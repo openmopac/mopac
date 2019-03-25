@@ -1,0 +1,104 @@
+      subroutine perm(iperm, nels, nmos, nperms, limci) 
+!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:33  03/09/06  
+!...Switches: -rl INDDO=2 INDIF=2 
+      use meci_C, only : maxci
+      implicit none
+!-----------------------------------------------
+!   D u m m y   A r g u m e n t s
+!-----------------------------------------------
+      integer , intent(in) :: nels 
+      integer , intent(in) :: nmos 
+      integer , intent(inout) :: nperms 
+      integer , intent(in) :: limci  
+      integer , intent(inout) :: iperm(nmos,maxci*4) 
+!-----------------------------------------------
+!   L o c a l   V a r i a b l e s
+!----------------------------------------------- 
+      integer :: Upper, Lower, Prm, El, i
+      integer, dimension (:), allocatable :: Occ
+!-----------------------------------------------
+!***********************************************************************
+!
+!  PERM PERMUTES NELS ENTITIES AMONG NMOS LOCATIONS. THE ENTITIES AND
+!       LOCATIONS ARE EACH INDISTINGUISHABLE. THE PAULI EXCLUSION
+!       PRINCIPLE IS FOLLOWED. THE NUMBER OF STATES PRODUCED IS GIVEN
+!       BY NMOS!/(NELS!*(NMOS-NELS)!).
+! ON INPUT: NELS  = NUMBER OF INDISTINGUISHABLE ENTITIES
+!           NMOS  = NUMBER OF INDISTINGUISHABLE LOCATIONS
+!
+! ON OUTPUT IPERM = ARRAY OF PERMUTATIONS, A 0 INDICATES NO ENTITY,
+!                   A 1 INDICATES AN ENTITY.
+!           NPERM = NUMBER OF PERMUTATIONS.
+!
+!***********************************************************************
+    Upper = nmos - nels
+    Lower = 1
+    Prm = 1
+    El = nels
+    allocate (Occ(-1:nels))
+!
+!  Occ initially contains the upper bounds that the various electrons
+!  can go to.  Thus electron 1 can end up in M.O. "nmos",
+!  and electron "nels-1" will end up in M.O. "nmos-nels".
+!
+    Occ(-1:nels-1) = (/(nmos+1-i, i=-1, nels-1) /)
+!
+!  For electron "El", the starting position is "1".
+!
+    call rperm (iperm, nperms, nels, Occ, Lower, Upper, El, limci)
+    nperms = Prm-1
+    deallocate (Occ)
+  contains
+    recursive subroutine rperm (iperm, nperms, nels, Occ, Lower, Upper, &
+         & El, limci)
+      use meci_C, only: nmos
+    implicit none
+      integer, intent (in) :: nperms, nels, limci
+      integer, intent (in) :: Lower, Upper
+      integer  :: El
+      integer, dimension (-1:nels), intent(inout) :: Occ
+      integer, dimension (nmos, nperms), intent(inout) :: iperm
+      integer :: i, j, k
+      if (El /= 0) then
+        do j = Lower, Upper
+          Occ(El) = j
+          call rperm (iperm, nperms, nels, Occ, Occ(El)+1, Occ(El-2)-2, &
+               & El-1, limci)
+        end do
+!
+!  "do" loop is complete.  Now add in the final permutation.
+!  (This is the reason for the second "-2" in "Occ(El-2)-2" in the call above.)
+!
+        Occ(El) = Upper + 1
+!
+!  Simplest test for exit - is the electron in an unacceptable M.O.,
+!  or have all the permutations been calculated.
+!
+        if (Upper+1 > nmos .or. Prm > nperms) return
+      end if
+!
+!  Generate the permutation.
+!
+      iperm(1:nmos, Prm) = 0
+      do i = 1, nels
+        iperm(Occ(i), Prm) = 1
+      end do
+      ! This statement only has an effect during the first call to rperm
+      El = nels + 1
+!
+!   Eliminate microstates which are not allowed by "limci".
+!
+      if (limci /= 0 .and. Prm > 1) then
+        k = 0
+        do j = 1, nmos
+          k = k + Abs (iperm(j, Prm)-iperm(j, 1))
+        end do
+        if (k > limci) then
+          Prm = Prm - 1
+        end if
+      end if
+      Prm = Prm + 1
+      return
+    end subroutine rperm
+end subroutine perm
+

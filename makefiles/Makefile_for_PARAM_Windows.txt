@@ -1,0 +1,17 @@
+##############################################################################
+#
+#   Compile and build PARAM for Windows
+#
+##############################################################################
+FORTRAN_COMPILER = ifort -c -O3 /nologo    /module=$(OBJ)  /fpp /Qmkl:parallel -o $@
+FORTRAN_LINKER   = ifort  /libs:static /threads /Qmkl:parallel -O3
+EXE              = PARAM.exe 
+OBJ              = ./PARAM_Objects 
+PARAM_SRC        = ./PARAM_source_code
+O                = obj
+##############################################################################
+#
+# Compile and link all the files in PARAM
+#
+##############################################################################
+include ./PARAM_Makefile_files.txt

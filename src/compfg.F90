@@ -1,0 +1,400 @@
+      subroutine compfg(xparam, int, escf, fulscf, grad, lgrad) 
+!-----------------------------------------------
+!   M o d u l e s 
+!-----------------------------------------------
+      USE vast_kind_param, ONLY:  double 
+!
+      USE funcon_C, only : fpc_9  
+!
+      USE chanel_C, only : iw 
+!
+      use elemts_C, only : elemnt
+!
+      USE molmec_C, only : nnhco, nhco, htype 
+!
+      use MOZYME_C, only : partf
+!
+      use common_arrays_C, only : nat, loc, geo, na, nb, nc, geoa, &
+      & coord, xparef, aicorr, tvec, labels, pa, p, pdiag, f
+!
+      USE molkst_C, ONLY: numat, norbs, nelecs, nclose, nopen, fract, natoms, numcal, &
+      & ndep, nvar, elect, enuclr, keywrd, moperr, emin, mozyme, method_PM7, lxfac, &
+      atheat, id, pressure, method_pm6, density, stress, N_3_present, Si_O_H_present, &
+      use_ref_geo, hpress, nsp2_corr, Si_O_H_corr, sum_dihed, method_PM6_D3H4X, method_PM6_D3H4, &
+      method_PM6_D3, method_pm7_minus, method_pm6_dh_plus, method_pm7_hh, method_pm8
+!
+      use cosmo_C, only : iseps, useps, noeps, solv_energy
+!
+      use linear_cosmo, only : ini_linear_cosmo, coscavz
+!
+!***********************************************************************
+!DECK MOPAC
+!...Translated by Pacific-Sierra Research 77to90  4.4G  12:18:48  03/10/06  
+!...Switches: -rl INDDO=2 INDIF=2 
+!-----------------------------------------------
+!   I n t e r f a c e   B l o c k s
+!-----------------------------------------------
+      use symtry_I 
+      use gmetry_I 
+      use dot_I
+      use volume_I
+      use timer_I 
+      use prtpar_I 
+      use hcore_I
+      use iter_I 
+      use dihed_I 
+      use deriv_I 
+      use mecip_I 
+      implicit none
+!-----------------------------------------------
+!   D u m m y   A r g u m e n t s
+!-----------------------------------------------
+      real(double) , intent(out) :: escf 
+      logical , intent(in) :: int 
+      logical, intent(in)  :: fulscf 
+      logical , intent(in) :: lgrad 
+      real(double) , intent(in) :: xparam(nvar) 
+      real(double)  :: grad(nvar) 
+!-----------------------------------------------
+!   L o c a l   V a r i a b l e s
+!-----------------------------------------------
+      integer :: icalcn, i, j, k, l
+      real(double), dimension(3) :: degree 
+      real(double) :: angle, atheat_store, sum
+      double precision, external ::  nsp2_correction, Si_O_H_correction
+      double precision, external :: helecz
+      logical :: debug, print, large, usedci, force, times, aider, &
+        dh, l_locate_ts
+      double precision, external :: xfac_value, reada
+      real(double), external :: ddot
+
+      save debug, print, large, usedci, force, times, aider, degree, &
+        icalcn, dh, l_locate_ts
+!***********************************************************************
+!
+!   COMPFG CALCULATES (A) THE HEAT OF FORMATION OF THE SYSTEM, AND
+!                     (B) THE GRADIENTS, IF LGRAD IS .TRUE.
+!
+!   ON INPUT  XPARAM = ARRAY OF PARAMETERS TO BE USED IN INTERNAL COORDS
+!             LGRAD  = .TRUE. IF GRADIENTS ARE NEEDED, .FALSE. OTHERWISE
+!             INT    = .TRUE. IF HEAT OF FORMATION IS TO BE CALCULATED
+!             FULSCF = .TRUE. IF FULL SCF TO BE DONE, .FALSE. OTHERWISE.
+!
+!   ON OUTPUT ESCF  = HEAT OF FORMATION.
+!             GRAD   = ARRAY OF GRADIENTS, IF LGRAD = .TRUE.
+!
+!***********************************************************************
+      data icalcn/ 0/  
+      if (lxfac) then 
+        if (index(keywrd," POP") /= 0) then
+          pa = 0.d0
+          i = index(keywrd," POP") + 4
+          pa(1)  = reada(keywrd,i+1)    !  "s"-population
+          pa(3)  = reada(keywrd,i+3)/3  !  "p"-population
+          pa(6)  = pa(3)
+          pa(10) = pa(3)
+          pa(15) = reada(keywrd,i+5)/5  !  "d"-population
+          pa(21) = pa(15)
+          pa(28) = pa(15)
+          pa(36) = pa(15)
+          pa(45) = pa(15)
+          p = pa
+          pa = pa*0.5d0
+          pdiag(1)   = p(1)
+          pdiag(2:4) = p(3)
+          pdiag(5:9) = p(15)
+        else
+          escf = xfac_value()        
+          return
+        end if
+      end if 
+      if (icalcn /= numcal) then 
+        icalcn = numcal 
+        hpress = 0.d0
+        nsp2_corr = 0.d0
+        Si_O_H_corr = 0.d0
+        sum_dihed = 0.d0
+        if (iseps) then
+          iseps = .true.
+          noeps = .true.
+          call cosini(.true.)
+          if (moperr) return
+          mozyme = (index(keywrd," MOZ") + index(keywrd," LOCATE-TS") + index(keywrd," RAPID") /= 0)    
+          if (mozyme .and. numat == 1) then
+            call mopend("MOZYME cannot be used for systems composed of only one atom!")
+            return
+          end if
+          if (mozyme) call ini_linear_cosmo
+        end if
+        aider = index(keywrd,'AIDER') /= 0 
+        times = index(keywrd,'TIMES') /= 0 
+        usedci = nclose/=nopen .and. Abs(fract - 2.d0) > 1.d-20 .and. &
+          fract > 1.d-20 .or. index(keywrd,'C.I.')/=0 
+        force = index(keywrd,'FORCE') /= 0 
+        large = index(keywrd,'LARGE') /= 0 
+        print = index(keywrd,'COMPFG') /= 0 
+        l_locate_ts = index(keywrd,'LOCATE-TS') /= 0 
+        debug = index(keywrd,'DEBUG')/=0 .and. print 
+        dh = (method_pm6_d3h4x .or. method_pm6_d3h4    .or. &
+              method_pm6_d3    .or. method_pm6_dh_plus .or. &
+              method_pm7_hh    .or. method_pm7_minus   .or. &
+              method_PM7 .or. method_pm8)
+        emin = 0.D0 
+        xparef(:nvar) = xparam(:nvar) 
+      endif 
+!
+! SET UP COORDINATES FOR CURRENT CALCULATION
+!
+!       PLACE THE NEW VALUES OF THE VARIABLES IN THE ARRAY GEO.
+!       MAKE CHANGES IN THE GEOMETRY.
+      do i = 1, nvar 
+        k = loc(1,i) 
+        l = loc(2,i) 
+        geo(l,k) = xparam(i) 
+      end do 
+!      IMPOSE THE SYMMETRY CONDITIONS + COMPUTE THE DEPENDENT-PARAMETERS
+      if (ndep /= 0) call symtry 
+!      NOW COMPUTE THE ATOMIC COORDINATES.
+      if (debug) then 
+        if (large) then 
+          k = natoms 
+        else 
+          k = min(5,natoms) 
+        endif 
+        write(iw,"(a)")" COORDINATES IN ARRAY 'GEO'"
+        degree(1) = 1.d0
+        do i = 1, k
+          if (na(i) > 0) then
+            degree(2:3) = 57.29577951308232D0 
+          else
+            degree(2:3) = 1.d0
+          end if
+          write (iw, "(i4,3x,a2,3x,3F14.5,3i5)") i,elemnt(labels(i)), &
+          (geo(j, i)*degree(j), j=1, 3), na(i), nb(i), nc(i) 
+        end do
+      endif 
+      call gmetry (geo, coord) 
+      if (moperr) return
+      if (debug) then 
+        if (large) then 
+          k = numat 
+        else 
+          k = min(5,numat) 
+        endif 
+        write (iw, '('' CARTESIAN COORDINATES'',/10000(/,i4,3x,a2,3x,3F16.9))') &
+          (i,elemnt(nat(i)),(coord(j,i),j=1,3),i=1,k) 
+      endif 
+      if (iseps) then
+      ! The following routine constructs the dielectric screening surface      
+      if (mozyme) then      
+          call coscavz(coord, nat)
+        else
+          call coscav 
+          call mkbmat
+        end if 
+        if (moperr) return
+        if (noeps) useps = .false.
+      end if
+      if (index(keywrd,' HCORE') /= 0) call prtpar 
+      if (times) call timer ('BEFORE HCORE')   
+      if (mozyme) then    
+        if (iseps) useps = .true.  
+        if (l_locate_ts .or. int) call hcore_for_MOZYME () 
+        if (moperr) return  
+      else
+        if (int) call hcore () 
+        if (moperr) return
+      end if  
+       atheat_store = atheat           
+      if (times) call timer ('AFTER  HCORE') 
+!
+! COMPUTE THE HEAT OF FORMATION.
+!
+      if (norbs > 0 .and. nelecs > 0) then
+!
+!  Put any ad-hoc corrections to the HoF here, so they will show up if PL
+!  is used
+!
+        hpress = 0.d0
+        if (Abs (pressure) > 1.d-4) then            
+          if (id == 1) then
+            hpress = -pressure * Sqrt (dot(tvec(1, 1), tvec(1, 1), 3))
+          else if (id == 3) then
+            hpress = -pressure * volume (tvec, 3)
+          end if
+          atheat = atheat + hpress
+        end if
+        if (useps .and. .not. mozyme) atheat = atheat + solv_energy * fpc_9
+!
+!  Add in any molecular-mechanics type corrections here
+!
+        if (method_pm6 .and. N_3_present) then
+          nsp2_corr = nsp2_correction() 
+          atheat = atheat + nsp2_corr
+        end if
+        if (method_pm7 .and. Si_O_H_present) then
+          Si_o_H_corr = Si_O_H_correction()
+          atheat = atheat + Si_O_H_corr
+        end if
+        sum_dihed = 0.d0
+        do i = 1, nnhco 
+          call dihed (coord, nhco(1,i), nhco(2,i), nhco(3,i), nhco(4,i), angle) 
+          sum_dihed = sum_dihed + htype*sin(angle)**2 
+        end do  
+        atheat = atheat + sum_dihed
+        stress = 0.d0
+        if(use_ref_geo) then
+          do i = 1, numat
+            do j = 1,3
+              stress = stress + (geo(j,i) - geoa(j,i))**2
+            end do
+          end do
+        end if
+        if (dh) then
+          call post_scf_corrections(sum, .false.)
+          if (moperr) return
+          atheat =  sum + atheat
+        end if
+        if (times) call timer ('BEFORE ITER') 
+        if (int) then
+          if (mozyme) then
+            call iter_for_MOZYME (elect)  
+          else
+            call iter (elect, fulscf, .TRUE.) 
+          end if
+          if (moperr) return   
+          if (noeps) then
+            noeps = .false.
+            useps = .true.
+            if ( .not. mozyme) then
+              call hcore () 
+              call iter (elect, fulscf, .TRUE.) 
+            end if    
+          end if
+        else
+          if (mozyme) then
+             call buildf (f, partf, 0)
+             elect = helecz()
+           end if
+        end if
+        stress = stress*density
+        atheat = atheat + stress
+        if (moperr) return  
+        if (times) call timer ('AFTER  ITER') 
+      else 
+        elect = 0.D0 
+      endif 
+      escf = (elect + enuclr)*fpc_9 + atheat 
+      if (useps .and. mozyme) then
+            escf = escf + solv_energy * fpc_9
+      endif 
+      if (.not. dh) then
+        call post_scf_corrections(sum, .false.)
+        if (moperr) return
+        escf =  sum + escf
+      end if
+      atheat = atheat_store
+      if (escf < emin .or. emin == 0.D0) emin = escf      
+!
+! FIND DERIVATIVES IF DESIRED
+!
+      if (lgrad) then 
+        if (times) call timer ('Before DERIV') 
+        if (nelecs > 0) call deriv (geo, grad) 
+        if (moperr) return  
+        if (times) call timer ('AFTER  DERIV')  
+      endif 
+      if (aider) then 
+!
+!  ADD IN AB INITIO CORRECTION
+!
+        escf = escf + ddot(nvar,xparam(:nvar)-xparef(:nvar),1,aicorr(:nvar),1)
+      endif 
+      if (int .and. print) write (iw, '(/1X,'' HEAT OF FORMATION'',G30.17)') &
+        escf 
+      if (print .and. lgrad) then
+        write (iw, '('' PARAMETERS     '',8F8.3,(/10F8.3))') (xparam(i),i=1,nvar) 
+        write (iw, '('' GRADIENT       '',8F8.3,(/10F8.3))') (grad(i),i=1,nvar) 
+      end if
+!
+! REFORM DENSITY MATRIX, IF A C.I. DONE AND EITHER THE LAST SCF OR A
+! FORCE CALCULATION
+!
+      if (usedci .and. force) call mecip () 
+      return  
+      end subroutine compfg 
+!
+!
+!
+      double precision function xfac_value()
+      use parameters_C, only :  tore, guess1, guess2, guess3, alpb, xfac, po, pocord, &
+        uss, upp, udd
+      use common_arrays_C, only : nat, coord, pa, p, h, f, w
+      use funcon_C, only : a0, ev, fpc_9
+      USE molkst_C, ONLY: keywrd
+      implicit none
+!-----------------------------------------------
+!   L o c a l   V a r i a b l e s
+!-----------------------------------------------
+      integer :: ni, nj, i
+      double precision :: enuc, abond, fff, scale, ax, r, &
+        gab, enuclr, point, const
+      double precision, external :: reada
+        if (index(keywrd," POP") /= 0) then
+          p = 0.d0
+          i = index(keywrd," POP") + 4
+          p(1)  = reada(keywrd,i+1)  !  "s"-population
+          p(3)  = reada(keywrd,i+3)/3  !  "p"-population
+          p(6)  = p(3)
+          p(10) = p(3)
+          p(15) = reada(keywrd,i+5)/5  !  "d"-population
+          p(21) = p(15)
+          p(28) = p(15)
+          p(36) = p(15)
+          p(45) = p(15)
+          pa = p*0.5d0
+          h = 0.d0
+          h(1) = uss(nat(1))
+          h(3) = upp(nat(1))
+          h(6) = h(3)
+          h(10) = h(3)
+          h(15) = udd(nat(1))
+          h(21) = h(15)
+          h(28) = h(15)
+          h(36) = h(15)
+          h(45) = h(15)
+          f = h
+          call fock1dorbs(f, p, pa, 45, w, i, 1, 9, 45)
+          return
+        end if
+        r = coord(1,2) 
+        ni = nat(1)
+        nj = nat(2) 
+        if (pocord(ni) > 1.D-5) po(9,ni) = pocord(ni) 
+        if (pocord(nj) > 1.D-5) po(9,nj) = pocord(nj) 
+        gab = eV/sqrt((r/a0)**2 + (po(9,ni) + po(9,nj))**2)
+        call to_point(r, point, const)
+        gab = gab*const + (1.d0 - const)*point
+        enuc = tore(ni)*tore(nj)*gab 
+        abond = alpb(ni,nj)
+        if (abond  > 1.d-3) then
+          fff = xfac(ni,nj)
+          scale = 2.d0 * fff * Exp (-abond*(r + 0.0003*r**6)) 
+          enuclr = enuc * scale
+          scale = 0.d0
+          ax = guess2(ni,1)*(r - guess3(ni,1))**2 
+          if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,1)*exp((-ax)) 
+          ax = guess2(nj,1)*(r - guess3(nj,1))**2 
+          if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(nj,1)*exp((-ax))
+          enuclr = enuclr + scale 
+          ax = r/(ni**0.3333d0 + nj**0.3333d0)
+          if (ax < 3.d0) then
+            scale = 1.d-8/ax**12
+            enuclr = enuclr + min(scale, 1.d5)
+          end if
+        else 
+          scale = 10.d0*exp((-2.18d0*r)) ! This is a generic core-core term.
+          enuclr = abs(scale*enuc) 
+      end if
+        xfac_value = enuclr*fpc_9
+      end function xfac_value

@@ -1,0 +1,23 @@
+##############################################################################
+#
+#   Compile and build PARAM for Mac
+#
+##############################################################################
+FORTRAN_COMPILER = ifort -c -O3 -I.$(OBJ) -module $(OBJ)  -o $@
+FORTRAN_LINKER   = ifort -lpthread -lstdc++ -O3
+MATH_LINK        =   $(MKLROOT)/lib/libmkl_intel.a \
+                     $(MKLROOT)/lib/libmkl_intel_thread.a \
+                     $(MKLROOT)/lib/libmkl_core.a  \
+                     /opt/intel/lib/libiomp5.a \
+                     -lpthread \
+                     -lm
+EXE              = /opt/PARAM/PARAM.exe
+OBJ              = ./PARAM_Objects
+PARAM_SRC        = ./PARAM_Source_code
+O                = o
+##############################################################################
+#
+# Compile and link all the files in PARAM
+#
+##############################################################################
+include PARAM_Makefile_files.txt

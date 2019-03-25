@@ -1,0 +1,19 @@
+##############################################################################
+#
+#   Compile and build MOPAC2012 for Windows
+#
+##############################################################################
+#
+#  The following set of definitions apply to this OS.
+#
+##############################################################################
+FORTRAN_COMPILER = ifort -c -O3 /nologo    /module=$(OBJ)  /fpp /Qmkl:parallel -o $@
+FORTRAN_LINKER   = ifort  /libs:static /threads /Qmkl:parallel -O3
+
+
+MOPAC_SRC        = .\MOPAC_source_code
+OBJ              = .\MOPAC_Objects
+O                = obj
+EXE              = MOPAC2016.exe  
+
+include MOPAC_Makefile_files.txt

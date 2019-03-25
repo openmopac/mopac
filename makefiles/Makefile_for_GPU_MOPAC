@@ -1,0 +1,5027 @@
+##############################################################
+#
+# Builds MOPAC2016 for GPU on a Linux platform, using CUDA and Magma
+#
+##############################################################
+#
+#                             Path definitions
+#
+#   Location of the source files (currently in the Windows folders)
+#
+SRC  = /home/jstewart/MOPAC_Source_code
+MOPAC_SRC  = /home/jstewart/MOPAC_Source_code
+CSRC = /home/jstewart/MOPAC_CUDA_files
+#
+#   Location of the intermediate files (must be in Linux folders - 
+#   otherwise the permissions might be incorrect)
+#
+LINUX_DIR = /home/jstewart/MOPAC2016GPU
+#
+#                                                    End of site-sensitive data
+#
+#                                    Build the Fermi version - recommended
+#
+OBJ             = objects_Linux_Fermi_GPU
+MAGMA_PATH      = $(LINUX_DIR)/Fermi_magma-1.4.0
+MARCH 		= -arch compute_20
+#
+# Libraries flags
+#
+
+FC_Libs		= -L$(CUDA_HOME)/lib64 -lcudart -lcublas -lcuda -lpthread -lstdc++
+NVCC_Libs	= -L$(CUDA_HOME)/lib64 -lcudart -lcublas -lcuda -lpthread -lstdc++
+# FC_Libs		= -L$(CUDA_HOME)/lib64 -lcudart_static -lcublas_device -lcuda -lpthread -lstdc++
+# NVCC_Libs	= -L$(CUDA_HOME)/lib64 -lcudart_static -lcublas_device -lcuda -lpthread -lstdc++
+
+
+#####
+
+MATH_LIBS	= -L$(MAGMA_PATH)/lib -lmagma -I$(MAGMA_PATH)/include -I$(MAGMA_PATH)/control
+
+MATH_LINK 	= -Wl,--start-group  $(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $(MKLROOT)/lib/intel64/libmkl_intel_thread.a $(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -openmp -lpthread -lm
+
+
+#
+# Includes flags
+#
+
+FC_Includes	= -I$(CUDA_HOME)/include -I$(LINUX_DIR)/includes -I$(LINUX_DIR)/$(OBJ)  -I$(LINUX_DIR) -I$(MKLROOT)/include
+NVCC_Includes	= -I$(CUDA_HOME)/include -I$(LINUX_DIR)/includes -I$(LINUX_DIR)/$(OBJ)  -I$(LINUX_DIR)
+
+#
+# Compilers flags
+#
+
+FC_Flags = $(FC_Libs) $(FC_Includes) -O3 -DGPU -DLINUX -DMAGMA  $(MATH_LIBS) -fp-model source -module $(LINUX_DIR)/modules # -openmp
+NVCC_Flags = $(NVCC_Libs) $(NVCC_Includes) -O3 -DKEPLER -DMAGMA -DLINUX -use_fast_math $(ARCH) $(MATH_LIBS) -DHAVE_CUBLAS
+
+
+#
+# Compilers
+#
+
+FC_LINK		= ifort
+FC		= ifort -o $@ -c
+NVCC		= nvcc -o $@ -c 
+FORTRAN_COMPILER = $(FC) $(FC_Flags)
+#
+# Path definitions
+#
+
+
+#
+# Objects
+#
+
+# Object files included in library
+
+OBJS = \
+$(OBJ)/H_bond_correction_bits.o \
+$(OBJ)/H_bond_correction_PM6_DH_Dispersion.o \
+$(OBJ)/H_bond_correction_PM6_DH_type.o \
+$(OBJ)/H_bond_correction_EC_plus_ER.o \
+$(OBJ)/H_bond_correction_EH_plus.o \
+$(OBJ)/disp_DnX.o \
+$(OBJ)/ccrep.o \
+$(OBJ)/gdisp.o                    $(OBJ)/CPE_Energy.o \
+$(OBJ)/aababc.o                   $(OBJ)/aababc_I.o                 $(OBJ)/aabacd.o                    \
+$(OBJ)/aabacd_I.o                 $(OBJ)/aabbcd.o                   $(OBJ)/aabbcd_I.o                  \
+$(OBJ)/vastkind.o                 $(OBJ)/Common_arrays_C.o          $(OBJ)/add_more_interactions.o     \
+$(OBJ)/addfck_I.o                 $(OBJ)/addhb.o                    $(OBJ)/big_swap.o                  \
+$(OBJ)/addhcr_I.o                 $(OBJ)/addnuc_I.o                 $(OBJ)/adjvec.o                    \
+$(OBJ)/aijm_I.o                   $(OBJ)/aintgs_I.o                 $(OBJ)/alpb_and_xfac_am1.o         \
+$(OBJ)/alpb_and_xfac_mndo.o       $(OBJ)/alpb_and_xfac_mndod.o      $(OBJ)/alpb_and_xfac_pm3.o         \
+$(OBJ)/alphaf_I.o                 $(OBJ)/analyt.o                   $(OBJ)/analyt_C.o                  \
+$(OBJ)/anavib.o                   $(OBJ)/asum_I.o                   $(OBJ)/atomrs.o                    \
+$(OBJ)/aval_I.o                   $(OBJ)/axis.o                     $(OBJ)/axis_I.o                    \
+$(OBJ)/babbbc.o                   $(OBJ)/babbbc_I.o                 $(OBJ)/babbcd.o                    \
+$(OBJ)/babbcd_I.o                 $(OBJ)/bangle.o                   $(OBJ)/bangle_I.o                  \
+$(OBJ)/bdenin_I.o                 $(OBJ)/bdenup_I.o                 $(OBJ)/beopor_I.o                  \
+$(OBJ)/betaf_I.o                  $(OBJ)/betal1_I.o                 $(OBJ)/betall_I.o                  \
+$(OBJ)/betcom_I.o                 $(OBJ)/bfn.o                      $(OBJ)/bfn_I.o                     \
+$(OBJ)/bintgs_I.o                 $(OBJ)/H_bonds4.o                 $(OBJ)/orient_water.o              \
+$(OBJ)/bldsym.o                   $(OBJ)/bldsym_I.o                 $(OBJ)/bmakuf_I.o                  \
+$(OBJ)/bonds.o                    $(OBJ)/bonds_for_MOZYME.o         $(OBJ)/linear_cosmo.o              \
+$(OBJ)/buildf.o                   $(OBJ)/calpar.o                   $(OBJ)/calpar_I.o                  \
+$(OBJ)/capcor.o                   $(OBJ)/capcor_I.o                 $(OBJ)/dfport.o \
+$(OBJ)/cartab_I.o                 $(OBJ)/ccprod_I.o                  \
+$(OBJ)/cdiag_I.o                  $(OBJ)/chanel_C.o                 $(OBJ)/charg_I.o                   \
+$(OBJ)/charmo.o                   $(OBJ)/charmo_I.o                 $(OBJ)/charst.o                    \
+$(OBJ)/charst_I.o                 $(OBJ)/charvi.o                   $(OBJ)/charvi_I.o                  \
+$(OBJ)/check.o                    $(OBJ)/chi_I.o                    $(OBJ)/chkion.o                    \
+$(OBJ)/chklew.o                   $(OBJ)/chrge.o                    $(OBJ)/chrge_for_MOZYME.o          \
+$(OBJ)/chrge_I.o                  $(OBJ)/ciint_I.o                  $(OBJ)/ciosci.o                    \
+$(OBJ)/ciosci_I.o                 $(OBJ)/cnvg.o                     $(OBJ)/cnvg_I.o                    \
+$(OBJ)/cnvgz.o                    $(OBJ)/coe.o                      $(OBJ)/coe_I.o                     \
+$(OBJ)/collid_I.o                 $(OBJ)/collis_I.o                                                    \
+$(OBJ)/compct.o                   $(OBJ)/compfg.o                   $(OBJ)/compfg_I.o                  \
+$(OBJ)/compfn_I.o                 $(OBJ)/conref_C.o                 $(OBJ)/consts_I.o                  \
+$(OBJ)/convert_storage.o          $(OBJ)/copym_I.o                  $(OBJ)/cosmo.o                     \
+$(OBJ)/cosmo_C.o                  $(OBJ)/cqden_I.o                  $(OBJ)/csum_I.o                    \
+$(OBJ)/cublas_drivers.o                    \
+$(OBJ)/dang.o                     $(OBJ)/dang_I.o                   $(OBJ)/darea1_I.o                  \
+$(OBJ)/daread_I.o                 $(OBJ)/dasum_I.o                  $(OBJ)/datin.o                     \
+$(OBJ)/datin_I.o                  $(OBJ)/dawrit_I.o                 $(OBJ)/dawrt1_I.o                  \
+$(OBJ)/daxpy_I.o                  $(OBJ)/dcart.o                    \
+$(OBJ)/dcart_I.o                  $(OBJ)/ddot_I.o                    \
+$(OBJ)/ddpo_I.o                   $(OBJ)/delmol_I.o                 $(OBJ)/delri_I.o                   \
+$(OBJ)/delsta.o                   $(OBJ)/delta_I.o                  $(OBJ)/denrot.o                    \
+$(OBJ)/denrot_for_MOZYME.o        $(OBJ)/denrot_I.o                 $(OBJ)/densf_I.o                   \
+$(OBJ)/densit.o                   $(OBJ)/density_for_GPU.o         $(OBJ)/density_for_MOZYME.o        \
+$(OBJ)/density_cuda_i.o            \
+$(OBJ)/deri0.o                    $(OBJ)/deri0_I.o                  $(OBJ)/deri1.o                     \
+$(OBJ)/deri1_I.o                  $(OBJ)/deri2.o                    $(OBJ)/deri21.o                    \
+$(OBJ)/deri21_I.o                 $(OBJ)/deri22.o                   $(OBJ)/deri22_I.o                  \
+$(OBJ)/deri23.o                   $(OBJ)/deri23_I.o                 $(OBJ)/deri2_I.o                   \
+$(OBJ)/deritr.o                   $(OBJ)/deritr_I.o                 $(OBJ)/deriv.o                     \
+$(OBJ)/deriv_I.o                  $(OBJ)/dernvo.o                   $(OBJ)/dernvo_I.o                  \
+$(OBJ)/ders_I.o                   $(OBJ)/dex2_I.o                   $(OBJ)/dfield.o                    \
+$(OBJ)/dfield_I.o                 $(OBJ)/dfock2.o                   $(OBJ)/dfock2_I.o                  \
+$(OBJ)/dfpsav.o                   $(OBJ)/dfpsav_I.o                 \
+$(OBJ)/dgetri_I.o                 $(OBJ)/dhc.o                       \
+$(OBJ)/dhc_I.o                    $(OBJ)/dhcore.o                   $(OBJ)/dhcore_I.o                  \
+$(OBJ)/diag.o                     $(OBJ)/diag_density_cuda.o        $(OBJ)/diag_for_GPU.o             \
+$(OBJ)/diag_I.o                   $(OBJ)/diagg.o                     \
+$(OBJ)/diagg1.o                   $(OBJ)/diagg2.o                   $(OBJ)/diagi.o                     \
+$(OBJ)/diagi_I.o                  $(OBJ)/diat.o                     $(OBJ)/diat2_I.o                   \
+$(OBJ)/diat_I.o                   $(OBJ)/diegrd_I.o                 $(OBJ)/dielen_I.o                  \
+$(OBJ)/digit.o                    $(OBJ)/digit_I.o                  $(OBJ)/dihed.o                     \
+$(OBJ)/dihed_I.o                  $(OBJ)/dijkl1.o                   $(OBJ)/dijkl1_I.o                  \
+$(OBJ)/dijkl2.o                   $(OBJ)/dijkl2_I.o                 $(OBJ)/dijkld_I.o                  \
+$(OBJ)/dimens.o                   $(OBJ)/dimens_I.o                 $(OBJ)/dipole.o                    \
+$(OBJ)/dipole_for_MOZYME.o        $(OBJ)/dipole_I.o                 $(OBJ)/dist2.o                     \
+$(OBJ)/dist2_I.o                  $(OBJ)/dmecip_I.o                 $(OBJ)/dnrm2_I.o                   \
+$(OBJ)/dofs.o                     $(OBJ)/dofs_I.o                   $(OBJ)/dopen_I.o                   \
+$(OBJ)/dot.o                      $(OBJ)/dot_I.o                    $(OBJ)/drc.o                       \
+$(OBJ)/drc_I.o                    $(OBJ)/drcout.o                   $(OBJ)/drcout_I.o                  \
+$(OBJ)/drepp2_I.o                 $(OBJ)/drotat_I.o                 $(OBJ)/dsum_I.o                    \
+$(OBJ)/dtran2.o                   $(OBJ)/dtran2_I.o                 $(OBJ)/dtrans.o                    \
+$(OBJ)/dtrmm_I.o                  $(OBJ)/dtrmv_I.o                   \
+$(OBJ)/dtrti2_I.o                 $(OBJ)/dvfill_I.o                 \
+$(OBJ)/ef.o                       $(OBJ)/ef_C.o                     $(OBJ)/ef_I.o                      \
+$(OBJ)/eigen.o                    $(OBJ)/eigenvectors_LAPACK.o      \
+$(OBJ)/eimp.o                     $(OBJ)/einvit_I.o                 \
+$(OBJ)/eiscor_I.o                 $(OBJ)/elau_I.o                   $(OBJ)/elemts_C.o                  \
+$(OBJ)/elenuc_I.o                 $(OBJ)/elesn_I.o                  $(OBJ)/en_I.o                      \
+$(OBJ)/enpart.o                   $(OBJ)/enpart_I.o                 $(OBJ)/epsab_I.o                   \
+$(OBJ)/epseta.o                   $(OBJ)/epseta_I.o                 $(OBJ)/epslon_I.o                  \
+$(OBJ)/eqlrat_I.o                 $(OBJ)/esn_I.o                     \
+$(OBJ)/esp.o                      $(OBJ)/esp1_I.o                   $(OBJ)/esp_C.o                     \
+$(OBJ)/esp_utilities.o            $(OBJ)/espfit_I.o                 $(OBJ)/estpi1_I.o                  \
+$(OBJ)/etime_I.o                  $(OBJ)/etrbk3_I.o                 $(OBJ)/etred3_I.o                  \
+$(OBJ)/euler_C.o                  $(OBJ)/evvrsp_I.o                 $(OBJ)/exchng.o                    \
+$(OBJ)/exchng_I.o                 $(OBJ)/fbx_I.o                    $(OBJ)/fcnpp_I.o                   \
+$(OBJ)/ffreq1_I.o                 $(OBJ)/ffreq2_I.o                 $(OBJ)/fhpatn_I.o                  \
+$(OBJ)/fillij.o                   $(OBJ)/findn1.o                                                      \
+$(OBJ)/flepo.o                    $(OBJ)/flepo_I.o                  $(OBJ)/fmat.o                      \
+$(OBJ)/fock1.o                    $(OBJ)/fock1_for_MOZYME.o          \
+$(OBJ)/fock1_I.o                  $(OBJ)/fock2.o                    $(OBJ)/fock2_I.o                   \
+$(OBJ)/fock2z.o                   $(OBJ)/fockd2_I.o                 $(OBJ)/force.o                     \
+$(OBJ)/force_I.o                  $(OBJ)/fordd_I.o                  $(OBJ)/formxy.o                    \
+$(OBJ)/formxy_I.o                 $(OBJ)/forsav.o                   $(OBJ)/frame.o                     \
+$(OBJ)/frame_I.o                  $(OBJ)/freda_I.o                  $(OBJ)/freqcy.o                    \
+$(OBJ)/fsub_I.o                   $(OBJ)/funcon_C.o                 $(OBJ)/genun.o                     \
+$(OBJ)/genun_I.o                  $(OBJ)/genvec_I.o                 $(OBJ)/geochk.o                    \
+$(OBJ)/geout.o                    $(OBJ)/geout_I.o                  $(OBJ)/geoutg.o                    \
+$(OBJ)/geoutg_I.o                 $(OBJ)/getdat.o                   $(OBJ)/GetDateStamp.o              \
+$(OBJ)/afmm_mod.o                 $(OBJ)/geochk_bits_1.o            $(OBJ)/geochk_bits_2.o \
+$(OBJ)/getgeg.o                   $(OBJ)/getgeg_I.o                 $(OBJ)/getgeo.o                    \
+$(OBJ)/getgeo_I.o                 $(OBJ)/getpdb.o                   $(OBJ)/getsym.o                    \
+$(OBJ)/getsym_I.o                 $(OBJ)/gettxt.o                   $(OBJ)/gettxt_I.o                  \
+$(OBJ)/getval.o                   $(OBJ)/getval_I.o                 $(OBJ)/gmetry.o                    \
+$(OBJ)/gmetry_I.o                 $(OBJ)/gover_I.o                  $(OBJ)/gpu_info.o                   \
+$(OBJ)/greek.o                     \
+$(OBJ)/grid.o                     $(OBJ)/grid_I.o                   $(OBJ)/grids_I.o                   \
+$(OBJ)/gstore_I.o                 $(OBJ)/h1elec.o                   $(OBJ)/h1elec_I.o                  \
+$(OBJ)/haddon_I.o                 $(OBJ)/hbonds.o                   $(OBJ)/hcore.o                     \
+$(OBJ)/hcore_for_MOZYME.o         $(OBJ)/hcore_I.o                  $(OBJ)/hcored_I.o                  \
+$(OBJ)/helect.o                   $(OBJ)/helect_I.o                 $(OBJ)/helecz.o                    \
+$(OBJ)/hmuf_I.o                   $(OBJ)/hplusf_I.o                 $(OBJ)/hybrid.o                    \
+$(OBJ)/ijbo.o                     $(OBJ)/ijkl.o                     $(OBJ)/inid_I.o                    \
+$(OBJ)/inighd_I.o                 $(OBJ)/init_filenames.o           $(OBJ)/initsn_I.o                  \
+$(OBJ)/initsv_I.o                 $(OBJ)/insymc_I.o                 $(OBJ)/interp.o                    \
+$(OBJ)/interp_I.o                 $(OBJ)/intfc.o                    $(OBJ)/intfc_I.o                   \
+$(OBJ)/ionout.o                   $(OBJ)/ird_I.o                    $(OBJ)/isitsc.o                    \
+$(OBJ)/iten_I.o                   $(OBJ)/iter.o                     $(OBJ)/iter_C.o                    \
+$(OBJ)/iter_for_MOZYME.o          $(OBJ)/iter_I.o                   $(OBJ)/jab.o                       \
+$(OBJ)/jab_for_MOZYME.o           $(OBJ)/jab_I.o                    $(OBJ)/jcarin.o                    \
+$(OBJ)/jcarin_I.o                 $(OBJ)/jdate.o                    $(OBJ)/journal_references_C.o      \
+$(OBJ)/kab.o                      $(OBJ)/kab_for_MOZYME.o           $(OBJ)/kab_I.o                     \
+$(OBJ)/lbfgs.o                    $(OBJ)/lewis.o                    $(OBJ)/ligand.o                    \
+$(OBJ)/linmin.o                   $(OBJ)/linmin_I.o                 $(OBJ)/linpack.o                   \
+$(OBJ)/local2.o                   $(OBJ)/local.o                    \
+$(OBJ)/locmin.o                   $(OBJ)/locmin_I.o                 $(OBJ)/lsame_I.o                   \
+$(OBJ)/lyse.o                     $(OBJ)/makeuf_I.o                 $(OBJ)/makopr_I.o                  \
+$(OBJ)/maksym.o                   $(OBJ)/maksym_I.o                 $(OBJ)/makvec.o                    \
+$(OBJ)/mamult.o                   $(OBJ)/mamult_I.o                 $(OBJ)/maps_C.o                    \
+$(OBJ)/mamult_cuda.o              $(OBJ)/mamult_cuda_I.o \
+$(OBJ)/mat33.o                    $(OBJ)/mat33_I.o                  $(OBJ)/matou1.o                    \
+$(OBJ)/matou1_I.o                 $(OBJ)/matout.o                   $(OBJ)/matout_I.o                  \
+$(OBJ)/mbonds.o                   $(OBJ)/me08a_I.o                  $(OBJ)/meci.o                      \
+$(OBJ)/meci_C.o                   $(OBJ)/meci_I.o                   $(OBJ)/mecid.o                     \
+$(OBJ)/mecid_I.o                  $(OBJ)/mecih.o                    $(OBJ)/mecih_I.o                   \
+$(OBJ)/mecip.o                    $(OBJ)/mecip_I.o                  $(OBJ)/mepchg_I.o                  \
+$(OBJ)/mepmap_I.o                 $(OBJ)/meprot_I.o                 $(OBJ)/minv.o                      \
+$(OBJ)/minv_I.o                   $(OBJ)/mlmo.o                     $(OBJ)/mndod.o                     \
+$(OBJ)/mndod_C.o                  $(OBJ)/mod_atomradii.o            $(OBJ)/mod_calls_cublas.o          \
+$(OBJ)/mod_gpu_info.o             $(OBJ)/mod_vars_cuda.o            $(OBJ)/modchg.o                    \
+$(OBJ)/modgra.o                   $(OBJ)/moldat.o                   $(OBJ)/molkst_C.o                  \
+$(OBJ)/molmec_C.o                 $(OBJ)/molsym_I.o                 $(OBJ)/molsymy.o                   \
+$(OBJ)/molval.o                   $(OBJ)/molval_I.o                 $(OBJ)/mopac.o                     \
+$(OBJ)/mopend.o                   $(OBJ)/mopend_I.o                 $(OBJ)/MOZYME_C.o                  \
+$(OBJ)/mpcbds_I.o                 $(OBJ)/mpcpop_I.o                 $(OBJ)/mpcsyb.o                    \
+$(OBJ)/mtxm.o                     $(OBJ)/mtxm_I.o                   $(OBJ)/mtxmc.o                     \
+$(OBJ)/mtxmc_I.o                  $(OBJ)/mullik.o                   \
+$(OBJ)/mullik_I.o                 $(OBJ)/mult.o                     $(OBJ)/mult33.o                    \
+$(OBJ)/mult33_I.o                 $(OBJ)/mult_I.o                   $(OBJ)/mxm.o                       \
+$(OBJ)/mxm_I.o                    $(OBJ)/mxmt.o                     $(OBJ)/mxmt_I.o                    \
+$(OBJ)/myword.o                   $(OBJ)/myword_I.o                 $(OBJ)/naican_I.o                  \
+$(OBJ)/naicas_I.o                 $(OBJ)/names.o                    $(OBJ)/new_esp.o                   \
+$(OBJ)/newflg.o                   $(OBJ)/ngamtg_I.o                 $(OBJ)/ngefis_I.o                  \
+$(OBJ)/ngidri_I.o                 $(OBJ)/ngoke_I.o                  $(OBJ)/nllsn_I.o                   \
+$(OBJ)/nllsq.o                    $(OBJ)/nllsq_I.o                  $(OBJ)/nonbet_I.o                  \
+$(OBJ)/nonope_I.o                 $(OBJ)/nonor_I.o                  $(OBJ)/nuchar.o                    \
+$(OBJ)/nuchar_I.o                 $(OBJ)/nxtmer.o                   $(OBJ)/openda_I.o                  \
+$(OBJ)/orient_I.o                 $(OBJ)/osinv.o                    $(OBJ)/osinv_I.o                   \
+$(OBJ)/outer1.o                   $(OBJ)/outer2.o                   $(OBJ)/overlaps_C.o                \
+$(OBJ)/ovlp_I.o                   $(OBJ)/packp_I.o                  $(OBJ)/parameters_C.o              \
+$(OBJ)/parameters_for_AM1_C.o     $(OBJ)/parameters_for_mndo_C.o    $(OBJ)/parameters_for_mndod_C.o    \
+$(OBJ)/parameters_for_PM3_C.o     $(OBJ)/parameters_for_PM6_C.o     $(OBJ)/parameters_for_RM1_C.o      \
+$(OBJ)/parsav.o                   $(OBJ)/parsav_I.o                 $(OBJ)/partxy.o                    \
+$(OBJ)/partxy_I.o                 $(OBJ)/Password.o                 $(OBJ)/pathk.o                     \
+$(OBJ)/pathk_I.o                  $(OBJ)/paths.o                    $(OBJ)/paths_I.o                   \
+$(OBJ)/pdbout.o                   $(OBJ)/pdgrid_I.o                 $(OBJ)/perm.o                      \
+$(OBJ)/perm_I.o                   $(OBJ)/picopt.o                   $(OBJ)/pinout.o                    \
+$(OBJ)/plato_I.o                  $(OBJ)/pmep.o                     $(OBJ)/pmep1_I.o                   \
+$(OBJ)/pmep_I.o                   $(OBJ)/pmepco_I.o                 $(OBJ)/poij_I.o                    \
+$(OBJ)/pol_vol_I.o                $(OBJ)/polar.o                    $(OBJ)/polar_C.o                   \
+$(OBJ)/polar_I.o                  $(OBJ)/potcal_I.o                 $(OBJ)/powsav_I.o                  \
+$(OBJ)/powsq.o                    $(OBJ)/powsq_I.o                  $(OBJ)/printp_I.o                  \
+$(OBJ)/prtdrc.o                   $(OBJ)/prtdrc_I.o                 $(OBJ)/prtgra.o                    \
+$(OBJ)/prthco_I.o                 $(OBJ)/prthes_I.o                 $(OBJ)/prtlmo.o                    \
+$(OBJ)/prtpar_I.o                 $(OBJ)/prtpka.o                   $(OBJ)/prttim.o                    \
+$(OBJ)/prttim_I.o                 $(OBJ)/pulay.o                    $(OBJ)/pulay_I.o                   \
+$(OBJ)/pulay_for_gpu_I.o          $(OBJ)/pulay_for_gpu.o  	    $(OBJ)/mult_symm_ab_I.o	       \
+$(OBJ)/mult_symm_ab.o             $(OBJ)/geo_ref.o  \
+$(OBJ)/quadr.o                    $(OBJ)/quadr_I.o                  $(OBJ)/react1.o                    \
+$(OBJ)/react1_I.o                 $(OBJ)/reada.o                    $(OBJ)/reada_I.o                   \
+$(OBJ)/readmo.o                   $(OBJ)/readmo_I.o                 $(OBJ)/redatm_I.o                  \
+$(OBJ)/refer.o                    $(OBJ)/refer_I.o                  $(OBJ)/refkey_C.o                  \
+$(OBJ)/reorth.o                   $(OBJ)/repp_I.o                    \
+$(OBJ)/reppd2_I.o                 $(OBJ)/reppd_I.o                  $(OBJ)/reseq.o                     \
+$(OBJ)/resolv.o                   $(OBJ)/resolv_I.o                 $(OBJ)/rijkl_I.o                   \
+$(OBJ)/rotat_I.o                  $(OBJ)/rotatd_I.o                 $(OBJ)/rotate.o                    \
+$(OBJ)/rotate_C.o                 $(OBJ)/rotate_I.o                 $(OBJ)/rotlmo.o                    \
+$(OBJ)/rotmat_I.o                 $(OBJ)/rotmol.o                   $(OBJ)/rotmol_I.o                  \
+$(OBJ)/rsc_I.o                    $(OBJ)/rsp.o                       \
+$(OBJ)/run_mopac.o                $(OBJ)/scfcri.o                    \
+$(OBJ)/schmib.o                   $(OBJ)/schmib_I.o                 $(OBJ)/schmit.o                    \
+$(OBJ)/schmit_I.o                 $(OBJ)/scprm_I.o                  $(OBJ)/search_I.o                  \
+$(OBJ)/second.o                   $(OBJ)/second_I.o                 $(OBJ)/selmos.o                    \
+$(OBJ)/set.o                      $(OBJ)/set_I.o                    $(OBJ)/set_up_dentate.o            \
+$(OBJ)/set_up_MOZYME_arrays.o     $(OBJ)/set_up_RAPID.o             $(OBJ)/setup3_I.o                  \
+$(OBJ)/setup_mopac_arrays.o       $(OBJ)/setupg.o                   $(OBJ)/setupk.o                    \
+$(OBJ)/solrot.o                   $(OBJ)/solrot_I.o                 $(OBJ)/sort.o                      \
+$(OBJ)/sort_I.o                   $(OBJ)/sp_two_electron.o          $(OBJ)/spcore_I.o                  \
+$(OBJ)/spline_I.o                 $(OBJ)/ss_I.o                     $(OBJ)/static_polarizability.o      \
+$(OBJ)/suma2_I.o                  $(OBJ)/supdot.o                   $(OBJ)/supdot_I.o                  \
+$(OBJ)/superd.o                   $(OBJ)/superd_I.o                 $(OBJ)/surfa_I.o                   \
+$(OBJ)/surfac_I.o                 $(OBJ)/swap.o                     $(OBJ)/swap_I.o                    \
+$(OBJ)/switch.o                   $(OBJ)/symdec_I.o                 $(OBJ)/symh.o                      \
+$(OBJ)/symh_I.o                   $(OBJ)/symmetry_C.o               $(OBJ)/symoir.o                    \
+$(OBJ)/symoir_I.o                 $(OBJ)/symopr.o                   $(OBJ)/symopr_I.o                  \
+$(OBJ)/symp_I.o                   $(OBJ)/sympop.o                   $(OBJ)/sympop_I.o                  \
+$(OBJ)/symr.o                     $(OBJ)/symr_I.o                   $(OBJ)/symt.o                      \
+$(OBJ)/symt_I.o                   $(OBJ)/symtry.o                   $(OBJ)/symtry_I.o                  \
+$(OBJ)/symtrz.o                   $(OBJ)/symtrz_I.o                 $(OBJ)/tf_I.o                      \
+$(OBJ)/thermo.o                   $(OBJ)/thermo_I.o                 $(OBJ)/tidy.o                      \
+$(OBJ)/time_I.o                   $(OBJ)/timer.o                    $(OBJ)/timer_I.o                   \
+$(OBJ)/timout.o                   $(OBJ)/to_screen.o                 \
+$(OBJ)/to_screen_C.o              $(OBJ)/transf_I.o                  \
+$(OBJ)/trsub_I.o                  $(OBJ)/trudgu_I.o                 $(OBJ)/trugdu_I.o                  \
+$(OBJ)/trugud_I.o                 $(OBJ)/tx_I.o                     $(OBJ)/txtype.o                    \
+$(OBJ)/upcase.o                   $(OBJ)/upcase_I.o                 $(OBJ)/update.o                    \
+$(OBJ)/update_I.o                 $(OBJ)/values.o                                                      \
+$(OBJ)/vecprt.o                   $(OBJ)/vecprt_for_MOZYME.o        $(OBJ)/vecprt_I.o                  \
+$(OBJ)/volume.o                   $(OBJ)/volume_I.o                 $(OBJ)/w2mat_I.o                   \
+$(OBJ)/worder_I.o                 $(OBJ)/wrdkey_I.o                 $(OBJ)/write_trajectory.o          \
+$(OBJ)/write_trajectory_I.o       $(OBJ)/writmo.o                   $(OBJ)/writmo_I.o                  \
+$(OBJ)/wrtkey.o                   $(OBJ)/wrtkey_I.o                 $(OBJ)/wrttxt.o                    \
+$(OBJ)/wrttxt_I.o                 $(OBJ)/wstore_I.o                 $(OBJ)/wwstep_I.o                  \
+$(OBJ)/xerbla_I.o                 $(OBJ)/xxx.o                      $(OBJ)/xxx_I.o                     \
+$(OBJ)/xyzcry.o                   $(OBJ)/xyzcry_I.o                 $(OBJ)/xyzint.o                    \
+$(OBJ)/xyzint_I.o                 $(OBJ)/zerom_I.o                  \
+$(OBJ)/parameters_for_PM3_Sparkles_C.o  $(OBJ)/parameters_for_PM6_Sparkles_C.o \
+$(OBJ)/parameters_for_AM1_Sparkles_C.o  $(OBJ)/parameters_for_PM7_C.o  $(OBJ)/post_scf_corrections.o      \
+$(OBJ)/parameters_for_PM8_C.o \
+$(OBJ)/local_for_MOZYME.o         $(OBJ)/add_hydrogen_atoms.o       $(OBJ)/wrt_diffs.o                 \
+$(OBJ)/dftd3.o                    $(OBJ)/parameters_for_PM7_Sparkles_C.o                               \
+$(OBJ)/parameters_for_PM7_TS_C.o  $(OBJ)/parameters_for_RM1_Sparkles_C.o                               \
+$(OBJ)/dftd3_bits.o               $(OBJ)/copyc6.o		    $(OBJ)/mxv.o                       \
+$(OBJ)/mxv_I.o                    \
+
+#
+# Define targets
+#
+
+
+#
+# Make MOPAC executable for Linux     
+#
+
+all: MOPAC2016
+
+
+MOPAC2016: $(OBJ) $(OBJS) 
+ifneq ($(GPU), Kepler)
+	@echo :
+	@echo : "Building Fermi (Good for Kepler and Fermi)"
+	@echo :
+else
+	@echo :
+	@echo :  "Building Kepler (Good for Kepler only)"
+	@echo :
+endif
+	$(FC_LINK) $(FC_Flags) -o /opt/mopac/MOPAC2016.exe $(OBJS) $(MATH_LIBS) $(MATH_LINK)
+ifneq ($(GPU), Kepler)
+	@echo :
+	@echo : "Fermi built (Good for Kepler and Fermi)"
+	@echo :
+else
+	@echo :
+	@echo :  "Kepler built (Good for Kepler only)"
+	@echo :
+endif
+
+
+# Directory for object files
+$(OBJ): 
+	mkdir $(OBJ)
+
+
+# Clean up all
+clean: 
+	rm -f $(LINUX_DIR)/$(OBJ)/*.o $(LINUX_DIR)/$(OBJ)/*.mod $(LINUX_DIR)/modules/*.mod $(LINUX_DIR)/*.o
+
+
+#
+# Dependencies of Fortran source files
+#
+$(OBJ)/CPE_Energy.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/CPE_Energy.F90 
+	$(FC) $(FC_Flags) $(SRC)/CPE_Energy.F90
+
+$(OBJ)/ccrep.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/ccrep.F90 
+	$(FC) $(FC_Flags) $(SRC)/ccrep.F90
+
+$(OBJ)/gdisp.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/gdisp.F90 
+	$(FC) $(FC_Flags) $(SRC)/gdisp.F90
+
+$(OBJ)/H_bonds4.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/H_bonds4.F90 
+	$(FC) $(FC_Flags) $(SRC)/H_bonds4.F90
+$(OBJ)/orient_water.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(MOPAC_SRC)/orient_water.F90
+	 $(FC)  $(FC_Flags) $(SRC)/orient_water.F90
+
+$(OBJ)/big_swap.o: \
+  $(SRC)/big_swap.F90
+	 $(FC) $(FC_Flags) $(SRC)/big_swap.F90
+  
+$(OBJ)/aababc.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aababc.F90
+	 $(FC) $(FC_Flags) $(SRC)/aababc.F90
+  
+$(OBJ)/aababc_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aababc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/aababc_I.F90
+  
+$(OBJ)/aabacd.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aabacd.F90
+	 $(FC) $(FC_Flags) $(SRC)/aabacd.F90
+  
+$(OBJ)/aabacd_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aabacd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/aabacd_I.F90
+  
+$(OBJ)/aabbcd.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aabbcd.F90
+	 $(FC) $(FC_Flags) $(SRC)/aabbcd.F90
+  
+$(OBJ)/aabbcd_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aabbcd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/aabbcd_I.F90
+  
+$(OBJ)/Common_arrays_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/Common_arrays_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/Common_arrays_C.F90
+  
+$(OBJ)/add_more_interactions.o: \
+  $(OBJ)/vastkind.o \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/iter_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/add_more_interactions.F90
+	 $(FC) $(FC_Flags) $(SRC)/add_more_interactions.F90
+  
+$(OBJ)/addfck_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/addfck_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/addfck_I.F90
+  
+$(OBJ)/addhb.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/addhb.F90
+	 $(FC) $(FC_Flags) $(SRC)/addhb.F90
+  
+$(OBJ)/addhcr_I.o: \
+  $(SRC)/addhcr_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/addhcr_I.F90
+  
+$(OBJ)/addnuc_I.o: \
+  $(SRC)/addnuc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/addnuc_I.F90
+  
+$(OBJ)/adjvec.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/adjvec.F90
+	 $(FC) $(FC_Flags) $(SRC)/adjvec.F90
+  
+$(OBJ)/aijm_I.o: \
+  $(SRC)/aijm_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/aijm_I.F90
+  
+$(OBJ)/aintgs_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aintgs_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/aintgs_I.F90
+  
+$(OBJ)/alpb_and_xfac_am1.o: \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/alpb_and_xfac_am1.F90
+	 $(FC) $(FC_Flags) $(SRC)/alpb_and_xfac_am1.F90
+  
+$(OBJ)/alpb_and_xfac_mndo.o: \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/alpb_and_xfac_mndo.F90
+	 $(FC) $(FC_Flags) $(SRC)/alpb_and_xfac_mndo.F90
+  
+$(OBJ)/alpb_and_xfac_mndod.o: \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/alpb_and_xfac_mndod.F90
+	 $(FC) $(FC_Flags) $(SRC)/alpb_and_xfac_mndod.F90
+  
+$(OBJ)/alpb_and_xfac_pm3.o: \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/alpb_and_xfac_pm3.F90
+	 $(FC) $(FC_Flags) $(SRC)/alpb_and_xfac_pm3.F90
+  
+$(OBJ)/alphaf_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/alphaf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/alphaf_I.F90
+  
+$(OBJ)/analyt.o: \
+  $(OBJ)/analyt_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/delri_I.o  \
+  $(OBJ)/ders_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/rotat_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/analyt.F90
+	 $(FC) $(FC_Flags) $(SRC)/analyt.F90
+  
+$(OBJ)/analyt_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/analyt_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/analyt_C.F90
+  
+$(OBJ)/anavib.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/anavib.F90
+	 $(FC) $(FC_Flags) $(SRC)/anavib.F90
+  
+$(OBJ)/asum_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/asum_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/asum_I.F90
+  
+$(OBJ)/atomrs.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/atomrs.F90
+	 $(FC) $(FC_Flags) $(SRC)/atomrs.F90
+  
+$(OBJ)/aval_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/aval_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/aval_I.F90
+  
+$(OBJ)/axis.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/axis.F90
+	 $(FC) $(FC_Flags) $(SRC)/axis.F90
+  
+$(OBJ)/axis_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/axis_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/axis_I.F90
+  
+$(OBJ)/babbbc.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/babbbc.F90
+	 $(FC) $(FC_Flags) $(SRC)/babbbc.F90
+  
+$(OBJ)/babbbc_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/babbbc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/babbbc_I.F90
+  
+$(OBJ)/babbcd.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/babbcd.F90
+	 $(FC) $(FC_Flags) $(SRC)/babbcd.F90
+  
+$(OBJ)/babbcd_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/babbcd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/babbcd_I.F90
+  
+$(OBJ)/bangle.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bangle.F90
+	 $(FC) $(FC_Flags) $(SRC)/bangle.F90
+  
+$(OBJ)/bangle_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bangle_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/bangle_I.F90
+  
+$(OBJ)/bdenin_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bdenin_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/bdenin_I.F90
+  
+$(OBJ)/bdenup_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bdenup_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/bdenup_I.F90
+  
+$(OBJ)/beopor_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/beopor_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/beopor_I.F90
+  
+$(OBJ)/betaf_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/betaf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/betaf_I.F90
+  
+$(OBJ)/betal1_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/betal1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/betal1_I.F90
+  
+$(OBJ)/betall_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/betall_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/betall_I.F90
+  
+$(OBJ)/betcom_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/betcom_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/betcom_I.F90
+  
+$(OBJ)/bfn.o: \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bfn.F90
+	 $(FC) $(FC_Flags) $(SRC)/bfn.F90
+  
+$(OBJ)/bfn_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bfn_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/bfn_I.F90
+  
+$(OBJ)/bintgs_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bintgs_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/bintgs_I.F90
+  
+#$(OBJ)/blas.o: \
+#  $(OBJ)/chanel_C.o  \
+#  $(OBJ)/blas_I.o  \
+#  $(OBJ)/vastkind.o  \
+#  $(OBJ)/xerbla_I.o  \
+#  $(OBJ)/lsame_I.o  \
+#  $(OBJ)/dot_I.o  \
+#  $(OBJ)/dtrmv_I.o  \
+#  $(OBJ)/ddot_I.o  \
+#  $(OBJ)/dgemv_I.o  \
+#  blas.F90
+#	 $(FC) $(FC_Flags) $(SRC)/blas.F90
+  
+$(OBJ)/blas_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/blas_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/blas_I.F90
+  
+$(OBJ)/bldsym.o: \
+  $(OBJ)/mult33_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bldsym.F90
+	 $(FC) $(FC_Flags) $(SRC)/bldsym.F90
+  
+$(OBJ)/bldsym_I.o: \
+  $(SRC)/bldsym_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/bldsym_I.F90
+  
+$(OBJ)/bmakuf_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bmakuf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/bmakuf_I.F90
+  
+$(OBJ)/bonds.o: \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(OBJ)/dopen_I.o  \
+  $(SRC)/bonds.F90
+	 $(FC) $(FC_Flags) $(SRC)/bonds.F90
+  
+$(OBJ)/bonds_for_MOZYME.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/bonds_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/bonds_for_MOZYME.F90
+  
+$(OBJ)/buildf.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/buildf.F90
+	 $(FC) $(FC_Flags) $(SRC)/buildf.F90
+  
+$(OBJ)/calpar.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/calpar.F90
+	 $(FC) $(FC_Flags) $(SRC)/calpar.F90
+  
+$(OBJ)/calpar_I.o: \
+  $(SRC)/calpar_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/calpar_I.F90
+  
+#$(OBJ)/canon.o: \
+#  $(OBJ)/Common_arrays_C.o  \
+#  $(OBJ)/molkst_C.o  \
+#  $(OBJ)/MOZYME_C.o  \
+#  canon.F90
+#	 $(FC) $(FC_Flags) $(SRC)/canon.F90
+  
+$(OBJ)/capcor.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/capcor.F90
+	 $(FC) $(FC_Flags) $(SRC)/capcor.F90
+  
+$(OBJ)/capcor_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/capcor_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/capcor_I.F90
+  
+$(OBJ)/cartab_I.o: \
+  $(SRC)/cartab_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/cartab_I.F90
+  
+$(OBJ)/ccprod_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ccprod_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ccprod_I.F90
+  
+$(OBJ)/cdiag_I.o: \
+  $(SRC)/cdiag_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/cdiag_I.F90
+  
+$(OBJ)/chanel_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/chanel_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/chanel_C.F90
+  
+$(OBJ)/charg_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/charg_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/charg_I.F90
+  
+$(OBJ)/charmo.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/charmo.F90
+	 $(FC) $(FC_Flags) $(SRC)/charmo.F90
+  
+$(OBJ)/charmo_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/charmo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/charmo_I.F90
+  
+$(OBJ)/charst.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/matout_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/minv_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/charst.F90
+	 $(FC) $(FC_Flags) $(SRC)/charst.F90
+  
+$(OBJ)/charst_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/charst_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/charst_I.F90
+  
+$(OBJ)/charvi.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/charvi.F90
+	 $(FC) $(FC_Flags) $(SRC)/charvi.F90
+  
+$(OBJ)/charvi_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/charvi_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/charvi_I.F90
+  
+$(OBJ)/check.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/check.F90
+	 $(FC) $(FC_Flags) $(SRC)/check.F90
+  
+$(OBJ)/chi_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/chi_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/chi_I.F90
+  
+$(OBJ)/chkion.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/chkion.F90
+	 $(FC) $(FC_Flags) $(SRC)/chkion.F90
+  
+$(OBJ)/chklew.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/chklew.F90
+	 $(FC) $(FC_Flags) $(SRC)/chklew.F90
+  
+$(OBJ)/chrge.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/chrge.F90
+	 $(FC) $(FC_Flags) $(SRC)/chrge.F90
+  
+$(OBJ)/chrge_for_MOZYME.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/chrge_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/chrge_for_MOZYME.F90
+  
+$(OBJ)/chrge_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/chrge_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/chrge_I.F90
+  
+$(OBJ)/ciint_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ciint_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ciint_I.F90
+  
+$(OBJ)/ciosci.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/matout_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ciosci.F90
+	 $(FC) $(FC_Flags) $(SRC)/ciosci.F90
+  
+$(OBJ)/ciosci_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ciosci_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ciosci_I.F90
+  
+$(OBJ)/cnvg.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/cnvg.F90
+	 $(FC) $(FC_Flags) $(SRC)/cnvg.F90
+  
+$(OBJ)/cnvg_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/cnvg_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/cnvg_I.F90
+  
+$(OBJ)/cnvgz.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/cnvgz.F90
+	 $(FC) $(FC_Flags) $(SRC)/cnvgz.F90
+  
+$(OBJ)/coe.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/coe.F90
+	 $(FC) $(FC_Flags) $(SRC)/coe.F90
+  
+$(OBJ)/coe_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/coe_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/coe_I.F90
+  
+$(OBJ)/collid_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/collid_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/collid_I.F90
+  
+$(OBJ)/collis_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/collis_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/collis_I.F90
+  
+$(OBJ)/compct.o: \
+  $(SRC)/compct.F90
+	 $(FC) $(FC_Flags) $(SRC)/compct.F90
+  
+$(OBJ)/compfg.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/deriv_I.o  \
+  $(OBJ)/dihed_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/hcore_I.o  \
+  $(OBJ)/iter_I.o  \
+  $(OBJ)/mecip_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/molmec_C.o  \
+  $(OBJ)/prtpar_I.o  \
+  $(OBJ)/symtry_I.o  \
+  $(OBJ)/timer_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/volume_I.o  \
+  $(SRC)/compfg.F90
+	 $(FC) $(FC_Flags) $(SRC)/compfg.F90
+  
+$(OBJ)/compfg_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/compfg_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/compfg_I.F90
+  
+$(OBJ)/compfn_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/compfn_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/compfn_I.F90
+  
+$(OBJ)/conref_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/conref_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/conref_C.F90
+  
+$(OBJ)/consts_I.o: \
+  $(SRC)/consts_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/consts_I.F90
+  
+$(OBJ)/convert_storage.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/convert_storage.F90
+	 $(FC) $(FC_Flags) $(SRC)/convert_storage.F90
+  
+$(OBJ)/linear_cosmo.o: \
+  $(OBJ)/afmm_mod.o \
+  $(OBJ)/cosmo_C.o \
+  $(SRC)/linear_cosmo.F90
+	 $(FC) $(FC_Flags) $(SRC)/linear_cosmo.F90
+  
+$(OBJ)/copym_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/copym_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/copym_I.F90
+  
+$(OBJ)/cosmo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/cosmo.F90
+	 $(FC) $(FC_Flags) $(SRC)/cosmo.F90
+  
+$(OBJ)/cosmo_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/cosmo_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/cosmo_C.F90
+  
+$(OBJ)/cqden_I.o: \
+  $(SRC)/cqden_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/cqden_I.F90
+  
+$(OBJ)/csum_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/csum_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/csum_I.F90
+  
+$(OBJ)/cublas_drivers.o: \
+  $(CSRC)/cublas_drivers.cu
+	 $(NVCC) $(NVCC_Flags) $(CSRC)/cublas_drivers.cu
+  
+$(OBJ)/dang.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dang.F90
+	 $(FC) $(FC_Flags) $(SRC)/dang.F90
+  
+$(OBJ)/dang_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dang_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dang_I.F90
+  
+$(OBJ)/darea1_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/darea1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/darea1_I.F90
+  
+$(OBJ)/daread_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/daread_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/daread_I.F90
+  
+$(OBJ)/dasum_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dasum_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dasum_I.F90
+  
+$(OBJ)/datin.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/upcase_I.o  \
+  $(OBJ)/update_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/datin.F90
+	 $(FC) $(FC_Flags) $(SRC)/datin.F90
+  
+$(OBJ)/datin_I.o: \
+  $(SRC)/datin_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/datin_I.F90
+  
+$(OBJ)/dawrit_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dawrit_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dawrit_I.F90
+  
+$(OBJ)/dawrt1_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dawrt1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dawrt1_I.F90
+  
+$(OBJ)/daxpy_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/daxpy_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/daxpy_I.F90
+  
+$(OBJ)/dcart.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/dhc_I.o  \
+  $(OBJ)/dihed_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/molmec_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dcart.F90
+	 $(FC) $(FC_Flags) $(SRC)/dcart.F90
+  
+$(OBJ)/dcart_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dcart_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dcart_I.F90
+  
+#$(OBJ)/dcopy_I.o: \
+#  $(OBJ)/vastkind.o  \
+#  dcopy_I.F90
+#	 $(FC) $(FC_Flags) $(SRC)/dcopy_I.F90
+  
+$(OBJ)/ddot_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ddot_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ddot_I.F90
+  
+$(OBJ)/ddpo_I.o: \
+  $(SRC)/ddpo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ddpo_I.F90
+  
+$(OBJ)/delmol_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/delmol_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/delmol_I.F90
+  
+$(OBJ)/delri_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/delri_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/delri_I.F90
+  
+$(OBJ)/delsta.o: \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/delsta.F90
+	 $(FC) $(FC_Flags) $(SRC)/delsta.F90
+  
+$(OBJ)/delta_I.o: \
+  $(SRC)/delta_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/delta_I.F90
+  
+$(OBJ)/denrot.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/coe_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/denrot.F90
+	 $(FC) $(FC_Flags) $(SRC)/denrot.F90
+  
+$(OBJ)/denrot_for_MOZYME.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/denrot_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/denrot_for_MOZYME.F90
+  
+$(OBJ)/denrot_I.o: \
+  $(SRC)/denrot_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/denrot_I.F90
+  
+$(OBJ)/densf_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/densf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/densf_I.F90
+  
+$(OBJ)/densit.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/densit.F90
+	 $(FC) $(FC_Flags) $(SRC)/densit.F90
+  
+$(OBJ)/density_for_GPU.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/density_cuda_i.o \
+  $(OBJ)/diag_density_cuda.o \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mod_calls_cublas.o \
+  $(OBJ)/mod_vars_cuda.o \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/density_for_GPU.F90
+	 $(FC) $(FC_Flags) $(SRC)/density_for_GPU.F90
+  
+$(OBJ)/density_for_MOZYME.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/density_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/density_for_MOZYME.F90
+  
+$(OBJ)/density_cuda_i.o: \
+  $(SRC)/density_cuda_i.F90
+	 $(FC) $(FC_Flags) $(SRC)/density_cuda_i.F90
+  
+$(OBJ)/deri0.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri0.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri0.F90
+  
+$(OBJ)/deri0_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri0_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri0_I.F90
+  
+$(OBJ)/deri1.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/dfock2_I.o  \
+  $(OBJ)/dhcore_I.o  \
+  $(OBJ)/dijkl1_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/helect_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/mecid_I.o  \
+  $(OBJ)/mecih_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mtxm_I.o  \
+  $(OBJ)/mxm_I.o  \
+  $(OBJ)/supdot_I.o  \
+  $(OBJ)/timer_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri1.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri1.F90
+  
+$(OBJ)/deri1_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri1_I.F90
+  
+$(OBJ)/deri2.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/deri22_I.o  \
+  $(OBJ)/deri23_I.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/mecid_I.o  \
+  $(OBJ)/mecih_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/mtxm_I.o  \
+  $(OBJ)/mxm_I.o  \
+  $(OBJ)/mxmt_I.o  \
+  $(OBJ)/osinv_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/supdot_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri2.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri2.F90
+  
+$(OBJ)/deri21.o: \
+  $(OBJ)/mtxmc_I.o  \
+  $(OBJ)/mxm_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri21.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri21.F90
+  
+$(OBJ)/deri21_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri21_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri21_I.F90
+  
+$(OBJ)/deri22.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/ddot_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/fock2_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mtxm_I.o  \
+  $(OBJ)/mxm_I.o  \
+  $(OBJ)/mxmt_I.o  \
+  $(OBJ)/supdot_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri22.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri22.F90
+  
+$(OBJ)/deri22_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri22_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri22_I.F90
+  
+$(OBJ)/deri23.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri23.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri23.F90
+  
+$(OBJ)/deri23_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri23_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri23_I.F90
+  
+$(OBJ)/deri2_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deri2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deri2_I.F90
+  
+$(OBJ)/deritr.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/hcore_I.o  \
+  $(OBJ)/iter_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/symtry_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deritr.F90
+	 $(FC) $(FC_Flags) $(SRC)/deritr.F90
+  
+$(OBJ)/deritr_I.o: \
+  $(SRC)/deritr_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deritr_I.F90
+  
+$(OBJ)/deriv.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dcart_I.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/dernvo_I.o  \
+  $(OBJ)/dfield_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/jcarin_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/mxm_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/symtry_I.o  \
+  $(OBJ)/upcase_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/volume_I.o  \
+  $(OBJ)/mxv.o \
+  $(SRC)/deriv.F90
+	 $(FC) $(FC_Flags) $(SRC)/deriv.F90
+  
+$(OBJ)/mxv.o: \
+  $(OBJ)/mxv_I.o \
+  $(SRC)/mxv.F90
+	 $(FC) $(FC_Flags) $(SRC)/mxv.F90
+
+$(OBJ)/mxv_I.o: \
+  $(SRC)/mxv_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mxv_I.F90
+
+
+$(OBJ)/deriv_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/deriv_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/deriv_I.F90
+  
+$(OBJ)/dernvo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/deri0_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dernvo.F90
+	 $(FC) $(FC_Flags) $(SRC)/dernvo.F90
+  
+$(OBJ)/dernvo_I.o: \
+  $(SRC)/dernvo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dernvo_I.F90
+  
+$(OBJ)/ders_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ders_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ders_I.F90
+  
+$(OBJ)/dex2_I.o: \
+  $(SRC)/dex2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dex2_I.F90
+  
+$(OBJ)/dfield.o: \
+  $(OBJ)/chrge_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dfield.F90
+	 $(FC) $(FC_Flags) $(SRC)/dfield.F90
+  
+$(OBJ)/dfield_I.o: \
+  $(SRC)/dfield_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dfield_I.F90
+  
+$(OBJ)/dfock2.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/jab_I.o  \
+  $(OBJ)/kab_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dfock2.F90
+	 $(FC) $(FC_Flags) $(SRC)/dfock2.F90
+  
+$(OBJ)/dfock2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dfock2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dfock2_I.F90
+  
+$(OBJ)/dfpsav.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dfpsav.F90
+	 $(FC) $(FC_Flags) $(SRC)/dfpsav.F90
+  
+$(OBJ)/dfpsav_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dfpsav_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dfpsav_I.F90
+  
+#$(OBJ)/dgefa_I.o: \
+#  $(OBJ)/vastkind.o  \
+#  dgefa_I.F90
+#	 $(FC) $(FC_Flags) $(SRC)/dgefa_I.F90
+  
+#$(OBJ)/dgemv_I.o: \
+#  $(OBJ)/vastkind.o  \
+#  dgemv_I.F90
+#	 $(FC) $(FC_Flags) $(SRC)/dgemv_I.F90
+  
+$(OBJ)/dgetri_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dgetri_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dgetri_I.F90
+  
+$(OBJ)/dhc.o: \
+  $(OBJ)/helect_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/dhc.F90
+	 $(FC) $(FC_Flags) $(SRC)/dhc.F90
+  
+$(OBJ)/dhc_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dhc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dhc_I.F90
+  
+$(OBJ)/dhcore.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/h1elec_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dhcore.F90
+	 $(FC) $(FC_Flags) $(SRC)/dhcore.F90
+  
+$(OBJ)/dhcore_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dhcore_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dhcore_I.F90
+  
+$(OBJ)/diag.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/diag.F90
+	 $(FC) $(FC_Flags) $(SRC)/diag.F90
+  
+$(OBJ)/diag_density_cuda.o: \
+  $(CSRC)/diag_density_cuda.cu
+	 $(NVCC) $(NVCC_Flags) $(CSRC)/diag_density_cuda.cu
+  
+$(OBJ)/diag_for_GPU.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/epseta_I.o \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/mod_vars_cuda.o \
+  $(SRC)/diag_for_GPU.F90
+	 $(FC) $(FC_Flags) $(SRC)/diag_for_GPU.F90
+  
+$(OBJ)/diag_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/diag_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/diag_I.F90
+  
+$(OBJ)/diagg.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/diagg.F90
+	 $(FC) $(FC_Flags) $(SRC)/diagg.F90
+  
+$(OBJ)/diagg1.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/diagg1.F90
+	 $(FC) $(FC_Flags) $(SRC)/diagg1.F90
+  
+$(OBJ)/diagg2.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/diagg2.F90
+	 $(FC) $(FC_Flags) $(SRC)/diagg2.F90
+  
+$(OBJ)/diagi.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/diagi.F90
+	 $(FC) $(FC_Flags) $(SRC)/diagi.F90
+  
+$(OBJ)/diagi_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/diagi_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/diagi_I.F90
+  
+$(OBJ)/diat.o: \
+  $(OBJ)/bfn_I.o  \
+  $(OBJ)/coe_I.o  \
+  $(OBJ)/diat2_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/set_I.o  \
+  $(OBJ)/ss_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/diat.F90
+	 $(FC) $(FC_Flags) $(SRC)/diat.F90
+  
+$(OBJ)/diat2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/diat2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/diat2_I.F90
+  
+$(OBJ)/diat_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/diat_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/diat_I.F90
+  
+$(OBJ)/diegrd_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/diegrd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/diegrd_I.F90
+  
+$(OBJ)/dielen_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dielen_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dielen_I.F90
+  
+$(OBJ)/digit.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/digit.F90
+	 $(FC) $(FC_Flags) $(SRC)/digit.F90
+  
+$(OBJ)/digit_I.o: \
+  $(SRC)/digit_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/digit_I.F90
+  
+$(OBJ)/dihed.o: \
+  $(OBJ)/dang_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dihed.F90
+	 $(FC) $(FC_Flags) $(SRC)/dihed.F90
+  
+$(OBJ)/dihed_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dihed_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dihed_I.F90
+  
+$(OBJ)/dijkl1.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/formxy_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dijkl1.F90
+	 $(FC) $(FC_Flags) $(SRC)/dijkl1.F90
+  
+$(OBJ)/dijkl1_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dijkl1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dijkl1_I.F90
+  
+$(OBJ)/dijkl2.o: \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dijkl2.F90
+	 $(FC) $(FC_Flags) $(SRC)/dijkl2.F90
+  
+$(OBJ)/dijkl2_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dijkl2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dijkl2_I.F90
+  
+$(OBJ)/dijkld_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dijkld_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dijkld_I.F90
+  
+$(OBJ)/dimens.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symopr_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dimens.F90
+	 $(FC) $(FC_Flags) $(SRC)/dimens.F90
+  
+$(OBJ)/dimens_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dimens_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dimens_I.F90
+  
+$(OBJ)/dipole.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dipole.F90
+	 $(FC) $(FC_Flags) $(SRC)/dipole.F90
+  
+$(OBJ)/dipole_for_MOZYME.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/dipole_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/dipole_for_MOZYME.F90
+  
+$(OBJ)/dipole_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dipole_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dipole_I.F90
+  
+$(OBJ)/dist2.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dist2.F90
+	 $(FC) $(FC_Flags) $(SRC)/dist2.F90
+  
+$(OBJ)/dist2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dist2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dist2_I.F90
+  
+$(OBJ)/dmecip_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/dmecip_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dmecip_I.F90
+  
+$(OBJ)/dnrm2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dnrm2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dnrm2_I.F90
+  
+$(OBJ)/dofs.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dofs.F90
+	 $(FC) $(FC_Flags) $(SRC)/dofs.F90
+  
+$(OBJ)/dofs_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dofs_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dofs_I.F90
+  
+$(OBJ)/dopen_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dopen_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dopen_I.F90
+  
+$(OBJ)/dot.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dot.F90
+	 $(FC) $(FC_Flags) $(SRC)/dot.F90
+  
+$(OBJ)/dot_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dot_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dot_I.F90
+  
+$(OBJ)/drc.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/prtdrc_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/drc.F90
+	 $(FC) $(FC_Flags) $(SRC)/drc.F90
+  
+$(OBJ)/drc_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/drc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/drc_I.F90
+  
+$(OBJ)/drcout.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/write_trajectory_I.o  \
+  $(SRC)/drcout.F90
+	 $(FC) $(FC_Flags) $(SRC)/drcout.F90
+  
+$(OBJ)/drcout_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/drcout_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/drcout_I.F90
+  
+$(OBJ)/drepp2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/drepp2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/drepp2_I.F90
+  
+$(OBJ)/drotat_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/drotat_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/drotat_I.F90
+  
+$(OBJ)/dsum_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dsum_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dsum_I.F90
+  
+$(OBJ)/dtran2.o: \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dtran2.F90
+	 $(FC) $(FC_Flags) $(SRC)/dtran2.F90
+  
+$(OBJ)/dtran2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dtran2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dtran2_I.F90
+  
+$(OBJ)/dtrans.o: \
+  $(OBJ)/dtran2_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dtrans.F90
+	 $(FC) $(FC_Flags) $(SRC)/dtrans.F90
+  
+#$(OBJ)/dtrans_I.o: \
+#  $(OBJ)/vastkind.o  \
+#  dtrans_I.F90
+#	 $(FC) $(FC_Flags) $(SRC)/dtrans_I.F90
+  
+$(OBJ)/dtrmm_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dtrmm_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dtrmm_I.F90
+  
+$(OBJ)/dtrmv_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dtrmv_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dtrmv_I.F90
+  
+$(OBJ)/dtrti2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dtrti2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dtrti2_I.F90
+  
+$(OBJ)/dvfill_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/dvfill_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/dvfill_I.F90
+  
+$(OBJ)/mod_vars_cuda.o: \
+  $(SRC)/mod_vars_cuda.F90
+	 $(FC) $(FC_Flags) $(SRC)/mod_vars_cuda.F90
+  
+$(OBJ)/mod_calls_cublas.o: \
+  $(SRC)/mod_calls_cublas.F90
+	 $(FC) $(FC_Flags) $(SRC)/mod_calls_cublas.F90
+  
+$(OBJ)/mod_gpu_info.o: \
+  $(SRC)/mod_gpu_info.F90
+	 $(FC) $(FC_Flags) $(SRC)/mod_gpu_info.F90
+  
+$(OBJ)/ef.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/mod_vars_cuda.o \
+  $(OBJ)/mod_calls_cublas.o \
+  $(OBJ)/eigenvectors_LAPACK.o \
+  $(SRC)/ef.F90
+	 $(FC) $(FC_Flags) $(SRC)/ef.F90
+  
+$(OBJ)/ef_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ef_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/ef_C.F90
+  
+$(OBJ)/ef_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ef_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ef_I.F90
+  
+$(OBJ)/eigen.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/eigen.F90
+	 $(FC) $(FC_Flags) $(SRC)/eigen.F90
+  
+$(OBJ)/eigenvectors_LAPACK_I.o: \
+  $(SRC)/eigenvectors_LAPACK_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/eigenvectors_LAPACK_I.F90
+  
+$(OBJ)/eigenvectors_LAPACK.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  
+	 $(FC) $(FC_Flags) $(MATH_LIBS) $(SRC)/eigenvectors_LAPACK.F90
+  
+$(OBJ)/eimp.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/eimp.F90
+	 $(FC) $(FC_Flags) $(SRC)/eimp.F90
+  
+$(OBJ)/einvit_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/einvit_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/einvit_I.F90
+  
+$(OBJ)/eiscor_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/eiscor_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/eiscor_I.F90
+  
+$(OBJ)/elau_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/elau_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/elau_I.F90
+  
+$(OBJ)/elemts_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/elemts_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/elemts_C.F90
+  
+$(OBJ)/elenuc_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/elenuc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/elenuc_I.F90
+  
+$(OBJ)/elesn_I.o: \
+  $(SRC)/elesn_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/elesn_I.F90
+  
+$(OBJ)/en_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/en_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/en_I.F90
+  
+$(OBJ)/enpart.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/rotate_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/enpart.F90
+	 $(FC) $(FC_Flags) $(SRC)/enpart.F90
+  
+$(OBJ)/enpart_I.o: \
+  $(SRC)/enpart_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/enpart_I.F90
+  
+$(OBJ)/epsab_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/epsab_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/epsab_I.F90
+  
+$(OBJ)/epseta.o: \
+  $(SRC)/epseta.F90
+	 $(FC) $(FC_Flags) $(SRC)/epseta.F90
+  
+$(OBJ)/epseta_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/epseta_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/epseta_I.F90
+  
+$(OBJ)/epslon_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/epslon_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/epslon_I.F90
+  
+$(OBJ)/eqlrat_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/eqlrat_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/eqlrat_I.F90
+  
+$(OBJ)/esn_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/esn_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/esn_I.F90
+  
+$(OBJ)/esp.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/collid_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dex2_I.o  \
+  $(OBJ)/dist2_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/esp_C.o  \
+  $(OBJ)/espfit_I.o  \
+  $(OBJ)/fsub_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/genun_I.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/mult_I.o  \
+  $(OBJ)/naicas_I.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/ovlp_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/pdgrid_I.o  \
+  $(OBJ)/potcal_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/setup3_I.o  \
+  $(OBJ)/surfac_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/esp.F90
+	 $(FC) $(FC_Flags) $(SRC)/esp.F90
+  
+$(OBJ)/esp1_I.o: \
+  $(SRC)/esp1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/esp1_I.F90
+  
+$(OBJ)/esp_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/esp_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/esp_C.F90
+  
+$(OBJ)/esp_utilities.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/esp_utilities.F90
+	 $(FC) $(FC_Flags) $(SRC)/esp_utilities.F90
+  
+$(OBJ)/espfit_I.o: \
+  $(SRC)/espfit_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/espfit_I.F90
+  
+$(OBJ)/estpi1_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/estpi1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/estpi1_I.F90
+  
+$(OBJ)/etime_I.o: \
+  $(SRC)/etime_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/etime_I.F90
+  
+$(OBJ)/etrbk3_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/etrbk3_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/etrbk3_I.F90
+  
+$(OBJ)/etred3_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/etred3_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/etred3_I.F90
+  
+$(OBJ)/euler_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/euler_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/euler_C.F90
+  
+$(OBJ)/evvrsp_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/evvrsp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/evvrsp_I.F90
+  
+$(OBJ)/exchng.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/exchng.F90
+	 $(FC) $(FC_Flags) $(SRC)/exchng.F90
+  
+$(OBJ)/exchng_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/exchng_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/exchng_I.F90
+  
+$(OBJ)/fbx_I.o: \
+  $(SRC)/fbx_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fbx_I.F90
+  
+$(OBJ)/fcnpp_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fcnpp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fcnpp_I.F90
+  
+$(OBJ)/ffreq1_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ffreq1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ffreq1_I.F90
+  
+$(OBJ)/ffreq2_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ffreq2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ffreq2_I.F90
+  
+$(OBJ)/fhpatn_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fhpatn_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fhpatn_I.F90
+  
+$(OBJ)/fillij.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/fillij.F90
+	 $(FC) $(FC_Flags) $(SRC)/fillij.F90
+  
+$(OBJ)/findn1.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/findn1.F90
+	 $(FC) $(FC_Flags) $(SRC)/findn1.F90
+  
+$(OBJ)/flepo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dfpsav_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/linmin_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/prttim_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/supdot_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/flepo.F90
+	 $(FC) $(FC_Flags) $(SRC)/flepo.F90
+  
+$(OBJ)/flepo_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/flepo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/flepo_I.F90
+  
+$(OBJ)/fmat.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/chrge_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dipole_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/sympop_I.o  \
+  $(OBJ)/symr_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fmat.F90
+	 $(FC) $(FC_Flags) $(SRC)/fmat.F90
+  
+$(OBJ)/fock1.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fock1.F90
+	 $(FC) $(FC_Flags) $(SRC)/fock1.F90
+  
+$(OBJ)/fock1_for_MOZYME.o: \
+  $(SRC)/fock1_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/fock1_for_MOZYME.F90
+  
+$(OBJ)/fock1_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fock1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fock1_I.F90
+  
+$(OBJ)/fock2.o: \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/jab_I.o  \
+  $(OBJ)/kab_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fock2.F90
+	 $(FC) $(FC_Flags) $(SRC)/fock2.F90
+  
+$(OBJ)/fock2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fock2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fock2_I.F90
+  
+$(OBJ)/fock2z.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/fock2z.F90
+	 $(FC) $(FC_Flags) $(SRC)/fock2z.F90
+  
+$(OBJ)/fockd2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fockd2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fockd2_I.F90
+  
+$(OBJ)/force.o: \
+  $(OBJ)/axis_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/drc_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/frame_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/intfc_I.o  \
+  $(OBJ)/matou1_I.o  \
+  $(OBJ)/matout_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/symtrz_I.o  \
+  $(OBJ)/thermo_I.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(OBJ)/write_trajectory_I.o  \
+  $(OBJ)/xyzint_I.o  \
+  $(SRC)/force.F90
+	 $(FC) $(FC_Flags) $(SRC)/force.F90
+  
+$(OBJ)/force_I.o: \
+  $(SRC)/force_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/force_I.F90
+  
+$(OBJ)/fordd_I.o: \
+  $(SRC)/fordd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fordd_I.F90
+  
+$(OBJ)/formxy.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/formxy.F90
+	 $(FC) $(FC_Flags) $(SRC)/formxy.F90
+  
+$(OBJ)/formxy_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/formxy_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/formxy_I.F90
+  
+$(OBJ)/forsav.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/forsav.F90
+	 $(FC) $(FC_Flags) $(SRC)/forsav.F90
+  
+$(OBJ)/frame.o: \
+  $(OBJ)/axis_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/frame.F90
+	 $(FC) $(FC_Flags) $(SRC)/frame.F90
+  
+$(OBJ)/frame_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/frame_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/frame_I.F90
+  
+$(OBJ)/freda_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/freda_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/freda_I.F90
+  
+$(OBJ)/freqcy.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/frame_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symt_I.o  \
+  $(OBJ)/symtrz_I.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(SRC)/freqcy.F90
+	 $(FC) $(FC_Flags) $(SRC)/freqcy.F90
+  
+$(OBJ)/fsub_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/fsub_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/fsub_I.F90
+  
+$(OBJ)/funcon_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/funcon_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/funcon_C.F90
+  
+$(OBJ)/genun.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/genun.F90
+	 $(FC) $(FC_Flags) $(SRC)/genun.F90
+  
+$(OBJ)/genun_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/genun_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/genun_I.F90
+  
+$(OBJ)/genvec_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/genvec_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/genvec_I.F90
+  
+$(OBJ)/geochk.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/mod_atomradii.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/wrdkey_I.o  \
+  $(SRC)/geochk.F90
+	 $(FC) $(FC_Flags) $(SRC)/geochk.F90
+  
+$(OBJ)/geochk_bits_1.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/mod_atomradii.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/wrdkey_I.o  \
+  $(SRC)/geochk_bits_1.F90
+	 $(FC) $(FC_Flags) $(SRC)/geochk_bits_1.F90
+  
+$(OBJ)/geochk_bits_2.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/mod_atomradii.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/wrdkey_I.o  \
+  $(SRC)/geochk_bits_2.F90
+	 $(FC) $(FC_Flags) $(SRC)/geochk_bits_2.F90
+  
+$(OBJ)/geout.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/chrge_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/wrttxt_I.o  \
+  $(SRC)/geout.F90
+	 $(FC) $(FC_Flags) $(SRC)/geout.F90
+  
+$(OBJ)/geout_I.o: \
+  $(SRC)/geout_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/geout_I.F90
+  
+$(OBJ)/geoutg.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/xxx_I.o  \
+  $(OBJ)/xyzint_I.o  \
+  $(SRC)/geoutg.F90
+	 $(FC) $(FC_Flags) $(SRC)/geoutg.F90
+  
+$(OBJ)/geoutg_I.o: \
+  $(SRC)/geoutg_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/geoutg_I.F90
+  
+$(OBJ)/getdat.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(SRC)/getdat.F90
+	 $(FC) $(FC_Flags) $(SRC)/getdat.F90
+  
+$(OBJ)/GetDateStamp.o: \
+  $(SRC)/GetDateStamp.F90
+	 $(FC) $(FC_Flags) $(SRC)/GetDateStamp.F90
+  
+$(OBJ)/afmm_mod.o: \
+  $(SRC)/afmm_mod.F90
+	 $(FC) $(FC_Flags) $(SRC)/afmm_mod.F90
+  
+$(OBJ)/getgeg.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/getval_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/getgeg.F90
+	 $(FC) $(FC_Flags) $(SRC)/getgeg.F90
+  
+$(OBJ)/getgeg_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/getgeg_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/getgeg_I.F90
+  
+$(OBJ)/getgeo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/nuchar_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/upcase_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/xyzint_I.o  \
+  $(SRC)/getgeo.F90
+	 $(FC) $(FC_Flags) $(SRC)/getgeo.F90
+  
+$(OBJ)/getgeo_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/getgeo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/getgeo_I.F90
+  
+$(OBJ)/getpdb.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/getpdb.F90
+	 $(FC) $(FC_Flags) $(SRC)/getpdb.F90
+  
+$(OBJ)/getsym.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/getsym.F90
+	 $(FC) $(FC_Flags) $(SRC)/getsym.F90
+  
+$(OBJ)/getsym_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/getsym_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/getsym_I.F90
+  
+$(OBJ)/gettxt.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/upcase_I.o  \
+  $(SRC)/gettxt.F90
+	 $(FC) $(FC_Flags) $(SRC)/gettxt.F90
+  
+$(OBJ)/gettxt_I.o: \
+  $(SRC)/gettxt_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/gettxt_I.F90
+  
+$(OBJ)/getval.o: \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/getval.F90
+	 $(FC) $(FC_Flags) $(SRC)/getval.F90
+  
+$(OBJ)/getval_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/getval_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/getval_I.F90
+  
+$(OBJ)/gmetry.o: \
+  $(OBJ)/bangle_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/gmetry.F90
+	 $(FC) $(FC_Flags) $(SRC)/gmetry.F90
+  
+$(OBJ)/gmetry_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/gmetry_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/gmetry_I.F90
+  
+$(OBJ)/gover_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/gover_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/gover_I.F90
+  
+$(OBJ)/gpu_info.o: \
+  $(OBJ)/mod_gpu_info.o \
+  $(CSRC)/gpu_info.cu
+	 $(NVCC) $(NVCC_Flags) $(CSRC)/gpu_info.cu
+  
+$(OBJ)/greek.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/greek.F90
+	 $(FC) $(FC_Flags) $(SRC)/greek.F90
+  
+$(OBJ)/grid.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dfpsav_I.o  \
+  $(OBJ)/ef_I.o  \
+  $(OBJ)/flepo_I.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/grid.F90
+	 $(FC) $(FC_Flags) $(SRC)/grid.F90
+  
+$(OBJ)/grid_I.o: \
+  $(SRC)/grid_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/grid_I.F90
+  
+$(OBJ)/grids_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/grids_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/grids_I.F90
+  
+$(OBJ)/gstore_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/gstore_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/gstore_I.F90
+  
+$(OBJ)/h1elec.o: \
+  $(OBJ)/diat_I.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/h1elec.F90
+	 $(FC) $(FC_Flags) $(SRC)/h1elec.F90
+  
+$(OBJ)/h1elec_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/h1elec_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/h1elec_I.F90
+  
+$(OBJ)/haddon_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/haddon_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/haddon_I.F90
+  
+$(OBJ)/hbonds.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/hbonds.F90
+	 $(FC) $(FC_Flags) $(SRC)/hbonds.F90
+  
+$(OBJ)/hcore.o: \
+  $(OBJ)/addhcr_I.o  \
+  $(OBJ)/addnuc_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/h1elec_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/rotate_I.o  \
+  $(OBJ)/solrot_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(SRC)/hcore.F90
+	 $(FC) $(FC_Flags) $(SRC)/hcore.F90
+  
+$(OBJ)/hcore_for_MOZYME.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/hcore_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/hcore_for_MOZYME.F90
+  
+$(OBJ)/hcore_I.o: \
+  $(SRC)/hcore_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/hcore_I.F90
+  
+$(OBJ)/hcored_I.o: \
+  $(SRC)/hcored_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/hcored_I.F90
+  
+$(OBJ)/helect.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/helect.F90
+	 $(FC) $(FC_Flags) $(SRC)/helect.F90
+  
+$(OBJ)/helect_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/helect_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/helect_I.F90
+  
+$(OBJ)/helecz.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/helecz.F90
+	 $(FC) $(FC_Flags) $(SRC)/helecz.F90
+  
+$(OBJ)/hmuf_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/hmuf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/hmuf_I.F90
+  
+$(OBJ)/hplusf_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/hplusf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/hplusf_I.F90
+  
+$(OBJ)/hybrid.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/hybrid.F90
+	 $(FC) $(FC_Flags) $(SRC)/hybrid.F90
+  
+$(OBJ)/ijbo.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(SRC)/ijbo.F90
+	 $(FC) $(FC_Flags) $(SRC)/ijbo.F90
+  
+$(OBJ)/ijkl.o: \
+  $(OBJ)/ciint_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/partxy_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ijkl.F90
+	 $(FC) $(FC_Flags) $(SRC)/ijkl.F90
+  
+$(OBJ)/inid_I.o: \
+  $(SRC)/inid_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/inid_I.F90
+  
+$(OBJ)/inighd_I.o: \
+  $(SRC)/inighd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/inighd_I.F90
+  
+$(OBJ)/init_filenames.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/init_filenames.F90
+	 $(FC) $(FC_Flags) $(SRC)/init_filenames.F90
+  
+$(OBJ)/initsn_I.o: \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/initsn_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/initsn_I.F90
+  
+$(OBJ)/initsv_I.o: \
+  $(SRC)/initsv_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/initsv_I.F90
+  
+$(OBJ)/insymc_I.o: \
+  $(SRC)/insymc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/insymc_I.F90
+  
+$(OBJ)/interp.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/schmib_I.o  \
+  $(OBJ)/schmit_I.o  \
+  $(OBJ)/spline_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/interp.F90
+	 $(FC) $(FC_Flags) $(SRC)/interp.F90
+  
+$(OBJ)/interp_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/interp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/interp_I.F90
+  
+$(OBJ)/intfc.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/jcarin_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/intfc.F90
+	 $(FC) $(FC_Flags) $(SRC)/intfc.F90
+  
+$(OBJ)/intfc_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/intfc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/intfc_I.F90
+  
+$(OBJ)/ionout.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/ionout.F90
+	 $(FC) $(FC_Flags) $(SRC)/ionout.F90
+  
+$(OBJ)/ird_I.o: \
+  $(SRC)/ird_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ird_I.F90
+  
+$(OBJ)/isitsc.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/isitsc.F90
+	 $(FC) $(FC_Flags) $(SRC)/isitsc.F90
+  
+$(OBJ)/iten_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/iten_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/iten_I.F90
+  
+$(OBJ)/iter.o: \
+  $(OBJ)/capcor_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/chrge_I.o  \
+  $(OBJ)/cnvg_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/diag_for_GPU.o \
+  $(OBJ)/density_for_GPU.o \
+  $(OBJ)/density_cuda_i.o \
+  $(OBJ)/diag_I.o  \
+  $(OBJ)/eigenvectors_LAPACK.o \
+  $(OBJ)/fock2_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/helect_I.o  \
+  $(OBJ)/interp_I.o  \
+  $(OBJ)/iter_C.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/matout_I.o  \
+  $(OBJ)/meci_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/pulay_I.o  \
+  $(OBJ)/pulay_for_gpu_I.o \
+  $(OBJ)/pulay_for_gpu.o \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/swap_I.o  \
+  $(OBJ)/timer_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(OBJ)/writmo_I.o  \
+  $(SRC)/iter.F90
+	 $(FC) $(FC_Flags) $(SRC)/iter.F90
+  
+$(OBJ)/iter_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/iter_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/iter_C.F90
+  
+$(OBJ)/iter_for_MOZYME.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/iter_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/iter_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/iter_for_MOZYME.F90
+  
+$(OBJ)/iter_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/iter_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/iter_I.F90
+  
+$(OBJ)/jab.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/jab.F90
+	 $(FC) $(FC_Flags) $(SRC)/jab.F90
+  
+$(OBJ)/jab_for_MOZYME.o: \
+  $(SRC)/jab_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/jab_for_MOZYME.F90
+  
+$(OBJ)/jab_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/jab_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/jab_I.F90
+  
+$(OBJ)/jcarin.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symtry_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/jcarin.F90
+	 $(FC) $(FC_Flags) $(SRC)/jcarin.F90
+  
+$(OBJ)/jcarin_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/jcarin_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/jcarin_I.F90
+  
+$(OBJ)/jdate.o: \
+  $(SRC)/jdate.F90
+	 $(FC) $(FC_Flags) $(SRC)/jdate.F90
+  
+$(OBJ)/journal_references_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/journal_references_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/journal_references_C.F90
+  
+$(OBJ)/kab.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/kab.F90
+	 $(FC) $(FC_Flags) $(SRC)/kab.F90
+  
+$(OBJ)/kab_for_MOZYME.o: \
+  $(SRC)/kab_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/kab_for_MOZYME.F90
+  
+$(OBJ)/kab_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/kab_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/kab_I.F90
+  
+$(OBJ)/lbfgs.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/ddot_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(SRC)/lbfgs.F90
+	 $(FC) $(FC_Flags) $(SRC)/lbfgs.F90
+  
+$(OBJ)/lewis.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/lewis.F90
+	 $(FC) $(FC_Flags) $(SRC)/lewis.F90
+  
+$(OBJ)/ligand.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/ligand.F90
+	 $(FC) $(FC_Flags) $(SRC)/ligand.F90
+  
+$(OBJ)/linmin.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/exchng_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/linmin.F90
+	 $(FC) $(FC_Flags) $(SRC)/linmin.F90
+  
+$(OBJ)/linmin_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/linmin_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/linmin_I.F90
+  
+$(OBJ)/linpack.o: \
+  $(SRC)/linpack.F90
+	 $(FC) $(FC_Flags) $(SRC)/linpack.F90
+
+$(OBJ)/local.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/matout_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/resolv_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/local.F90
+	 $(FC) $(FC_Flags) $(SRC)/local.F90
+  
+$(OBJ)/local2.o: \
+  $(SRC)/local2.F90
+	 $(FC) $(FC_Flags) $(SRC)/local2.F90
+  
+$(OBJ)/locmin.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/exchng_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/locmin.F90
+	 $(FC) $(FC_Flags) $(SRC)/locmin.F90
+  
+$(OBJ)/locmin_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/locmin_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/locmin_I.F90
+  
+$(OBJ)/lsame_I.o: \
+  $(SRC)/lsame_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/lsame_I.F90
+  
+$(OBJ)/lyse.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/lyse.F90
+	 $(FC) $(FC_Flags) $(SRC)/lyse.F90
+  
+$(OBJ)/makeuf_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/makeuf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/makeuf_I.F90
+  
+$(OBJ)/makopr_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/makopr_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/makopr_I.F90
+  
+$(OBJ)/maksym.o: \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/maksym.F90
+	 $(FC) $(FC_Flags) $(SRC)/maksym.F90
+  
+$(OBJ)/maksym_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/maksym_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/maksym_I.F90
+  
+$(OBJ)/makvec.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/makvec.F90
+	 $(FC) $(FC_Flags) $(SRC)/makvec.F90
+  
+$(OBJ)/mamult.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mamult.F90
+	 $(FC) $(FC_Flags) $(SRC)/mamult.F90
+  
+$(OBJ)/mamult_cuda.o: \
+  $(CSRC)/mamult_cuda.cu
+	 $(NVCC) $(NVCC_Flags) $(CSRC)/mamult_cuda.cu
+
+$(OBJ)/mamult_cuda_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mamult_cuda_i.F90
+	 $(FC) $(FC_Flags) $(SRC)/mamult_cuda_i.F90
+  
+$(OBJ)/mamult_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mamult_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mamult_I.F90
+  
+$(OBJ)/maps_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/maps_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/maps_C.F90
+  
+$(OBJ)/mat33.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mat33.F90
+	 $(FC) $(FC_Flags) $(SRC)/mat33.F90
+  
+$(OBJ)/mat33_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mat33_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mat33_I.F90
+  
+$(OBJ)/matou1.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/matou1.F90
+	 $(FC) $(FC_Flags) $(SRC)/matou1.F90
+  
+$(OBJ)/matou1_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/matou1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/matou1_I.F90
+  
+$(OBJ)/matout.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/matout.F90
+	 $(FC) $(FC_Flags) $(SRC)/matout.F90
+  
+$(OBJ)/matout_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/matout_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/matout_I.F90
+  
+$(OBJ)/mbonds.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/mbonds.F90
+	 $(FC) $(FC_Flags) $(SRC)/mbonds.F90
+  
+$(OBJ)/me08a_I.o: \
+  $(SRC)/me08a_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/me08a_I.F90
+  
+$(OBJ)/meci.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/ciosci_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/diagi_I.o  \
+  $(OBJ)/dmecip_I.o  \
+  $(OBJ)/matou1_I.o  \
+  $(OBJ)/matout_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/mecih_I.o  \
+  $(OBJ)/mndod_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/perm_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/symtrz_I.o  \
+  $(OBJ)/upcase_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(SRC)/meci.F90
+	 $(FC) $(FC_Flags) $(SRC)/meci.F90
+  
+$(OBJ)/meci_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/meci_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/meci_C.F90
+  
+$(OBJ)/meci_I.o: \
+  $(SRC)/meci_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/meci_I.F90
+  
+$(OBJ)/mecid.o: \
+  $(OBJ)/diagi_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mecid.F90
+	 $(FC) $(FC_Flags) $(SRC)/mecid.F90
+  
+$(OBJ)/mecid_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mecid_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mecid_I.F90
+  
+$(OBJ)/mecih.o: \
+  $(OBJ)/aababc_I.o  \
+  $(OBJ)/aabacd_I.o  \
+  $(OBJ)/aabbcd_I.o  \
+  $(OBJ)/babbbc_I.o  \
+  $(OBJ)/babbcd_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mecih.F90
+	 $(FC) $(FC_Flags) $(SRC)/mecih.F90
+  
+$(OBJ)/mecih_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mecih_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mecih_I.F90
+  
+$(OBJ)/mecip.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mxm_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mecip.F90
+	 $(FC) $(FC_Flags) $(SRC)/mecip.F90
+  
+$(OBJ)/mecip_I.o: \
+  $(SRC)/mecip_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mecip_I.F90
+  
+$(OBJ)/mepchg_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mepchg_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mepchg_I.F90
+  
+$(OBJ)/mepmap_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mepmap_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mepmap_I.F90
+  
+$(OBJ)/meprot_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/meprot_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/meprot_I.F90
+  
+$(OBJ)/minv.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/minv.F90
+	 $(FC) $(FC_Flags) $(SRC)/minv.F90
+  
+$(OBJ)/minv_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/minv_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/minv_I.F90
+  
+$(OBJ)/mlmo.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/mlmo.F90
+	 $(FC) $(FC_Flags) $(SRC)/mlmo.F90
+  
+$(OBJ)/mndod.o: \
+  $(OBJ)/aijm_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/charg_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/ddpo_I.o  \
+  $(OBJ)/eiscor_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/inighd_I.o  \
+  $(OBJ)/mndod_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/poij_I.o  \
+  $(OBJ)/printp_I.o  \
+  $(OBJ)/reppd2_I.o  \
+  $(OBJ)/reppd_I.o  \
+  $(OBJ)/rijkl_I.o  \
+  $(OBJ)/rotmat_I.o  \
+  $(OBJ)/rsc_I.o  \
+  $(OBJ)/scprm_I.o  \
+  $(OBJ)/spcore_I.o  \
+  $(OBJ)/tx_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/w2mat_I.o  \
+  $(SRC)/mndod.F90
+	 $(FC) $(FC_Flags) $(SRC)/mndod.F90
+  
+$(OBJ)/mndod_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mndod_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/mndod_C.F90
+  
+$(OBJ)/mod_atomradii.o: \
+  $(SRC)/mod_atomradii.F90
+	 $(FC) $(FC_Flags) $(SRC)/mod_atomradii.F90
+  
+$(OBJ)/modchg.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/modchg.F90
+	 $(FC) $(FC_Flags) $(SRC)/modchg.F90
+  
+$(OBJ)/modgra.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/modgra.F90
+	 $(FC) $(FC_Flags) $(SRC)/modgra.F90
+  
+$(OBJ)/moldat.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/molmec_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/refer_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/symtrz_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(OBJ)/volume_I.o  \
+  $(SRC)/moldat.F90
+	 $(FC) $(FC_Flags) $(SRC)/moldat.F90
+  
+$(OBJ)/molkst_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/molkst_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/molkst_C.F90
+  
+$(OBJ)/molmec_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/molmec_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/molmec_C.F90
+  
+$(OBJ)/molsym_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/molsym_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/molsym_I.F90
+  
+$(OBJ)/molsymy.o: \
+  $(OBJ)/bangle_I.o  \
+  $(OBJ)/bldsym_I.o  \
+  $(OBJ)/cartab_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/chi_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/mult33_I.o  \
+  $(OBJ)/orient_I.o  \
+  $(OBJ)/plato_I.o  \
+  $(OBJ)/rotmol_I.o  \
+  $(OBJ)/symdec_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/symopr_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/molsymy.F90
+	 $(FC) $(FC_Flags) $(SRC)/molsymy.F90
+  
+$(OBJ)/molval.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/molval.F90
+	 $(FC) $(FC_Flags) $(SRC)/molval.F90
+  
+$(OBJ)/molval_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/molval_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/molval_I.F90
+  
+$(OBJ)/mopac.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/mopac.F90
+	 $(FC) $(FC_Flags) $(SRC)/mopac.F90
+  
+$(OBJ)/mopend.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/mopend.F90
+	 $(FC) $(FC_Flags) $(SRC)/mopend.F90
+  
+$(OBJ)/mopend_I.o: \
+  $(SRC)/mopend_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mopend_I.F90
+  
+$(OBJ)/MOZYME_C.o: \
+  $(SRC)/MOZYME_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/MOZYME_C.F90
+  
+$(OBJ)/mpcbds_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mpcbds_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mpcbds_I.F90
+  
+$(OBJ)/mpcpop_I.o: \
+  $(SRC)/mpcpop_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mpcpop_I.F90
+  
+$(OBJ)/mpcsyb.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mpcsyb.F90
+	 $(FC) $(FC_Flags) $(SRC)/mpcsyb.F90
+  
+$(OBJ)/mtxm.o: \
+  $(OBJ)/blas_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mtxm.F90
+	 $(FC) $(FC_Flags) $(SRC)/mtxm.F90
+  
+$(OBJ)/mtxm_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mtxm_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mtxm_I.F90
+  
+$(OBJ)/mtxmc.o: \
+  $(OBJ)/mxm_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mtxmc.F90
+	 $(FC) $(FC_Flags) $(SRC)/mtxmc.F90
+  
+$(OBJ)/mtxmc_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mtxmc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mtxmc_I.F90
+  
+$(OBJ)/mullik.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mult_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(SRC)/mullik.F90
+	 $(FC) $(FC_Flags) $(SRC)/mullik.F90
+  
+$(OBJ)/mullik_I.o: \
+  $(SRC)/mullik_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mullik_I.F90
+  
+$(OBJ)/mult.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mult.F90
+	 $(FC) $(FC_Flags) $(SRC)/mult.F90
+  
+$(OBJ)/mult33.o: \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mult33.F90
+	 $(FC) $(FC_Flags) $(SRC)/mult33.F90
+  
+$(OBJ)/mult33_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mult33_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mult33_I.F90
+  
+$(OBJ)/mult_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mult_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mult_I.F90
+  
+$(OBJ)/mxm.o: \
+  $(OBJ)/blas_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mxm.F90
+	 $(FC) $(FC_Flags) $(SRC)/mxm.F90
+  
+$(OBJ)/mxm_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mxm_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mxm_I.F90
+  
+$(OBJ)/mxmt.o: \
+  $(OBJ)/blas_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mxmt.F90
+	 $(FC) $(FC_Flags) $(SRC)/mxmt.F90
+  
+$(OBJ)/mxmt_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/mxmt_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mxmt_I.F90
+  
+$(OBJ)/myword.o: \
+  $(SRC)/myword.F90
+	 $(FC) $(FC_Flags) $(SRC)/myword.F90
+  
+$(OBJ)/myword_I.o: \
+  $(SRC)/myword_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/myword_I.F90
+  
+$(OBJ)/naican_I.o: \
+  $(SRC)/naican_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/naican_I.F90
+  
+$(OBJ)/naicas_I.o: \
+  $(SRC)/naicas_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/naicas_I.F90
+  
+$(OBJ)/names.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/names.F90
+	 $(FC) $(FC_Flags) $(SRC)/names.F90
+  
+$(OBJ)/new_esp.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/esp_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/new_esp.F90
+	 $(FC) $(FC_Flags) $(SRC)/new_esp.F90
+  
+$(OBJ)/newflg.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/newflg.F90
+	 $(FC) $(FC_Flags) $(SRC)/newflg.F90
+  
+$(OBJ)/ngamtg_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ngamtg_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ngamtg_I.F90
+  
+$(OBJ)/ngefis_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ngefis_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ngefis_I.F90
+  
+$(OBJ)/ngidri_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ngidri_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ngidri_I.F90
+  
+$(OBJ)/ngoke_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ngoke_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ngoke_I.F90
+  
+$(OBJ)/nllsn_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/nllsn_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/nllsn_I.F90
+  
+$(OBJ)/nllsq.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/locmin_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/parsav_I.o  \
+  $(OBJ)/prttim_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/nllsq.F90
+	 $(FC) $(FC_Flags) $(SRC)/nllsq.F90
+  
+$(OBJ)/nllsq_I.o: \
+  $(SRC)/nllsq_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/nllsq_I.F90
+  
+$(OBJ)/nonbet_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/nonbet_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/nonbet_I.F90
+  
+$(OBJ)/nonope_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/nonope_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/nonope_I.F90
+  
+$(OBJ)/nonor_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/nonor_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/nonor_I.F90
+  
+$(OBJ)/nuchar.o: \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/nuchar.F90
+	 $(FC) $(FC_Flags) $(SRC)/nuchar.F90
+  
+$(OBJ)/nuchar_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/nuchar_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/nuchar_I.F90
+  
+$(OBJ)/nxtmer.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(SRC)/nxtmer.F90
+	 $(FC) $(FC_Flags) $(SRC)/nxtmer.F90
+  
+$(OBJ)/openda_I.o: \
+  $(SRC)/openda_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/openda_I.F90
+  
+$(OBJ)/orient_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/orient_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/orient_I.F90
+  
+$(OBJ)/osinv.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/osinv.F90
+	 $(FC) $(FC_Flags) $(SRC)/osinv.F90
+  
+$(OBJ)/osinv_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/osinv_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/osinv_I.F90
+  
+$(OBJ)/outer1.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/outer1.F90
+	 $(FC) $(FC_Flags) $(SRC)/outer1.F90
+  
+$(OBJ)/outer2.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/outer2.F90
+	 $(FC) $(FC_Flags) $(SRC)/outer2.F90
+  
+$(OBJ)/overlaps_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/overlaps_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/overlaps_C.F90
+  
+$(OBJ)/ovlp_I.o: \
+  $(SRC)/ovlp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ovlp_I.F90
+  
+$(OBJ)/packp_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/packp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/packp_I.F90
+  
+$(OBJ)/parameters_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_C.F90
+  
+$(OBJ)/parameters_for_AM1_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_AM1_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_AM1_C.F90
+  
+$(OBJ)/parameters_for_mndo_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_mndo_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_mndo_C.F90
+  
+$(OBJ)/parameters_for_mndod_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_mndod_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_mndod_C.F90
+  
+$(OBJ)/parameters_for_PM3_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM3_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM3_C.F90
+  
+$(OBJ)/parameters_for_PM6_C.o: \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM6_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM6_C.F90
+           
+$(OBJ)/parameters_for_PM7_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM7_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM7_C.F90
+
+$(OBJ)/parameters_for_PM8_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM8_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM8_C.F90
+
+$(OBJ)/parameters_for_AM1_Sparkles_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_AM1_Sparkles_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_AM1_Sparkles_C.F90
+  
+$(OBJ)/parameters_for_PM3_Sparkles_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM3_Sparkles_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM3_Sparkles_C.F90
+ 
+$(OBJ)/parameters_for_PM6_Sparkles_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM6_Sparkles_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM6_Sparkles_C.F90
+
+$(OBJ)/parameters_for_PM7_Sparkles_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM7_Sparkles_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM7_Sparkles_C.F90
+
+$(OBJ)/parameters_for_RM1_Sparkles_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_RM1_Sparkles_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_RM1_Sparkles_C.F90
+
+$(OBJ)/parameters_for_PM7_TS_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_PM7_TS_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_PM7_TS_C.F90
+
+  
+$(OBJ)/parameters_for_RM1_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parameters_for_RM1_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/parameters_for_RM1_C.F90
+  
+$(OBJ)/parsav.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parsav.F90
+	 $(FC) $(FC_Flags) $(SRC)/parsav.F90
+  
+$(OBJ)/parsav_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/parsav_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/parsav_I.F90
+  
+$(OBJ)/partxy.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/partxy.F90
+	 $(FC) $(FC_Flags) $(SRC)/partxy.F90
+  
+$(OBJ)/partxy_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/partxy_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/partxy_I.F90
+  
+$(OBJ)/Password.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/Password.F90
+	 $(FC) $(FC_Flags) $(SRC)/Password.F90
+  
+$(OBJ)/pathk.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dfpsav_I.o  \
+  $(OBJ)/ef_I.o  \
+  $(OBJ)/flepo_I.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/wrttxt_I.o  \
+  $(SRC)/pathk.F90
+	 $(FC) $(FC_Flags) $(SRC)/pathk.F90
+  
+$(OBJ)/pathk_I.o: \
+  $(SRC)/pathk_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pathk_I.F90
+  
+$(OBJ)/paths.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dfpsav_I.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/ef_I.o  \
+  $(OBJ)/flepo_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/writmo_I.o  \
+  $(SRC)/paths.F90
+	 $(FC) $(FC_Flags) $(SRC)/paths.F90
+  
+$(OBJ)/paths_I.o: \
+  $(SRC)/paths_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/paths_I.F90
+  
+$(OBJ)/pdbout.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/pdbout.F90
+	 $(FC) $(FC_Flags) $(SRC)/pdbout.F90
+  
+$(OBJ)/pdgrid_I.o: \
+  $(SRC)/pdgrid_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pdgrid_I.F90
+  
+$(OBJ)/perm.o: \
+  $(OBJ)/meci_C.o  \
+  $(SRC)/perm.F90
+	 $(FC) $(FC_Flags) $(SRC)/perm.F90
+  
+$(OBJ)/perm_I.o: \
+  $(OBJ)/meci_C.o  \
+  $(SRC)/perm_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/perm_I.F90
+  
+$(OBJ)/picopt.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(SRC)/picopt.F90
+	 $(FC) $(FC_Flags) $(SRC)/picopt.F90
+  
+$(OBJ)/pinout.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/pinout.F90
+	 $(FC) $(FC_Flags) $(SRC)/pinout.F90
+  
+$(OBJ)/plato_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/plato_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/plato_I.F90
+  
+$(OBJ)/pmep.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/collis_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/drepp2_I.o  \
+  $(OBJ)/drotat_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/genvec_I.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/grids_I.o  \
+  $(OBJ)/mepchg_I.o  \
+  $(OBJ)/mepmap_I.o  \
+  $(OBJ)/meprot_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/osinv_I.o  \
+  $(OBJ)/packp_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/pmepco_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/rotate_C.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/surfa_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/pmep.F90
+	 $(FC) $(FC_Flags) $(SRC)/pmep.F90
+  
+$(OBJ)/pmep1_I.o: \
+  $(SRC)/pmep1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pmep1_I.F90
+  
+$(OBJ)/pmep_I.o: \
+  $(SRC)/pmep_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pmep_I.F90
+  
+$(OBJ)/pmepco_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/pmepco_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pmepco_I.F90
+  
+$(OBJ)/poij_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/poij_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/poij_I.F90
+  
+$(OBJ)/pol_vol_I.o: \
+  $(SRC)/pol_vol_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pol_vol_I.F90
+  
+$(OBJ)/polar.o: \
+  $(OBJ)/alphaf_I.o  \
+  $(OBJ)/aval_I.o  \
+  $(OBJ)/axis_I.o  \
+  $(OBJ)/bdenin_I.o  \
+  $(OBJ)/bdenup_I.o  \
+  $(OBJ)/beopor_I.o  \
+  $(OBJ)/betaf_I.o  \
+  $(OBJ)/betal1_I.o  \
+  $(OBJ)/betall_I.o  \
+  $(OBJ)/betcom_I.o  \
+  $(OBJ)/bmakuf_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/copym_I.o  \
+  $(OBJ)/darea1_I.o  \
+  $(OBJ)/daread_I.o  \
+  $(OBJ)/dawrit_I.o  \
+  $(OBJ)/dawrt1_I.o  \
+  $(OBJ)/densf_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/epsab_I.o  \
+  $(OBJ)/ffreq1_I.o  \
+  $(OBJ)/ffreq2_I.o  \
+  $(OBJ)/fhpatn_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/hmuf_I.o  \
+  $(OBJ)/hplusf_I.o  \
+  $(OBJ)/makeuf_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/ngamtg_I.o  \
+  $(OBJ)/ngefis_I.o  \
+  $(OBJ)/ngidri_I.o  \
+  $(OBJ)/ngoke_I.o  \
+  $(OBJ)/nonbet_I.o  \
+  $(OBJ)/nonope_I.o  \
+  $(OBJ)/nonor_I.o  \
+  $(OBJ)/openda_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/pol_vol_I.o  \
+  $(OBJ)/polar_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/tf_I.o  \
+  $(OBJ)/transf_I.o  \
+  $(OBJ)/trsub_I.o  \
+  $(OBJ)/trudgu_I.o  \
+  $(OBJ)/trugdu_I.o  \
+  $(OBJ)/trugud_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/wrdkey_I.o  \
+  $(OBJ)/zerom_I.o  \
+  $(SRC)/polar.F90
+	 $(FC) $(FC_Flags) $(SRC)/polar.F90
+  
+$(OBJ)/polar_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/polar_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/polar_C.F90
+  
+$(OBJ)/polar_I.o: \
+  $(SRC)/polar_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/polar_I.F90
+  
+$(OBJ)/potcal_I.o: \
+  $(SRC)/potcal_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/potcal_I.F90
+  
+$(OBJ)/powsav_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/powsav_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/powsav_I.F90
+  
+$(OBJ)/powsq.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/prttim_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/search_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(SRC)/powsq.F90
+	 $(FC) $(FC_Flags) $(SRC)/powsq.F90
+  
+$(OBJ)/powsq_I.o: \
+  $(SRC)/powsq_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/powsq_I.F90
+  
+$(OBJ)/printp_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/printp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/printp_I.F90
+  
+$(OBJ)/prtdrc.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/chrge_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/drcout_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/quadr_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/xyzint_I.o  \
+  $(SRC)/prtdrc.F90
+	 $(FC) $(FC_Flags) $(SRC)/prtdrc.F90
+  
+$(OBJ)/prtdrc_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/prtdrc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/prtdrc_I.F90
+  
+$(OBJ)/prtgra.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/prtgra.F90
+	 $(FC) $(FC_Flags) $(SRC)/prtgra.F90
+  
+$(OBJ)/prthco_I.o: \
+  $(SRC)/prthco_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/prthco_I.F90
+  
+$(OBJ)/prthes_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/prthes_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/prthes_I.F90
+  
+$(OBJ)/prtlmo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/prtlmo.F90
+	 $(FC) $(FC_Flags) $(SRC)/prtlmo.F90
+  
+$(OBJ)/prtpar_I.o: \
+  $(SRC)/prtpar_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/prtpar_I.F90
+  
+$(OBJ)/prtpka.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/prtpka.F90
+	 $(FC) $(FC_Flags) $(SRC)/prtpka.F90
+  
+$(OBJ)/prttim.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/prttim.F90
+	 $(FC) $(FC_Flags) $(SRC)/prttim.F90
+  
+$(OBJ)/prttim_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/prttim_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/prttim_I.F90
+  
+$(OBJ)/pulay.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/mamult_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/osinv_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/pulay.F90
+	 $(FC) $(FC_Flags) $(SRC)/pulay.F90
+
+$(OBJ)/pulay_for_gpu.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/mamult_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/osinv_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/mamult_cuda.o \
+  $(OBJ)/mamult_cuda_I.o \
+  $(OBJ)/mult_symm_ab.o \
+  $(SRC)/pulay_for_gpu.F90
+	 $(FC) $(FC_Flags) $(SRC)/pulay_for_gpu.F90
+  
+$(OBJ)/pulay_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/pulay_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pulay_I.F90
+
+$(OBJ)/pulay_for_gpu_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/pulay_for_gpu_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/pulay_for_gpu_I.F90
+
+$(OBJ)/mult_symm_ab.o: \
+  $(OBJ)/mult_symm_ab_I.o  \
+  $(SRC)/mult_symm_AB.F90
+	 $(FC) $(FC_Flags) $(SRC)/mult_symm_AB.F90
+
+$(OBJ)/mult_symm_ab_I.o: \
+  $(SRC)/mult_symm_AB_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/mult_symm_AB_I.F90
+  
+$(OBJ)/quadr.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/quadr.F90
+	 $(FC) $(FC_Flags) $(SRC)/quadr.F90
+  
+$(OBJ)/quadr_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/quadr_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/quadr_I.F90
+  
+$(OBJ)/react1.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/dot_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/getgeo_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/writmo_I.o  \
+  $(SRC)/react1.F90
+	 $(FC) $(FC_Flags) $(SRC)/react1.F90
+  
+$(OBJ)/react1_I.o: \
+  $(SRC)/react1_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/react1_I.F90
+  
+$(OBJ)/reada.o: \
+  $(OBJ)/digit_I.o  \
+  $(SRC)/reada.F90
+	 $(FC) $(FC_Flags) $(SRC)/reada.F90
+  
+$(OBJ)/reada_I.o: \
+  $(SRC)/reada_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/reada_I.F90
+  
+$(OBJ)/geo_ref.o: \
+  $(SRC)/geo_ref.F90
+	 $(FC) $(FC_Flags) $(SRC)/geo_ref.F90
+  
+$(OBJ)/readmo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/getgeg_I.o  \
+  $(OBJ)/getgeo_I.o  \
+  $(OBJ)/getsym_I.o  \
+  $(OBJ)/gettxt_I.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/maksym_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/nuchar_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/symtry_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/wrtkey_I.o  \
+  $(OBJ)/wrttxt_I.o  \
+  $(SRC)/readmo.F90
+	 $(FC) $(FC_Flags) -fpp -DBITS64 $(SRC)/readmo.F90
+  
+$(OBJ)/readmo_I.o: \
+  $(SRC)/readmo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/readmo_I.F90
+  
+$(OBJ)/redatm_I.o: \
+  $(SRC)/redatm_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/redatm_I.F90
+  
+$(OBJ)/refer.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/journal_references_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/parameters_for_PM6_Sparkles_C.o \
+  $(OBJ)/parameters_for_AM1_Sparkles_C.o \
+  $(OBJ)/parameters_for_PM3_Sparkles_C.o \
+  $(SRC)/refer.F90
+	 $(FC) $(FC_Flags) $(SRC)/refer.F90
+  
+$(OBJ)/refer_I.o: \
+  $(SRC)/refer_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/refer_I.F90
+  
+$(OBJ)/refkey_C.o: \
+  $(SRC)/refkey_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/refkey_C.F90
+  
+$(OBJ)/reorth.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/reorth.F90
+	 $(FC) $(FC_Flags) $(SRC)/reorth.F90
+  
+$(OBJ)/repp_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/repp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/repp_I.F90
+  
+$(OBJ)/reppd2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/reppd2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/reppd2_I.F90
+  
+$(OBJ)/reppd_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/reppd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/reppd_I.F90
+  
+$(OBJ)/reseq.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/reseq.F90
+	 $(FC) $(FC_Flags) $(SRC)/reseq.F90
+  
+$(OBJ)/resolv.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/resolv.F90
+	 $(FC) $(FC_Flags) $(SRC)/resolv.F90
+  
+$(OBJ)/resolv_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/resolv_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/resolv_I.F90
+  
+$(OBJ)/rijkl_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rijkl_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/rijkl_I.F90
+  
+$(OBJ)/rotat_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotat_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotat_I.F90
+  
+$(OBJ)/rotatd_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotatd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotatd_I.F90
+  
+$(OBJ)/rotate.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotate.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotate.F90
+  
+$(OBJ)/rotate_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotate_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotate_C.F90
+  
+$(OBJ)/rotate_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotate_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotate_I.F90
+  
+$(OBJ)/rotlmo.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/rotlmo.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotlmo.F90
+  
+$(OBJ)/rotmat_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotmat_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotmat_I.F90
+  
+$(OBJ)/rotmol.o: \
+  $(OBJ)/symopr_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotmol.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotmol.F90
+  
+$(OBJ)/rotmol_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rotmol_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/rotmol_I.F90
+  
+$(OBJ)/rsc_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rsc_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/rsc_I.F90
+  
+$(OBJ)/rsp.o: \
+  $(OBJ)/dasum_I.o  \
+  $(OBJ)/daxpy_I.o  \
+  $(OBJ)/ddot_I.o  \
+  $(OBJ)/dnrm2_I.o  \
+  $(OBJ)/blas_I.o  \
+  $(OBJ)/einvit_I.o  \
+  $(OBJ)/elau_I.o  \
+  $(OBJ)/epslon_I.o  \
+  $(OBJ)/eqlrat_I.o  \
+  $(OBJ)/estpi1_I.o  \
+  $(OBJ)/etrbk3_I.o  \
+  $(OBJ)/etred3_I.o  \
+  $(OBJ)/evvrsp_I.o  \
+  $(OBJ)/freda_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/rsp.F90
+	 $(FC) $(FC_Flags) $(SRC)/rsp.F90
+  
+#$(OBJ)/rsp_I.o: \
+#  $(OBJ)/vastkind.o  \
+#  rsp_I.F90
+#	 $(FC) $(FC_Flags) $(SRC)/rsp_I.F90
+  
+$(OBJ)/run_mopac.o: \
+  $(OBJ)/calpar_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/datin_I.o  \
+  $(OBJ)/drc_I.o  \
+  $(OBJ)/ef_I.o  \
+  $(OBJ)/fbx_I.o  \
+  $(OBJ)/flepo_I.o  \
+  $(OBJ)/force_I.o  \
+  $(OBJ)/fordd_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/geoutg_I.o  \
+  $(OBJ)/gpu_info.o \
+  $(OBJ)/grid_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/nllsq_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/pathk_I.o  \
+  $(OBJ)/paths_I.o  \
+  $(OBJ)/pmep_I.o  \
+  $(OBJ)/polar_I.o  \
+  $(OBJ)/powsq_I.o  \
+  $(OBJ)/react1_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/writmo_I.o  \
+  $(OBJ)/wrttxt_I.o  \
+  $(OBJ)/parameters_for_PM7_C.o \
+  $(OBJ)/parameters_for_PM7_Sparkles_C.o \
+  $(SRC)/run_mopac.F90
+	 $(FC) $(FC_Flags) $(SRC)/run_mopac.F90
+  
+$(OBJ)/scfcri.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/scfcri.F90
+	 $(FC) $(FC_Flags) $(SRC)/scfcri.F90
+  
+$(OBJ)/schmib.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/schmib.F90
+	 $(FC) $(FC_Flags) $(SRC)/schmib.F90
+  
+$(OBJ)/schmib_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/schmib_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/schmib_I.F90
+  
+$(OBJ)/schmit.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/schmit.F90
+	 $(FC) $(FC_Flags) $(SRC)/schmit.F90
+  
+$(OBJ)/schmit_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/schmit_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/schmit_I.F90
+  
+$(OBJ)/scprm_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/scprm_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/scprm_I.F90
+  
+$(OBJ)/search_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/search_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/search_I.F90
+  
+$(OBJ)/second.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/geout_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/second.F90
+	 $(FC) $(FC_Flags) $(SRC)/second.F90
+  
+$(OBJ)/second_I.o: \
+  $(SRC)/second_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/second_I.F90
+  
+$(OBJ)/selmos.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/selmos.F90
+	 $(FC) $(FC_Flags) $(SRC)/selmos.F90
+  
+$(OBJ)/set.o: \
+  $(OBJ)/aintgs_I.o  \
+  $(OBJ)/bintgs_I.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/set.F90
+	 $(FC) $(FC_Flags) $(SRC)/set.F90
+  
+$(OBJ)/set_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/set_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/set_I.F90
+  
+$(OBJ)/set_up_dentate.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(SRC)/set_up_dentate.F90
+	 $(FC) $(FC_Flags) $(SRC)/set_up_dentate.F90
+  
+$(OBJ)/set_up_MOZYME_arrays.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/iter_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/set_up_MOZYME_arrays.F90
+	 $(FC) $(FC_Flags) $(SRC)/set_up_MOZYME_arrays.F90
+  
+$(OBJ)/set_up_RAPID.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/set_up_RAPID.F90
+	 $(FC) $(FC_Flags) $(SRC)/set_up_RAPID.F90
+  
+$(OBJ)/setup3_I.o: \
+  $(SRC)/setup3_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/setup3_I.F90
+  
+$(OBJ)/setup_mopac_arrays.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/ef_C.o  \
+  $(OBJ)/esp_C.o  \
+  $(OBJ)/iter_C.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(SRC)/setup_mopac_arrays.F90
+	 $(FC) $(FC_Flags) $(SRC)/setup_mopac_arrays.F90
+  
+$(OBJ)/setupg.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/overlaps_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/setupg.F90
+	 $(FC) $(FC_Flags) $(SRC)/setupg.F90
+  
+$(OBJ)/setupk.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/setupk.F90
+	 $(FC) $(FC_Flags) $(SRC)/setupk.F90
+  
+$(OBJ)/solrot.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/rotate_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/solrot.F90
+	 $(FC) $(FC_Flags) $(SRC)/solrot.F90
+  
+$(OBJ)/solrot_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/solrot_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/solrot_I.F90
+  
+$(OBJ)/sort.o: \
+  $(SRC)/sort.F90
+	 $(FC) $(FC_Flags) $(SRC)/sort.F90
+  
+$(OBJ)/sort_I.o: \
+  $(SRC)/sort_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/sort_I.F90
+  
+$(OBJ)/sp_two_electron.o: \
+  $(OBJ)/mndod_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/rsc_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/sp_two_electron.F90
+	 $(FC) $(FC_Flags) $(SRC)/sp_two_electron.F90
+  
+$(OBJ)/spcore_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/spcore_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/spcore_I.F90
+  
+$(OBJ)/spline_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/spline_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/spline_I.F90
+  
+$(OBJ)/ss_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/ss_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/ss_I.F90
+  
+$(OBJ)/static_polarizability.o: \
+  $(OBJ)/axis_I.o  \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/chrge_I.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/compfg_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/gmetry_I.o  \
+  $(OBJ)/matout_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/pol_vol_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/vecprt_I.o  \
+  $(SRC)/static_polarizability.F90
+	 $(FC) $(FC_Flags) $(SRC)/static_polarizability.F90
+  
+$(OBJ)/suma2_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/suma2_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/suma2_I.F90
+  
+$(OBJ)/supdot.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/supdot.F90
+	 $(FC) $(FC_Flags) $(SRC)/supdot.F90
+  
+$(OBJ)/supdot_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/supdot_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/supdot_I.F90
+  
+$(OBJ)/superd.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/superd.F90
+	 $(FC) $(FC_Flags) $(SRC)/superd.F90
+  
+$(OBJ)/superd_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/superd_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/superd_I.F90
+  
+$(OBJ)/surfa_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/surfa_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/surfa_I.F90
+  
+$(OBJ)/surfac_I.o: \
+  $(SRC)/surfac_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/surfac_I.F90
+  
+$(OBJ)/swap.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/iter_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/swap.F90
+	 $(FC) $(FC_Flags) $(SRC)/swap.F90
+  
+$(OBJ)/swap_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/swap_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/swap_I.F90
+  
+$(OBJ)/switch.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/conref_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/parameters_for_AM1_C.o  \
+  $(OBJ)/parameters_for_mndo_C.o  \
+  $(OBJ)/parameters_for_mndod_C.o  \
+  $(OBJ)/parameters_for_PM3_C.o  \
+  $(OBJ)/parameters_for_PM6_C.o  \
+  $(OBJ)/parameters_for_PM7_C.o  \
+  $(OBJ)/parameters_for_PM8_C.o  \
+  $(OBJ)/parameters_for_RM1_C.o  \
+  $(OBJ)/parameters_for_PM7_TS_C.o \
+  $(OBJ)/parameters_for_RM1_Sparkles_C.o  \
+  $(OBJ)/parameters_for_PM7_Sparkles_C.o  \
+  $(SRC)/switch.F90
+	 $(FC) $(FC_Flags) $(SRC)/switch.F90
+  
+$(OBJ)/symdec_I.o: \
+  $(SRC)/symdec_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symdec_I.F90
+  
+$(OBJ)/symh.o: \
+  $(OBJ)/mat33_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symh.F90
+	 $(FC) $(FC_Flags) $(SRC)/symh.F90
+  
+$(OBJ)/symh_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symh_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symh_I.F90
+  
+$(OBJ)/symmetry_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symmetry_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/symmetry_C.F90
+  
+$(OBJ)/symoir.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/charmo_I.o  \
+  $(OBJ)/charst_I.o  \
+  $(OBJ)/charvi_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symoir.F90
+	 $(FC) $(FC_Flags) $(SRC)/symoir.F90
+  
+$(OBJ)/symoir_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symoir_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symoir_I.F90
+  
+$(OBJ)/symopr.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symopr.F90
+	 $(FC) $(FC_Flags) $(SRC)/symopr.F90
+  
+$(OBJ)/symopr_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symopr_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symopr_I.F90
+  
+$(OBJ)/symp_I.o: \
+  $(SRC)/symp_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symp_I.F90
+  
+$(OBJ)/sympop.o: \
+  $(OBJ)/symh_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/sympop.F90
+	 $(FC) $(FC_Flags) $(SRC)/sympop.F90
+  
+$(OBJ)/sympop_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/sympop_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/sympop_I.F90
+  
+$(OBJ)/symr.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/symp_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symr.F90
+	 $(FC) $(FC_Flags) $(SRC)/symr.F90
+  
+$(OBJ)/symr_I.o: \
+  $(SRC)/symr_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symr_I.F90
+  
+$(OBJ)/symt.o: \
+  $(OBJ)/mat33_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symt.F90
+	 $(FC) $(FC_Flags) $(SRC)/symt.F90
+  
+$(OBJ)/symt_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symt_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symt_I.F90
+  
+$(OBJ)/symtry.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/haddon_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/mopend_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symtry.F90
+	 $(FC) $(FC_Flags) $(SRC)/symtry.F90
+  
+$(OBJ)/symtry_I.o: \
+  $(SRC)/symtry_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symtry_I.F90
+  
+$(OBJ)/symtrz.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/makopr_I.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/molsym_I.o  \
+  $(OBJ)/mult33_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symtrz.F90
+	 $(FC) $(FC_Flags) $(SRC)/symtrz.F90
+  
+$(OBJ)/symtrz_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/symtrz_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/symtrz_I.F90
+  
+$(OBJ)/tf_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/tf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/tf_I.F90
+  
+$(OBJ)/thermo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/thermo.F90
+	 $(FC) $(FC_Flags) $(SRC)/thermo.F90
+  
+$(OBJ)/thermo_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/thermo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/thermo_I.F90
+  
+$(OBJ)/tidy.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/tidy.F90
+	 $(FC) $(FC_Flags) $(SRC)/tidy.F90
+  
+$(OBJ)/time_I.o: \
+  $(SRC)/time_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/time_I.F90
+  
+$(OBJ)/timer.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/timer.F90
+	 $(FC) $(FC_Flags) $(SRC)/timer.F90
+  
+$(OBJ)/timer_I.o: \
+  $(SRC)/timer_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/timer_I.F90
+  
+$(OBJ)/timout.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/timout.F90
+	 $(FC) $(FC_Flags) $(SRC)/timout.F90
+  
+#$(OBJ)/timout_I.o: \
+#  $(OBJ)/vastkind.o  \
+#  timout_I.F90
+#	 $(FC) $(FC_Flags) $(SRC)/timout_I.F90
+  
+$(OBJ)/to_screen.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/to_screen_C.o  \
+  $(SRC)/to_screen.F90
+	 $(FC) $(FC_Flags) $(SRC)/to_screen.F90
+  
+$(OBJ)/to_screen_C.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/to_screen_C.F90
+	 $(FC) $(FC_Flags) $(SRC)/to_screen_C.F90
+  
+$(OBJ)/transf_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/transf_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/transf_I.F90
+  
+$(OBJ)/trsub_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/trsub_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/trsub_I.F90
+  
+$(OBJ)/trudgu_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/trudgu_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/trudgu_I.F90
+  
+$(OBJ)/trugdu_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/trugdu_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/trugdu_I.F90
+  
+$(OBJ)/trugud_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/trugud_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/trugud_I.F90
+  
+$(OBJ)/tx_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/tx_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/tx_I.F90
+  
+$(OBJ)/txtype.o: \
+  $(OBJ)/Common_arrays_C.o  \
+  $(SRC)/txtype.F90
+	 $(FC) $(FC_Flags) $(SRC)/txtype.F90
+  
+$(OBJ)/upcase.o: \
+  $(SRC)/upcase.F90
+	 $(FC) $(FC_Flags) $(SRC)/upcase.F90
+  
+$(OBJ)/upcase_I.o: \
+  $(SRC)/upcase_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/upcase_I.F90
+  
+$(OBJ)/update.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/update.F90
+	 $(FC) $(FC_Flags) $(SRC)/update.F90
+  
+$(OBJ)/update_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/update_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/update_I.F90
+  
+$(OBJ)/values.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(SRC)/values.F90
+	 $(FC) $(FC_Flags) $(SRC)/values.F90
+  
+$(OBJ)/vastkind.o: \
+  $(SRC)/vastkind.F90
+	 $(FC) $(FC_Flags) $(SRC)/vastkind.F90
+  
+$(OBJ)/vecprt.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/vecprt.F90
+	 $(FC) $(FC_Flags) $(SRC)/vecprt.F90
+  
+$(OBJ)/vecprt_for_MOZYME.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/vecprt_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/vecprt_for_MOZYME.F90
+  
+$(OBJ)/vecprt_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/vecprt_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/vecprt_I.F90
+  
+$(OBJ)/volume.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/volume.F90
+	 $(FC) $(FC_Flags) $(SRC)/volume.F90
+  
+$(OBJ)/volume_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/volume_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/volume_I.F90
+  
+$(OBJ)/w2mat_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/w2mat_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/w2mat_I.F90
+  
+$(OBJ)/worder_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/worder_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/worder_I.F90
+  
+$(OBJ)/wrdkey_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/wrdkey_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/wrdkey_I.F90
+  
+$(OBJ)/write_trajectory.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/write_trajectory.F90
+	 $(FC) $(FC_Flags) $(SRC)/write_trajectory.F90
+  
+$(OBJ)/write_trajectory_I.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/write_trajectory_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/write_trajectory_I.F90
+  
+$(OBJ)/writmo.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/conref_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/dipole_I.o  \
+  $(OBJ)/elemts_C.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/geoutg_I.o  \
+  $(OBJ)/maps_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/meci_I.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/reada_I.o  \
+  $(OBJ)/second_I.o  \
+  $(OBJ)/symmetry_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(OBJ)/volume_I.o  \
+  $(SRC)/writmo.F90
+	 $(FC) $(FC_Flags) $(SRC)/writmo.F90
+  
+$(OBJ)/writmo_I.o: \
+  $(SRC)/writmo_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/writmo_I.F90
+  
+$(OBJ)/wrtkey.o: \
+  $(OBJ)/chanel_C.o  \
+  $(OBJ)/conref_C.o  \
+  $(OBJ)/cosmo_C.o  \
+  $(OBJ)/meci_C.o  \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/myword_I.o  \
+  $(OBJ)/reada_I.o  \
+  $(SRC)/wrtkey.F90
+	 $(FC) $(FC_Flags) $(SRC)/wrtkey.F90
+  
+$(OBJ)/wrtkey_I.o: \
+  $(SRC)/wrtkey_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/wrtkey_I.F90
+  
+$(OBJ)/wrttxt.o: \
+  $(OBJ)/molkst_C.o  \
+  $(SRC)/wrttxt.F90
+	 $(FC) $(FC_Flags) $(SRC)/wrttxt.F90
+  
+$(OBJ)/wrttxt_I.o: \
+  $(SRC)/wrttxt_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/wrttxt_I.F90
+  
+$(OBJ)/wstore_I.o: \
+  $(SRC)/wstore_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/wstore_I.F90
+  
+$(OBJ)/wwstep_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/wwstep_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/wwstep_I.F90
+  
+$(OBJ)/xerbla_I.o: \
+  $(SRC)/xerbla_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/xerbla_I.F90
+  
+$(OBJ)/xxx.o: \
+  $(SRC)/xxx.F90
+	 $(FC) $(FC_Flags) $(SRC)/xxx.F90
+  
+$(OBJ)/xxx_I.o: \
+  $(SRC)/xxx_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/xxx_I.F90
+  
+$(OBJ)/xyzcry.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/xyzcry.F90
+	 $(FC) $(FC_Flags) $(SRC)/xyzcry.F90
+  
+$(OBJ)/xyzcry_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/xyzcry_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/xyzcry_I.F90
+  
+$(OBJ)/xyzint.o: \
+  $(OBJ)/bangle_I.o  \
+  $(OBJ)/dihed_I.o  \
+  $(OBJ)/funcon_C.o  \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/xyzint.F90
+	 $(FC) $(FC_Flags) $(SRC)/xyzint.F90
+  
+$(OBJ)/xyzint_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/xyzint_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/xyzint_I.F90
+  
+$(OBJ)/zerom_I.o: \
+  $(OBJ)/vastkind.o  \
+  $(SRC)/zerom_I.F90
+	 $(FC) $(FC_Flags) $(SRC)/zerom_I.F90
+     
+$(OBJ)/dfport.o: \
+  $(SRC)/dfport.F90
+	 $(FC) $(FC_Flags) $(SRC)/dfport.F90
+
+$(OBJ)/add_hydrogen_atoms.o: \
+  $(OBJ)/wrt_diffs.o \
+  $(SRC)/add_hydrogen_atoms.F90
+	 $(FC) $(FC_Flags) $(SRC)/add_hydrogen_atoms.F90
+
+$(OBJ)/wrt_diffs.o: \
+  $(SRC)/wrt_diffs.F90
+	 $(FC) $(FC_Flags) $(SRC)/wrt_diffs.F90
+
+$(OBJ)/dftd3.o: \
+  $(OBJ)/dftd3_bits.o \
+  $(SRC)/dftd3.F90
+	 $(FC) $(FC_Flags) $(SRC)/dftd3.F90
+
+$(OBJ)/dftd3_bits.o: \
+  $(SRC)/dftd3_bits.F90
+	 $(FC) $(FC_Flags) $(SRC)/dftd3_bits.F90
+
+$(OBJ)/copyc6.o: \
+  $(SRC)/copyc6.F90
+	 $(FC) $(FC_Flags) $(SRC)/copyc6.F90
+
+$(OBJ)/post_scf_corrections.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(SRC)/post_scf_corrections.F90
+	 $(FC) $(FC_Flags) $(SRC)/post_scf_corrections.F90
+
+
+$(OBJ)/local_for_MOZYME.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/MOZYME_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(SRC)/local_for_MOZYME.F90
+	 $(FC) $(FC_Flags) $(SRC)/local_for_MOZYME.F90  
+
+$(OBJ)/H_bond_correction_bits.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/to_screen.o \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(SRC)/H_bond_correction_bits.F90
+	 $(FORTRAN_COMPILER)  $(SRC)/H_bond_correction_bits.F90
+
+$(OBJ)/H_bond_correction_PM6_DH_type.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(MOPAC_SRC)/H_bond_correction_PM6_DH_type.F90
+	 $(FORTRAN_COMPILER)  $(MOPAC_SRC)/H_bond_correction_PM6_DH_type.F90
+
+$(OBJ)/H_bond_correction_PM6_DH_Dispersion.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(MOPAC_SRC)/H_bond_correction_PM6_DH_Dispersion.F90
+	 $(FORTRAN_COMPILER)  $(MOPAC_SRC)/H_bond_correction_PM6_DH_Dispersion.F90
+
+$(OBJ)/H_bond_correction_EC_plus_ER.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(MOPAC_SRC)/H_bond_correction_EC_plus_ER.F90
+	 $(FORTRAN_COMPILER)  $(MOPAC_SRC)/H_bond_correction_EC_plus_ER.F90
+
+$(OBJ)/H_bond_correction_EH_plus.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(MOPAC_SRC)/H_bond_correction_EH_plus.F90
+	 $(FORTRAN_COMPILER)  $(MOPAC_SRC)/H_bond_correction_EH_plus.F90
+
+$(OBJ)/disp_DnX.o: \
+  $(OBJ)/molkst_C.o  \
+  $(OBJ)/parameters_C.o  \
+  $(OBJ)/Common_arrays_C.o  \
+  $(OBJ)/chanel_C.o  \
+  $(MOPAC_SRC)/disp_DnX.F90
+	 $(FORTRAN_COMPILER)  $(MOPAC_SRC)/disp_DnX.F90
+
+
+#
+# Dependencies of C source files
+#
+
+#
+# Dependencies of CXX source files
+#
+
+
