@@ -3,11 +3,12 @@
 target_sources(MOPAC_exe
     PRIVATE
 # GPU-related files
-#        ${CMAKE_CURRENT_SOURCE_DIR}/mod_calls_cublas.F90
 #        ${CMAKE_CURRENT_SOURCE_DIR}/mod_gpu_info.F90
-#        ${CMAKE_CURRENT_SOURCE_DIR}/mod_vars_cuda.F90
-# Windows-related files
-#        ${CMAKE_CURRENT_SOURCE_DIR}/MOPAC\ for\ Windows.F90
+#        ${CMAKE_CURRENT_SOURCE_DIR}/pulay_for_gpu_I.F90
+#        ${CMAKE_CURRENT_SOURCE_DIR}/pulay_for_gpu.F90
+#        ${CMAKE_CURRENT_SOURCE_DIR}/density_cuda_i.F90
+#        ${CMAKE_CURRENT_SOURCE_DIR}/mamult_cuda_i.F90
+#        ${CMAKE_CURRENT_SOURCE_DIR}/mod_calls_cublas.F90
 # interface files
         ${CMAKE_CURRENT_SOURCE_DIR}/aababc_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aabacd_I.F90
@@ -269,7 +270,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/prtpar_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prttim_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pulay_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pulay_for_gpu_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/quadr_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/react1_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reada_I.F90
@@ -394,7 +394,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_bits.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bonds4.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/Password.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/QuickWin_bits.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aababc.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aabacd.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aabbcd.F90
@@ -447,7 +446,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/denrot.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/denrot_for_MOZYME.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/densit.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/density_cuda_i.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/density_for_GPU.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/density_for_MOZYME.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/deri0.F90
@@ -566,7 +564,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/maksym.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/makvec.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mamult.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mamult_cuda_i.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mat33.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/matou1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/matout.F90
@@ -581,6 +578,7 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/mndod.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mod_atomradii.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mod_iso_c_binding.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/mod_vars_cuda.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/modchg.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/modgra.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/moldat.F90
@@ -627,7 +625,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/prtpka.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prttim.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pulay.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pulay_for_gpu.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/quadr.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/react1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reada.F90

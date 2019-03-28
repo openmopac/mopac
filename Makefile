@@ -12,7 +12,7 @@ OBJ       = ./obj
 MKL_ROOT   = /opt/intel/compilers_and_libraries_2018.3.185/mac/mkl
 COMPILER_ROOT = /opt/intel/compilers_and_libraries_2018.3.185/mac/compiler
 FORTRAN_COMPILER = ifort -c -O3 -I$(OBJ) -module $(OBJ) -o $@
-FORTRAN_LINKER   = ifort -lpthread -lstdc++ -O3
+FORTRAN_LINKER   = ifort -lpthread -O3
 O                = o 
 MATH_LINK        =   $(MKL_ROOT)/lib/libmkl_intel.a \
                      $(MKL_ROOT)/lib/libmkl_intel_thread.a \
