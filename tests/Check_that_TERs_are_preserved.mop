@@ -1,0 +1,18 @@
+*
+* In this test:
+*
+* (A) There are four breaks, indicated by the four of the "TER" lines in the PDB data-set. 
+*     These breaks must be preserved in the new PDB file. 
+*     A "TER" normally means that there is a break before the next atom.
+*
+*     In two instances a "TER" has been put inside a ligand - these are ignored.
+*
+* (B) The atoms are re-sequenced to put them into the standard PDB sequence.
+*
+* (C) The residue sequence and chain letter are changed.
+*
+* (D) A residue, mis-labeled as "XXX" is (correctly) re-labeled as "PRO"
+*
+*                 
+ geo_dat="check_ters.pdb" start_res=(40, 50, 60) chains=(B) residues reseq HTML
+ Test to show that PDB files are correctly manipulated

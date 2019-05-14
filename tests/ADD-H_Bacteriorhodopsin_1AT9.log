@@ -1,0 +1,4 @@
+ START_RES=(2A 216)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AT9.ent" ADD-H
+ Hydrogenate 1AT9
+
+           Empirical Formula: C1214 N272 O303 S9   =  1798 atoms

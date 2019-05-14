@@ -1,0 +1,10 @@
+*
+* Comapare two protein structures
+*
+* These two structures differ in that the order of the atoms is different, and the
+* coordinates of atom 1 are different.
+*
+*  Note that the input files must not end in ".pdb" because the job will create new PDB files.
+*
+geo_dat="Structure-1.txt" geo_ref="Structure-2.txt" compare output
+ Compare two very similar geometries (compare residue 10)

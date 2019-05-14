@@ -1,0 +1,4 @@
+ ADD-H PDBOUT   CHAINS=(A)  START_RES=(1A)
+ From PDB file: 'PDB1EJG'
+
+           Empirical Formula: C202 H310 N55 O64 S6   =   637 atoms

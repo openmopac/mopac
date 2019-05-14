@@ -1,0 +1,4 @@
+ ADD-H PDBOUT   CHAINS=(AA)  START_RES=(1A 66A)
+ From PDB file: 'PDB1CBN'
+
+           Empirical Formula: C202 H311 N55 O66 S6   =   640 atoms

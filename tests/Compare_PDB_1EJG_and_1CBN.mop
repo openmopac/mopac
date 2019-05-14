@@ -1,0 +1,2 @@
+geo_dat="PDB1EJG.ent" geo_ref="PDB1CBN.ent" compare output
+Two PDB structures for Crambin after deleting atoms not common to both

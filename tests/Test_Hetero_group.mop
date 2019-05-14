@@ -1,0 +1,766 @@
+HEADER    HORMONE                                 05-JUN-87   1XY1      1XY1   3
+COMPND    1 BETA-MERCAPTOPROPIONATE-OXYTOCIN (WET FORM)                 1XY1   4
+SOURCE    SYNTHETIC                                                     1XY1   5
+AUTHOR    J.HUSAIN,T.L.BLUNDELL,S.P.WOOD,I.J.TICKLE,S.COOPER,           1XY1   6
+AUTHOR   2 J.E.PITTS                                                    1XY1   7
+REVDAT   3   15-OCT-90 1XY1B   3       REMARK HET    HETATM ANISOU      1XY1B  1
+REVDAT   2   09-OCT-88 1XY1A   1       REMARK                           1XY1A  1
+REVDAT   1   16-APR-88 1XY1    0                                        1XY1   8
+JRNL        AUTH   S.P.WOOD,I.J.TICKLE,A.M.TREHARNE,J.E.PITTS,          1XY1   9
+JRNL        AUTH 2 Y.MASCARENHAS,J.Y.LI,J.HUSAIN,S.COOPER,              1XY1  10
+JRNL        AUTH 3 T.L.BLUNDELL,V.J.HRUBY,A.BUKU,A.J.FISCHMAN,          1XY1  11
+JRNL        AUTH 4 H.R.WYSSBROD                                         1XY1  12
+JRNL        TITL   CRYSTAL STRUCTURE ANALYSIS OF DEAMINO-*OXYTOCIN.     1XY1  13
+JRNL        TITL 2 CONFORMATIONAL FLEXIBILITY AND RECEPTOR BINDING      1XY1  14
+JRNL        REF    SCIENCE                       V. 232   633 1986      1XY1  15
+JRNL        REFN   ASTM SCIEAS  US ISSN 0036-8075                  038  1XY1  16
+REMARK   1                                                              1XY1  17
+REMARK   1 REFERENCE 1                                                  1XY1  18
+REMARK   1  AUTH   J.E.PITTS,S.P.WOOD,I.J.TICKLE,A.M.TREHARNE,          1XY1  19
+REMARK   1  AUTH 2 Y.MASCARENHAS,J.Y.LI,J.HUSAIN,S.COOPER,              1XY1  20
+REMARK   1  AUTH 3 T.L.BLUNDELL,V.J.HRUBY,H.R.WYSSBROD,A.BAKU,          1XY1  21
+REMARK   1  AUTH 4 A.J.FISCHMAN                                         1XY1  22
+REMARK   1  TITL   X-*RAY ANALYSIS OF DEAMINO-OXYTOCIN. CONFORMATIONAL  1XY1  23
+REMARK   1  TITL 2 FLEXIBILITY AND RECEPTOR BINDING                     1XY1  24
+REMARK   1  EDIT   R.M.BURNETT,H.J.VOGEL                                1XY1  25
+REMARK   1  REF    BIOLOGICAL ORGANIZATION.               289 1987      1XY1  26
+REMARK   1  REF  2 MACROMOLECULAR INTERACTIONS                          1XY1  27
+REMARK   1  REF  3 AT HIGH RESOLUTION                                   1XY1  28
+REMARK   1  PUBL   ACADEMIC PRESS, ORLANDO,FL                           1XY1  29
+REMARK   1  REFN                US ISBN 0-12-145948-9              850  1XY1  30
+REMARK   1 REFERENCE 2                                                  1XY1  31
+REMARK   1  AUTH   A.M.TREHARNE,S.P.WOOD,I.J.TICKLE,J.E.PITTS,          1XY1  32
+REMARK   1  AUTH 2 J.HUSAIN,I.D.GLOVER,S.COOPER,T.L.BLUNDELL            1XY1  33
+REMARK   1  TITL   X-*RAY ANALYSIS OF POLYPEPTIDE HORMONES AT (LESS     1XY1  34
+REMARK   1  TITL 2 THAN OR EQUAL) 1 ANGSTROM RESOLUTION. ANISOTROPIC    1XY1  35
+REMARK   1  TITL 3 THERMAL MOTION AND SECONDARY STRUCTURE OF            1XY1  36
+REMARK   1  TITL 4 PANCREATIC POLYPEPTIDE AND DEAMINO-*OXYTOCIN         1XY1  37
+REMARK   1  EDIT   D.MORAS,J.DRENTH,B.STRANDBERG,D.SUCK,K.WILSON        1XY1  38
+REMARK   1  REF    CRYSTALLOGRAPHY IN MOLECULAR  V. 126   153 1988      1XY1A  2
+REMARK   1  REF  2 BIOLOGY                                              1XY1A  3
+REMARK   1  PUBL   PLENUM, NEW YORK, NY                                 1XY1  40
+REMARK   1  REFN                US ISBN 0-306-42497-5              849  1XY1  41
+REMARK   2                                                              1XY1  42
+REMARK   2 RESOLUTION. 1.04 ANGSTROMS.                                  1XY1  43
+REMARK   3                                                              1XY1  44
+REMARK   3 REFINEMENT. RESTRAINED LEAST SQUARES REFINEMENT USING        1XY1  45
+REMARK   3  SHELX-76 (G.M.SHELDRICK (1987) SHELXTL, AN INTEGRATED       1XY1  46
+REMARK   3  SYSTEM FOR SOLVING, REFINING AND DISPLAYING CRYSTAL         1XY1  47
+REMARK   3  STRUCTURES FROM DIFFRACTION DATA, UNIVERSITY OF             1XY1  48
+REMARK   3  GOETTINGEN).  THE R-VALUE IS 0.088 FOR ALL 4681             1XY1  49
+REMARK   3  REFLECTIONS.  THE RMS DEVIATIONS FROM IDEALITY OF THE       1XY1  50
+REMARK   3  BOND LENGTHS ARE BETWEEN 0.01 AND 0.07 ANGSTROMS.           1XY1  51
+REMARK   4                                                              1XY1  52
+REMARK   4 THERE ARE TWO OXYTOCIN MOLECULES IN THE ASYMMETRIC UNIT      1XY1  53
+REMARK   4 DESIGNATED HERE AS CHAINS *A* AND *B*.  THE CHAINS ARE       1XY1  54
+REMARK   4 RELATED BY A NON-CRYSTALLOGRAPHIC TWO FOLD AXIS.  THE        1XY1  55
+REMARK   4 TRANSFORMATION DEFINED IN THE *MTRIX* RECORDS GIVEN BELOW    1XY1  56
+REMARK   4 WILL YIELD COORDINATES FOR CHAIN *B* WHEN APPLIED TO THOSE   1XY1  57
+REMARK   4 FOR CHAIN *A*.                                               1XY1  58
+REMARK   5                                                              1XY1  59
+REMARK   5 HYDROGEN ATOMS IN THIS ENTRY HAVE BEEN ASSIGNED NAMES        1XY1  60
+REMARK   5 CONSISTENT WITH THE RECOMMENDATIONS OF THE IUPAC-IUB         1XY1  61
+REMARK   5 COMMISSION ON BIOCHEMICAL NOMENCLATURE (SEE,E.G., J.MOL.     1XY1  62
+REMARK   5 BIOL. (1970) VOL.52, PP 1-17). WE HAVE FOLLOWED RULE 4.4 OF  1XY1  63
+REMARK   5 THE RECOMMENDATIONS WITH THE FOLLOWING MODIFICATION-         1XY1  64
+REMARK   5 WHEN MORE THAN ONE HYDROGEN ATOM IS BONDED TO A SINGLE       1XY1  65
+REMARK   5 NON-HYDROGEN ATOM, THE HYDROGEN ATOM NUMBER DESIGNATION IS   1XY1  66
+REMARK   5 GIVEN AS THE FIRST CHARACTER OF THE ATOM NAME RATHER THAN    1XY1  67
+REMARK   5 AS THE LAST CHARACTER (E.G. H*BETA*1 IS DENOTED AS 1HB ).    1XY1  68
+REMARK   6                                                              1XY1  69
+REMARK   6 THE *SG* ATOM OF CYS A 6 FORMS A DISULFIDE BRIDGE TO         1XY1  70
+REMARK   6 *SG* OF MPR A 1 IN BOTH ALTERNATE LOCATIONS OF THE LATTER    1XY1  71
+REMARK   6 ATOM.  THE *SG* ATOM OF CYS B 6 FORMS A DISULFIDE BRIDGE TO  1XY1  72
+REMARK   6 *SG* OF MPR B 1 IN BOTH ALTERNATE LOCATIONS OF THE LATTER    1XY1  73
+REMARK   6 ATOM.                                                        1XY1  74
+REMARK   7                                                              1XY1  75
+REMARK   7 TORSION ANGLES OF THE MAIN CHAIN AND THE SIDE GROUPS         1XY1  76
+REMARK   7                                                              1XY1  77
+REMARK   7 RESIDUE     PHI   PSI   OMEGA    C1   C2    C3    C4         1XY1  78
+REMARK   7                                                              1XY1  79
+REMARK   7 MPR A 1(A)        120   -171   -109                          1XY1  80
+REMARK   7 MPR A 1(B)                     -178                          1XY1  81
+REMARK   7 TYR A 2    -133   167    176    -50   87                     1XY1  82
+REMARK   7 ILE A 3     -54   120    179    -68  -79                     1XY1  83
+REMARK   7 GLN A 4      58    24    171    -66  -55   -48               1XY1  84
+REMARK   7 ASN A 5    -151    75   -177    168   26                     1XY1  85
+REMARK   7 CYS A 6    -145    98   -176   -177                          1XY1  86
+REMARK   7 PRO A 7     -78    -8    179     24  -36    31   -15         1XY1  87
+REMARK   7 LEU A 8     -73   -40   -176    -59  174                     1XY1  88
+REMARK   7 GLY A 9     170  -177                                        1XY1  89
+REMARK   7                                                              1XY1  90
+REMARK   7 MPR B 1(A)        101   -172   -178                          1XY1  91
+REMARK   7 MPR B 1(B)                     -111                          1XY1  92
+REMARK   7 TYR B 2    -126   164   -177    -55   98                     1XY1  93
+REMARK   7 ILE B 3     -65   125   -173   -169  163                     1XY1  94
+REMARK   7 GLN B 4      56    29    164    -64  -51   -47               1XY1  95
+REMARK   7 ASN B 5    -158    66    177   -180  -43                     1XY1  96
+REMARK   7 CYS B 6    -128    98   -173   -179                          1XY1  97
+REMARK   7 PRO B 7     -73   -12   -179     29  -40    35   -18         1XY1  98
+REMARK   7 LEU B 8     -77   -33   -173    -67  175                     1XY1  99
+REMARK   7 GLY B 9    -176   168                                        1XY1 100
+REMARK   7                                                              1XY1 101
+REMARK   7 TORSION ANGLES ABOUT THE DISULFIDE BRIDGE                    1XY1 102
+REMARK   7                                                              1XY1 103
+REMARK   7 CA(MPR A 1)-CB(MPR A 1)-SG(A)(MPR A 1)-SG(CYS A 6)   -102    1XY1 104
+REMARK   7 CA(MPR A 1)-CB(MPR A 1)-SG(B)(MPR A 1)-SG(CYS A 6)     87    1XY1 105
+REMARK   7 CB(MPR A 1)-SG(A)(MPR A 1)-SG(CYS A 6)-CB(CYS A 6)     77    1XY1 106
+REMARK   7 CB(MPR A 1)-SG(B)(MPR A 1)-SG(CYS A 6)-CB(CYS A 6)    -87    1XY1 107
+REMARK   7 CA(CYS A 6)-CB(CYS A 6)-SG(CYS A6)-SG(A)(MPR A 1)      57    1XY1 108
+REMARK   7 CA(CYS A 6)-CB(CYS A 6)-SG(CYS A6)-SG(B)(MPR A 1)     110    1XY1 109
+REMARK   7                                                              1XY1 110
+REMARK   7 CA(MPR B 1)-CB(MPR B 1)-SG(A)(MPR B 1)-SG(CYS B 6)     80    1XY1 111
+REMARK   7 CA(MPR B 1)-CB(MPR B 1)-SG(B)(MPR B 1)-SG(CYS B 6)    -93    1XY1 112
+REMARK   7 CB(MPR B 1)-SG(A)(MPR B 1)-SG(CYS B 6)-CB(CYS B 6)    -94    1XY1 113
+REMARK   7 CB(MPR B 1)-SG(B)(MPR B 1)-SG(CYS B 6)-CB(CYS B 6)     83    1XY1 114
+REMARK   7 CA(CYS B 6)-CB(CYS B 6)-SG(CYS B 6)-SG(A)(MPR B 1)    113    1XY1 115
+REMARK   7 CA(CYS B 6)-CB(CYS B 6)-SG(CYS B 6)-SG(B)(MPR B 1)     45    1XY1 116
+REMARK   8                                                              1XY1 117
+REMARK   8 INTERMOLECULAR HYDROGEN BONDING BETWEEN MOLECULES RELATED    1XY1 118
+REMARK   8 BY CRYSTALLOGRAPHIC SYMMETRY -                               1XY1 119
+REMARK   8                                                              1XY1 120
+REMARK   8 DONOR           ACCEPTOR                                     1XY1 121
+REMARK   8                                                              1XY1 122
+REMARK   8  N   ILE A 3     O   PRO B 7                                 1XY1 123
+REMARK   8  ND1 ASN A 5     O   LEU B 8                                 1XY1 124
+REMARK   8  ND2 ASN A 5     O   MPR A 1                                 1XY1 125
+REMARK   8  N   CYS A 6     OE  GLN B 4                                 1XY1 126
+REMARK   8  N   ILE B 3     O   PRO A 7                                 1XY1 127
+REMARK   8  ND1 ASN B 5     O   LEU A 8                                 1XY1 128
+REMARK   8  ND2 ASN B 5     O   MPR B 1                                 1XY1 129
+REMARK   8  N   CYS B 6     OE  GLN A 4                                 1XY1 130
+REMARK   8  N   NH2 B 9     O   ILE A 3                                 1XY1B  2
+REMARK   9                                                              1XY1A  4
+REMARK   9 CORRECTION. CORRECT REFERENCE 2.  09-OCT-88.                 1XY1A  5
+REMARK  10                                                              1XY1B  3
+REMARK  10 CORRECTION. STANDARDIZE NH2 ATOM NOMENCLATURE.  REVISE HET   1XY1B  4
+REMARK  10  RECORDS FOR NH2.  15-OCT-90.                                1XY1B  5
+SEQRES   1 A   10  MPR TYR ILE GLN ASN CYS PRO LEU GLY NH2              1XY1 132
+SEQRES   1 B   10  MPR TYR ILE GLN ASN CYS PRO LEU GLY NH2              1XY1 133
+FTNOTE   1                                                              1XY1 134
+FTNOTE   1 THE SG ATOM OF RESIDUE MPR A 1 AND MPR B 1 IS DISORDERED.    1XY1 135
+FTNOTE   1 THE TWO POSSIBLE SITES FOR THIS ATOM ARE GIVEN AS            1XY1 136
+FTNOTE   1 ALTERNATE LOCATIONS *A* AND *B*.                             1XY1 137
+FTNOTE   2                                                              1XY1 138
+FTNOTE   2 THERMAL PARAMETERS FOR SOME HYDROGEN ATOMS WERE DEPOSITED    1XY1 139
+FTNOTE   2 WITH VALUES LESS THAN 0.05.  CONVERSION TO UEQ GENERATES     1XY1 140
+FTNOTE   2 A THERMAL PARAMETER OF 0.00 BECAUSE OF PROTEIN DATA BANK     1XY1 141
+FTNOTE   2 FORMAT SPECIFICATION FOR THIS FIELD.                         1XY1 142
+HET    MPR  A   1       9     BETA-MERCAPTOPROPIONATE                   1XY1 143
+HET    NH2  A  10       3     TERMINAL AMIDE                            1XY1B  6
+HET    MPR  B   1       9     BETA-MERCAPTOPROPIONATE                   1XY1 145
+HET    NH2  B  10       3     TERMINAL AMIDE                            1XY1B  7
+FORMUL   3  MPR    2(C3 H6 O2 S1)                                       1XY1 147
+FORMUL   4  NH2    2(H2 N1)                                             1XY1 148
+FORMUL   5  HOH   *13(H2 O1)                                            1XY1 149
+TURN     1 TA1 TYR A   2  ASN A   5     TYPE II                         1XY1 150
+TURN     2 TA2 CYS A   6  GLY A   9     TYPE III                        1XY1 151
+TURN     3 TB1 TYR B   2  ASN B   5     TYPE II                         1XY1 152
+TURN     4 TB2 CYS B   6  GLY B   9     TYPE III                        1XY1 153
+SSBOND   1 MPR A    1    CYS A    6     SEE REMARK 6                    1XY1 154
+SSBOND   2 MPR B    1    CYS B    6     SEE REMARK 6                    1XY1 155
+CRYST1   27.270    9.040   23.040  90.00 102.24  90.00 P 21          4  1XY1 156
+ORIGX1      1.000000  0.000000  0.000000        0.00000                 1XY1 157
+ORIGX2      0.000000  1.000000  0.000000        0.00000                 1XY1 158
+ORIGX3      0.000000  0.000000  1.000000        0.00000                 1XY1 159
+SCALE1      0.036670  0.000000  0.007950        0.00000                 1XY1 160
+SCALE2      0.000000  0.110619  0.000000        0.00000                 1XY1 161
+SCALE3      0.000000  0.000000  0.044410        0.00000                 1XY1 162
+MTRIX1   1 -0.997700 -0.066200  0.010900        0.03300    1            1XY1 163
+MTRIX2   1 -0.065200  0.995100  0.074500        0.02000    1            1XY1 164
+MTRIX3   1 -0.015800  0.074500 -0.997200       -0.00600    1            1XY1 165
+HETATM    1  CA  MPR A   1      19.392   5.714   9.147  1.00  0.07   1  1XY1 166
+ANISOU    1  CA  MPR A   1      696    696    696      0      0      0  1XY1 167
+HETATM    2  C   MPR A   1      18.131   5.091   8.587  1.00  0.06   1  1XY1 168
+ANISOU    2  C   MPR A   1      464    754    446    154     63    -64  1XY1 169
+HETATM    3  O   MPR A   1      17.488   4.191   9.060  1.00  0.08   1  1XY1 170
+ANISOU    3  O   MPR A   1      793    964    515    -93    -23     11  1XY1 171
+HETATM    4  CB  MPR A   1      20.530   4.821   9.169  1.00  0.22   1  1XY1 172
+ANISOU    4  CB  MPR A   1     2165   2165   2165      0      0      0  1XY1 173
+HETATM    5  SG AMPR A   1      22.103   5.593   8.460  0.66  0.07   1  1XY1 174
+ANISOU    5  SG AMPR A   1      537    827    716    -77     83    -38  1XY1 175
+HETATM    6  SG BMPR A   1      21.289   4.124   7.744  0.34  0.25   1  1XY1 176
+ANISOU    6  SG BMPR A   1     3519   1848   2169   -911   -985   -602  1XY1 177
+HETATM    7 1HA  MPR A   1      19.191   6.034  10.159  1.00  0.49   1  1XY1 178
+ANISOU    7 1HA  MPR A   1     4850   4850   4850      0      0      0  1XY1 179
+HETATM    8 2HA  MPR A   1      19.644   6.572   8.541  1.00  0.04   1  1XY1 180
+ANISOU    8 2HA  MPR A   1      358    358    358      0      0      0  1XY1 181
+HETATM    9 1HB  MPR A   1      21.313   5.364   9.677  1.00  1.15   1  1XY1 182
+ANISOU    9 1HB  MPR A   1    11540  11540  11540      0      0      0  1XY1 183
+HETATM   10 2HB  MPR A   1      20.225   3.980   9.775  1.00  1.00   1  1XY1 184
+ANISOU   10 2HB  MPR A   1    10034  10034  10034      0      0      0  1XY1 185
+ATOM     12  N   TYR A   2      17.727   5.795   7.447  1.00  0.05      1XY1 186
+ANISOU   12  N   TYR A   2      350    545    689      0     20   -118  1XY1 187
+ATOM     13  CA  TYR A   2      16.455   5.569   6.781  1.00  0.05      1XY1 188
+ANISOU   13  CA  TYR A   2      415    637    449     78    103    -39  1XY1 189
+ATOM     14  C   TYR A   2      16.769   5.450   5.297  1.00  0.05      1XY1 190
+ANISOU   14  C   TYR A   2      384    580    580    150     20   -266  1XY1 191
+ATOM     15  O   TYR A   2      17.837   5.723   4.790  1.00  0.06      1XY1 192
+ANISOU   15  O   TYR A   2      451    945    500     46    197     47  1XY1 193
+ATOM     16  CB  TYR A   2      15.496   6.752   6.975  1.00  0.06      1XY1 194
+ANISOU   16  CB  TYR A   2      782    644    450    303    182     36  1XY1 195
+ATOM     17  CG  TYR A   2      15.333   7.208   8.402  1.00  0.05      1XY1 196
+ANISOU   17  CG  TYR A   2      355    751    425    178     60     -6  1XY1 197
+ATOM     18  CD1 TYR A   2      16.189   8.135   8.981  1.00  0.07      1XY1 198
+ANISOU   18  CD1 TYR A   2      646    910    515     87    118    -20  1XY1 199
+ATOM     19  CD2 TYR A   2      14.308   6.703   9.191  1.00  0.06      1XY1 200
+ANISOU   19  CD2 TYR A   2      396    627    840     81    154     68  1XY1 201
+ATOM     20  CE1 TYR A   2      16.021   8.579  10.286  1.00  0.07      1XY1 202
+ANISOU   20  CE1 TYR A   2      532    908    631     13    183   -130  1XY1 203
+ATOM     21  CE2 TYR A   2      14.107   7.178  10.479  1.00  0.07      1XY1 204
+ANISOU   21  CE2 TYR A   2      565    987    464    192    255    128  1XY1 205
+ATOM     22  CZ  TYR A   2      14.952   8.125  11.060  1.00  0.07      1XY1 206
+ANISOU   22  CZ  TYR A   2      723    673    627    154    121     92  1XY1 207
+ATOM     23  OH  TYR A   2      14.710   8.551  12.299  1.00  0.08      1XY1 208
+ANISOU   23  OH  TYR A   2     1017    997    311    385    284     65  1XY1 209
+ATOM     24  H   TYR A   2      18.393   6.544   7.043  1.00  0.14      1XY1 210
+ANISOU   24  H   TYR A   2     1372   1372   1372      0      0      0  1XY1 211
+ATOM     25  HA  TYR A   2      15.979   4.688   7.186  1.00  0.07      1XY1 212
+ANISOU   25  HA  TYR A   2      725    725    725      0      0      0  1XY1 213
+ATOM     26 1HB  TYR A   2      15.868   7.585   6.397  1.00  0.04      1XY1 214
+ANISOU   26 1HB  TYR A   2      438    438    438      0      0      0  1XY1 215
+ATOM     27 2HB  TYR A   2      14.525   6.461   6.603  1.00  0.55      1XY1 216
+ANISOU   27 2HB  TYR A   2     5494   5494   5494      0      0      0  1XY1 217
+ATOM     28  HD1 TYR A   2      17.012   8.523   8.399  1.00  0.14      1XY1 218
+ANISOU   28  HD1 TYR A   2     1443   1443   1443      0      0      0  1XY1 219
+ATOM     29  HD2 TYR A   2      13.661   5.932   8.799  1.00  0.03      1XY1 220
+ANISOU   29  HD2 TYR A   2      347    347    347      0      0      0  1XY1 221
+ATOM     30  HE1 TYR A   2      16.724   9.283  10.706  1.00  0.10      1XY1 222
+ANISOU   30  HE1 TYR A   2      951    951    951      0      0      0  1XY1 223
+ATOM     31  HE2 TYR A   2      13.270   6.804  11.050  1.00  0.21      1XY1 224
+ANISOU   31  HE2 TYR A   2     2099   2099   2099      0      0      0  1XY1 225
+ATOM     33  N   ILE A   3      15.692   4.946   4.551  1.00  0.05      1XY1 226
+ANISOU   33  N   ILE A   3      388    653    320     40     94   -101  1XY1 227
+ATOM     34  CA  ILE A   3      15.787   4.855   3.103  1.00  0.06      1XY1 228
+ANISOU   34  CA  ILE A   3      487    472    726   -146    166   -221  1XY1 229
+ATOM     35  C   ILE A   3      16.161   6.204   2.518  1.00  0.05      1XY1 230
+ANISOU   35  C   ILE A   3      521    432    604     -9    -72   -111  1XY1 231
+ATOM     36  O   ILE A   3      15.406   7.175   2.594  1.00  0.06      1XY1 232
+ANISOU   36  O   ILE A   3      601    485    677     83    164     93  1XY1 233
+ATOM     37  CB  ILE A   3      14.455   4.315   2.541  1.00  0.06      1XY1 234
+ANISOU   37  CB  ILE A   3     1020    515    403   -271    104    -98  1XY1 235
+ATOM     38  CG1 ILE A   3      14.245   2.876   2.932  1.00  0.10      1XY1 236
+ANISOU   38  CG1 ILE A   3     1052   1174    786   -111    -33   -214  1XY1 237
+ATOM     39  CG2 ILE A   3      14.346   4.551   0.999  1.00  0.12      1XY1 238
+ANISOU   39  CG2 ILE A   3     1136   2171    366   -598   -231    156  1XY1 239
+ATOM     40  CD1 ILE A   3      15.042   1.945   2.054  1.00  0.13      1XY1 240
+ANISOU   40  CD1 ILE A   3     1631   1099   1115    -63    513   -175  1XY1 241
+ATOM     41  H   ILE A   3      14.791   4.626   5.054  1.00  0.39      1XY1 242
+ANISOU   41  H   ILE A   3     3898   3898   3898      0      0      0  1XY1 243
+ATOM     42  HA  ILE A   3      16.568   4.165   2.820  1.00  0.11      1XY1 244
+ANISOU   42  HA  ILE A   3     1123   1123   1123      0      0      0  1XY1 245
+ATOM     43 1HB  ILE A   3      13.648   4.877   2.988  1.00  0.06      1XY1 246
+ANISOU   43 1HB  ILE A   3      559    559    559      0      0      0  1XY1 247
+ATOM     44 1HG1 ILE A   3      14.555   2.743   3.958  1.00  0.38      1XY1 248
+ANISOU   44 1HG1 ILE A   3     3767   3767   3767      0      0      0  1XY1 249
+ATOM     45 2HG1 ILE A   3      13.196   2.636   2.838  1.00  0.04      1XY1 250
+ANISOU   45 2HG1 ILE A   3      440    440    440      0      0      0  1XY1 251
+ATOM     46 1HG2 ILE A   3      14.505   5.597   0.782  1.00  1.48      1XY1 252
+ANISOU   46 1HG2 ILE A   3    14754  14754  14754      0      0      0  1XY1 253
+ATOM     47 2HG2 ILE A   3      15.093   3.961   0.490  1.00  0.18      1XY1 254
+ANISOU   47 2HG2 ILE A   3     1812   1812   1812      0      0      0  1XY1 255
+ATOM     48 3HG2 ILE A   3      13.363   4.259   0.658  1.00  1.27      1XY1 256
+ANISOU   48 3HG2 ILE A   3    12715  12715  12715      0      0      0  1XY1 257
+ATOM     49 1HD1 ILE A   3      16.093   2.174   2.146  1.00  0.32      1XY1 258
+ANISOU   49 1HD1 ILE A   3     3203   3203   3203      0      0      0  1XY1 259
+ATOM     50 2HD1 ILE A   3      14.868   0.924   2.362  1.00  1.30      1XY1 260
+ANISOU   50 2HD1 ILE A   3    12957  12957  12957      0      0      0  1XY1 261
+ATOM     51 3HD1 ILE A   3      14.735   2.068   1.026  1.00  0.07      1XY1 262
+ANISOU   51 3HD1 ILE A   3      688    688    688      0      0      0  1XY1 263
+ATOM     52  N   GLN A   4      17.346   6.206   1.799  1.00  0.05      1XY1 264
+ANISOU   52  N   GLN A   4      359    653    541    -30    179    -72  1XY1 265
+ATOM     53  CA  GLN A   4      17.863   7.437   1.124  1.00  0.06      1XY1 266
+ANISOU   53  CA  GLN A   4      418    817    496    104    164     50  1XY1 267
+ATOM     54  C   GLN A   4      18.086   8.620   2.042  1.00  0.06      1XY1 268
+ANISOU   54  C   GLN A   4      505    730    690      3    237     52  1XY1 269
+ATOM     55  O   GLN A   4      18.180   9.780   1.694  1.00  0.08      1XY1 270
+ANISOU   55  O   GLN A   4     1241    463    730   -188     50    166  1XY1 271
+ATOM     56  CB  GLN A   4      17.028   7.808  -0.092  1.00  0.06      1XY1 272
+ANISOU   56  CB  GLN A   4      657    519    518    179    319     67  1XY1 273
+ATOM     57  CG  GLN A   4      17.119   6.781  -1.196  1.00  0.07      1XY1 274
+ANISOU   57  CG  GLN A   4      639    668    696    -10    369    125  1XY1 275
+ATOM     58  CD  GLN A   4      18.504   6.470  -1.634  1.00  0.07      1XY1 276
+ANISOU   58  CD  GLN A   4      734    881    608    -58     67     25  1XY1 277
+ATOM     59  OE1 GLN A   4      19.336   7.452  -1.892  1.00  0.08      1XY1 278
+ANISOU   59  OE1 GLN A   4      751   1081    688   -127    290    -17  1XY1 279
+ATOM     60  NE2 GLN A   4      18.945   5.226  -1.648  1.00  0.10      1XY1 280
+ANISOU   60  NE2 GLN A   4      847    978   1104   -153    415   -103  1XY1 281
+ATOM     61  H   GLN A   4      17.914   5.290   1.723  1.00  0.23      1XY1 282
+ANISOU   61  H   GLN A   4     2263   2263   2263      0      0      0  1XY1 283
+ATOM     62  HA  GLN A   4      18.851   7.168   0.782  1.00  0.06      1XY1 284
+ANISOU   62  HA  GLN A   4      554    554    554      0      0      0  1XY1 285
+ATOM     63 1HB  GLN A   4      15.996   7.898   0.212  1.00  0.15      1XY1 286
+ANISOU   63 1HB  GLN A   4     1540   1540   1540      0      0      0  1XY1 287
+ATOM     64 2HB  GLN A   4      17.376   8.757  -0.473  1.00  0.06      1XY1 288
+ANISOU   64 2HB  GLN A   4      611    611    611      0      0      0  1XY1 289
+ATOM     65 1HG  GLN A   4      16.663   5.867  -0.845  1.00  0.04      1XY1 290
+ANISOU   65 1HG  GLN A   4      433    433    433      0      0      0  1XY1 291
+ATOM     66 2HG  GLN A   4      16.571   7.153  -2.049  1.00  0.04      1XY1 292
+ANISOU   66 2HG  GLN A   4      417    417    417      0      0      0  1XY1 293
+ATOM     67 1HE2 GLN A   4      18.336   4.387  -1.544  1.00  0.10      1XY1 294
+ANISOU   67 1HE2 GLN A   4     1048   1048   1048      0      0      0  1XY1 295
+ATOM     68 2HE2 GLN A   4      19.922   4.944  -1.850  1.00  0.12      1XY1 296
+ANISOU   68 2HE2 GLN A   4     1200   1200   1200      0      0      0  1XY1 297
+ATOM     69  N   ASN A   5      18.297   8.283   3.392  1.00  0.05      1XY1 298
+ANISOU   69  N   ASN A   5      451    436    709     37    -18      9  1XY1 299
+ATOM     70  CA  ASN A   5      18.726   9.270   4.364  1.00  0.05      1XY1 300
+ANISOU   70  CA  ASN A   5      377    342    777    -85    215    -15  1XY1 301
+ATOM     71  C   ASN A   5      19.535   8.605   5.440  1.00  0.05      1XY1 302
+ANISOU   71  C   ASN A   5      430    456    683   -137     34     30  1XY1 303
+ATOM     72  O   ASN A   5      19.117   8.259   6.523  1.00  0.08      1XY1 304
+ANISOU   72  O   ASN A   5      636   1149    531    -22    105     37  1XY1 305
+ATOM     73  CB  ASN A   5      17.504   9.941   4.951  1.00  0.07      1XY1 306
+ANISOU   73  CB  ASN A   5      684    728    733    -59   -117   -172  1XY1 307
+ATOM     74  CG  ASN A   5      17.769  10.814   6.185  1.00  0.09      1XY1 308
+ANISOU   74  CG  ASN A   5      421   1324   1074    253    288    118  1XY1 309
+ATOM     75  OD1 ASN A   5      18.963  11.326   6.322  1.00  0.15      1XY1 310
+ANISOU   75  OD1 ASN A   5      889   1123   2401   -495    572  -1014  1XY1 311
+ATOM     76  ND2 ASN A   5      16.842  11.030   7.112  1.00  0.08      1XY1 312
+ANISOU   76  ND2 ASN A   5      646    798    857     93    -33   -297  1XY1 313
+ATOM     77  H   ASN A   5      18.136   7.264   3.712  1.00  0.05      1XY1 314
+ANISOU   77  H   ASN A   5      481    481    481      0      0      0  1XY1 315
+ATOM     78  HA  ASN A   5      19.346  10.016   3.887  1.00  0.04      1XY1 316
+ANISOU   78  HA  ASN A   5      364    364    364      0      0      0  1XY1 317
+ATOM     79 1HB  ASN A   5      17.066  10.567   4.187  1.00  0.05      1XY1 318
+ANISOU   79 1HB  ASN A   5      548    548    548      0      0      0  1XY1 319
+ATOM     80 2HB  ASN A   5      16.801   9.171   5.231  1.00  0.12      1XY1 320
+ANISOU   80 2HB  ASN A   5     1244   1244   1244      0      0      0  1XY1 321
+ATOM     81 1HD2 ASN A   5      17.162  11.716   7.823  1.00  0.16      1XY1 322
+ANISOU   81 1HD2 ASN A   5     1574   1574   1574      0      0      0  1XY1 323
+ATOM     82 2HD2 ASN A   5      15.810  10.855   7.237  1.00  0.03      1XY1 324
+ANISOU   82 2HD2 ASN A   5      309    309    309      0      0      0  1XY1 325
+ATOM     83  N   CYS A   6      20.783   8.286   4.974  1.00  0.07      1XY1 326
+ANISOU   83  N   CYS A   6      316   1214    676     31    136   -188  1XY1 327
+ATOM     84  CA  CYS A   6      21.699   7.571   5.848  1.00  0.07      1XY1 328
+ANISOU   84  CA  CYS A   6      462    865    626    186     40   -186  1XY1 329
+ATOM     85  C   CYS A   6      23.061   8.121   5.499  1.00  0.06      1XY1 330
+ANISOU   85  C   CYS A   6      482    911    479     91    -20     86  1XY1 331
+ATOM     86  O   CYS A   6      23.781   7.720   4.630  1.00  0.12      1XY1 332
+ANISOU   86  O   CYS A   6      781   1692   1066    -31    509   -734  1XY1 333
+ATOM     87  CB  CYS A   6      21.670   6.082   5.545  1.00  0.09      1XY1 334
+ANISOU   87  CB  CYS A   6      641   1176    736    106   -107   -120  1XY1 335
+ATOM     88  SG  CYS A   6      22.779   5.149   6.682  1.00  0.10      1XY1 336
+ANISOU   88  SG  CYS A   6     1021    941   1128    252      0   -152  1XY1 337
+ATOM     89  H   CYS A   6      21.081   8.561   3.973  1.00  0.47      1XY1 338
+ANISOU   89  H   CYS A   6     4726   4726   4726      0      0      0  1XY1 339
+ATOM     90  HA  CYS A   6      21.443   7.696   6.890  1.00  0.05      1XY1 340
+ANISOU   90  HA  CYS A   6      477    477    477      0      0      0  1XY1 341
+ATOM     91 1HB  CYS A   6      20.660   5.719   5.661  1.00  0.07      1XY1 342
+ANISOU   91 1HB  CYS A   6      719    719    719      0      0      0  1XY1 343
+ATOM     92 2HB  CYS A   6      21.995   5.924   4.527  1.00  0.62      1XY1 344
+ANISOU   92 2HB  CYS A   6     6203   6203   6203      0      0      0  1XY1 345
+ATOM     94  N   PRO A   7      23.537   9.129   6.372  1.00  0.07      1XY1 346
+ANISOU   94  N   PRO A   7      579    750    658    138     26    259  1XY1 347
+ATOM     95  CA  PRO A   7      24.825   9.781   6.052  1.00  0.06      1XY1 348
+ANISOU   95  CA  PRO A   7      484    853    606    110    135    365  1XY1 349
+ATOM     96  C   PRO A   7      26.006   8.922   6.426  1.00  0.05      1XY1 350
+ANISOU   96  C   PRO A   7      502    830    292     70     29     93  1XY1 351
+ATOM     97  O   PRO A   7      27.140   9.224   6.116  1.00  0.08      1XY1 352
+ANISOU   97  O   PRO A   7      560   1146    750     53    245    309  1XY1 353
+ATOM     98  CB  PRO A   7      24.786  11.055   6.846  1.00  0.09      1XY1 354
+ANISOU   98  CB  PRO A   7      858    813   1143     90    318    -65  1XY1 355
+ATOM     99  CG  PRO A   7      23.820  10.724   7.929  1.00  0.11      1XY1 356
+ANISOU   99  CG  PRO A   7     1237    901   1188    355    537    -22  1XY1 357
+ATOM    100  CD  PRO A   7      22.733   9.832   7.398  1.00  0.08      1XY1 358
+ANISOU  100  CD  PRO A   7      810   1117    538     91    439   -273  1XY1 359
+ATOM    101  HA  PRO A   7      24.946   9.955   4.993  1.00  0.02      1XY1 360
+ANISOU  101  HA  PRO A   7      243    243    243      0      0      0  1XY1 361
+ATOM    102 1HB  PRO A   7      25.759  11.295   7.249  1.00  0.19      1XY1 362
+ANISOU  102 1HB  PRO A   7     1882   1882   1882      0      0      0  1XY1 363
+ATOM    103 2HB  PRO A   7      24.432  11.880   6.245  1.00  0.17      1XY1 364
+ANISOU  103 2HB  PRO A   7     1660   1660   1660      0      0      0  1XY1 365
+ATOM    104 1HG  PRO A   7      24.340  10.216   8.728  1.00  0.10      1XY1 366
+ANISOU  104 1HG  PRO A   7     1048   1048   1048      0      0      0  1XY1 367
+ATOM    105 2HG  PRO A   7      23.381  11.635   8.308  1.00  0.16      1XY1 368
+ANISOU  105 2HG  PRO A   7     1641   1641   1641      0      0      0  1XY1 369
+ATOM    106 1HD  PRO A   7      22.349   9.159   8.151  1.00  0.58      1XY1 370
+ANISOU  106 1HD  PRO A   7     5824   5824   5824      0      0      0  1XY1 371
+ATOM    107 2HD  PRO A   7      21.916  10.392   6.967  1.00  0.64      1XY1 372
+ANISOU  107 2HD  PRO A   7     6417   6417   6417      0      0      0  1XY1 373
+ATOM    108  N   LEU A   8      25.759   7.745   7.153  1.00  0.05      1XY1 374
+ANISOU  108  N   LEU A   8      187    772    630    148    162    188  1XY1 375
+ATOM    109  CA  LEU A   8      26.832   6.875   7.526  1.00  0.06      1XY1 376
+ANISOU  109  CA  LEU A   8      284    854    550     29     47     96  1XY1 377
+ATOM    110  C   LEU A   8      27.410   6.096   6.383  1.00  0.06      1XY1 378
+ANISOU  110  C   LEU A   8      749    798    289    204    363    -36  1XY1 379
+ATOM    111  O   LEU A   8      28.595   5.802   6.303  1.00  0.08      1XY1 380
+ANISOU  111  O   LEU A   8      482   1204    621    398    131   -220  1XY1 381
+ATOM    112  CB  LEU A   8      26.377   5.934   8.610  1.00  0.07      1XY1 382
+ANISOU  112  CB  LEU A   8      625    746    590    229    164      8  1XY1 383
+ATOM    113  CG  LEU A   8      25.889   6.622   9.887  1.00  0.10      1XY1 384
+ANISOU  113  CG  LEU A   8      860   1423    621    459   -145    -38  1XY1 385
+ATOM    114  CD1 LEU A   8      25.315   5.582  10.838  1.00  0.11      1XY1 386
+ANISOU  114  CD1 LEU A   8     1094   1627    707    304    558    276  1XY1 387
+ATOM    115  CD2 LEU A   8      26.999   7.406  10.552  1.00  0.15      1XY1 388
+ANISOU  115  CD2 LEU A   8     2074   1817    586   1024    438   -242  1XY1 389
+ATOM    116  H   LEU A   8      24.747   7.495   7.434  1.00  0.00   2  1XY1 390
+ANISOU  116  H   LEU A   8        0      0      0      0      0      0  1XY1 391
+ATOM    117  HA  LEU A   8      27.625   7.513   7.886  1.00  0.06      1XY1 392
+ANISOU  117  HA  LEU A   8      561    561    561      0      0      0  1XY1 393
+ATOM    118 1HB  LEU A   8      25.567   5.336   8.219  1.00  0.05      1XY1 394
+ANISOU  118 1HB  LEU A   8      501    501    501      0      0      0  1XY1 395
+ATOM    119 2HB  LEU A   8      27.206   5.293   8.869  1.00  0.07      1XY1 396
+ANISOU  119 2HB  LEU A   8      686    686    686      0      0      0  1XY1 397
+ATOM    120  HG  LEU A   8      25.114   7.327   9.624  1.00  0.12      1XY1 398
+ANISOU  120  HG  LEU A   8     1244   1244   1244      0      0      0  1XY1 399
+ATOM    121 1HD1 LEU A   8      26.079   4.862  11.087  1.00  0.01      1XY1 400
+ANISOU  121 1HD1 LEU A   8      126    126    126      0      0      0  1XY1 401
+ATOM    122 2HD1 LEU A   8      24.971   6.069  11.738  1.00  0.03      1XY1 402
+ANISOU  122 2HD1 LEU A   8      324    324    324      0      0      0  1XY1 403
+ATOM    123 3HD1 LEU A   8      24.486   5.078  10.362  1.00  0.10      1XY1 404
+ANISOU  123 3HD1 LEU A   8      991    991    991      0      0      0  1XY1 405
+ATOM    124 1HD2 LEU A   8      27.718   7.644   9.838  1.00  0.14      1XY1 406
+ANISOU  124 1HD2 LEU A   8     1361   1361   1361      0      0      0  1XY1 407
+ATOM    125 2HD2 LEU A   8      27.143   7.593  11.568  1.00  0.26      1XY1 408
+ANISOU  125 2HD2 LEU A   8     2560   2560   2560      0      0      0  1XY1 409
+ATOM    126 3HD2 LEU A   8      27.825   6.880  10.933  1.00  0.11      1XY1 410
+ANISOU  126 3HD2 LEU A   8     1124   1124   1124      0      0      0  1XY1 411
+ATOM    127  N   GLY A   9      26.504   5.589   5.458  1.00  0.08      1XY1 412
+ANISOU  127  N   GLY A   9      626   1259    568    118    111   -332  1XY1 413
+ATOM    128  CA  GLY A   9      27.025   4.760   4.392  1.00  0.10      1XY1 414
+ANISOU  128  CA  GLY A   9      740   1531    678     15     -7   -536  1XY1 415
+ATOM    129  C   GLY A   9      25.794   4.188   3.737  1.00  0.08      1XY1 416
+ANISOU  129  C   GLY A   9     1105    758    409    -20    100    -16  1XY1 417
+ATOM    130  O   GLY A   9      24.616   4.360   4.025  1.00  0.08      1XY1 418
+ANISOU  130  O   GLY A   9      572   1209    635    119    191    -36  1XY1 419
+ATOM    131  H   GLY A   9      25.449   5.806   5.533  1.00  0.21      1XY1 420
+ANISOU  131  H   GLY A   9     2077   2077   2077      0      0      0  1XY1 421
+ATOM    132 1HA  GLY A   9      27.593   5.351   3.690  1.00  0.79      1XY1 422
+ANISOU  132 1HA  GLY A   9     7930   7930   7930      0      0      0  1XY1 423
+ATOM    133 2HA  GLY A   9      27.649   3.973   4.789  1.00  0.28      1XY1 424
+ANISOU  133 2HA  GLY A   9     2783   2783   2783      0      0      0  1XY1 425
+HETATM  134  N   NH2 A  10      26.128   3.299   2.686  1.00  0.09      1XY1B  8
+ANISOU  134  N   NH2 A  10      615   1055   1015    -58    201   -517  1XY1B  9
+HETATM  135 1H   NH2 A  10      25.328   2.983   2.098  1.00  0.05      1XY1B 10
+ANISOU  135 1H   NH2 A  10      515    515    515      0      0      0  1XY1B 11
+HETATM  136 2H   NH2 A  10      27.024   2.952   2.285  1.00  0.06      1XY1B 12
+ANISOU  136 2H   NH2 A  10      604    604    604      0      0      0  1XY1B 13
+TER     137      NH2 A  10                                              1XY1 432
+HETATM  138  CA  MPR B   1      16.520   6.087  13.492  1.00  0.08   1  1XY1 433
+ANISOU  138  CA  MPR B   1      509   1110    682    -89   -126     72  1XY1 434
+HETATM  139  C   MPR B   1      17.789   5.493  14.051  1.00  0.05   1  1XY1 435
+ANISOU  139  C   MPR B   1      494    536    447    -43   -247    163  1XY1 436
+HETATM  140  O   MPR B   1      18.323   4.488  13.695  1.00  0.07   1  1XY1 437
+ANISOU  140  O   MPR B   1      908    615    681     29    -96    -68  1XY1 438
+HETATM  141  CB  MPR B   1      15.449   5.045  13.080  1.00  0.08   1  1XY1 439
+ANISOU  141  CB  MPR B   1      704    926    897   -182    -44    -17  1XY1 440
+HETATM  142  SG AMPR B   1      14.997   3.942  14.550  0.68  0.05   1  1XY1 441
+ANISOU  142  SG AMPR B   1      520    507    543   -115     85   -131  1XY1 442
+HETATM  143  SG BMPR B   1      13.938   5.712  13.993  0.32  0.10   1  1XY1 443
+ANISOU  143  SG BMPR B   1     1060   1104    757    -14    -68     79  1XY1 444
+HETATM  144 1HA  MPR B   1      16.090   6.733  14.244  1.00  0.06   1  1XY1 445
+ANISOU  144 1HA  MPR B   1      633    633    633      0      0      0  1XY1 446
+HETATM  145 2HA  MPR B   1      16.776   6.670  12.620  1.00  0.12   1  1XY1 447
+ANISOU  145 2HA  MPR B   1     1210   1210   1210      0      0      0  1XY1 448
+HETATM  146 1HB  MPR B   1      15.295   5.035  12.011  1.00  1.03   1  1XY1 449
+ANISOU  146 1HB  MPR B   1    10291  10291  10291      0      0      0  1XY1 450
+HETATM  147 2HB  MPR B   1      15.710   4.053  13.416  1.00  0.75   1  1XY1 451
+ANISOU  147 2HB  MPR B   1     7524   7524   7524      0      0      0  1XY1 452
+ATOM    149  N   TYR B   2      18.208   6.247  15.167  1.00  0.05      1XY1 453
+ANISOU  149  N   TYR B   2      275    732    512    -21     44     87  1XY1 454
+ATOM    150  CA  TYR B   2      19.523   5.985  15.807  1.00  0.04      1XY1 455
+ANISOU  150  CA  TYR B   2      494    465    255     66    111     92  1XY1 456
+ATOM    151  C   TYR B   2      19.240   5.761  17.279  1.00  0.05      1XY1 457
+ANISOU  151  C   TYR B   2      781    469    366    -51    264    -84  1XY1 458
+ATOM    152  O   TYR B   2      18.170   6.069  17.818  1.00  0.05      1XY1 459
+ANISOU  152  O   TYR B   2      492    773    344     87    209    105  1XY1 460
+ATOM    153  CB  TYR B   2      20.434   7.176  15.586  1.00  0.05      1XY1 461
+ANISOU  153  CB  TYR B   2      350    794    360   -137    -65    198  1XY1 462
+ATOM    154  CG  TYR B   2      20.594   7.528  14.138  1.00  0.05      1XY1 463
+ANISOU  154  CG  TYR B   2      481    716    354   -125    135    -70  1XY1 464
+ATOM    155  CD1 TYR B   2      19.864   8.542  13.540  1.00  0.06      1XY1 465
+ANISOU  155  CD1 TYR B   2      618    620    637     84    208    306  1XY1 466
+ATOM    156  CD2 TYR B   2      21.537   6.840  13.405  1.00  0.06      1XY1 467
+ANISOU  156  CD2 TYR B   2      759    671    302   -169    -16     34  1XY1 468
+ATOM    157  CE1 TYR B   2      19.964   8.844  12.179  1.00  0.07      1XY1 469
+ANISOU  157  CE1 TYR B   2      661    841    472   -186    160    212  1XY1 470
+ATOM    158  CE2 TYR B   2      21.714   7.187  12.071  1.00  0.08      1XY1 471
+ANISOU  158  CE2 TYR B   2      793   1043    536    218    129   -148  1XY1 472
+ATOM    159  CZ  TYR B   2      20.961   8.181  11.459  1.00  0.07      1XY1 473
+ANISOU  159  CZ  TYR B   2      601    901    497   -149    201   -180  1XY1 474
+ATOM    160  OH  TYR B   2      21.128   8.498  10.135  1.00  0.09      1XY1 475
+ANISOU  160  OH  TYR B   2     1085   1178    445    -14    223     26  1XY1 476
+ATOM    161  H   TYR B   2      17.845   7.089  15.738  1.00  0.53      1XY1 477
+ANISOU  161  H   TYR B   2     5283   5283   5283      0      0      0  1XY1 478
+ATOM    162  HA  TYR B   2      20.021   5.122  15.390  1.00  0.03      1XY1 479
+ANISOU  162  HA  TYR B   2      305    305    305      0      0      0  1XY1 480
+ATOM    163 1HB  TYR B   2      20.018   8.028  16.103  1.00  0.20      1XY1 481
+ANISOU  163 1HB  TYR B   2     2008   2008   2008      0      0      0  1XY1 482
+ATOM    164 2HB  TYR B   2      21.407   6.946  15.994  1.00  0.11      1XY1 483
+ANISOU  164 2HB  TYR B   2     1074   1074   1074      0      0      0  1XY1 484
+ATOM    165  HD1 TYR B   2      19.189   9.123  14.151  1.00  0.15      1XY1 485
+ANISOU  165  HD1 TYR B   2     1462   1462   1462      0      0      0  1XY1 486
+ATOM    166  HD2 TYR B   2      22.123   6.052  13.856  1.00  0.11      1XY1 487
+ANISOU  166  HD2 TYR B   2     1149   1149   1149      0      0      0  1XY1 488
+ATOM    167  HE1 TYR B   2      19.302   9.555  11.707  1.00  0.90      1XY1 489
+ANISOU  167  HE1 TYR B   2     9007   9007   9007      0      0      0  1XY1 490
+ATOM    168  HE2 TYR B   2      22.462   6.667  11.491  1.00  0.00   2  1XY1 491
+ANISOU  168  HE2 TYR B   2       31     31     31      0      0      0  1XY1 492
+ATOM    170  N   ILE B   3      20.259   5.180  18.001  1.00  0.05      1XY1 493
+ANISOU  170  N   ILE B   3      367    538    458     84     35    117  1XY1 494
+ATOM    171  CA  ILE B   3      20.051   4.875  19.405  1.00  0.05      1XY1 495
+ANISOU  171  CA  ILE B   3      245    560    562     22    -16    201  1XY1 496
+ATOM    172  C   ILE B   3      19.871   6.151  20.202  1.00  0.05      1XY1 497
+ANISOU  172  C   ILE B   3      545    527    317    109     21    -13  1XY1 498
+ATOM    173  O   ILE B   3      20.677   7.082  20.215  1.00  0.07      1XY1 499
+ANISOU  173  O   ILE B   3      598    719    678   -102    201   -194  1XY1 500
+ATOM    174  CB  ILE B   3      21.141   3.892  19.844  1.00  0.06      1XY1 501
+ANISOU  174  CB  ILE B   3      604    876    366   -110    204    150  1XY1 502
+ATOM    175  CG1 ILE B   3      20.748   3.385  21.239  1.00  0.10      1XY1 503
+ANISOU  175  CG1 ILE B   3      857    973   1161    292    164    324  1XY1 504
+ATOM    176  CG2 ILE B   3      22.492   4.550  19.862  1.00  0.09      1XY1 505
+ANISOU  176  CG2 ILE B   3      886    899   1034    251    -11    253  1XY1 506
+ATOM    177  CD1 ILE B   3      21.519   2.098  21.589  1.00  0.14      1XY1 507
+ANISOU  177  CD1 ILE B   3     1475   1301   1415    547    296    292  1XY1 508
+ATOM    178  H   ILE B   3      21.202   4.954  17.527  1.00  0.09      1XY1 509
+ANISOU  178  H   ILE B   3      919    919    919      0      0      0  1XY1 510
+ATOM    179  HA  ILE B   3      19.124   4.357  19.599  1.00  0.02      1XY1 511
+ANISOU  179  HA  ILE B   3      169    169    169      0      0      0  1XY1 512
+ATOM    180 1HB  ILE B   3      21.215   3.069  19.147  1.00  0.05      1XY1 513
+ANISOU  180 1HB  ILE B   3      462    462    462      0      0      0  1XY1 514
+ATOM    181 1HG1 ILE B   3      20.978   4.146  21.970  1.00  0.12      1XY1 515
+ANISOU  181 1HG1 ILE B   3     1214   1214   1214      0      0      0  1XY1 516
+ATOM    182 2HG1 ILE B   3      19.688   3.178  21.256  1.00  0.13      1XY1 517
+ANISOU  182 2HG1 ILE B   3     1258   1258   1258      0      0      0  1XY1 518
+ATOM    183 1HG2 ILE B   3      22.731   4.909  18.872  1.00  0.41      1XY1 519
+ANISOU  183 1HG2 ILE B   3     4093   4093   4093      0      0      0  1XY1 520
+ATOM    184 2HG2 ILE B   3      22.478   5.380  20.553  1.00  0.40      1XY1 521
+ANISOU  184 2HG2 ILE B   3     3985   3985   3985      0      0      0  1XY1 522
+ATOM    185 3HG2 ILE B   3      23.236   3.833  20.175  1.00  0.33      1XY1 523
+ANISOU  185 3HG2 ILE B   3     3266   3266   3266      0      0      0  1XY1 524
+ATOM    186 1HD1 ILE B   3      22.580   2.299  21.577  1.00  0.72      1XY1 525
+ANISOU  186 1HD1 ILE B   3     7159   7159   7159      0      0      0  1XY1 526
+ATOM    187 2HD1 ILE B   3      21.228   1.760  22.572  1.00  0.41      1XY1 527
+ANISOU  187 2HD1 ILE B   3     4093   4093   4093      0      0      0  1XY1 528
+ATOM    188 3HD1 ILE B   3      21.289   1.332  20.863  1.00  0.28      1XY1 529
+ANISOU  188 3HD1 ILE B   3     2766   2766   2766      0      0      0  1XY1 530
+ATOM    189  N   GLN B   4      18.676   6.189  20.961  1.00  0.05      1XY1 531
+ANISOU  189  N   GLN B   4      502    566    458     -5     73     69  1XY1 532
+ATOM    190  CA  GLN B   4      18.199   7.368  21.717  1.00  0.07      1XY1 533
+ANISOU  190  CA  GLN B   4      827    452    846    -72    655    -47  1XY1 534
+ATOM    191  C   GLN B   4      18.044   8.601  20.841  1.00  0.06      1XY1 535
+ANISOU  191  C   GLN B   4      388    669    641     88    289    207  1XY1 536
+ATOM    192  O   GLN B   4      18.011   9.729  21.287  1.00  0.07      1XY1 537
+ANISOU  192  O   GLN B   4     1010    571    623     28    -44    -97  1XY1 538
+ATOM    193  CB  GLN B   4      19.020   7.600  22.977  1.00  0.06      1XY1 539
+ANISOU  193  CB  GLN B   4      489    850    401   -154     15   -346  1XY1 540
+ATOM    194  CG  GLN B   4      18.888   6.452  23.969  1.00  0.08      1XY1 541
+ANISOU  194  CG  GLN B   4      962    868    558    144    -35    186  1XY1 542
+ATOM    195  CD  GLN B   4      17.445   6.107  24.256  1.00  0.10      1XY1 543
+ANISOU  195  CD  GLN B   4      686   1741    432    195    300     90  1XY1 544
+ATOM    196  OE1 GLN B   4      16.645   7.121  24.516  1.00  0.12      1XY1 545
+ANISOU  196  OE1 GLN B   4     1071   1495    929    210    534    184  1XY1 546
+ATOM    197  NE2 GLN B   4      17.099   4.826  24.258  1.00  0.17      1XY1 547
+ANISOU  197  NE2 GLN B   4     1569    908   2494   -181   1093    120  1XY1 548
+ATOM    198  H   GLN B   4      18.071   5.295  20.991  1.00  0.08      1XY1 549
+ANISOU  198  H   GLN B   4      821    821    821      0      0      0  1XY1 550
+ATOM    199  HA  GLN B   4      17.198   7.148  22.058  1.00  0.02      1XY1 551
+ANISOU  199  HA  GLN B   4      157    157    157      0      0      0  1XY1 552
+ATOM    200 1HB  GLN B   4      20.059   7.703  22.701  1.00  0.00   2  1XY1 553
+ANISOU  200 1HB  GLN B   4        0      0      0      0      0      0  1XY1 554
+ATOM    201 2HB  GLN B   4      18.681   8.509  23.450  1.00  0.07      1XY1 555
+ANISOU  201 2HB  GLN B   4      654    654    654      0      0      0  1XY1 556
+ATOM    202 1HG  GLN B   4      19.379   5.582  23.560  1.00  0.08      1XY1 557
+ANISOU  202 1HG  GLN B   4      797    797    797      0      0      0  1XY1 558
+ATOM    203 2HG  GLN B   4      19.368   6.736  24.894  1.00  0.06      1XY1 559
+ANISOU  203 2HG  GLN B   4      577    577    577      0      0      0  1XY1 560
+ATOM    204 1HE2 GLN B   4      16.122   4.477  24.324  1.00  0.25      1XY1 561
+ANISOU  204 1HE2 GLN B   4     2488   2488   2488      0      0      0  1XY1 562
+ATOM    205 2HE2 GLN B   4      17.758   4.048  24.041  1.00  0.17      1XY1 563
+ANISOU  205 2HE2 GLN B   4     1719   1719   1719      0      0      0  1XY1 564
+ATOM    206  N   ASN B   5      17.745   8.337  19.479  1.00  0.04      1XY1 565
+ANISOU  206  N   ASN B   5      362    369    599      0    136     -3  1XY1 566
+ATOM    207  CA  ASN B   5      17.251   9.384  18.632  1.00  0.05      1XY1 567
+ANISOU  207  CA  ASN B   5      274    694    633   -118    -13    323  1XY1 568
+ATOM    208  C   ASN B   5      16.533   8.695  17.484  1.00  0.06      1XY1 569
+ANISOU  208  C   ASN B   5      611    472    604    168      0    206  1XY1 570
+ATOM    209  O   ASN B   5      16.863   8.793  16.287  1.00  0.06      1XY1 571
+ANISOU  209  O   ASN B   5      380    832    480    -45    -66    126  1XY1 572
+ATOM    210  CB  ASN B   5      18.418  10.249  18.110  1.00  0.06      1XY1 573
+ANISOU  210  CB  ASN B   5      572    400    858    -14   -218    208  1XY1 574
+ATOM    211  CG  ASN B   5      17.847  11.366  17.220  1.00  0.07      1XY1 575
+ANISOU  211  CG  ASN B   5      699    460   1065   -144    235   -198  1XY1 576
+ATOM    212  OD1 ASN B   5      16.758  12.011  17.628  1.00  0.09      1XY1 577
+ANISOU  212  OD1 ASN B   5      687    586   1326     43    217    125  1XY1 578
+ATOM    213  ND2 ASN B   5      18.513  11.707  16.121  1.00  0.08      1XY1 579
+ANISOU  213  ND2 ASN B   5      896    639    721   -276   -104    244  1XY1 580
+ATOM    214  H   ASN B   5      17.890   7.345  19.079  1.00  0.87      1XY1 581
+ANISOU  214  H   ASN B   5     8745   8745   8745      0      0      0  1XY1 582
+ATOM    215  HA  ASN B   5      16.585  10.044  19.167  1.00  0.25      1XY1 583
+ANISOU  215  HA  ASN B   5     2549   2549   2549      0      0      0  1XY1 584
+ATOM    216 1HB  ASN B   5      18.948  10.685  18.944  1.00  0.02      1XY1 585
+ANISOU  216 1HB  ASN B   5      163    163    163      0      0      0  1XY1 586
+ATOM    217 2HB  ASN B   5      19.095   9.636  17.534  1.00  0.16      1XY1 587
+ANISOU  217 2HB  ASN B   5     1594   1594   1594      0      0      0  1XY1 588
+ATOM    218 1HD2 ASN B   5      19.365  11.137  15.902  1.00  0.20      1XY1 589
+ANISOU  218 1HD2 ASN B   5     2004   2004   2004      0      0      0  1XY1 590
+ATOM    219 2HD2 ASN B   5      18.329  12.316  15.288  1.00  0.09      1XY1 591
+ANISOU  219 2HD2 ASN B   5      928    928    928      0      0      0  1XY1 592
+ATOM    220  N   CYS B   6      15.396   7.985  17.873  1.00  0.05      1XY1 593
+ANISOU  220  N   CYS B   6      423    364    644     18    121     52  1XY1 594
+ATOM    221  CA  CYS B   6      14.573   7.315  16.865  1.00  0.04      1XY1 595
+ANISOU  221  CA  CYS B   6      342    601    352    -15     72    -41  1XY1 596
+ATOM    222  C   CYS B   6      13.181   7.786  17.109  1.00  0.06      1XY1 597
+ANISOU  222  C   CYS B   6      423    775    599   -220    149    -58  1XY1 598
+ATOM    223  O   CYS B   6      12.432   7.322  17.961  1.00  0.08      1XY1 599
+ANISOU  223  O   CYS B   6      559   1138    745    127    301    352  1XY1 600
+ATOM    224  CB  CYS B   6      14.651   5.791  17.047  1.00  0.06      1XY1 601
+ANISOU  224  CB  CYS B   6      569    316    833   -103   -213   -125  1XY1 602
+ATOM    225  SG  CYS B   6      13.645   4.956  15.769  1.00  0.08      1XY1 603
+ANISOU  225  SG  CYS B   6      789    720    928   -224     69    -51  1XY1 604
+ATOM    226  H   CYS B   6      15.123   7.931  18.916  1.00  0.15      1XY1 605
+ANISOU  226  H   CYS B   6     1460   1460   1460      0      0      0  1XY1 606
+ATOM    227  HA  CYS B   6      14.905   7.541  15.862  1.00  0.11      1XY1 607
+ANISOU  227  HA  CYS B   6     1132   1132   1132      0      0      0  1XY1 608
+ATOM    228 1HB  CYS B   6      15.680   5.473  16.957  1.00  0.10      1XY1 609
+ANISOU  228 1HB  CYS B   6     1041   1041   1041      0      0      0  1XY1 610
+ATOM    229 2HB  CYS B   6      14.277   5.528  18.025  1.00  0.24      1XY1 611
+ANISOU  229 2HB  CYS B   6     2362   2362   2362      0      0      0  1XY1 612
+ATOM    231  N   PRO B   7      12.706   8.841  16.314  1.00  0.05      1XY1 613
+ANISOU  231  N   PRO B   7      491    486    432    -29    239    -95  1XY1 614
+ATOM    232  CA  PRO B   7      11.401   9.434  16.624  1.00  0.05      1XY1 615
+ANISOU  232  CA  PRO B   7      477    449    456   -137    -16      7  1XY1 616
+ATOM    233  C   PRO B   7      10.254   8.561  16.264  1.00  0.06      1XY1 617
+ANISOU  233  C   PRO B   7      468    747    625    102    128    459  1XY1 618
+ATOM    234  O   PRO B   7       9.103   8.861  16.587  1.00  0.08      1XY1 619
+ANISOU  234  O   PRO B   7      370   1052    955     23    258   -232  1XY1 620
+ATOM    235  CB  PRO B   7      11.438  10.745  15.823  1.00  0.07      1XY1 621
+ANISOU  235  CB  PRO B   7      505    590    959    148     82   -135  1XY1 622
+ATOM    236  CG  PRO B   7      12.354  10.410  14.649  1.00  0.08      1XY1 623
+ANISOU  236  CG  PRO B   7      706    768    799    143   -222    141  1XY1 624
+ATOM    237  CD  PRO B   7      13.446   9.583  15.296  1.00  0.07      1XY1 625
+ANISOU  237  CD  PRO B   7     1028    453    483     34    398     86  1XY1 626
+ATOM    238  HA  PRO B   7      11.248   9.584  17.682  1.00  0.12      1XY1 627
+ANISOU  238  HA  PRO B   7     1175   1175   1175      0      0      0  1XY1 628
+ATOM    239 1HB  PRO B   7      10.450  11.016  15.478  1.00  0.07      1XY1 629
+ANISOU  239 1HB  PRO B   7      690    690    690      0      0      0  1XY1 630
+ATOM    240 2HB  PRO B   7      11.846  11.550  16.415  1.00  0.07      1XY1 631
+ANISOU  240 2HB  PRO B   7      652    652    652      0      0      0  1XY1 632
+ATOM    241 1HG  PRO B   7      11.829   9.839  13.897  1.00  0.05      1XY1 633
+ANISOU  241 1HG  PRO B   7      481    481    481      0      0      0  1XY1 634
+ATOM    242 2HG  PRO B   7      12.758  11.307  14.203  1.00  0.22      1XY1 635
+ANISOU  242 2HG  PRO B   7     2174   2174   2174      0      0      0  1XY1 636
+ATOM    243 1HD  PRO B   7      13.908   8.916  14.583  1.00  0.02      1XY1 637
+ANISOU  243 1HD  PRO B   7      178    178    178      0      0      0  1XY1 638
+ATOM    244 2HD  PRO B   7      14.203  10.212  15.742  1.00  0.46      1XY1 639
+ANISOU  244 2HD  PRO B   7     4622   4622   4622      0      0      0  1XY1 640
+ATOM    245  N   LEU B   8      10.522   7.448  15.472  1.00  0.06      1XY1 641
+ANISOU  245  N   LEU B   8      612    491    595    -13     36    -93  1XY1 642
+ATOM    246  CA  LEU B   8       9.419   6.561  15.058  1.00  0.06      1XY1 643
+ANISOU  246  CA  LEU B   8      412    701    625   -162    -16    -85  1XY1 644
+ATOM    247  C   LEU B   8       8.940   5.625  16.129  1.00  0.05      1XY1 645
+ANISOU  247  C   LEU B   8      558    469    555   -151   -196    -87  1XY1 646
+ATOM    248  O   LEU B   8       7.829   5.193  16.138  1.00  0.09      1XY1 647
+ANISOU  248  O   LEU B   8      381   1220    998   -529    -42    182  1XY1 648
+ATOM    249  CB  LEU B   8       9.900   5.782  13.837  1.00  0.07      1XY1 649
+ANISOU  249  CB  LEU B   8      699    891    524   -608    100   -205  1XY1 650
+ATOM    250  CG  LEU B   8      10.132   6.643  12.602  1.00  0.12      1XY1 651
+ANISOU  250  CG  LEU B   8     1374   1609    581   -974    195    186  1XY1 652
+ATOM    251  CD1 LEU B   8      10.725   5.748  11.524  1.00  0.15      1XY1 653
+ANISOU  251  CD1 LEU B   8     1694   2437    397  -1125    279   -372  1XY1 654
+ATOM    252  CD2 LEU B   8       8.861   7.333  12.099  1.00  0.15      1XY1 655
+ANISOU  252  CD2 LEU B   8     1891   1296   1401     47   -232    622  1XY1 656
+ATOM    253  H   LEU B   8      11.534   7.235  15.161  1.00  0.48      1XY1 657
+ANISOU  253  H   LEU B   8     4826   4826   4826      0      0      0  1XY1 658
+ATOM    254  HA  LEU B   8       8.560   7.176  14.835  1.00  0.12      1XY1 659
+ANISOU  254  HA  LEU B   8     1206   1206   1206      0      0      0  1XY1 660
+ATOM    255 1HB  LEU B   8      10.829   5.294  14.090  1.00  0.04      1XY1 661
+ANISOU  255 1HB  LEU B   8      416    416    416      0      0      0  1XY1 662
+ATOM    256 2HB  LEU B   8       9.156   5.037  13.596  1.00  0.28      1XY1 663
+ANISOU  256 2HB  LEU B   8     2824   2824   2824      0      0      0  1XY1 664
+ATOM    257  HG  LEU B   8      10.808   7.445  12.860  1.00  0.06      1XY1 665
+ANISOU  257  HG  LEU B   8      630    630    630      0      0      0  1XY1 666
+ATOM    258 1HD1 LEU B   8      10.035   4.948  11.302  1.00  0.04      1XY1 667
+ANISOU  258 1HD1 LEU B   8      404    404    404      0      0      0  1XY1 668
+ATOM    259 2HD1 LEU B   8      10.903   6.329  10.632  1.00  0.18      1XY1 669
+ANISOU  259 2HD1 LEU B   8     1817   1817   1817      0      0      0  1XY1 670
+ATOM    260 3HD1 LEU B   8      11.658   5.333  11.875  1.00  0.09      1XY1 671
+ANISOU  260 3HD1 LEU B   8      927    927    927      0      0      0  1XY1 672
+ATOM    261 1HD2 LEU B   8       8.460   7.962  12.880  1.00  0.37      1XY1 673
+ANISOU  261 1HD2 LEU B   8     3661   3661   3661      0      0      0  1XY1 674
+ATOM    262 2HD2 LEU B   8       9.098   7.938  11.236  1.00  0.67      1XY1 675
+ANISOU  262 2HD2 LEU B   8     6692   6692   6692      0      0      0  1XY1 676
+ATOM    263 3HD2 LEU B   8       8.130   6.587  11.826  1.00  0.68      1XY1 677
+ANISOU  263 3HD2 LEU B   8     6791   6791   6791      0      0      0  1XY1 678
+ATOM    264  N   GLY B   9       9.848   5.142  17.052  1.00  0.08      1XY1 679
+ANISOU  264  N   GLY B   9      613    910    747     70    238    297  1XY1 680
+ATOM    265  CA  GLY B   9       9.405   4.129  17.977  1.00  0.09      1XY1 681
+ANISOU  265  CA  GLY B   9      705   1388    692    142    164    455  1XY1 682
+ATOM    266  C   GLY B   9      10.539   3.848  18.929  1.00  0.08      1XY1 683
+ANISOU  266  C   GLY B   9     1113    756    413   -375     84    -40  1XY1 684
+ATOM    267  O   GLY B   9      11.715   4.063  18.695  1.00  0.09      1XY1 685
+ANISOU  267  O   GLY B   9      752    898    963    -97    227    309  1XY1 686
+ATOM    268  H   GLY B   9      10.862   5.514  17.080  1.00  0.11      1XY1 687
+ANISOU  268  H   GLY B   9     1127   1127   1127      0      0      0  1XY1 688
+ATOM    269 1HA  GLY B   9       8.544   4.482  18.525  1.00  0.11      1XY1 689
+ANISOU  269 1HA  GLY B   9     1053   1053   1053      0      0      0  1XY1 690
+ATOM    270 2HA  GLY B   9       9.145   3.229  17.440  1.00  0.27      1XY1 691
+ANISOU  270 2HA  GLY B   9     2715   2715   2715      0      0      0  1XY1 692
+HETATM  271  N   NH2 B  10      10.103   3.092  20.007  1.00  0.09      1XY1B 14
+ANISOU  271  N   NH2 B  10      595   1262    978   -132    252    198  1XY1B 15
+HETATM  272 1H   NH2 B  10       9.105   2.951  20.225  1.00  0.05      1XY1B 16
+ANISOU  272 1H   NH2 B  10      506    506    506      0      0      0  1XY1B 17
+HETATM  273 2H   NH2 B  10      10.692   2.246  20.305  1.00  0.19      1XY1B 18
+ANISOU  273 2H   NH2 B  10     1930   1930   1930      0      0      0  1XY1B 19
+TER     274      NH2 B  10                                              1XY1 699
+HETATM  275  O   HOH     1      16.744   4.058  20.326  1.00  0.10      1XY1 700
+TER 
+ANISOU  275  O   HOH     1      822   1006   1188   -284    305   -374  1XY1 701
+HETATM  276  O   HOH     2      14.035   2.408  18.231  1.00  0.11      1XY1 702
+TER 
+ANISOU  276  O   HOH     2     1036   1065   1053     17    132     30  1XY1 703
+HETATM  277  O   HOH     3      12.384   2.605  21.898  1.00  0.10      1XY1 704
+ANISOU  277  O   HOH     3      965   1122   1040    194      9     42  1XY1 705
+TER 
+HETATM  278  O   HOH     4      17.938   2.874  11.493  1.00  0.11      1XY1 706
+ANISOU  278  O   HOH     4     1314    953   1017     -1   -190    -76  1XY1 707
+HETATM  279  O   HOH     5      16.530   1.118  13.392  1.00  0.12      1XY1 708
+ANISOU  279  O   HOH     5     1259   1227   1117   -270    387   -219  1XY1 709
+TER 
+HETATM  280  O   HOH     6      14.108   1.047  20.528  1.00  0.13      1XY1 710
+ANISOU  280  O   HOH     6     1674   1305    970     71    304    345  1XY1 711
+HETATM  281  O   HOH     7      15.740   2.251  22.341  1.00  0.16      1XY1 712
+ANISOU  281  O   HOH     7     1174   1353   2189    251    112    -86  1XY1 713
+HETATM  282  O   HOH     8      23.666   2.275   1.191  1.00  0.14      1XY1 714
+ANISOU  282  O   HOH     8     1212   1280   1626   -390    362   -485  1XY1 715
+HETATM  283  O   HOH     9      21.491   0.596   2.285  1.00  0.14      1XY1 716
+ANISOU  283  O   HOH     9     1555   1612   1171    360    226     18  1XY1 717
+HETATM  284  O   HOH    10      19.528   1.361   9.153  1.00  0.12      1XY1 718
+ANISOU  284  O   HOH    10     1404   1373    767    446    218    271  1XY1 719
+HETATM  285  O   HOH    11      19.023   3.847   1.887  1.00  0.15      1XY1 720
+ANISOU  285  O   HOH    11     1245   1162   2223    638    633    -20  1XY1 721
+HETATM  286  O   HOH    12      19.969   3.535   4.394  1.00  0.18      1XY1 722
+ANISOU  286  O   HOH    12     2090   1510   1746   -507    392   -434  1XY1 723
+HETATM  287  O   HOH    13      22.475   2.485   4.180  1.00  0.18      1XY1 724
+ANISOU  287  O   HOH    13     2397   1111   1784   -100   -339    -12  1XY1 725
+CONECT    1    2    4                                                   1XY1 726
+CONECT    2    1    3   12                                              1XY1 727
+CONECT    3    2                                                        1XY1 728
+CONECT    4    1    5    6                                              1XY1 729
+CONECT    5    4   88                                                   1XY1 730
+CONECT    6    4   88                                                   1XY1 731
+CONECT   12    2   13             72                                    1XY1 732
+CONECT   15   14                                 69                     1XY1 733
+CONECT   69   54   70             15                                    1XY1 734
+CONECT   72   71                                 12                     1XY1 735
+CONECT   86   85                                127                     1XY1 736
+CONECT   88   87    5                                                   1XY1 737
+CONECT   88   87    6                                                   1XY1 738
+CONECT  127  110  128             86                                    1XY1 739
+CONECT  138  139  141                                                   1XY1 740
+CONECT  139  138  140  149                                              1XY1 741
+CONECT  140  139                                                        1XY1 742
+CONECT  141  138  142  143                                              1XY1 743
+CONECT  142  141  225                                                   1XY1 744
+CONECT  143  141  225                                                   1XY1 745
+CONECT  149  139  150            209                                    1XY1 746
+CONECT  152  151                                206                     1XY1 747
+CONECT  206  191  207            152                                    1XY1 748
+CONECT  209  208                                149                     1XY1 749
+CONECT  223  222                                264                     1XY1 750
+CONECT  225  224  142                                                   1XY1 751
+CONECT  225  224  143                                                   1XY1 752
+CONECT  264  247  265            223                                    1XY1 753
+MASTER      121    9    4    0    0    4    0    9  279    2   28    2  1XY1B 20
+END                                                                     1XY1 755
+

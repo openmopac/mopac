@@ -1,0 +1,15 @@
+ geo-ok HTML MOZYME
+ Transition state for 1,3-Cyclobutadiene <=> 2,4-Cyclobutadiene
+( 120.0 second) Locate approximate structure of the transition state for the second step in the hydride transfer
+  C(HETATM    1  C   HET A   1)  -0.20372251 +1  -0.79904462 +1   0.94186055 +1
+  H(HETATM    2  H   HET A   1)   1.02909804 +1  -1.04532587 +1   1.06244157 +1
+  C(HETATM    3  C   HET A   1)   0.52413055 +1   0.50255238 +1   0.93045551 +1
+  C(HETATM    4  C   HET A   1)   0.54417617 +1   0.97636055 +1  -0.34816981 +1
+  H(HETATM    5  H   HET A   1)  -0.81347651 +1  -1.16572182 +1   1.76940336 +1
+  H(HETATM    6  H   HET A   1)  -1.48998461 +1  -1.64290186 +1  -0.73599504 +1
+  H(HETATM    7  H   HET A   1)  -0.53480200 +1   0.36657377 +1  -2.19733466 +1
+  H(HETATM    8  H   HET A   1)   1.10192951 +1   1.81759090 +1  -0.69354017 +1
+  H(HETATM    9  H   HET A   1)   0.82222544 +1   0.98313737 +1   1.82663072 +1
+  C(HETATM   10  C   HET A   1)  -0.78728661 +1  -0.89338704 +1  -0.42123347 +1
+  C(HETATM   11  C   HET A   1)  -0.31942661 +1   0.15083103 +1  -1.16975035 +1
+ 

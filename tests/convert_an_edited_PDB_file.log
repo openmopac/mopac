@@ -1,0 +1,4 @@
+ START_RES=(12B 20C 30B)  CHAINS=(BCB)  add-H RESEQ HTML
+ Test that ADD-H and RESEQ work correctly.
+
+           Empirical Formula: C63 H24 N16 O28 S3 P   =   135 atoms

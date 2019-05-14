@@ -1,0 +1,6 @@
+*
+* Input files were generated from raw PDB files by deleting the
+* original hydrogen atoms and adding atoms to satisfy chemical requirements.
+*
+geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
+Two PDB structures for Crambin (Atoms in PRO/SER 22, LEU/ILE 25, and others deleted)

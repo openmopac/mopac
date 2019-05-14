@@ -1,0 +1,4 @@
+geo_dat="Neutral.mop"  OUTPUT   site=(ionize) HTML
+Test that all ionizable sites get ionized
+
+

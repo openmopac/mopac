@@ -1,0 +1,5 @@
+ geo_ref="Cyclobutadiene_2.arc" +
+geo_dat="Cyclobutadiene_1.arc" +
+geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML 
+Transition state for 1,3-Cyclobutadiene <=> 2,4-Cyclobutadiene
+Locate approximate structure of the transition state for the second step in the hydride transfer
