@@ -692,7 +692,7 @@
           allocate(react(3*numat))
           react = 0.d0
         end if
-        if (index(keywrd, " HTML") /= 0) call write_path_html
+        if (index(keywrd, " HTML") /= 0) call write_path_html(1)
         call drc (react, react)
         iflepo = -1
       else if (index(keywrd, " LOCATE-TS") /= 0) then
@@ -840,6 +840,12 @@
       inquire(unit=ir, opened=opend) 
       if (opend) close(ir, status = 'delete', err = 999)
 999   jobnam = " "
+      inquire(unit = ilog, opened = opend, name = line)
+      if (opend) then
+        rewind (ilog)
+        read(ilog,'(a)', iostat=i)line
+        if (i == -1) close(ilog, status = 'delete', iostat=i)
+      end if
       return
 end subroutine run_mopac
 subroutine special

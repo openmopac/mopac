@@ -1,0 +1,189 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue May 14 12:16:10 2019  *
+ *  COMPARE    - Compare two geometries
+ *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
+ *  Keyword:   START_RES=(1A) 
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "PDB1EJG.ENT"
+ *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "PDB1CBN.ENT"
+ *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
+ *  Keyword:   CHAINS=(A) 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  OUTPUT     - MINIMIZE OUTPUT
+ *******************************************************************************
+ START_RES=(1A)  CHAINS=(A) geo_dat="PDB1EJG.ent" geo_ref="PDB1CBN.ent" compare output
+ Two PDB structures for Crambin after deleting atoms not common to both
+
+ 
+
+                            Differences in atoms sets
+
+          Atoms in GEO_DAT only                   Atoms in GEO_REF only
+
+       ATOM    400  N   PRO A  22              ATOM    352  N   SER A  22
+       ATOM    401  CA  PRO A  22              ATOM    354  CA  SER A  22
+       ATOM    402  C   PRO A  22              ATOM    356  C   SER A  22
+       ATOM    403  O   PRO A  22              ATOM    358  O   SER A  22
+       ATOM    404  CB  PRO A  22              ATOM    360  CB  SER A  22
+       ATOM    405  CG  PRO A  22              ATOM    362  OG  SER A  22
+       ATOM    406  CD  PRO A  22              ATOM    364  H   SER A  22
+       ATOM    407  HA  PRO A  22              ATOM    366  HA  SER A  22
+       ATOM    408  HB2 PRO A  22              ATOM    368  HB2 SER A  22
+       ATOM    409  HB3 PRO A  22              ATOM    370  HB3 SER A  22
+       ATOM    410  HG2 PRO A  22              ATOM    415  N   ILE A  25
+       ATOM    411  HG3 PRO A  22              ATOM    417  CA  ILE A  25
+       ATOM    412  HD2 PRO A  22              ATOM    419  C   ILE A  25
+       ATOM    413  HD3 PRO A  22              ATOM    421  O   ILE A  25
+       ATOM    457  N   LEU A  25              ATOM    423  CB  ILE A  25
+       ATOM    458  CA  LEU A  25              ATOM    425  CG1 ILE A  25
+       ATOM    459  C   LEU A  25              ATOM    427  CG2 ILE A  25
+       ATOM    460  O   LEU A  25              ATOM    429  CD1 ILE A  25
+       ATOM    461  CB  LEU A  25              ATOM    431  H   ILE A  25
+       ATOM    462  CG  LEU A  25              ATOM    433  HA  ILE A  25
+       ATOM    463  CD1 LEU A  25              ATOM    435  HB  ILE A  25
+       ATOM    464  CD2 LEU A  25              ATOM    437 HG12 ILE A  25
+       ATOM    465  H   LEU A  25              ATOM    439 HG13 ILE A  25
+       ATOM    466  HA  LEU A  25              ATOM    441 HG21 ILE A  25
+       ATOM    467  HB2 LEU A  25              ATOM    443 HG22 ILE A  25
+       ATOM    468  HB3 LEU A  25              ATOM    445 HG23 ILE A  25
+       ATOM    469  HG  LEU A  25              ATOM    447 HD11 ILE A  25
+       ATOM    470 HD11 LEU A  25              ATOM    449 HD12 ILE A  25
+       ATOM    471 HD12 LEU A  25              ATOM    451 HD13 ILE A  25
+       ATOM    472 HD13 LEU A  25              ATOM    675  HB  THR A  39
+       ATOM    473 HD21 LEU A  25              ATOM    676  HG1 THR A  39
+       ATOM    474 HD22 LEU A  25              ATOM    677 HG21 THR A  39
+       ATOM    475 HD23 LEU A  25              ATOM    678 HG22 THR A  39
+       ATOM    587  HH  TYR A  29              ATOM    679 HG23 THR A  39
+                                               HETATM  774  C1  EOH A  66
+                                               HETATM  775  C2  EOH A  66
+                                               HETATM  777  O   EOH A  66
+
+                      Number of atoms in GEO_DAT:  637
+                      Number of atoms in GEO_REF:  640
+          Number of atoms common to both systems:  603
+
+
+                        After docking
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (ATOM    603 HD22 ASN A  46)  11.317   5.324  15.663        3.98         3.98
+            (ATOM     93 HD12 ILE A   7)  10.589  -0.934  15.540        3.47         7.44
+            (ATOM    602 HD21 ASN A  46)  12.053   4.334  16.647        2.46         9.90
+            (ATOM     87 HG12 ILE A   7)  11.182   0.915  13.495        2.42        12.32
+            (ATOM    596  ND2 ASN A  46)  11.916   4.601  15.746        2.31        14.63
+            (ATOM    595  OD1 ASN A  46)  13.443   3.218  14.924        2.17        16.80
+            (ATOM     92 HD11 ILE A   7)  11.690  -1.087  14.327        1.69        18.50
+            (ATOM     94 HD13 ILE A   7)  11.998  -0.148  15.646        1.69        20.18
+            (ATOM     83  CD1 ILE A   7)  11.293  -0.460  15.011        1.67        21.86
+            (ATOM     27  HG1 THR A   2)  13.260   9.363   3.966        1.50        23.36
+            (ATOM    578  HH  TYR A  44)   8.359  15.024  15.914        1.40        24.76
+            (ATOM     90 HG22 ILE A   7)   8.879  -1.259  13.461        0.95        25.71
+            (ATOM    553  OD2 ASP A  43)  12.244  14.902  19.239        0.94        26.66
+            (ATOM    512  CG2 THR A  39)  23.199  12.887  12.825        0.80        27.45
+            (ATOM    108 HG21 VAL A   8)   4.432   0.305  13.922        0.68        28.13
+            (ATOM    551  CG  ASP A  43)  13.083  14.013  18.900        0.67        28.80
+            (ATOM    552  OD1 ASP A  43)  14.052  14.180  18.165        0.63        29.43
+            (ATOM    397  HG1 THR A  30)   5.140   9.936   6.972        0.62        30.06
+            (ATOM    511  OG1 THR A  39)  24.152  13.569  10.774        0.61        30.66
+            (ATOM     81  CG1 ILE A   7)  10.659   0.726  14.337        0.58        31.25
+            (ATOM    556  HB2 ASP A  43)  11.795  12.538  19.513        0.57        31.82
+            (ATOM     88 HG13 ILE A   7)  10.782   1.519  14.934        0.56        32.38
+            (ATOM    109 HG22 VAL A   8)   3.296   0.983  14.780        0.54        32.92
+            (ATOM     89 HG21 ILE A   7)   9.581  -0.446  12.230        0.54        33.46
+            (ATOM    169 HD22 ASN A  12)   1.604   4.977   9.991        0.52        33.98
+            (ATOM    550  CB  ASP A  43)  12.776  12.653  19.456        0.48        34.46
+            (ATOM    557  HB3 ASP A  43)  13.056  12.655  20.409        0.47        34.93
+            (ATOM    168 HD21 ASN A  12)   0.895   3.591  10.299        0.47        35.40
+            (ATOM     86  HB  ILE A   7)   8.615   0.637  14.674        0.47        35.86
+            (ATOM     91 HG23 ILE A   7)   7.993  -0.280  12.525        0.46        36.33
+
+   Difference between GEO_DAT and GEO_REF:  98.262 = total,  0.1630 = Average,  0.3654 = RMS, in Angstroms
+
+                             Differences between bond-lengths for the two geometries
+
+           Diff.                 Atom 1                       Atom 2                  Bond length      Bond length
+                                                                                      in GEO_DAT      in GEO_REF
+   1       0.269     C(ATOM    530  CG  PRO A  41)    H(ATOM    535  HG2 PRO A  41)      1.099            0.831
+   2       0.260     C(ATOM     56  CG  PRO A   5)    H(ATOM     61  HG2 PRO A   5)      1.099            0.839
+   3       0.260     C(ATOM    278  CG  PRO A  19)    H(ATOM    283  HG2 PRO A  19)      1.099            0.839
+   4       0.257     C(ATOM    480  CG  PRO A  36)    H(ATOM    485  HG2 PRO A  36)      1.099            0.842
+   5       0.217     C(ATOM    529  CB  PRO A  41)    H(ATOM    533  HB2 PRO A  41)      1.099            0.882
+   6       0.207     C(ATOM     55  CB  PRO A   5)    H(ATOM     59  HB2 PRO A   5)      1.099            0.892
+   7       0.200     C(ATOM    277  CB  PRO A  19)    H(ATOM    281  HB2 PRO A  19)      1.099            0.899
+   8       0.186     C(ATOM    479  CB  PRO A  36)    H(ATOM    483  HB2 PRO A  36)      1.099            0.913
+   9       0.174     C(ATOM    178  CE1 PHE A  13)    H(ATOM    187  HE1 PHE A  13)      1.098            0.924
+  10       0.161     C(ATOM    177  CD2 PHE A  13)    H(ATOM    186  HD2 PHE A  13)      1.099            0.938
+  11       0.156     C(ATOM    179  CE2 PHE A  13)    H(ATOM    188  HE2 PHE A  13)      1.099            0.944
+  12       0.153     C(ATOM    127  CD  ARG A  10)    H(ATOM    139  HD3 ARG A  10)      1.099            0.946
+  13       0.145     C(ATOM    236  CD  ARG A  17)    H(ATOM    248  HD3 ARG A  17)      1.099            0.954
+  14       0.144     C(ATOM     32  CA  CYS A   3)    H(ATOM     38  HA  CYS A   3)      1.099            0.954
+  15       0.144     C(ATOM     55  CB  PRO A   5)    H(ATOM     60  HB3 PRO A   5)      1.098            0.954
+  16       0.144     C(ATOM    235  CG  ARG A  17)    H(ATOM    246  HG3 ARG A  17)      1.099            0.955
+  17       0.143     C(ATOM    529  CB  PRO A  41)    H(ATOM    534  HB3 PRO A  41)      1.099            0.957
+  18       0.140     C(ATOM    171  CA  PHE A  13)    H(ATOM    182  HA  PHE A  13)      1.099            0.959
+  19       0.140     C(ATOM    100  CG1 VAL A   8)    H(ATOM    107 HG13 VAL A   8)      1.106            0.966
+  20       0.140     C(ATOM    277  CB  PRO A  19)    H(ATOM    282  HB3 PRO A  19)      1.099            0.960
+  21       0.138     C(ATOM    126  CG  ARG A  10)    H(ATOM    137  HG3 ARG A  10)      1.099            0.960
+  22       0.137     C(ATOM    490  CA  GLY A  37)    H(ATOM    494  HA2 GLY A  37)      1.114            0.977
+  23       0.136     N(ATOM    308  N   GLU A  23)    H(ATOM    317  H   GLU A  23)      1.029            0.894
+  24       0.135     C(ATOM    100  CG1 VAL A   8)    H(ATOM    106 HG12 VAL A   8)      1.111            0.975
+  25       0.135     C(ATOM    507  CA  THR A  39)    H(ATOM    514  HA  THR A  39)      1.099            0.964
+
+    GEO_DAT:  'PDB1EJG.ent'
+    GEO_REF:  'PDB1CBN.ent'
+
+
+                    Analysis of Non-Covalent Interactions
+
+          Total non-covalent energy of GEO_DAT system:   -546.43 Kcal/mol
+          Total non-covalent energy of GEO_REF system:   -551.77 Kcal/mol
+                                           Difference:      5.33 Kcal/mol
+
+          Number of hydrogen bonds common to both systems:   57
+
+
+                            Hydrogen bonds in GEO_REF but not in GEO_DAT
+
+               Donor atom                     Hydrogen atom            H-bond length(A)     Energy    Sum
+
+   1   "ATOM     65  N   SER A   6"      "ATOM    603 HD22 ASN A  46"       2.918           -1.606   -1.606
+   2   "ATOM     54  O   PRO A   5"      "ATOM    603 HD22 ASN A  46"       2.990           -0.840   -2.446
+
+
+    The following files will be written:
+    'Compare_PDB_1EJG_and_1CBN.html'
+    'PDB1EJG.pdb'
+    'PDB1CBN.pdb'
+
+          GEO_REF with 0SCF: Job complete
+
+ ******************************************************************************
+ *                                                                            *
+ *     Error and normal termination messages reported in this calculation     *
+ *                                                                            *
+ * GEO_REF with 0SCF: Job complete                                            *
+ * JOB ENDED NORMALLY                                                         *
+ *                                                                            *
+ ******************************************************************************
+
+
+
+ TOTAL JOB TIME:             0.00 SECONDS
+
+ == MOPAC DONE ==

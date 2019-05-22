@@ -8,7 +8,7 @@
       zs, zp, uss, upp, udd, eisol, &
       f0sd, g2sd, f0sd_store, g2sd_store
       USE funcon_C, only : ev
-      USE molkst_C, only : keywrd, method_pm7
+      USE molkst_C, only : keywrd
       USE chanel_C, only : iw
 !...Translated by Pacific-Sierra Research 77to90  4.4G  08:24:24  03/10/06  
 !...Switches: -rl INDDO=2 INDIF=2 

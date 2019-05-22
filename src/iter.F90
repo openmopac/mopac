@@ -35,6 +35,7 @@
       use swap_I
       use cnvg_I
       use chrge_I
+      use to_screen_I
       implicit none
       real(double) , intent(out) :: ee
       logical , intent(in) :: fulscf
@@ -1009,6 +1010,7 @@
       use chanel_C, only : iw, iden, density_fn
       use common_arrays_C, only : p, pa, pb
       use molkst_C, only: uhf, keywrd, norbs, numat, mozyme
+      use to_screen_I
 !
 ! Read and write the density matrix
 !

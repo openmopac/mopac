@@ -88,6 +88,8 @@ subroutine ef (xparam, funct)
       end if
       return
     end if  
+    tstep = 0.d0
+    tprt = 0.d0
     pmat(:) = 0.d0
     bmat(:,:) = 0.d0
     u(:) = 0.d0
@@ -193,7 +195,7 @@ subroutine ef (xparam, funct)
       iflepo = 2
       last = 1
       icalcn = numcal
-      write (iw, '(/, 5 x, "GRADIENT =", f9.5, "  IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
+      write (iw, '(/, 5 x, "GRADIENT =", f9.5, " IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
       go to 1030
     end if
    !
@@ -361,7 +363,7 @@ subroutine ef (xparam, funct)
          !
          !     ****** OPTIMIZATION TERMINATION ******
          !
-        write (iw, '(/, 5 x, "GRADIENT =", f9.5, "  IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
+        write (iw, '(/, 5 x, "GRADIENT =", f9.5, " IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
         go to 1020
       else
         if (ef_mode == 0 .and. nstep > 5 .and. .not. l_geo_ok) then
@@ -1535,6 +1537,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
     use chanel_C, only: iw, iw0
     use ef_C, only: ef_mode, nstep, iprnt
     use second_I
+    use to_screen_I
    !
    !.. Implicit Declarations ..
     implicit none

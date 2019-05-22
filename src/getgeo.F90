@@ -479,17 +479,17 @@
           end do 
         endif 
       end if
+      pdb_label = (maxtxt > 25)
       if (line(istart(10):istart(10)) == '"' .or. line(istart(9):istart(9)) == '"' .or. &
         line(istart(8):istart(8)) == '"') then
-        pdb_label = (maxtxt == 26)
         call  l_control("CONTROL_NABC_in_PDB", len_trim("CONTROL_NABC_in_PDB"), 1) 
         end if
       string = trim(line)
       if (line(istart(10):istart(10)) == '"') then
-        call txt_to_atom_no(line, istart(10), .false., j)
+        call txt_to_atom_no(line, istart(10), .false.)
       end if
-      if (line(istart(9):istart(9)) == '"')   call txt_to_atom_no(line, istart(9), .false., j)
-      if (line(istart(8):istart(8)) == '"')   call txt_to_atom_no(line, istart(8), .false., j)
+      if (line(istart(9):istart(9)) == '"')   call txt_to_atom_no(line, istart(9), .false.)
+      if (line(istart(8):istart(8)) == '"')   call txt_to_atom_no(line, istart(8), .false.)
       if (moperr) then
         write(iw,'(/10x,a, i5)')" Error detected in definition of atom no.:", natoms
         write(iw,'(/,a)')" Text of faulty atom: '"//trim(elemnt(labels(natoms)))//&

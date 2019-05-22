@@ -45,7 +45,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
       if (nat(j) == 8 .or. nat(j) == 7) max_h_bonds = max_h_bonds + 1
     end do
     if (id == 0) then
-      max_h_bonds = max_h_bonds*110
+      max_h_bonds = max_h_bonds*125
     else
       max_h_bonds = max_h_bonds*250
     end if
@@ -178,7 +178,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   double precision :: xa_dist, xb_dist, xh_dist, xc_dist, sum, sum1, old_dist
   double precision, external :: distance, bonding
   logical :: hbs1_ok, hbs2_ok
- 
+  hbs1_ok = .false.
 !
 !  Identify atoms associated with the hydrogen bonds
 !

@@ -12,7 +12,7 @@
   use common_arrays_C, only: coord, nat 
   use chanel_C, only : iw
   use elemts_C, only: elemnt
-  use parameters_C, only: par7, par8, par9
+  use parameters_C, only: par7, par8, par9, par10, par11
   implicit none   
   double precision, intent (inout) ::  dxyz(3, numat)
   logical, intent (in):: l_grad
@@ -82,15 +82,19 @@
       end if
       D3H4 = (method_PM8 .or. index(keywrd, "D3H4") + index(keywrd, "D3(H4)") /= 0) 
       if (D3H4) then
+! The D3H4 version of the dispersion
+! Used in PM6-D3H4 and its variants PM6-D3H4X, PM6-D3(H4)
+! I'VE CHECKED THAT THIS SETUP & THE PARAMETER VALUES READ FROM
+! parameters_for_PM6 YIELD CORRECT PM6-D3H4 energies
         s6   = par7
         alp  = par8
-        rs18 = 1.0d0
         rs6 = par9    
-        s18 = 1.009d0
-      else ! hard-wired
+        s18 = par10
+        rs18 = par11
+      else ! hard-wired 
         s6   = 1.0d0
-        alp  = 14.0d0
         rs18 = 1.0d0
+        alp = 14.0d0
         rs6 = 1.560d0
         s18 = 1.009d0          
       end if          
@@ -119,7 +123,7 @@
       E_hb   = ehb*au_to_kcal
       dftd3  = E_disp + E_hb      
       if(l_grad)then
-        call gdisp(xyz, r0ab, rs6, alp6, c6ab, s6, mxc, rcov, dxyz_temp)
+        call gdisp(xyz, r0ab, rs6, alp6, c6ab, s6, s18,mxc, r2r4, rcov, rs8, alp8, dxyz_temp)
         dxyz = dxyz + 2.d0*dxyz_temp*au_to_kcal
         if (index(keywrd, " DERIV") > 0) then
           write (iw, '(/16X,a)')"GRIMME'S D3 CORRECTIONS" 

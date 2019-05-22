@@ -582,6 +582,10 @@
 !
   i = index(keywrd," SITE=")
   j = index(keywrd(i:), ") ") + i 
+!
+!  In the next block "txt_to_atom_no" cannot be used, because the PDB text is
+!  needed for recognizing the atom.
+!
   do
     k = Index (keywrd(i:), ") ") + i
     j = index(keywrd(i:k),"""") + i

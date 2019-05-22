@@ -11,6 +11,7 @@
       use vecprt_I 
       use search_I 
       use prttim_I 
+      use to_screen_I
       implicit none
       real(double)  :: hess(nvar,nvar) 
       real(double)  :: bmat(nvar,nvar) 
@@ -131,6 +132,7 @@
       lpacifier = .false.
       percent = (100*(ilpr-1))/nvar
       write (iw, '(/, 10 x, "HESSIAN CALCULATED NUMERICALLY", /)')
+      test = 0.d0
       do iloop = ilpr, nvar 
         time1 = second(1) 
         xparam(iloop) = xparam(iloop) + xinc 

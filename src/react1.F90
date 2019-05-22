@@ -13,6 +13,7 @@
       use geout_I 
       use compfg_I 
       use writmo_I 
+      use to_screen_I
       implicit none
       integer :: linear, iflag, i, maxstp, maxcyc, j, k, iloop, lopt(3,natoms)
       real(double), dimension(3*numat) :: xold, grold

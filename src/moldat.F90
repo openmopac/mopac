@@ -50,6 +50,7 @@
       use gmetry_I 
       use symtrz_I 
       use vecprt_I 
+      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1114,6 +1115,7 @@ subroutine write_unit_cell_HOF(iprt)
   use molkst_C, only : keywrd, escf, numat, line, mers
   use common_arrays_C, only : nat
   use reada_I
+  use to_screen_I
   implicit none
   integer, intent(in) :: iprt
   integer :: i, j, k, l, z, nel(107), m
@@ -1172,6 +1174,7 @@ subroutine write_unit_cell_HOF(iprt)
       use funcon_C, only: fpc_10
       use common_arrays_C, only : grad, xparam, labels
       use volume_I
+      use to_screen_I
       implicit none
       integer, intent(in) :: iprt
       integer :: m, i1,i2, k, l, i, ndim

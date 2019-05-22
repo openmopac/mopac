@@ -149,17 +149,16 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
                   if (i1 /= nrpairs + 1) cycle                  
                   nrpairs = nrpairs + 1 !  k = Distant acceptor atom
                   if (nrpairs > max_h_bonds) then
-                    write(iw,'(a)')" The default array size for hydrogen bonds is too small"
-                    write(iw,'(a,i6,a,i6)')" Array size:", max_h_bonds,", estimated size needed:", &
-                      nint(float(max_h_bonds)*float(nacc_a)/float(ii))
-                    if (index(keywrd, "PM6-DH+") /= 0 ) then
-                      write(iw,'(a)')" If possible, use PM6-DH+=(text)"
-                      call web_message(iw,"PM6_DH_plus.html")
-                    else
-                      write(iw,'(a)')" If possible, use PM6-DH2=(text)"
-                      call web_message(iw,"PM6_DH2.html")
-                    end if
                     call mopend("The default array size for hydrogen bonds is too small")
+                    write(iw,'(9x,a,i6,a,i6)')" Array size:", max_h_bonds,", estimated size needed:", &
+                      nint(float(max_h_bonds)*float(nacc_a)/float(ii))
+                !    if (index(keywrd, "PM6-DH+") /= 0 ) then
+                !      write(iw,'(a)')" If possible, use PM6-DH+=(text)"
+                !      call web_message(iw,"PM6_DH_plus.html")
+                !    else
+                !      write(iw,'(a)')" If possible, use PM6-DH2=(text)"
+                !      call web_message(iw,"PM6_DH2.html")
+                !    end if
                     nrpairs = nrpairs - 1
                     return
                   end if
@@ -173,6 +172,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
         end if          
       end do
     end do
+    return
   end subroutine find_H__Y_bonds
  
   function truncation(R, limit, spread)

@@ -1434,9 +1434,11 @@
 !
       data   v_par6(1)/    9.278465d0/  ! Used in ccrep for scalar correction of C-C triple bonds.
       data   v_par6(2)/    5.983752d0/  ! Used in ccrep for exponent correction of C-C triple bonds.
-      data   v_par6(7)/    1.000000d0/  ! Used in dftd3 to set "s6"  in D3H4
-      data   v_par6(8)/   14.000000d0/  ! Used in dftd3 to set "alp" in D3H4
-      data   v_par6(9)/    1.560000d0/  ! Used in dftd3 to set "rs6" in D3H4
+      data   v_par6(7)/    0.880000d0/  ! Used in dftd3 to set "s6"  in D3H4
+      data   v_par6(8)/   22.000000d0/  ! Used in dftd3 to set "alp" in D3H4
+      data   v_par6(9)/    1.180000d0/  ! Used in dftd3 to set "rs6" in D3H4
+      data   v_par6(10)/    0.0d0/      ! Used in dftd3 to set "s8" in D3H4
+      data   v_par6(11)/    1.0d0/      ! Used in dftd3 to set "rs8" in D3H4
   contains
   subroutine alpb_and_xfac_pm6
     use parameters_C, only : xfac, alpb

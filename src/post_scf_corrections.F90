@@ -60,6 +60,7 @@ subroutine post_scf_corrections(correction, l_grad)
   E_hh       = 0.d0
   E_disp     = 0.d0
   P_Hbonds   = 0
+  if (.not. allocated(dxyz)) allocate (dxyz(1))
   if (method_pm6_d3h4x) then
     correction = correction + dftd3(l_grad, dxyz)
     correction = correction + H_bonds4(l_grad, dxyz)

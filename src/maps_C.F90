@@ -22,6 +22,7 @@
   &  rxn_coord2,  &
   &  rxn_coord,   &
   &  rc_escf,     &  !  Reaction coordinate Heat of Formation
+  &  rc_dipo,     &  !  Reaction coordinate dipole
   &  ekin,        &  !  Kinetic energy
   &  dummy
       end module maps_C 

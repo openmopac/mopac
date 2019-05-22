@@ -1,0 +1,92 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue May 14 12:15:40 2019  *
+ *  COMPARE    - Compare two geometries
+ *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
+ *  Keyword:   START_RES=(10B 20B 30B) 
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "STRUCTURE-1.TXT"
+ *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "STRUCTURE-2.TXT"
+ *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
+ *  Keyword:   CHAINS=(BBB) 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  OUTPUT     - MINIMIZE OUTPUT
+ *******************************************************************************
+ START_RES=(10B 20B 30B)  CHAINS=(BBB) geo_dat="Structure-1.txt" geo_ref="Structure-2.txt" compare output
+ Compare two very similar geometries (compare residue 10)
+
+ 
+
+                        After docking
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (ATOM      1  N   ASP B  10)   0.000   0.000   0.000        0.49         0.49
+            (ATOM    117  HD2 ASP B  10)   2.978  -3.861  -1.464        0.0068       0.50
+            (ATOM      8  OD2 ASP B  10)   2.680  -2.960  -1.781        0.0068       0.51
+            (ATOM    116 2HB  ASP B  10)   1.255  -0.895  -1.944        0.0067       0.51
+            (ATOM    115 1HB  ASP B  10)   2.889  -0.273  -1.585        0.0066       0.52
+            (ATOM      6  CG  ASP B  10)   2.445  -2.159  -0.731        0.0066       0.53
+            (ATOM      5  CB  ASP B  10)   2.024  -0.796  -1.178        0.0065       0.53
+            (ATOM    124  HE1 GLU B  11)  -2.822   3.296  -2.683        0.0065       0.54
+            (ATOM     17  OE2 GLU B  11)  -0.739   2.552  -2.065        0.0064       0.55
+            (ATOM    120 1HB  GLU B  11)   1.516   4.084  -2.223        0.0064       0.55
+
+   Difference between GEO_DAT and GEO_REF:   1.150 = total,  0.0055 = Average,  0.0343 = RMS, in Angstroms
+
+                             Differences between bond-lengths for the two geometries
+
+           Diff.                 Atom 1                       Atom 2                  Bond length      Bond length
+                                                                                      in GEO_DAT      in GEO_REF
+   1       0.500     N(ATOM      1  N   ASP B  10)    C(ATOM      2  CA  ASP B  10)      0.963            1.463
+   2       0.254     N(ATOM      1  N   ASP B  10)    H(ATOM    112 1H   ASP B  10)      1.265            1.010
+   3       0.254     N(ATOM      1  N   ASP B  10)    H(ATOM    113 2H   ASP B  10)      1.265            1.010
+
+    GEO_DAT:  'Structure-1.txt'
+    GEO_REF:  'Structure-2.txt'
+
+
+                    Analysis of Non-Covalent Interactions
+
+          Total non-covalent energy of GEO_DAT system:    -66.34 Kcal/mol
+          Total non-covalent energy of GEO_REF system:    -67.98 Kcal/mol
+                                           Difference:      1.64 Kcal/mol
+
+          Number of hydrogen bonds common to both systems:    6
+
+
+    The following files will be written:
+    'Compare_two_protein_structures.html'
+    'Structure-1.pdb'
+    'Structure-2.pdb'
+
+          GEO_REF with 0SCF: Job complete
+
+ ******************************************************************************
+ *                                                                            *
+ *     Error and normal termination messages reported in this calculation     *
+ *                                                                            *
+ * GEO_REF with 0SCF: Job complete                                            *
+ * JOB ENDED NORMALLY                                                         *
+ *                                                                            *
+ ******************************************************************************
+
+
+
+ TOTAL JOB TIME:             0.00 SECONDS
+
+ == MOPAC DONE ==

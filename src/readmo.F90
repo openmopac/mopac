@@ -345,6 +345,32 @@
         allocate(txtatm1(numat))
         numat_old = numat
         txtatm1(:numat) = txtatm(:numat)
+        if (index(keywrd, " INT") /= 0) then
+          call xyzint (coord, numat, na, nb, nc, 1.d0, geo) 
+          lopt(:,1) = 0
+          lopt(2:,2) = 0
+          lopt(3,3) = 0
+        end if
+        if (index(keywrd, " XYZ") /= 0) then
+          numat = 0 
+          do i = 1, natoms 
+            if (labels(i) /= 99) then 
+              numat = numat + 1 
+              labels(numat) = labels(i)
+              txtatm(numat) = txtatm(i)
+              lopt(:,numat) = lopt(:,i)
+              na(numat) = 0
+            endif 
+            geo(:,i) = coord(:,i) 
+          end do 
+!
+!   If everything is marked for optimization then unconditionally mark the first
+!   three atoms for optimization
+!
+          if (k >= 3*numat - 6) lopt(:,:min(3, numat)) = 1
+          natoms = numat
+        end if
+        
       end if
       if (moperr) then
         natoms = 0
@@ -601,11 +627,9 @@
 #if BITS32
       num_bits = 32 
       maxci = 5000
-#elif BITS64
+#else
       num_bits = 64
       maxci = 20000
-#else
-    Set pre-processor directive BITS32 or BITS64.  This line causes a deliberate compile-time error
 #endif
       if (Academic) then
         if (site_no > 9999) then
@@ -1381,7 +1405,11 @@
         if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis') 
         call wrttxt (ilog) 
        endif 
-      if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1) 
+      if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1)
+      if (index(keywrd, " NOTXT") /= 0) then
+        maxtxt = 0
+        txtatm = " "
+      end if
       if (prt_coords) call geout(1)
       write(iw,*)
       if (moperr) return 
@@ -1550,10 +1578,13 @@
                 if (j == i) exit
                 ij = index(line(j:),"""") + j 
                 line_1 = line(j:ij - 2)
+!
+! Do NOT use "txt_to_atom_no" in the next block - the format must be in PDB
+!
                 if (line_1(1:1) == "[") then
-  !
-  ! Atom defined using Jmol format
-  !
+!
+! Atom defined using Jmol format
+!
                   ii = index(line(j:ij - 2),".") + j
                   k = index(line(j:ij - 2),":") + j
                   jj = index(line(j:ij - 2),"]") + j

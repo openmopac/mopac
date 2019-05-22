@@ -1364,14 +1364,14 @@ CYCLES=1  SYMMETRY  MNDO
 *   H    1.078224  1  120.066593  1    0.000000  0   1  2  0       0.0301
 *   H    1.078207  1  120.000000  0  180.000000  0   1  2  3       0.0300
 *   0    0.000000  0    0.000000  0    0.000000  0   0  0  0
- cycles=10 drc=10  AM1 IRC=-1 NOXYZ  GRAPH GEO-OK LARGE=1 X-PRIO=3.00
+ cycles=10 drc=10  AM1 IRC=-1 NOXYZ  GRAPH GEO-OK LARGE=1 X-PRIO=0.3
 From transition state between HCN and HNC, moving to one of these species
 
   C     0.0000000  0    0.0000000  0    0.0000000  0    0    0    0
   N     1.2165000  0    0.0000000  0    0.0000000  0    1    0    0
   H     1.2978741  0   67.5370229  0    0.0000000  0    1    2    0
 
-drc=10  AM1 IRC=1 NOXYZ  cycles=10  GRAPH GEO-OK LARGE=1 X-PRIO=3.00
+drc=10  AM1 IRC=1 NOXYZ  cycles=10  GRAPH GEO-OK LARGE=1 X-PRIO=0.3
 From transition state between HCN and HNC, moving to the other species
 
   C     0.0000000  0    0.0000000  0    0.0000000  0    0    0    0

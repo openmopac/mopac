@@ -160,6 +160,7 @@
       else
         c2 = 1.d0
       end if     
+      cputot = 0.d0
       if (restrt) then 
           open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', &
           position='asis', iostat = io_stat)
@@ -197,7 +198,6 @@
         read(ires, iostat = io_stat)surf(:max_count), all_points1(:max_count), all_points2(:max_count)
       else
         ijlp = 1
-        cputot = 0.d0
       endif 
       if ( minimize_energy_in_grid )  then
         big_loop = 4*npts1*npts2

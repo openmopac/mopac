@@ -279,7 +279,7 @@
 !
 !
     subroutine write_params(iw, lv_par)
-      USE parameters_C, only : partyp, n_partyp_fn, n_partyp_alpb, n_partyp, v_par, t_par
+      USE parameters_C, only : partyp, n_partyp_alpb, n_partyp, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
       use molkst_C, only : lpars, line
       implicit none
@@ -289,7 +289,7 @@
 !
 !  Local
 !
-      integer :: i, j, k, l, il, iu, ii, jj, iparam, ielmnt, jelmnt, j1
+      integer :: i, j, k, l, il, iu, ii, jj, iparam, ielmnt, jelmnt
       character :: elemnt(107)*2, elemnt2*2
       save elemnt, lold
 !----------------------------------------------- 

@@ -1,0 +1,299 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue May 14 12:17:02 2019  *
+ *  COMPARE    - Compare two geometries
+ *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
+ *  Keyword:   START_RES=(7A 300) 
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "BACTERIORHODOPSIN_1AP9.ENT"
+ *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "BACTERIORHODOPSIN_1BRX.ENT"
+ *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
+ *  Keyword:   CHAINS=(A) 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  OUTPUT     - MINIMIZE OUTPUT
+ *******************************************************************************
+ START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_1BRX.ent" Compare output
+ Compare 1AP9 and 1BRX Bacteriorhodopsin
+
+ 
+
+                            Differences in atoms sets
+
+          Atoms in GEO_DAT only                   Atoms in GEO_REF only
+
+       ATOM   1131  N   PHE A 153              ATOM      1  N   GLY A   6
+       ATOM   1132  CA  PHE A 153              ATOM      2  CA  GLY A   6
+       ATOM   1133  C   PHE A 153              ATOM      3  C   GLY A   6
+       ATOM   1134  O   PHE A 153              ATOM      4  O   GLY A   6
+       ATOM   1135  CB  PHE A 153              ATOM     11  CD  ARG A   7
+       ATOM   1136  CG  PHE A 153              ATOM     12  NE  ARG A   7
+       ATOM   1137  CD1 PHE A 153              ATOM     13  CZ  ARG A   7
+       ATOM   1138  CD2 PHE A 153              ATOM     14  NH1 ARG A   7
+       ATOM   1139  CE1 PHE A 153              ATOM     15  NH2 ARG A   7
+       ATOM   1140  CE2 PHE A 153              ATOM   1583  O   ARG A 225
+       ATOM   1141  CZ  PHE A 153              ATOM   1591  N   SER A 226
+       ATOM   1142  N   PHE A 154              ATOM   1592  CA  SER A 226
+       ATOM   1143  CA  PHE A 154              ATOM   1593  C   SER A 226
+       ATOM   1144  C   PHE A 154              ATOM   1594  O   SER A 226
+       ATOM   1145  O   PHE A 154              ATOM   1595  CB  SER A 226
+       ATOM   1146  CB  PHE A 154              ATOM   1596  OG  SER A 226
+       ATOM   1147  CG  PHE A 154              ATOM   1597  N   ARG A 227
+       ATOM   1148  CD1 PHE A 154              ATOM   1598  CA  ARG A 227
+       ATOM   1149  CD2 PHE A 154              ATOM   1599  C   ARG A 227
+       ATOM   1150  CE1 PHE A 154              ATOM   1600  O   ARG A 227
+       ATOM   1151  CE2 PHE A 154              ATOM   1601  CB  ARG A 227
+       ATOM   1152  CZ  PHE A 154              ATOM   1602  CG  ARG A 227
+       ATOM   1153  N   GLY A 155              ATOM   1603  CD  ARG A 227
+       ATOM   1154  CA  GLY A 155              ATOM   1604  NE  ARG A 227
+       ATOM   1155  C   GLY A 155              ATOM   1605  CZ  ARG A 227
+       ATOM   1156  O   GLY A 155              ATOM   1606  NH1 ARG A 227
+       ATOM   1157  N   PHE A 156              ATOM   1607  NH2 ARG A 227
+       ATOM   1158  CA  PHE A 156              ATOM   1608  N   ALA A 228
+       ATOM   1159  C   PHE A 156              ATOM   1609  CA  ALA A 228
+       ATOM   1160  O   PHE A 156              ATOM   1610  C   ALA A 228
+       ATOM   1161  CB  PHE A 156              ATOM   1611  O   ALA A 228
+       ATOM   1162  CG  PHE A 156              ATOM   1612  CB  ALA A 228
+       ATOM   1163  CD1 PHE A 156              HETATM 1614  C1  RET   301
+       ATOM   1164  CD2 PHE A 156              HETATM 1615  C2  RET   301
+       ATOM   1165  CE1 PHE A 156              HETATM 1616  C3  RET   301
+       ATOM   1166  CE2 PHE A 156              HETATM 1617  C4  RET   301
+       ATOM   1167  CZ  PHE A 156              HETATM 1618  C5  RET   301
+       ATOM   1168  N   THR A 157              HETATM 1619  C6  RET   301
+       ATOM   1169  CA  THR A 157              HETATM 1620  C7  RET   301
+       ATOM   1170  C   THR A 157              HETATM 1621  C8  RET   301
+       ATOM   1171  O   THR A 157              HETATM 1622  C9  RET   301
+       ATOM   1172  CB  THR A 157              HETATM 1623  C10 RET   301
+       ATOM   1173  OG1 THR A 157              HETATM 1624  C11 RET   301
+       ATOM   1174  CG2 THR A 157              HETATM 1625  C12 RET   301
+       ATOM   1175  N   SER A 158              HETATM 1626  C13 RET   301
+       ATOM   1176  CA  SER A 158              HETATM 1627  C14 RET   301
+       ATOM   1177  C   SER A 158              HETATM 1628  C15 RET   301
+       ATOM   1178  O   SER A 158              HETATM 1629  C16 RET   301
+       ATOM   1179  CB  SER A 158              HETATM 1630  C17 RET   301
+       ATOM   1180  OG  SER A 158              HETATM 1631  C18 RET   301
+       ATOM   1181  N   LYS A 159              HETATM 1632  C19 RET   301
+       ATOM   1182  CA  LYS A 159              HETATM 1633  C20 RET   301
+       ATOM   1183  C   LYS A 159
+       ATOM   1184  O   LYS A 159
+       ATOM   1185  CB  LYS A 159
+       ATOM   1186  CG  LYS A 159
+       ATOM   1187  CD  LYS A 159
+       ATOM   1188  CE  LYS A 159
+       ATOM   1189  NZ  LYS A 159
+       ATOM   1190  N   ALA A 160
+       ATOM   1191  CA  ALA A 160
+       ATOM   1192  C   ALA A 160
+       ATOM   1193  O   ALA A 160
+       ATOM   1194  CB  ALA A 160
+       ATOM   1195  N   GLU A 161
+       ATOM   1196  CA  GLU A 161
+       ATOM   1197  C   GLU A 161
+       ATOM   1198  O   GLU A 161
+       ATOM   1199  CB  GLU A 161
+       ATOM   1200  CG  GLU A 161
+       ATOM   1201  CD  GLU A 161
+       ATOM   1202  OE1 GLU A 161
+       ATOM   1203  OE2 GLU A 161
+       ATOM   1204  N   SER A 162
+       ATOM   1205  CA  SER A 162
+       ATOM   1206  C   SER A 162
+       ATOM   1207  O   SER A 162
+       ATOM   1208  CB  SER A 162
+       ATOM   1209  OG  SER A 162
+       ATOM   1210  N   MET A 163
+       ATOM   1211  CA  MET A 163
+       ATOM   1212  C   MET A 163
+       ATOM   1213  O   MET A 163
+       ATOM   1214  CB  MET A 163
+       ATOM   1215  CG  MET A 163
+       ATOM   1216  SD  MET A 163
+       ATOM   1217  CE  MET A 163
+       ATOM   1218  N   ARG A 164
+       ATOM   1219  CA  ARG A 164
+       ATOM   1220  C   ARG A 164
+       ATOM   1221  O   ARG A 164
+       ATOM   1222  CB  ARG A 164
+       ATOM   1223  CG  ARG A 164
+       ATOM   1224  CD  ARG A 164
+       ATOM   1225  NE  ARG A 164
+       ATOM   1226  CZ  ARG A 164
+       ATOM   1227  NH1 ARG A 164
+       ATOM   1228  NH2 ARG A 164
+       ATOM   1229  N   PRO A 165
+       ATOM   1230  CA  PRO A 165
+       ATOM   1231  C   PRO A 165
+       ATOM   1232  O   PRO A 165
+       ATOM   1233  CB  PRO A 165
+       ATOM   1234  CG  PRO A 165
+       ATOM   1235  CD  PRO A 165
+       ATOM   1236  N   GLU A 166
+       ATOM   1237  CA  GLU A 166
+       ATOM   1238  C   GLU A 166
+       ATOM   1239  O   GLU A 166
+       ATOM   1240  CB  GLU A 166
+       ATOM   1241  CG  GLU A 166
+       ATOM   1242  CD  GLU A 166
+       ATOM   1243  OE1 GLU A 166
+       ATOM   1244  OE2 GLU A 166
+       HETATM 1696  C1  RET   300
+       HETATM 1697  C2  RET   300
+       HETATM 1698  C3  RET   300
+       HETATM 1699  C4  RET   300
+       HETATM 1700  C5  RET   300
+       HETATM 1701  C6  RET   300
+       HETATM 1702  C7  RET   300
+       HETATM 1703  C8  RET   300
+       HETATM 1704  C9  RET   300
+       HETATM 1705  C10 RET   300
+       HETATM 1706  C11 RET   300
+       HETATM 1707  C12 RET   300
+       HETATM 1708  C13 RET   300
+       HETATM 1709  C14 RET   300
+       HETATM 1710  C15 RET   300
+       HETATM 1711  C16 RET   300
+       HETATM 1712  C17 RET   300
+       HETATM 1713  C18 RET   300
+       HETATM 1714  C19 RET   300
+       HETATM 1715  C20 RET   300
+       HETATM 1716  O   HOH   400
+       HETATM 1720  O   HOH   404
+       HETATM 1721  O   HOH   405
+       HETATM 1722  O   HOH   406
+       HETATM 1723  O   HOH   407
+       HETATM 1724  O   HOH   408
+       HETATM 1725  O   HOH   409
+       HETATM 1726  O   HOH   410
+       HETATM 1727  O   HOH   411
+       HETATM 1728  O   HOH   412
+       HETATM 1729  O   HOH   413
+       HETATM 1730  O   HOH   414
+       HETATM 1731  O   HOH   415
+       HETATM 1732  O   HOH   416
+       HETATM 1733  O   HOH   417
+       HETATM 1734  O   HOH   418
+       HETATM 1735  O   HOH   419
+       HETATM 1736  O   HOH   420
+       HETATM 1737  O   HOH   421
+       HETATM 1738  O   HOH   422
+       HETATM 1739  O   HOH   423
+       HETATM 1740  O   HOH   424
+       HETATM 1741  O   HOH   425
+
+                      Number of atoms in GEO_DAT: 1740
+                      Number of atoms in GEO_REF: 1635
+          Number of atoms common to both systems: 1583
+
+
+                        After docking
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (ATOM    948  OH  TYR A 131)  18.032  52.039 -13.890       17.56        17.56
+            (ATOM    947  CZ  TYR A 131)  16.675  52.005 -14.123       15.64        33.20
+            (ATOM    945  CE1 TYR A 131)  16.019  50.807 -14.382       14.95        48.15
+            (ATOM    946  CE2 TYR A 131)  15.973  53.204 -14.133       14.58        62.73
+            (ATOM    943  CD1 TYR A 131)  14.649  50.819 -14.662       12.97        75.70
+            (ATOM    944  CD2 TYR A 131)  14.604  53.201 -14.415       12.78        88.48
+            (ATOM    929  NZ  LYS A 129)   2.089  45.586 -13.339       12.64       101.12
+            (ATOM    524  NE2 GLN A  75)   8.989  39.586 -21.352       11.91       113.04
+            (ATOM    942  CG  TYR A 131)  13.923  52.013 -14.688       11.81       124.84
+            (ATOM    498  CZ  PHE A  71)  14.341  46.065 -13.730       11.02       135.86
+            (ATOM    497  CE2 PHE A  71)  13.071  45.499 -13.744       10.30       146.16
+            (ATOM    928  CE  LYS A 129)   3.501  45.960 -13.663       10.16       156.32
+            (ATOM    502  O   GLY A  72)  15.084  49.372 -21.445       10.00       166.32
+            (ATOM   1580  NH2 ARG A 225)  30.601  25.222  19.901        9.98       176.30
+            (ATOM    941  CB  TYR A 131)  12.457  52.034 -15.076        9.82       186.12
+            (ATOM    523  OE1 GLN A  75)   9.821  40.269 -19.403        9.73       195.85
+            (ATOM   1579  NH1 ARG A 225)  28.921  25.586  21.423        9.70       205.55
+            (ATOM    504  CA  GLY A  73)  13.064  48.102 -22.755        9.69       215.24
+            (HETATM 1582  O   HOH   402)  17.911  33.946   2.861        9.67       224.90
+            (ATOM    522  CD  GLN A  75)   9.953  40.090 -20.608        9.65       234.56
+            (ATOM    201  CE  MET A  32)  19.147  15.219  17.531        9.50       244.06
+            (ATOM    473  CE  MET A  68)  15.157  38.009 -18.931        9.45       253.51
+            (ATOM    496  CE1 PHE A  71)  14.620  47.155 -14.533        9.35       262.87
+            (ATOM    503  N   GLY A  73)  13.000  48.565 -21.381        9.34       272.21
+            (ATOM    501  C   GLY A  72)  14.055  49.145 -20.819        9.33       281.53
+            (ATOM    927  CD  LYS A 129)   3.917  45.597 -15.109        9.02       290.56
+            (ATOM   1578  CZ  ARG A 225)  29.409  25.730  20.190        8.99       299.54
+            (ATOM    500  CA  GLY A  72)  13.922  49.588 -19.369        8.92       308.47
+            (ATOM    189  NZ  LYS A  30)  25.242  18.090  18.683        8.61       317.07
+            (ATOM    472  SD  MET A  68)  14.282  37.375 -17.436        8.29       325.37
+
+   Difference between GEO_DAT and GEO_REF:2377.970 = total,  1.5022 = Average,  2.4393 = RMS, in Angstroms
+
+                             Differences between bond-lengths for the two geometries
+
+           Diff.                 Atom 1                       Atom 2                  Bond length      Bond length
+                                                                                      in GEO_DAT      in GEO_REF
+   1       0.133     S(ATOM   1066  SD  MET A 145)    C(ATOM   1067  CE  MET A 145)      1.814            1.682
+   2       0.069     C(ATOM   1000  CB  TRP A 137)    C(ATOM   1001  CG  TRP A 137)      1.491            1.560
+   3       0.067     C(ATOM     49  CB  TRP A  12)    C(ATOM     50  CG  TRP A  12)      1.536            1.469
+   4       0.063     C(ATOM    667  CG  PRO A  91)    C(ATOM    668  CD  PRO A  91)      1.497            1.560
+   5       0.062     S(ATOM    472  SD  MET A  68)    C(ATOM    473  CE  MET A  68)      1.782            1.845
+   6       0.057     C(ATOM    666  CB  PRO A  91)    C(ATOM    667  CG  PRO A  91)      1.501            1.444
+   7       0.056     C(ATOM   1400  CB  ASN A 202)    C(ATOM   1401  CG  ASN A 202)      1.502            1.445
+   8       0.054     C(ATOM   1291  CA  VAL A 187)    C(ATOM   1294  CB  VAL A 187)      1.566            1.513
+   9       0.053     C(ATOM    347  CG1 ILE A  52)    C(ATOM    349  CD1 ILE A  52)      1.506            1.453
+  10       0.052     C(ATOM   1001  CG  TRP A 137)    C(ATOM   1002  CD1 TRP A 137)      1.358            1.411
+  11       0.051     C(ATOM   1574  CB  ARG A 225)    C(ATOM   1575  CG  ARG A 225)      1.495            1.546
+  12       0.050     C(ATOM    860  CA  ILE A 119)    C(ATOM    863  CB  ILE A 119)      1.535            1.585
+  13       0.050     C(ATOM   1243  CG  LEU A 181)    C(ATOM   1244  CD1 LEU A 181)      1.516            1.466
+  14       0.049     C(ATOM    187  CD  LYS A  30)    C(ATOM    188  CE  LYS A  30)      1.520            1.569
+  15       0.047     C(ATOM    887  CG  LEU A 123)    C(ATOM    889  CD2 LEU A 123)      1.548            1.500
+  16       0.047     C(ATOM   1044  CA  THR A 142)    C(ATOM   1047  CB  THR A 142)      1.523            1.570
+  17       0.047     N(ATOM      1  N   ARG A   7)    C(ATOM      2  CA  ARG A   7)      1.500            1.452
+  18       0.047     C(ATOM    790  CB  ILE A 108)    C(ATOM    792  CG2 ILE A 108)      1.528            1.481
+  19       0.046     S(ATOM    413  SD  MET A  60)    C(ATOM    414  CE  MET A  60)      1.772            1.818
+  20       0.046     C(ATOM    872  CA  THR A 121)    C(ATOM    875  CB  THR A 121)      1.552            1.506
+  21       0.045     S(ATOM   1461  SD  MET A 209)    C(ATOM   1462  CE  MET A 209)      1.764            1.810
+  22       0.045     C(ATOM    351  CA  ALA A  53)    C(ATOM    354  CB  ALA A  53)      1.540            1.495
+  23       0.044     C(ATOM    832  CA  ASP A 115)    C(ATOM    833  C   ASP A 115)      1.529            1.484
+  24       0.044     C(ATOM    819  CB  VAL A 112)    C(ATOM    821  CG2 VAL A 112)      1.499            1.543
+  25       0.044     C(ATOM    686  CA  LEU A  94)    C(ATOM    687  C   LEU A  94)      1.515            1.559
+
+    GEO_DAT:  'Bacteriorhodopsin_1AP9.ent'
+    GEO_REF:  'Bacteriorhodopsin_1BRX.ent'
+
+
+                    Analysis of Non-Covalent Interactions
+
+          Total non-covalent energy of GEO_DAT system:  -1543.65 Kcal/mol
+          Total non-covalent energy of GEO_REF system:  -1684.01 Kcal/mol
+                                           Difference:    140.37 Kcal/mol
+
+
+    The following files will be written:
+    'Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRX.html'
+    'Bacteriorhodopsin_1AP9.pdb'
+    'Bacteriorhodopsin_1BRX.pdb'
+
+          GEO_REF with 0SCF: Job complete
+
+ ******************************************************************************
+ *                                                                            *
+ *     Error and normal termination messages reported in this calculation     *
+ *                                                                            *
+ * GEO_REF with 0SCF: Job complete                                            *
+ * JOB ENDED NORMALLY                                                         *
+ *                                                                            *
+ ******************************************************************************
+
+
+
+ TOTAL JOB TIME:             0.00 SECONDS
+
+ == MOPAC DONE ==

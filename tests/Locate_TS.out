@@ -1,0 +1,638 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue May 14 12:19:01 2019  *
+ *  GEO-OK     - OVERRIDE INTERATOMIC DISTANCE AND OTHER SAFETY CHECKS
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "CYCLOBUTADIENE_1.ARC"
+ *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "CYCLOBUTADIENE_2.ARC"
+ *  OPT        - OPTIMIZE COORDINATES OF ALL ATOMS
+ *  XYZ        - CARTESIAN COORDINATE SYSTEM TO BE USED
+ *  LOCATE-TS  - LOCATE A TRANSITION STATE USING REACTANTS AND PRODUCTS
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  HTML       - WRITE HTML SCRIPT TO READ PDB FILE USING JSMOL
+ *******************************************************************************
+ geo_ref="Cyclobutadiene_2.arc" +
+geo_dat="Cyclobutadiene_1.arc" +
+geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
+ Transition state for 1,3-Cyclobutadiene <=> 2,4-Cyclobutadiene
+ Locate approximate structure of the transition state for the second step in the hydride transfer
+   ATOM                 CHEMICAL                   X               Y               Z
+  NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C(HETATM    1  C   HET A   1)   -0.23381000  *  -0.78002000  *   0.90392000  *
+     2       H(HETATM    2  H   HET A   1)    1.67454000  *   0.21551000  *   1.24897000  *
+     3       C(HETATM    3  C   HET A   1)    0.63265000  *   0.45604000  *   0.96877000  *
+     4       C(HETATM    4  C   HET A   1)    0.53803000  *   0.99939000  *  -0.43785000  *
+     5       H(HETATM    5  H   HET A   1)   -0.37989000  *  -1.40727000  *   1.75708000  *
+     6       H(HETATM    6  H   HET A   1)   -1.38623000  *  -1.68034000  *  -0.71762000  *
+     7       H(HETATM    7  H   HET A   1)   -0.52676000  *   0.30129000  *  -2.21178000  *
+     8       H(HETATM    8  H   HET A   1)    1.05068000  *   1.89089000  *  -0.72973000  *
+     9       H(HETATM    9  H   HET A   1)    0.26247000  *   1.18071000  *   1.71693000  *
+    10       C(HETATM   10  C   HET A   1)   -0.73796000  *  -0.91259000  *  -0.34476000  *
+    11       C(HETATM   11  C   HET A   1)   -0.25760000  *   0.19484000  *  -1.17983000  *
+ 
+
+                        After docking
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (HETATM    2  H   HET A   1)   0.568  -1.588   1.250        1.69         1.69
+            (HETATM    9  H   HET A   1)   1.082   0.980   1.755        0.70         2.40
+            (HETATM    5  H   HET A   1)  -0.933  -0.766   1.717        0.70         3.10
+            (HETATM    8  H   HET A   1)   0.869   1.998  -0.721        0.63         3.73
+            (HETATM    6  H   HET A   1)  -1.209  -1.794  -0.728        0.63         4.36
+            (HETATM    1  C   HET A   1)  -0.119  -0.769   0.969        0.37         4.73
+            (HETATM    3  C   HET A   1)   0.589   0.564   0.902        0.37         5.10
+            (HETATM   10  C   HET A   1)  -0.646  -0.932  -0.437        0.34         5.44
+            (HETATM    4  C   HET A   1)   0.479   1.072  -0.347        0.34         5.77
+            (HETATM   11  C   HET A   1)  -0.291   0.141  -1.181        0.0376       5.81
+
+   Difference between GEO_DAT and GEO_REF:   5.835 = total,  0.5305 = Average,  0.6846 = RMS, in Angstroms
+
+    The rotated-translated input geometry will be written to: 'Cyclobutadiene_1.new'
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x
+
+           Empirical Formula: C5 H6  =    11 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Cs  
+
+ Set 1: Atoms involved in covalent bond-breaking and bond-making                  Connectivity of atoms
+
+                                                                             Data-set                  Reference
+                                     (PDB labels from GEO-REF)
+   1    Atom:   C     1  PDB Label: (HETATM    1  C   HET A   1)           3     5    10              2     3     5    10
+   2    Atom:   H     2  PDB Label: (HETATM    2  H   HET A   1)           3                          1
+   3    Atom:   C     3  PDB Label: (HETATM    3  C   HET A   1)           1     2     4     9        1     4     9
+
+ Set 2 : Atoms involved in covalent bond-breaking and bond-making, plus nearest neighbors
+
+   1    Atom:   C     1  PDB Label: (HETATM    1  C   HET A   1 )
+   2    Atom:   H     2  PDB Label: (HETATM    2  H   HET A   1 )
+   3    Atom:   C     3  PDB Label: (HETATM    3  C   HET A   1 )
+   4    Atom:   H     5  PDB Label: (HETATM    5  H   HET A   1 )
+   5    Atom:   C    10  PDB Label: (HETATM   10  C   HET A   1 )
+   6    Atom:   C     4  PDB Label: (HETATM    4  C   HET A   1 )
+   7    Atom:   H     9  PDB Label: (HETATM    9  H   HET A   1 )
+
+          Set 1 selected by keywork 'SET' within keyword 'LOCATE-TS'
+
+          Constraining constant: 30.00 Kcal/mol/Angstrom^2
+
+
+          Current value of GEO_REF constraint:               30.00  Kcal/mol/Angstrom^2
+          Distance between the geometries:                    5.84  Angstroms
+
+          Heat of formation of the first geometry:           32.296 Kcal/mol
+          Heat of formation of the second geometry:          32.296 Kcal/mol
+          Contribution to heat of formation due to stress:  309.36  Kcal/mol
+          Gradient arising from first geometry:             272.41  Kcal/mol/Angstrom
+          Gradient arising from second geometry:            272.54  Kcal/mol/Angstrom
+          Angle between gradient vectors:                   179.71  degrees
+
+ CYCLE:     1 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:   192.671 HEAT:  373.9494
+ CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:   191.980 HEAT:  373.3934
+ CYCLE:     3 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:   802.825 HEAT:  320.6296
+ CYCLE:     4 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:   217.055 HEAT:  224.1060
+ CYCLE:     5 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    99.166 HEAT:  216.6277
+ CYCLE:     6 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    50.227 HEAT:  225.1485
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    34.558 HEAT:  220.5180
+ CYCLE:     8 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    27.369 HEAT:  218.9171
+ CYCLE:     9 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    20.224 HEAT:  218.5452
+ CYCLE:    10 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    13.809 HEAT:  218.3957
+ CYCLE:    11 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.043 HEAT:  218.6183
+ CYCLE:    12 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    21.174 HEAT:  218.6631
+ CYCLE:    13 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     5.886 HEAT:  218.4811
+ CYCLE:    14 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     3.259 HEAT:  218.4838
+
+     GRADIENT =  3.25875 IS LESS THAN CUTOFF =  4.00000
+
+
+
+          First geometry (derived from data-set) after optimization subject to 
+          GEO_REF constraint of 30.0 Kcal/mol/Angstrom^2 towards the reference geometry written to file:
+          'Locate_TS 30p0 first.mop'
+
+
+          Second geometry (derived from reference geometry)after optimization subject to 
+          GEO_REF constraint of 30.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 30p0 second.mop'
+
+
+          Job name: 'Locate_TS'
+          Current value of GEO_REF constraint:               30.00  Kcal/mol/Angstrom^2
+          Distance between the geometries:                    3.77  Angstroms
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (HETATM    2  H   HET A   1)   0.810  -1.364   1.240        1.05         1.05
+            (HETATM    9  H   HET A   1)   0.933   0.991   1.789        0.39         1.44
+            (HETATM    5  H   HET A   1)  -0.900  -0.928   1.727        0.39         1.83
+            (HETATM    1  C   HET A   1)  -0.121  -0.781   0.959        0.34         2.17
+            (HETATM    3  C   HET A   1)   0.569   0.542   0.902        0.34         2.51
+            (HETATM    6  H   HET A   1)  -1.355  -1.719  -0.735        0.32         2.84
+            (HETATM    8  H   HET A   1)   0.982   1.904  -0.726        0.32         3.16
+            (HETATM   10  C   HET A   1)  -0.700  -0.923  -0.436        0.25         3.41
+            (HETATM    4  C   HET A   1)   0.488   1.035  -0.353        0.25         3.65
+            (HETATM   11  C   HET A   1)  -0.317   0.138  -1.184        0.0752       3.73
+
+          Heat of formation of the first geometry:           49.948 Kcal/mol
+          Heat of formation of the second geometry:          50.075 Kcal/mol
+          Contribution to heat of formation due to stress:  118.46  Kcal/mol
+          Gradient arising from first geometry:              84.41  Kcal/mol/Angstrom
+          Gradient arising from second geometry:             84.18  Kcal/mol/Angstrom
+          Angle between gradient vectors:                   177.99  degrees
+
+          Average of first and second geometries after optimization subject to 
+          GEO_REF constraint of 30.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 30p0 average.mop'
+
+
+          Constraining constant: 60.00 Kcal/mol/Angstrom^2
+
+ CYCLE:     1 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:   193.410 HEAT:  315.0738
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:   192.221 HEAT:  314.4787
+ CYCLE:     3 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:   281.405 HEAT:  237.1420
+ CYCLE:     4 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:   412.663 HEAT:  214.8949
+ CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    78.798 HEAT:  190.0529
+ CYCLE:     6 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    27.161 HEAT:  203.4323
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    16.596 HEAT:  205.5840
+ CYCLE:     8 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    31.313 HEAT:  200.7602
+ CYCLE:     9 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    35.100 HEAT:  198.6274
+ CYCLE:    10 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    12.840 HEAT:  201.5389
+ CYCLE:    11 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     6.326 HEAT:  202.6725
+ CYCLE:    12 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     8.094 HEAT:  201.9955
+ CYCLE:    13 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.328 HEAT:  201.6801
+ CYCLE:    14 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.426 HEAT:  202.0931
+ CYCLE:    15 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.706 HEAT:  202.0477
+ CYCLE:    16 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     2.694 HEAT:  202.0075
+
+     GRADIENT =  2.69378 IS LESS THAN CUTOFF =  4.00000
+
+
+
+          First geometry (derived from data-set) after optimization subject to 
+          GEO_REF constraint of 60.0 Kcal/mol/Angstrom^2 towards the reference geometry written to file:
+          'Locate_TS 60p0 first.mop'
+
+
+          Second geometry (derived from reference geometry)after optimization subject to 
+          GEO_REF constraint of 60.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 60p0 second.mop'
+
+
+          Job name: 'Locate_TS'
+          Current value of GEO_REF constraint:               60.00  Kcal/mol/Angstrom^2
+          Distance between the geometries:                    2.31  Angstroms
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (HETATM    2  H   HET A   1)   0.951  -1.204   1.178        0.63         0.63
+            (HETATM    3  C   HET A   1)   0.545   0.529   0.910        0.32         0.94
+            (HETATM    1  C   HET A   1)  -0.138  -0.794   0.951        0.32         1.26
+            (HETATM    4  C   HET A   1)   0.509   1.012  -0.353        0.18         1.43
+            (HETATM   10  C   HET A   1)  -0.739  -0.911  -0.431        0.18         1.61
+            (HETATM    9  H   HET A   1)   0.845   1.000   1.808        0.17         1.78
+            (HETATM    5  H   HET A   1)  -0.859  -1.058   1.744        0.17         1.95
+            (HETATM    8  H   HET A   1)   1.058   1.851  -0.717        0.13         2.08
+            (HETATM    6  H   HET A   1)  -1.441  -1.668  -0.735        0.13         2.21
+            (HETATM   11  C   HET A   1)  -0.325   0.144  -1.180        0.0745       2.29
+
+          Heat of formation of the first geometry:           55.867 Kcal/mol
+          Heat of formation of the second geometry:          55.880 Kcal/mol
+          Contribution to heat of formation due to stress:   90.26  Kcal/mol
+          Gradient arising from first geometry:             104.28  Kcal/mol/Angstrom
+          Gradient arising from second geometry:            104.14  Kcal/mol/Angstrom
+          Angle between gradient vectors:                   178.57  degrees
+
+          Average of first and second geometries after optimization subject to 
+          GEO_REF constraint of 60.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 60p0 average.mop'
+
+
+          Constraining constant: 120.00 Kcal/mol/Angstrom^2
+
+ CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   211.800 HEAT:  278.7852
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:   209.527 HEAT:  278.0402
+ CYCLE:     3 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:   146.416 HEAT:  219.7413
+ CYCLE:     4 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:   266.453 HEAT:  198.1094
+ CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    58.662 HEAT:  191.4829
+ CYCLE:     6 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    24.720 HEAT:  198.4061
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    15.162 HEAT:  200.1826
+ CYCLE:     8 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    23.255 HEAT:  197.1604
+ CYCLE:     9 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    16.802 HEAT:  195.5307
+ CYCLE:    10 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    15.818 HEAT:  199.0053
+ CYCLE:    11 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    10.040 HEAT:  199.7500
+ CYCLE:    12 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    15.381 HEAT:  197.0908
+ CYCLE:    13 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.886 HEAT:  196.5417
+ CYCLE:    14 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     9.447 HEAT:  198.2906
+ CYCLE:    15 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     6.565 HEAT:  198.6534
+ CYCLE:    16 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.804 HEAT:  197.5712
+ CYCLE:    17 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     3.282 HEAT:  197.2797
+
+     GRADIENT =  3.28200 IS LESS THAN CUTOFF =  4.00000
+
+
+
+          First geometry (derived from data-set) after optimization subject to 
+          GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the reference geometry written to file:
+          'Locate_TS 120p0 first.mop'
+
+
+          Second geometry (derived from reference geometry)after optimization subject to 
+          GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 120p0 second.mop'
+
+
+          Job name: 'Locate_TS'
+          Current value of GEO_REF constraint:              120.00  Kcal/mol/Angstrom^2
+          Distance between the geometries:                    1.37  Angstroms
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (HETATM    2  H   HET A   1)   1.021  -1.084   1.116        0.35         0.35
+            (HETATM    3  C   HET A   1)   0.532   0.508   0.921        0.26         0.61
+            (HETATM    1  C   HET A   1)  -0.178  -0.801   0.945        0.26         0.87
+            (HETATM    4  C   HET A   1)   0.532   0.986  -0.350        0.11         0.98
+            (HETATM   10  C   HET A   1)  -0.773  -0.900  -0.427        0.11         1.08
+            (HETATM   11  C   HET A   1)  -0.325   0.148  -1.174        0.0674       1.15
+            (HETATM    9  H   HET A   1)   0.818   0.990   1.818        0.0662       1.22
+            (HETATM    5  H   HET A   1)  -0.835  -1.132   1.760        0.0640       1.28
+            (HETATM    6  H   HET A   1)  -1.478  -1.650  -0.739        0.0427       1.32
+            (HETATM    8  H   HET A   1)   1.093   1.823  -0.702        0.0425       1.37
+
+          Heat of formation of the first geometry:           63.184 Kcal/mol
+          Heat of formation of the second geometry:          63.010 Kcal/mol
+          Contribution to heat of formation due to stress:   71.09  Kcal/mol
+          Gradient arising from first geometry:             128.90  Kcal/mol/Angstrom
+          Gradient arising from second geometry:            130.27  Kcal/mol/Angstrom
+          Angle between gradient vectors:                   178.66  degrees
+
+          Average of first and second geometries after optimization subject to 
+          GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 120p0 average.mop'
+
+
+          Constraining constant: 120.00 Kcal/mol/Angstrom^2
+
+ CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    88.983 HEAT:  188.1511
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    87.320 HEAT:  188.0074
+ CYCLE:     3 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    29.652 HEAT:  180.3734
+ CYCLE:     4 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    82.985 HEAT:  183.2689
+ CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    85.030 HEAT:  187.9147
+ CYCLE:     6 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    64.145 HEAT:  186.2564
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    38.312 HEAT:  181.3713
+ CYCLE:     8 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    39.581 HEAT:  176.2078
+ CYCLE:     9 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    20.184 HEAT:  175.1197
+ CYCLE:    10 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    16.085 HEAT:  175.0112
+ CYCLE:    11 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    14.489 HEAT:  174.9472
+ CYCLE:    12 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    12.045 HEAT:  174.8797
+ CYCLE:    13 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    16.764 HEAT:  175.3933
+ CYCLE:    14 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    10.424 HEAT:  175.2581
+ CYCLE:    15 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.426 HEAT:  175.1348
+ CYCLE:    16 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     8.862 HEAT:  175.0230
+ CYCLE:    17 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    72.611 HEAT:  174.4867
+ CYCLE:    18 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     8.553 HEAT:  174.5240
+ CYCLE:    19 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     5.520 HEAT:  174.6106
+ CYCLE:    20 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.127 HEAT:  174.1211
+ CYCLE:    21 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     3.363 HEAT:  174.1656
+
+     GRADIENT =  3.36291 IS LESS THAN CUTOFF =  4.00000
+
+
+
+          First geometry (derived from data-set) after optimization subject to 
+          GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the reference geometry written to file:
+          'Locate_TS 120p0 first.mop'
+
+
+          Second geometry (derived from reference geometry)after optimization subject to 
+          GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 120p0 second.mop'
+
+
+          Job name: 'Locate_TS'
+          Current value of GEO_REF constraint:              120.00  Kcal/mol/Angstrom^2
+          Distance between the geometries:                    1.11  Angstroms
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (HETATM    2  H   HET A   1)   1.029  -1.045   1.062        0.29         0.29
+            (HETATM    1  C   HET A   1)  -0.204  -0.799   0.942        0.23         0.52
+            (HETATM    3  C   HET A   1)   0.524   0.503   0.930        0.23         0.75
+            (HETATM    4  C   HET A   1)   0.544   0.976  -0.348        0.0799       0.83
+            (HETATM   10  C   HET A   1)  -0.787  -0.893  -0.421        0.0796       0.91
+            (HETATM   11  C   HET A   1)  -0.319   0.151  -1.170        0.0560       0.96
+            (HETATM    5  H   HET A   1)  -0.813  -1.166   1.769        0.0430       1.01
+            (HETATM    9  H   HET A   1)   0.822   0.983   1.827        0.0429       1.05
+            (HETATM    8  H   HET A   1)   1.102   1.818  -0.694        0.0271       1.08
+            (HETATM    6  H   HET A   1)  -1.490  -1.643  -0.736        0.0270       1.10
+
+          Heat of formation of the first geometry:           61.366 Kcal/mol
+          Heat of formation of the second geometry:          62.252 Kcal/mol
+          Contribution to heat of formation due to stress:   50.55  Kcal/mol
+          Gradient arising from first geometry:             110.70  Kcal/mol/Angstrom
+          Gradient arising from second geometry:            109.55  Kcal/mol/Angstrom
+          Angle between gradient vectors:                   178.31  degrees
+
+          Average of first and second geometries after optimization subject to 
+          GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
+          'Locate_TS 120p0 average.mop'
+
+  Loop:   1  Energy minimization, excluding active site, using L-BFGS
+
+ CYCLE:     1 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:    20.203 HEAT:  73.33205
+ CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    19.715 HEAT:  73.32376
+ CYCLE:     3 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    14.893 HEAT:  73.16719
+ CYCLE:     4 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    19.787 HEAT:  73.32116
+ CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    15.031 HEAT:  73.16652
+ CYCLE:     6 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    12.958 HEAT:  73.05817
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    13.433 HEAT:  72.74146
+ CYCLE:     8 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    21.923 HEAT:  72.58794
+ CYCLE:     9 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.273 HEAT:  72.44839
+ CYCLE:    10 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.969 HEAT:  72.36921
+
+     GRADIENT =  4.96904 IS LESS THAN CUTOFF =  5.00000
+
+
+  Loop:   1  Gradient minimization of atoms in the active site using TS
+
+          Transition state on cycle 1 written to file:
+          'Locate_TS Loop1.mop'
+
+
+          HESSIAN CALCULATED NUMERICALLY
+
+ CYCLE:     1 TIME:   0.062 TIME LEFT:  2.00D  GRAD.:    18.371 HEAT:  72.36817
+ CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    35.110 HEAT:  73.32733
+ CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    18.757 HEAT:  72.49871
+ CYCLE:     3 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    15.202 HEAT:  72.40461
+ CYCLE:     4 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    16.326 HEAT:  72.13347
+ CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    16.012 HEAT:  72.01595
+ CYCLE:     6 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    14.406 HEAT:  72.04937
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.956 HEAT:  71.86079
+ CYCLE:     8 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     2.547 HEAT:  71.82039
+
+     GRADIENT =  2.54704  IS LESS THAN CUTOFF =  3.00000
+
+
+  Loop:   2  Energy minimization, excluding active site, using L-BFGS
+
+ CYCLE:     1 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    10.194 HEAT:  71.81277
+ CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.247 HEAT:  71.81140
+ CYCLE:     3 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:  1448.682 HEAT:  325.9390
+ CYCLE:     4 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    13.145 HEAT:  71.82088
+ CYCLE:     5 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:  1442.990 HEAT:  311.1731
+ CYCLE:     6 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    18.884 HEAT:  71.86187
+ CYCLE:     7 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   245.857 HEAT:  88.15361
+ CYCLE:     8 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    18.611 HEAT:  71.77052
+ CYCLE:     9 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    24.603 HEAT:  71.83631
+ CYCLE:    10 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     5.159 HEAT:  71.67030
+ CYCLE:    11 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     4.226 HEAT:  71.65499
+
+     GRADIENT =  4.22609 IS LESS THAN CUTOFF =  5.00000
+
+
+  Loop:   2  Gradient minimization of atoms in the active site using TS
+
+          Transition state on cycle 2 written to file:
+          'Locate_TS Loop2.mop'
+
+ CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     9.742 HEAT:  71.65464
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     6.262 HEAT:  71.73674
+ CYCLE:     3 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.835 HEAT:  71.68039
+
+     GRADIENT =  2.83466  IS LESS THAN CUTOFF =  3.00000
+
+
+  Loop:   3  Energy minimization, excluding active site, using L-BFGS
+
+ CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    12.606 HEAT:  71.67452
+ CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    12.555 HEAT:  71.67269
+ CYCLE:     3 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    78.304 HEAT:  73.07672
+ CYCLE:     4 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    16.326 HEAT:  71.68127
+ CYCLE:     5 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:   104.407 HEAT:  74.35489
+ CYCLE:     6 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     5.821 HEAT:  71.61482
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.313 HEAT:  71.59755
+
+     GRADIENT =  4.31307 IS LESS THAN CUTOFF =  5.00000
+
+
+  Loop:   3  Gradient minimization of atoms in the active site using TS
+
+          Transition state on cycle 3 written to file:
+          'Locate_TS Loop3.mop'
+
+ CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    11.445 HEAT:  71.59632
+ CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     1.848 HEAT:  71.67523
+
+     GRADIENT =  1.84772  IS LESS THAN CUTOFF =  3.00000
+
+
+  Loop:   4  Energy minimization, excluding active site, using L-BFGS
+
+ CYCLE:     1 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    13.073 HEAT:  71.66758
+ CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    13.030 HEAT:  71.66551
+ CYCLE:     3 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   118.133 HEAT:  74.96310
+ CYCLE:     4 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    16.298 HEAT:  71.67145
+ CYCLE:     5 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:   155.821 HEAT:  77.24793
+ CYCLE:     6 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     6.865 HEAT:  71.61498
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     3.774 HEAT:  71.59582
+
+     GRADIENT =  3.77353 IS LESS THAN CUTOFF =  5.00000
+
+
+  Loop:   4  Gradient minimization of atoms in the active site using TS
+
+          Transition state on cycle 4 written to file:
+          'Locate_TS Loop4.mop'
+
+ CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.126 HEAT:  71.59424
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     1.474 HEAT:  71.62613
+
+     GRADIENT =  1.47368  IS LESS THAN CUTOFF =  3.00000
+
+
+  Loop:   5  Energy minimization, excluding active site, using L-BFGS
+
+ CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    12.013 HEAT:  71.61931
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    11.972 HEAT:  71.61757
+ CYCLE:     3 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:   107.282 HEAT:  74.27897
+ CYCLE:     4 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    15.717 HEAT:  71.62619
+ CYCLE:     5 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:   149.625 HEAT:  76.66145
+ CYCLE:     6 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     5.820 HEAT:  71.58249
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.967 HEAT:  71.56882
+
+     GRADIENT =  2.96735 IS LESS THAN CUTOFF =  5.00000
+
+
+  Loop:   5  Gradient minimization of atoms in the active site using TS
+
+          Transition state on cycle 5 written to file:
+          'Locate_TS Loop5.mop'
+
+ CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    10.716 HEAT:  71.56610
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     1.063 HEAT:  71.61640
+
+     GRADIENT =  1.06317  IS LESS THAN CUTOFF =  3.00000
+
+
+
+ -------------------------------------------------------------------------------
+ geo-ok HTML MOZYME
+ Transition state for 1,3-Cyclobutadiene <=> 2,4-Cyclobutadiene
+ Locate approximate structure of the transition state for the second step in the hydride transfer
+
+
+     GEOMETRY OPTIMISED USING EIGENVECTOR FOLLOWING (TS).     
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 18.179L)
+                                                       Tue May 14 12:19:02 2019
+
+
+
+
+          FINAL HEAT OF FORMATION =         71.61035 KCAL/MOL =     299.61772 KJ/MOL
+
+
+          TOTAL ENERGY            =       -692.36353 EV
+          ELECTRONIC ENERGY       =      -2611.13704 EV
+          CORE-CORE REPULSION     =       1918.77351 EV
+
+          GRADIENT NORM           =          1.06317 = 0.32056 PER ATOM
+          NO. OF FILLED LEVELS    =         13
+          MOLECULAR WEIGHT        =         66.1024
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     8    H     5     4.34878
+            H     9    H     6     4.12756
+            H     7    H     2     1.53850
+
+
+          SCF CALCULATIONS        =         84
+ 
+
+
+
+
+   ATOM                 CHEMICAL                   X               Y               Z
+  NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C(HETATM    1  C   HET A   1)   -0.32189767  *  -0.77994598  *   0.92930709  *
+     2       H(HETATM    2  H   HET A   1)    1.08491583  *  -0.92667697  *   0.94840735  *
+     3       C(HETATM    3  C   HET A   1)    0.56981195  *   0.41341205  *   0.94833494  *
+     4       C(HETATM    4  C   HET A   1)    0.56596491      0.93900320     -0.36589948   
+     5       H(HETATM    5  H   HET A   1)   -0.74096647     -1.25687534      1.79150983   
+     6       H(HETATM    6  H   HET A   1)   -1.49068371     -1.64437486     -0.73952323   
+     7       H(HETATM    7  H   HET A   1)   -0.48194404      0.32603059     -2.20350999   
+     8       H(HETATM    8  H   HET A   1)    1.10979737      1.80577313     -0.67966629   
+     9       H(HETATM    9  H   HET A   1)    0.89320296      0.92707448      1.83049118   
+    10       C(HETATM   10  C   HET A   1)   -0.81177452     -0.89319581     -0.39235017   
+    11       C(HETATM   11  C   HET A   1)   -0.26799383      0.15036123     -1.16737883   
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.321897673    -0.779945983     0.929307093
+   2    H        1.084915830    -0.926676975     0.948407353
+   3    C        0.569811952     0.413412050     0.948334938
+   4    C        0.565964911     0.939003199    -0.365899485
+   5    H       -0.740966471    -1.256875343     1.791509825
+   6    H       -1.490683709    -1.644374863    -0.739523232
+   7    H       -0.481944042     0.326030591    -2.203509988
+   8    H        1.109797372     1.805773127    -0.679666291
+   9    H        0.893202956     0.927074478     1.830491178
+  10    C       -0.811774518    -0.893195807    -0.392350173
+  11    C       -0.267993835     0.150361229    -1.167378830
+
+
+           Empirical Formula: C5 H6  =    11 atoms
+
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.                 TYPE                        CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C(HETATM    1  C   HET A   1)          -0.253640        4.2536     1.07389     3.17975
+    2          H(HETATM    2  H   HET A   1)           0.292404        0.7076     0.70760
+    3          C(HETATM    3  C   HET A   1)          -0.252242        4.2522     1.07597     3.17627
+    4          C(HETATM    4  C   HET A   1)          -0.195782        4.1958     1.08110     3.11468
+    5          H(HETATM    5  H   HET A   1)           0.163852        0.8361     0.83615
+    6          H(HETATM    6  H   HET A   1)           0.151050        0.8490     0.84895
+    7          H(HETATM    7  H   HET A   1)           0.148279        0.8517     0.85172
+    8          H(HETATM    8  H   HET A   1)           0.151101        0.8489     0.84890
+    9          H(HETATM    9  H   HET A   1)           0.163529        0.8365     0.83647
+   10          C(HETATM   10  C   HET A   1)          -0.197660        4.1977     1.08248     3.11518
+   11          C(HETATM   11  C   HET A   1)          -0.170889        4.1709     1.08555     3.08534
+
+          NET CHARGE ON RESIDUES
+
+      Residue         Charge  Anion or
+                              Cation?
+      HET A   1       +0.000
+ 
+
+
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     1.183    -0.922     0.974     1.788
+ HYBRID         0.296    -0.230     0.161     0.408
+ SUM            1.479    -1.152     1.135     2.192
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+                   Atom                  s        px        py        pz   
+    1  C(HETATM    1  C   HET A   1)   1.07389   0.97353   1.13120   1.07502
+    2  H(HETATM    2  H   HET A   1)   0.70760
+    3  C(HETATM    3  C   HET A   1)   1.07597   1.16350   0.93829   1.07448
+    4  C(HETATM    4  C   HET A   1)   1.08110   1.06123   1.06502   0.98843
+    5  H(HETATM    5  H   HET A   1)   0.83615
+    6  H(HETATM    6  H   HET A   1)   0.84895
+    7  H(HETATM    7  H   HET A   1)   0.85172
+    8  H(HETATM    8  H   HET A   1)   0.84890
+    9  H(HETATM    9  H   HET A   1)   0.83647
+   10  C(HETATM   10  C   HET A   1)   1.08248   1.06617   1.06029   0.98873
+   11  C(HETATM   11  C   HET A   1)   1.08555   1.01566   1.00201   1.06767
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             1.37 SECONDS
+
+ == MOPAC DONE ==

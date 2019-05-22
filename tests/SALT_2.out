@@ -1,0 +1,177 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue May 14 12:19:33 2019  *
+ *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *******************************************************************************
+ SITE=(SALT=4.0)
+ Test that N-end Asp and C-end Arg form salt-bridges
+
+   ATOM                 CHEMICAL                   X               Y               Z
+  NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       N(ATOM      1  N   ASP A   1)   40.95810273  *  14.94276982  *  25.00194341  *
+     2       C(ATOM      2  CA  ASP A   1)   41.62661392  *  14.88389701  *  23.69539119  *
+     3       C(ATOM      3  C   ASP A   1)   40.75538668  *  14.22661571  *  22.61261850  *
+     4       O(ATOM      4  O   ASP A   1)   40.49981955  *  14.81708621  *  21.59582962  *
+     5       C(ATOM      5  CB  ASP A   1)   42.93297070  *  14.07105897  *  23.82328221  *
+     6       C(ATOM      6  CG  ASP A   1)   42.78509633  *  12.80217571  *  24.59888461  *
+     7       O(ATOM      7  OD1 ASP A   1)   41.56353985  *  12.22869178  *  24.37187166  *
+     8       O(ATOM      8  OD2 ASP A   1)   43.56610453  *  12.27175565  *  25.34009673  *
+     9       H(ATOM      9 1H   ASP A   1)   40.20574903  *  15.61297421  *  25.02945953  *
+    10       H(ATOM     10 2H   ASP A   1)   40.63172855  *  14.03369596  *  25.30148168  *
+    11       H(ATOM     11  HA  ASP A   1)   41.87648219  *  15.93534009  *  23.38011003  *
+    12       H(ATOM     12  HXT ASP A   1)   40.39129542  *  13.21123828  *  22.80464538  *
+    13       H(ATOM     13 1HB  ASP A   1)   43.69847162  *  14.70563370  *  24.33370377  *
+    14       H(ATOM     14 2HB  ASP A   1)   43.34150743  *  13.83861441  *  22.81502476  *
+    15       H(ATOM     15  HD1 ASP A   1)   41.42233677  *  11.38694064  *  24.86383923  *
+    16       H(ATOM     17  H   ARG A   5)   34.74130831  *  17.18921890  *  23.85274498  *
+    17       C(ATOM     18  CA  ARG A   5)   33.97529057  *  17.59928684  *  24.54333088  *
+    18       C(ATOM     19  CB  ARG A   5)   33.22790403  *  16.47244118  *  25.26427976  *
+    19       C(ATOM     20  CG  ARG A   5)   32.51739662  *  15.53791595  *  24.28194989  *
+    20       C(ATOM     21  CD  ARG A   5)   31.33271529  *  16.23755486  *  23.58296709  *
+    21       N(ATOM     22  NE  ARG A   5)   30.35459320  *  16.65721884  *  24.60785878  *
+    22       C(ATOM     23  CZ  ARG A   5)   30.20830752  *  18.03835577  *  24.85767488  *
+    23       N(ATOM     24  NH1 ARG A   5)   30.82131109  *  18.92943245  *  24.14848191  *
+    24       N(ATOM     25  NH2 ARG A   5)   29.32794266  *  18.29745981  *  25.94010148  *
+    25       C(ATOM     26  C   ARG A   5)   34.57438905  *  18.50522365  *  25.56764160  *
+    26       O(ATOM     27  O   ARG A   5)   34.03744308  *  19.19309223  *  26.39580539  *
+    27       O(ATOM     28  O   HIS A   6)   35.93472426  *  18.48971177  *  25.47894978  *
+    28       H(ATOM     29  HA  ARG A   5)   33.26848228  *  18.19222355  *  23.90769726  *
+    29       H(ATOM     30 1HB  ARG A   5)   33.92703902  *  15.90233706  *  25.90471493  *
+    30       H(ATOM     31 2HB  ARG A   5)   32.46729347  *  16.90788545  *  25.94728270  *
+    31       H(ATOM     32 1HG  ARG A   5)   32.14354098  *  14.65654081  *  24.83215853  *
+    32       H(ATOM     33 2HG  ARG A   5)   33.22763071  *  15.15604693  *  23.52781583  *
+    33       H(ATOM     34  HE  ARG A   5)   29.49987770  *  16.11473077  *  24.63170570  *
+    34       H(ATOM     35  HH1 ARG A   5)   30.81916374  *  19.89676023  *  24.40631338  *
+    35       H(ATOM     36 1HH2 ARG A   5)   29.15382428  *  17.55904210  *  26.59605073  *
+    36       H(ATOM     37 2HH2 ARG A   5)   29.40299987  *  19.20034407  *  26.37473760  *
+    37       H(ATOM     38 1HD  ARG A   5)   30.84746223  *  15.54440208  *  22.86693570  *
+    38       H(ATOM     39 2HD  ARG A   5)   31.72082263  *  17.10256325  *  22.99151446  *
+    39       H(ATOM     40  H   HIS A   6)   36.38511104  *  19.07036871  *  26.13784376  *
+ 
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x
+
+           Empirical Formula: C10 H20 N4 O5  =    39 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C1  
+ GEOMETRY OF SYSTEM SUPPLIED
+ SITE=(SALT=4.0)
+ Test that N-end Asp and C-end Arg form salt-bridges
+
+  N(ATOM      1  N   ASP A   1)  40.95810273 +1  14.94276982 +1  25.00194341 +1
+  C(ATOM      2  CA  ASP A   1)  41.62661392 +1  14.88389701 +1  23.69539119 +1
+  C(ATOM      3  C   ASP A   1)  40.75538668 +1  14.22661571 +1  22.61261850 +1
+  O(ATOM      4  O   ASP A   1)  40.49981955 +1  14.81708621 +1  21.59582962 +1
+  C(ATOM      5  CB  ASP A   1)  42.93297070 +1  14.07105897 +1  23.82328221 +1
+  C(ATOM      6  CG  ASP A   1)  42.78509633 +1  12.80217571 +1  24.59888461 +1
+  O(ATOM      7  OD1 ASP A   1)  41.56353985 +1  12.22869178 +1  24.37187166 +1
+  O(ATOM      8  OD2 ASP A   1)  43.56610453 +1  12.27175565 +1  25.34009673 +1
+  H(ATOM      9 1H   ASP A   1)  40.20574903 +1  15.61297421 +1  25.02945953 +1
+  H(ATOM     10 2H   ASP A   1)  40.63172855 +1  14.03369596 +1  25.30148168 +1
+  H(ATOM     11  HA  ASP A   1)  41.87648219 +1  15.93534009 +1  23.38011003 +1
+  H(ATOM     12  HXT ASP A   1)  40.39129542 +1  13.21123828 +1  22.80464538 +1
+  H(ATOM     13 1HB  ASP A   1)  43.69847162 +1  14.70563370 +1  24.33370377 +1
+  H(ATOM     14 2HB  ASP A   1)  43.34150743 +1  13.83861441 +1  22.81502476 +1
+  H(ATOM     15  HD1 ASP A   1)  41.42233677 +1  11.38694064 +1  24.86383923 +1
+  H(ATOM     17  H   ARG A   5)  34.74130831 +1  17.18921890 +1  23.85274498 +1
+  C(ATOM     18  CA  ARG A   5)  33.97529057 +1  17.59928684 +1  24.54333088 +1
+  C(ATOM     19  CB  ARG A   5)  33.22790403 +1  16.47244118 +1  25.26427976 +1
+  C(ATOM     20  CG  ARG A   5)  32.51739662 +1  15.53791595 +1  24.28194989 +1
+  C(ATOM     21  CD  ARG A   5)  31.33271529 +1  16.23755486 +1  23.58296709 +1
+  N(ATOM     22  NE  ARG A   5)  30.35459320 +1  16.65721884 +1  24.60785878 +1
+  C(ATOM     23  CZ  ARG A   5)  30.20830752 +1  18.03835577 +1  24.85767488 +1
+  N(ATOM     24  NH1 ARG A   5)  30.82131109 +1  18.92943245 +1  24.14848191 +1
+  N(ATOM     25  NH2 ARG A   5)  29.32794266 +1  18.29745981 +1  25.94010148 +1
+  C(ATOM     26  C   ARG A   5)  34.57438905 +1  18.50522365 +1  25.56764160 +1
+  O(ATOM     27  O   ARG A   5)  34.03744308 +1  19.19309223 +1  26.39580539 +1
+  O(ATOM     28  O   HIS A   6)  35.93472426 +1  18.48971177 +1  25.47894978 +1
+  H(ATOM     29  HA  ARG A   5)  33.26848228 +1  18.19222355 +1  23.90769726 +1
+  H(ATOM     30 1HB  ARG A   5)  33.92703902 +1  15.90233706 +1  25.90471493 +1
+  H(ATOM     31 2HB  ARG A   5)  32.46729347 +1  16.90788545 +1  25.94728270 +1
+  H(ATOM     32 1HG  ARG A   5)  32.14354098 +1  14.65654081 +1  24.83215853 +1
+  H(ATOM     33 2HG  ARG A   5)  33.22763071 +1  15.15604693 +1  23.52781583 +1
+  H(ATOM     34  HE  ARG A   5)  29.49987770 +1  16.11473077 +1  24.63170570 +1
+  H(ATOM     35  HH1 ARG A   5)  30.81916374 +1  19.89676023 +1  24.40631338 +1
+  H(ATOM     36 1HH2 ARG A   5)  29.15382428 +1  17.55904210 +1  26.59605073 +1
+  H(ATOM     37 2HH2 ARG A   5)  29.40299987 +1  19.20034407 +1  26.37473760 +1
+  H(ATOM     38 1HD  ARG A   5)  30.84746223 +1  15.54440208 +1  22.86693570 +1
+  H(ATOM     39 2HD  ARG A   5)  31.72082263 +1  17.10256325 +1  22.99151446 +1
+  H(ATOM     40  H   HIS A   6)  36.38511104 +1  19.07036871 +1  26.13784376 +1
+ 
+
+
+                   Salt Bridges Found (Up to  4.0 Angstroms)
+
+     No.          Cationic site                            Anionic site                Dist. (Angstroms)
+
+      1  (ATOM      1  N   ASP A   1)    A1(+)    (ATOM      7  OD1 ASP A   1)    A1(-)      2.85
+      2  (ATOM     23  NH1 ARG A   5)    A5(+)    (ATOM     26  O   ARG A   5)    A5(-)      3.93
+
+       Changes in Ionization caused by keyword SITE
+
+       Keyword: "SITE=(SALT=4.0)" =>  SITE=(A1(+),A1(-),A5(+),A5(-))
+
+      Hydrogen atoms added to     Hydrogen atoms deleted from
+
+  1       N   ASP A   1                 OD1 ASP A   1
+  2       NH1 ARG A   5                 O   HIS A   6
+
+          Change in net ionization:  +0
+
+                RESIDUE SEQUENCE IN PROTEIN Chain: A
+
+             1     2     3     4     5     6     7     8     9    10
+        0   ASP   
+
+                RESIDUE SEQUENCE IN PROTEIN FRAGMENT: 2 Chain: A
+
+             1     2     3     4     5     6     7     8     9    10
+        0                           ARG   HIS   
+
+                RESIDUE SEQUENCE IN PROTEIN Chain: A
+
+        0  D
+
+                RESIDUE SEQUENCE IN PROTEIN FRAGMENT: 2 Chain: A
+
+        0      RH
+
+          CHARGES MODIFIED BY SITE COMMAND
+
+          GEOMETRY RESEQUENCED
+
+ ******************************************************************************
+ *                                                                            *
+ *     Error and normal termination messages reported in this calculation     *
+ *                                                                            *
+ * CHARGES MODIFIED BY SITE COMMAND                                           *
+ * GEOMETRY RESEQUENCED                                                       *
+ * JOB ENDED NORMALLY                                                         *
+ *                                                                            *
+ ******************************************************************************
+
+
+
+ TOTAL JOB TIME:             0.00 SECONDS
+
+ == MOPAC DONE ==

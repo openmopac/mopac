@@ -5,11 +5,11 @@
       use molkst_C, only : numat, nclose, nopen, fract, nalpha, nelecs, nbeta, &
       & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, escf, &
       & keywrd, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
-      ijulian, jobnam, method_am1, method_pm3, method_mndod, line, mers, uhf, &
-      method_pm6, method_rm1, gui, density, formula, mozyme, mpack, stress, &
-      site_no, method_pm7,  method_PM7_ts, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
+      ijulian, jobnam, line, mers, uhf, &
+      gui, density, formula, mozyme, mpack, stress, &
+      site_no, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
-      n_methods, methods, methods_keys, hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
+      hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
       prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label
 !
       use MOZYME_C, only : icocc, icvir, ncocc, ncvir, nvirtual, noccupied, &
@@ -55,7 +55,7 @@
       dip, dumy(3), pKa_unsorted(numat), distortion, rms, gnorm_norm
       logical :: ci, lprtgra, still, bcc, opend
       character  :: type(3)*11, idate*24, gtype*13, grtype*14, &
-      flepo(18)*58, iter(2)*58, namfil*241, num*1
+      flepo(18)*58, iter(2)*58, namfil*241, num*2
       character, allocatable :: old_arc_file(:)*1000
       double precision, external :: dipole_for_MOZYME, dot
       integer, external :: ijbo
@@ -172,6 +172,8 @@
         write (iw, &
     '(10X,''RMS DISTORTION          ='',F17.5,'' Angstroms per atom (all atoms)'' )') sqrt(rms/numat)
       else
+        distortion = 0.d0
+        rms = 0.d0
         if (index(keywrd," PM7-TS") /= 0) then
           call PM7_TS
           return
@@ -212,8 +214,8 @@
       call to_screen(" Job: "//jobnam(1:len_trim(jobnam)))
       write (line,'(10x,a,f16.5,a)') "Final heat of formation = ",escf," kcal/mol"
       call to_screen(line)
-      gnorm_norm =  gnorm/sqrt(1.0*numat)
-      num = Char (min(2, max(0, Int(Log10( gnorm_norm))))+Ichar ("7"))
+      gnorm_norm =  gnorm/sqrt(1.0*numat) + 1.d-8
+      write(num, '(i2)')  max(0, Int(Log10( gnorm_norm))) + 7
       write (line, '(10X,''GRADIENT NORM           ='',F17.5, '' = '',f'//num//'.5, '' PER ATOM'')') gnorm, gnorm_norm
       call to_screen(line) 
       if (id == 3 .and. iw0 > -1) call write_unit_cell_HOF(iw0)     
@@ -548,9 +550,12 @@
         write (iw, '(2/,''      MOLECULAR POINT GROUP   :   '',A4)') name 
         if (mozyme) then
           if (index(keywrd," RE-LOC") /= 0) then
-            write(iw,"(a,/)")"  LMOs being Re-Localized"
+            write(iw,"(10x,a,/)")"  LMOs being Re-Localized"
             call local_for_MOZYME("OCCUPIED")
-            call local_for_MOZYME("VIRTUAL")
+!
+!  Suppress re-localization of the virtual set.  Not of interest to users.
+!
+!            call local_for_MOZYME("VIRTUAL") 
           end if
           if ((index(keywrd,' VEC') + index(keywrd,' ALLVEC'))*nelecs /= 0) then 
             if (index(keywrd, " EIGEN") /= 0) then
@@ -830,7 +835,7 @@
         endif 
         call to_screen("To_file: Normal output")
         i = nclose + nalpha 
-        if (index(keywrd,' LOCAL') /= 0) then 
+        if (index(keywrd,' LOCAL') + index(keywrd,' RABBIT') + index(keywrd,' BANANA') /= 0) then 
           call local (c, i, eigs, 1, "c ") 
           if (nbeta /= 0) then 
             write (iw, '(2/10X,'' LOCALIZED BETA MOLECULAR ORBITALS'')') 

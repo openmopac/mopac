@@ -1,0 +1,540 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue May 14 12:16:39 2019  *
+ *  COMPARE    - Compare two geometries
+ *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
+ *  Keyword:   START_RES=(7A 300) 
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "BACTERIORHODOPSIN_1AP9.ENT"
+ *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "BACTERIORHODOPSIN_1C3W.ENT"
+ *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
+ *  Keyword:   CHAINS=(A) 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  OUTPUT     - MINIMIZE OUTPUT
+ *******************************************************************************
+ START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_1C3W.ent" COMPARE OUTPUT
+ Compare 1AP9 and 1C3W Bacteriorhodopsin
+
+ 
+
+                            Differences in atoms sets
+
+          Atoms in GEO_DAT only                   Atoms in GEO_REF only
+
+       ATOM   1168  N   THR A 157              ATOM      1  N   THR A   5
+       ATOM   1169  CA  THR A 157              ATOM      2  CA  THR A   5
+       ATOM   1170  C   THR A 157              ATOM      3  C   THR A   5
+       ATOM   1171  O   THR A 157              ATOM      4  O   THR A   5
+       ATOM   1172  CB  THR A 157              ATOM      5  CB  THR A   5
+       ATOM   1173  OG1 THR A 157              ATOM      6  OG1 THR A   5
+       ATOM   1174  CG2 THR A 157              ATOM      7  CG2 THR A   5
+       ATOM   1175  N   SER A 158              ATOM      8  N   GLY A   6
+       ATOM   1176  CA  SER A 158              ATOM      9  CA  GLY A   6
+       ATOM   1177  C   SER A 158              ATOM     10  C   GLY A   6
+       ATOM   1178  O   SER A 158              ATOM     11  O   GLY A   6
+       ATOM   1179  CB  SER A 158              ATOM     18  CD  ARG A   7
+       ATOM   1180  OG  SER A 158              ATOM     19  NE  ARG A   7
+       ATOM   1181  N   LYS A 159              ATOM     20  CZ  ARG A   7
+       ATOM   1182  CA  LYS A 159              ATOM     21  NH1 ARG A   7
+       ATOM   1183  C   LYS A 159              ATOM     22  NH2 ARG A   7
+       ATOM   1184  O   LYS A 159              ATOM   1668  O   ARG A 225
+       ATOM   1185  CB  LYS A 159              ATOM   1676  N   SER A 226
+       ATOM   1186  CG  LYS A 159              ATOM   1677  CA  SER A 226
+       ATOM   1187  CD  LYS A 159              ATOM   1678  C   SER A 226
+       ATOM   1188  CE  LYS A 159              ATOM   1679  O   SER A 226
+       ATOM   1189  NZ  LYS A 159              ATOM   1680  CB  SER A 226
+       ATOM   1190  N   ALA A 160              ATOM   1681  OG  SER A 226
+       ATOM   1191  CA  ALA A 160              ATOM   1682  N   ARG A 227
+       ATOM   1192  C   ALA A 160              ATOM   1683  CA  ARG A 227
+       ATOM   1193  O   ALA A 160              ATOM   1684  C   ARG A 227
+       ATOM   1194  CB  ALA A 160              ATOM   1685  O   ARG A 227
+       ATOM   1195  N   GLU A 161              ATOM   1686  CB  ARG A 227
+       ATOM   1196  CA  GLU A 161              ATOM   1687  CG  ARG A 227
+       ATOM   1197  C   GLU A 161              ATOM   1688  CD  ARG A 227
+       ATOM   1198  O   GLU A 161              ATOM   1689  NE  ARG A 227
+       ATOM   1199  CB  GLU A 161              ATOM   1690  CZ  ARG A 227
+       ATOM   1200  CG  GLU A 161              ATOM   1691  NH1 ARG A 227
+       ATOM   1201  CD  GLU A 161              ATOM   1692  NH2 ARG A 227
+       ATOM   1202  OE1 GLU A 161              ATOM   1693  N   ALA A 228
+       ATOM   1203  OE2 GLU A 161              ATOM   1694  CA  ALA A 228
+       HETATM 1696  C1  RET   300              ATOM   1695  C   ALA A 228
+       HETATM 1697  C2  RET   300              ATOM   1696  O   ALA A 228
+       HETATM 1698  C3  RET   300              ATOM   1697  CB  ALA A 228
+       HETATM 1699  C4  RET   300              ATOM   1698  N   ILE A 229
+       HETATM 1700  C5  RET   300              ATOM   1699  CA  ILE A 229
+       HETATM 1701  C6  RET   300              ATOM   1700  C   ILE A 229
+       HETATM 1702  C7  RET   300              ATOM   1701  O   ILE A 229
+       HETATM 1703  C8  RET   300              ATOM   1702  CB  ILE A 229
+       HETATM 1704  C9  RET   300              ATOM   1703  CG1 ILE A 229
+       HETATM 1705  C10 RET   300              ATOM   1704  CG2 ILE A 229
+       HETATM 1706  C11 RET   300              ATOM   1705  CD1 ILE A 229
+       HETATM 1707  C12 RET   300              ATOM   1706  N   PHE A 230
+       HETATM 1708  C13 RET   300              ATOM   1707  CA  PHE A 230
+       HETATM 1709  C14 RET   300              ATOM   1708  C   PHE A 230
+       HETATM 1710  C15 RET   300              ATOM   1709  O   PHE A 230
+       HETATM 1711  C16 RET   300              ATOM   1710  CB  PHE A 230
+       HETATM 1712  C17 RET   300              ATOM   1711  CG  PHE A 230
+       HETATM 1713  C18 RET   300              ATOM   1712  CD1 PHE A 230
+       HETATM 1714  C19 RET   300              ATOM   1713  CD2 PHE A 230
+       HETATM 1715  C20 RET   300              ATOM   1714  CE1 PHE A 230
+       HETATM 1716  O   HOH   400              ATOM   1715  CE2 PHE A 230
+       HETATM 1724  O   HOH   408              ATOM   1716  CZ  PHE A 230
+       HETATM 1725  O   HOH   409              ATOM   1717  N   GLY A 231
+       HETATM 1726  O   HOH   410              ATOM   1718  CA  GLY A 231
+       HETATM 1737  O   HOH   421              ATOM   1719  C   GLY A 231
+       HETATM 1738  O   HOH   422              ATOM   1720  O   GLY A 231
+       HETATM 1739  O   HOH   423              HETATM 1722  C1  LI1   601
+       HETATM 1740  O   HOH   424              HETATM 1723  C2  LI1   601
+       HETATM 1741  O   HOH   425              HETATM 1724  C3  LI1   601
+                                               HETATM 1725  O1  LI1   601
+                                               HETATM 1726  O2  LI1   601
+                                               HETATM 1727  O3  LI1   601
+                                               HETATM 1728  C41 LI1   601
+                                               HETATM 1729  C42 LI1   601
+                                               HETATM 1730  C43 LI1   601
+                                               HETATM 1731  C45 LI1   601
+                                               HETATM 1732  C46 LI1   601
+                                               HETATM 1733  C47 LI1   601
+                                               HETATM 1734  C48 LI1   601
+                                               HETATM 1735  C50 LI1   601
+                                               HETATM 1736  C11 LI1   601
+                                               HETATM 1737  C12 LI1   601
+                                               HETATM 1738  C13 LI1   601
+                                               HETATM 1739  C15 LI1   601
+                                               HETATM 1740  C16 LI1   601
+                                               HETATM 1741  C17 LI1   601
+                                               HETATM 1742  C18 LI1   601
+                                               HETATM 1743  C19 LI1   601
+                                               HETATM 1744  C20 LI1   601
+                                               HETATM 1745  C21 LI1   601
+                                               HETATM 1746  C22 LI1   601
+                                               HETATM 1747  C23 LI1   601
+                                               HETATM 1748  C25 LI1   601
+                                               HETATM 1749  C26 LI1   601
+                                               HETATM 1750  C27 LI1   601
+                                               HETATM 1751  C28 LI1   601
+                                               HETATM 1752  C29 LI1   601
+                                               HETATM 1753  C30 LI1   601
+                                               HETATM 1754  C1  LI1   602
+                                               HETATM 1755  C2  LI1   602
+                                               HETATM 1756  C3  LI1   602
+                                               HETATM 1757  O1  LI1   602
+                                               HETATM 1758  O2  LI1   602
+                                               HETATM 1759  O3  LI1   602
+                                               HETATM 1760  C41 LI1   602
+                                               HETATM 1761  C42 LI1   602
+                                               HETATM 1762  C43 LI1   602
+                                               HETATM 1763  C44 LI1   602
+                                               HETATM 1764  C45 LI1   602
+                                               HETATM 1765  C46 LI1   602
+                                               HETATM 1766  C47 LI1   602
+                                               HETATM 1767  C48 LI1   602
+                                               HETATM 1768  C49 LI1   602
+                                               HETATM 1769  C50 LI1   602
+                                               HETATM 1770  C51 LI1   602
+                                               HETATM 1771  C52 LI1   602
+                                               HETATM 1772  C53 LI1   602
+                                               HETATM 1773  C55 LI1   602
+                                               HETATM 1774  C56 LI1   602
+                                               HETATM 1775  C57 LI1   602
+                                               HETATM 1776  C58 LI1   602
+                                               HETATM 1777  C59 LI1   602
+                                               HETATM 1778  C60 LI1   602
+                                               HETATM 1779  C11 LI1   602
+                                               HETATM 1780  C12 LI1   602
+                                               HETATM 1781  C13 LI1   602
+                                               HETATM 1782  C14 LI1   602
+                                               HETATM 1783  C15 LI1   602
+                                               HETATM 1784  C16 LI1   602
+                                               HETATM 1785  C17 LI1   602
+                                               HETATM 1786  C18 LI1   602
+                                               HETATM 1787  C20 LI1   602
+                                               HETATM 1788  C21 LI1   602
+                                               HETATM 1789  C22 LI1   602
+                                               HETATM 1790  C23 LI1   602
+                                               HETATM 1791  C24 LI1   602
+                                               HETATM 1792  C25 LI1   602
+                                               HETATM 1793  C26 LI1   602
+                                               HETATM 1794  C27 LI1   602
+                                               HETATM 1795  C11 LI1   603
+                                               HETATM 1796  C12 LI1   603
+                                               HETATM 1797  C13 LI1   603
+                                               HETATM 1798  C14 LI1   603
+                                               HETATM 1799  C15 LI1   603
+                                               HETATM 1800  C16 LI1   603
+                                               HETATM 1801  C17 LI1   603
+                                               HETATM 1802  C18 LI1   603
+                                               HETATM 1803  C20 LI1   603
+                                               HETATM 1804  C21 LI1   603
+                                               HETATM 1805  C22 LI1   603
+                                               HETATM 1806  C23 LI1   603
+                                               HETATM 1807  C25 LI1   603
+                                               HETATM 1808  C26 LI1   603
+                                               HETATM 1809  C27 LI1   603
+                                               HETATM 1810  C28 LI1   603
+                                               HETATM 1811  C29 LI1   603
+                                               HETATM 1812  C30 LI1   603
+                                               HETATM 1813  C11 LI1   604
+                                               HETATM 1814  C12 LI1   604
+                                               HETATM 1815  C13 LI1   604
+                                               HETATM 1816  C15 LI1   604
+                                               HETATM 1817  C16 LI1   604
+                                               HETATM 1818  C17 LI1   604
+                                               HETATM 1819  C18 LI1   604
+                                               HETATM 1820  C20 LI1   604
+                                               HETATM 1821  C21 LI1   604
+                                               HETATM 1822  C22 LI1   604
+                                               HETATM 1823  C23 LI1   604
+                                               HETATM 1824  C25 LI1   604
+                                               HETATM 1825  C26 LI1   604
+                                               HETATM 1826  C27 LI1   604
+                                               HETATM 1827  C28 LI1   604
+                                               HETATM 1828  C29 LI1   604
+                                               HETATM 1829  C13 LI1   605
+                                               HETATM 1830  C15 LI1   605
+                                               HETATM 1831  C16 LI1   605
+                                               HETATM 1832  C17 LI1   605
+                                               HETATM 1833  C18 LI1   605
+                                               HETATM 1834  C20 LI1   605
+                                               HETATM 1835  C21 LI1   605
+                                               HETATM 1836  C22 LI1   605
+                                               HETATM 1837  C13 LI1   606
+                                               HETATM 1838  C15 LI1   606
+                                               HETATM 1839  C16 LI1   606
+                                               HETATM 1840  C17 LI1   606
+                                               HETATM 1841  C18 LI1   606
+                                               HETATM 1842  C20 LI1   606
+                                               HETATM 1843  C21 LI1   606
+                                               HETATM 1844  C22 LI1   606
+                                               HETATM 1845  C1  LI1   607
+                                               HETATM 1846  C2  LI1   607
+                                               HETATM 1847  C3  LI1   607
+                                               HETATM 1848  O1  LI1   607
+                                               HETATM 1849  O2  LI1   607
+                                               HETATM 1850  O3  LI1   607
+                                               HETATM 1851  C41 LI1   607
+                                               HETATM 1852  C42 LI1   607
+                                               HETATM 1853  C43 LI1   607
+                                               HETATM 1854  C44 LI1   607
+                                               HETATM 1855  C45 LI1   607
+                                               HETATM 1856  C46 LI1   607
+                                               HETATM 1857  C47 LI1   607
+                                               HETATM 1858  C48 LI1   607
+                                               HETATM 1859  C50 LI1   607
+                                               HETATM 1860  C51 LI1   607
+                                               HETATM 1861  C52 LI1   607
+                                               HETATM 1862  C53 LI1   607
+                                               HETATM 1863  C55 LI1   607
+                                               HETATM 1864  C56 LI1   607
+                                               HETATM 1865  C57 LI1   607
+                                               HETATM 1866  C58 LI1   607
+                                               HETATM 1867  C60 LI1   607
+                                               HETATM 1868  C11 LI1   607
+                                               HETATM 1869  C12 LI1   607
+                                               HETATM 1870  C13 LI1   607
+                                               HETATM 1871  C15 LI1   607
+                                               HETATM 1872  C16 LI1   607
+                                               HETATM 1873  C17 LI1   607
+                                               HETATM 1874  C18 LI1   607
+                                               HETATM 1875  C20 LI1   607
+                                               HETATM 1876  C21 LI1   607
+                                               HETATM 1877  C22 LI1   607
+                                               HETATM 1878  C23 LI1   607
+                                               HETATM 1879  C25 LI1   607
+                                               HETATM 1880  C26 LI1   607
+                                               HETATM 1881  C27 LI1   607
+                                               HETATM 1882  C28 LI1   607
+                                               HETATM 1883  C11 LI1   608
+                                               HETATM 1884  C12 LI1   608
+                                               HETATM 1885  C13 LI1   608
+                                               HETATM 1886  C15 LI1   608
+                                               HETATM 1887  C16 LI1   608
+                                               HETATM 1888  C17 LI1   608
+                                               HETATM 1889  C18 LI1   608
+                                               HETATM 1890  C19 LI1   608
+                                               HETATM 1891  C20 LI1   608
+                                               HETATM 1892  C21 LI1   608
+                                               HETATM 1893  C22 LI1   608
+                                               HETATM 1894  C23 LI1   608
+                                               HETATM 1895  C25 LI1   608
+                                               HETATM 1896  C26 LI1   608
+                                               HETATM 1897  C27 LI1   608
+                                               HETATM 1898  C28 LI1   608
+                                               HETATM 1899  C29 LI1   608
+                                               HETATM 1900  C30 LI1   608
+                                               HETATM 1901  C11 LI1   609
+                                               HETATM 1902  C12 LI1   609
+                                               HETATM 1903  C13 LI1   609
+                                               HETATM 1904  C15 LI1   609
+                                               HETATM 1905  C16 LI1   609
+                                               HETATM 1906  C17 LI1   609
+                                               HETATM 1907  C18 LI1   609
+                                               HETATM 1908  C20 LI1   609
+                                               HETATM 1909  C21 LI1   609
+                                               HETATM 1910  C22 LI1   609
+                                               HETATM 1911  C23 LI1   609
+                                               HETATM 1912  C25 LI1   609
+                                               HETATM 1913  C26 LI1   609
+                                               HETATM 1914  C27 LI1   609
+                                               HETATM 1915  C28 LI1   609
+                                               HETATM 1916  C30 LI1   609
+                                               HETATM 1917  C1  LI1   610
+                                               HETATM 1918  C2  LI1   610
+                                               HETATM 1919  C3  LI1   610
+                                               HETATM 1920  O1  LI1   610
+                                               HETATM 1921  O2  LI1   610
+                                               HETATM 1922  O3  LI1   610
+                                               HETATM 1923  C41 LI1   610
+                                               HETATM 1924  C42 LI1   610
+                                               HETATM 1925  C43 LI1   610
+                                               HETATM 1926  C45 LI1   610
+                                               HETATM 1927  C46 LI1   610
+                                               HETATM 1928  C47 LI1   610
+                                               HETATM 1929  C48 LI1   610
+                                               HETATM 1930  C50 LI1   610
+                                               HETATM 1931  C51 LI1   610
+                                               HETATM 1932  C52 LI1   610
+                                               HETATM 1933  C53 LI1   610
+                                               HETATM 1934  C55 LI1   610
+                                               HETATM 1935  C56 LI1   610
+                                               HETATM 1936  C57 LI1   610
+                                               HETATM 1937  C58 LI1   610
+                                               HETATM 1938  C59 LI1   610
+                                               HETATM 1939  C60 LI1   610
+                                               HETATM 1940  C11 LI1   610
+                                               HETATM 1941  C12 LI1   610
+                                               HETATM 1942  C13 LI1   610
+                                               HETATM 1943  C15 LI1   610
+                                               HETATM 1944  C16 LI1   610
+                                               HETATM 1945  C17 LI1   610
+                                               HETATM 1946  C18 LI1   610
+                                               HETATM 1947  C20 LI1   610
+                                               HETATM 1948  C21 LI1   610
+                                               HETATM 1949  C22 LI1   610
+                                               HETATM 1950  C23 LI1   610
+                                               HETATM 1951  C25 LI1   610
+                                               HETATM 1952  C26 LI1   610
+                                               HETATM 1953  C27 LI1   610
+                                               HETATM 1954  C28 LI1   610
+                                               HETATM 1955  C29 LI1   610
+                                               HETATM 1956  C30 LI1   610
+                                               HETATM 1957  C11 LI1   611
+                                               HETATM 1958  C12 LI1   611
+                                               HETATM 1959  C13 LI1   611
+                                               HETATM 1960  C14 LI1   611
+                                               HETATM 1961  C15 LI1   611
+                                               HETATM 1962  C16 LI1   611
+                                               HETATM 1963  C17 LI1   611
+                                               HETATM 1964  C18 LI1   611
+                                               HETATM 1965  C19 LI1   611
+                                               HETATM 1966  C20 LI1   611
+                                               HETATM 1967  C21 LI1   611
+                                               HETATM 1968  C22 LI1   611
+                                               HETATM 1969  C23 LI1   611
+                                               HETATM 1970  C24 LI1   611
+                                               HETATM 1971  C25 LI1   611
+                                               HETATM 1972  C26 LI1   611
+                                               HETATM 1973  C27 LI1   611
+                                               HETATM 1974  C11 LI1   612
+                                               HETATM 1975  C12 LI1   612
+                                               HETATM 1976  C13 LI1   612
+                                               HETATM 1977  C14 LI1   612
+                                               HETATM 1978  C15 LI1   612
+                                               HETATM 1979  C16 LI1   612
+                                               HETATM 1980  C17 LI1   612
+                                               HETATM 1981  C18 LI1   612
+                                               HETATM 1982  C20 LI1   612
+                                               HETATM 1983  C21 LI1   612
+                                               HETATM 1984  C22 LI1   612
+                                               HETATM 1985  C23 LI1   612
+                                               HETATM 1986  C25 LI1   612
+                                               HETATM 1987  C26 LI1   612
+                                               HETATM 1988  C27 LI1   612
+                                               HETATM 1989  C28 LI1   612
+                                               HETATM 1990  C29 LI1   612
+                                               HETATM 1991  C30 LI1   612
+                                               HETATM 1992  C11 LI1   613
+                                               HETATM 1993  C12 LI1   613
+                                               HETATM 1994  C13 LI1   613
+                                               HETATM 1995  C15 LI1   613
+                                               HETATM 1996  C16 LI1   613
+                                               HETATM 1997  C17 LI1   613
+                                               HETATM 1998  C18 LI1   613
+                                               HETATM 1999  C19 LI1   613
+                                               HETATM 2000  C20 LI1   613
+                                               HETATM 2001  C21 LI1   613
+                                               HETATM 2002  C22 LI1   613
+                                               HETATM 2003  C23 LI1   613
+                                               HETATM 2004  C24 LI1   613
+                                               HETATM 2005  C1  SQU   701
+                                               HETATM 2006  C2  SQU   701
+                                               HETATM 2007  C3  SQU   701
+                                               HETATM 2008  C4  SQU   701
+                                               HETATM 2009  C5  SQU   701
+                                               HETATM 2010  C6  SQU   701
+                                               HETATM 2011  C7  SQU   701
+                                               HETATM 2012  C9  SQU   701
+                                               HETATM 2013  C10 SQU   701
+                                               HETATM 2014  C11 SQU   701
+                                               HETATM 2015  C12 SQU   701
+                                               HETATM 2016  C13 SQU   701
+                                               HETATM 2017  C14 SQU   701
+                                               HETATM 2018  C15 SQU   701
+                                               HETATM 2019  C16 SQU   701
+                                               HETATM 2020  C17 SQU   701
+                                               HETATM 2021  C18 SQU   701
+                                               HETATM 2022  C20 SQU   701
+                                               HETATM 2023  C21 SQU   701
+                                               HETATM 2024  C22 SQU   701
+                                               HETATM 2025  C23 SQU   701
+                                               HETATM 2026  C25 SQU   701
+                                               HETATM 2027  C26 SQU   701
+                                               HETATM 2028  C27 SQU   701
+                                               HETATM 2029  C28 SQU   701
+                                               HETATM 2030  C29 SQU   701
+                                               HETATM 2031  C30 SQU   701
+                                               HETATM 2032  C1  RET A 301
+                                               HETATM 2033  C2  RET A 301
+                                               HETATM 2034  C3  RET A 301
+                                               HETATM 2035  C4  RET A 301
+                                               HETATM 2036  C5  RET A 301
+                                               HETATM 2037  C6  RET A 301
+                                               HETATM 2038  C7  RET A 301
+                                               HETATM 2039  C8  RET A 301
+                                               HETATM 2040  C9  RET A 301
+                                               HETATM 2041  C10 RET A 301
+                                               HETATM 2042  C11 RET A 301
+                                               HETATM 2043  C12 RET A 301
+                                               HETATM 2044  C13 RET A 301
+                                               HETATM 2045  C14 RET A 301
+                                               HETATM 2046  C15 RET A 301
+                                               HETATM 2047  C16 RET A 301
+                                               HETATM 2048  C17 RET A 301
+                                               HETATM 2049  C18 RET A 301
+                                               HETATM 2050  C19 RET A 301
+                                               HETATM 2051  C20 RET A 301
+                                               HETATM 2069  O   HOH   501
+                                               HETATM 2070  O   HOH   502
+                                               HETATM 2071  O   HOH   511
+                                               HETATM 2072  O   HOH   512
+                                               HETATM 2073  O   HOH   513
+                                               HETATM 2074  O   HOH   514
+
+                      Number of atoms in GEO_DAT: 1740
+                      Number of atoms in GEO_REF: 2073
+          Number of atoms common to both systems: 1675
+
+
+                        After docking
+
+                     Atoms that move a lot
+
+                     Atom Label             GEO_REF Coordinates       Movement    Integral
+
+            (HETATM 1660  O   HOH   402)  17.624  34.092   2.626       32.84        32.84
+            (HETATM 1667  O   HOH   412)  16.095  33.248  -0.331       27.31        60.15
+            (HETATM 1664  O   HOH   406)  21.723  34.595  -3.228       27.13        87.28
+            (HETATM 1661  O   HOH   403)  17.486  35.607  -0.626       23.56       110.83
+            (HETATM 1675  O   HOH   420)  10.170  30.127 -12.905       21.37       132.21
+            (HETATM 1669  O   HOH   414)  18.411  38.525  -6.532       20.85       153.06
+            (HETATM 1668  O   HOH   413)   3.635  50.670 -11.043       20.74       173.80
+            (HETATM 1666  O   HOH   411)   4.389  50.141  -8.668       20.02       193.82
+            (ATOM    948  OH  TYR A 131)  17.888  51.659 -12.974       17.69       211.51
+            (HETATM 1674  O   HOH   419)   3.992  47.829 -12.493       17.63       229.14
+            (HETATM 1663  O   HOH   405)  15.156  39.280  -5.688       16.94       246.08
+            (ATOM    947  CZ  TYR A 131)  16.574  51.711 -13.383       15.74       261.81
+            (ATOM    945  CE1 TYR A 131)  15.806  50.567 -13.414       15.40       277.22
+            (ATOM    946  CE2 TYR A 131)  16.043  52.928 -13.768       14.28       291.49
+            (HETATM 1672  O   HOH   417)  19.672  34.901 -15.086       13.61       305.10
+            (HETATM 1670  O   HOH   415)  24.837  37.723 -13.872       13.49       318.59
+            (ATOM    929  NZ  LYS A 129)   3.331  43.290 -16.721       13.47       332.06
+            (ATOM    943  CD1 TYR A 131)  14.491  50.669 -13.850       13.45       345.51
+            (ATOM    944  CD2 TYR A 131)  14.739  53.034 -14.199       12.42       357.93
+            (ATOM   1181  CE  MET A 163)  19.383  44.905  26.918       12.20       370.13
+            (ATOM    942  CG  TYR A 131)  13.945  51.881 -14.233       11.91       382.03
+            (ATOM    498  CZ  PHE A  71)  14.510  45.597 -13.174       11.73       393.77
+            (ATOM   1180  SD  MET A 163)  18.143  43.724  27.425       11.73       405.50
+            (ATOM    928  CE  LYS A 129)   4.010  43.943 -15.551       11.06       416.57
+            (ATOM    524  NE2 GLN A  75)  10.679  37.936 -20.529       11.02       427.58
+            (ATOM    497  CE2 PHE A  71)  13.269  45.015 -13.347       10.96       438.54
+            (ATOM    496  CE1 PHE A  71)  14.762  46.818 -13.789       10.10       448.64
+            (ATOM    523  OE1 GLN A  75)   9.645  39.739 -19.688       10.05       458.68
+            (ATOM   1658  NH2 ARG A 225)  30.403  25.789  18.551       10.03       468.71
+            (ATOM    941  CB  TYR A 131)  12.517  52.010 -14.710        9.92       478.63
+
+   Difference between GEO_DAT and GEO_REF:2892.888 = total,  1.7271 = Average,  3.1424 = RMS, in Angstroms
+
+                             Differences between bond-lengths for the two geometries
+
+           Diff.                 Atom 1                       Atom 2                  Bond length      Bond length
+                                                                                      in GEO_DAT      in GEO_REF
+   1       0.060     C(ATOM   1064  CB  MET A 145)    C(ATOM   1065  CG  MET A 145)      1.503            1.563
+   2       0.058     C(ATOM   1093  CG1 ILE A 148)    C(ATOM   1095  CD1 ILE A 148)      1.472            1.530
+   3       0.051     N(ATOM    574  N   ALA A  81)    C(ATOM    562  C   TRP A  80)      1.333            1.384
+   4       0.050     C(ATOM     92  CA  ALA A  18)    C(ATOM     93  C   ALA A  18)      1.534            1.484
+   5       0.049     N(ATOM    350  N   ALA A  53)    C(ATOM    344  C   ILE A  52)      1.325            1.374
+   6       0.047     O(ATOM     48  O   TRP A  12)    C(ATOM     47  C   TRP A  12)      1.247            1.199
+   7       0.047     S(ATOM    413  SD  MET A  60)    C(ATOM    412  CG  MET A  60)      1.785            1.832
+   8       0.047     C(ATOM    656  CA  THR A  90)    C(ATOM    657  C   THR A  90)      1.548            1.501
+   9       0.046     N(ATOM   1029  N   ILE A 140)    C(ATOM   1026  C   ALA A 139)      1.331            1.377
+  10       0.046     N(ATOM     37  N   ILE A  11)    C(ATOM     25  C   TRP A  10)      1.322            1.368
+  11       0.045     O(ATOM     83  O   GLY A  16)    C(ATOM     82  C   GLY A  16)      1.232            1.186
+  12       0.045     O(ATOM   1378  O   VAL A 188)    C(ATOM   1377  C   VAL A 188)      1.240            1.195
+  13       0.044     O(ATOM   1517  O   LEU A 207)    C(ATOM   1516  C   LEU A 207)      1.246            1.202
+  14       0.044     O(ATOM    107  O   MET A  20)    C(ATOM    106  C   MET A  20)      1.234            1.190
+  15       0.044     O(ATOM   1032  O   ILE A 140)    C(ATOM   1031  C   ILE A 140)      1.234            1.190
+  16       0.043     C(ATOM   1609  CD2 PHE A 219)    C(ATOM   1611  CE2 PHE A 219)      1.403            1.360
+  17       0.041     C(ATOM    982  CB  PHE A 135)    C(ATOM    983  CG  PHE A 135)      1.500            1.541
+  18       0.041     C(ATOM   1618  CA  LEU A 221)    C(ATOM   1619  C   LEU A 221)      1.550            1.509
+  19       0.041     O(ATOM    952  O   SER A 132)    C(ATOM    951  C   SER A 132)      1.231            1.190
+  20       0.040     C(ATOM      8  CA  PRO A   8)    C(ATOM      9  C   PRO A   8)      1.545            1.504
+  21       0.040     O(ATOM   1352  O   TYR A 185)    C(ATOM   1351  C   TYR A 185)      1.229            1.189
+  22       0.040     N(ATOM    867  N   GLY A 120)    C(ATOM    868  CA  GLY A 120)      1.443            1.483
+  23       0.039     C(ATOM   1397  CA  LEU A 190)    C(ATOM   1398  C   LEU A 190)      1.536            1.497
+  24       0.039     C(ATOM    351  CA  ALA A  53)    C(ATOM    352  C   ALA A  53)      1.545            1.506
+  25       0.039     C(ATOM     68  CA  ALA A  14)    C(ATOM     69  C   ALA A  14)      1.530            1.491
+
+    GEO_DAT:  'Bacteriorhodopsin_1AP9.ent'
+    GEO_REF:  'Bacteriorhodopsin_1C3W.ent'
+
+
+                    Analysis of Non-Covalent Interactions
+
+          Total non-covalent energy of GEO_DAT system:  -1636.12 Kcal/mol
+          Total non-covalent energy of GEO_REF system:  -1821.34 Kcal/mol
+                                           Difference:    185.22 Kcal/mol
+
+
+    The following files will be written:
+    'Compare_PDB_Bacteriorhodopsin_1AP9_and_1C3W.html'
+    'Bacteriorhodopsin_1AP9.pdb'
+    'Bacteriorhodopsin_1C3W.pdb'
+
+          GEO_REF with 0SCF: Job complete
+
+ ******************************************************************************
+ *                                                                            *
+ *     Error and normal termination messages reported in this calculation     *
+ *                                                                            *
+ * GEO_REF with 0SCF: Job complete                                            *
+ * JOB ENDED NORMALLY                                                         *
+ *                                                                            *
+ ******************************************************************************
+
+
+
+ TOTAL JOB TIME:             0.00 SECONDS
+
+ == MOPAC DONE ==
