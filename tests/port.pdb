@@ -1,6 +1,0 @@
-HEADER  data-set: port
-REMARK  MOPAC 2016, Version: 18.179L Date: May 22 2019 17:26
-REMARK   3  NI = Isolated element                                  res:    1
-HETATM    1 NI    NI A   1       0.000   0.000   0.000  1.00 -0.13      PROTNI 
-HETATM    2  H   UNK A           2.000   0.000   0.000  1.00  0.13      PROT H 
-END

@@ -1,4 +1,0 @@
- ADD-H PDBOUT   CHAINS=(AB)  START_RES=(1A 1B 1)
- From PDB file: 'Test_Hetero_group'
-
-           Empirical Formula: C86 H128 N22 O37 S4   =   277 atoms

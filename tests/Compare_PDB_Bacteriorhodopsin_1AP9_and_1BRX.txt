@@ -1,3 +1,0 @@
-#
-# Script for use with the HTML file "Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRX.html"
-#

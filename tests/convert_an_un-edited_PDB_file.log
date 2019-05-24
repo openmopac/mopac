@@ -1,4 +1,0 @@
- ADD-H PDBOUT   CHAINS=(BCB)  START_RES=(12B 20C 30B)
- From PDB file: 'convert_an_un-edited_PDB_file'
-
-           Empirical Formula: C63 H24 N16 O28 S3 P   =   135 atoms

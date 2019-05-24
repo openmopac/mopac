@@ -1,3 +1,0 @@
-#
-# Script for use with the HTML file "Compare_two_protein_structures.html"
-#

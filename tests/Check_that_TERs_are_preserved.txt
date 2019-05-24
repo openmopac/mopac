@@ -1,3 +1,0 @@
-#
-# Script for use with the HTML file "Check_that_TERs_are_preserved.html"
-#

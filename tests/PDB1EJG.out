@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ ** Site#:    0         For non-commercial use only    Version 19.136L 64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 19.136L, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue May 14 12:15:59 2019  *
+ *  CALCULATION DONE:                                Thu May 23 17:06:38 2019  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED

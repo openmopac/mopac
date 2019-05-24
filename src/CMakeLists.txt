@@ -1,6 +1,6 @@
 #target_include_directories(exe PUBLIC         ${CMAKE_CURRENT_LIST_DIR})
 
-target_sources(MOPAC_exe
+target_sources(mopac.exe
     PRIVATE
 # GPU-related files
 #        ${CMAKE_CURRENT_SOURCE_DIR}/mod_gpu_info.F90
@@ -117,7 +117,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/dopen_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dot_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/drc_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/drcout_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/drepp2_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/drotat_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dsum_I.F90
@@ -264,7 +263,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/powsav_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/powsq_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/printp_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/prtdrc_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prthco_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prthes_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prtpar_I.F90
@@ -279,7 +277,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/repp_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reppd2_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reppd_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/resolv_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rijkl_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rotat_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rotatd_I.F90
@@ -332,7 +329,6 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/w2mat_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/worder_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/wrdkey_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/write_trajectory_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/writmo_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/wrtkey_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/wrttxt_I.F90
@@ -393,6 +389,7 @@ target_sources(MOPAC_exe
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_PM6_DH_type.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_bits.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bonds4.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/MOZYME_eigs.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/Password.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aababc.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aabacd.F90

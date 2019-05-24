@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 18.179L 64BITS **
+ ** Site#:    0         For non-commercial use only    Version 19.136L 64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 18.179L, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 19.136L, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon May 13 10:55:54 2019  *
+ *  CALCULATION DONE:                                Thu May 23 17:03:01 2019  *
  *  PDBOUT     - PRINT GEOMETY IN PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 66) 
@@ -1385,8 +1385,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 18.179L)
-                                                       Mon May 13 10:56:18 2019
+                                                       MOPAC2016 (Version: 19.136L)
+                                                       Thu May 23 17:03:23 2019
 
 
 
@@ -1411,8 +1411,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =         23.383 SECONDS
-          COMPUTATION TIME        =         23.278 SECONDS
+          WALL-CLOCK TIME         =         22.145 SECONDS
+          COMPUTATION TIME        =         22.093 SECONDS
 
 
 
@@ -4105,6 +4105,6 @@
 
 
 
- TOTAL JOB TIME:            23.49 SECONDS
+ TOTAL JOB TIME:            22.26 SECONDS
 
  == MOPAC DONE ==

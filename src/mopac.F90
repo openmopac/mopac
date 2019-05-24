@@ -10,10 +10,8 @@ program mopac
 !
 ! The call to "password" checks that the password is valid.  If it's not valid, the run will be stopped.
 ! if it is valid, ijulian will be incremented to, e.g. ijulian = 365.
-! To by-pass "password" replace the following line with: "site_no = 999".   
-  call password 
-!  academic = .false.
-!  site_no = 999 
+! To by-pass "password" replace the following line with: "site_no = 999".
+  call password  
   call run_mopac 
 end program mopac
   

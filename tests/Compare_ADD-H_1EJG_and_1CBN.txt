@@ -1,3 +1,0 @@
-#
-# Script for use with the HTML file "Compare_ADD-H_1EJG_and_1CBN.html"
-#
