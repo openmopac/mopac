@@ -98,12 +98,15 @@
         line = trim(file(loop))
         do i = len_trim(line), 1, -1
           if (line(i:i) == "\" .or. line(i:i) == "/") then
-            inquire (directory = line(:i), exist = exists)
-            if (exists) then
-              write(iw,"(10x,a)")"  (but folder: '"//line(:i)//"' does exist.)"
-            else
-              if (verson(7:7) == "W") write(iw,"(5x,a)")" (Note: the folder: '"//line(:i)//"'  also does not exist.)"
-            end if
+!  using inquire to check for the existence of a directory is a non-standard Intel extension to Fortran 90
+!  there is no standard, system-independent way to do this as directories do not exist in Fortran language specifications
+!  I'm just commenting this out for now, since it is just some extra error messages [JEM 2019.05.24]
+!            inquire (directory = line(:i), exist = exists)
+!            if (exists) then
+!              write(iw,"(10x,a)")"  (but folder: '"//line(:i)//"' does exist.)"
+!            else
+!              if (verson(7:7) == "W") write(iw,"(5x,a)")" (Note: the folder: '"//line(:i)//"'  also does not exist.)"
+!            end if
             exit
           end if
         end do

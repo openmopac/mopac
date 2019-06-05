@@ -76,7 +76,9 @@
       logical :: exists, opend, sparkles
       double precision, external :: C_triple_bond_C
       character :: nokey(20)*10
+#ifdef MKL
       integer, external :: mkl_get_max_threads
+#endif
 #if GPU
       logical :: lgpu_ref
       logical(c_bool)    :: hasGpu = .false.
@@ -93,16 +95,18 @@
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
       call fordd                          ! More constants, for use by MNDO-d
-      inquire (directory = "C:/", exist = exists)
-      if (exists) then
-        bad_separator = "/"
-        good_separator = "\"
-        if (verson(7:7) == " ") verson(7:7) = "W"
-      else
+! MOPAC ideally should be OS agnostic, and I'll gradually be deprecating OS-dependent parts of the code
+! Windows should be able to handle a '/' directory separator, although I need to verify this ...
+!      inquire (directory = "C:/", exist = exists)
+!      if (exists) then
+!        bad_separator = "/"
+!        good_separator = "\"
+!        if (verson(7:7) == " ") verson(7:7) = "W"
+!      else
         bad_separator = "\"
         good_separator = "/"
-        if (verson(7:7) == " ") verson(7:7) = "L"
-      end if
+!        if (verson(7:7) == " ") verson(7:7) = "L"
+!      end if
       lgpu = .false.
       trunc_1 = 7.0d0    ! Beyond 7.0 Angstroms, use exact point-charge
       trunc_2 = 0.22d0   ! Multiplier in Gaussian: exp(-trunc_2*(trunc_1 - Rab)^2)
@@ -187,6 +191,7 @@
       if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
       if (numcal == 1) then
+#ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
         i = index(keywrd, " THREADS")
         if (i > 0) then
@@ -194,6 +199,7 @@
           num_threads = min(max(1,i), num_threads)
         end if
         call mkl_set_num_threads(num_threads)
+#endif
 #if GPU
         gpuName(1:6) = '' ; name_size(1:6) = 0 ; totalMem(1:6) = 0 ; clockRate(1:6) = 0
         hasDouble(1:6) = .false. ; gpu_ok(1:6) = .false.

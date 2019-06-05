@@ -147,7 +147,9 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
 
           ! The correct one
           ij = 1
+#ifdef MKL
           call mkl_set_num_threads(ij)
+#endif
           ij = 0 ; in = 0
 
           do i = 1, nocc
@@ -204,7 +206,9 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
     End select
     deallocate (fmo,fck,stat=i)
     continue
+#ifdef MKL
     call mkl_set_num_threads(num_threads)
+#endif
     return
 end subroutine diag_for_GPU
 

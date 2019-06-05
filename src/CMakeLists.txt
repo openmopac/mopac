@@ -574,7 +574,6 @@ target_sources(mopac.exe
         ${CMAKE_CURRENT_SOURCE_DIR}/mlmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mndod.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mod_atomradii.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mod_iso_c_binding.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mod_vars_cuda.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/modchg.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/modgra.F90

@@ -2114,8 +2114,12 @@
 
 ! GBR_new_addition
 ! ORG      f = h 
+! this should probably be reconsidered, no reason to use MKL-specific commands
+#ifdef MKL
       call mkl_domatcopy('c', 'n', m, m, 1.d0, h, m, f, m)
-      !call dlacpy('u', m, m, h, m, f, m )
+#else
+      call dlacpy('u', m, m, h, m, f, m )
+#endif
 !        
       return  
       end subroutine copym 

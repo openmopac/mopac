@@ -165,9 +165,11 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
       sum = 1.d8/sum
       if (loop == 1) then
         if (jbig(1)*0.01d0> 99.949d0) then
-          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.1)') k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0 
+          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.1)') &
+          k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0 
         else
-          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.2)') k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0
+          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.2)') &
+          k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0
         end if
       else
         if (loop < 6) then
