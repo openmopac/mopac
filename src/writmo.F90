@@ -436,7 +436,8 @@
       if (mol_weight > 0.1D0) write (iw, &
         '(    10X,''MOLECULAR WEIGHT        ='',F16.4)') mol_weight 
       call gmetry (geo, coord) 
-      if (id == 0) call dimens (coord, iw) 
+! DEPRECATED ON 20190801
+!      if (id == 0) call dimens (coord, iw) 
       if (id == 3) then 
         vol = volume(tvec,3) 
         density = mol_weight*1.D24/fpc_10/vol
@@ -1155,7 +1156,8 @@
         write (iwrite, "(10X,A,F14.2,A)") "COSMO VOLUME            =", cosvol, &
              & " CUBIC ANGSTROMS"
       end if
-      if (id == 0) call dimens (coord, iwrite) 
+! DEPRECATED ON 20190801
+!      if (id == 0) call dimens (coord, iwrite) 
       if (id == 3) then 
         write (iwrite, '(/,19x,"THE SYSTEM IS A SOLID")') 
         write (iwrite, '(/,"                UNIT CELL TRANSLATION VECTORS",/,/,&

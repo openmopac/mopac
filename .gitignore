@@ -32,3 +32,6 @@
 
 # CMake build directory
 build/
+
+# Local files directory
+local/
