@@ -1,11 +1,114 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
 
-          GEO_DAT file: 'Neutral.mop' does not exist.
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Aug  7 17:15:52 2019  *
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "NEUTRAL.MOP"
+ *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  OUTPUT     - MINIMIZE OUTPUT
+ *******************************************************************************
+geo_dat="Neutral.mop"  OUTPUT   site=(salt)
+ Test that salt bridges are generated correctly
+
+ 
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x
+
+           Empirical Formula: C798 H1353 N206 O314 S9 P  =  2681 atoms
+
+
+
+                   Salt Bridges Found (Up to  4.0 Angstroms)
+
+     No.          Cationic site                            Anionic site                Dist. (Angstroms)
+
+      1  (ATOM    305  NZ  LYS B  24)   B24(+)    (ATOM   1405  OE2 GLU B  97)   B97(-)      2.64
+      2  (ATOM    675  NH1 ARG B  50)   B50(+)    (ATOM    628  OE2 GLU B  46)   B46(-)      2.70
+      3  (ATOM   2051  NE2 HIS B 134)  B134(+)    (ATOM   2407  O   VAL B 156)  B156(-)      2.74
+      4  (ATOM   1989  NZ  LYS B 131)  B131(+)    (ATOM   2352  OE1 GLU B 152)  B152(-)      2.75
+      5  (ATOM    699  NH2 ARG B  51)   B51(+)    (ATOM    579  OE2 GLU B  43)   B43(-)      2.82
+      6  (ATOM    402  NH2 ARG B  31)   B31(+)    (ATOM   2196  OD1 ASP B 143)  B143(-)      3.18
+      7  (ATOM   1689  NZ  LYS B 114)  B114(+)    (ATOM   1709  OD2 ASP B 115)  B115(-)      3.26
+      8  (ATOM   1214  ND1 HIS B  84)   B84(+)    (ATOM   1185  OD1 ASP B  82)   B82(-)      3.51
+
+       Changes in Ionization caused by keyword SITE
+
+       Keyword: "SITE=(SALT)" =>  SITE=(B24(+),B97(-),B50(+),B46(-),B134(+),B156(-),B131(+),
+       B152(-),B51(+),B43(-),B31(+),B143(-),B114(+),B115(-),B84(+),B82(-))
+
+      Hydrogen atoms added to     Hydrogen atoms deleted from
+
+  1       NZ  LYS B  24                 OE2 GLU B  43
+  2       NH2 ARG B  31                 OE2 GLU B  46
+  3       NH2 ARG B  50                 OD1 ASP B  82
+  4       NH2 ARG B  51                 OE1 GLU B  97
+  5       NE2 HIS B  84                 OD1 ASP B 115
+  6       NZ  LYS B 114                 OD2 ASP B 143
+  7       NZ  LYS B 131                 OE2 GLU B 152
+  8       NE2 HIS B 134                 OXT VAL B 156
+
+          Change in net ionization:  +0
+
+                RESIDUE SEQUENCE IN PROTEIN Chain: B
+
+             1     2     3     4     5     6     7     8     9    10
+        0         GLY   ALA   SER   ARG   LEU   TYR   THR   LEU   VAL   
+       10   LEU   VAL   LEU   
+
+                RESIDUE SEQUENCE IN PROTEIN FRAGMENT: 2 Chain: B
+
+             1     2     3     4     5     6     7     8     9    10
+       10                                             VAL   LEU   LEU   
+       20   GLY   MET   LYS   LYS   ARG   GLY   PHE   GLY   ALA   GLY   
+       30   ARG   TRP   ASN   GLY   PHE   GLY   GLY   LYS   VAL   GLN   
+       40   GLU   GLY   GLU   THR   ILE   GLU   ASP   GLY   ALA   ARG   
+       50   ARG   GLU   LEU   GLN   GLU   GLU   SER   GLY   LEU   THR   
+       60   VAL   ASP   ALA   LEU   HIS   LYS   VAL   GLY   GLN   ILE   
+       70   VAL   PHE   GLU   PHE   VAL   GLY   GLU   PRO   GLU   LEU   
+       80   MET   ASP   VAL   HIS   VAL   PHE   CYS   THR   ASP   SER   
+       90   ILE   GLN   GLY   THR   PRO   VAL   GLU   SER   ASP   GLU   
+      100   MET   ARG   PRO   CYS   TRP   PHE   GLN   LEU   ASP   GLN   
+      110   ILE   PRO   PHE   LYS   ASP   MET   TRP   PRO   ASP   ASP   
+      120   SER   TYR   TRP   PHE   PRO   LEU   LEU   LEU   GLN   LYS   
+      130   LYS   LYS   PHE   HIS   GLY   TYR   PHE   LYS   PHE   GLN   
+      140   GLY   GLN   ASP   THR   ILE   LEU   ASP   TYR   THR   LEU   
+      150   ARG   GLU   VAL   ASP   THR   VAL   
+
+                RESIDUE SEQUENCE IN PROTEIN Chain: B
+
+        0   GASRLYTLV LVL
+
+                RESIDUE SEQUENCE IN PROTEIN FRAGMENT: 2 Chain: B
+
+       10         VLL GMKKRGFGAG RWNGFGGKVQ EGETIEDGAR RELQEESGLT
+       60  VDALHKVGQI VFEFVGEPEL MDVHVFCTDS IQGTPVESDE MRPCWFQLDQ
+      110  IPFKDMWPDD SYWFPLLLQK KKFHGYFKFQ GQDTILDYTL REVDTV
+
+          CHARGES MODIFIED BY SITE COMMAND
+
+          GEOMETRY RESEQUENCED
 
  ******************************************************************************
  *                                                                            *
  *     Error and normal termination messages reported in this calculation     *
  *                                                                            *
- * GEO_DAT file: 'Neutral.mop' does not exist.                                *
+ * CHARGES MODIFIED BY SITE COMMAND                                           *
+ * GEOMETRY RESEQUENCED                                                       *
  * JOB ENDED NORMALLY                                                         *
  *                                                                            *
  ******************************************************************************

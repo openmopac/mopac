@@ -293,7 +293,7 @@
             if (line(i:i) /= " ") exit
           end do
           if (line(1:1) /= "*") then
-            write (ir, '(A)', iostat=i) trim(line(i:))
+            write (ir, '(A)') trim(line(i:))
             natoms = natoms + 1
           end if
         end do

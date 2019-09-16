@@ -1,11 +1,124 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
 
-          GEO_DAT file: 'Neutral.mop' does not exist.
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Aug  7 17:15:51 2019  *
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "NEUTRAL.MOP"
+ *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  OUTPUT     - MINIMIZE OUTPUT
+ *  HTML       - WRITE HTML SCRIPT TO READ PDB FILE USING JSMOL
+ *******************************************************************************
+geo_dat="Neutral.mop"  OUTPUT   site=(ionize) HTML
+ Test that all ionizable sites get ionized
+
+ 
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x
+
+           Empirical Formula: C798 H1353 N206 O314 S9 P  =  2681 atoms
+
+
+       Changes in Ionization caused by keyword SITE
+
+       Keyword: SITE=(COO,NH3,ARG(+),SO4,PO4)
+
+      Hydrogen atoms added to     Hydrogen atoms deleted from
+
+  1       N   GLY B   2                 OE2 GLU B  41
+  2       NH2 ARG B   5                 OE2 GLU B  43
+  3       N   VAL B  18                 OE2 GLU B  46
+  4       NZ  LYS B  23                 OD2 ASP B  47
+  5       NZ  LYS B  24                 OE1 GLU B  52
+  6       NH2 ARG B  25                 OE2 GLU B  55
+  7       NH2 ARG B  31                 OE1 GLU B  56
+  8       NZ  LYS B  38                 OD2 ASP B  62
+  9       NH2 ARG B  50                 OE1 GLU B  73
+ 10       NH2 ARG B  51                 OE2 GLU B  77
+ 11       NZ  LYS B  66                 OE2 GLU B  79
+ 12       NH2 ARG B 102                 OD1 ASP B  82
+ 13       NZ  LYS B 114                 OD2 ASP B  89
+ 14       NZ  LYS B 130                 OE1 GLU B  97
+ 15       NZ  LYS B 131                 OD2 ASP B  99
+ 16       NZ  LYS B 132                 OE1 GLU B 100
+ 17       NZ  LYS B 138                 OD2 ASP B 109
+ 18       NH2 ARG B 151                 OD1 ASP B 115
+ 19            -                        OD1 ASP B 119
+ 20            -                        OD1 ASP B 120
+ 21            -                        OD2 ASP B 143
+ 22            -                        OD2 ASP B 147
+ 23            -                        OE2 GLU B 152
+ 24            -                        OD1 ASP B 154
+ 25            -                        OXT VAL B 156
+ 26            -                        OP3 8OG B1157
+ 27            -                        O1  SO4 B1158
+ 28            -                        O4  SO4 B1158
+ 29            -                        O1  SO4 B1159
+ 30            -                        O4  SO4 B1159
+ 31            -                        O1  SO4 B1160
+ 32            -                        O4  SO4 B1160
+
+          Change in net ionization: -14
+
+                RESIDUE SEQUENCE IN PROTEIN Chain: B
+
+             1     2     3     4     5     6     7     8     9    10
+        0         GLY   ALA   SER   ARG   LEU   TYR   THR   LEU   VAL   
+       10   LEU   VAL   LEU   
+
+                RESIDUE SEQUENCE IN PROTEIN FRAGMENT: 2 Chain: B
+
+             1     2     3     4     5     6     7     8     9    10
+       10                                             VAL   LEU   LEU   
+       20   GLY   MET   LYS   LYS   ARG   GLY   PHE   GLY   ALA   GLY   
+       30   ARG   TRP   ASN   GLY   PHE   GLY   GLY   LYS   VAL   GLN   
+       40   GLU   GLY   GLU   THR   ILE   GLU   ASP   GLY   ALA   ARG   
+       50   ARG   GLU   LEU   GLN   GLU   GLU   SER   GLY   LEU   THR   
+       60   VAL   ASP   ALA   LEU   HIS   LYS   VAL   GLY   GLN   ILE   
+       70   VAL   PHE   GLU   PHE   VAL   GLY   GLU   PRO   GLU   LEU   
+       80   MET   ASP   VAL   HIS   VAL   PHE   CYS   THR   ASP   SER   
+       90   ILE   GLN   GLY   THR   PRO   VAL   GLU   SER   ASP   GLU   
+      100   MET   ARG   PRO   CYS   TRP   PHE   GLN   LEU   ASP   GLN   
+      110   ILE   PRO   PHE   LYS   ASP   MET   TRP   PRO   ASP   ASP   
+      120   SER   TYR   TRP   PHE   PRO   LEU   LEU   LEU   GLN   LYS   
+      130   LYS   LYS   PHE   HIS   GLY   TYR   PHE   LYS   PHE   GLN   
+      140   GLY   GLN   ASP   THR   ILE   LEU   ASP   TYR   THR   LEU   
+      150   ARG   GLU   VAL   ASP   THR   VAL   
+
+                RESIDUE SEQUENCE IN PROTEIN Chain: B
+
+        0   GASRLYTLV LVL
+
+                RESIDUE SEQUENCE IN PROTEIN FRAGMENT: 2 Chain: B
+
+       10         VLL GMKKRGFGAG RWNGFGGKVQ EGETIEDGAR RELQEESGLT
+       60  VDALHKVGQI VFEFVGEPEL MDVHVFCTDS IQGTPVESDE MRPCWFQLDQ
+      110  IPFKDMWPDD SYWFPLLLQK KKFHGYFKFQ GQDTILDYTL REVDTV
+
+          CHARGES MODIFIED BY SITE COMMAND
+
+          GEOMETRY RESEQUENCED
 
  ******************************************************************************
  *                                                                            *
  *     Error and normal termination messages reported in this calculation     *
  *                                                                            *
- * GEO_DAT file: 'Neutral.mop' does not exist.                                *
+ * CHARGES MODIFIED BY SITE COMMAND                                           *
+ * GEOMETRY RESEQUENCED                                                       *
  * JOB ENDED NORMALLY                                                         *
  *                                                                            *
  ******************************************************************************

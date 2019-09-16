@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 19.136L 64BITS **
+ ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 19.136L, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu May 23 17:08:42 2019  *
+ *  CALCULATION DONE:                                Wed Aug  7 17:15:51 2019  *
  *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
  *  ADD-H      - ADD HYDROGEN ATOMS TO SATISFY VALENCE
  *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 

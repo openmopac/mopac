@@ -1,9 +1,10 @@
       subroutine pulay(f, p, n, fppf, fock, emat, lfock, nfock, msize, start, pl) 
       USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw
-      use molkst_C, only : numcal, keywrd, mpack
+      use molkst_C, only : numcal, keywrd, mpack, npulay
       use mamult_I  
       use osinv_I 
+      use Common_arrays_C, only : workmat1, workmat2, workmat3
       implicit none
       integer  :: n 
       integer , intent(inout) :: lfock 
@@ -52,7 +53,7 @@
       data icalcn/ 0/  
       if (icalcn /= numcal) then 
         icalcn = numcal 
-        maxlim = 6 
+        maxlim = npulay
         debug = index(keywrd,'DEBUGPULAY') /= 0 
       endif 
       if (start) then 
@@ -79,8 +80,12 @@
 !
 !   NOW FORM /FOCK*DENSITY-DENSITY*FOCK/, AND STORE THIS IN FPPF
 !
-      call mamult (p, f, fppf(lbase+1), n, 0.D0) 
-      call mamult (f, p, fppf(lbase+1), n, -1.D0) 
+!      call mamult (p, f, fppf(lbase+1), n, 0.D0) 
+!      call mamult (f, p, fppf(lbase+1), n, -1.D0) 
+      call unpack_matrix(p, workmat1, n)
+      call unpack_matrix(f, workmat2, n)
+      call sym_commute(workmat1, workmat2, workmat3, n)
+      call pack_matrix(workmat3, fppf(lbase+1), n)
 !
 !   FPPF NOW CONTAINS THE RESULT OF FP - PF.
 !
@@ -147,3 +152,87 @@
       end do 
       return  
       end subroutine pulay 
+
+      subroutine pack_matrix(unpacked, packed, size) 
+        USE vast_kind_param, ONLY:  double 
+        implicit none
+        integer :: info
+        integer , intent(in) :: size
+        real(double) , intent(in) :: unpacked(size, size)
+        real(double) , intent(out) :: packed(*)
+  !-----------------------------------------------
+  !***********************************************************************
+  !
+  !   CONVERT UNPACKED SYMMETRIC MATRIX INTO A PACKED UPPER TRIANGLE
+  !   (LAPACK DTRTTP CALL)
+  !
+  ! ARGUMENTS:-
+  !         ON INPUT UNPACKED = UNPACKED SYMMETRIC MATRIX
+  !                  SIZE     = DIMENSION OF MATRIX
+  !      ON OUTPUT   PACKED   = PACKED UPPER TRIANGLE MATRIX
+  !
+  !***********************************************************************
+        call dtrttp( 'U', size, unpacked, size, packed, info )        
+        if (info /= 0) stop 'error in dtrttp'
+        return
+        end subroutine pack_matrix
+
+        subroutine unpack_matrix(packed, unpacked, size) 
+          USE vast_kind_param, ONLY:  double 
+          implicit none
+          integer :: info, i, j
+          integer , intent(in) :: size
+          real(double) , intent(in) :: packed(*)
+          real(double) , intent(out) :: unpacked(size, size)
+    !-----------------------------------------------
+    !***********************************************************************
+    !
+    !   CONVERT PACKED UPPER TRIANGLE INTO AN UNPACKED SYMMETRIC MATRIX
+    !   (LAPACK DTPTTR CALLS & FILLING IN THE REST BY HAND)
+    !
+    ! ARGUMENTS:-
+    !         ON INPUT PACKED   = PACKED UPPER TRIANGLE MATRIX
+    !                  SIZE     = DIMENSION OF MATRIX
+    !      ON OUTPUT   UNPACKED = UNPACKED SYMMETRIC MATRIX
+    !
+    !***********************************************************************
+          call dtpttr( 'U', size, packed, unpacked, size, info )
+          if (info /= 0) stop 'error in dtpttr'
+          do i = 1, size
+            do j = i+1, size
+              unpacked(j,i) = unpacked(i,j)
+            enddo
+          enddo
+          return
+          end subroutine unpack_matrix
+
+          subroutine sym_commute(mat1, mat2, mat3, size)
+            USE vast_kind_param, ONLY:  double 
+            implicit none
+            integer :: i, j
+            integer , intent(in) :: size
+            real(double) , intent(in) :: mat1(size, size)
+            real(double) , intent(in) :: mat2(size, size)
+            real(double) , intent(out) :: mat3(size, size)
+    !-----------------------------------------------
+    !***********************************************************************
+    !
+    !   COMPUTE THE COMMUTATOR BETWEEN TWO SYMMETRIC MATRICES
+    !   (DGEMM & AN IN-PLACE EVALUATION OF THE SECOND TERM)
+    !
+    ! ARGUMENTS:-
+    !         ON INPUT MAT1   = FIRST MATRIX IN COMMUTATOR
+    !                  MAT2   = SECOND MATRIX IN COMMUTATOR
+    !                  SIZE   = DIMENSION OF MATRIX
+    !      ON OUTPUT   MAT3   = MAT1*MAT2 - MAT2*MAT1
+    !
+    !***********************************************************************
+            call dgemm("N", "N", size, size, size, 1.D0, mat1, size, mat2, size, 0.D0, mat3, size)
+            do i = 1, size
+              do j = i, size
+                mat3(i,j) = mat3(i,j) - mat3(j,i)
+                mat3(j,i) = -mat3(i,j)
+              enddo
+            enddo  
+            return
+            end subroutine sym_commute

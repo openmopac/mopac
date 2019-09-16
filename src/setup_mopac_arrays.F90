@@ -12,7 +12,7 @@
      & h, w, p, pa, pb, f, c, eigs, dxyz, grad, eigb, txtatm, fb, cb, &
      & wk, errfn, aicorr, nbonds, ibonds, na_store, q, nw, lopt, &
      & hesinv, gnext1, gmin1, ifact, i1fact, ptot2, geoa, l_atom, coorda, &
-       txtatm1
+       txtatm1, workmat1, workmat2, workmat3
 !
   USE maps_C, only : react
 !
@@ -22,7 +22,7 @@
   namo, ipo
 !
   use molkst_C, only : mpack, n2elec, norbs, numat, nvar, uhf, &
-  l123, natoms, mozyme
+  l123, natoms, mozyme, npulay
 !
   USE chanel_C, only : iw
 !
@@ -104,11 +104,16 @@
           if (allocated(eigs))     deallocate(eigs)
           if (allocated(q))        deallocate(q)         
           if (allocated(eigb))     deallocate(eigb)
+          if (allocated(workmat1)) deallocate(workmat1)
+          if (allocated(workmat2)) deallocate(workmat2)
+          if (allocated(workmat3)) deallocate(workmat3)
           allocate(h(mpack), p(mpack), pa(mpack), pb(mpack), stat=i)
           j = j + i
-          allocate(pold(6*mpack),  pold2(6*mpack), f(mpack), stat=i)
+          allocate(pold(npulay*mpack),  pold2(npulay*mpack), f(mpack), stat=i)
           j = j + i
           allocate(c(norbs, norbs), eigs(norbs + 1), q(numat), stat=i)
+          j = j + i
+          allocate(workmat1(norbs, norbs), workmat2(norbs, norbs), workmat3(norbs, norbs), stat=i)
           j = j + i
           allocate(eigb(norbs), pold3(max(mpack, 400)), stat=i)
           j = j + i
@@ -118,8 +123,8 @@
           j = j + i
           allocate(dxyz(3*numat*l123), stat=i)
           j = j + i
-          if (uhf) allocate(fb(mpack), cb(norbs, norbs), pbold(6*mpack), &
-          pbold2(6*mpack), pbold3(max(mpack, 400)), stat=i)
+          if (uhf) allocate(fb(mpack), cb(norbs, norbs), pbold(npulay*mpack), &
+          pbold2(npulay*mpack), pbold3(max(mpack, 400)), stat=i)
           j = j + i          
           if (j /= 0) then
             write(iw,'(/10x,a)')" A problem occurred during memory assignment, most likely the system is too big to run. "
@@ -338,6 +343,9 @@
     if (allocated(vectci))     deallocate(vectci, stat = i)
     if (allocated(ispin))      deallocate(ispin, stat = i)
     if (allocated(ispqr))      deallocate(ispqr, stat = i)
+    if (allocated(workmat1))   deallocate(workmat1, stat = i)
+    if (allocated(workmat2))   deallocate(workmat2, stat = i)
+    if (allocated(workmat3))   deallocate(workmat3, stat = i)
     end if
   end subroutine setup_mopac_arrays
   subroutine memory_error(txt)

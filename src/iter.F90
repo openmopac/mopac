@@ -12,8 +12,8 @@
       USE molkst_C, ONLY: numat, norbs, nalpha, nbeta, uhf, &
     &    nclose, nopen, fract, numcal, mpack, iflepo, iscf, &
     &    enuclr, keywrd, gnorm, moperr, last, nscf, emin, &
-         limscf, atheat, is_PARAM, id, line, lxfac, nalpha_open, &
-         nbeta_open
+    &    limscf, atheat, is_PARAM, id, line, lxfac, nalpha_open, &
+    &    nbeta_open, npulay
       Use mod_vars_cuda, only: lgpu
 #if GPU
       Use mod_vars_cuda, only: real_cuda, prec
@@ -723,12 +723,12 @@
               if (lgpu) then
 #if GPU
                  call pulay_for_gpu (f, pa, norbs, pold, pold2, pold3, &
-                 & jalp, ialp, 6*mpack, frst, pl)
+                 & jalp, ialp, npulay*mpack, frst, pl)
 #endif
               else
 
                  call pulay (f, pa, norbs, pold, pold2, pold3, &
-                 & jalp, ialp, 6*mpack, frst, pl)
+                 & jalp, ialp, npulay*mpack, frst, pl)
               endif
           endif
 
@@ -831,11 +831,11 @@
               if (lgpu) then
 #if GPU
                  call pulay_for_gpu (fb, pb, norbs, pbold, pbold2, pbold3, &
-                 & jbet, ibet, 6*mpack, bfrst, plb)
+                 & jbet, ibet, npulay*mpack, bfrst, plb)
 #endif
               else
                 call pulay (fb, pb, norbs, pbold, pbold2, pbold3, &
-                 & jbet, ibet, 6*mpack, bfrst, plb)
+                 & jbet, ibet, npulay*mpack, bfrst, plb)
               endif
           endif
 

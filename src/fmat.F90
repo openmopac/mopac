@@ -114,7 +114,9 @@
         estime = nvar*(tscf + tder)*2.D0 
         if (precis) estime = estime*2.D0 
       endif 
-      if (tscf > 0) write (iw, &
+! 20190807 removed conditional output to stabilize output file
+!      if (tscf > 0)
+      write (iw, &
       '(/10X,''ESTIMATED TIME TO COMPLETE CALCULATION ='',F12.2,'' SECONDS'')') estime 
       if (restrt) then 
         if (istart <= nvar) write (iw, &

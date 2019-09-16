@@ -96,6 +96,8 @@ module molkst_C
   &  n2elec,   & !  Number of two-electron integrals
   &  nscf,     & !  Number of SCF calculations done
   &  iscf,     & !  Index of message of how the SCF ended
+  &  npulay    & !  Total number of previous SCF solutions in Pulay converger
+  &  = 12,     & !  Default set to standard value in quantum chemistry codes
   &  iflepo,   & !  Index of message of how the geometry operation ended
   &  maxtxt,   & !  Maximum number of characters in labeled atoms (e.g. C(on Si))
   &  last,     & !  

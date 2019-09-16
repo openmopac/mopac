@@ -1,6 +1,6 @@
 #target_include_directories(exe PUBLIC         ${CMAKE_CURRENT_LIST_DIR})
 
-target_sources(mopac.exe
+target_sources(mopac
     PRIVATE
 # GPU-related files
 #        ${CMAKE_CURRENT_SOURCE_DIR}/mod_gpu_info.F90
@@ -108,7 +108,6 @@ target_sources(mopac.exe
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl1_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkld_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dimens_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dist2_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dmecip_I.F90
@@ -473,7 +472,6 @@ target_sources(mopac.exe
         ${CMAKE_CURRENT_SOURCE_DIR}/dihed.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dimens.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole_for_MOZYME.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/disp_DnX.F90

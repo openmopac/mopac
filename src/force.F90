@@ -258,10 +258,11 @@
       &/10X,'' TO GIVE ACCURATE RESULTS'')') 
       endif 
       if ( .not. mozyme .and. .not. restrt) call mullik()
-      if (tscf > 0.D0) then 
+! 20190807 - removed conditional output to stabilize output file
+!      if (tscf > 0.D0) then 
         write (iw, '(2/10X,''TIME FOR SCF CALCULATION ='',F8.2)') tscf 
         write (iw, '( /10X,''TIME FOR DERIVATIVES     ='',F8.2)') tder 
-      endif 
+!      endif 
       if (ndeold > 0) write (iw, &
       '(2/10X,''SYMMETRY WAS SPECIFIED, BUT CANNOT BE USED HERE'')')
       c = 1.d0

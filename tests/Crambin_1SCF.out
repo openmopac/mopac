@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 19.136L 64BITS **
+ ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 19.136L, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu May 23 17:03:01 2019  *
+ *  CALCULATION DONE:                                Wed Aug  7 17:15:24 2019  *
  *  PDBOUT     - PRINT GEOMETY IN PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 66) 
@@ -1369,10 +1369,10 @@
 
  PLS ESCF USING THE OLD LMOs:    -2996.630448 KCAL/MOL
 
- ITER.      1 PLS= 0.430E-02           ENERGY   -2996.63087 DELTAE-2996.6308736
- ITER.      2 PLS= 0.336E-02           ENERGY   -2996.63105 DELTAE   -0.0001733
+ ITER.      1 PLS= 0.430E-02           ENERGY   -2996.63087 DELTAE-2996.6308737
+ ITER.      2 PLS= 0.336E-02           ENERGY   -2996.63105 DELTAE   -0.0001732
  ITER.      3 PLS= 0.219E-02           ENERGY   -2996.63102 DELTAE    0.0000300
- ITER.      4 PLS= 0.160E-02           ENERGY   -2996.63114 DELTAE   -0.0001204
+ ITER.      4 PLS= 0.160E-02           ENERGY   -2996.63114 DELTAE   -0.0001205
 
  -------------------------------------------------------------------------------
  START_RES=(1A 66)  CHAINS=(A)  1SCF pdbout MOZYME pl oldens residue CHARGE=-1
@@ -1385,8 +1385,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 19.136L)
-                                                       Thu May 23 17:03:23 2019
+                                                       MOPAC2016 (Version: 19.136 )
+                                                       Wed Aug  7 17:15:30 2019
 
 
 
@@ -1401,18 +1401,11 @@
           NO. OF FILLED LEVELS    =        919
           MOLECULAR WEIGHT        =       4775.4615
 
-          MOLECULAR DIMENSIONS (Angstroms)
-
-            Atom       Atom       Distance
-            H   605    H   466    31.40738
-            H   585    H   375    25.43699
-            H   464    H   523    17.80949
-
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =         22.145 SECONDS
-          COMPUTATION TIME        =         22.093 SECONDS
+          WALL-CLOCK TIME         =          5.926 SECONDS
+          COMPUTATION TIME        =          5.925 SECONDS
 
 
 
@@ -4105,6 +4098,6 @@
 
 
 
- TOTAL JOB TIME:            22.26 SECONDS
+ TOTAL JOB TIME:             5.97 SECONDS
 
  == MOPAC DONE ==
