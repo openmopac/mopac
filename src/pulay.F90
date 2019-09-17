@@ -221,13 +221,13 @@
     !   (DGEMM & AN IN-PLACE EVALUATION OF THE SECOND TERM)
     !
     ! ARGUMENTS:-
-    !         ON INPUT MAT1   = FIRST MATRIX IN COMMUTATOR
-    !                  MAT2   = SECOND MATRIX IN COMMUTATOR
+    !         ON INPUT MAT1   = FIRST SYMMETRIC MATRIX IN COMMUTATOR
+    !                  MAT2   = SECOND SYMMETRIC MATRIX IN COMMUTATOR
     !                  SIZE   = DIMENSION OF MATRIX
     !      ON OUTPUT   MAT3   = MAT1*MAT2 - MAT2*MAT1
     !
     !***********************************************************************
-            call dgemm("N", "N", size, size, size, 1.D0, mat1, size, mat2, size, 0.D0, mat3, size)
+            call dsymm('L', 'U', size, size, 1.D0, mat1, size, mat2, size, 0.D0, mat3, size)
             do i = 1, size
               do j = i, size
                 mat3(i,j) = mat3(i,j) - mat3(j,i)
