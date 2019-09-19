@@ -738,21 +738,25 @@
 ! WHERE POSSIBLE, USE THE PULAY-STEWART METHOD, OTHERWISE USE BEPPU'S  *
 !                                                                      *
 !***********************************************************************
-          if (halfe .or. camkin) then
+! JEM NOTE: pseudo-diagonalization does less work, but it is less stable
+!           and slower because a large fraction of its work is stuck
+!           using BLAS level-1 operations right now. This could be
+!           accelerated using a QR diagonalization analog at some point ...
+!          if (halfe .or. camkin) then
             if (timitr) call timer ('BEFORE FULL DIAG')
             call eigenvectors_LAPACK(c, f, eigs, norbs)
             if (timitr) call timer ('AFTER  FULL DIAG')
-          else
-            if (lgpu) then
-               if (timitr) call timer ('BEFORE GPU DIAG')
-               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
-               if (timitr) call timer ('AFTER  GPU DIAG')
-            else
-              if (timitr) call timer ('BEFORE CPU DIAG')
-               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
-               if (timitr) call timer ('AFTER  CPU DIAG')
-            endif
-          endif
+!          else
+!            if (lgpu) then
+!               if (timitr) call timer ('BEFORE GPU DIAG')
+!               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
+!               if (timitr) call timer ('AFTER  GPU DIAG')
+!            else
+!              if (timitr) call timer ('BEFORE CPU DIAG')
+!               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
+!               if (timitr) call timer ('AFTER  CPU DIAG')
+!            endif
+!          endif
         else
           if (timitr) call timer ('BEFORE FULL DIAG')
           call eigenvectors_LAPACK(c, f, eigs, norbs)
@@ -845,21 +849,25 @@
 ! WHERE POSSIBLE, USE THE PULAY-STEWART METHOD, OTHERWISE USE BEPPU'S  *
 !                                                                      *
 !***********************************************************************
-            if (halfe .or. camkin) then
+! JEM NOTE: pseudo-diagonalization does less work, but it is less stable
+!           and slower because a large fraction of its work is stuck
+!           using BLAS level-1 operations right now. This could be
+!           accelerated using a QR diagonalization analog at some point ...
+!            if (halfe .or. camkin) then
               if (timitr) call timer ('BEFORE FULL DIAG')
               call eigenvectors_LAPACK(cb, fb, eigb, norbs)
               if (timitr) call timer ('AFTER  FULL DIAG')
-            else
-              if (lgpu) then
-                 if (timitr) call timer ('BEFORE GPU DIAG')
-                 call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
-                 if (timitr) call timer ('AFTER  GPU DIAG')
-              else
-                if (timitr) call timer ('BEFORE CPU DIAG')
-                call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
-                if (timitr) call timer ('AFTER  CPU DIAG')
-              endif
-            endif
+!            else
+!              if (lgpu) then
+!                 if (timitr) call timer ('BEFORE GPU DIAG')
+!                 call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
+!                 if (timitr) call timer ('AFTER  GPU DIAG')
+!              else
+!                if (timitr) call timer ('BEFORE CPU DIAG')
+!                call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
+!                if (timitr) call timer ('AFTER  CPU DIAG')
+!              endif
+!            endif
           else
             if (timitr) call timer ('BEFORE FULL DIAG')
             call eigenvectors_LAPACK(cb, fb, eigb, norbs)

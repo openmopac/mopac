@@ -16,11 +16,11 @@
       real(double)  :: p(mpack) 
       real(double)  :: fppf(*) 
       real(double) , intent(inout) :: fock(*) 
-      real(double) , intent(inout) :: emat(20,20) 
+      real(double) , intent(inout) :: emat(npulay+1,npulay+1) 
 !
       integer :: icalcn, maxlim, linear, mfock, lbase, i, nfock1, j, l, il, ii 
-      real(double), dimension(1000) :: evec 
-      real(double), dimension(20) :: coeffs 
+      real(double), dimension((npulay+1)**2) :: evec 
+      real(double), dimension(npulay) :: coeffs 
       real(double) :: const, d, sum 
       logical :: debug      
       real(double), external :: ddot
@@ -40,7 +40,7 @@
 !                  FPPF   = WORKSTORE OF SIZE MSIZE, CONTENTS WILL BE
 !                           OVERWRITTEN.
 !                  FOCK   =      "       "              "         "
-!                  EMAT   = WORKSTORE OF AT LEAST 20**2 ELEMENTS.
+!                  EMAT   = WORKSTORE OF AT LEAST NPULAY**2 ELEMENTS.
 !                  START  = LOGICAL, = TRUE TO START PULAY.
 !                  PL     = UNDEFINED ELEMENT.
 !      ON OUTPUT   F      = "BEST" FOCK MATRIX, = LINEAR COMBINATION

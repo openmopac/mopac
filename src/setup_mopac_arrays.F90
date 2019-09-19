@@ -115,7 +115,7 @@
           j = j + i
           allocate(workmat1(norbs, norbs), workmat2(norbs, norbs), workmat3(norbs, norbs), stat=i)
           j = j + i
-          allocate(eigb(norbs), pold3(max(mpack, 400)), stat=i)
+          allocate(eigb(norbs), pold3(max(mpack, npulay*npulay)), stat=i)
           j = j + i
           allocate(errfn(3*natoms*l123), aicorr(nvar), stat=i)
           j = j + i
@@ -124,7 +124,7 @@
           allocate(dxyz(3*numat*l123), stat=i)
           j = j + i
           if (uhf) allocate(fb(mpack), cb(norbs, norbs), pbold(npulay*mpack), &
-          pbold2(npulay*mpack), pbold3(max(mpack, 400)), stat=i)
+          pbold2(npulay*mpack), pbold3(max(mpack, npulay*npulay)), stat=i)
           j = j + i          
           if (j /= 0) then
             write(iw,'(/10x,a)')" A problem occurred during memory assignment, most likely the system is too big to run. "
