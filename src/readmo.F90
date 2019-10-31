@@ -13,14 +13,14 @@
       USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar 
 !
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
-      & verson, method_mndo, method_am1, method_pm3, is_PARAM, line, nl_atoms, &
-      & method_mndod, moperr, maxatoms, koment, title, method_pm6, refkey, &
-      isok, ijulian, method_rm1, gui, Academic, site_no, method_pm6_dh2, caltyp, &
+      & verson, is_PARAM, line, nl_atoms, &
+      & moperr, maxatoms, koment, title, method_pm6, refkey, &
+      isok, ijulian, gui, Academic, site_no, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, num_bits, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x,   &   
       method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
-      method_pm7_minus, method_pm6_dh_plus, method_pm8, prt_coords, prt_cart, mozyme, pdb_label
+      method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label
 !
       use meci_C, only : maxci
 !
@@ -34,7 +34,7 @@
 !
       use MOZYME_C, only : start_res, lstart_res, start_letter
 !
-      USE funcon_C, only : fpc_9, fpc
+      USE funcon_C, only : fpc
       use conref_C, only : fpcref 
 !
 !***********************************************************************

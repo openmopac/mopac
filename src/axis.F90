@@ -4,7 +4,7 @@
       use common_arrays_C, only : atmass, coord
       USE chanel_C, only : iw
       use to_screen_C, only : rot, xyzmom
-      USE funcon_C, only : fpc_6, fpc_8, fpc_9, fpc_10, pi
+      USE funcon_C, only : fpc_6, fpc_8, fpc_10, pi
       implicit none
       real(double) , intent(out) :: a 
       real(double) , intent(out) :: b 

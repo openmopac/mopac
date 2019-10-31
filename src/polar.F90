@@ -760,7 +760,7 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use second_I 
+      use second2_I 
       use hmuf_I 
       use copym_I 
       use zerom_I 
@@ -822,7 +822,7 @@
 !  X: ID=1   Y: ID=2   Z: ID=3
 !
       do id = 1, 3 
-        cmptim = second(1) 
+        cmptim = second2(1) 
         last = .FALSE. 
 !
 !  CALCULATE THE DIPOLE MATRIX.
@@ -901,7 +901,7 @@
           call hplusf (f, h1, norbs) 
 !..............................................................
         end do 
-        cmptim = second(1) - cmptim 
+        cmptim = second2(1) - cmptim 
         if (debug) write (iw, 30) icount, cmptim, diff, dela 
    30   format(/,' CONVERGED IN',i4,' ITERATIONS IN',f10.2,' SECONDS',/,&
           '           DENSITY CONVERG. TO ',1p,d12.5,/,&
@@ -1173,7 +1173,7 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use second_I 
+      use second2_I 
       use hmuf_I 
       use zerom_I 
       use daread_I 
@@ -1257,7 +1257,7 @@
       bavy = 0.0D+00 
       bavz = 0.0D+00 
       do id = 1, 9 
-        cmptim = second(1) 
+        cmptim = second2(1) 
         ia = ida(id) 
         ib = idb(id) 
         last = .FALSE. 
@@ -1409,7 +1409,7 @@
           call hplusf (f, da, norbs) 
 !..............................................................
         end do 
-        cmptim = second(1) - cmptim 
+        cmptim = second2(1) - cmptim 
         write (iw, 50) icount, cmptim 
    50   format(/,' CONVERGED IN',i4,' ITERATIONS IN',f10.2,' SECONDS') 
         write (iw, 60) maxu, diff 
@@ -1508,7 +1508,7 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use second_I 
+      use second2_I 
       use hmuf_I 
       use zerom_I 
       use daread_I 
@@ -1594,7 +1594,7 @@
       bavy = 0.0D+00 
       bavz = 0.0D+00 
       do id = 1, 6 
-        cmptim = second(1) 
+        cmptim = second2(1) 
         ia = ida(id) 
         ib = idb(id) 
         last = .FALSE. 
@@ -1731,7 +1731,7 @@
           call hplusf (f, da, norbs) 
 !..............................................................
         end do 
-        cmptim = second(1) - cmptim 
+        cmptim = second2(1) - cmptim 
         if (debug) write (iw, 40) icount, cmptim 
    40   format(/,' CONVERGED IN',i4,' ITERATIONS IN',f10.2,' SECONDS') 
         if (debug) write (iw, 50) maxu, diff 

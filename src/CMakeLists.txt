@@ -140,7 +140,6 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/esp1_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/espfit_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/estpi1_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/etime_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/etrbk3_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/etred3_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/evvrsp_I.F90
@@ -287,7 +286,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/schmit_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/scprm_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/search_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/second_I.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/second2_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/set_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/setup3_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/solrot_I.F90
@@ -313,7 +312,6 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/symtrz_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/tf_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/thermo_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/time_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/timer_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/transf_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/trsub_I.F90
@@ -635,7 +633,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/scfcri.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/schmib.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/schmit.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/second.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/second2.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/selmos.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/set.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/set_up_MOZYME_arrays.F90

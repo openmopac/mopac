@@ -18,7 +18,7 @@
       USE chanel_C, only : iw
       use xyzint_I 
       use gmetry_I 
-      use second_I 
+      use second2_I 
       use compfg_I 
       use axis_I 
       use dipole_I
@@ -190,15 +190,15 @@
       debug = index(keywrd,'DFORCE') /= 0 
       large = index(keywrd,'LARGE') /= 0 
       restrt = index(keywrd,'RESTART') /= 0 
-      time1 = second(1) 
+      time1 = second2(1) 
       if (.not. restrt) then
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.) 
         if (moperr) goto 99
         write (iw,'(2/10X,''HEAT OF FORMATION ='',F15.6,'' KCALS/MOLE'')') escf 
-        time2 = second(1) 
+        time2 = second2(1) 
         tscf = time2 - time1 
         call compfg (xparam, .TRUE., escf, .FALSE., grad, .TRUE.) 
-        time3 = second(1) 
+        time3 = second2(1) 
         tder = time3 - time2 
         if (prnt) then
           if (ts) then

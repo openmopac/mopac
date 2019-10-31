@@ -22,6 +22,8 @@ if(DEFINED ENV{MKLROOT})
     target_link_libraries(mopac PUBLIC  -Wl,-rpath,$ENV{OMPROOT}
                           $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a 
                           $ENV{MKLROOT}/lib/libmkl_core.a -L$ENV{OMPROOT} -liomp5 -lpthread -lm -ldl)
+#                          -dynamiclib -lgfortran -static-libgfortran
+#                          /usr/local/opt/gcc/lib/gcc/8/libquadmath.a -static-libgcc)
   else()
     message("environment variable OMPROOT is not defined, building serial MKL")
     target_link_libraries(mopac PUBLIC $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_sequential.a
@@ -33,7 +35,8 @@ else()
   find_package(BLAS REQUIRED)
   find_package(LAPACK REQUIRED)
   if(${CMAKE_Fortran_COMPILER} MATCHES "gfortran")
-    target_compile_options(mopac PRIVATE -g -static -ffpe-trap=invalid -fbacktrace -std=legacy -pedantic -Wall -Wextra -Wconversion -fcheck=bounds)
+#    target_compile_options(mopac PRIVATE -g -static -ffpe-trap=invalid,zero,overflow -fbacktrace -Wimplicit-procedure)
+    target_compile_options(mopac PRIVATE -g -static -ffpe-trap=invalid,zero,overflow -fbacktrace -std=gnu -Wall -Wunused-parameter -fcheck=bounds -Waliasing -Wampersand -Wcharacter-truncation -Winteger-division -Wreal-q-constant)
   elseif(${CMAKE_Fortran_COMPILER} MATCHES "ifort")
     target_compile_options(mopac PRIVATE -g -traceback -check all -debug all -fpe0 -warn)
   else()

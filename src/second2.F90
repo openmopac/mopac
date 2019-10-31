@@ -1,4 +1,4 @@
-      real(kind(0.0d0)) function second (mode) 
+      real(kind(0.0d0)) function second2 (mode) 
 !
 !  If mode = 1:   Get current CPU time - CPU_0, and return without checking for <file>.end
 !     mode = 2:   Get current CPU time - CPU_0, and return after checking for <file>.end,
@@ -24,6 +24,7 @@
 !******************************************************
       data setok/ .TRUE./  
       data shut/ 0.D0/                      
+      second2 = 0.D0 ! dummy time upon failure
       if (first) then 
         first = .false. 
 !
@@ -101,7 +102,7 @@
       isec  = itim1(7)
       imsec = itim1(8)
       wall_clock_1 = float(3600*ihour + 60*imin + isec) + (float(imsec)/1.e3 )         
-      second = dble(wall_clock_1 - wall_clock_0) + shut 
+      second2 = dble(wall_clock_1 - wall_clock_0) + shut 
       
       if (is_PARAM) return
  11   endfile (iw, iostat = i99) 
@@ -123,6 +124,6 @@
       if (l > 0) then
        write(0,"(a)")" Fault successfully corrected.  Job continuing"
       end if
-      backspace (iw) 
-      return  
-      end function second 
+      backspace (iw)
+      return
+      end function second2 

@@ -141,7 +141,7 @@
             h_interp(ij) = h_interp(ij) + sum(p_interp(i,np1:norbs)*p_interp(j,np1:norbs)) 
           end do 
         end do 
-        call rsp (h_interp, np, theta, vecl) 		
+        call rsp (h_interp, np, theta, vecl)
         do i = np, 1, -1 
           il = i*np - np 
           vec_interp(np:1:(-1),i) = vecl(np+il:il+1:(-1)) 

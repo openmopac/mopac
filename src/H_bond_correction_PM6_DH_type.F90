@@ -3,9 +3,9 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !    Add a dispersion E_disp, a coulombic, EC, and a repulsive correction, ER,
 !    to improve intermolecular interaction energies.
 !
-  use molkst_C, only : numat, E_hb, N_Hbonds, method_pm7, method_PM6, l123, l1u, l2u, l3u, &
-    method_pm6_dh_plus, method_pm6_dh2, method_pm6_d3h4, method_pm6_dh2x, method_pm6_d3h4x, &
-    method_pm6_d3, method_pm6_d3_not_h4, line, id, numcal
+  use molkst_C, only : numat, E_hb, N_Hbonds, method_pm7, l123, l1u, l2u, l3u, &
+    method_pm6_dh_plus, method_pm6_dh2, method_pm6_dh2x, &
+    line, id, numcal
   use parameters_C, only : tore
   use common_arrays_C, only: coord, nat, q, p, hblist, dxyz, cell_ijk
   use to_screen_I

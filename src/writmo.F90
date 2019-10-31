@@ -40,7 +40,7 @@
       use meci_I
       use geoutg_I 
       use dipole_I
-      use second_I
+      use second2_I
       use volume_I
       use to_screen_I
       implicit none
@@ -450,7 +450,7 @@
       end if
       if (latom == 0) write (iw, '(/)') 
       write (iw, '(10X,''SCF CALCULATIONS        =   '',I8 )') nscf 
-      tim = second(1) - time0 
+      tim = second2(1) - time0 
       i = int(tim*0.000001D0) 
       tim = tim - i*1000000 
       call date_and_time(VALUES=time_end)
@@ -849,7 +849,7 @@
         endif 
         if (index(keywrd,' ENPART') /= 0) call enpart () 
       endif 
-      if (second(2) - time0 > 1.d7 .or. index(keywrd,' DENOUT') /= 0) call den_in_out(1)
+      if (second2(2) - time0 > 1.d7 .or. index(keywrd,' DENOUT') /= 0) call den_in_out(1)
       if ((ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20 .or. &
         index(keywrd,' SIZE') /= 0) .and. index(keywrd,' MECI') + index(keywrd,' ESR')/=0) then 
         write (iw, &
@@ -1161,7 +1161,7 @@
       if (id == 3) then 
         write (iwrite, '(/,19x,"THE SYSTEM IS A SOLID")') 
         write (iwrite, '(/,"                UNIT CELL TRANSLATION VECTORS",/,/,&
-            "                 X                 Y                 Z")') 
+            &"                 X                 Y                 Z")') 
         write (iwrite,"('    T',i1,' = ',f14.7,'    ',f14.7,'    ',f14.7)") (i,(tvec(j,i),j=1,3),i=1,id) 
         vol = volume(tvec,3) 
         density = mol_weight*1.D24/fpc_10/vol

@@ -7,7 +7,7 @@
       & errfn, coord, na, p, q, labels
       USE parameters_C, only : tore
       USE elemts_C, only : elemnt
-      use second_I 
+      use second2_I 
       use reada_I 
       use compfg_I 
       use to_screen_I
@@ -51,8 +51,8 @@
       past10 = 0.d0 
       average_old_hof = 0.d0
       average_new_hof = 0.d0
-      tnow = second(1) 
-      oldtim = second(1) 
+      tnow = second2(1) 
+      oldtim = second2(1) 
       delold = 10.d0 
       percent = 0
       gtot = 0.d0 
@@ -798,7 +798,7 @@
           escf_diff = escf - escf_old
           escf_old = escf
         endif 
-        tnow = second(2) 
+        tnow = second2(2) 
         tcycle = tnow - oldtim 
         oldtim = tnow 
         tleft = tleft - tcycle 

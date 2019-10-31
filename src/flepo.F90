@@ -5,7 +5,7 @@
       use common_arrays_C, only : hesinv, grad
       USE chanel_C, only : iw, ilog, log, input_fn
       use reada_I 
-      use second_I 
+      use second2_I 
       use dfpsav_I 
       use compfg_I 
       use geout_I 
@@ -204,7 +204,7 @@
 !  MINOR BOOK-KEEPING
 !
         tlast = tleft 
-        tx2 = second(2) 
+        tx2 = second2(2) 
         tleft = tleft - tx2 + time0 
         print = index(keywrd,'FLEPO') /= 0 
 !
@@ -316,11 +316,11 @@
           call compfg (xparam, .TRUE., funct1, .TRUE., grad, .FALSE.) 
           if (moperr) return  
         endif 
-        tx2 = second(1) 
+        tx2 = second2(1) 
         emin = 0.D0 
         return  
       endif 
-      tx1 = second(2) 
+      tx1 = second2(2) 
       tleft = tleft - tx1 + tx2 
 !     *
 !     START OF EACH ITERATION CYCLE ...
@@ -570,7 +570,7 @@
         iflepo = 3 
         time0 = time0 - totime 
         emin = 0.D0 
-        tx2 = second(1) 
+        tx2 = second2(1) 
         return  
       endif 
       beta = alpha 
@@ -598,14 +598,14 @@
         if (moperr) return  
         iflepo = 14 
         emin = 0.D0 
-        tx2 = second(1) 
+        tx2 = second2(1) 
         if (tx2 - time0 > tleft) then 
 !
 !  This step is necessary so that a GRID calculation can
 !  be re-started, even if there is only one variable.
 !
           iflepo = -1 
-          totim = totime + second(1) - time0 
+          totim = totime + second2(1) - time0 
           mdfp(9) = 1 
           mdfp(5) = nscf 
           call dfpsav (totim, xparam, gd, xlast, funct1, mdfp, xdfp) 
@@ -664,7 +664,7 @@
           if (moperr) return  
           iflepo = 4 
           time0 = time0 - totime 
-          tx2 = second(1) 
+          tx2 = second2(1) 
           emin = 0.D0 
           return  
         endif 
@@ -738,7 +738,7 @@
           if (moperr) return  
           iflepo = 8 
           time0 = time0 - totime 
-          tx2 = second(1) 
+          tx2 = second2(1) 
           emin = 0.D0 
           return  
         else 
@@ -753,7 +753,7 @@
       if (moperr) return  
       iflepo = 6 
       time0 = time0 - totime 
-      tx2 = second(1) 
+      tx2 = second2(1) 
       emin = 0.D0 
       return  
 !
@@ -765,7 +765,7 @@
       del = 0.002D00 
       if (bsmvf > 1.0D00) del = dell/2.0D00 
       if (bsmvf > 5.0D00) del = dell 
-      tx2 = second(2) 
+      tx2 = second2(2) 
       tcycle = tx2 - tx1 
       tx1 = tx2 
 !
@@ -777,7 +777,7 @@
       if (tleft < 0) tleft = -0.1D0 
       if (tcycle > 1.D5) tcycle = 0.D0 
       if (tlast - tleft > tdump) then 
-        totim = totime + second(1) - time0 
+        totim = totime + second2(1) - time0 
         tlast = tleft 
         mdfp(9) = 2 
         resfil = .TRUE. 
@@ -828,7 +828,7 @@
       write (iw, 460) 
   460 format(20x,'THERE IS NOT ENOUGH TIME FOR ANOTHER CYCLE',/,30x,&
         'NOW GOING TO FINAL') 
-      totim = totime + second(1) - time0 
+      totim = totime + second2(1) - time0 
       mdfp(9) = 1 
       mdfp(5) = nscf 
       call dfpsav (totim, xparam, gd, xlast, funct1, mdfp, xdfp) 

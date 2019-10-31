@@ -24,8 +24,6 @@
       logical :: exists, arc_file, comments = .true.
       character :: text*90, line1*1000, num1*1, num2*1
       character, allocatable :: tmp_comments(:)*120
-      intrinsic getarg
-      integer, intrinsic :: iargc
       double precision, external :: reada
       save i 
 !-----------------------------------------------

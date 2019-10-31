@@ -255,7 +255,7 @@
   use ef_C, only : nstep
 !
   use reada_I
-  use second_I
+  use second2_I
   use to_screen_I
   implicit none
   integer, intent (in) :: big_nvar
@@ -313,7 +313,7 @@
     oldstp(i) = 1.d0
   end do
   tlast = tleft
-  tx2 = second (2)
+  tx2 = second2 (2)
   tx1 = tx2
 !
 !  Turn OFF all bounds checking.  This saves memory and speeds things up
@@ -434,14 +434,14 @@
 !  Write out this cycle
 !
     jcyc = jcyc + 1
-    tx2 = second (2)
+    tx2 = second2 (2)
     tstep = tx2 - tx1
     cycmx = Max (tstep, cycmx)
     tx1 = tx2
     tleft = tleft - tstep
     if (tlast-tleft > tdump) then
       tlast = tleft
-      tt0 = second (1) - time0
+      tt0 = second2 (1) - time0
       call lbfsav (tt0, 1, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
             & dsave, jcyc, escf_tot)
       if (moperr) goto 99
@@ -1328,7 +1328,7 @@
 !
 !
     integer :: i, k, l
-    double precision, external :: second, reada
+    double precision, external :: second2, reada
     
     
       call l_control("TS", len("TS"), -1)
@@ -1342,7 +1342,7 @@
       write(line,'(a,f0.1)')"DDMIN=0 GNORM=",gnorm_lim
       call l_control(trim(line), len_trim(line), 1)
       numcal = numcal + 1
-      time0 = second(1)
+      time0 = second2(1)
       if (nvar > 0) then
         call lbfgs(xparam,escf)
         do i = 1, nvar 
@@ -1373,7 +1373,7 @@
 !  Local
 !
     integer :: i
-    double precision, external :: second
+    double precision, external :: second2
     logical :: opend    
     if (l_ts) then
       line = "TS"
@@ -1409,7 +1409,7 @@
     end if
     call l_control("GNORM=3", len("GNORM=3"), 1)
     geoa(:,:numat) = geo(:,:numat)
-    time0 = second(1)
+    time0 = second2(1)
     if (loop == 2) call l_control("OLD_HESS", len("OLD_HESS"), 1)
     if (l_ts) then
       call l_control("TS", len("TS"), 1)

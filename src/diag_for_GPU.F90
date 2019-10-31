@@ -1,6 +1,8 @@
 subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
     Use vast_kind_param, only: double
+#ifdef MKL
     use molkst_C, only: num_threads
+#endif
     Use mod_vars_cuda, only: lgpu
 #if GPU
     Use mod_vars_cuda, only: prec, ngpus

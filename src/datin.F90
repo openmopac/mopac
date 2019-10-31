@@ -5,7 +5,7 @@
       USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : partyp, n_partyp, n_partyp_alpb, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
-      use molkst_C, only : keywrd, lpars, verson, line
+      use molkst_C, only : keywrd, lpars, line
       use chanel_C, only : iext
 !***********************************************************************
 !DECK MOPAC

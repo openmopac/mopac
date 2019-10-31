@@ -5,7 +5,7 @@ subroutine ef (xparam, funct)
     use chanel_C, only: iw, ilog, log, iw0, input_fn
     use ef_C, only: nstep, negreq, iprnt, ef_mode, ddx, xlamd, &
        & xlamd0, skal, rmin, rmax
-    use second_I   
+    use second2_I   
     use to_screen_I
 #if GPU      
     Use mod_vars_cuda, only: real_cuda
@@ -170,7 +170,7 @@ subroutine ef (xparam, funct)
     do i = 1, nvar
       grad(i) = 0.d0
     end do
-    time1 = second(1)     
+    time1 = second2(1)     
     call compfg (xparam, .true., funct, .true., grad, .true.)
     if (moperr) then
       go to 1100
@@ -204,7 +204,7 @@ subroutine ef (xparam, funct)
     last = 0
    !     GET INITIAL HESSIAN. IF ILOOP IS .LE.0 THIS IS AN OPTIMIZATION
    !     RESTART AND HESSIAN SHOULD ALREADY BE AVAILABLE
-    t_hess1 = second(1)
+    t_hess1 = second2(1)
     if (newhes .and. iloop > 0) then
       call gethes (xparam, igthes, iloop, hesinv, pmat, bmat, grad, &
            & geo, loc, oldf, d, vmode, funct)
@@ -213,7 +213,7 @@ subroutine ef (xparam, funct)
       end if
       newhes = .false.
     end if
-    t_hess2 = second(1)
+    t_hess2 = second2(1)
     icalcn = numcal
    !     START OF MAIN LOOP
    !     WE NOW HAVE THE GRADIENT AND A HESSIAN. IF THIS IS THE FIRST
@@ -261,7 +261,7 @@ subroutine ef (xparam, funct)
       !        PRINT RESULTS IN CYCLE
       gnorm = dSqrt (ddot(nvar, grad, 1, grad, 1))
 !       
-      time2 = second (2)
+      time2 = second2 (2)
       tstep = time2 - time1
       if (tstep < zero) then
         tstep = zero
@@ -678,7 +678,7 @@ subroutine ef (xparam, funct)
           ipow(1) = ihess
           ipow(2) = nstep
           ipow(9) = 2
-          tt0 = second (1) - time0
+          tt0 = second2 (1) - time0
           instep = -nstep
           call efsav (tt0, hesinv, funct, grad, xparam, pmat, instep, &
                bmat, ipow, oldf, d, vmode)
@@ -709,7 +709,7 @@ subroutine ef (xparam, funct)
       end if
 1020 iflepo = 15
     last = 1
-    tt0 = second (1) - time0
+    tt0 = second2 (1) - time0
     if ( .not. moperr) then
    !     CALL COMPFG TO CALCULATE ENERGY FOR FIXING MO-VECTOR BUG
       call compfg (xparam, .true., funct, .true., grad, .false.)
@@ -722,7 +722,7 @@ subroutine ef (xparam, funct)
       ipow(1) = ihess
       ipow(9) = 1
       ipow(2) = nstep
-      tt0 = second (1) - time0
+      tt0 = second2 (1) - time0
       instep = -nstep
       call efsav (tt0, hesinv, funct, grad, xparam, pmat, instep, &
                 & bmat, ipow, oldf, d, vmode)
@@ -1536,7 +1536,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
     keywrd, moperr, line
     use chanel_C, only: iw, iw0
     use ef_C, only: ef_mode, nstep, iprnt
-    use second_I
+    use second2_I
     use to_screen_I
    !
    !.. Implicit Declarations ..
@@ -1695,7 +1695,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
       if (iprnt >= 5) then
         write (iw, "(I3,12(8F9.4,/3X))") 0, (grad(if), if=1, nvar)
       end if
-      time1 = second (1)
+      time1 = second2 (1)
       tstore = time1
       percent = (100*(iloop-1))/nvar
       lpacifier = .false.
@@ -1722,7 +1722,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
             hess(i, j) = (gnext1(j)-grad(j)) / xinc
           end do
         end if
-        time2 = second (1)
+        time2 = second2 (1)
         tstep = time2 - time1
         tleft = tleft - tstep
         time1 = time2
@@ -1757,7 +1757,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
           write (iw, "(A,I4)") " STOPPING IN HESSIAN AT COORDINATE:", i
           ipow(9) = 1
           ipow(2) = nstep
-          tt0 = second (1) - time0
+          tt0 = second2 (1) - time0
           j = i
           call efsav (tt0, hess, funct, grad, xparam, pmat, j, bmat, &
                & ipow, oldf, d, vmode)
@@ -1775,7 +1775,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
       end if
       !        ADD ALL TIME USED BACK TO TLEFT, THIS WILL THEN BE SUBTRACTED
       !        AGAIN IN MAIN EF ROUTINE
-      time2 = second (1)
+      time2 = second2 (1)
       tstep = time2 - tstore
       tleft = tleft + tstep
     end if

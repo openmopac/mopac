@@ -103,7 +103,7 @@
             read(85,*)line,line,line,line,vqc(i)
             if (debug) write(iw,'(a, i4, a, f9.3)')"ATOM No.",i," VQC(I)",vqc(i)
           enddo
-          close(85)		
+          close(85)
         endif
         xf = 0.D0 
         yf = 0.D0 
@@ -166,7 +166,7 @@
             h(i2) = uspd(i1)
             if(lmolaris_qmmm) then 
               if (debug) write(iw,'(''OLD 1e MATRIX ELEMENT '',i5,f12.5,'' i'',i5,&
-              '' vqc(i)'',f12.5)')i2,h(i2),i,-vqc(i)/fpc_9
+            & '' vqc(i)'',f12.5)')i2,h(i2),i,-vqc(i)/fpc_9
               h(i2) = h(i2) - vqc(i)/fpc_9
               if (debug) write(iw,'(''UPD 1e MATRIX ELEMENT '',i5,f12.5)')i2,h(i2)
             endif

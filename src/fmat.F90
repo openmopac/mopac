@@ -10,7 +10,7 @@
       use funcon_C, only : fpc_10
       use chanel_C, only : iw, ilog, log
       use reada_I 
-      use second_I 
+      use second2_I 
       use symr_I 
       use sympop_I 
       use compfg_I 
@@ -100,7 +100,7 @@
         kountf = (istart*(istart + 1))/2 
         istart = istart + 1 
         jstart = jstart + 1 
-        time2 = second(1) 
+        time2 = second2(1) 
       else 
         kountf = 0 
         totime = 0.D0 
@@ -146,7 +146,7 @@
           lu = lu + i 
           cycle  
         endif 
-        time2 = second(1) 
+        time2 = second2(1) 
         delta = 1.D0/120.D0 
         if (precis) then 
 !
@@ -275,7 +275,7 @@
       ' ELEMENT  +1.0*DELTA  +0.5*DELTA  -0.5*DELTA  -1.0*DELTA   2''ND ORDER 4TH ORDER' 
           write (iw, '(I7,6F12.6)') (l,g2old(l),grold(l),grad(l),g2rad(l),dumy(l),eigs(l),l=1,nvar) 
         endif 
-        time3 = second(2) 
+        time3 = second2(2) 
         tstep = time3 - time2 
         tleft = max(0.1D0,tleft - tstep) 
         if (tstep > 1.D7) tstep = tstep - 1.D7 
