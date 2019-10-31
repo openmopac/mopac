@@ -136,7 +136,6 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/epseta_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/epslon_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/eqlrat_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/esn_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/esp1_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/espfit_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/estpi1_I.F90

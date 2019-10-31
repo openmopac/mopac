@@ -98,6 +98,7 @@
       return
       end
       FUNCTION ESYM(I)
+      INTEGER I
       CHARACTER*2 ESYM
       CHARACTER*2 ELEMNT(94)
       DATA ELEMNT/'h ','he', &
