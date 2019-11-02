@@ -506,7 +506,7 @@
         call xyzint (coord, numat, na, nb, nc, 1.D0, geo) 
         last = 1 
         store_coord = coord
-        geo(:,:numat) = store_coord
+        geo(:,:numat) = store_coord(:,:numat)
         na = 0
         this_point = 0
         if (ts) then

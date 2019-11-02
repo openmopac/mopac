@@ -1559,7 +1559,7 @@ subroutine geochk ()
 !
 !  Restore nbonds and ibonds in case they are modified within this subroutine
 !
-    nbonds(:numat) = nnbonds
+    nbonds(:numat) = nnbonds(:numat)
     ibonds(:,:numat) = iibonds(:,:numat)
 1100 continue
     if (Allocated (nnbonds))      deallocate (nnbonds, iibonds)

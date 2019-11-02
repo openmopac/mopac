@@ -77,9 +77,9 @@
       sumwx = sumwx/mol_weight 
       sumwy = sumwy/mol_weight 
       sumwz = sumwz/mol_weight 
-      x(:numat) = coord(1,:) - sumwx 
-      y(:numat) = coord(2,:) - sumwy 
-      z(:numat) = coord(3,:) - sumwz 
+      x(:numat) = coord(1,:numat) - sumwx 
+      y(:numat) = coord(2,:numat) - sumwy 
+      z(:numat) = coord(3,:numat) - sumwz 
 !***********************************************************************
 !
 !    MATRIX FOR MOMENTS OF INERTIA IS OF FORM
