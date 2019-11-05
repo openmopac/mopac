@@ -565,7 +565,6 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/mecih.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mecip.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/minv.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mkl_bits.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mlmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mndod.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mod_atomradii.F90

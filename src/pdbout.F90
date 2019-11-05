@@ -315,12 +315,12 @@ subroutine pdbout (mode1)
       n_res = "["//res_txt(i)(:3)//"]"
       j = nint(reada(res_txt(i),4))
       biggest_res = max(biggest_res, j)
-      num = char(Int(log10(j + 1.0)) + ichar("1"))
       if (j < 0) then
         num = char(Int(log10(-j + 1.0)) + ichar("1"))
         write(n_res(6:),'(a1,i'//num//',a)')"_", -j, res_txt(i)(8:9)
       else
-        num = char(Int(log10(-j + 1.0)) + ichar("2"))
+! JEM 191105: -j changed to j, seems like this is counting the number of digits of an integers
+        num = char(Int(log10(j + 1.0)) + ichar("2"))
         write(n_res(6:),'(i'//num//',a)')j, res_txt(i)(8:9)
       end if 
       wrt_res = n_res(2:4)//n_res(6:)

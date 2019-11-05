@@ -346,14 +346,16 @@
 ! 
 ! where "sum" is the gradient norm of the entire system.
 !
-            if (sum > max(2.d0, 2.D0*gnorm*sqrt((numat*3.d0)/nvar)) .and. sum < sqrt(0.1d0*numat) .and. &
-            nclose == nopen .and. id == 0 .and. index(keywrd, "NOANCI") == 0) then
-              if (nvar /= 1 .or. index(keywrd," GRAD") + index(keywrd, "DERIV") > 0) then 
-                write (iw, '(9x,A)') &
-                ' WARNING -- GEOMETRY IS NOT AT A STATIONARY POINT' 
-                call web_message(iw,"Warning_geometry.html")
-                still = .FALSE.
-              end if 
+            if (nvar > 0) then
+              if (sum > max(2.d0, 2.D0*gnorm*sqrt((numat*3.d0)/nvar)) .and. sum < sqrt(0.1d0*numat) .and. &
+              nclose == nopen .and. id == 0 .and. index(keywrd, "NOANCI") == 0) then
+                if (nvar /= 1 .or. index(keywrd," GRAD") + index(keywrd, "DERIV") > 0) then 
+                  write (iw, '(9x,A)') &
+                  ' WARNING -- GEOMETRY IS NOT AT A STATIONARY POINT' 
+                  call web_message(iw,"Warning_geometry.html")
+                  still = .FALSE.
+                end if 
+              endif
             endif 
           endif 
         endif 
