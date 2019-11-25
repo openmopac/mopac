@@ -18,11 +18,12 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
     nrpairs, max_h_bonds, icalcn = -1
   logical :: n_h_bonds, first = .true.
   integer, allocatable :: nrbondsa(:), nrbondsb(:)
-  double precision :: EC, ER, vector(numat), sum, sum1, delta = 1.d-5, covrad(94)
+  double precision, allocatable :: vector(:)
+  double precision :: EC, ER, sum, sum1, delta = 1.d-5, covrad(94)
   double precision, external :: EC_plus_ER, EH_plus  
   logical, external :: connected
   
-  save  
+  save
    data covrad /& 
   &0.32d0,  0.46d0,  1.20d0,  0.94d0,  0.77d0,  0.75d0,  0.71d0,  0.63d0,  0.64d0,  0.67d0, &
   &1.40d0,  1.25d0,  1.13d0,  1.04d0,  1.10d0,  1.02d0,  0.99d0,  0.96d0,  1.76d0,  1.54d0, &
@@ -57,7 +58,8 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   if (allocated(nrbondsa))   deallocate(nrbondsa)
   if (allocated(nrbondsb))   deallocate(nrbondsb) 
   if (allocated(hblist))     deallocate(hblist) 
-  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), stat=i)   
+  if (allocated(vector))     deallocate(vector) 
+  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), vector(numat), stat=i)   
     if (i /= 0) then
     line = " Cannot allocate arrays for PM6-DH+"
     call to_screen(trim(line))

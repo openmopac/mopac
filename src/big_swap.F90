@@ -658,12 +658,18 @@
     logical , intent(in) :: lgrad 
     double precision, intent(in) :: big_xparam(2*nvar)
     double precision, intent (out) :: big_grad(2*nvar) 
-    double precision :: xparam(nvar) 
+    double precision, allocatable :: xparam(:)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-    integer :: i
-    save 
+    integer :: i, nparam = -1
+    save xparam, nparam
+!  Reallocate xparam as needed
+   if (nparam < nvar) then
+     if(nparam >= 0) deallocate(xparam)
+     nparam = nvar
+     allocate(xparam(nparam))
+   end if
 !
 !  Save the current point
 !
