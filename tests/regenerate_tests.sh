@@ -9,7 +9,6 @@ rm port.res
 rm port.txt
 rm port.ump
 rm port.xyz
-rm setup.iter
 rm parameters_for_PM8_C.F90
 
 ../build/mopac Crambin_1SCF.mop

@@ -430,7 +430,17 @@ module to_screen_I
       write(hook,"(a,sp, d"//fmt13p6//",a)")" VOLUME:CUBIC ANGSTROMS=",cosvol
       if (Abs(solv_energy) > 1.d-6) write(hook,"(a,sp, d"//fmt13p6//",a)")" DIEL_ENER:EV=",solv_energy
     end if
-    write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",-eigs(nelecs/2)
+    if (nelecs > 0) then
+      if (uhf) then
+        eig_min = -eigs(nalpha)
+        if(nbeta > 0 .and. -eigb(nbeta) < eig_min) eig_min = -eigb(nbeta)
+        write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",eig_min
+      else
+        write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",-eigs(nelecs/2)
+      end if
+    else
+      write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",1.022d6
+    end if
     write(hook,"(a,sp, d"//fmt13p6//",a)")" SPIN_COMPONENT=",sz
     write(hook,"(a,sp, d"//fmt13p6//",a)")" TOTAL_SPIN=",ss2
     num = char(ichar("1") +int(log10(nscf + 0.05)))

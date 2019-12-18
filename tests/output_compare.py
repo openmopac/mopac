@@ -3,7 +3,6 @@
 
 from shutil import copyfile
 from sys import argv
-from itertools import zip_longest
 import subprocess
 import difflib
 import os
@@ -22,162 +21,238 @@ import numpy as np
 # completeness of a degenerate subspace), and untestable data is ignored.
 # In principle, we could interpret the symmetry labels to use some of the edge data when
 # we can independently determine the size of the subspace, but this is way more trouble than it is worth.
+# This comparison is insensitive to differences in whitespace and number of empty lines.
+
+# Summary of units in MOPAC output files?
 
 # TODO:
-# - pre-filter skipped lines to avoid inconsistency in their number
-# - figure out why "IS LESS THAN CUTOFF" lines aren't being flagged as inconsistent
-# - debug & wrap up initial testing phase
-
-# thresholds of acceptable errors
-NUMERIC_THRESHOLD = 1e-3
-EIGVEC_THRESHOLD = 1e-3
+# - parse "INITIAL EIGENVALUES " blocks
+# - create a tighter error threshold for heat of formation, perhaps loosen threshold for other things?
+#   ^^^ can we guess context of numbers in any reliable way?
+NUMERIC_THRESHOLD = 0.99999
+DEGENERACY_THRESHOLD = 1e-2
+EIGVEC_THRESHOLD = 5e-3
 
 # regular expression pattern for a time stamp or other signifier of timing output, "CLOCK" or "TIME" or "SECONDS", & system-dependent versioning
 skip_criteria = re.compile('([A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9])'
-                           '|(CLOCK)|(TIME)|(SECONDS)|(Version)')
+                           '|(CLOCK)|(TIME)|(SECONDS)|(Version)|(THE VIBRATIONAL FREQUENCY)|(ITERATION)|(SCF CALCULATIONS)')
 
 # regular expression pattern for an eigenvector block
 eigen_criteria = re.compile('(Root No.)|(ROOT NO.)')
+
+def is_float(string):
+    '''check if a string contains a float'''
+    try:
+        float(string.replace('D','E'))
+        return True
+    except ValueError:
+        return False
+
+def to_float(string):
+    '''check if a string contains a float'''
+    try:
+        return float(string.replace('D','E'))
+    except ValueError:
+        return False
+
+def parse_mopac_output(path):
+    '''parse a MOPAC output file at a given path into a list of basic elements (strings, numbers, matrices)'''
+    parse_line = []
+    parse_list = []
+    mode = 'standard'
+    with open(path,'r') as file:
+        for line_num, line in enumerate(file):
+
+            # this hack separates floats that don't have a space between them because of a minus sign
+            word_list = line.replace('-',' -').replace('E -','E-').replace('D -','D-').replace('=',' = ').split()
+
+            # switch to or continue iter mode
+            if 'RHF CALCULATION' in line or 'UHF CALCULATION' in line or 'Geometry optimization using BFGS' in line:
+                mode = 'iter'
+                continue
+            elif mode == 'iter':
+                if 'SCF FIELD WAS ACHIEVED' in line or 'THERE IS NOT ENOUGH TIME FOR ANOTHER CYCLE' in line:
+                    mode = 'standard'
+                else:
+                    continue
+
+            # skip lines as necessary
+            if skip_criteria.search(line):
+                continue
+
+            # switch to or continue geo mode
+            if 'ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE' in line:
+                mode = 'geo'
+            elif mode == 'geo':
+                if len(word_list) == 0:
+                    mode = 'standard'
+                else:
+                    continue
+
+            # switch to or continue lmo mode
+            if 'NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS' in line:
+                mode = 'lmo'
+            elif mode == 'lmo':
+                if 'LOCALIZED ORBITALS' in line:
+                    mode = 'standard'
+                else:
+                    continue
+
+            # switch to or continue grad mode
+            if 'LARGEST ATOMIC GRADIENTS' in line:
+                mode = 'grad'
+                blank_count = 0
+            # simple-minded skipping based on counting blank lines
+            elif mode == 'grad':
+                if len(word_list) == 0:
+                    blank_count += 1
+                if blank_count == 3:
+                    mode = 'standard'
+                else:
+                    continue
+
+            # switch to or continue vibe mode
+            if 'DESCRIPTION OF VIBRATIONS' in line:
+                mode = 'vibe'
+            elif mode == 'vibe':
+                if 'FORCE CONSTANT IN INTERNAL COORDINATES' in line or 'SYMMETRY NUMBER FOR POINT-GROUP' in line:
+                    mode = 'standard'
+                else:
+                    continue
+
+            # switch to or continue eigen mode
+            if eigen_criteria.search(line):
+                if mode != 'eigen':
+                    eigen_line_num = line_num+1
+                    mode = 'eigen'
+                    label_list = []
+                    value_list = []
+                    vector_list = []
+                    num_eigen = []
+                label_list += [ int(word) for word in word_list[2:] ]
+                num_eigen.append(len(word_list) - 2)
+
+            # eigen parsing
+            elif mode == 'eigen':
+
+                # save eigenvalues in a list
+                if len(word_list) == num_eigen[-1] and len(value_list) < len(label_list):
+
+                    # check if the list of numbers is just another label
+                    label_check = True
+                    try:
+                        for word,label in zip(word_list,label_list[-len(word_list):]):
+                            if int(word) != label:
+                                label_check = False
+                    except ValueError:
+                        label_check = False
+
+                    if label_check == False:
+                        value_list += [ float(word) for word in word_list ]
+
+                # ignore symmetry labels
+                elif len(word_list) == 2*num_eigen[-1] and is_float(word_list[-2]) and not is_float(word_list[-1]):
+                    pass
+
+                # save eigenvectors in a matrix
+                elif len(word_list) > num_eigen[-1] and all([is_float(word) for word in word_list[-num_eigen[-1]:]]):
+                    vector_list += [ float(word) for word in word_list[-num_eigen[-1]:] ]
+
+                # ignore blank lines
+                elif len(word_list) == 0:
+                    pass
+
+                # switch back to standard mode & reformat eigenvectors
+                else:
+                    mode = 'standard'
+
+                    # reshape into a matrix
+                    nrow = len(vector_list) // len(label_list)
+                    ncol = len(label_list)
+                    eigenmatrix = np.empty((nrow,ncol))
+
+                    offset = 0
+                    for num in num_eigen:
+                        eigenmatrix[:,offset:offset+num] = np.reshape(vector_list[offset*nrow:(offset+num)*nrow],(nrow,num),order='C')
+                        offset += num
+
+                    # renormalize the eigenvectors (MOPAC uses a variety of normalizations)
+                    for col in eigenmatrix.T:
+                        col /= np.linalg.norm(col)
+
+                    # output eigenvalue (if known) and eigenvectors
+                    if len(value_list) == len(label_list):
+                        parse_list.append((value_list,eigenmatrix,label_list[0] == 1,label_list[-1] == nrow))
+                    else:
+                        parse_list.append((label_list,eigenmatrix,label_list[0] == 1,label_list[-1] == nrow))
+                    parse_line.append(eigen_line_num)
+
+            # standard parsing
+            if mode == 'standard':
+                for word in word_list:
+                    if is_float(word):
+                        parse_list.append(to_float(word))
+                    else:
+                        parse_list.append(word)
+                    parse_line.append(line_num+1)
+
+    return parse_line, parse_list
 
 # make a local copy of the input & other necessary files
 for file in argv[3:]:
    copyfile(os.path.join(argv[1],file),file)
 
 # run MOPAC in the local directory
-subprocess.call([argv[2],argv[3]])
-print(argv[2],argv[3])
+#subprocess.call([argv[2],argv[3]])
 
-# only compare ".out" output files, which have the same name as ".mop" or ".ent" input files
+# only compare ".out" output files that have the same name as ".mop" or ".ent" input files
 out_name = argv[3][:-3]+'out'
 ref_path = os.path.join(argv[1],out_name)
 
-# initialize state variables of the parsing process
-mode = 'standard'
-empty_line_counter = 0
-ref_modes = []
-new_modes = []
-ref_eigenvalues = []
-new_eigenvalues = []
-ref_eigenvectors = []
-new_eigenvectors = []
+# parse the 2 output files that we are comparing
+ref_line, ref_list = parse_mopac_output(ref_path)
+out_line, out_list = parse_mopac_output(out_name)
 
-# extract non-skipped lines of output files
-with open(ref_path,'r') as ref_file:
-    ref_list = [ line for line in ref_file if skip_criteria.search(line) is None ]
+#assert len(ref_list) == len(out_list), f'ERROR: output file size mismatch, {len(ref_list)} vs. {len(out_list)}'
 
-with open(out_name,'r') as out_file:
-    out_list = [ line for line in out_file if skip_criteria.search(line) is None ]
+for (line, ref, out) in zip(out_line, ref_list, out_list):
+#    print(ref, "vs.", out)
+    # check that types match
+    assert type(ref) == type(out), f'ERROR: type mismatch between {ref} and {out} on output line {line}'
 
-# loop over pairs of output file lines to be compared
-for (ref_line, new_line) in zip_longest(ref_list, out_list, fillvalue=''):
+    # compare strings
+    if type(ref) is str:
+        assert ref == out, f'ERROR: string mismatch between {ref} and {out} on output line {line}'
 
-    # count empty lines (used to navigate eigenvalue & eigenvector blocks)
-    assert (ref_line == '' and new_line == '') or (ref_line != '' and new_line != ''), \
-        f'''ERROR: empty mismatch between output files
-            REF: {ref_line}
-            NEW: {new_line}'''
-    if ref_line == '':
-        empty_line_counter += 1
-        continue
+    # compare floats
+    elif type(ref) is float:
+#        assert abs(ref - out) < NUMERIC_THRESHOLD, f'ERROR: numerical mismatch between {ref} and {out} on output line {line}'
+        if abs(ref - out) > NUMERIC_THRESHOLD:
+            print(f'WARNING: numerical mismatch between {ref} and {out} on output line {line}')
 
-    # switch to eigenvalue mode if eigenvector blocks are detected
-    ref_eigen = eigen_criteria.search(ref_line)
-    new_eigen = eigen_criteria.search(new_line)
-    assert (ref_eigen is None and new_eigen is None) or (ref_eigen is not None and new_eigen is not None), \
-        f'''ERROR: eigen mismatch between output files
-            REF: {ref_line}
-            NEW: {new_line}'''
-    if ref_eigen is not None:
-        mode = 'eigenvalue'
-        empty_line_counter = 0
-        ref_modes += [ int(val) for val in ref_line.split()[2:] ]
-        new_modes += [ int(val) for val in new_line.split()[2:] ]
+    # compare eigenvalues & eigenvectors
+    else:
+        ref_val, ref_vec, ref_begin, ref_end = ref
+        out_val, out_vec, ref_begin, ref_end = out
 
-    # parse line in eigenvalue mode
-    if mode == 'eigenvalue':
+        for refv, outv in zip(ref_val,out_val):
+#            assert abs(refv - outv) < NUMERIC_THRESHOLD, f'ERROR: numerical mismatch between {refv} and {outv} on output line {line}'
+            if abs(refv - outv) > NUMERIC_THRESHOLD:
+                print(f'WARNING: eigenvalue mismatch between {refv} and {outv} on output line {line}')
 
-        # NOTE: we are not looking at the symmetry labels for now, the numerical stability of their ordering is unclear
-
-        # read the list of eigenvalues after 2 blank lines
-        if empty_line_counter == 2:
-            ref_eigenvalues += [ float(val) for val in ref_line.split() ]
-            new_eigenvalues += [ float(val) for val in new_line.split() ]
-
-        # check for the end of an eigenvalue block & switch to eigenvector mode after 3 blank lines
-        if empty_line_counter >= 3:
-            mode = 'eigenvector'
-            empty_line_counter = 0
-
-    # parse line in eigenvector mode
-    if mode == 'eigenvector':
-
-        # analysis at the end of an eigenvector block that isn't immediately followed by another one
-        if empty_line_counter == 2:
-
-            # regroup eigenvector information into a proper matrix layout
-            nrow = len(ref_eigenvectors) / len(ref_eigenvalues)
-            ncol = len(ref_eigenvalues)
-            ref_eigenmatrix = np.empty((nrow,ncol))
-            new_eigenmatrix = np.empty((nrow,ncol))
-            for block_offset in range(0,ncol,8):
-                block_end = min(block_offset+8,nrow)
-                block_size = block_end - block_offset
-                ref_eigenmatrix[:,block_offset:block_end] = \
-                    np.reshape(ref_eigenvectors[block_offset*ncol:block_end*ncol],(nrow,block_size),order='C')
-
-            # identify degenerate eigenvector blocks
-            if ref_modes[0] == 1:
-                edge_list = []
-            else:
+            # build list of edges denoting degenerate subspaces
+            if ref_begin:
                 edge_list = [0]
-            edge_list += [ index for index in range(ncol-1) if np.abs(ref_eigenvalues[i] - ref_eigenvalues[i+1]) < NUMERIC_THRESHOLD ]
-            if ref_modes[-1] == nrow:
-                edge_list += [ncol-1]
+            else:
+                edge_list = []
+            edge_list += [ i+1 for i in range(len(ref_val)-1) if np.abs(ref_val[i] - ref_val[i+1]) > DEGENERACY_THRESHOLD ]
+            if ref_end:
+                edge_list += [len(ref_val)]
 
-            # calculate the distance between degenerate subspaces
+            # test the distance between each pair of degenerate subspaces
             for i in range(len(edge_list)-1):
-                begin = edge_list[i]
-                end = edge_list[i+1]
-                overlap = new_eigenvectors[:,begin:end].T @ ref_eigenvectors[:,begin:end]
-                singular_values = np.linalg.svd(overlap)
-                assert (max(singular_values) < 1.0 + EIGVEC_THRESHOLD) and (min(singular_values) > 1.0 - EIGVEC_THRESHOLD), \
-                    f'''ERROR: degenerate subspace mismatch between output files
-                        REF: {ref_eigenvectors[:,begin:end]}
-                        NEW: {new_eigenvectors[:,begin:end]}'''
-
-            # clean up the eigenvector data at the end of the analysis
-            mode = 'standard'
-            ref_modes = []
-            new_modes = []
-            ref_eigenvalues = []
-            new_eigenvalues = []
-            ref_eigenvectors = []
-            new_eigenvectors = []
-        else:
-            # accumulate eigenvector information in the as-input order
-            index = -len(ref_modes)-1
-            ref_eigenvectors += [ float(val) for val in ref_line.split()[index:] ]
-            new_eigenvectors += [ float(val) for val in new_line.split()[index:] ]
-
-    # compare words & approximately compare numbers in standard mode
-    if mode == 'standard':
-        for ref_word, new_word in zip(ref_line.split(), new_line.split()):
-
-            # try to convert to floats
-            try:
-                ref_float = float(ref_word)
-                new_float = float(new_word)
-
-                error = abs(ref_float - new_float)
-#                    if math.isfinite(new_number):
-                if error > NUMERIC_THRESHOLD:
-                    assert 0, f'''ERROR: float mismatch between output files
-                                  REF: {ref_line}
-                                  NEW: {new_line}'''
-
-            # otherwise assume a word
-            except ValueError:
-                if ref_word != new_word:
-                    assert 0, f'''ERROR: word mismatch between output files
-                                  REF: {ref_line}
-                                  NEW: {new_line}'''
+                overlap = ref_vec[:,edge_list[i]:edge_list[i+1]].T @ out_vec[:,edge_list[i]:edge_list[i+1]]
+#                print("overlap = ",overlap)
+                sval = np.linalg.svd(overlap, compute_uv=False)
+                assert (sval[0] < 1.0 + EIGVEC_THRESHOLD) and (sval[-1] > 1.0 - EIGVEC_THRESHOLD), \
+                    f'ERROR: degenerate subspace mismatch on output line {line}, overlap range in [{min(sval)},{max(sval)}]'
