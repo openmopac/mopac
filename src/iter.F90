@@ -75,6 +75,8 @@
       data plb/ 0.D0/
       data scorr/ 0.D0/
       data abprt/ '     ', 'ALPHA', ' BETA'/
+      data shift/ 0.D0/  ! repairing gaps in initialization
+      data shiftb/ 0.D0/  ! repairing gaps in initialization
 !
 !  INITIALIZE
 !

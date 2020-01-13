@@ -181,6 +181,7 @@
          return
        end if
       errfn = 0.d0
+      grad = 0.d0
 !
 !   IF A RESTART, THEN TSCF AND TDER WILL BE FAULTY, THEREFORE SET TO -1
 !

@@ -235,7 +235,7 @@
       call chrge (p, charge) 
       charge(:numat) = tore(nat(:numat)) - charge(:numat) 
       deltat = deltt*1.D15 
-      na =  na_store 
+      na(:numat) =  na_store(:numat) ! to prevent resizing of na
       call xyzint (xparam, numat, na, nb, nc, 57.29577951308232D0, geo) 
       if (iloop == 1) then 
         etot1 = etot0 
