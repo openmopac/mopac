@@ -75,8 +75,6 @@
       data plb/ 0.D0/
       data scorr/ 0.D0/
       data abprt/ '     ', 'ALPHA', ' BETA'/
-      data shift/ 0.D0/  ! repairing gaps in initialization
-      data shiftb/ 0.D0/  ! repairing gaps in initialization
 !
 !  INITIALIZE
 !
@@ -386,7 +384,11 @@
               shift = -0.1D0
             endif
           else
-            shift = ten + eigs(ihomo+1) - eigs(ihomo) + shift
+            if (ihomo < norbs) then
+              shift = ten + eigs(ihomo+1) - eigs(ihomo) + shift
+            else
+              shift = 0.D0
+            endif
           endif
           if (diff > 0.D0) then
             if (shift > 4.D0) shfmax = 4.5D0
@@ -411,7 +413,11 @@
             if (newdg .and. .not.(halfe .or. camkin)) then
               shiftb = ten - tenold
             else
-              shiftb = ten + eigs(ihomob+1) - eigs(ihomob) + shiftb
+              if (ihomob < norbs) then
+                shiftb = ten + eigb(ihomob+1) - eigb(ihomob) + shiftb
+              else
+                shiftb = 0.D0
+              endif
             endif
             if (diff > 0.D0) shiftb = min(4.D0,shiftb)
             shiftb = max(-20.D0,min(shfmax,shiftb))

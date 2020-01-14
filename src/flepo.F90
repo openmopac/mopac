@@ -142,6 +142,7 @@
       if (icalcn /= numcal) then 
         if (allocated(hesinv)) deallocate(hesinv)
         allocate (hesinv((nvar*(nvar+1))/2))
+        hesinv = 0.0d0
 !
 !   THE FOLLOWING CONSTANTS SHOULD BE SET BY THE USER.
 !
