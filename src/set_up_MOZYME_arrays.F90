@@ -101,6 +101,7 @@
   end if  
   icocc = 0
   icvir = 0
+  jopt = 0
   kopt = 0
 !
 !   Create the ijbo array, if it exists?

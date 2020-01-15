@@ -68,6 +68,7 @@ subroutine paths()
 
     if (allocated(alparm)) deallocate(alparm)
     allocate(alparm(3, nvar))
+    alparm = 0.d0
 
     ! Initialize if RESTART
     CheckRestart: if (lef) then 
