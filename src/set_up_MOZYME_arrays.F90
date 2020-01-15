@@ -79,6 +79,7 @@
     end if
     allocate(dxyz(3*numat*l123), errfn(3*numat*l123), stat = i)
     j = j + i
+    dxyz = 0.d0
   end if
   allocate(p1(norbs), p2(norbs), p3(norbs), nfmo(norbs), idiag(norbs), stat = i)
   j = j + i
@@ -101,7 +102,6 @@
   icocc = 0
   icvir = 0
   kopt = 0
-  dxyz = 0.d0
 !
 !   Create the ijbo array, if it exists?
 !
