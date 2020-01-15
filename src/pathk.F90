@@ -93,7 +93,7 @@
       if (allocated(profil)) deallocate(profil)
       if (allocated(react)) deallocate(react)
       allocate(profil(npts + 1), react(npts + 1))
-      profil(1) = 0.D0 
+      profil = 0.D0 
       react(1) = geo(lparam,latom) 
       if (use_lbfgs) then 
         write (iw, '(/10x,''ABOUT TO ENTER L-BFGS FROM PATHK'')') 
