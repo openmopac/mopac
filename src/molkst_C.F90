@@ -38,7 +38,7 @@ module molkst_C
   &  ndep = 0, & !  Number of dependent coordinates, related by symmetry
   &  nvar = 0, & !  Number of coordinate that are to be optimized
                  !
-  &  nclose,   & !  Term        Number of doubly-occupied M.O.s
+  &  nclose = 0,&!  Term        Number of doubly-occupied M.O.s
                  !  Units       Molecular orbitals
                  !  Min. value  0
                  !  Max. value  nelecs/2  
@@ -173,7 +173,7 @@ module molkst_C
                      !  Max. value  2.0
                      !  Default     0.0
                      !
-  &  gnorm,        & !  Term        Scalar of gradient vector
+  &  gnorm = 0.d0, & !  Term        Scalar of gradient vector
                      !  Units       kcal/mol/(Angstrom - Radians)
                      !  Definition  The square root of the sum of the squares of the gradient components
                      !
@@ -248,7 +248,7 @@ module molkst_C
                      !  Pattern      "\d\.\d\d\d[X|W|L]"
                      !  Description  Year.Julian date. Operating System [X = placeholder]
   character ::     &
-  & jobnam*240 = ' ', &!
+  & jobnam*240 = repeat(' ',240), &!
   & line*2000         !
   character :: bad_separator*1, good_separator*1 ! separator in paths 
   character :: keywrd*2000, koment*200, title*200, refkey(6)*1000, geo_ref_name*241, geo_dat_name*241, &
