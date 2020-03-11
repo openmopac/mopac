@@ -38,7 +38,7 @@ module molkst_C
   &  ndep = 0, & !  Number of dependent coordinates, related by symmetry
   &  nvar = 0, & !  Number of coordinate that are to be optimized
                  !
-  &  nclose = 0,&!  Term        Number of doubly-occupied M.O.s
+  &  nclose,    &!  Term        Number of doubly-occupied M.O.s
                  !  Units       Molecular orbitals
                  !  Min. value  0
                  !  Max. value  nelecs/2  
@@ -248,7 +248,7 @@ module molkst_C
                      !  Pattern      "\d\.\d\d\d[X|W|L]"
                      !  Description  Year.Julian date. Operating System [X = placeholder]
   character ::     &
-  & jobnam*240 = repeat(' ',240), &!
+  & jobnam*240 = ' ', &!
   & line*2000         !
   character :: bad_separator*1, good_separator*1 ! separator in paths 
   character :: keywrd*2000, koment*200, title*200, refkey(6)*1000, geo_ref_name*241, geo_dat_name*241, &

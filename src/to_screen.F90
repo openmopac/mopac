@@ -50,11 +50,11 @@ module to_screen_I
 !
   use polar_C, only : omega, alpavg
 !
-  use molkst_C, only : numat, norbs, escf, nelecs, elect, enuclr, verson, &
+  use molkst_C, only : numat, norbs, escf, nelecs, nclose, nopen, elect, enuclr, verson, &
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
   method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, &
   uhf, nalpha, nbeta,  nclose, gnorm, mozyme, mol_weight, ilim, &
-  line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no
+  line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no, fract
 !
   use MOZYME_C, only : ncf, ncocc, noccupied, icocc_dim, cocc_dim, nvirtual, icvir_dim, &
   nncf, iorbs, cocc, icocc, ncvir, nnce, nce, icvir, cvir, tyres, size_mres, &
@@ -69,7 +69,7 @@ module to_screen_I
   use cosmo_C, only : area, solv_energy, cosvol
 !
   use meci_C, only : deltap, nmos, occa, microa, microb, lab, nstate, vectci, &
-    root_requested, eig, nelec
+    root_requested, eig, nelec, rjkab
 !
   use maps_C, only : rxn_coord, rc_escf, ekin, lparam, latom
 !
@@ -291,6 +291,14 @@ module to_screen_I
 !
   end if
   if (L_MO_s) L_MO_s = (moa_upper - moa_lower > -1)
+  if (nelecs == 0) then
+    L_MO_s = .false.
+    L_overlap = .false.
+    L_Density = .false.
+    eigen = .false.
+    lnmobs = .false.
+    lnmoas = .false.
+  end if
 !
 !  Set up options for various types of calculation
 !
@@ -430,25 +438,30 @@ module to_screen_I
       write(hook,"(a,sp, d"//fmt13p6//",a)")" VOLUME:CUBIC ANGSTROMS=",cosvol
       if (Abs(solv_energy) > 1.d-6) write(hook,"(a,sp, d"//fmt13p6//",a)")" DIEL_ENER:EV=",solv_energy
     end if
-    if (nelecs > 0) then
-      if (uhf) then
+    if (.not. mozyme) then
+      if (nalpha > 0) then
         eig_min = -eigs(nalpha)
-        if(nbeta > 0 .and. -eigb(nbeta) < eig_min) eig_min = -eigb(nbeta)
-        write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",eig_min
-      else
-        write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",-eigs(nelecs/2)
+        if (nbeta > 0) eig_min = min(eig_min,-eigb(nbeta))
+      else if (nelecs == 1) then
+        eig_min = -eigs(1)
+      else if (nelecs > 1) then
+        if (nopen > 0) eig_min = -eigs(nopen)
+        if (nclose > 0) eig_min = min(eig_min,-eigs(nclose))
+!   CORRECTION TO I.P. OF DOUBLETS
+        if (nopen - nclose == 1 .and. fract <= 1.99D0) eig_min = eig_min + 0.5D0*rjkab(1,1) 
       end if
-    else
-      write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",1.022d6
+      if (nelecs > 0) write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",eig_min
     end if
     write(hook,"(a,sp, d"//fmt13p6//",a)")" SPIN_COMPONENT=",sz
     write(hook,"(a,sp, d"//fmt13p6//",a)")" TOTAL_SPIN=",ss2
     num = char(ichar("1") +int(log10(nscf + 0.05)))
     write(hook,"(a,i"//num//")")" NUMBER_SCF_CYCLES=",nscf
-    num = char(ichar("1") +int(log10(nalpha + 0.05)))
-    write(hook,"(a,i"//num//")")" NUM_ALPHA_ELECTRONS=",nalpha
-    num = char(ichar("1") +int(log10(nbeta + 0.05)))
-    write(hook,"(a,i"//num//")")" NUM_BETA_ELECTRONS=",nbeta
+    if (uhf) then
+      num = char(ichar("1") +int(log10(nalpha + 0.05)))
+      write(hook,"(a,i"//num//")")" NUM_ALPHA_ELECTRONS=",nalpha
+      num = char(ichar("1") +int(log10(nbeta + 0.05)))
+      write(hook,"(a,i"//num//")")" NUM_BETA_ELECTRONS=",nbeta
+    endif
       sum = second2(1) - time0
       i = int(sum*0.000001D0)
       sum = sum - i*1000000
@@ -457,6 +470,10 @@ module to_screen_I
     write(hook,"(a,sp, d"//fmt13p6//",a)")" TOTAL_ENERGY:EV=",elect + enuclr + solv_energy
     write(hook,"(a,i"//paras//",a)")" ATOM_X_OPT:ANGSTROMS[",3*numat, "]="
     write(hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
+    if(nelecs == 0)then
+      call chrge (p, q)
+      q(:numat) = tore(nat(:numat)) - q(:numat)
+    end if
     write(hook,"(a,i"//atoms//",a)")" ATOM_CHARGES[",numat,"]="
     write(hook,"(sp,10f"//fmt9p5//")") (q(i), i=1,numat)
     if (nvar > 0) then
@@ -985,6 +1002,7 @@ module to_screen_I
       end if
       if (index(keywrd, " BOND") /= 0)  &
         call write_screen_bonds(compressed, orbs2, hook, fmt9p4)
+      if (L_MO_s) &
       call print_M_O_data(hook, moa_lower, moa_upper, lnmoas, mob_lower, mob_upper, lnmobs, orbs, fmt9p3)
     end if
 !

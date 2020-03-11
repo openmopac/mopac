@@ -22,20 +22,22 @@ import numpy as np
 # In principle, we could interpret the symmetry labels to use some of the edge data when
 # we can independently determine the size of the subspace, but this is way more trouble than it is worth.
 # This comparison is insensitive to differences in whitespace and number of empty lines.
+# Some input files used for testing contain reference data in comments, which are ignored here.
 
 # Summary of units in MOPAC output files?
 
 # TODO:
+# - anything else we can do to guess the context of numbers?
 # - parse "INITIAL EIGENVALUES " blocks
-# - create a tighter error threshold for heat of formation, perhaps loosen threshold for other things?
-#   ^^^ can we guess context of numbers in any reliable way?
-NUMERIC_THRESHOLD = 0.99999
+NUMERIC_THRESHOLD = 0.01
+HEAT_THRESHOLD = 1e-3
 DEGENERACY_THRESHOLD = 1e-2
 EIGVEC_THRESHOLD = 5e-3
 
 # regular expression pattern for a time stamp or other signifier of timing output, "CLOCK" or "TIME" or "SECONDS", & system-dependent versioning
 skip_criteria = re.compile('([A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9])'
-                           '|(CLOCK)|(TIME)|(SECONDS)|(Version)|(THE VIBRATIONAL FREQUENCY)|(ITERATION)|(SCF CALCULATIONS)')
+                           '|(CLOCK)|(TIME)|(SECONDS)|(Version)|(THE VIBRATIONAL FREQUENCY)|(ITERATION)|(SCF CALCULATIONS)|(Stewart)'
+                           '|(remaining)|(\*  ISOTOPE)|(\*  DENOUT)|(\*  OLDENS)|(\*  SETUP)')
 
 # regular expression pattern for an eigenvector block
 eigen_criteria = re.compile('(Root No.)|(ROOT NO.)')
@@ -63,8 +65,18 @@ def parse_mopac_output(path):
     with open(path,'r') as file:
         for line_num, line in enumerate(file):
 
-            # this hack separates floats that don't have a space between them because of a minus sign
-            word_list = line.replace('-',' -').replace('E -','E-').replace('D -','D-').replace('=',' = ').split()
+            # this hack separates floats that don't have a space between them because of a minus sign & trailing comma's
+            word_list = line.replace('-',' -').replace('E -','E-').replace('D -','D-').replace('=',' = ').replace(',',' , ').split()
+
+            # ignore molecular dimensions block
+            if 'MOLECULAR DIMENSIONS (Angstroms)' in line:
+                mode = 'dim'
+                continue
+            elif mode == 'dim':
+                if 'SCF CALCULATIONS' in line:
+                    mode = 'standard'
+                else:
+                    continue
 
             # switch to or continue iter mode
             if 'RHF CALCULATION' in line or 'UHF CALCULATION' in line or 'Geometry optimization using BFGS' in line:
@@ -191,7 +203,10 @@ def parse_mopac_output(path):
             if mode == 'standard':
                 for word in word_list:
                     if is_float(word):
-                        parse_list.append(to_float(word))
+                        if 'FINAL HEAT OF FORMATION =' in line and word is word_list[5]:
+                            parse_list.append(('HOF',to_float(word)))
+                        else:
+                            parse_list.append(to_float(word))
                     else:
                         parse_list.append(word)
                     parse_line.append(line_num+1)
@@ -230,8 +245,14 @@ for (line, ref, out) in zip(out_line, ref_list, out_list):
         if abs(ref - out) > NUMERIC_THRESHOLD:
             print(f'WARNING: numerical mismatch between {ref} and {out} on output line {line}')
 
+    # compare heats of formation
+    elif len(ref) == 2:
+#        assert abs(ref[1] - out[1]) < HEAT_THRESHOLD, f'ERROR: numerical heat mismatch between {ref[1]} and {out[1]} on output line {line}'
+        if abs(ref[1] - out[1]) > HEAT_THRESHOLD:
+            print(f'WARNING: numerical heat mismatch between {ref[1]} and {out[1]} on output line {line}')
+
     # compare eigenvalues & eigenvectors
-    else:
+    elif len(ref) == 4:
         ref_val, ref_vec, ref_begin, ref_end = ref
         out_val, out_vec, ref_begin, ref_end = out
 

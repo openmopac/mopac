@@ -132,7 +132,9 @@
             call hint()
             return
           end if
+          p = 0.d0
           pold = 0.d0
+          eigs = 0.d0
           eigb = 0.d0
           if (uhf) pbold = 0.d0
           if (l123 > 1) then

@@ -208,7 +208,7 @@ H 2.0
  
 PRECISE gradients  AM1 eps=78.4 1scf
  Glycine (solution phase geometry)
- Heat of Formation should be -110.35 kcal/mol
+ Heat of Formation should be -110.386 kcal/mol
   C         0.00000000 +0    0.0000000 +0    0.0000000 +0                     -0.0795
   C         1.51404800 +1    0.0000000 +0    0.0000000 +0    1    0    0       0.3011
   N         1.43117776 +1  115.8837769 +1    0.0000000 +0    1    2    0      -0.3675
@@ -1032,7 +1032,7 @@ open(1,2)      PM3 1SCF   GRADIENTS PRECISE
 
   1SCF   T=25M GRADIENTS       MNDO      PULAY PRECISE
    DOUBLET RHF ETHYL RADICAL
-   CALCULATED HEAT OF FORMATION SHOULD BE = 12.799
+   CALCULATED HEAT OF FORMATION SHOULD BE = 10.536
   C    0.00000000  0    0.0000000  0    0.0000000  0    0    0    0     -0.1385
   C    1.47916326  1    0.0000000  0    0.0000000  0    1    0    0      0.0558
   H    1.10941574  1  111.4945902  1    0.0000000  0    2    1    0     -0.0028
@@ -1478,34 +1478,41 @@ Final heat should be -34.101 kcal/mol in about 8 SCF calculations
  oldgeo force  PM3 nosym
   Do a FORCE calculation on the PM3 geometry
 Roots should be  1069  1098  1288  1987    2998  3025
-    charge=1 mndo 
+    charge=1 mndo RHF
   Formaldehyde, for Demonstration Purposes
-     FINAL HEAT OF FORMATION SHOULD BE     215.648 KCAL 
+     FINAL HEAT OF FORMATION SHOULD BE     215.647 KCAL 
   O
   C 1.2 1 0 0 0 0 1
   H 1.1 1 120 1 0 0 2 1 
   H 1.2 1 120 1 150 1 2 1 3
  
-  oldgeo force  CHARGE=1 nosym mndo 
+  oldgeo force  CHARGE=1 nosym mndo RHF
    FORCE calculation on CH2O(+), RHF
-Roots should be 881  1147  1157-1158  1865  3051  3071 
+Roots should be 883-884  1151  1159-1160  1866-1867  3037-3038  3060 
  oldgeo uhf  CHARGE=1 mndo 
    Optimize the CH2O(+) geometry, UHF, starting with RHF geometry
-     FINAL HEAT OF FORMATION SHOULD BE     210.147 KCAL 
+     FINAL HEAT OF FORMATION SHOULD BE     210.148 KCAL 
  oldgeo force CHARGE=1 uhf  mndo nosym
   Do a force calculation on UHF geometry.
-Roots should be  928  1161  1232-1233  1827  3052  3090 
-    charge=1 T=1M DUMP=1 UHF mndo 
+Roots should be  928 1159-1160 1230-1231 1830 3057 3095
+    charge=1 T=1M DUMP=1 mndo 
   Formaldehyde, for Demonstration Purposes
-    FINAL HEAT OF FORMATION SHOULD BE      210.154 KCAL 
+    FINAL HEAT OF FORMATION SHOULD BE      210.150 KCAL 
   O
   C 1.2 1 0 0 0 0 1
   H 1.1 1 120 1 0 0  2 1
   H 1.2 1 120 1 150 1 2 1 3
- 
+
+*
+*  This test gives results slightly different to those in the earlier test
+*  where the title was "Do a force calculation on UHF geometry."
+*  This is because the geometries are slightly different.
+*  If "PRECISE" is used in the geometry optimization of both geometries,
+*  then the vibrational frequencies will be the same.
+*
   oldgeo force CHARGE=1 t=1h dump=23m mndo 
    RHF force calculation
-Roots should be 882  1149  1159  1865  3044  3065
+Roots should be 924 1170 1226 1828 3055-3056 3094
        noxyz 1scf VECTORS mndo 
  Point group should be C1
  There should be no strings of `????' in the output from here until `+-+-+-' 
@@ -1681,9 +1688,6 @@ CHARGE=2    noxyz 1SCF VECTORS  mndo SYMMETRY
   H         1.09435822 +1  110.4145370 +1  123.5296286 +1    2    1    3       0.0780
   H         1.09806876 +1  103.6207867 +1 -118.2342790 +1    2    1    3       0.1035
   H         0.97719315 +1  109.8828844 +1  -61.8349577 +1    1    2    3       0.3444
- 
-  oldgeo    noxyz force let 
- Point group should be C2v
 
      noxyz     SYMMETRY   mndo VECTORS
  Formaldehyde
@@ -1697,7 +1701,7 @@ CHARGE=2    noxyz 1SCF VECTORS  mndo SYMMETRY
    3  2    4
 
   oldgeo    noxyz force MNDO
-
+ Point group should be C2v
 
     noxyz 1scf   symmetry   mndo 
  Ammonia   Point group should be C3v
@@ -3058,30 +3062,30 @@ h -.7 0 -.7 0 0.7 0
 *
 *
 * Test of 2-D solid state.  
-mndo 1scf gradients
-          FINAL HEAT OF FORMATION SHOULD BE 60.148 KCAL
- Simple 2-D system. One cycloC4H4, in CH units, at corners of a 20 A square
-  H         0.00000000 +0    0.0000000 +0    0.0000000 +0                      0.1828
- XX        10.00000000 +0    0.0000000 +0    0.0000000 +0    1    0    0
- XX        10.00000000 +0   90.0000000 +0    0.0000000 +0    2    1    0
- XX        10.00000000 +0   90.0000000 +0  180.0000000 +0    2    1    3
- XX        10.00000000 +0  180.0000000 +0    0.0000000 +0    1    2    3
- XX        10.00000000 +0   90.0000000 +0    0.0000000 +0    5    1    3
- XX        10.00000000 +0   90.0000000 +0  180.0000000 +0    5    1    3
-  C         1.02445751 +1   41.4684420 +1    0.0000000 +0    3    2    1      -0.0928
-  H         1.07150809 +1  173.3580030 +1  180.0000000 +0    8    3    2       0.0928
-  C         1.02333319 +1   41.5112224 +1    0.0000000 +0    4    3    1      -0.0927
-  H         1.07153826 +1  173.3931916 +1  180.0000000 +0   10    4    2       0.0928
-  C         1.02481348 +1   41.4567041 +1    0.0000000 +0    6    5    1      -0.0928
-  H         1.07151425 +1  173.3922406 +1  180.0000000 +0   12    6    5       0.0928
-  C         1.02370266 +1   41.5363432 +1    0.0000000 +0    7    5    1      -0.0927
-  H         1.07155298 +1  173.4290178 +1  180.0000000 +0   14    7    5       0.0928
- Cl         1.34820463 +1   90.0000000 +0   90.0000000 +0    1    2    3      -0.1828
-  H         6.00000000 +0   90.0000000 +0   90.0000000 +0    3    2    1       0.1836
- Cl         1.34827000 +1  180.0000000 +0    0.0000000 +0   17    3    2      -0.1836
- Tv        20.00000000 +0    0.0000000 +0    0.0000000 +0    1    2    3
- Tv        20.00000000 +0   90.0000000 +0    0.0000000 +0    1    2    3
- 
+ 1scf  gradients  
+          FINAL HEAT OF FORMATION SHOULD BE 54.692 KCAL
+ Simple 2-D system. One cycloC4H4, in CH units, at corners of a 20 A square with two HCl at symmetry points
+  H     0.00000000 +0    0.0000000 +0    0.0000000 +0     0     0     0
+ XX    10.00000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+ XX    10.00000000 +0   90.0000000 +0    0.0000000 +0     2     1     0
+ XX    10.00000000 +0   90.0000000 +0  180.0000000 +0     2     1     3
+ XX    10.00000000 +0  180.0000000 +0    0.0000000 +0     1     2     3
+ XX    10.00000000 +0   90.0000000 +0    0.0000000 +0     5     1     3
+ XX    10.00000000 +0   90.0000000 +0  180.0000000 +0     5     1     3
+  C     1.02727677 +1   40.9383841 +1    0.0000000 +0     3     2     1
+  H     1.05284572 +1  171.6622354 +1  180.0000000 +0     8     3     2
+  C     1.02615865 +1   40.9745042 +1    0.0000000 +0     4     3     1
+  H     1.05286168 +1  171.7163105 +1  180.0000000 +0    10     4     2
+  C     1.02750424 +1   40.9360607 +1    0.0000000 +0     6     5     1
+  H     1.05287474 +1  171.6753851 +1  180.0000000 +0    12     6     5
+  C     1.02641074 +1   41.0076829 +1    0.0000000 +0     7     5     1
+  H     1.05288509 +1  171.7275772 +1  180.0000000 +0    14     7     5
+ Cl     1.27286516 +1   90.0000000 +0   90.0000000 +0     1     2     3
+  H     6.00000000 +0   90.0000000 +0   90.0000000 +0     3     2     1
+ Cl     1.27317457 +1  180.0000000 +0    0.0000000 +0    17     3     2
+ Tv    20.00000000 +0    0.0000000 +0    0.0000000 +0     1     2     3
+ Tv    20.00000000 +0   90.0000000 +0    0.0000000 +0     1     2     3
+  
 *
 * Check re-orthogonalization, re-localization, local MOs
 *
@@ -3106,7 +3110,7 @@ C 1.2 0 180 0 0 0 4 3 2
 H 1.1 0 180 0 0 0 5 4 3
 
    RELSCF=0.1  CHARGE=-1  1SCF  gradients  field(1.0,0.0,0.0) mndo
-      FINAL HEAT OF FORMATION SHOULD BE =   27.331 KCAL
+      FINAL HEAT OF FORMATION SHOULD BE =   -16.87 KCAL
 
   H    0.0000000  0     0.0000000  0     0.0000000  0     -0.1979
   C    0.9005356  1     0.7094945  0     0.0000000  0      0.2852
@@ -3311,7 +3315,7 @@ F 20.0 1
 + 30.0 1
 
  charge=2 xyz gradients  1SCF  mndo
-        FINAL HEAT OF FORMATION SHOULD BE  260.335
+        FINAL HEAT OF FORMATION SHOULD BE  260.304
 
 +
 + 1.5 1
@@ -3705,7 +3709,7 @@ H 1.1 1 109 1 -120 1 3 2 4
 
   charge=-1      STATIC    polar mndo
  Formaldehyde
-  HEAT OF FORMATION SHOULD BE              -32.107
+  HEAT OF FORMATION SHOULD BE              -44.842
   O    0.0000000  0      0.000000  0      0.000000  0    0    0    0     -0.3100
   C    1.2021981  0      0.000000  0      0.000000  0    1    0    0      0.2973
   H    1.0912234  0    121.833130  0      0.000000  0    2    1    0      0.0064
@@ -3775,7 +3779,7 @@ H 1.1 1 109 1 -120 1 3 2 4
   H    1.51951877  1   36.4414584  1    0.0000000  0    2    1    0      0.2196
 
   AM1 T=3600 C.I.=(3,1) EF   GRAD EPS=80 N**2=2 MECI 
-         FINAL HEAT OF FORMATION SHOULD BE -69.847 KCAL
+         FINAL HEAT OF FORMATION SHOULD BE -64.802 KCAL
 
   O    0.000000  0   0.000000  0    0.000000  0     0     0     0 -0.5249
   H    0.958816  1   0.000000  0    0.000000  0     1     0     0  0.2626

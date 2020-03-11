@@ -387,14 +387,14 @@
         write (iw, '(10X,''REACTION GRADIENT       ='',F17.5,A14)') &
         gcoord(1,1), grtype 
       endif 
-      eionis = 0.D0 
+      eionis = 0.D0
       if (nalpha > 0 .and. nbeta > 0) then 
         eionis = -max(eigs(nalpha),eigb(nbeta)) 
       else if (nelecs == 1) then 
         eionis = -eigs(1) 
       else if (nelecs > 1) then 
-        if (nclose > 0) eionis = -eigs(nclose) 
-        if (nopen > 0) eionis = min(eionis,(-eigs(nopen))) 
+        if (nopen > 0) eionis = -eigs(nopen)
+        if (nclose > 0) eionis = min(eionis,-eigs(nclose))
       endif 
       i = nclose 
       if (fract > 1.99D0) i = nopen 
