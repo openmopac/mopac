@@ -1,6 +1,8 @@
-#target_include_directories(exe PUBLIC         ${CMAKE_CURRENT_LIST_DIR})
+# This CMake file just contains a long list of source files, mostly for the library
+target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
+target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
 
-target_sources(mopac
+target_sources(mopac-lib
     PRIVATE
 # GPU-related files
 #        ${CMAKE_CURRENT_SOURCE_DIR}/mod_gpu_info.F90
@@ -44,6 +46,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/capcor_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/cartab_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ccprod_I.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/ccrep_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/cdiag_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/charg_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/charmo_I.F90
@@ -421,6 +424,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/check.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/chkion.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/chklew.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/chkpar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/chrge.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/chrge_for_MOZYME.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ciosci.F90
@@ -434,6 +438,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/cosmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dang.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/datin.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/datinp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dcart.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/delsta.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/denrot.F90
@@ -441,6 +446,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/densit.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/density_for_GPU.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/density_for_MOZYME.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/depfn.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/deri0.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/deri1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/deri2.F90
@@ -471,6 +477,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole_for_MOZYME.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/direct.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/disp_DnX.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dist2.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dofs.F90
@@ -483,12 +490,15 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/eigen.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/eigenvectors_LAPACK.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/eimp.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/empire.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/enpart.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/epseta.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/esp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/esp_utilities.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/exchng.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/extract_parameter.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/fillij.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/filusp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/findn1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/finish.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/flepo.F90
@@ -513,6 +523,8 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/getdat.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/getgeg.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/getgeo.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/getmol.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/getpar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/getpdb.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/getsym.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/gettxt.F90
@@ -532,6 +544,7 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/init_filenames.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/interp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/intfc.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/invfn.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ionout.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/isitsc.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/iter.F90
@@ -574,7 +587,6 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/moldat.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/molsymy.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/molval.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mopend.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mpcsyb.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mtxm.F90
@@ -593,11 +605,19 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/nllsq.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/nuchar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/nxtmer.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/optgeo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/orient_water.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/osinv.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/outer1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/outer2.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/output_cc_rep_fn.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/pardip.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/parfg.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/pargeo.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/parips.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/parkey.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parsav.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/partab.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/partxy.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pathk.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/paths.F90
@@ -609,25 +629,34 @@ target_sources(mopac
         ${CMAKE_CURRENT_SOURCE_DIR}/polar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/post_scf_corrections.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/powsq.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/pparsav.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prtdrc.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prtgra.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prtlmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prtpka.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prttim.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/psort.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pulay.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/quadr.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/rapid0.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/rapid1.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/rapid2.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/rapid3.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/react1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reada.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/readmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/refer.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reorth.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/repp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reseq.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/resetp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/resolv.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rotate.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rotlmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rotmol.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rsp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/run_mopac.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/savgeo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/scfcri.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/schmib.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/schmit.F90
