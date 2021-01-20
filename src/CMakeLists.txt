@@ -1,9 +1,8 @@
-# This CMake file just contains a long list of source files, mostly for the library
+# This CMake file contains the list of source files, mostly for the library
 target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
 target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
 
-target_sources(mopac-lib
-    PRIVATE
+target_sources(mopac-common PRIVATE
 # GPU-related files
 #        ${CMAKE_CURRENT_SOURCE_DIR}/mod_gpu_info.F90
 #        ${CMAKE_CURRENT_SOURCE_DIR}/pulay_for_gpu_I.F90
@@ -21,7 +20,6 @@ target_sources(mopac-lib
         ${CMAKE_CURRENT_SOURCE_DIR}/aijm_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aintgs_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/alphaf_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/asum_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aval_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/axis_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/babbbc_I.F90
@@ -36,16 +34,12 @@ target_sources(mopac-lib
         ${CMAKE_CURRENT_SOURCE_DIR}/betcom_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/bfn_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/bintgs_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/blas_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/bldsym_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/bmakuf_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/bonds_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/break_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/btoc_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/calpar_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/capcor_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/cartab_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/ccprod_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ccrep_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/cdiag_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/charg_I.F90
@@ -69,7 +63,6 @@ target_sources(mopac-lib
         ${CMAKE_CURRENT_SOURCE_DIR}/dang_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/darea1_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/daread_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dasum_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/datin_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dawrit_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dawrt1_I.F90
