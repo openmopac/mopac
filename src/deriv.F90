@@ -72,7 +72,7 @@
 !        GEO    ARRAY \GEO\ HOLDS THE INTERNAL COORDINATES.
 !        gradnt   ON EXIT, CONTAINS THE DERIVATIVES
 !
-!***********************************************************************  
+!***********************************************************************   
       data icalcn/ 0/  
       if (icalcn /= numcal) then          
         aifrst = index(keywrd,' RESTART') == 0 

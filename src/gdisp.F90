@@ -1,4 +1,4 @@
-  subroutine gdisp(xyz, r0ab, rs6, alp6, c6ab, s6, s8, mxc, r2r4, rcov, rs8, alp8, dxyz_temp)
+  subroutine gdisp(xyz, r0ab, rs6, alp6, c6ab, s6, mxc, rcov, dxyz_temp)
 !
 ! Calculates the derivative (gradient) of the D3 dispersion term, 
 ! based on material provided by Stefan Grimme, University of Muenster, Germany
@@ -18,14 +18,14 @@
   rcov(max_elem),                          & ! covalent radii
   cn(numat),                               & ! coordination numbers of the atoms
   r0ab(max_elem, max_elem),                & ! cut  -  off radii for all element pairs
-  rs6, alp6, s6, s8, r2r4(max_elem), rs8, alp8
+  rs6, alp6, s6
   integer :: mxc(max_elem)
 !
 !  Local variables
 !
   integer :: i, j, linij
-  double precision :: R0, r2, damp6, damp8, c6, tmp1, tmp2, r, dc6_rest, rij(3), dc6iji, dc6ijj, r6, r7, t6, t8, &
-  rcovij, expterm, dcn,x1, r42, r8, r9
+  double precision :: R0, r2, damp6, c6, tmp1, r, dc6_rest, rij(3), dc6iji, dc6ijj, r6, r7, t6, &
+  rcovij, expterm, dcn,x1
   double precision, allocatable :: drij(:), dc6i(:)
   integer, external :: lin
   i = (numat*(numat+1))/2
@@ -41,27 +41,21 @@
        if (r2 > 10000.d0) cycle
       linij = lin(i,j)
       r0 = r0ab(nat(j),nat(i))
-      r42=r2r4(nat(i))*r2r4(nat(j))
       call get_dC6_dCNij(maxc, max_elem, c6ab, mxc(nat(i)), &
             mxc(nat(j)), cn(i), cn(j), nat(i), nat(j), &
             c6, dc6iji, dc6ijj)
       r = sqrt(r2)
       r6 = r2*r2*r2
       r7 = r6*r
-      r8=r6*r2
-      r9=r8*r
 !
 !  Calculate damping functions
 !
       t6  =  (r/(rs6*R0))**( - alp6)
       damp6  = 1.d0/( 1.d0 + 6.d0*t6 )
-      t8 = (r/(rs8*R0))**(-alp8)
-          damp8 =1.d0/( 1.d0+6.d0*t8 )
       tmp1 = s6*6.d0*damp6*C6/r7
-      tmp2=s8*6.d0*C6*r42*damp8/r9
-      drij(linij) = drij(linij) - tmp1 - 4.d0*tmp2 
-      drij(linij) = drij(linij)  + tmp1*alp6*t6*damp6 +3.d0*tmp2*alp8*t8*damp8  
-      dc6_rest = s6/r6*damp6 +3.d0*s8*r42/r8*damp8
+      drij(linij) = drij(linij) - tmp1  
+      drij(linij) = drij(linij)  + tmp1*alp6*t6*damp6   
+      dc6_rest = s6/r6*damp6 
 !
 !     saving all f_dmp/r6*dC6(ij)/dCN(i) for each atom for later
 !
@@ -91,7 +85,6 @@
       dxyz_temp(:,j) = dxyz_temp(:,j) - x1*rij/r
     end do 
   end do 
-  return
   end subroutine gdisp
   
   

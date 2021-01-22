@@ -2,21 +2,21 @@
       subroutine mult_symm_AB(a, b, alpha, ndim, mdim, c, beta, iopc)
 
         Use vast_kind_param, only: double
-!        Use mod_vars_cuda, only: ngpus
+        Use molkst_C, only: keywrd
+        Use mod_vars_cuda, only: lgpu,real_cuda,prec,ngpus
+        Use chanel_C, only : iw
         Use mamult_I  
         Use iso_c_binding
 #if GPU
         Use call_gemm_cublas
         Use mamult_cuda_i 
-        use common_arrays_C, only : ifact                 
 #endif
+        use common_arrays_C, only : ifact                 
         implicit none
         Integer :: iopc,ndim,mdim           
-        Integer :: i
-#if GPU
+        Integer :: i,j,ij
         integer :: igrid, iblock
         real :: tt      
-#endif
 #if CC12
         real(c_float), dimension(mdim) :: a, b, c          
 #else

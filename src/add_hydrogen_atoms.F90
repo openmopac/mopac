@@ -2404,7 +2404,6 @@
     allocate (h1(numat), h2(numat),Rab1(numat),Rab2(numat))
     Rab1 = 100.d0
     Rab2 = 100.d0
-    k = 0
     ii = 0
     do i = 1, numat
       if (nat(i) /= 1) cycle

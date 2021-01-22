@@ -17,7 +17,6 @@ subroutine iter_for_MOZYME (ee)
     use cosmo_C, only: useps, lpka, solv_energy
     use linear_cosmo, only : c_proc
     use reada_I
-    use to_screen_I
     implicit none
 !
     double precision, intent (out) :: ee

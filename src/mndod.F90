@@ -228,6 +228,18 @@
               a1 = y1 
             endif 
           end do 
+        else 
+          do i = 1, niter 
+            delta = a2 - a1 
+            if (delta < epsil) exit  
+            y1 = a1 + delta*g1 
+            y2 = a1 + delta*g2 
+            if (f1 < f2) then 
+              a2 = y2 
+            else 
+              a1 = y1 
+            endif 
+          end do 
         endif 
       endif 
 !     DEFINE ADDITIVE TERM AFTER CONVERGENCE OF ITERATIONS.

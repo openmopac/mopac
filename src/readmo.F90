@@ -13,14 +13,14 @@
       USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar 
 !
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
-      & verson, is_PARAM, line, nl_atoms, &
-      & moperr, maxatoms, koment, title, method_pm6, refkey, &
-      isok, ijulian, gui, Academic, site_no, method_pm6_dh2, caltyp, &
+      & verson, method_mndo, method_am1, method_pm3, is_PARAM, line, nl_atoms, &
+      & method_mndod, moperr, maxatoms, koment, title, method_pm6, refkey, &
+      isok, ijulian, method_rm1, gui, Academic, site_no, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, num_bits, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x,   &   
       method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
-      method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label
+      method_pm7_minus, method_pm6_dh_plus, method_pm8, prt_coords, prt_cart, mozyme, pdb_label
 !
       use meci_C, only : maxci
 !
@@ -34,7 +34,7 @@
 !
       use MOZYME_C, only : start_res, lstart_res, start_letter
 !
-      USE funcon_C, only : fpc
+      USE funcon_C, only : fpc_9, fpc
       use conref_C, only : fpcref 
 !
 !***********************************************************************
@@ -293,7 +293,7 @@
             if (line(i:i) /= " ") exit
           end do
           if (line(1:1) /= "*") then
-            write (ir, '(A)') trim(line(i:))
+            write (ir, '(A)', iostat=i) trim(line(i:))
             natoms = natoms + 1
           end if
         end do
@@ -345,32 +345,6 @@
         allocate(txtatm1(numat))
         numat_old = numat
         txtatm1(:numat) = txtatm(:numat)
-        if (index(keywrd, " INT") /= 0) then
-          call xyzint (coord, numat, na, nb, nc, 1.d0, geo) 
-          lopt(:,1) = 0
-          lopt(2:,2) = 0
-          lopt(3,3) = 0
-        end if
-        if (index(keywrd, " XYZ") /= 0) then
-          numat = 0 
-          do i = 1, natoms 
-            if (labels(i) /= 99) then 
-              numat = numat + 1 
-              labels(numat) = labels(i)
-              txtatm(numat) = txtatm(i)
-              lopt(:,numat) = lopt(:,i)
-              na(numat) = 0
-            endif 
-            geo(:,i) = coord(:,i) 
-          end do 
-!
-!   If everything is marked for optimization then unconditionally mark the first
-!   three atoms for optimization
-!
-          if (k >= 3*numat - 6) lopt(:,:min(3, numat)) = 1
-          natoms = numat
-        end if
-        
       end if
       if (moperr) then
         natoms = 0
@@ -627,9 +601,11 @@
 #if BITS32
       num_bits = 32 
       maxci = 5000
-#else
+#elif BITS64
       num_bits = 64
       maxci = 20000
+#else
+    Set pre-processor directive BITS32 or BITS64.  This line causes a deliberate compile-time error
 #endif
       if (Academic) then
         if (site_no > 9999) then
@@ -1405,11 +1381,7 @@
         if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis') 
         call wrttxt (ilog) 
        endif 
-      if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1)
-      if (index(keywrd, " NOTXT") /= 0) then
-        maxtxt = 0
-        txtatm = " "
-      end if
+      if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1) 
       if (prt_coords) call geout(1)
       write(iw,*)
       if (moperr) return 
@@ -1578,13 +1550,10 @@
                 if (j == i) exit
                 ij = index(line(j:),"""") + j 
                 line_1 = line(j:ij - 2)
-!
-! Do NOT use "txt_to_atom_no" in the next block - the format must be in PDB
-!
                 if (line_1(1:1) == "[") then
-!
-! Atom defined using Jmol format
-!
+  !
+  ! Atom defined using Jmol format
+  !
                   ii = index(line(j:ij - 2),".") + j
                   k = index(line(j:ij - 2),":") + j
                   jj = index(line(j:ij - 2),"]") + j

@@ -55,6 +55,7 @@
     integer :: i, j
     double precision :: r2, r, b, br, cc, j00, d00dr, j10, e, U(3), dbdQa, dbdQb, d00db, &
       dedb, d00drdb, d10db, d10dQa, d10dQb
+    double precision, intrinsic :: erf
     X = 0.d0
     Xa = 0.d0
     Xb = 0.d0
@@ -138,6 +139,7 @@
     double precision :: U(3)
     double precision :: dUda(3, 3)
     integer :: ix, iy, jx, jy
+    double precision, intrinsic :: erf
     X = 0.d0
     r2 = Rab(1)*Rab(1) + Rab(2)*Rab(2) + Rab(3)*Rab(3)
     if ( r2 < 1.d-25 ) then
@@ -215,6 +217,7 @@
     double precision :: dedQa, dedQb
     double precision :: d10dQa, d10dQb
     double precision :: d11dQa, d11dQb
+    double precision, intrinsic :: erf
     X  = 0.d0
     Xa = 0.d0
     Xb = 0.d0
@@ -318,6 +321,7 @@
 !
     integer :: i
     double precision :: r2, r, b, br, cc, j00, d00dr, j10, e, U(3)
+    double precision, intrinsic :: erf
     X = 0.d0
     r2 = Rab(1)*Rab(1) + Rab(2)*Rab(2) + Rab(3)*Rab(3)
     if ( r2 < 1.d-25 ) then
@@ -355,6 +359,7 @@
     integer :: i
     double precision :: r2, r, b, br, cc, j00, d00dr, j10, e, U(3), d10dQa, dbdQa, &
       dedb, d00db, d00drdb
+    double precision, intrinsic :: erf
     X = 0.d0
     Xa = 0.d0
     r2 = Rab(1)*Rab(1) + Rab(2)*Rab(2) + Rab(3)*Rab(3)

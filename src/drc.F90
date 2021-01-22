@@ -4,19 +4,19 @@
       line, nopen, nclose, moperr, jloop => itemp_1, prt_velocity
       USE chanel_C, only : iw, ires, iscr, restart_fn, iw0
       use common_arrays_C, only : geo, loc, grad, xparam, atmass, nat, &
-      & errfn, coord, na, p, q, labels
-      USE parameters_C, only : tore
+      & errfn, coord, na
       USE elemts_C, only : elemnt
-      use second2_I 
+      use second_I 
       use reada_I 
       use compfg_I 
+      use prtdrc_I 
       use to_screen_I
       implicit none
       real(double) :: startv(9*numat*numat) 
       real(double) , intent(in) :: startk(3*numat) 
 !
       integer :: i, l, j, iskin,   iloop, k, kl, ncoprt, bigcycles, jloop_lim, &
-        ii, i1, maxcyc, iupper, ilp, io_stat, ilim, iw00, percent, n_escf, n_min, iwd = 9
+        ii, i1, maxcyc, iupper, ilp, io_stat, ilim, iw00, percent, n_escf, n_min
       integer, dimension(2,3*numat) :: mcoprt
       real(double), dimension(3*numat) :: velo0, velo1, velo2, velo3, gerror, grold2 
       real(double), dimension(10) :: past10 
@@ -26,10 +26,9 @@
         accu, gnlim, half, addonk, deltat, quadr, etot, const, one, summ, &
         summas, ams, error, velvec, delta1, elost, sum, dummy, tcycle, &
         average_old_hof, average_new_hof, start_hof=1.d20, minstep, escf_old, &
-        escf_diff, stepx, damp, escf_min, stepxx, dipvec(3), dip
-      logical :: addk, letot, let, velred, opend, parmax, debug, l_debug = .false., l_irc, &
-        l_dipole
-      real(double), external :: ddot, dipole
+        escf_diff, stepx, damp, escf_min, stepxx
+      logical :: addk, letot, let, velred, opend, parmax, debug
+      real(double), external :: ddot
 !***********************************************************************
 !                                                                      *
 !    DRC IS DESIGNED TO FOLLOW A REACTION PATH FROM THE TRANSITION     *
@@ -51,8 +50,8 @@
       past10 = 0.d0 
       average_old_hof = 0.d0
       average_new_hof = 0.d0
-      tnow = second2(1) 
-      oldtim = second2(1) 
+      tnow = second(1) 
+      oldtim = second(1) 
       delold = 10.d0 
       percent = 0
       gtot = 0.d0 
@@ -80,9 +79,7 @@
       else 
         accu = 1.d0 
       endif 
-      l_dipole = (index(keywrd,' DIPOLE') /= 0)
-      l_irc = (index(keywrd,' DRC') == 0)
-      if (l_irc) then 
+      if (Index (keywrd, " DRC") == 0) then 
         if (index(keywrd,' X-PRIORITY=') /= 0) then 
           stepx = reada(keywrd,index(keywrd,'X-PRIO') + 5) 
         else 
@@ -129,7 +126,6 @@
         end if
       else 
         addonk = 0.d0 
-        if (l_irc) addonk=2.d0  ! Just a guess to get the IRC started
       endif 
       velred = index(keywrd,'VELO') /= 0 
       if (ddot(3*numat,startv,1,startv,1) > 0.001d0) then
@@ -158,7 +154,7 @@
 !
 !  TRANSFER COORDINATES TO XPARAM AND LOC
 !
-      if (.not. l_irc) then 
+      if (index(keywrd,' DRC') /= 0) then 
         parmax = (loc(1,1) /= 0)
         ncoprt = 0
         if (parmax) then 
@@ -403,15 +399,6 @@
       one = 0.d0 
       if (index(keywrd,'RESTART') /= 0 .and. index(keywrd,'IRC=') == 0) one = 1.d0 
       gerror(:nvar) = 0.d0 
-      if (l_debug) then
-!
-! Use this block to print diagnostic details of the reaction coordinate
-!
-        line = "debug.txt"
-        call add_path(line)
-        open(iwd, file = trim(line))
-        write(iwd,'(a)')" Point  Velocity      Coordinate      Delta-x    Gradient     ESCF   Deltat*(10^16)"
-      end if
       do iloop = ilp, iupper 
 !
 !  MOVEMENT OF ATOMS WILL BE PROPORTIONAL TO THE AVERAGE VELOCITIES
@@ -437,7 +424,7 @@
         else 
           quadr = 1.d0 
         endif 
-        if ((let .or. ekin > 0.2d0) .and. addk) then 
+        if ((let .or. ekin>0.2d0) .and. addk) then 
 !
 !   DUMP IN EXCESS KINETIC ENERGY
 !
@@ -474,41 +461,37 @@
                 delold*(delta1**2*1.d30)) 
             velo2(i) = 1.d0/atmass(loc(1,i))* &
             (grad(i)-grold(i)-0.5d0*velo3(i)*(1.d30*delold**2))/(delold*1.d15) 
-          end do
-          if (l_irc) then
-            velo2 = 0.d0
-            velo3 = 0.d0
-          end if
-          do 
-            do i = 1, nvar
+            end do
+            do 
+              do i = 1, nvar
 !
 !  MOVE ATOMS THROUGH DISTANCE EQUAL TO VELOCITY * DELTA-TIME, NOTE
 !  VELOCITY CHANGES FROM START TO FINISH, THEREFORE AVERAGE.
 !
-              startv(i) = xparam(i) - 1.d8*( &
-              deltat*velo0(i)*one + &
-              0.5d0*deltat**2*velo1(i) + &
-              0.16666d0*(deltat**2*1.d15)*deltat*velo2(i) + & 
-              0.0416666d0*deltat**2*(1.d30*deltat**2)*velo3(i)) 
+                startv(i) = xparam(i) - 1.d8*( &
+                deltat*velo0(i)*one + &
+                0.5d0*deltat**2*velo1(i) + &
+                0.16666d0*(deltat**2*1.d15)*deltat*velo2(i) + &
+                0.0416666d0*deltat**2*(1.d30*deltat**2)*velo3(i)) 
+              end do 
+              if (stepxx < 1.d-5) exit
+              sum = 0.d0
+              do i = 1, nvar
+                sum = sum + (xparam(i) - startv(i))**2
+              end do
+              sum = stepxx/sqrt(sum)
+              if (sum > 0.8d0 .and. sum < 1.25d0) exit
+              deltat = deltat*max(0.99d0, min(1.01d0, sum))
             end do
-            if (stepxx < 1.d-5 .or. (l_irc .and. iloop > 4)) exit
+            xparam(:nvar) = startv(:nvar)
             sum = 0.d0
+            do i = 1, numat
+              do j = 1,3
+                sum = sum + (geo(j,i) - georef(j,i))**2
+              end do
+            end do
+            if (sum > 0.01d0) gnorm = 4.d0
             do i = 1, nvar
-              sum = sum + (xparam(i) - startv(i))**2
-            end do
-            sum = stepxx/sqrt(sum)
-            if (sum > 0.8d0 .and. sum < 1.25d0) exit
-            deltat = deltat*max(0.99d0, min(1.01d0, sum))
-          end do
-          sum = 0.d0
-          do i = 1, numat
-            do j = 1,3
-              sum = sum + (geo(j,i) - georef(j,i))**2
-            end do
-          end do
-          if (sum > 0.01d0) gnorm = 4.d0
-          if (l_irc) velo0 = 0.d0
-          do i = 1, nvar
 !
 !   CORRECT ERRORS DUE TO CUBIC COMPONENTS IN ENERGY GRADIENT,
 !   ALSO TO ADD ON EXCESS ENERGY, IF NECESSARY.
@@ -539,26 +522,11 @@
 !
             ekin = ekin + velo0(i)**2*atmass(loc(1,i)) 
           end do 
-          if (l_debug) then
-!
-! Use this block to print diagnostic details of the reaction coordinate
-!
-            if (iloop > 25) then
-              write(iwd,'(i6, f10.2, f15.6, f15.6, f10.4, 2f12.6)')iloop, velo0(42)/(const*quadr), &
-              startv(42), startv(42) - xparam(42), grad(42)/4.184D18, escf, deltat*1.d16
-            end if
-          end if
-          xparam(:nvar) = startv(:nvar)
         else 
 !
 !   First few steps do not have velo3 
 !
 !  
-          if (l_irc) then
-            velo1 = 0.d0
-            velo2 = 0.d0
-            velo3 = 0.d0
-          end if
           do i = 1, nvar 
 !
 !   CALCULATE COMPONENTS OF VELOCITY AS
@@ -717,7 +685,7 @@
           deltat = deltat*min(2.d0,2.d-4*accu/(abs(escf + elost1 - etold) + 1.d-20))**0.25d0
           etold = escf + elost1 
           if (iloop > ilim .and. addonk < 1.d-5 .and. &
-          & abs(average_old_hof - average_new_hof) <0.00001d0) then
+          & average_old_hof - average_new_hof <0.0001d0) then
             iw0 = iw00 
             write (iw, '(2/,'' IRC CALCULATION COMPLETE '')') 
             return  
@@ -758,12 +726,7 @@
 !
 !***********************************************************************
         endif 
-        deltat = max(minstep,deltat)
-        if (l_dipole) then
-          call chrge (p, q) 
-          q(:numat) = tore(labels(:numat)) - q(:numat)           
-          dip = dipole(p, xparam, dipvec,0)
-        end if
+        deltat = max(minstep,deltat) 
         if (abs(half) < 0.00001d0) then 
 !
 !   FOR THE IRC:
@@ -775,8 +738,7 @@
 !   IN DRCOUT  'TOTAL' = ESCF + ELOST1
 !              'ERROR' = ESCF + ELOST1 - ETOT
 !
-          call prtdrc (deltat, xparam, georef, escf, elost1, gtot, etot, velo0, mcoprt, ncoprt, parmax, &
-          l_dipole, dip)
+          call prtdrc (deltat, xparam, georef, elost1, gtot, etot, velo0, mcoprt, ncoprt, parmax) 
         else 
 !
 !   FOR THE DRC:
@@ -789,8 +751,7 @@
 !   IN DRCOUT  'TOTAL' = ESCF + EKIN
 !              'ERROR' = ESCF + EKIN - ETOT
 !
-          call prtdrc (deltat, xparam, georef, escf, ekin, dummy, etot, velo0, mcoprt, ncoprt, parmax, &
-          l_dipole, dip) 
+          call prtdrc (deltat, xparam, georef, ekin, dummy, etot, velo0, mcoprt, ncoprt, parmax) 
           if (iloop > 10 .and. (escf - escf_old)/ escf_diff < 0.d0) then
             bigcycles = bigcycles - 1   
             if (bigcycles == 0) iupper = iloop 
@@ -798,7 +759,7 @@
           escf_diff = escf - escf_old
           escf_old = escf
         endif 
-        tnow = second2(2) 
+        tnow = second(2) 
         tcycle = tnow - oldtim 
         oldtim = tnow 
         tleft = tleft - tcycle 
@@ -825,8 +786,7 @@
           write (ires) etot, escf, ekin, delold, deltat, dlold2, i, gnorm, letot, elost1, gtot 
           close (ires)
           escf = -1.d9 
-          call prtdrc (deltat, xparam, georef, escf, ekin, elost, etot, velo0, mcoprt, ncoprt, parmax, &
-          l_dipole, dip) 
+          call prtdrc (deltat, xparam, georef, ekin, elost, etot, velo0, mcoprt, ncoprt, parmax) 
           call den_in_out(1)
         end if
         do j = 1, 3

@@ -14,16 +14,17 @@
       use parameters_C, only : tore
       USE elemts_C, only : elemnt  
       USE funcon_C, only : fpc_10, fpc_6, fpc_8, a0, ev, fpc_9
-      use to_screen_C, only : dipt, travel, freq, redmas, cnorml, force_const
+      use to_screen_C, only : dipt, travel, freq, redmas, cnorml
       USE chanel_C, only : iw
       use xyzint_I 
       use gmetry_I 
-      use second2_I 
+      use second_I 
       use compfg_I 
       use axis_I 
       use dipole_I
       use symtrz_I 
       use vecprt_I 
+      use write_trajectory_I
       use frame_I 
       use matou1_I 
       use matout_I 
@@ -163,26 +164,23 @@
 ! Deallocate grad and errfn in case the number of variables set in the input file was smaller
 ! than the number needed in FORCE
 !
-      if (allocated(grad))            deallocate (grad)
-      if (allocated(errfn))           deallocate (errfn)
-      if (allocated(dipt))            deallocate (dipt)
-      if (allocated(travel))          deallocate (travel)
-      if (allocated(force_const))     deallocate (force_const)
-      if (allocated(freq))            deallocate (freq)
-      if (allocated(redmas))          deallocate (redmas)
-      if (allocated(cnorml))          deallocate (cnorml)
-      if (allocated(fmatrx))          deallocate (fmatrx)
+      if (allocated(grad))    deallocate (grad)
+      if (allocated(errfn))   deallocate (errfn)
+      if (allocated(dipt))    deallocate (dipt)
+      if (allocated(travel))  deallocate (travel)
+      if (allocated(freq))    deallocate (freq)
+      if (allocated(redmas))  deallocate (redmas)
+      if (allocated(cnorml))  deallocate (cnorml)
+      if (allocated(fmatrx))  deallocate (fmatrx)
       allocate(cnorml(i**2), fmatrx((i*(i+1))/2),grad(i), ff(i**2), errfn(i), &
        & store((i*(i+1))/2), oldf((i*(i + 1))/2), dipt(3*numat), &
-       travel(3*numat), force_const(3*numat), freq(3*numat), redmas(3*numat,2), stat = j)
+       travel(3*numat), freq(3*numat), redmas(3*numat,2), stat = j)
        if (j /= 0) then
          write(iw,*)" Failed to allocate memory in FORCE"
          call mopend("Failed to allocate memory in FORCE")
          return
        end if
       errfn = 0.d0
-      grad = 0.d0
-      ff = 0.d0
 !
 !   IF A RESTART, THEN TSCF AND TDER WILL BE FAULTY, THEREFORE SET TO -1
 !
@@ -192,15 +190,15 @@
       debug = index(keywrd,'DFORCE') /= 0 
       large = index(keywrd,'LARGE') /= 0 
       restrt = index(keywrd,'RESTART') /= 0 
-      time1 = second2(1) 
+      time1 = second(1) 
       if (.not. restrt) then
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.) 
         if (moperr) goto 99
         write (iw,'(2/10X,''HEAT OF FORMATION ='',F15.6,'' KCALS/MOLE'')') escf 
-        time2 = second2(1) 
+        time2 = second(1) 
         tscf = time2 - time1 
         call compfg (xparam, .TRUE., escf, .FALSE., grad, .TRUE.) 
-        time3 = second2(1) 
+        time3 = second(1) 
         tder = time3 - time2 
         if (prnt) then
           if (ts) then
@@ -260,14 +258,12 @@
       &/10X,'' TO GIVE ACCURATE RESULTS'')') 
       endif 
       if ( .not. mozyme .and. .not. restrt) call mullik()
-! 20190807 - removed conditional output to stabilize output file
-!      if (tscf > 0.D0) then 
+      if (tscf > 0.D0) then 
         write (iw, '(2/10X,''TIME FOR SCF CALCULATION ='',F8.2)') tscf 
         write (iw, '( /10X,''TIME FOR DERIVATIVES     ='',F8.2)') tder 
-!      endif 
+      endif 
       if (ndeold > 0) write (iw, &
-      '(2/10X,''SYMMETRY WAS SPECIFIED, BUT CANNOT BE USED HERE'')')
-      c = 1.d0
+      '(2/10X,''SYMMETRY WAS SPECIFIED, BUT CANNOT BE USED HERE'')') 
       if ( .not. ts) call axis (a, b, c, rot)
       allocate (store_coord(3,numat))
       store_coord(:,:numat) = coord(:,:numat)
@@ -398,7 +394,7 @@
         endif 
       endif 
       n_trivial = nvar - nvib
-      call freqcy (fmatrx, freq, travel, force_const, .TRUE., deldip, ff, oldf, ts) 
+      call freqcy (fmatrx, freq, travel, .TRUE., deldip, ff, oldf, ts) 
 !
 !  CALCULATE ZERO POINT ENERGY
 !
@@ -496,10 +492,7 @@
 !   CARRY OUT IRC IF REQUESTED.
 !
       if (index(keywrd,'IRC') + index(keywrd,'DRC') /= 0) then 
-        if (index(keywrd, " HTML") /= 0) then
-           if (index(keywrd,' DIPOLE') /= 0) call write_path_html(2)
-           call write_path_html(1)
-        end if
+        if (index(keywrd, " HTML") /= 0) call write_path_html
         loc(1,:nvar) = 0 
         loc(2,:nvar) = 0 
         nvar = nvaold 
@@ -508,7 +501,7 @@
         call xyzint (coord, numat, na, nb, nc, 1.D0, geo) 
         last = 1 
         store_coord = coord
-        geo(:,:numat) = store_coord(:,:numat)
+        geo(:,:numat) = store_coord
         na = 0
         this_point = 0
         if (ts) then
@@ -549,9 +542,8 @@
 !
 !   First, reverse the reaction path already written.
 !
-            If (index(keywrd,' DIPOLE') /= 0) call reverse_trajectory(2)
-            call reverse_trajectory(1)
-            call reverse_aux
+          call write_trajectory(geo, 2)
+          call reverse_aux
             last = 1             
             geo(:,:numat) = store_coord
             na = 0
@@ -588,7 +580,7 @@
         end if
         goto 99  
       endif 
-      call freqcy (fmatrx, freq, deldip, force_const, .FALSE., deldip, ff, oldf, ts) 
+      call freqcy (fmatrx, freq, deldip, .FALSE., deldip, ff, oldf, ts) 
       if (prt_normal_coords) then
       write (iw, '(2/10X,'' MASS-WEIGHTED COORDINATE ANALYSIS (NORMAL COORDINATES)'')')  
         i = -nvar 

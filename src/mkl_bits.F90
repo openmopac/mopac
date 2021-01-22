@@ -1448,6 +1448,7 @@
 !     ..
 !     .. Executable Statements ..
 !
+      if (n3 == -10000 .and. opts == " ") return ! dummy use of n3 and opts
       select case (ispec)  
 !
 !     Invalid value for ISPEC
@@ -1783,7 +1784,6 @@
           return  
         end select 
       end select 
-      if (n3 == -10000 .and. opts == " ") ilaenv = ilaenv + 0 ! dummy use of n3 and opts
 !
 !     End of ILAENV
 !

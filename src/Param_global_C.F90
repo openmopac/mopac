@@ -60,7 +60,7 @@ module Param_global_C
 !
 !  Character scalars
 !
-      character (len=2000) :: contrl = " "  ! Keywords for PARAM
+      character (len=1000) :: contrl = " "  ! Keywords for PARAM
 !
     
       character (len=40) :: molnam         ! Names of file of current system
@@ -155,7 +155,7 @@ module Param_global_C
     titls(maxmol)           ! Titles for all molecules
     character (len=80) :: &
     comnts(maxmol)          ! Comments for all molecules
-    character (len=120) :: &
+    character (len=90) :: &
     source(3, 400)          ! Original references for all reference data
     
 

@@ -16,7 +16,6 @@
 !-----------------------------------------------
       use compfg_I 
       use exchng_I 
-      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s

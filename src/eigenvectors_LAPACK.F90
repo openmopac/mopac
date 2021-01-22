@@ -42,9 +42,7 @@
       call dtpttr( 'u', ndim, xmat, eigenvecs, ndim, i )
     
       if (lgpu .and. (ngpus > 1 .and. ndim > 100)) then
-#ifdef MKL
         call mkl_dimatcopy('C', 'T' , ndim, ndim, 1.0d0, eigenvecs, ndim, ndim)
-#endif
       endif
       if (i /= 0) stop 'error in dtpttr'  
       
@@ -76,8 +74,8 @@
       lwork = int(work_tmp(1))
       liwork = iwork_tmp(1)
       allocate (work(lwork), iwork(liwork), stat = i)      
-!      forall (j=1:lwork) work(j) = 0.d0      
-!      forall (j=1:liwork) iwork(j) = 0 
+      forall (j=1:lwork) work(j) = 0.d0      
+      forall (j=1:liwork) iwork(j) = 0 
 #if (MAGMA)           
       if (lgpu .and. ndim > 100) then
          if (ngpus > 1) then

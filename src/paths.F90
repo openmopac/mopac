@@ -19,7 +19,7 @@ subroutine paths()
     !-----------------------------------------------
     use reada_I 
     use dfpsav_I 
-    use second2_I 
+    use second_I 
     use ef_I 
     use flepo_I 
     use writmo_I 
@@ -68,7 +68,6 @@ subroutine paths()
 
     if (allocated(alparm)) deallocate(alparm)
     allocate(alparm(3, nvar))
-    alparm = 0.d0
 
     ! Initialize if RESTART
     CheckRestart: if (lef) then 
@@ -109,7 +108,7 @@ subroutine paths()
     endif
 
     FirstReactionStep: if (iloop <= 1) then 
-        time0 = second2(1) 
+        time0 = second(1) 
         if (maxcyc == 0) tleft = -100.D0 
         if (lef) then 
             call ef (xparam, escf) 
@@ -132,7 +131,7 @@ subroutine paths()
           write(ipdb,'(a)')"ENDMDL"
         end if
         call writmo
-        time0 = second2(1) 
+        time0 = second(1) 
     endif FirstReactionStep
 
     NextReactionStep: if (iloop <= 2) then 
@@ -187,7 +186,7 @@ subroutine paths()
           call pdbout(ipdb)
           write(ipdb,'(a)')"ENDMDL"
         end if
-        time0 = second2(1) 
+        time0 = second(1) 
         alparm(3,:nvar) = xparam(:nvar) 
         if (iloop == 2) iloop = 3 
     endif NextReactionStep
@@ -281,7 +280,7 @@ subroutine paths()
           write(ipdb,'(a)')"ENDMDL"
         end if
         call writmo 
-        time0 = second2(1) 
+        time0 = second(1) 
         alparm(3,:nvar) = xparam(:nvar) 
     end do MainLoop
 

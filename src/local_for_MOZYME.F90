@@ -7,7 +7,7 @@ subroutine local_for_MOZYME (type)
     implicit none
     character (len=*), intent (in) :: type
     integer :: i, nocc, nvir, alloc_stat
-    double precision :: totij, sum
+    double precision :: totij
     double precision, dimension(:), allocatable :: psi1, psi2, axiiii
     integer, dimension(:), allocatable :: nf, nl
     integer, dimension(:,:), allocatable :: ioc
@@ -22,22 +22,17 @@ subroutine local_for_MOZYME (type)
       !
       do i = 1, 100
         call localize_for_MOZYME (cocc, cocc_dim, icocc, icocc_dim, ncf, ncocc, &
-             & nocc, iorbs, psi1, psi2, axiiii, nf, nl, ioc, nncf, totij, sum)
-   !     write (iw, "(10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALIZATION VALUE =',f14.9)") i, sum 
-        if (totij < 1.d-5) exit
+             & nocc, iorbs, psi1, psi2, axiiii, nf, nl, ioc, nncf, totij)
+        if (totij < 1.d-10) exit
       end do
-      write (iw, "(10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALIZATION VALUE =',f14.9,/)") i, sum 
-!
-      call MOZYME_eigs(nocc)
-!
     else if (type == "VIRTUAL") then
       nvir = norbs - nelecs / 2
       !
       do i = 1, 100
         call localize_for_MOZYME (cvir, cvir_dim, icvir, icvir_dim, nce, ncvir, &
              & nvir, iorbs, psi1, psi2, axiiii, nf, nl, ioc, &
-             & nnce, totij, sum)
-        if (totij < 1.d-5) exit
+             & nnce, totij)
+        if (totij < 1.d-10) exit
       end do
     else
       write (iw,*) " Error"
@@ -47,11 +42,11 @@ subroutine local_for_MOZYME (type)
 1100 continue
 end subroutine local_for_MOZYME
 subroutine localize_for_MOZYME (c, n289, ic, n267, nc, ncstrt, nmos_loc, iorbs, psi1, &
-     & psi2, axiiii, nf, nl, ioc, nnc_loc, totij, total)
+     & psi2, axiiii, nf, nl, ioc, nnc_loc, totij)
     use molkst_C, only: numat, norbs, natoms
     implicit none
     integer, intent (in) :: n267, n289, nmos_loc
-    double precision, intent (out) :: totij, total
+    double precision, intent (out) :: totij
     integer, dimension (n267), intent (in) :: ic
     integer, dimension (nmos_loc), intent (in) :: nc, ncstrt, nnc_loc
     integer, dimension (numat), intent (inout) :: nf, nl
@@ -62,7 +57,7 @@ subroutine localize_for_MOZYME (c, n289, ic, n267, nc, ncstrt, nmos_loc, iorbs, 
     double precision, dimension (norbs), intent (inout) :: psi1, psi2
     integer :: i, i1, i5, i8, ii, ij, ijorb, il, il1, iloop, j, j1, j5, j8, &
    & jl, jl1, jloop, k, k1, l, m
-    double precision :: aij, bij, ca, dii, dij, djj, sa, xiiii, xiijj, &
+    double precision :: aij, bij, ca, dii, dij, djj, sa, total, xiiii, xiijj, &
    & xijij, xijjj, xjiii, xjjjj
    !
    !**********************************************************************
@@ -168,7 +163,7 @@ subroutine localize_for_MOZYME (c, n289, ic, n267, nc, ncstrt, nmos_loc, iorbs, 
             bij = xjiii - xijjj
             ca = Sqrt (aij*aij+bij*bij)
             sa = aij + ca
-            if (sa > 1.d-14) then
+            if (sa > 1.0d-14) then
               ca = (1.0d0+Sqrt((1.0d0-aij/ca)/2.0d0)) / 2.0d0
               sa = Sqrt (1.0d0-ca)
               ca = Sqrt (ca)
@@ -189,5 +184,4 @@ subroutine localize_for_MOZYME (c, n289, ic, n267, nc, ncstrt, nmos_loc, iorbs, 
       end do
       total = total + xiiii
     end do
-    return
 end subroutine localize_for_MOZYME

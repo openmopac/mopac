@@ -58,7 +58,7 @@
 !
 !    Identify Molecular Point Group
 !
-      nat_store = nat(:numat)
+      nat_store = nat
 !
 !  Change the atomic number to a function of the isotope.
 !  The multiplier "20" was chosen so that an isotope that was different by

@@ -23,7 +23,7 @@
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
       use reada_I 
-      use second2_I 
+      use second_I 
       use ef_I 
       use flepo_I 
       use geout_I 
@@ -160,7 +160,6 @@
       else
         c2 = 1.d0
       end if     
-      cputot = 0.d0
       if (restrt) then 
           open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', &
           position='asis', iostat = io_stat)
@@ -198,6 +197,7 @@
         read(ires, iostat = io_stat)surf(:max_count), all_points1(:max_count), all_points2(:max_count)
       else
         ijlp = 1
+        cputot = 0.d0
       endif 
       if ( minimize_energy_in_grid )  then
         big_loop = 4*npts1*npts2
@@ -212,13 +212,13 @@
         end if
         geo (lpara1, latom1) = geo11 + xy(1,loop)*step1
         geo (lpara2, latom2) = geo22 + xy(2,loop)*step2
-        cpu1 = second2 (2)
+        cpu1 = second (2)
         if (useef .and. nvar > 1) then 
           call ef (xparam, escf)
         else
           call flepo (xparam, nvar, escf)
         end if
-        cpu2 = second2 (2)
+        cpu2 = second (2)
         cpu3 = cpu2 - cpu1
         cputot = cputot + cpu3
         jlp = jlp + 1

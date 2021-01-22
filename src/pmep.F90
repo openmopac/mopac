@@ -23,7 +23,7 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use second2_I 
+      use second_I 
       use gmetry_I 
       use mepmap_I 
       use grids_I 
@@ -47,7 +47,7 @@
           if (alpw(nat(i)) < 0.1D0) go to 30 
         end do 
 !
-        t1 = second2(1) 
+        t1 = second(1) 
 !
         call gmetry (geo, coord) 
         if (moperr) return  
@@ -75,7 +75,7 @@
         call mepchg (coord, potpt, nmep) 
 !
    20   continue 
-        t1 = second2(1) - t1 
+        t1 = second(1) - t1 
         write (iw, '(/1X,A,F9.2,A)') 'TIME TO CALCULATE MEP', t1, ' SECONDS' 
         return  
       endif 

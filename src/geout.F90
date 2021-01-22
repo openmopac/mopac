@@ -52,7 +52,6 @@
       mode = mode1 
       igui = -10 ! Set to impossible value
       store_maxtxt = maxtxt
-      if (index(keywrd, " NOTXT") /= 0) maxtxt = 0
       store_moperr = moperr
       moperr = .false.
       charge = (index(keywrd, " PRTCHAR") /= 0)
@@ -108,9 +107,9 @@
       fmt3  = "13.7"
       if (maxtxt /= 0)  maxtxt = maxtxt + 2
       if (cart) then 
-        x = 1.d-8
-        y = 1.d-8
-        z = 1.d-8
+        x = 0.d0
+        y = 0.d0
+        z = 0.d0
         do i = 1, natoms
           x = max(x, abs(geo(1,i)))
           y = max(y, abs(geo(2,i)))

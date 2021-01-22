@@ -4,7 +4,7 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      USE funcon_C, only : a0, fpc_9
+      USE funcon_C, only : a0, fpc_9, ev
       USE molkst_C, only : keywrd, numcal, mpack
       USE analyt_C, only : ds, dg, dr, g, nztype
       USE parameters_C, only : alp, natorb, tore, guess1, guess2, guess3, &
@@ -747,7 +747,7 @@
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
       USE overlaps_C, only :  ccc,  zzz
-      use funcon_C, only : a0
+      use funcon_C, only : fpc_10, a0
       USE analyt_C, only : ds 
 !...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
 !...Switches: -rl INDDO=2 INDIF=2 

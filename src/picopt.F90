@@ -69,7 +69,6 @@ subroutine picopt (loop)
     end if
     imol = numcal
     numred = 0
-    jopt = 0
     do i = 1, numat
       if (iopt_loc(i) /= 0) then
         numred = numred + 1

@@ -22,8 +22,7 @@ subroutine getpdb (geo)
  !           NA     = INTEGER ARRAY FILLED WITH '0'S.
  !           NB     = INTEGER ARRAY FILLED WITH '0'S.
  !           NC     = INTEGER ARRAY FILLED WITH '0'S.
- !************************************************************************
- !
+ !***********************************************************************\
     double precision :: geo(3,*)
 !
     integer, parameter :: maxel = 115

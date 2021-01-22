@@ -18,10 +18,9 @@ subroutine buildf (f, partf, mode)
        call memory_error ("buildf")
        goto 100
     end if
-    ! the size of reallocated h & partf from add_more_interactions is larger than mpack, causing array-size mismatching (FIX THE ALLOCATION & REVERT THIS CHANGE?)
-    if (mode ==-1) f = partf(:mpack) - h(:mpack)
-    if (mode == 0) f =                 h(:mpack)
-    if (mode == 1) f = partf(:mpack) + h(:mpack)
+    if (mode ==-1) f = partf - h
+    if (mode == 0) f =         h
+    if (mode == 1) f = partf + h
     if (id == 0) then
       !
       !  Discrete system

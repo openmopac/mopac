@@ -1422,10 +1422,7 @@ subroutine geochk ()
       if (index(keywrd, " 0SCF") == 0) line = "JOB STOPPED BECAUSE"
       i = len_trim(line)
       if (i > 0) i = i + 1
-      j = max(abs(ichrge), abs(irefq))
-      k = min(ichrge, irefq)
-      num = char(ichar("2") + max(int(log10(j + 0.05)),0))
-      if (k < 0) num = char(ichar(num) + 1)
+       num = char(ichar("2") + max(int(log10(abs(ichrge) + 0.05)),0))
       if (charges) then
         if (index(keywrd," CHARGES") == 0) then
           call mopend (line(:i)//"CHARGES MODIFIED BY SITE COMMAND")
@@ -1433,7 +1430,6 @@ subroutine geochk ()
           call write_sequence
           if (irefq /= ichrge) then
             write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM: ", ichrge
-            if (index(keywrd," CHARGE=") /= 0) &
             write (iw, "(10x,A,SP,I"//num//",A)") "CHARGE SPECIFIED IN DATA SET: ", irefq," IS INCORRECT." 
           else
             write (iw, "(SP/3x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM = ", ichrge, &
@@ -1559,7 +1555,7 @@ subroutine geochk ()
 !
 !  Restore nbonds and ibonds in case they are modified within this subroutine
 !
-    nbonds(:numat) = nnbonds(:numat)
+    nbonds(:numat) = nnbonds
     ibonds(:,:numat) = iibonds(:,:numat)
 1100 continue
     if (Allocated (nnbonds))      deallocate (nnbonds, iibonds)

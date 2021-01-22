@@ -161,8 +161,8 @@
 !
 !   EXTRACT COULOMB TERMS
 !
-              pja = ptot2(ii,:16)
-              pjb = ptot2(jj,:16)
+              pja = ptot2(ii,:) 
+              pjb = ptot2(jj,:) 
 !
 !  COULOMB TERMS
 !

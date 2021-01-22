@@ -513,8 +513,19 @@ subroutine remove_bond(i)
           OO_first = .false.
           cycle
         end if
-        call txt_to_atom_no(keywrd, j - 1, let)
-        if (moperr) return      
+        call txt_to_atom_no(keywrd, j - 1, let, m)
+        if (moperr) return
+        if (m > numat) then
+          if (let) then
+!
+!  Jump over the faulty atom label
+!
+            k = Index (keywrd(i:), ")") + i
+            i = index(keywrd(i:k),"""") + i  
+            i = index(keywrd(i:k),"""") + i  
+            cycle
+          end if
+        end if        
       end do
       k = Index (keywrd(i:), ")") + i
       ncvb = 0
@@ -734,7 +745,7 @@ subroutine remove_bond(i)
     keywrd = store
     return
   end subroutine check_CVS
-  subroutine txt_to_atom_no(text, j_in, let)
+  subroutine txt_to_atom_no(text, j_in, let, m)
 !
 !  Convert atom number from text to a number.  Text can be PDB or Jmol
 !
@@ -750,8 +761,9 @@ subroutine remove_bond(i)
   implicit none
   character :: text*(*)
   integer, intent (in) :: j_in
+  integer, intent (out) :: m
   logical, intent (in) :: let
-  integer :: i, j, l, n, k, m
+  integer :: i, j, l, n, k
   character :: line*80, txt*30, num*1, txt2*30
   if (.not. pdb_label) then
     call mopend("Labeled atoms can only be used when atoms have labels")

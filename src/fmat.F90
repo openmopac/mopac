@@ -10,7 +10,7 @@
       use funcon_C, only : fpc_10
       use chanel_C, only : iw, ilog, log
       use reada_I 
-      use second2_I 
+      use second_I 
       use symr_I 
       use sympop_I 
       use compfg_I 
@@ -58,7 +58,7 @@
 !    FACT IS THE CONVERSION FACTOR FROM KCAL/MOLE TO ERGS
 !
       fact = 4.184D0/fpc_10*1.D21 
-!          = 4.184/6.0221367d23*10^21
+    !  fact = 1.d0/627.51*0.529**2
 !
 ! SET UP CONSTANTS AND FLAGS
       na = 0
@@ -84,7 +84,7 @@
       restrt = index(keywrd,'RESTART') /= 0 
       if (index(keywrd,'NLLSQ') /= 0) restrt = .FALSE. 
       debug = index(keywrd,'FMAT') /= 0 
-      big = (index(keywrd,'LARGE') /= 0 .and. debug) 
+      big = index(keywrd,'LARGE')/=0 .and. debug 
       if (prnt) write (iw, &
       '(2/4X,''FIRST DERIVATIVES WILL BE USED IN THE CALCULATION OF SECOND DERIVATIVES'')') 
       tlast = tleft 
@@ -100,7 +100,7 @@
         kountf = (istart*(istart + 1))/2 
         istart = istart + 1 
         jstart = jstart + 1 
-        time2 = second2(1) 
+        time2 = second(1) 
       else 
         kountf = 0 
         totime = 0.D0 
@@ -114,9 +114,7 @@
         estime = nvar*(tscf + tder)*2.D0 
         if (precis) estime = estime*2.D0 
       endif 
-! 20190807 removed conditional output to stabilize output file
-!      if (tscf > 0)
-      write (iw, &
+      if (tscf > 0) write (iw, &
       '(/10X,''ESTIMATED TIME TO COMPLETE CALCULATION ='',F12.2,'' SECONDS'')') estime 
       if (restrt) then 
         if (istart <= nvar) write (iw, &
@@ -124,6 +122,7 @@
         write (iw, '(/10X,''TIME USED UP TO RESTART ='',F22.2)') totime 
       endif 
       lu = kountf 
+     ! numat = nvar/3 
       eigs(:nvar) = 0.D0 
       if (.not. ts) call symr 
       iskip = 0 
@@ -146,7 +145,7 @@
           lu = lu + i 
           cycle  
         endif 
-        time2 = second2(1) 
+        time2 = second(1) 
         delta = 1.D0/120.D0 
         if (precis) then 
 !
@@ -157,12 +156,15 @@
           call compfg (xparam, .TRUE., escf, .TRUE., g2old, .TRUE.) 
           if (moperr) return  
           xparam(i) = xparam(i) - delta 
+
+! For MOPAC BLAS          
+!          delta = delta*10.D0/sqrt(dot(g2old,g2old,nvar))
           delta = delta*10.D0/sqrt(ddot(nvar,g2old,1,g2old,1)) 
 !
 !   CONSTRAIN DELTA TO A 'REASONABLE' VALUE
 !
           delta = min(0.05D0,max(0.005D0,delta)) 
-          if (debug) write (iw, '(A,I3,A,F15.8)') ' STEP:', i, ' DELTA :', delta 
+          if (debug) write (iw, '(A,I3,A,F12.5)') ' STEP:', i, ' DELTA :', delta 
           g2old(1) = 100.D0 
           xparam(i) = xparam(i) + delta 
           emin = 0.d0
@@ -171,6 +173,8 @@
 !          
           if (debug) write (iw, '(A,F12.5)') ' GNORM +1.0*DELTA',  &
             & dsqrt(ddot(nvar,g2old,1,g2old,1)) 
+            !& sqrt(dot(g2old,g2old,nvar)) 
+!! For MOPAC BLAS                                
           xparam(i) = xparam(i) - delta*2.D0 
           g2rad = 100.D0 
           emin = 0.d0
@@ -179,8 +183,10 @@
           xparam(i) = xparam(i) + delta 
           if (debug) write (iw, '(A,F12.5)') ' GNORM -1.0*DELTA', &
             dsqrt(ddot(nvar,g2rad,1,g2rad,1)) 
+            !sqrt(dot(g2rad,g2rad,nvar))             
+! MOPAC BLAS            
         else 
-          if (debug) write (iw, '(A,I3,A,F15.8)') ' STEP:', i, ' DELTA :', delta 
+          if (debug) write (iw, '(A,I3,A,F12.5)') ' STEP:', i, ' DELTA :', delta 
         endif 
         xparam(i) = xparam(i) + 0.5D0*delta 
         grold = 100.D0 
@@ -275,7 +281,7 @@
       ' ELEMENT  +1.0*DELTA  +0.5*DELTA  -0.5*DELTA  -1.0*DELTA   2''ND ORDER 4TH ORDER' 
           write (iw, '(I7,6F12.6)') (l,g2old(l),grold(l),grad(l),g2rad(l),dumy(l),eigs(l),l=1,nvar) 
         endif 
-        time3 = second2(2) 
+        time3 = second(2) 
         tstep = time3 - time2 
         tleft = max(0.1D0,tleft - tstep) 
         if (tstep > 1.D7) tstep = tstep - 1.D7 

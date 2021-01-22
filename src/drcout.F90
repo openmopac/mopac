@@ -1,24 +1,24 @@
-      subroutine drcout(xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
-        xtot3, iloop, charge, fract, text1, text2, ii, jloop, l_dipole) 
+      subroutine drcout(xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, &
+        xtot3, iloop, charge, fract, text1, text2, ii, jloop) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : na, nb, nc, labels, loc, nat, c, eigs
       use molkst_C, only : natoms, numcal, keywrd, numat, title, koment, line
-      use maps_C, only : rxn_coord, rc_escf, ekin, rc_dipo
+      use maps_C, only : rxn_coord, rc_escf, ekin
       use elemts_C, only : elemnt
       use chanel_C, only : iw
       use reada_I 
       use to_screen_I
+      use write_trajectory_I
       implicit none
       integer, intent(in) :: nvar, iloop, ii 
       integer, intent(inout) :: jloop
       real(double), intent(in) :: time, fract 
       character, intent(in) :: text1*3, text2*2 
       real(double), intent(in) :: xyz3(3,nvar), geo3(3,3*numat), vel3(3,nvar), &
-        escf3(3), ekin3(3), etot3(3), dip3(3), xtot3(3), charge(natoms) 
-      logical, intent (in) :: l_dipole
+        escf3(3), ekin3(3), etot3(3), xtot3(3), charge(natoms) 
 !
       integer, dimension(3) :: iel1 
       integer :: i, icalcn, iprint, l, j, ivar, k
@@ -44,7 +44,7 @@
         icalcn = numcal
         last_point = -1.d8
         graph = (index(keywrd,' GRAPH') /= 0)
-        run_local = (index(keywrd,' LOCAL') + index(keywrd,' RABBIT') + index(keywrd,' BANANA') /= 0)
+        run_local = (index(keywrd,' LOCAL') /= 0)
         if (index(keywrd,'RESTART') == 0 .or. index(keywrd,'IRC=') /= 0) jloop = 0
         drc = index(keywrd,' DRC') /= 0         
         i = index(keywrd,'LARGE') 
@@ -57,11 +57,14 @@
           if (keywrd(i:i) == '=') iprint = nint(abs(reada(keywrd,i))) 
         endif 
       endif 
-      if (jloop==0 .or. (jloop/iprint)*iprint==jloop) then               
+      if (jloop==0 .or. (jloop/iprint)*iprint==jloop) then 
         if (drc) then 
-          write (line, '('' FEMTOSECONDS  POINT  POTENTIAL + KINETIC  =   TOTAL     ERROR    REF%   MOVEMENT'')') 
+          write (line, &
+      '('' FEMTOSECONDS  POINT  POTENTIAL +''         ,'' KINETIC  =   TOTAL &
+      &    ERROR    REF%   MOVEMENT'')') 
         else 
-          write (line, '(''     POINT   POTENTIAL  +  ENERGY LOST   =   TOTAL      ERROR    REF%   MOVEMENT'')') 
+          write (line, &
+      '(''     POINT   POTENTIAL  +  ENERGY LOST   =   TOTAL      ERROR    REF%   MOVEMENT'')') 
         endif 
         write(iw,'(2/,a)')trim(line)
       endif 
@@ -77,7 +80,6 @@
       end if
       jloop = jloop + 1 
       rc_escf = escf3(1) + escf3(2)*fract + escf3(3)*fract**2 
-      rc_dipo = dip3(1) + dip3(2)*fract + dip3(3)*fract**2 
       ekin = ekin3(1) + ekin3(2)*fract + ekin3(3)*fract**2 
       etot = etot3(1) + etot3(2)*fract + etot3(3)*fract**2 
       rxn_coord = xtot3(1) + xtot3(2)*fract + xtot3(3)*fract**2 
@@ -130,8 +132,8 @@
             write (line, &
       '(I8,F14.'//frmat//',F13.5,F17.5,F10.5,'' '',I5,3X,''%'',A,A,I3)') &
       iloop - 2, rc_escf, ekin, rc_escf + ekin, errr, jloop, text1, text2 
-          end if
-        end if        
+          endif 
+        endif 
       endif 
       if (index(keywrd," LDRC_FIRST") /= 0) then
 !
@@ -175,9 +177,9 @@
 !   Write out trajectory for graphics
 !
       if (drc) then
-        call write_trajectory(xyz, rc_escf, ekin, rc_dipo, time, rxn_coord, l_dipole)
+        call write_trajectory(xyz, 1, charge, rc_escf, ekin, time, rxn_coord)
       else
-        call write_trajectory(xyz, rc_escf, errr, rc_dipo, 0.d0, rxn_coord, l_dipole)
+        call write_trajectory(xyz, 1, charge, rc_escf, errr, 0.d0, rxn_coord)
       end if
       if ((jloop/iprint)*iprint == jloop) then 
         ivar = 1  

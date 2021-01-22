@@ -5,7 +5,7 @@
       USE vast_kind_param, ONLY:  double 
       use parameters_C, only : alp, tore, guess1, guess2, guess3, alpb, xfac, &
         par1, par2, par3, par4
-      use funcon_C, only : a0
+      use funcon_C, only : a0, ev
       use molkst_C, only : method_mndod, method_pm6, method_am1, &
         method_pm7, method_PM8
 !...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  

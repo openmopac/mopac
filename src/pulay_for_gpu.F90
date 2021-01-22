@@ -59,7 +59,7 @@
       data icalcn/ 0/  
       if (icalcn /= numcal) then 
         icalcn = numcal 
-        maxlim = 6
+        maxlim = 6 
         debug = index(keywrd,'DEBUGPULAY') /= 0 
       endif 
       if (start) then 

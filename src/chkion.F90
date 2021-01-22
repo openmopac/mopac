@@ -91,7 +91,10 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
 !
     i = index(keywrd," METAL")
     if (i /= 0) then
-      j = index(keywrd(i:), ") ") + i
+      do j = i + 6, len_trim(keywrd)
+        if (keywrd(j:j) == " ") exit
+      end do
+      j = index(keywrd(i:j),")") + i
       if (i /= j) then
         line = keywrd(i + 7:j)
         do k = 1, 83

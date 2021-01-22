@@ -40,8 +40,8 @@
 !
        USE parameters_for_PM7_TS_C, only : uss7_TS, upp7_TS, udd7_TS, zs7_TS, zp7_TS, zd7_TS, betas7_TS, &
          betap7_TS, betad7_TS, gss7_TS, gsp7_TS, gpp7_TS, gp27_TS, hsp7_TS, polvo7_TS, poc_7_TS, &
-         zsn7_TS, zpn7_TS, zdn7_TS, f0sd7_TS, g2sd7_TS, alp7_TS, v_par7_TS, alpb_and_xfac_pm7_ts, &
-         gues7_ts1, gues7_ts2, gues7_ts3 
+         zsn7_TS, zpn7_TS, zdn7_TS, f0sd7_TS, g2sd7_TS, alp7_TS, gues7_TS1, gues7_TS2, gues7_TS3, &
+         alpb_and_xfac_pm7_ts
 !
 !
       USE parameters_for_PM3_C, only : usspm3, upppm3, zspm3, zppm3, &
@@ -321,7 +321,6 @@
           alp = alp7_TS
           pocord = poc_7_TS
           polvol = polvo7_TS
-          v_par = v_par7_TS
           call alpb_and_xfac_pm7_TS
         else if (method_pm7) then 
 !

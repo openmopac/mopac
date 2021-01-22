@@ -9,16 +9,12 @@
       txtatm1
 !
       USE molkst_C, only : gnorm, natoms, numat, nvar, numcal, job_no, nscf, id, &
-        escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
+        escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, verson, &
         time0, atheat, errtxt, isok, mpack, gui, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
-        MM_corrections, lxfac, trunc_1, trunc_2, bad_separator, good_separator, &
+        MM_corrections, lxfac, trunc_1, trunc_2, method_PM8, bad_separator, good_separator, &
         method_PM7, method_PM6, method_RM1, sparkle, itemp_1, maxtxt, koment, &
-        nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax
-!      USE molkst_C, only : verson
-#ifdef MKL
-      USE molkst_C, only : num_threads
-#endif
+        num_threads, nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles
 !
@@ -27,7 +23,7 @@
 !
       use cosmo_C, only : iseps, useps, lpka, solv_energy
 !
-      USE funcon_C, only : fpc_9
+      USE funcon_C, only : fpc_9, fpc
 !
       USE maps_C, only : latom, react, rxn_coord
 !
@@ -52,7 +48,7 @@
       Use gpu_info
       Use settingGPUcard
 #endif
-      use second2_I
+      use second_I
       use geout_I
       use wrttxt_I
       use geoutg_I
@@ -80,9 +76,7 @@
       logical :: exists, opend, sparkles
       double precision, external :: C_triple_bond_C
       character :: nokey(20)*10
-#ifdef MKL
       integer, external :: mkl_get_max_threads
-#endif
 #if GPU
       logical :: lgpu_ref
       logical(c_bool)    :: hasGpu = .false.
@@ -99,18 +93,16 @@
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
       call fordd                          ! More constants, for use by MNDO-d
-! MOPAC ideally should be OS agnostic, and I'll gradually be deprecating OS-dependent parts of the code
-! Windows should be able to handle a '/' directory separator, although I need to verify this ...
-!      inquire (directory = "C:/", exist = exists)
-!      if (exists) then
-!        bad_separator = "/"
-!        good_separator = "\"
-!        if (verson(7:7) == " ") verson(7:7) = "W"
-!      else
+      inquire (directory = "C:/", exist = exists)
+      if (exists) then
+        bad_separator = "/"
+        good_separator = "\"
+        if (verson(7:7) == " ") verson(7:7) = "W"
+      else
         bad_separator = "\"
         good_separator = "/"
-!        if (verson(7:7) == " ") verson(7:7) = "L"
-!      end if
+        if (verson(7:7) == " ") verson(7:7) = "L"
+      end if
       lgpu = .false.
       trunc_1 = 7.0d0    ! Beyond 7.0 Angstroms, use exact point-charge
       trunc_2 = 0.22d0   ! Multiplier in Gaussian: exp(-trunc_2*(trunc_1 - Rab)^2)
@@ -143,7 +135,7 @@
       rewind iw
       isok = .TRUE.
       errtxt = 'Job stopped by operator'
-      tim = second2(1)
+      tim = second(1)
       call date_and_time(VALUES=time_start)
       if (moperr) goto 101
 !
@@ -171,7 +163,7 @@
       lpka = .false.
       stress = 0.d0
       no_pKa = 0
-      time0 = second2(1)
+      time0 = second(1)
       MM_corrections = .false.
       pdb_label = .false.
       state_Irred_Rep = " "
@@ -195,7 +187,6 @@
       if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
       if (numcal == 1) then
-#ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
         i = index(keywrd, " THREADS")
         if (i > 0) then
@@ -203,7 +194,6 @@
           num_threads = min(max(1,i), num_threads)
         end if
         call mkl_set_num_threads(num_threads)
-#endif
 #if GPU
         gpuName(1:6) = '' ; name_size(1:6) = 0 ; totalMem(1:6) = 0 ; clockRate(1:6) = 0
         hasDouble(1:6) = .false. ; gpu_ok(1:6) = .false.
@@ -672,7 +662,7 @@
         i = index(keywrd,' GRAD')
         grad(:nvar) = 0.D0
         numcal = numcal + 1
-        tim = second2(1)
+        tim = second(1)
         call to_screen(" Single point calculation")
         call compfg (xparam, .TRUE., escf, .TRUE., grad, i /= 0)
       else if (index(keywrd,' SADDLE') /= 0) then
@@ -702,7 +692,7 @@
           allocate(react(3*numat))
           react = 0.d0
         end if
-        if (index(keywrd, " HTML") /= 0) call write_path_html(1)
+        if (index(keywrd, " HTML") /= 0) call write_path_html
         call drc (react, react)
         iflepo = -1
       else if (index(keywrd, " LOCATE-TS") /= 0) then
@@ -730,7 +720,7 @@
         i = index(keywrd,' GRAD')
         grad(:nvar) = 0.D0
         numcal = numcal + 1
-        tim = second2(1)
+        tim = second(1)
         call to_screen(" Single point calculation")
         call compfg (xparam, .TRUE., escf, .TRUE., grad, i /= 0)
       else if (index(keywrd,' DFP') + index(keywrd,' FLEPO') + &
@@ -778,7 +768,7 @@
         endif
       endif
   100 continue
-      tim = tim + second2(2)
+      tim = tim + second(2)
       if (tim > 1.d7) tim = tim - 1.d7
       inquire(unit = ilog, opened = opend, name = line)
       if (opend) opend = (index(line, log_fn) /= 0)
@@ -850,12 +840,6 @@
       inquire(unit=ir, opened=opend) 
       if (opend) close(ir, status = 'delete', err = 999)
 999   jobnam = " "
-      inquire(unit = ilog, opened = opend, name = line)
-      if (opend) then
-        rewind (ilog)
-        read(ilog,'(a)', iostat=i)line
-        if (i == -1) close(ilog, status = 'delete', iostat=i)
-      end if
       return
 end subroutine run_mopac
 subroutine special

@@ -5,11 +5,11 @@
       use molkst_C, only : numat, nclose, nopen, fract, nalpha, nelecs, nbeta, &
       & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, escf, &
       & keywrd, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
-      ijulian, jobnam, line, mers, uhf, &
-      gui, density, formula, mozyme, mpack, stress, &
-      site_no, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
+      ijulian, jobnam, method_am1, method_pm3, method_mndod, line, mers, uhf, &
+      method_pm6, method_rm1, gui, density, formula, mozyme, mpack, stress, &
+      site_no, method_pm7,  method_PM7_ts, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
-      hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
+      n_methods, methods, methods_keys, hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
       prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label
 !
       use MOZYME_C, only : icocc, icvir, ncocc, ncvir, nvirtual, noccupied, &
@@ -40,7 +40,7 @@
       use meci_I
       use geoutg_I 
       use dipole_I
-      use second2_I
+      use second_I
       use volume_I
       use to_screen_I
       implicit none
@@ -55,7 +55,7 @@
       dip, dumy(3), pKa_unsorted(numat), distortion, rms, gnorm_norm
       logical :: ci, lprtgra, still, bcc, opend
       character  :: type(3)*11, idate*24, gtype*13, grtype*14, &
-      flepo(18)*58, iter(2)*58, namfil*241, num*2
+      flepo(18)*58, iter(2)*58, namfil*241, num*1
       character, allocatable :: old_arc_file(:)*1000
       double precision, external :: dipole_for_MOZYME, dot
       integer, external :: ijbo
@@ -172,8 +172,6 @@
         write (iw, &
     '(10X,''RMS DISTORTION          ='',F17.5,'' Angstroms per atom (all atoms)'' )') sqrt(rms/numat)
       else
-        distortion = 0.d0
-        rms = 0.d0
         if (index(keywrd," PM7-TS") /= 0) then
           call PM7_TS
           return
@@ -214,8 +212,8 @@
       call to_screen(" Job: "//jobnam(1:len_trim(jobnam)))
       write (line,'(10x,a,f16.5,a)') "Final heat of formation = ",escf," kcal/mol"
       call to_screen(line)
-      gnorm_norm =  gnorm/sqrt(1.0*numat) + 1.d-8
-      write(num, '(i2)')  max(0, Int(Log10( gnorm_norm))) + 7
+      gnorm_norm =  gnorm/sqrt(1.0*numat)
+      num = Char (min(2, max(0, Int(Log10( gnorm_norm))))+Ichar ("7"))
       write (line, '(10X,''GRADIENT NORM           ='',F17.5, '' = '',f'//num//'.5, '' PER ATOM'')') gnorm, gnorm_norm
       call to_screen(line) 
       if (id == 3 .and. iw0 > -1) call write_unit_cell_HOF(iw0)     
@@ -346,16 +344,14 @@
 ! 
 ! where "sum" is the gradient norm of the entire system.
 !
-            if (nvar > 0) then
-              if (sum > max(2.d0, 2.D0*gnorm*sqrt((numat*3.d0)/nvar)) .and. sum < sqrt(0.1d0*numat) .and. &
-              nclose == nopen .and. id == 0 .and. index(keywrd, "NOANCI") == 0) then
-                if (nvar /= 1 .or. index(keywrd," GRAD") + index(keywrd, "DERIV") > 0) then 
-                  write (iw, '(9x,A)') &
-                  ' WARNING -- GEOMETRY IS NOT AT A STATIONARY POINT' 
-                  call web_message(iw,"Warning_geometry.html")
-                  still = .FALSE.
-                end if 
-              endif
+            if (sum > max(2.d0, 2.D0*gnorm*sqrt((numat*3.d0)/nvar)) .and. sum < sqrt(0.1d0*numat) .and. &
+            nclose == nopen .and. id == 0 .and. index(keywrd, "NOANCI") == 0) then
+              if (nvar /= 1 .or. index(keywrd," GRAD") + index(keywrd, "DERIV") > 0) then 
+                write (iw, '(9x,A)') &
+                ' WARNING -- GEOMETRY IS NOT AT A STATIONARY POINT' 
+                call web_message(iw,"Warning_geometry.html")
+                still = .FALSE.
+              end if 
             endif 
           endif 
         endif 
@@ -387,14 +383,14 @@
         write (iw, '(10X,''REACTION GRADIENT       ='',F17.5,A14)') &
         gcoord(1,1), grtype 
       endif 
-      eionis = 0.D0
+      eionis = 0.D0 
       if (nalpha > 0 .and. nbeta > 0) then 
         eionis = -max(eigs(nalpha),eigb(nbeta)) 
       else if (nelecs == 1) then 
         eionis = -eigs(1) 
       else if (nelecs > 1) then 
-        if (nopen > 0) eionis = -eigs(nopen)
-        if (nclose > 0) eionis = min(eionis,-eigs(nclose))
+        if (nclose > 0) eionis = -eigs(nclose) 
+        if (nopen > 0) eionis = min(eionis,(-eigs(nopen))) 
       endif 
       i = nclose 
       if (fract > 1.99D0) i = nopen 
@@ -438,8 +434,7 @@
       if (mol_weight > 0.1D0) write (iw, &
         '(    10X,''MOLECULAR WEIGHT        ='',F16.4)') mol_weight 
       call gmetry (geo, coord) 
-! DEPRECATED ON 20190801
-!      if (id == 0) call dimens (coord, iw) 
+      if (id == 0) call dimens (coord, iw) 
       if (id == 3) then 
         vol = volume(tvec,3) 
         density = mol_weight*1.D24/fpc_10/vol
@@ -452,7 +447,7 @@
       end if
       if (latom == 0) write (iw, '(/)') 
       write (iw, '(10X,''SCF CALCULATIONS        =   '',I8 )') nscf 
-      tim = second2(1) - time0 
+      tim = second(1) - time0 
       i = int(tim*0.000001D0) 
       tim = tim - i*1000000 
       call date_and_time(VALUES=time_end)
@@ -553,12 +548,9 @@
         write (iw, '(2/,''      MOLECULAR POINT GROUP   :   '',A4)') name 
         if (mozyme) then
           if (index(keywrd," RE-LOC") /= 0) then
-            write(iw,"(10x,a,/)")"  LMOs being Re-Localized"
+            write(iw,"(a,/)")"  LMOs being Re-Localized"
             call local_for_MOZYME("OCCUPIED")
-!
-!  Suppress re-localization of the virtual set.  Not of interest to users.
-!
-!            call local_for_MOZYME("VIRTUAL") 
+            call local_for_MOZYME("VIRTUAL")
           end if
           if ((index(keywrd,' VEC') + index(keywrd,' ALLVEC'))*nelecs /= 0) then 
             if (index(keywrd, " EIGEN") /= 0) then
@@ -838,7 +830,7 @@
         endif 
         call to_screen("To_file: Normal output")
         i = nclose + nalpha 
-        if (index(keywrd,' LOCAL') + index(keywrd,' RABBIT') + index(keywrd,' BANANA') /= 0) then 
+        if (index(keywrd,' LOCAL') /= 0) then 
           call local (c, i, eigs, 1, "c ") 
           if (nbeta /= 0) then 
             write (iw, '(2/10X,'' LOCALIZED BETA MOLECULAR ORBITALS'')') 
@@ -851,7 +843,7 @@
         endif 
         if (index(keywrd,' ENPART') /= 0) call enpart () 
       endif 
-      if (second2(2) - time0 > 1.d7 .or. index(keywrd,' DENOUT') /= 0) call den_in_out(1)
+      if (second(2) - time0 > 1.d7 .or. index(keywrd,' DENOUT') /= 0) call den_in_out(1)
       if ((ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20 .or. &
         index(keywrd,' SIZE') /= 0) .and. index(keywrd,' MECI') + index(keywrd,' ESR')/=0) then 
         write (iw, &
@@ -1158,12 +1150,11 @@
         write (iwrite, "(10X,A,F14.2,A)") "COSMO VOLUME            =", cosvol, &
              & " CUBIC ANGSTROMS"
       end if
-! DEPRECATED ON 20190801
-!      if (id == 0) call dimens (coord, iwrite) 
+      if (id == 0) call dimens (coord, iwrite) 
       if (id == 3) then 
         write (iwrite, '(/,19x,"THE SYSTEM IS A SOLID")') 
         write (iwrite, '(/,"                UNIT CELL TRANSLATION VECTORS",/,/,&
-            &"                 X                 Y                 Z")') 
+            "                 X                 Y                 Z")') 
         write (iwrite,"('    T',i1,' = ',f14.7,'    ',f14.7,'    ',f14.7)") (i,(tvec(j,i),j=1,3),i=1,id) 
         vol = volume(tvec,3) 
         density = mol_weight*1.D24/fpc_10/vol

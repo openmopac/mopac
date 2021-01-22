@@ -5,7 +5,7 @@
       USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : partyp, n_partyp, n_partyp_alpb, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
-      use molkst_C, only : keywrd, lpars, line
+      use molkst_C, only : keywrd, lpars, verson, line
       use chanel_C, only : iext
 !***********************************************************************
 !DECK MOPAC
@@ -98,15 +98,12 @@
         line = trim(file(loop))
         do i = len_trim(line), 1, -1
           if (line(i:i) == "\" .or. line(i:i) == "/") then
-!  using inquire to check for the existence of a directory is a non-standard Intel extension to Fortran 90
-!  there is no standard, system-independent way to do this as directories do not exist in Fortran language specifications
-!  I'm just commenting this out for now, since it is just some extra error messages [JEM 2019.05.24]
-!            inquire (directory = line(:i), exist = exists)
-!            if (exists) then
-!              write(iw,"(10x,a)")"  (but folder: '"//line(:i)//"' does exist.)"
-!            else
-!              if (verson(7:7) == "W") write(iw,"(5x,a)")" (Note: the folder: '"//line(:i)//"'  also does not exist.)"
-!            end if
+            inquire (directory = line(:i), exist = exists)
+            if (exists) then
+              write(iw,"(10x,a)")"  (but folder: '"//line(:i)//"' does exist.)"
+            else
+              if (verson(7:7) == "W") write(iw,"(5x,a)")" (Note: the folder: '"//line(:i)//"'  also does not exist.)"
+            end if
             exit
           end if
         end do
@@ -282,7 +279,7 @@
 !
 !
     subroutine write_params(iw, lv_par)
-      USE parameters_C, only : partyp, n_partyp_alpb, n_partyp, v_par, t_par
+      USE parameters_C, only : partyp, n_partyp_fn, n_partyp_alpb, n_partyp, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
       use molkst_C, only : lpars, line
       implicit none
@@ -292,7 +289,7 @@
 !
 !  Local
 !
-      integer :: i, j, k, l, il, iu, ii, jj, iparam, ielmnt, jelmnt
+      integer :: i, j, k, l, il, iu, ii, jj, iparam, ielmnt, jelmnt, j1
       character :: elemnt(107)*2, elemnt2*2
       save elemnt, lold
 !----------------------------------------------- 

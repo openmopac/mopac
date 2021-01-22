@@ -13,8 +13,8 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
+      use resolv_I 
       use matout_I 
-      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -25,6 +25,7 @@
       integer  :: nocc, iprint
       real(double)  :: c(norbs,norbs) 
       real(double)  :: eig(norbs) 
+      real(double)  :: cold(norbs,norbs) 
       character*2 :: txt
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
@@ -37,8 +38,7 @@
       real(double), dimension(norbs) :: eig1, psi1, psi2, cii, refeig 
       real(double) :: eps, sum, xijjj, xjiii, xiiii, xjjjj, xijij, xiijj, dij, &
         dii, djj, aij, bij, ca, sa, sum1, x, co 
-      character :: elemnt(99)*2, num_1*1, num_2*1 
-      real(double), allocatable  :: cold(:,:) 
+      character, dimension(99) :: elemnt*2 
 
       save elemnt 
 !-----------------------------------------------
@@ -72,13 +72,8 @@
         'BI', 'PO', 'AT', 'RN', 'FR', 'RA', 'AC', 'TH', 'PA', 'U', 'NP', 'PU', &
         'AM', 'CM', 'BK', 'CF', 'XX'/  
       niter = 100 
-      eps = 1.0D-10 
+      eps = 1.0D-7 
       refeig(:norbs) = eig(:norbs) 
-      allocate (cold(norbs,norbs), stat = i)
-       if (i /= 0) then
-        call memory_error ("Unable to allocate memory in LOCAL")
-        return
-      end if
       cold(:norbs,:norbs) = c(:norbs,:norbs) 
       iter = 0 
    20 continue 
@@ -142,7 +137,6 @@
         end do 
       end do 
       sum1 = 0.D0 
-      psi1(:nocc) = 0.d0
       do i = 1, nocc 
         do j = 1, numat 
           il = nfirst(j) 
@@ -152,7 +146,6 @@
             x = x + c(k,i)**2 
           end do 
           sum1 = sum1 + x*x 
-          psi1(i) = psi1(i) + x*x
         end do 
       end do 
       if (sum > eps .and. iter < niter) go to 20 
@@ -160,10 +153,7 @@
 !   Check for LMOs that involve the same atom(s).  Resolve any
 !   ill-definition.
 !
-      do i = 1, nocc
-        psi1(i) = 1.d0/psi1(i)
-      end do
-      call resolv (c, cold, norbs, eig, nocc, psi1) 
+      call resolv (c, cold, norbs, eig, nocc) 
 !
 !   Work out LMO energy levels
 !
@@ -199,12 +189,12 @@
         end do 
       end do 
       if (iprint == 1) then
-        num_1 = char(ichar("1") +int(log10(numat + 0.05)))
-        write (iw, "(/,10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALIZATION VALUE =',f14.9,/)") iter, sum1 
-        write (iw, "("//num_1//"x,'NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS ')")   
-        write (iw, "("//num_1//"x,34x,'(AS PERCENT OF THE LMO)',/)") 
-        num_1 = char(ichar("3") +int(log10(numat + 0.05)))
-        num_2 = char(ichar("1") +int(log10(norbs + 0.05)))
+        write (iw, 110) iter, sum1 
+  110 format(/,10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALISATION VALUE =',f&
+        14.9,/) 
+        write (iw, 120) 
+  120 format(3x,'NUMBER OF CENTERS',14x,'(COMPOSITION OF ORBITALS)'/,/)   
+       
         do i = 1, nocc 
           x = 0.D0 
           do k1 = 1, numat 
@@ -232,33 +222,13 @@
             exit  
           end do 
           ii = ii - 1 
-          if (ii == 1) then
-            if (cii(1) > 99.949d0) then
-              write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.1)') i, x,eig(i), elemnt(nat(iel(1))),iel(1),cii(1) 
-            else
-              write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.2)') i, x,eig(i), elemnt(nat(iel(1))),iel(1),cii(1)
-            end if
-          else
-            if (ii < 6) then
-              write (iw, '(i'//num_1//',f10.4,f17.5, 5(3x,a2,i'//num_2//',f6.2))') &
-              i, x,eig(i), (elemnt(nat(iel(k))),iel(k),cii(k),k=1,ii) 
-            else if (ii < 11) then
-              write (iw, '(i'//num_1//',f10.4,f17.5, 5(3x,a2,i'//num_2//',f6.2),/31x,5(3x,a2,i'//num_2//',f6.2))') &
-              i, x,eig(i), (elemnt(nat(iel(k))),iel(k),cii(k),k=1,ii) 
-            else
-              write (iw, '(i'//num_1//',f10.4,f17.5, 5(3x,a2,i'//num_2//',f6.2),2(/31x,5(3x,a2,i'//num_2//',f6.2)))') &
-              i, x,eig(i), (elemnt(nat(iel(k))),iel(k),cii(k),k=1,ii)           
-            end if 
-          end if
+          write (iw, 240) x, (elemnt(nat(iel(k))),iel(k),cii(k),k=1,ii) 
+    240   format(f10.4,4(5(3x,a2,i3,f6.2),/,10x)) 
         end do 
+  260 format(/,/,20x,' LOCALIZED ORBITALS ',/,/) 
         call phase_lock(c, norbs)
-        if (numat > 25 .and. index(keywrd, "LARGE") == 0) then
-          write(iw,'(/10x,a)')"Localized orbitals for systems of over 25 atoms are not printed by default"
-          write(iw,'(10x,a)')"(To print localized orbitals, add keyword ""LARGE"")"
-        else
-          write (iw, "(/,/,20x,' LOCALIZED ORBITALS ',/,/)") 
-          call matout (c, eig, nocc, norbs, norbs) 
-        end if
+        write (iw, 260) 
+        call matout (c, eig, nocc, norbs, norbs) 
         call to_screen("To_file: LMOs")
       end if
       if (txt == "c ") then

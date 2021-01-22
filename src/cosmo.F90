@@ -1731,7 +1731,6 @@ subroutine cosini(l_print)
     allocate(srad(numat), nn(3, numat), qden(lm61), &
           iatsp(lenabc + 1), isude(2, 30*numat), nar_csm(lenabc + 1),&
           arat(numat), sude(2,30*numat), nsetf(lenabc + 1), cosurf(4,lenabc), stat = i)
-    nsetf = 0 ! Added to fix gaps in nsetf's initialization, which might indicate a deeper flaw
     if (i /= 0) then
       call memory_error("COSINI (1) in Cosmo")
       return

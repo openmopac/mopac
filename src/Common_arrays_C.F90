@@ -176,9 +176,6 @@ module Common_arrays_C
                    !  Units         dimensionless
                    !  Min inclusive -1.0
                    !  Max inclusive  1.0
-  &  workmat1,   & !  unpacked matrix workspace #1
-  &  workmat2,   & !  unpacked matrix workspace #2
-  &  workmat3,   & !  unpacked matrix workspace #3
   &  dxyz2,      & !  dxyz, but 2-D
   &  ptot2,      & !
      xmat,       &

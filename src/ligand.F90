@@ -250,7 +250,6 @@ subroutine ligand (ires, start_res, nfrag)
           n_P = n_ele(15)
           attached = .false.
           res = -10000
-          n = 0
           loop_k: do k = 1, ninres
             m = inres(k)
             do l = 1, nbonds(m)
