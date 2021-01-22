@@ -1,4 +1,4 @@
-  subroutine gdisp(xyz, r0ab, rs6, alp6, c6ab, s6, mxc, rcov, dxyz_temp)
+  subroutine gdisp(r0ab, rs6, alp6, c6ab, s6, s8, mxc, r2r4, rcov, rs8, alp8, dxyz_temp)
 !
 ! Calculates the derivative (gradient) of the D3 dispersion term, 
 ! based on material provided by Stefan Grimme, University of Muenster, Germany
@@ -6,7 +6,7 @@
 ! Referred to in: http://sirius.chem.vt.edu/psi4manual/4.0b5/dftd3.html
 ! Download date for dftd3.tgz: 5/30/2015.  File dftd3.3.1.0 dated 6/30/2014
 !
-  use common_arrays_C, only: nat 
+  use common_arrays_C, only: nat, Vab 
   use molkst_C, only : numat
   implicit none
   double precision, parameter :: k1 = 16.d0
@@ -14,48 +14,57 @@
   double precision :: &
   c6ab(max_elem, max_elem, maxc, maxc, 3), & ! C6 for all element pairs 
   dxyz_temp(3,numat),                      & ! Contribution to gradient
-  xyz(3, numat),                           & ! coordinates in au
   rcov(max_elem),                          & ! covalent radii
   cn(numat),                               & ! coordination numbers of the atoms
   r0ab(max_elem, max_elem),                & ! cut  -  off radii for all element pairs
-  rs6, alp6, s6
+  rs6, alp6, s6, s8, r2r4(max_elem), rs8, alp8
   integer :: mxc(max_elem)
 !
 !  Local variables
 !
   integer :: i, j, linij
-  double precision :: R0, r2, damp6, c6, tmp1, r, dc6_rest, rij(3), dc6iji, dc6ijj, r6, r7, t6, &
-  rcovij, expterm, dcn,x1
+  double precision :: R0, r2, damp6, damp8, c6, tmp1, tmp2, r, dc6_rest, rij(3), dc6iji, dc6ijj, r6, r7, t6, t8, &
+  rcovij, expterm, dcn,x1, r42, r8, r9
   double precision, allocatable :: drij(:), dc6i(:)
+  double precision, external :: distance
   integer, external :: lin
-  i = (numat*(numat+1))/2
+!
+! In this subroutine, array "coord" is in atomic units, not Angstroms.
+!
+  i = (numat*(numat + 1))/2
   allocate(drij(i), dc6i(numat))
-  call ncoord(numat,rcov,nat,xyz,cn)
+  call ncoord(numat, rcov, nat, cn)
   drij = 0.d0
   dc6i = 0.d0
   dc6_rest = 0.0d0
   do i = 2, numat
     do j = 1, i - 1
-      rij = xyz(:,j) - xyz(:,i)
-      r2 = sum(rij*rij)
-       if (r2 > 10000.d0) cycle
+      r = distance(j,i)
+      if (r < 0.1d0) cycle
+      r2 = r**2
+      if (r2 > 10000.d0) cycle
       linij = lin(i,j)
       r0 = r0ab(nat(j),nat(i))
+      r42=r2r4(nat(i))*r2r4(nat(j))
       call get_dC6_dCNij(maxc, max_elem, c6ab, mxc(nat(i)), &
             mxc(nat(j)), cn(i), cn(j), nat(i), nat(j), &
             c6, dc6iji, dc6ijj)
-      r = sqrt(r2)
       r6 = r2*r2*r2
       r7 = r6*r
+      r8=r6*r2
+      r9=r8*r
 !
 !  Calculate damping functions
 !
       t6  =  (r/(rs6*R0))**( - alp6)
       damp6  = 1.d0/( 1.d0 + 6.d0*t6 )
+      t8 = (r/(rs8*R0))**(-alp8)
+          damp8 =1.d0/( 1.d0+6.d0*t8 )
       tmp1 = s6*6.d0*damp6*C6/r7
-      drij(linij) = drij(linij) - tmp1  
-      drij(linij) = drij(linij)  + tmp1*alp6*t6*damp6   
-      dc6_rest = s6/r6*damp6 
+      tmp2=s8*6.d0*C6*r42*damp8/r9
+      drij(linij) = drij(linij) - tmp1 - 4.d0*tmp2 
+      drij(linij) = drij(linij)  + tmp1*alp6*t6*damp6 +3.d0*tmp2*alp8*t8*damp8  
+      dc6_rest = s6/r6*damp6 +3.d0*s8*r42/r8*damp8
 !
 !     saving all f_dmp/r6*dC6(ij)/dCN(i) for each atom for later
 !
@@ -70,7 +79,10 @@
   do i = 2, numat
     do j = 1, i - 1
       linij = lin(i,j)
-      rij = xyz(:,j) - xyz(:,i)
+      r = distance(j,i)
+      if (r < 0.1d0) cycle
+      r2 = r**2
+      rij = Vab
       r2 = sum(rij*rij)
       r = dsqrt(r2)
       if (r2 < 100.d0) then
@@ -85,24 +97,21 @@
       dxyz_temp(:,j) = dxyz_temp(:,j) - x1*rij/r
     end do 
   end do 
+  return
   end subroutine gdisp
   
   
-  subroutine ncoord(natoms,rcov,nat,xyz,cn)
+  subroutine ncoord(natoms, rcov, nat, cn)
   implicit none
   integer nat(*),natoms, i, j
-  double precision xyz(3,*), cn(*), rcov(94)
-  double precision dx, dy, dz, r, damp, xn, rr, rco, r2
-  do i = 1,natoms
+  double precision cn(*), rcov(94)
+  double precision r, damp, xn, rr, rco
+  double precision, external :: distance
+  do i = 1, natoms
     xn = 0.0d0
-    do j = 1,natoms
-        if(j /= i)then
-          dx = xyz(1,j) - xyz(1,i)
-          dy = xyz(2,j) - xyz(2,i)
-          dz = xyz(3,j) - xyz(3,i)
-          r2 = dx*dx + dy*dy + dz*dz
-      !    if (r2 > 100.d0) cycle  WARNING
-          r = sqrt(r2)
+    do j = 1, natoms
+        if (j /= i) then
+          r = distance(i, j)
 ! covalent distance in Bohr
           rco = rcov(nat(i)) + rcov(nat(j))
           rr = rco/r
@@ -113,6 +122,7 @@
     end do
     cn(i) = xn
   end do
+  return
   end subroutine ncoord
   
   subroutine get_dC6_dCNij(maxc ,max_elem, c6ab, mxci, mxcj,  &

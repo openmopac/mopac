@@ -1385,6 +1385,8 @@
   contains
   subroutine alpb_and_xfac_pm7
     use parameters_C, only : xfac, alpb
+      xfac = 0.d0
+      alpb = 0.d0
  !
       alpb( 1, 1) =     4.051163d0 !    Hydrogen -     Hydrogen
       xfac( 1, 1) =     2.845627d0 !    Hydrogen -     Hydrogen

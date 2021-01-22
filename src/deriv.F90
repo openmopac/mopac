@@ -4,12 +4,11 @@
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
       USE molkst_C, ONLY: numat, norbs, nclose, nopen, fract, natoms, numcal, &
-      & ndep, nvar, keywrd, cosine, moperr, mpack, isok, id, l123, line, &
-      pressure, l1u, l2u, l3u, method_PM7, method_pm8
-      use common_arrays_C, only : dxyz, loc, errfn, aicorr, tvec, nat
+      & ndep, nvar, keywrd, cosine, moperr, mpack, isok, id, l123, line, nscf, &
+      pressure, l1u, l2u, l3u, method_PM7, method_pm8        
+      use common_arrays_C, only : dxyz, loc, errfn, aicorr, tvec
       USE symmetry_C, ONLY: locpar, idepfn 
       USE chanel_C, only : iw, ir, job_fn
-      use elemts_C, only : elemnt
       use funcon_C, only : pi
       use derivs_C, only : aidref, work2
 !***********************************************************************
@@ -55,10 +54,10 @@
       real(double) :: grlim, sum, gnorm, step, press, summ, press1, &
       press2, press3
       logical :: scf1, halfe, slow, aifrst, debug, precis, intn, geochk, ci, &
-        aic, noanci, field, saddle, DH_correction, large
+        aic, noanci, field, saddle, DH_correction, l_redo_bonds
 
-      save change, scf1, halfe, idelta, slow, icalcn, aifrst, debug, &
-        precis, intn, geochk, ci, aic, grlim, nw2, field, DH_correction, large
+      save change, scf1, halfe, idelta, slow, icalcn, aifrst, debug, l_redo_bonds, &
+        precis, intn, geochk, ci, aic, grlim, nw2, field, DH_correction
 !-----------------------------------------------
 !***********************************************************************
 !
@@ -79,7 +78,6 @@
         saddle = index(keywrd, " SADDLE") /= 0
         debug = index(keywrd,' DERIV') /= 0 
         field = index(keywrd,' FIELD') /= 0 
-        large = index(keywrd,'LARGE') /= 0 
         precis = index(keywrd,' PREC') /= 0 
         DH_correction = (index(keywrd,' PM6-D') + index(keywrd,' PM6-H') /= 0 .or. &
           method_PM7 .or. method_pm8 )   
@@ -172,6 +170,8 @@
           endif 
           close(ir, status='KEEP') 
         endif 
+        l_redo_bonds = (index(keywrd,' FORCE') + index(keywrd,' IRC=') + &
+          index(keywrd,' THERM') + index(keywrd,' DFORCE') == 0)
         grlim = 0.01D0 
         if (precis) grlim = 0.0001D0 
         halfe = nopen>nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. Abs(fract) > 1.d-20 .or. ci 
@@ -196,7 +196,7 @@
       endif 
       if (nvar == 0) return  
       if (debug) then 
-        write (iw, '('' GEO AT START OF DERIV'')') 
+        write (iw, '(10X, "GEOMETRY AT THE START OF DERIV")') 
         call geout(-iw)
       endif 
       gnorm = 0.D0 
@@ -220,28 +220,28 @@
 !  COORD NOW HOLDS THE CARTESIAN COORDINATES
 !
       if (halfe .and. .not.noanci .and. numat > 1) then 
-        if (debug) write (iw, *) 'DOING ANALYTICAL C.I. DERIVATIVES' 
+        if (debug) write (iw, '(10x,a)') 'DOING ANALYTICAL C.I. DERIVATIVES' 
+        if (debug) write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)') 
         call dernvo () 
         if (moperr) return  
       else 
-        if (debug) write (iw, *) 'DOING VARIATIONALLY OPTIMIZED DERIVATIVES' 
-        call dcart (coord, dxyz)        
+        if (debug) write (iw, '(10x,a)') 'DOING VARIATIONALLY OPTIMIZED DERIVATIVES' 
+        if (debug) write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)') 
+        call dcart (coord, dxyz)  
       endif  
+      if (l_redo_bonds .and. mod(nscf,10) == 4 .and. nscf /= 0 .and. id == 0) then
+!
+!  There is a possibility that a bond might be made or broken during a geometry optimization
+!  or a gradient minimization.  To allow for this, the bonds array should be updated every
+!  few SCF calculations. The values in the mod test are "intelligent guesses" 
+!
+	      call lewis (.true.)
+        if (moperr) then
+           write (iw, '(/10x,A,/)') ' Geometry at the point this error was detected' 
+          call geout(iw)
+        end if         
+      end if
       if (DH_correction) call post_scf_corrections(sum, .true.)
-      if (DH_correction .and. debug) then  
-        write (iw, '(2/10X,''CARTESIAN COORDINATE DERIVATIVES'')') 
-        write (iw, '(11X,a)')"(Includes post-SCF corrections)" 
-        write (iw, '(/3X,       ''NUMBER  ATOM '',5X,''X'',12X,''Y'',12X,''Z'',/)') 
-        if (l123 == 1) then 
-          write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i,elemnt(nat(i)),(dxyz(j + (i - 1)*3),j=1,3),i=1,numat*l123) 
-        else if (large) then 
-          write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i,elemnt(nat((i - 1)/l123+1)), &
-            (dxyz(j + (i - 1)*3),j=1,3),i=1,numat*l123) 
-        else 
-          write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i,elemnt(nat((i-1)/l123+1)),(dxyz(j + (i-1)*3) + &
-            dxyz(j + i*3) + dxyz(j + (i + 1)*3),j=1,3),i=1, numat*l123 - 2,3) 
-        endif
-      end if 
 !
 !   THE CARTESIAN DERIVATIVES ARE IN DXYZ
 !
@@ -251,7 +251,7 @@
       !
       !  Add in gradient tension contribution
       !
-          i = 3 * l123 / 2 
+          i = 3 * l123 / 2 - 1
         !
         !  For polymers, pressure is pull in Newtons for 1 mole
         !  1N = J/M = 10**(-3)/4.184 kcal/M = 4.184*10**(-3)*10**(-10) kcal/Angstrom
@@ -299,6 +299,9 @@
           end do
         end if
       end if
+      if ((DH_correction .or. Abs (pressure) > 1.d-4) .and. debug) then  
+         call print_dxyz("  (Includes post-SCF corrections)")
+      end if 
 
       step = change(1) 
       nstep = nw2/(3*numat*l123)  

@@ -43,7 +43,7 @@
       integer , dimension(256) :: jindex 
       integer :: i, m, j, ij, ji, k, ik, l, kl, lk, jl, i1, ia, ib, jk, kj, kk&
         , ii, iminus, jj, ja, jb, ll, j1, ka, kb, kc, il 
-      real(double), dimension(16) :: pk, pja, pjb 
+      real(double), dimension(81) :: pk, pja, pjb 
       real(double) :: sumdia, sumoff, sum, aa, bb, aj, ak, a 
       logical :: lid, deriv
 

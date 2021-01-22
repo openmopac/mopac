@@ -1,9 +1,4 @@
       subroutine gettxt 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:18  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
-!-----------------------------------------------
-!   I n t e r f a c e   B l o c k s
-!-----------------------------------------------
       use upcase_I 
       use mopend_I 
       use chanel_C, only: ir, iw, isetup, input_fn
@@ -14,9 +9,10 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, k, l, ipath
-      character :: filen*100, oldkey*1000, path*240, ch*1
+      character :: filen*300, oldkey*1000, line1*1000, path*240, ch*1, geo_xxx(2)*3
       logical :: aux, exists, setup_present, zero_scf, l_quote
-      character (len = 100), external :: get_text
+      character (len = 300), external :: get_text
+      data geo_xxx /"DAT", "REF"/
 !-----------------------------------------------
       koment = " "
       title = " "
@@ -24,6 +20,22 @@
       aux = (index(keywrd, "AUX") /= 0) 
       read (ir, '(A1000)', end=100, err=100) refkey(1)
       keywrd = refkey(1)
+      do
+        i = index(keywrd, "++")
+        if (i /= 0) then
+          do
+            i = index(keywrd, "++")
+            if (i == 0) exit
+            line = keywrd(:i - 1)//trim(keywrd(i + 2:))
+            keywrd = trim(line)
+          end do
+          read (ir, '(A1000)', end=100, err=100) line
+          keywrd = trim(keywrd)//trim(line)
+        else
+          refkey(1) = trim(keywrd)
+          exit
+        end if
+      end do
       oldkey = trim(keywrd)
       call upcase (keywrd, len_trim(keywrd))
       zero_scf = (index(keywrd, "0SCF") /= 0) 
@@ -38,16 +50,16 @@
         filen = 'SETUP' 
       endif
       inquire (file=filen, exist = exists)
-      i = len_trim(keywrd) 
-      allkey = keywrd(:i)
-      l_quote = .false.
-      do j = 1, i
-        if (allkey(j:j) == '"') l_quote = (.not. l_quote)
-        if (l_quote) allkey(j:j) = " "
-      end do      
+       i = len_trim(keywrd) 
+       allkey = keywrd(:i)
+       l_quote = .false.
+       do j = 1, i
+         if (allkey(j:j) == '"') l_quote = (.not. l_quote)
+         if (l_quote) allkey(j:j) = " "
+       end do   
       setup_present = (index(keywrd,'SETUP') /= 0)
       if (setup_present) then 
-        if (index(keywrd, " + ") /= 0) then
+        if (index(allkey, " + ") /= 0) then
           call mopend(" Keywords ""SETUP"" and ""+""cannot be used together")
 !
 !  Dummy read to go to the end of the data set
@@ -60,31 +72,28 @@
         end if
         i = index(keywrd,'SETUP=') 
         if (i /= 0) then 
-          filen = get_text(oldkey, i + 6, 1) 
+          filen = trim(get_text(oldkey, i + 6, 1))
         else 
-          if  (ipath > 2) then
-            filen = trim(path)//'SETUP' 
-          else
-            filen = 'SETUP' 
-          endif
+          i = index(keywrd,'SETUP')
+          j = index(keywrd(i:), " ") + i - 1
+          filen = keywrd(i:j)
         end if
         call add_path(filen)
         inquire (file=filen, exist = exists)
         if (.not. exists) then
           inquire (file=trim(filen)//".txt", exist = exists)
           if (exists) filen = trim(filen)//".txt"
-        end if
+        end if          
         if (.not. exists) then
           if (setup_present .and. .not. zero_scf) then
-            write (line, '(A)') "SETUP FILE MISSING.  Setup file name: '"//trim(filen)//"'"
+            write (line, '(A)') "SETUP FILE """//trim(filen)//""" MISSING."
             numcal = 2
-            if (.not. gui )write(0,'(//30x,a)')' SETUP FILE MISSING, EMPTY OR CORRUPT' 
-            if (.not. gui )write(0,'(2x,a,//)')" (An attempt was made to open the Setup file named: '"//trim(filen)//"')"
+            if (.not. gui )write(0,'(//30x,a)')' SETUP FILE "'//trim(filen)//'" MISSING' 
             call mopend (trim(line)) 
             return
           end if
         else 
-          open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED',position='asis', iostat=i) 
+          open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED',position='REWIND', iostat=i) 
           if (i /= 0) then
             if (.not. zero_scf) then
               call mopend ('COULD NOT OPEN SETUP FILE: '//trim(filen)) 
@@ -92,10 +101,27 @@
               return 
             end if
           end if
-          rewind isetup  
+          rewind isetup 
+          refkey(2) = " "
           do
-            read (isetup, '(A)', end=50, err=50) refkey(2)
-            if (refkey(2)(1:1) /= "*") exit
+            read (isetup, '(A)', end=61, err=50) line1
+61          if (line1(1:1) == "*") cycle
+            refkey(2) = trim(refkey(2))//trim(line1)
+            i = index(refkey(2), "++")
+            if (i /= 0) then
+              do
+                i = index(refkey(2), "++")
+                if (i == 0) exit
+                line = refkey(2)(:i - 1)//trim(refkey(2)(i + 2:))
+                refkey(2) = trim(line)
+              end do
+            else
+              oldkey = trim(oldkey)//" "//trim(refkey(2))
+  !            line = trim(refkey(2))
+  !            call upcase(line, len_trim(line))
+  !            keywrd = trim(keywrd)//" "//trim(line)
+              exit
+            end if
           end do
           close (isetup)
           call upcase (refkey(2), len(refkey(2)) ) 
@@ -136,7 +162,7 @@
                     (line(k:k) < "0" .or. line(k:k) > "9")) exit
               end do 
               k = k - 1
-              if (index(keywrd, " "//line(:k)) > 0 .and. line(:5) /= "SETUP") then
+              if (index(allkey, " "//line(:k)) > 0 .and. line(:5) /= "SETUP") then
                 k = index(keywrd, " "//line(:k)) + k + 1
                 if (keywrd(k:k) < "A" .or. keywrd(k:k) > "Z") then
                   refkey(2) = refkey(2)(:i - 1)//refkey(2)(j + 1:)
@@ -166,7 +192,6 @@
           keywrd(i + 1:) = " "//refkey(2)(:999 - i)
           refkey(1) = trim(keywrd)
           refkey(2) = refkey(3)
-          if (keywrd(i + 1:) == ' ') go to 50 
 !
 ! Delete SETUP keyword
 !
@@ -189,12 +214,12 @@
 !
 !  READ SECOND KEYWORD LINE
 !
+        read (ir, '(A)', end=100, err=100) refkey(2)
+        oldkey(len_trim(oldkey) + 2:) = trim(refkey(2))
         i = index(allkey(1:i),' +')
         keywrd(i:i + 1) = " "
         i = len_trim(keywrd)
-        read (ir, '(A)', end=100, err=100) refkey(2)
-        keywrd(i + 2:) = refkey(2)(:999 - i)
-        oldkey = trim(keywrd)
+        keywrd(i + 2:) = trim(refkey(2))
         call upcase (keywrd(i + 1:), len(keywrd) - i) 
         k = len_trim(keywrd)
         allkey = keywrd(:k)
@@ -207,8 +232,8 @@
           i = index(keywrd,'SETUP=') 
           if (i /= 0) then 
             j = index(keywrd(i:),' ') 
-            filen = oldkey(i+6:i+j-1) 
-            keywrd(i: i + j) = " "
+            filen = oldkey(i+6:i+j-2) 
+            keywrd(i: i + j - 1) = " "
           else 
             filen = 'SETUP' 
             i = index(keywrd,'SETUP') 
@@ -217,7 +242,7 @@
           keywrd(i:i+6) = " "
           call add_path(filen)
           open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED', &
-            position='asis') 
+            position='REWIND') 
           rewind isetup 
           read (isetup, '(A)', end=30, err=30) refkey(2)
           close(isetup)
@@ -261,14 +286,14 @@
         i = len_trim(keywrd)
         read (ir, '(A)', end=100, err=100) refkey(2)
         keywrd(i + 1:) = " "//refkey(2)(:1001 - i)
-        oldkey = trim(keywrd)
+        oldkey(len_trim(oldkey) + 2:) = trim(keywrd)
         call upcase (keywrd, len_trim(keywrd)) 
         i = len_trim(keywrd)
         if (index(keywrd,'SETUP') /= 0) then 
           i = index(keywrd,'SETUP=') 
           if (i /= 0) then 
             j = index(keywrd(i:),' ') 
-            filen = oldkey(i + 6:i + j) 
+            filen = keywrd(i + 6:i + j) 
             keywrd(i: i + j) = " "
           else 
             filen = 'SETUP' 
@@ -277,10 +302,10 @@
           endif 
           call add_path(filen)
           open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED', &
-            position='asis') 
+            position='REWIND') 
           rewind isetup 
-          read (isetup, '(A)', end=40, err=40) keywrd(len_trim(keywrd) + 2:) 
-          close (isetup)
+          read (isetup, '(A)', end=39, err=40) keywrd(len_trim(keywrd) + 2:) 
+39        close (isetup) 
           call upcase (keywrd, len_trim(keywrd)) 
           read (ir, '(A)', end=100, err=100) title 
    40     continue 
@@ -293,19 +318,67 @@
         else 
           read (ir, '(A)', end=100, err=100) title 
         endif 
-      else 
+      else        
         read (ir, '(A)', end=100, err=100) koment, title 
       endif 
       go to 60 
 50    continue 
       if (zero_scf) go to 60
       numcal = 2
-      write (iw, '(A)') ' SETUP FILE MISSING, EMPTY OR CORRUPT' 
+      call mopend ('SETUP FILE "'//trim(filen)//'" MISSING')  
       write(iw,'(a)') " (Setup file name: '"//trim(filen)//"')"
-      call mopend ('SETUP FILE MISSING, EMPTY OR CORRUPT') 
       return  
 60    continue  
+      i = len_trim(keywrd) 
+      allkey = keywrd(:i)
+      l_quote = .false.
+      do j = 1, i
+        if (allkey(j:j) == '"') then
+          l_quote = (.not. l_quote)
+          allkey(j:j) = " "
+        end if
+        if (l_quote) allkey(j:j) = " "
+      end do             
       call upcase (keywrd, len_trim(keywrd)) 
+      i = index(keywrd, "GEO-DAT")
+      if (i /= 0) then
+        keywrd(i:i+6) = "GEO_DAT"
+        refkey(1)(i:i+6) = "GEO_DAT"
+      end if
+      i = index(keywrd, "GEO-REF")
+      if (i /= 0) then
+        keywrd(i:i+6) = "GEO_REF"
+        refkey(1)(i:i+6) = "GEO_REF"
+      end if
+!
+!  The following code is specific to very case-sensitive operating systems
+!  such as Red Hat Enterprise Linux.  It is not very robust or flexible.
+!
+!  Preserve case of GEO_DAT and GEO_REF files
+!  Original case is in oldkey
+!
+      line = trim(oldkey)
+      do l = 1,2
+        i = index(keywrd, "GEO_"//geo_xxx(l)) 
+        if (i /= 0) then
+          call upcase(line, len_trim(line))
+          j = index(line, "GEO_"//geo_xxx(l)) + index(line, "GEO-"//geo_xxx(l))
+          if (j /= 0) then
+            k = index(keywrd(i + 9:), '"')
+            keywrd(i + 9: i + 9 + k) = oldkey(j + 9: j + 9 + k)
+          end if
+        end if
+      end do
+!
+! End of UNIX-specific code
+!
+      if (len_trim(keywrd) == len_trim(oldkey)) then
+        l_quote = .false.
+        do i = 1, len_trim(oldkey)
+          if (l_quote) keywrd(i:i) = oldkey(i:i)
+          if(keywrd(i:i) == '"') l_quote = .not. l_quote
+        end do  
+      end if
       if (gui) then
         i = index(keywrd,"PM3")  ! Convert PM3 to PM6 for CAChe only
         if (i /= 0) then
@@ -380,6 +453,18 @@
           exists = .true.
         end if
       end do
+      do k = 1, 6
+        if (index(refkey(k), " NULL") /= 0) exit
+        j = len_trim(refkey(k))
+        do
+          i = index(refkey(k), char(160))
+          if (i > 0) then
+            refkey(k)(i:i) = " "
+          else
+            exit
+          end if
+        end do
+      end do
       if (exists) then
         do k = 1, 6
           if (index(refkey(k), " NULL") /= 0) exit
@@ -405,10 +490,10 @@
         i = index(keywrd, bad_separator)
         if (i == 0) exit
         keywrd(i:i) = good_separator
-      end do
+      end do 
       return  
   end subroutine gettxt
-  character (len = 100) function get_text(line, i_start, zero)
+  character (len = 300) function get_text(line, i_start, zero)
     implicit none
     character :: line*(*)
     integer :: i_start, zero

@@ -582,6 +582,15 @@
 !
   i = index(keywrd," SITE=")
   j = index(keywrd(i:), ") ") + i 
+  if (j == i) then
+    line = "ERROR IN KEYWORD ""SITE"" - no closing "")"""
+    call mopend(trim(line))
+    return
+  end if
+!
+!  In the next block "txt_to_atom_no" cannot be used, because the PDB text is
+!  needed for recognizing the atom.
+!
   do
     k = Index (keywrd(i:), ") ") + i
     j = index(keywrd(i:k),"""") + i
@@ -595,15 +604,14 @@
       n = index(keywrd(j:l - 2),".") + j
       k = index(keywrd(j:l - 2),":") + j
       m = index(keywrd(j:l - 2),"]") + j
-      if (n == j .or. k == j .or. m == j) then
+      if (n == j .or. m == j) then
         if (n == j) write(iw,'(/10x,a)')"""."" Missing in JSmol atom label: """//keywrd(j:l - 2)//'"'
-        if (k == j) write(iw,'(/10x,a)')""":"" Missing in JSmol atom label: """//keywrd(j:l - 2)//'"'
         if (m == j) write(iw,'(/10x,a)')"""]"" Missing in JSmol atom label: """//keywrd(j:l - 2)//'"'
         call mopend("ERROR IN JSMOL ATOM LABEL IN KEYWORD ""SITE""")
         return
       end if              
       if (k == j) then
-        line = keywrd(n:l - 2)//keywrd(j + 1:m - 2)//"A"//keywrd(m:n - 2)
+        line = keywrd(n:l - 2)//keywrd(j + 1:m - 2)//keywrd(j + 5:n - 2)
       else
         line = keywrd(n:l - 2)//keywrd(j + 1:m - 2)//keywrd(k:k)//keywrd(m:k - 2)
       end if
@@ -678,14 +686,20 @@
             n = index(allkey(i:k),".") + i
             p = index(allkey(i:k),":") + i
             m = index(allkey(i:k),"]") + i
-            if (n == i .or. p == i .or. m == i) then
+            if (n == i  .or. m == i) then
               if (n == i) write(iw,'(/10x,a)')"""."" Missing in JSmol atom label: "//allkey(i:k)
-              if (p == i) write(iw,'(/10x,a)')""":"" Missing in JSmol atom label: "//allkey(i:k)
               if (m == i) write(iw,'(/10x,a)')"""]"" Missing in JSmol atom label: "//allkey(i:k)
               call mopend("ERROR IN JSMOL ATOM LABEL IN KEYWORD ""SITE""")
               return
-            end if              
-            txt = allkey(n:k - 1)//allkey(i + 2:m - 2)//allkey(p:p)//allkey(m:p - 2)
+            end if  
+            if (p == i) then
+!
+!  Chain-letter missing, so:
+!
+              txt = allkey(n:k - 1)//allkey(i + 2:i + 4)//allkey(i + 6:n - 2)
+            else
+              txt = allkey(n:k - 1)//allkey(i + 2:m - 2)//allkey(p:p)//allkey(m:p - 2)
+            end if
           else
             txt = allkey(i + 1:k - 1)
           end if
@@ -961,8 +975,19 @@
               do k = 1, nbonds(j)   ! If no -COO, search for anything other that atom i
                 if (ibonds(k,j) /= i) exit
               end do
-            end if            
-            k = ibonds(k,j)
+            end if     
+            if (k > nbonds(j)) then
+              do k = numat, 1, -1
+                if (k /= j .and. k /= i) exit
+              end do
+              if (k == 0) then
+                line = "A hydrogen atom cannot be added to a diatomic.  Do this outside MOPAC"
+                call mopend(trim(line))
+                return
+              end if                
+            else              
+              k = ibonds(k,j)
+            end if
             call add_sp_H(i, j, k)
             numat = numat + 1
             nadd = nadd + 1

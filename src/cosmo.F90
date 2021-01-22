@@ -1,7 +1,7 @@
-subroutine addfck (f,p)
-    use molkst_C, only: lm61, numat, mpack
-    use funcon_C, only: a0, ev
-    use cosmo_C, only : ediel, fepsi, nps,  & 
+subroutine addfck (f, p)
+    use molkst_C, only : lm61, numat, mpack
+    use funcon_C, only : a0, ev
+    use cosmo_C, only : ediel, fepsi, nps, & 
      amat, bmat, iatsp, nsetf, phinet, qscnet, qdenet, ipiden, gden, qscat
     implicit none
     double precision, dimension(mpack), intent(in) :: p
@@ -53,8 +53,8 @@ subroutine addfck (f,p)
     end do
 end subroutine addfck
 subroutine addhcr 
-    use molkst_C, only: lm61
-    use funcon_C, only: a0, ev
+    use molkst_C, only : lm61
+    use funcon_C, only : a0, ev
     use cosmo_C, only : nps, bmat, qscnet, ipiden
     use common_arrays_C, only : h
     implicit none
@@ -71,12 +71,12 @@ subroutine addhcr
     end do
 end subroutine addhcr
 subroutine addnuc 
-    use molkst_C, only: numat, lm61, enuclr
-    use funcon_C, only: a0, ev
+    use molkst_C, only : numat, lm61, enuclr
+    use funcon_C, only : a0, ev
     use common_arrays_c, only : nat
     use cosmo_C, only : nps, fepsi, &
     amat, bmat, nsetf, phinet, qscnet, qdenet, idenat
-    use parameters_C, only: tore
+    use parameters_C, only : tore
     implicit none
     integer :: i, j
     double precision :: enclr, fcon, phi
@@ -97,7 +97,7 @@ subroutine addnuc
       end do
       phinet(i, 1) = phi
     end do
-   !  NOW CALCULATE QSCNUC FROM  AMAT*QSCNUC=PHINUC
+   !  NOW CALCULATE QSCNUC FROM  AMAT*QSCNUC = PHINUC
     call coscl2 (amat, nsetf, qscnet(1, 1), phinet(1, 1), nps)
    ! SCALE QSCNUC AND CALCULATE INTERATION ENERGY
     enclr = 0.d0
@@ -108,13 +108,13 @@ subroutine addnuc
     enuclr = enuclr + fcon * enclr / 2
 end subroutine addnuc
 subroutine ansude (ra, rb, d, rs, ara, arb, aar, abr, arad, arbd, rinc)
-    use funcon_C, only: pi
+    use funcon_C, only : pi
    !   THIS PROGROM CALCULATES THE AREA OF TWO INTERSECTING SPHERES
    !   WITH RADII RA AND RB AT A DISTANCE D AND A SOLVENT PROBE
-   !   RADIUS RS. THE TWO AREAS ARE CALCULATED SEPARATELY (ARA,ARB).
+   !   RADIUS RS. THE TWO AREAS ARE CALCULATED SEPARATELY (ARA, ARB).
    !   THE PART OF THE AREA ON THE CLOSURE PART IS AAR AND ABR.
    !   FOR BOTH AREAS ANALYTIC DERIVATIVES WITH RESPECT TO THE DISTANCE
-   !   D ARE CALCULATED (ARAD,ARBD).    (WRITTEN BY ANDREAS KLAMT, 9/9/96)
+   !   D ARE CALCULATED (ARAD, ARBD).    (WRITTEN BY ANDREAS KLAMT, 9/9/96)
     implicit none
     double precision, intent (in) :: d, ra, rb, rs
     double precision, intent (out) :: aar, abr, ara, arad, arb, arbd, rinc
@@ -123,8 +123,8 @@ subroutine ansude (ra, rb, d, rs, ara, arb, aar, abr, arad, arbd, rinc)
    & za, zad, zb, zbd
     qa = ra + rs
     qb = rb + rs
-    ca = (qa**2+d**2 - qb**2) / (2.d0*qa*d)
-    cb = (qb**2+d**2 - qa**2) / (2.d0*qb*d)
+    ca = (qa**2 + d**2 - qb**2) / (2.d0*qa*d)
+    cb = (qb**2 + d**2 - qa**2) / (2.d0*qb*d)
     sa = Sqrt (1.d0 - ca*ca)
     sb = Sqrt (1.d0 - cb*cb)
     ta = pi * sa
@@ -137,20 +137,20 @@ subroutine ansude (ra, rb, d, rs, ara, arb, aar, abr, arad, arbd, rinc)
     if (sa < 0 .or. sb < 0) then
       fzb = 1.d0
     end if
-    xa = fzb ** 1 * rs * (ca+cb)
-    xb = fza ** 1 * rs * (ca+cb)
+    xa = fzb ** 1 * rs * (ca + cb)
+    xb = fza ** 1 * rs * (ca + cb)
     ya = ra * sa - fzb * rb * sb
     yb = rb * sb - fza * ra * sa
-    za = Sqrt (xa*xa+ya*ya)
-    zb = Sqrt (xb*xb+yb*yb)
-    rinc=0.5d0*(za+zb)/sqrt(rs*rs*(ca+cb)**2+(ra*sa - rb*sb)**2)
-    ara = pi * ra * (2.d0*(1.d0+ca)*ra+sa*za)
-    arb = pi * rb * (2.d0*(1.d0+cb)*rb+sb*zb)
+    za = Sqrt (xa*xa + ya*ya)
+    zb = Sqrt (xb*xb + yb*yb)
+    rinc = 0.5d0*(za + zb)/sqrt(rs*rs*(ca + cb)**2 + (ra*sa - rb*sb)**2)
+    ara = pi * ra * (2.d0*(1.d0 + ca)*ra + sa*za)
+    arb = pi * rb * (2.d0*(1.d0 + cb)*rb + sb*zb)
     aar = pi * ra * (sa*za)
     abr = pi * rb * (sb*zb)
    ! NOW DERIVATIVES
-    cad = (qb**2+d**2 - qa**2) / (2.d0*qa*d*d)
-    cbd = (qa**2+d**2 - qb**2) / (2.d0*qb*d*d)
+    cad = (qb**2 + d**2 - qa**2) / (2.d0*qa*d*d)
+    cbd = (qa**2 + d**2 - qb**2) / (2.d0*qb*d*d)
     sad = -ca * cad / sa
     sbd = -cb * cbd / sb
     tad = pi * sad
@@ -163,17 +163,17 @@ subroutine ansude (ra, rb, d, rs, ara, arb, aar, abr, arad, arbd, rinc)
     if (sa < 0 .or. sb < 0) then
       fzbd = 0.d0
     end if
-    xad = rs * ((ca+cb)*fzbd*tbd+fzb*(cad+cbd))
-    xbd = rs * ((ca+cb)*fzad*tad+fza*(cad+cbd))
-    yad = ra * sad - fzbd * tbd * rb * sb - fzb * rb * sbd
-    ybd = rb * sbd - fzad * tad * ra * sa - fza * ra * sad
-    zad = (xa*xad+ya*yad) / za
-    zbd = (xb*xbd+yb*ybd) / zb
-    arad = pi * ra * (sad*za+sa*zad+2.d0*ra*cad)
-    arbd = pi * rb * (sbd*zb+sb*zbd+2.d0*rb*cbd)
+    xad = rs * ((ca + cb)*fzbd*tbd + fzb*(cad + cbd))
+    xbd = rs * ((ca + cb)*fzad*tad + fza*(cad + cbd))
+    yad = ra * sad-fzbd * tbd * rb * sb - fzb * rb * sbd
+    ybd = rb * sbd-fzad * tad * ra * sa - fza * ra * sad
+    zad = (xa*xad + ya*yad) / za
+    zbd = (xb*xbd + yb*ybd) / zb
+    arad = pi * ra * (sad*za + sa*zad + 2.d0*ra*cad)
+    arbd = pi * rb * (sbd*zb + sb*zbd + 2.d0*rb*cbd)
 end subroutine ansude
 subroutine ciint (c34, pq34)
-    use molkst_C, only: lm61
+    use molkst_C, only : lm61
     use cosmo_C, only : nps, cmat
     implicit none
     double precision, dimension (lm61), intent (in) :: c34
@@ -197,16 +197,16 @@ end subroutine ciint
 subroutine coscav
    !***********************************************************************
    !
-   ! THIS ROUTINE CONSTRUCTS OR UPDATES THE SOLVENT-ACCESSIBLE
+   ! THIS ROUTINE CONSTRUCTS OR UPDATES THE SOLVENT - ACCESSIBLE
    ! SURFACE (SAS)
    !
    !***********************************************************************
     use molkst_C, only : numat
-    use cosmo_C, only: lenabc, nps, area, isude, sude, &
+    use cosmo_C, only : lenabc, nps, area, isude, sude, &
        cosvol, rsolv, ioldcv, disex2, n0, dirvec, dirsm, srad, &
        cosurf, amat, iatsp, nar_csm, nsetf, phinet, arat
     use common_arrays_c, only : coord, nat
-    use funcon_C, only: pi
+    use funcon_C, only : pi
     use chanel_C, only : iw
     implicit none
     integer :: i, i0, ik, ilipa, info, inset, ipm, ips, ix, j, jmax, jps, k, &
@@ -216,18 +216,18 @@ subroutine coscav
     logical, dimension (10000) :: din ! Was 1082, but some calc'ns used more than 1082
     integer, dimension (1082) :: iseg
     double precision, dimension (3) :: xa, xb, xi, xj, xx
-    double precision, dimension (:,:), allocatable :: dirtm
-    double precision, dimension (:,:,:), allocatable :: finel
+    double precision, dimension (:, :), allocatable :: dirtm
+    double precision, dimension (:, :, :), allocatable :: finel
     double precision, dimension(:), allocatable :: rdat
-    double precision, dimension(:,:), allocatable :: rsc
-    double precision, dimension(:,:,:), allocatable :: tm
+    double precision, dimension(:, :), allocatable :: rsc
+    double precision, dimension(:, :, :), allocatable :: tm
     integer, dimension(:), allocatable :: isort, ipsrs, nipsrs, nset, nipa, &
          & lipa
-    integer, dimension(:,:), allocatable :: nn
+    integer, dimension(:, :), allocatable :: nn
     maxrs = 70 * numat
-    allocate (rdat(numat), rsc(4,maxrs), tm(3,3,numat), nn(3,numat), &
+    allocate (rdat(numat), rsc(4, maxrs), tm(3, 3, numat), nn(3, numat), &
          & isort(maxrs), ipsrs(maxrs), nipsrs(lenabc), nset(1082*numat), &
-         & nipa(numat), dirtm(3,1082), finel(4,500,2))
+         & nipa(numat), dirtm(3, 1082), finel(4, 500, 2))
     if (.not. allocated(srad)) allocate(srad(numat))
     if (.not. allocated(nar_csm))  allocate(nar_csm(lenabc + 1))
    ! MAKE COORDINATES A BIT ASYMMETRIC IN ORDER TO AVOID
@@ -253,7 +253,7 @@ subroutine coscav
           do ix = 1, 3
             dist = dist + (xa(ix) - coord(ix, j)) ** 2
           end do
-          if (dist < (rr+srad(j))**2) then
+          if (dist < (rr + srad(j))**2) then
             ilipa = ilipa + 1
           end if
         end if
@@ -284,11 +284,11 @@ subroutine coscav
           do ix = 1, 3
             dist = dist + (xa(ix) - coord(ix, j)) ** 2
           end do
-          if (dist < (rr+srad(j))**2) then
+          if (dist < (rr + srad(j))**2) then
             ilipa = ilipa + 1
             if (ilipa > maxrs) then
-              write(iw,'(/10x,a)')"Solvent radius too large - reduce RSOLV"
-              write(iw,'(/10x,a,f6.2,a,/)')"(Current value of RSOLV:",rsolv," Angstroms)"
+              write(iw, '(/10x, a)')"Solvent radius too large - reduce RSOLV"
+              write(iw, '(/10x, a, f6.2, a, /)')"(Current value of RSOLV:", rsolv, " Angstroms)"
               call mopend ("Solvent radius too large - reduce RSOLV")
               return
             end if
@@ -310,18 +310,18 @@ subroutine coscav
           do ix = 1, 3
             dist = dist + (xa(ix) - coord(ix, j)) ** 2
           end do
-          if (dist+0.05d0 < dist3) then
+          if (dist + 0.05d0 < dist3) then
             dist3 = dist
             nn(3, i) = j
           end if
-          if (dist3+0.05d0 < dist2) then
+          if (dist3 + 0.05d0 < dist2) then
             dist = dist2
             dist2 = dist3
             dist3 = dist
             nn(3, i) = nn(2, i)
             nn(2, i) = j
           end if
-          if (dist2+0.05d0 < dist1) then
+          if (dist2 + 0.05d0 < dist1) then
             dist = dist1
             dist1 = dist2
             dist2 = dist
@@ -349,21 +349,21 @@ subroutine coscav
       i_loop: do
         if (nn(2, i) == 0) then
           rr = rr + 1.d0
-          dist = sqrt(9.d0*(tm(1,2,I) + rr)**2 + 4.d0*(tm(1,1,i) + rr**2)**2 + tm(1,3,i)**2)
-          xx(1) = 3.d0*(tm(1,2,I) + rr)/dist
-          xx(2) = tm(1,3,I)/dist
-          xx(3) = 2.d0*(tm(1,1,I) + rr**2)/dist 
+          dist = sqrt(9.d0*(tm(1, 2, I) + rr)**2 + 4.d0*(tm(1, 1, i) + rr**2)**2 + tm(1, 3, i)**2)
+          xx(1) = 3.d0*(tm(1, 2, I) + rr)/dist
+          xx(2) = tm(1, 3, I)/dist
+          xx(3) = 2.d0*(tm(1, 1, I) + rr**2)/dist 
         else
           dist2 = 0.d0
-          do ix = 1,3
-              dist2 = dist2 + (xa(ix) - coord(ix,nn(2, i)))**2
+          do ix = 1, 3
+              dist2 = dist2 + (xa(ix) - coord(ix, nn(2, i)))**2
           enddo
           dist = 1.0d0/sqrt(dist2)
-          xx(1) = (coord(1,nn(2, i)) - xa(1))*dist
-          xx(2) = (coord(2,nn(2, i)) - xa(2))*dist
-          xx(3) = (coord(3,nn(2, i)) - xa(3))*dist
+          xx(1) = (coord(1, nn(2, i)) - xa(1))*dist
+          xx(2) = (coord(2, nn(2, i)) - xa(2))*dist
+          xx(3) = (coord(3, nn(2, i)) - xa(3))*dist
         end if
-        sp = xx(1)*tm(1,1,i) + xx(2)*tm(1,2,i) + xx(3)*tm(1,3,i)
+        sp = xx(1)*tm(1, 1, i) + xx(2)*tm(1, 2, i) + xx(3)*tm(1, 3, i)
         if (sp*sp > 0.99d0) then
           nn(2, i) = nn(3, i)
           nn(3, i) = 0
@@ -397,19 +397,19 @@ subroutine coscav
         do ix = 1, 3
           xx(ix) = xa(ix) + dirtm(ix, j) * r
         end do
-         !           --- WE NEED ONLY TRY THOSE ATOMS INTERSECTING ATOM I
+         !          - - - WE NEED ONLY TRY THOSE ATOMS INTERSECTING ATOM I
         do ik = ilipa - nipa(i) + 1, ilipa
           k = lipa(ik)
           dist = 0.d0
           do ix = 1, 3
-            dist = dist + (xx(ix)-coord(ix, k)) ** 2
+            dist = dist + (xx(ix) - coord(ix, k)) ** 2
           end do
           dist = Sqrt (dist) - rsolv - srad(k)
           if (dist < 0) cycle loop
         end do
         narea = narea + 1
-        cosvol = cosvol + ri2 * dirvec(4, j) * (dirtm(1, j)*xa(1)+dirtm(2, &
-       & j)*xa(2)+dirtm(3, j)*xa(3)+ri)
+        cosvol = cosvol + ri2 * dirvec(4, j) * (dirtm(1, j)*xa(1) + dirtm(2, &
+       & j)*xa(2) + dirtm(3, j)*xa(3) + ri)
         area = area + ri2 * dirvec(4, j)
         din(j) = .true.
       end do loop
@@ -423,16 +423,16 @@ subroutine coscav
           i0 = 2
         end if
         jmax = n0(i0)
-        i0 = (i0-1) * n0(1)
+        i0 = (i0 - 1) * n0(1)
         do j = 1, jmax
           nps = nps + 1
           if (nps > lenabc) then
-            call mopend ("NPS IS GREATER THAN LENABC-USE SMALLER NSPA")
+            call mopend ("NPS IS GREATER THAN LENABC - USE SMALLER NSPA")
             go to 100
           else
             iatsp(nps) = i
             do ix = 1, 3
-              xx(ix) = dirsm(ix, i0+j)
+              xx(ix) = dirsm(ix, i0 + j)
             end do
             do ix = 1, 3
               cosurf(ix, nps) = xx(1) * tm(1, ix, i) + xx(2) * tm(2, ix, &
@@ -459,7 +459,7 @@ subroutine coscav
                 sp = x1 * cosurf(1, ips) + x2 * cosurf(2, ips) + x3 * cosurf &
                & (3, ips)
                 if (sp >= spm) then
-                  spm = sp * (1.d0+1.d-14)
+                  spm = sp * (1.d0 + 1.d-14)
                   ipm = ips
                 end if
               end do
@@ -474,18 +474,18 @@ subroutine coscav
           ips = nps0 - 1
           loop1: do
             ips = ips + 1
-            do while (nar_csm(ips) ==  0)
+            do while (nar_csm(ips) == 0)
               niter = 1
               nps = nps - 1
               if (ips > nps) exit loop1
               do jps = ips, nps
-                nar_csm(jps) = nar_csm(jps+1)
-                phinet(jps, 1) = phinet(jps+1, 1)
-                if (Abs(phinet(1,1)) > 1.d-20) then
+                nar_csm(jps) = nar_csm(jps + 1)
+                phinet(jps, 1) = phinet(jps + 1, 1)
+                if (Abs(phinet(1, 1)) > 1.d-20) then
                   ips = ips
                end if
-                phinet(jps, 2) = phinet(jps+1, 2)
-                phinet(jps, 3) = phinet(jps+1, 3)
+                phinet(jps, 2) = phinet(jps + 1, 2)
+                phinet(jps, 3) = phinet(jps + 1, 3)
               end do
             end do
             dists = 0.d0
@@ -502,7 +502,7 @@ subroutine coscav
           if (niter >= 2) exit
         end do
          ! NOW ALL SEGMENTS ARE FINALLY DEFINED AND THE ASSOCIATED
-         ! BASIC GRID POINTS ARE CLOSE-PACKED
+         ! BASIC GRID POINTS ARE CLOSE - PACKED
         do ips = nps0, nps
           nsetf(ips) = inset
           inset = inset + nar_csm(ips)
@@ -516,7 +516,7 @@ subroutine coscav
           if (din(j)) then
             ipm = iseg(j)
             nara = nar_csm(ipm)
-            nset(nsetf(ipm)+nara) = j
+            nset(nsetf(ipm) + nara) = j
             nar_csm(ipm) = nara + 1
             cosurf(4, ipm) = cosurf(4, ipm) + dirvec(4, j) * ri2
           end if
@@ -566,11 +566,11 @@ subroutine coscav
         x3 = finel(3, k, 1)
         x4 = finel(4, k, 1)
         do l = 1, k - 1
-          aa = aa + 2 * x4 * finel(4, l, 1) / Sqrt ((x1-finel(1, l, &
-         & 1))**2+ (x2-finel(2, l, 1))**2+ (x3-finel(3, l, 1))**2)
+          aa = aa + 2 * x4 * finel(4, l, 1) / Sqrt ((x1 - finel(1, l, &
+         & 1))**2 + (x2 - finel(2, l, 1))**2 + (x3 - finel(3, l, 1))**2)
         end do
       end do
-      amat(((ips+1)*ips)/2) = aa / cosurf(4, ips) ** 2
+      amat(((ips + 1)*ips)/2) = aa / cosurf(4, ips) ** 2
       rdat(i) = rdat(i) + aa
       do jps = 1, ips - 1
         j = iatsp(jps)
@@ -578,7 +578,7 @@ subroutine coscav
         do ix = 1, 3
           xj(ix) = coord(ix, j)
           xb(ix) = cosurf(ix, jps)
-          d2 = d2 + (xb(ix)-xa(ix)) ** 2
+          d2 = d2 + (xb(ix) - xa(ix)) ** 2
         end do
         if (d2 > disex2) then
           aa = 1.d0 / Sqrt (d2)
@@ -594,13 +594,13 @@ subroutine coscav
             x3 = finel(3, k, 1)
             x4 = finel(4, k, 1)
             do l = 1, nfl2
-              aa = aa + x4 * finel(4, l, 2) / Sqrt ((x1-finel(1, l, &
-             & 2))**2+ (x2-finel(2, l, 2))**2+ (x3-finel(3, l, 2))**2)
+              aa = aa + x4 * finel(4, l, 2) / Sqrt ((x1 - finel(1, l, &
+             & 2))**2 + (x2 - finel(2, l, 2))**2 + (x3 - finel(3, l, 2))**2)
             end do
           end do
           aa = aa / cosurf(4, ips) / cosurf(4, jps)
         end if
-        amat(((ips-1)*ips)/2+jps) = aa
+        amat(((ips - 1)*ips)/2 + jps) = aa
         if (i == j) then
           rdat(i) = rdat(i) + 2 * aa * cosurf(4, ips) * cosurf(4, jps)
         end if
@@ -615,10 +615,10 @@ subroutine coscav
 end subroutine coscav
 subroutine coscl1 (a, id, n, info)
    ! THIS ROUTINE PERFORMS A CHOLESKY FACTORIZATION
-   ! INPUT:   A =  PACKED LOWER TRIANGLE OF A
+   ! INPUT:   A = PACKED LOWER TRIANGLE OF A
    !               SYMMETRIC POSITIVE DEFINITE N*N MATRIX
-   ! OUTPUT:  A =  LOWER TRIANGLE OF CHOLESKY MATRIX ( INVERSE PIVOT ELEMEN
-   !         ID =  INTEGER VECTOR OF LENGTH N CONTAINING THE INDICES I(I-1)
+   ! OUTPUT:  A = LOWER TRIANGLE OF CHOLESKY MATRIX (INVERSE PIVOT ELEMEN
+   !         ID = INTEGER VECTOR OF LENGTH N CONTAINING THE INDICES I(I - 1)
    !
     implicit none
     integer, intent (in) :: n
@@ -640,9 +640,9 @@ subroutine coscl1 (a, id, n, info)
         indi = id(i)
         summe = 0.d0
         do j = 1, k - 1
-          summe = summe + a(j+indi) * a(j+indk)
+          summe = summe + a(j + indi) * a(j + indk)
         end do
-        summe = a(k+indi) - summe
+        summe = a(k + indi) - summe
         if (i == k) then
           if (summe < 0.0d0) then
             info = -1
@@ -650,7 +650,7 @@ subroutine coscl1 (a, id, n, info)
           end if
           a(kk) = 1.d0 / Sqrt (summe)
         else
-          a(k+indi) = summe * a(kk)
+          a(k + indi) = summe * a(kk)
         end if
       end do
     end do
@@ -658,48 +658,49 @@ end subroutine coscl1
 subroutine coscl2 (a, id, x, y, n)
    ! THIS ROUTINE SOLVES THE LINEAR SYSTEM CX = Y BASED ON
    ! CHOLESKY FACTORIZATION
-   ! INPUT:   A =  UPPER TRIANGLE OF CHOLESKY MATRIX
-   ! INPUT:   Y =  VECTOR OF LENGTH N
-   !         ID =  INTEGER VECTOR OF LENGTH N CONTAINING THE INDICES I(I-1)
-   ! OUTPUT:  X =  VECTOR OF LENGTH N
+   ! INPUT:   A = UPPER TRIANGLE OF CHOLESKY MATRIX
+   ! INPUT:   Y = VECTOR OF LENGTH N
+   !         ID = INTEGER VECTOR OF LENGTH N CONTAINING THE INDICES I(I - 1)
+   ! OUTPUT:  X = VECTOR OF LENGTH N
     implicit none
     integer, intent (in) :: n
     double precision, dimension (*), intent (in) :: a
     integer, dimension (n), intent (in) :: id
-    double precision, dimension (n), intent (inout) :: x
+    double precision, dimension (n), intent (out) :: x
     double precision, dimension (n), intent (in) :: y
     integer :: i, k, kk
     double precision :: summe
+    x = 0.d0
     do k = 1, n
       summe = y(k)
       kk = id(k)
-      do i = k - 1, 1, -1
-        summe = summe - a(i+kk) * x(i)
+      do i = k - 1, 1, - 1
+        summe = summe - a(i + kk) * x(i)
       end do
-      x(k) = summe * a(k+kk)
+      x(k) = summe * a(k + kk)
     end do
-    do k = n, 1, -1
+    do k = n, 1, - 1
       summe = x(k)
       do i = k + 1, n
-        summe = summe - a(k+id(i)) * x(i)
+        summe = summe - a(k + id(i)) * x(i)
       end do
-      x(k) = summe * a(k+id(k))
+      x(k) = summe * a(k + id(k))
     end do
 end subroutine coscl2
 subroutine diegrd (dxyz)
-    use molkst_C, only: numat
-    use cosmo_C, only: nps, fepsi, nipc, &
+    use molkst_C, only : numat
+    use cosmo_C, only : nps, fepsi, nipc, &
      cosurf, iatsp, isude, sude, qscnet, qdenet, qscat, arat
-    use parameters_C, only: dd, qq
+    use parameters_C, only : dd, qq
     use common_arrays_c, only : coord, nfirst, nlast, nat
-    use funcon_C, only: ev, a0, fpc_9
+    use funcon_C, only : ev, a0, fpc_9
     implicit none
     integer :: i, ia, iak, ial, ib, idel, iden, ix, j, k, l, nati, iii
     double precision :: bsurf, ddi, deab, dist2, dx, fact, ff, ff0, &
    & qqi2, qsk, rm2, rm4, xxx
     double precision, dimension (3) :: xk, xl, xx
     double precision, dimension (0:3, 10) :: db
-    double precision, dimension (3,numat), intent (inout) :: dxyz 
+    double precision, dimension (3, numat), intent (inout) :: dxyz 
     intrinsic Min, Sqrt
     do i = 1, 10
       do ix = 1, 3
@@ -723,7 +724,7 @@ subroutine diegrd (dxyz)
             xl(ix) = xxx
             dist2 = dist2 + xxx * xxx
           end do
-          ff = qsk * qscnet(l, 3) * fact * dist2 ** (-1.5d0) / fepsi
+          ff = qsk * qscnet(l, 3) * fact * dist2 ** (- 1.5d0) / fepsi
           do ix = 1, 3
             dxyz(ix, iak) = dxyz(ix, iak) - xl(ix) * ff
             dxyz(ix, ial) = dxyz(ix, ial) + xl(ix) * ff
@@ -737,12 +738,12 @@ subroutine diegrd (dxyz)
     do i = 1, nipc
       ia = isude(1, i)
       ib = isude(2, i)
-      deab = -0.25d0 * (qscat(ia)**2*sude(1, i)/arat(ia)+qscat(ib)**2*sude(2, &
-     & i)/arat(ib)+bsurf*(sude(1, i)+sude(2, i)))
+      deab = -0.25d0 * (qscat(ia)**2*sude(1, i)/arat(ia) + qscat(ib)**2*sude(2, &
+     & i)/arat(ib) + bsurf*(sude(1, i) + sude(2, i)))
       xk(1) = coord(1, ib) - coord(1, ia)
       xk(2) = coord(2, ib) - coord(2, ia)
       xk(3) = coord(3, ib) - coord(3, ia)
-      deab = deab / Sqrt (xk(1)**2+xk(2)**2+xk(3)**2)
+      deab = deab / Sqrt (xk(1)**2 + xk(2)**2 + xk(3)**2)
       do ix = 1, 3
         dxyz(ix, ia) = dxyz(ix, ia) - xk(ix) * deab
         dxyz(ix, ib) = dxyz(ix, ib) + xk(ix) * deab
@@ -756,7 +757,7 @@ subroutine diegrd (dxyz)
       qsk = qscnet(k, 3)
       iden = 0
       do i = 1, numat
-        idel = nlast(i)+1 - nfirst(i)
+        idel = nlast(i) + 1 - nfirst(i)
         if (i /= iak) then
           nati = nat(i)
           dist2 = 0.d0
@@ -767,16 +768,16 @@ subroutine diegrd (dxyz)
           end do
           ddi = dd(nati) * a0
           qqi2 = (a0*qq(nati)) ** 2
-          ff0 = -qsk * fact * dist2 ** (-1.5d0)
-          if (idel .gt. 1) then
+          ff0 = -qsk * fact * dist2 ** (- 1.5d0)
+          if (idel  >  1) then
             rm2 = 1.d0 / dist2
             rm4 = rm2 ** 2
             db(0, 2) = ddi * 3 * xx(1) * rm2
             db(0, 4) = ddi * 3 * xx(2) * rm2
             db(0, 7) = ddi * 3 * xx(3) * rm2
-            db(0, 3) = 1.d0 + qqi2 * (15*xx(1)**2*rm2-3.d0) * rm2
-            db(0, 6) = 1.d0 + qqi2 * (15*xx(2)**2*rm2-3.d0) * rm2
-            db(0, 10) = 1.d0 + qqi2 * (15*xx(3)**2*rm2-3.d0) * rm2
+            db(0, 3) = 1.d0 + qqi2 * (15*xx(1)**2*rm2 - 3.d0) * rm2
+            db(0, 6) = 1.d0 + qqi2 * (15*xx(2)**2*rm2 - 3.d0) * rm2
+            db(0, 10) = 1.d0 + qqi2 * (15*xx(3)**2*rm2 - 3.d0) * rm2
             db(0, 5) = qqi2 * 15 * xx(1) * xx(2) * rm4
             db(0, 8) = qqi2 * 15 * xx(1) * xx(3) * rm4
             db(0, 9) = qqi2 * 15 * xx(3) * xx(2) * rm4
@@ -793,31 +794,31 @@ subroutine diegrd (dxyz)
             db(2, 9) = db(3, 10)
             db(3, 9) = db(2, 6)
           end if
-          do j = 1, min(10,(idel*(idel+1))/2)
-            ff = -ff0 * qdenet(iden+j, 3)
-            if(j.eq.1 .and. idel.eq.9) then
-              do iii=5,9
-                ff = ff-ff0 * qdenet(iden+(iii*(iii+1))/2, 3)
+          do j = 1, min(10, (idel*(idel + 1))/2)
+            ff = -ff0 * qdenet(iden + j, 3)
+            if(j == 1 .and. idel == 9) then
+              do iii = 5, 9
+                ff = ff - ff0 * qdenet(iden + (iii*(iii + 1))/2, 3)
               end do
             end if
             do ix = 1, 3
-              dx = (xx(ix)*db(0, j)-db(ix, j)) * ff
+              dx = (xx(ix)*db(0, j) - db(ix, j)) * ff
               dxyz(ix, iak) = dxyz(ix, iak) + dx
               dxyz(ix, i) = dxyz(ix, i) - dx
             end do
           end do
         end if
-        iden = iden + (idel*(idel+1))/2
+        iden = iden + (idel*(idel + 1))/2
       end do
     end do
 end subroutine diegrd
 subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
-    use molkst_C, only: numat, norbs, lm61
+    use molkst_C, only : numat, norbs, lm61
     use meci_C, only : lab, nmos, nstate, nelec, microa, microb, occa, nalmat
-    use cosmo_C, only: nps, fnsq, amat, bmat, nsetf, &
+    use cosmo_C, only : nps, fnsq, amat, bmat, nsetf, &
     phinet, qscnet, qdenet
     use common_arrays_C, only : nfirst, nlast
-    use funcon_C, only: ev, a0
+    use funcon_C, only : ev, a0
     implicit none
     double precision, dimension (lab), intent (inout) :: eig, vectci
     double precision, dimension (lab**2), intent (in) :: conf
@@ -829,9 +830,9 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
 
     fact = -ev * a0 * fnsq / 2
     do ist = 1, lab
-      ii = lab * (ist-1)
+      ii = lab * (ist - 1)
       do j = 1, lab
-        vectci(j) = conf(ii+j)
+        vectci(j) = conf(ii + j)
       end do
       !     INITIALIZE WITH THE OPPOSITE OF THE 'SCF' DENSITY.
       do i = 1, nmos
@@ -849,11 +850,11 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
             ix = 0
             iy = 0
             do j = 1, nmos
-              ix = ix + Abs (microa(j, id)-microa(j, jd))
-              iy = iy + Abs (microb(j, id)-microb(j, jd))
+              ix = ix + Abs (microa(j, id) - microa(j, jd))
+              iy = iy + Abs (microb(j, id) - microb(j, jd))
             end do
                !     CHECK NUMBER OF DIFFERING M.O.
-            if (ix+iy <= 2) then
+            if (ix + iy  <= 2) then
               if (ix == 2) then
                 ! DETERMINANTS ID AND JD DIFFER BY M.O I IN ID AND M.O J IN JD:
                 do i = 1, nmos
@@ -867,9 +868,9 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
                 !        IJ GIVES THE SIGN OF THE PERMUTATION
                 sum = 0.d0
                 do k = 1, nstate
-                  sum = sum + vectci(id+(k-1)*lab) * vectci(jd+(k-1)*lab)
+                  sum = sum + vectci(id + (k - 1)*lab) * vectci(jd + (k - 1)*lab)
                 end do
-                deltap(j, i) = deltap(j, i) + sum * Dble (1-2*Mod(ij, 2)) / &
+                deltap(j, i) = deltap(j, i) + sum * Dble (1 - 2*Mod(ij, 2)) / &
                & nstate
               else if (iy == 2) then
                 ! DETERMINANTS ID AND JD DIFFER BY M.O J IN ID AND M.O I IN JD:
@@ -884,19 +885,19 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
                 ij = ij + microa(j, id)
                 sum = 0.d0
                 do k = 1, nstate
-                  sum = sum + vectci(id+(k-1)*lab) * vectci(jd+(k-1)*lab)
+                  sum = sum + vectci(id + (k - 1)*lab) * vectci(jd + (k - 1)*lab)
                 end do
-                deltap(j, i) = deltap(j, i) + sum * Dble (1-2*Mod(ij, 2)) / &
+                deltap(j, i) = deltap(j, i) + sum * Dble (1 - 2*Mod(ij, 2)) / &
                      & nstate
               else
                      !        DETERMINANTS ID AND JD ARE IDENTICAL:
                 sum = 0.d0
                 do k = 1, nstate
-                  sum = sum + vectci(id+(k-1)*lab) ** 2
+                  sum = sum + vectci(id + (k - 1)*lab) ** 2
                 end do
                 do i = 1, nmos
                   deltap(i, i) = deltap(i, i) &
-                       & + (microa(i, id)+microb(i, id)) * sum / nstate
+                       & + (microa(i, id) + microb(i, id)) * sum / nstate
                 end do
               end if
             end if
@@ -905,7 +906,7 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
       end do
       !
       !     BACK TRANSFORM INTO A.O. BASIS.
-      !     -------------------------------
+      !    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
       !     P(C.I.) = P(SCF) + C * DELTAP * C'
       do i = 1, nmos
         do j = 1, i - 1
@@ -913,7 +914,7 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
         end do
       end do
       !     STEP 1: DELTAP = C * DELTAP
-      call mxm (coeffs(1, nelec+1), norbs, deltap, nmos, delta, nmos)
+      call mxm (coeffs(1, nelec + 1), norbs, deltap, nmos, delta, nmos)
       !     STEP 2: P = P + DELTAP * C'
       iden = 0
       do iat = 1, numat
@@ -921,7 +922,7 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
           do j = nfirst(iat), i
             sum = 0.d0
             do k = 1, nmos
-              sum = sum + delta (i, k) * coeffs(j, nelec+k)
+              sum = sum + delta (i, k) * coeffs(j, nelec + k)
             end do
             iden = iden + 1
             qdenet(iden, 1) = sum
@@ -936,7 +937,7 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
         end do
         phinet(i, 1) = sum
       end do
-      ! NOW CALCULATE THE CORRESPONDING SCREENING CHARGES FROM A*QSCNET=-QDENE
+      ! NOW CALCULATE THE CORRESPONDING SCREENING CHARGES FROM A*QSCNET = -QDENE
       call coscl2 (amat, nsetf, qscnet, phinet, nps)
       edie = 0.d0
       ! NOW CALCULATE THE DIELECTRIC ENERGY AS QSCNET*PHINET
@@ -956,12 +957,12 @@ subroutine dvfill (nppa, dirvec)
    !   DVFILL CALCULATES THE DIRECTION VECTORS.  THESE ARE PUT IN DIRVEC.
    !
    !  (THE VARIOUS SETS FORM ALMOST REGULAR POLYHEDRA WITH IH
-   !   SYMMETRY.  A GOOD EXERCISE IS TO SKETCH THE POINTS USING,
+   !   SYMMETRY.  A GOOD EXERCISE IS TO SKETCH THE POINTS USING, 
    !   E.G. CHEM3D)
    !
    !***********************************************************************
-    use chanel_C, only: iw
-    use funcon_C, only: pi
+    use chanel_C, only : iw
+    use funcon_C, only : pi
     implicit none
     integer, intent (in) :: nppa
     double precision, dimension (4, nppa), intent (inout) :: dirvec
@@ -985,7 +986,7 @@ subroutine dvfill (nppa, dirvec)
     do i = -1, 1, 2
       do j = 1, 5
         nd = nd + 1
-        beta = 1.d0 + j * 0.4d0 * pi + (i+1) * 0.1d0 * pi
+        beta = 1.d0 + j * 0.4d0 * pi + (i + 1) * 0.1d0 * pi
         dirvec(2, nd) = r * Cos (beta)
         dirvec(3, nd) = r * Sin (beta)
         dirvec(1, nd) = i * h
@@ -1003,27 +1004,27 @@ subroutine dvfill (nppa, dirvec)
       dirvec(1, i) = cphi * xx + sphi * yy
       dirvec(2, i) = -sphi * xx + cphi * yy
     end do
-   !   NPPA=10*3**K*M**2+2
-    m2 = (nppa-2) / 10
-    m = Nint (Sqrt(m2+0.d0))
+   !   NPPA = 10*3**K*M**2 + 2
+    m2 = (nppa - 2) / 10
+    m = Nint (Sqrt(m2 + 0.d0))
     k = 0
     if (m2 /= m*m) then
       k = 1
       m2 = m2 / 3
-      m = Nint (Sqrt(m2+0.d0))
+      m = Nint (Sqrt(m2 + 0.d0))
     end if
-    if (10*3**k*m**2+2 /= nppa) then
-      write (iw,*) "VALUE OF NPPA NOT ALLOWED: IT MUST BE 10*3**K*M**2+2"
+    if (10*3**k*m**2 + 2 /= nppa) then
+      write (iw, *) "VALUE OF NPPA NOT ALLOWED: IT MUST BE 10*3**K*M**2 + 2"
       return
     end if
-   ! CREATE ON EACH EDGE M-1 NEW POINTS
+   ! CREATE ON EACH EDGE M - 1 NEW POINTS
     do i = 1, 30
       na = kset(1, i)
       nb = kset(2, i)
       do j = 1, m - 1
         nd = nd + 1
         do ix = 1, 3
-          dirvec(ix, nd) = dirvec(ix, na) * (m-j) + dirvec(ix, nb) * j
+          dirvec(ix, nd) = dirvec(ix, na) * (m - j) + dirvec(ix, nb) * j
         end do
       end do
     end do
@@ -1036,7 +1037,7 @@ subroutine dvfill (nppa, dirvec)
         do j2 = 1, m - j1 - 1
           nd = nd + 1
           do ix = 1, 3
-            dirvec(ix, nd) = dirvec(ix, na) * (m-j1-j2) + dirvec(ix, nb) * &
+            dirvec(ix, nd) = dirvec(ix, na) * (m - j1 - j2) + dirvec(ix, nb) * &
            & j1 + dirvec(ix, nc) * j2
           end do
         end do
@@ -1048,8 +1049,8 @@ subroutine dvfill (nppa, dirvec)
           do j2 = 0, m - j1 - 1
             nd = nd + 1
             do ix = 1, 3
-              dirvec(ix, nd) = dirvec(ix, na) * (m-j1-j2-2*t) + dirvec(ix, &
-             & nb) * (j1+t) + dirvec(ix, nc) * (j2+t)
+              dirvec(ix, nd) = dirvec(ix, na) * (m - j1 - j2 - 2*t) + dirvec(ix, &
+             & nb) * (j1 + t) + dirvec(ix, nc) * (j2 + t)
             end do
           end do
         end do
@@ -1058,8 +1059,8 @@ subroutine dvfill (nppa, dirvec)
           do j2 = 0, m - j1 - 2
             nd = nd + 1
             do ix = 1, 3
-              dirvec(ix, nd) = dirvec(ix, na) * (m-j1-j2-2*t) + dirvec(ix, &
-             & nb) * (j1+t) + dirvec(ix, nc) * (j2+t)
+              dirvec(ix, nd) = dirvec(ix, na) * (m - j1 - j2 - 2*t) + dirvec(ix, &
+             & nb) * (j1 + t) + dirvec(ix, nc) * (j2 + t)
             end do
           end do
         end do
@@ -1077,7 +1078,7 @@ subroutine dvfill (nppa, dirvec)
       do ix = 1, 3
         dirvec(ix, i) = dirvec(ix, i) * dist
       end do
-      if (i <= 12) then
+      if (i  <= 12) then
         ar = 5.d0
       else
         ar = 6.d0 * dist2
@@ -1093,7 +1094,7 @@ end subroutine dvfill
 subroutine mfinel (ips, k, finel, nar_csm, nsetf, nset, rsc, nipsrs, dirvec, tm, &
 & x, r, nfl, ioldcv, maxrs, lenabc, numat)
    !  THIS ROUTINE GENERATES THE LIST OF ALL BASIC GRID POINTS AND
-   !  RING-SEGMENTS BELONGING TO SEGMENT IPS
+   !  RING - SEGMENTS BELONGING TO SEGMENT IPS
     implicit none
     integer, intent (in) :: ioldcv, ips, k, lenabc, maxrs, numat
     integer, intent (out) :: nfl
@@ -1104,7 +1105,7 @@ subroutine mfinel (ips, k, finel, nar_csm, nsetf, nset, rsc, nipsrs, dirvec, tm,
     double precision, dimension (3, 3), intent (in) :: tm
     double precision, dimension (4, 1082), intent (in) :: dirvec
     double precision, dimension (4, maxrs), intent (in) :: rsc
-    double precision, dimension (4,500,2), intent (out) :: finel
+    double precision, dimension (4, 500, 2), intent (out) :: finel
     integer :: idir, irs, irs0, irs1, ix, l, nari
     double precision, dimension (3) :: y
    !
@@ -1129,7 +1130,7 @@ subroutine mfinel (ips, k, finel, nar_csm, nsetf, nset, rsc, nipsrs, dirvec, tm,
    ! NOW THE ASSOCIATED RINGSEGMENTS
     irs0 = 1
     if (ips > 1) then
-      irs0 = nipsrs(ips-1) + 1
+      irs0 = nipsrs(ips - 1) + 1
     end if
     irs1 = nipsrs(ips)
     do irs = irs0, irs1
@@ -1140,23 +1141,29 @@ subroutine mfinel (ips, k, finel, nar_csm, nsetf, nset, rsc, nipsrs, dirvec, tm,
     end do
 end subroutine mfinel
 subroutine mkbmat 
-    use molkst_C, only: numat
+    use molkst_C, only : numat, method_indo
     use cosmo_C, only : nps, bmat, cosurf
-    use parameters_C, only: dd, qq
-    use funcon_C, only: a0
+    use parameters_C, only : dd, qq, dsd, dpd, ddd
+    use funcon_C, only : a0
     use common_arrays_C, only : coord, nfirst, nlast, nat
     implicit none
     integer :: i, ia, idel, iden, ips, ix, nati, iii
-    double precision :: ddi, dist, qqi2, rm1, rm3, rm5
+    double precision :: ddi, dist, qqi2, rm1, rm3, rm5, dsdi, dpdi, dddi, atmp
     double precision, dimension (3) :: xa
-   ! FILLING B-MATRIX
+   ! FILLING B - MATRIX
     iden = 0
     do i = 1, numat
       ia = nfirst(i)
-      idel = nlast(i) - ia+1
+      idel = nlast(i) - ia + 1
       nati = nat(i)
       ddi = dd(nati) * a0
       qqi2 = (a0*qq(nati)) ** 2
+!
+! replace dd and qq with terms that work for d orbitals
+!
+      dsdi = (dsd(nati)*a0)**2
+      dpdi = dpd(nati)*a0
+      dddi = (ddd(nati)*a0)**2
       do ips = 1, nps
         dist = 0.d0
         do ix = 1, 3
@@ -1164,48 +1171,122 @@ subroutine mkbmat
           dist = dist + xa(ix) ** 2
         end do
         rm1 = 1.d0 / Sqrt (dist)
-        bmat(iden+1, ips) = rm1
+        bmat(iden + 1, ips) = rm1
         if (idel > 1) then
           rm3 = rm1 ** 3
           rm5 = rm1 ** 5
-          bmat(iden+3, ips) = rm1 + 3 * xa(1) ** 2 * qqi2 * rm5 - qqi2 * &
+!
+!   INDO off - diagonal terms are zero - preset here
+!
+          do iii = iden + 2, iden + 9
+            bmat(iii, ips) = 0.d0
+          end do
+          bmat(iden + 3, ips) = rm1 + 3 * xa(1) ** 2 * qqi2 * rm5 - qqi2 * &
          & rm3
-          bmat(iden+6, ips) = rm1 + 3 * xa(2) ** 2 * qqi2 * rm5 - qqi2 * &
+          bmat(iden + 6, ips) = rm1 + 3 * xa(2) ** 2 * qqi2 * rm5 - qqi2 * &
          & rm3
-          bmat(iden+10, ips) = rm1 + 3 * xa(3) ** 2 * qqi2 * rm5 - qqi2 &
+          bmat(iden + 10, ips) = rm1 + 3 * xa(3) ** 2 * qqi2 * rm5 - qqi2 &
          & * rm3
-          bmat(iden+2, ips) = xa(1) * ddi * rm3
-          bmat(iden+4, ips) = xa(2) * ddi * rm3
-          bmat(iden+7, ips) = xa(3) * ddi * rm3
-          bmat(iden+5, ips) = 3 * xa(1) * xa(2) * qqi2 * rm5
-          bmat(iden+8, ips) = 3 * xa(1) * xa(3) * qqi2 * rm5
-          bmat(iden+9, ips) = 3 * xa(3) * xa(2) * qqi2 * rm5
+!
+!  s - p terms (2, 4, 7) and p - p terms (5, 8, 9) for non - INDO methods
+!
+          if (.not. method_indo) then
+            bmat(iden + 2, ips) = xa(1) * ddi * rm3
+            bmat(iden + 4, ips) = xa(2) * ddi * rm3
+            bmat(iden + 7, ips) = xa(3) * ddi * rm3
+            bmat(iden + 5, ips) = 3 * xa(1) * xa(2) * qqi2 * rm5
+            bmat(iden + 8, ips) = 3 * xa(1) * xa(3) * qqi2 * rm5
+            bmat(iden + 9, ips) = 3 * xa(3) * xa(2) * qqi2 * rm5
+          end if
 ! c now the d-orbitals in spherical symmetry
-          if(idel.gt.4) then
-            do iii=iden+11,iden+44
-              bmat(iii,ips)=0.d0
+          if(idel > 4) then
+            do iii = iden + 11, iden + 44
+              bmat(iii, ips) = 0.d0
             end do
-            do iii=5,9
-              bmat(iden+(iii*(iii+1))/2, ips) = rm1
+            do iii = 5, 9
+              bmat(iden + (iii*(iii + 1))/2, ips) = rm1
             end do
+! Replace spherically symmetric d orbitals with terms from
+! J. Phys. Chem. B 2005, 109, 9799
+            if (method_indo) then
+              do iii = iden + 11, iden + 44
+                bmat(iii, ips) = 0.d0
+              end do
+! Order of INDO d orbitals:  z^2, x^2 - y^2, xy, xz, yz
+! d-d self interactions
+              bmat(iden + 15, ips) = rm1 - dddi*rm3 + 3*dddi*xa(3)**2*rm5   ! z^2
+              bmat(iden + 21, ips) = rm1 + dddi*rm3 - 3*dddi*xa(3)**2*rm5   ! x^2 - y^2
+              bmat(iden + 28, ips) = rm1 + dddi*rm3 - 3*dddi*xa(3)**2*rm5   ! xy
+              bmat(iden + 36, ips) = rm1 + dddi*rm3 - 3*dddi*xa(2)**2*rm5   ! xz
+              bmat(iden + 45, ips) = rm1 + dddi*rm3 - 3*dddi*xa(1)**2*rm5   ! yz
+            else
+! Order of MOPAC d orbitals: x^2 - y^2, xz, z^2, yz, xy
+              bmat(iden + 15, ips) = rm1 + dddi*rm3 - 3*dddi*xa(3)**2*rm5   ! x^2 - y^2
+              bmat(iden + 21, ips) = rm1 + dddi*rm3 - 3*dddi*xa(2)**2*rm5   ! xz
+              bmat(iden + 28, ips) = rm1 - dddi*rm3 + 3*dddi*xa(3)**2*rm5   ! z^2
+              bmat(iden + 36, ips) = rm1 + dddi*rm3 - 3*dddi*xa(1)**2*rm5   ! yz
+              bmat(iden + 45, ips) = rm1 + dddi*rm3 - 3*dddi*xa(3)**2*rm5   ! xy
+
+!     s - d terms
+              atmp = 2*xa(3)**2 - xa(1)**2 - xa(2)**2
+              bmat(iden + 11, ips) = 3*dsdi*(xa(1)**2 - xa(2)**2)*rm5/2.d0    ! x^2 - y^2
+              bmat(iden + 16, ips) = 3*dsdi*xa(1)*xa(3)*rm5                 ! xz
+              bmat(iden + 22, ips) = sqrt(3.d0)*atmp*rm5/2.d0               ! z^2
+              bmat(iden + 29, ips) = 3*dsdi*xa(2)*xa(3)*rm5                 ! yz
+              bmat(iden + 37, ips) = 3*dsdi*xa(1)*xa(2)*rm5                 ! xy
+
+!     p - d terms
+!             dx^2 - y^2
+              bmat(iden + 12, ips) = dpdi*xa(1)*rm3
+              bmat(iden + 13, ips) = dpdi*xa(2)*rm3
+              bmat(iden + 14, ips) = 0.d0
+!             dxz
+              bmat(iden + 17, ips) = dpdi*xa(3)*rm3
+              bmat(iden + 18, ips) = 0.d0
+              bmat(iden + 19, ips) = dpdi*xa(1)*rm3
+!             dz^2
+              bmat(iden + 23, ips) = -dpdi*xa(1)*rm3/sqrt(3.d0)
+              bmat(iden + 24, ips) = -dpdi*xa(2)*rm3/sqrt(3.d0)
+              bmat(iden + 25, ips) = 2*dpdi*xa(3)*rm3/sqrt(3.d0)
+!             dyz
+              bmat(iden + 30, ips) = 0.d0
+              bmat(iden + 31, ips) = dpdi*xa(3)*rm3
+              bmat(iden + 32, ips) = dpdi*xa(2)*rm3
+!             dxy
+              bmat(iden + 38, ips) = dpdi*xa(2)*rm3
+              bmat(iden + 39, ips) = dpdi*xa(1)*rm3
+              bmat(iden + 40, ips) = 0.d0
+
+!     d-d non - self terms
+              bmat(iden + 20, ips) = 3*dddi*xa(1)*xa(3)*rm5             ! dxz - dx^2 - y^2
+              bmat(iden + 26, ips) = 3*dddi*rm5*(xa(1)**2 - xa(2)**2)   ! dz^2 - dx^2 - y^2
+              bmat(iden + 27, ips) = sqrt(3.d0)*dddi*rm5*xa(1)*xa(3)    ! dz^2 - dxz
+              bmat(iden + 33, ips) = 3*dddi*xa(2)*xa(3)*rm5             ! dyz - dx^2 - y^2
+              bmat(iden + 34, ips) = 3*dddi*xa(1)*xa(2)*rm5             ! dyz - dxz
+              bmat(iden + 35, ips) = sqrt(3.d0)*dddi*rm5*xa(2)*xa(3)    ! dyz - dz^2
+              bmat(iden + 41, ips) = 0                                  ! dxy - dx^2 - y^2
+              bmat(iden + 42, ips) = 3*dddi*xa(2)*xa(3)*rm5             ! dxy - dxz
+              bmat(iden + 43, ips) = -2*sqrt(3.d0)*dddi*rm5*xa(1)*xa(2) ! dxy - dz^2
+              bmat(iden + 44, ips) = 3*dddi*xa(1)*xa(3)*rm5             ! dxy - dyz
+            end if
           end if
 ! c end d-orbitals
         end if
       end do
-      iden = iden + (idel*(idel+1))/2
+      iden = iden + (idel*(idel + 1))/2
     end do
 end subroutine mkbmat
 subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, nat, &
 & srad, cosurf, iatsp, nar_csm, nsetf, isude, sude, maxrs)
    ! CREATES SEGMENTS WHICH CLOSE THE CONCAVE REGIONS OF THE CAVITY
-    use cosmo_C, only: n0, lenabc, nipc, rsolv, area, &
+    use cosmo_C, only : n0, lenabc, nipc, rsolv, area, &
        & cosvol, nps
-    use molkst_C, only: numat
-    use funcon_C, only: pi, twopi
+    use molkst_C, only : numat
+    use funcon_C, only : pi, twopi
     implicit none
     integer, intent (in) :: maxrs, dim_din
     logical, dimension (dim_din), intent (in) :: din 
-    integer, dimension (lenabc+1), intent (inout) :: iatsp, nar_csm, nsetf
+    integer, dimension (lenabc + 1), intent (inout) :: iatsp, nar_csm, nsetf
     integer, dimension (maxrs), intent (in) :: lipa
     integer, dimension (maxrs), intent (out) :: ipsrs, isort
     integer, dimension (numat), intent (in) :: nat, nipa
@@ -1214,7 +1295,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
     double precision, dimension (numat), intent (in) :: srad
     double precision, dimension (2, 30*numat), intent (out) :: sude
     double precision, dimension (3, numat), intent (in) :: coord
-    double precision, dimension (4, lenabc+1), intent (inout) :: cosurf
+    double precision, dimension (4, lenabc + 1), intent (inout) :: cosurf
     double precision, dimension (4, maxrs), intent (out) :: rsc
     integer :: i, i2, i3, ia, iat, iat0, ib, ic, ich, iib, iic, iii, &
          & ik, il, ilipa, ip1, ips, ips0, ips1, ipsmin, is, isum, &
@@ -1241,7 +1322,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
       nipsrs(i) = 0
     end do
     do ia = 1, numat - 1
-      if ( .not. din(ia)) then
+      if (.not. din(ia)) then
         ra = srad(ia) + rsolv
         do ix = 1, 3
           xta(ix, 1) = coord(ix, ia)
@@ -1249,7 +1330,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
         do iib = ilipa + 1, ilipa + nipa(ia)
           ib = lipa(iib)
           if (ib > ia) then
-            if ( .not. din(ib)) then
+            if (.not. din(ib)) then
               rb = srad(ib) + rsolv
               dab = 0.d0
               nsab = 0
@@ -1259,16 +1340,16 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                 dab = dab + xx(ix) ** 2
               end do
               dab = Sqrt (dab)
-              call ansude (ra-rsolv, rb-rsolv, dab, rsolv, aa, ab, aar, abr, &
+              call ansude (ra - rsolv, rb - rsolv, dab, rsolv, aa, ab, aar, abr, &
              & aad, abd, rinc)
-              cosa = (ra**2+dab**2-rb**2) / (2*dab*ra)
-              cosb = (rb**2+dab**2-ra**2) / (2*dab*rb)
-              sina = Sqrt (1.d0-cosa**2)
+              cosa = (ra**2 + dab**2 - rb**2) / (2*dab*ra)
+              cosb = (rb**2 + dab**2 - ra**2) / (2*dab*rb)
+              sina = Sqrt (1.d0 - cosa**2)
               da = ra * cosa
               hh = ra * sina
-              ddd = rsolv * (cosa+cosb) / dab
-              fz(1) = (1.d0-Cos (hh*pi/ra)) / 2
-              fz(2) = (1.d0-Cos (hh*pi/rb)) / 2
+              ddd = rsolv * (cosa + cosb) / dab
+              fz(1) = (1.d0 - Cos (hh*pi/ra)) / 2
+              fz(2) = (1.d0 - Cos (hh*pi/rb)) / 2
               if (cosa*cosb < 0d0) then
                 fz(1) = 1.d0
               end if
@@ -1284,19 +1365,19 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
               rvx(1) = xx(2) * 3.d0 - xx(3) * 2.d0
               rvx(2) = xx(3) * 1.d0 - xx(1) * 3.d0
               rvx(3) = xx(1) * 2.d0 - xx(2) * 1.d0
-              dist = Sqrt (rvx(1)**2+rvx(2)**2+rvx(3)**2)
+              dist = Sqrt (rvx(1)**2 + rvx(2)**2 + rvx(3)**2)
               if(dist < 1d-9) then
-                rvx(1)=xx(2)*4.d0-xx(3)*2.d0
-                rvx(2)=xx(3)*1.d0-xx(1)*4.d0
-                rvx(3)=xx(1)*2.d0-xx(2)*1.d0
-                dist=sqrt(rvx(1)**2+rvx(2)**2+rvx(3)**2)
+                rvx(1) = xx(2)*4.d0 - xx(3)*2.d0
+                rvx(2) = xx(3)*1.d0 - xx(1)*4.d0
+                rvx(3) = xx(1)*2.d0 - xx(2)*1.d0
+                dist = sqrt(rvx(1)**2 + rvx(2)**2 + rvx(3)**2)
               end if
               do ix = 1, 3
                 rvx(ix) = hh * rvx(ix) / dist
               end do
-              rvy(1) = (xx(2)*rvx(3)-xx(3)*rvx(2)) / dab
-              rvy(2) = (xx(3)*rvx(1)-xx(1)*rvx(3)) / dab
-              rvy(3) = (xx(1)*rvx(2)-xx(2)*rvx(1)) / dab
+              rvy(1) = (xx(2)*rvx(3) - xx(3)*rvx(2)) / dab
+              rvy(2) = (xx(3)*rvx(1) - xx(1)*rvx(3)) / dab
+              rvy(3) = (xx(1)*rvx(2) - xx(2)*rvx(1)) / dab
                   ! NOW ALL TRIPLE POINTS ON THE RING ARE SEARCHED
               ntrp = 0
               ntrp2 = 0
@@ -1315,25 +1396,25 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                   dabc = Sqrt (dabc)
                   cosa = sp / dab / dabc
                            ! AVOID PROBLEMS WITH NUMERICAL ACCURACY
-                  sina = Sqrt (Max(1.d-28, 1.d0-cosa*cosa))
-                  cj = (dabc*dabc+hh*hh-rc*rc) / (2*dabc*hh*sina)
+                  sina = Sqrt (Max(1.d-28, 1.d0 - cosa*cosa))
+                  cj = (dabc*dabc + hh*hh - rc*rc) / (2*dabc*hh*sina)
                   if (cj < 1.d0) then
                     ntrp2 = ntrp2 + 2
                   end if
-                  if (cj <= 1.d0 .and. cj >=-1.d0) then
-                    sj = Sqrt (1.d0-cj*cj)
+                  if (cj  <= 1.d0 .and. cj >= -1.d0) then
+                    sj = Sqrt (1.d0 - cj*cj)
                               !
                     do ix = 1, 3
-                      tvx(ix) = (xta(ix, 3)-xd(ix)) - cosa * dabc * xx(ix) / &
+                      tvx(ix) = (xta(ix, 3) - xd(ix)) - cosa * dabc * xx(ix) / &
                      & dab
                     end do
-                    dist = Sqrt (tvx(1)**2+tvx(2)**2+tvx(3)**2)
+                    dist = Sqrt (tvx(1)**2 + tvx(2)**2 + tvx(3)**2)
                     do ix = 1, 3
                       tvx(ix) = hh * tvx(ix) / dist
                     end do
-                    tvy(1) = (xx(2)*tvx(3)-xx(3)*tvx(2)) / dab
-                    tvy(2) = (xx(3)*tvx(1)-xx(1)*tvx(3)) / dab
-                    tvy(3) = (xx(1)*tvx(2)-xx(2)*tvx(1)) / dab
+                    tvy(1) = (xx(2)*tvx(3) - xx(3)*tvx(2)) / dab
+                    tvy(2) = (xx(3)*tvx(1) - xx(1)*tvx(3)) / dab
+                    tvy(3) = (xx(1)*tvx(2) - xx(2)*tvx(1)) / dab
                     loop: do l = -1, 1, 2
                       il = ntrp + 1
                       do ix = 1, 3
@@ -1344,18 +1425,18 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                         if (k /= ib .and. k /= ic) then
                           dabck = 0.d0
                           do ix = 1, 3
-                            dabck = dabck + (trp(ix)-coord(ix, k)) ** 2
+                            dabck = dabck + (trp(ix) - coord(ix, k)) ** 2
                           end do
                           dabck = Sqrt (dabck)
-                          if (dabck < srad(k)+rsolv) cycle loop
+                          if (dabck < srad(k) + rsolv) cycle loop
                         end if
                       end do
                       ntrp = ntrp + 1
                       spx = 0.d0
                       spy = 0.d0
                       do ix = 1, 3
-                        spx = spx + rvx(ix) * (trp(ix)-xd(ix))
-                        spy = spy + rvy(ix) * (trp(ix)-xd(ix))
+                        spx = spx + rvx(ix) * (trp(ix) - xd(ix))
+                        spy = spy + rvy(ix) * (trp(ix) - xd(ix))
                       end do
                       phi = Acos (spx/(hh**2 + 1.d-10))
                       if (spy < 0.d0) then
@@ -1364,8 +1445,8 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                       phiset(il) = phi
                       sp = 0.d0
                       do ix = 1, 3
-                        sp = sp + (-spy*rvx(ix)+spx*rvy(ix)) * &
-                       & (trp(ix)-xta(ix, 3))
+                        sp = sp + (- spy*rvx(ix) + spx*rvy(ix)) * &
+                       & (trp(ix) - xta(ix, 3))
                       end do
                       iset(ntrp) = 1
                       if (sp < 0.d0) then
@@ -1377,18 +1458,18 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                       dbc = 0.d0
                       do ix = 1, 3
                         ee(ix, 1) = trp(ix) + rsolv / srad(ia) &
-                             & * (xta(ix, 1)-trp(ix))
+                             & * (xta(ix, 1) - trp(ix))
                         ee(ix, 2) = trp(ix) + rsolv / srad(ib) &
-                             & * (xta(ix, 2)-trp(ix))
+                             & * (xta(ix, 2) - trp(ix))
                         ee(ix, 3) = trp(ix) + rsolv / srad(ic) &
-                             & * (xta(ix, 3)-trp(ix))
-                        sp = sp + (ee(ix, 1)-ee(ix, 3)) * (ee(ix, 2)-ee(ix, 3))
-                        dac = dac + (ee(ix, 1)-ee(ix, 3)) &
-                             & * (ee(ix, 1)-ee(ix, 3))
-                        dbc = dbc + (ee(ix, 2)-ee(ix, 3)) &
-                             & * (ee(ix, 2)-ee(ix, 3))
+                             & * (xta(ix, 3) - trp(ix))
+                        sp = sp + (ee(ix, 1) - ee(ix, 3)) * (ee(ix, 2) - ee(ix, 3))
+                        dac = dac + (ee(ix, 1) - ee(ix, 3)) &
+                             & * (ee(ix, 1) - ee(ix, 3))
+                        dbc = dbc + (ee(ix, 2) - ee(ix, 3)) &
+                             & * (ee(ix, 2) - ee(ix, 3))
                       end do
-                      tarset(il) = 0.8d0 * Sqrt (dac*dbc-sp*sp) / 12
+                      tarset(il) = 0.8d0 * Sqrt (dac*dbc - sp*sp) / 12
                     end do loop
                   end if
                 end if
@@ -1400,7 +1481,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
               if (ntrp > 18) then
                 call mopend ("NTRP TOO LARGE")
               end if
-              if (ntrp+ntrp2 == 0) then
+              if (ntrp + ntrp2 == 0) then
                 phiset(1) = 0
                 phiset(2) = twopi
                 tarset(2) = 0.d0
@@ -1411,21 +1492,21 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
               do
                 ic = 0
                 do l = 2, ntrp
-                  if (phiset(l) < phiset(l-1)) then
+                  if (phiset(l) < phiset(l - 1)) then
                     phi = phiset(l)
                     iii = iset(l)
-                    tar=tarset(l)
-                    phiset(l) = phiset(l-1)
-                    iset(l) = iset(l-1)
-                    tarset(l)=tarset(l-1)
-                    phiset(l-1) = phi
-                    iset(l-1) = iii
-                    tarset(l-1)=tar
+                    tar = tarset(l)
+                    phiset(l) = phiset(l - 1)
+                    iset(l) = iset(l - 1)
+                    tarset(l) = tarset(l - 1)
+                    phiset(l - 1) = phi
+                    iset(l - 1) = iii
+                    tarset(l - 1) = tar
                     ic = ic + 1
                   end if
                 end do
-                if (ic <= 0) then
-                  if (iset(1) ==-1) then
+                if (ic  <= 0) then
+                  if (iset(1) == -1) then
                     phiset(1) = phiset(1) + twopi
                   else
                     exit
@@ -1439,10 +1520,10 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                 k = l - 1
                 phiu = phiset(k)
                 phio = phiset(l)
-                nsa = Int ((phio-phiu)/2/pi*20)
-                nsa = Max (nsa+1, 2)
+                nsa = Int ((phio - phiu)/2/pi*20)
+                nsa = Max (nsa + 1, 2)
                 sumphi = sumphi + phio - phiu
-                dp = (phio-phiu) / (nsa-1)
+                dp = (phio - phiu) / (nsa - 1)
                 do ich = 1, 2
                   iat = ib
                   if (ich == 2) then
@@ -1455,30 +1536,30 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                     htr = abr / twopi
                   end if
                   do ja = ich, nsa, 2
-                    jb = Max (ja-1, 1)
-                    jc = Min (ja+1, nsa)
-                    phi = phiu + (ja-1) * dp
+                    jb = Max (ja - 1, 1)
+                    jc = Min (ja + 1, nsa)
+                    phi = phiu + (ja - 1) * dp
                     cphi = Cos (phi)
                     sphi = Sin (phi)
                     do ix = 1, 3
-                      ca = xd(ix) + (cphi*rvx(ix)+sphi*rvy(ix)) * fz(ich)
-                      ca = ca + (xta(ix, ich)-ca) * yx(ich)
-                      xja(ix) = ca + (xta(ix, 3-ich)-xta(ix, ich)) * ddd * &
-                     & (1.d0-fz(ich))
+                      ca = xd(ix) + (cphi*rvx(ix) + sphi*rvy(ix)) * fz(ich)
+                      ca = ca + (xta(ix, ich) - ca) * yx(ich)
+                      xja(ix) = ca + (xta(ix, 3 - ich) - xta(ix, ich)) * ddd * &
+                     & (1.d0 - fz(ich))
                     end do
-                    phi = phiu + (jb-1) * dp
+                    phi = phiu + (jb - 1) * dp
                     cphi = Cos (phi)
                     sphi = Sin (phi)
                     do ix = 1, 3
                       ca = xd(ix) + cphi * rvx(ix) + sphi * rvy(ix)
-                      xjb(ix) = ca + (xta(ix, 3-ich)-ca) * yx(3-ich)
+                      xjb(ix) = ca + (xta(ix, 3 - ich) - ca) * yx(3 - ich)
                     end do
-                    phi = phiu + (jc-1) * dp
+                    phi = phiu + (jc - 1) * dp
                     cphi = Cos (phi)
                     sphi = Sin (phi)
                     do ix = 1, 3
                       ca = xd(ix) + cphi * rvx(ix) + sphi * rvy(ix)
-                      xjc(ix) = ca + (xta(ix, 3-ich)-ca) * yx(3-ich)
+                      xjc(ix) = ca + (xta(ix, 3 - ich) - ca) * yx(3 - ich)
                     end do
                     nrs = nrs + 1
                     nsab = nsab + 1
@@ -1494,29 +1575,29 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
                     iat = ipsrs(nrs)
                     nipsrs(iat) = nipsrs(iat) + 1
                     do ix = 1, 3
-                      rsc (ix, nrs) = (xja(ix)*.5d0+xjb(ix)+xjc(ix)) / 2.5d0
+                      rsc (ix, nrs) = (xja(ix)*.5d0 + xjb(ix) + xjc(ix)) / 2.5d0
                       i2 = Mod (ix, 3) + 1
                       i3 = Mod (i2, 3) + 1
-                      cnrs = (xjc(i2)-xjb(i2)) * (xja(i3)-xjb(i3)) - &
-                     & (xja(i2)-xjb(i2)) * (xjc(i3)-xjb(i3))
+                      cnrs = (xjc(i2) - xjb(i2)) * (xja(i3) - xjb(i3)) - &
+                     & (xja(i2) - xjb(i2)) * (xjc(i3) - xjb(i3))
                       dist = dist + cnrs ** 2
-                      spn = spn + cnrs * (rsc (ix, nrs)-coord(ix, iat))
+                      spn = spn + cnrs * (rsc (ix, nrs) - coord(ix, iat))
                       spn2 = spn2 + cnrs * rsc (ix, nrs)
                     end do
                     dist = 1.d0 / Sqrt (dist)
                     if (spn < 0.d0) then
                       dist = -dist
                     end if
-                    rsc(4,nrs) = (jc-jb)*dp*htr
-                    if (ja .eq. 1)   rsc (4, nrs) = rsc (4, nrs) + tarset(k) * rinc
-                    if (ja .eq. nsa) rsc (4, nrs) = rsc (4, nrs) + tarset(l) * rinc
+                    rsc(4, nrs) = (jc - jb)*dp*htr
+                    if (ja  ==  1)   rsc (4, nrs) = rsc (4, nrs) + tarset(k) * rinc
+                    if (ja  ==  nsa) rsc (4, nrs) = rsc (4, nrs) + tarset(l) * rinc
                     cosvol = cosvol + rsc (4, nrs) * spn2 * dist
                     do ik = ilipa + 1, ilipa + nipa(ia)
                       k = lipa(ik)
-                      if (k .eq. ib) cycle
+                      if (k  ==  ib) cycle
                       dabck = 0.d0
                       do ix = 1, 3
-                        dabck = dabck + (rsc(ix,nrs) - coord(ix,k))**2
+                        dabck = dabck + (rsc(ix, nrs) - coord(ix, k))**2
                       end do
                       dabck = sqrt(dabck)
                     end do
@@ -1588,7 +1669,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
         end do
         ips0 = ips
         do ips = ips0, nps - 1
-          if (iatsp(ips+1) > iat) exit
+          if (iatsp(ips + 1) > iat) exit
         end do
         ips1 = ips
       end if
@@ -1596,7 +1677,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
       do ips = ips0, ips1
         d2 = 0.d0
         do ix = 1, 3
-          d2 = d2 + (cosurf(ix, ips)-rsc (ix, i)) ** 2
+          d2 = d2 + (cosurf(ix, ips) - rsc (ix, i)) ** 2
         end do
         if (d2 < d2min) then
           ipsmin = ips
@@ -1606,7 +1687,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
       if (d2min > d2max) then
          ! IF NO CLOSE ENOUGH SEGMENT IS PRESENT ADD A NEW ONE
         ips1 = ips1 + 1
-        do ips = nps, ips1, -1
+        do ips = nps, ips1, - 1
           ip1 = ips + 1
           do ix = 1, 4
             cosurf(ix, ip1) = cosurf(ix, ips)
@@ -1621,24 +1702,24 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
         do ix = 1, 4
           cosurf(ix, ips1) = rsc (ix, i)
         end do
-        iatsp(ips1) = iatsp(ips1-1)
+        iatsp(ips1) = iatsp(ips1 - 1)
         nar_csm(ips1) = 0
         nipsrs(ips1) = 1
-        nsetf(ips1) = nsetf(ips1+1)
+        nsetf(ips1) = nsetf(ips1 + 1)
       else
         ipsrs(i) = ipsmin
         nipsrs(ipsmin) = nipsrs(ipsmin) + 1
-         ! UPDATE THE SEGMENT WITH RESPECT TO ADDED RING-SEGMENT
+         ! UPDATE THE SEGMENT WITH RESPECT TO ADDED RING - SEGMENT
         arseg = cosurf(4, ipsmin)
         arsegn = arseg + rsc (4, i)
         do ix = 1, 3
-          cosurf(ix, ipsmin) = (arseg*cosurf(ix, ipsmin)+rsc (4, i)*rsc (ix, &
+          cosurf(ix, ipsmin) = (arseg*cosurf(ix, ipsmin) + rsc (4, i)*rsc (ix, &
          & i)) / arsegn
         end do
         cosurf(4, ipsmin) = arsegn
       end if
     end do
-   ! NOW SORT THE RING-SEGMENTS WITH RESPECT TO PRIMARY SEGMENTS
+   ! NOW SORT THE RING - SEGMENTS WITH RESPECT TO PRIMARY SEGMENTS
     isum = 0
     do ips = 1, nps
       isum2 = isum + nipsrs(ips)
@@ -1665,36 +1746,50 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
     end do
 end subroutine surclo
 subroutine cosini(l_print)
-    use cosmo_C, only: n0, ioldcv, fnsq, nps, rsolv, nspa, disex2, &
+    use cosmo_C, only : n0, ioldcv, fnsq, nps, rsolv, nspa, disex2, &
     dirsm, dirvec, srad, ipiden, gden, idenat, qdenet, amat, &
-    cmat, lenabc, arat, sude, isude, bh,qden, nar_csm, nsetf, phinet, &
-    qscnet, bmat, nset, xsp, abcmat, iatsp, nn, qscat, cosurf, nppa
+    cmat, lenabc, arat, sude, isude, bh, qden, nar_csm, nsetf, phinet, &
+    qscnet, bmat, nset, xsp, abcmat, iatsp, nn, qscat, cosurf, nppa, &
+    ffact, fepsi, nden
     use common_arrays_C, only : nat, nfirst, nlast
-    use molkst_C, only: numat, keywrd, moperr, lm61, mozyme, line, jobnam
-    use chanel_C, only: iw
+    use molkst_C, only : numat, keywrd, moperr, lm61, mozyme, line, jobnam
+    use chanel_C, only : iw
     use reada_I
     implicit none
     logical, intent (in) :: l_print
     integer :: i, i0, iat, idel, iden, incif, indise, inrsol, j, k, n1, &
-   & n2, nfi, nfj
+   & n2, nfi, nfj, ns, nsp, nspd
     double precision :: disex, ri1, x
     double precision, dimension (107) :: rvdw, usevdw
     integer, external :: ijbo
     data rvdw / &
-   1.30d0,   1.64d0,   2.13d0,   2.19d0,   2.05d0,   2.00d0,   1.83d0,   1.72d0, &
-   1.72d0,   1.80d0,   2.66d0,   2.02d0,   2.41d0,   2.46d0,   2.11d0,   2.16d0, &
-   2.05d0,   2.20d0,   3.22d0,   2.54d0,   2.64d0,   2.64d0,   2.52d0,   2.40d0, &
-   2.46d0,   2.41d0,   2.40d0,   1.91d0,   1.64d0,   1.63d0,   2.19d0,   2.46d0, &
-   2.22d0,   2.22d0,   2.16d0,   2.36d0,   3.78d0,   3.44d0,   3.39d0,   3.33d0, &
-   3.28d0,   2.57d0,   2.57d0,   2.57d0,   2.57d0,   1.91d0,   2.01d0,   1.85d0, &
-   2.26d0,   2.54d0,   2.53d0,   2.41d0,   2.32d0,   2.53d0,   4.00d0,   3.47d0, &
-   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.81d0, &
-   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.81d0,   2.57d0, &
-   2.57d0,   2.57d0,   2.57d0,   2.57d0,   2.57d0,   2.05d0,   1.94d0,   1.81d0, &
-   2.29d0,   2.36d0,   2.64d0,   2.64d0,   2.63d0,   2.69d0,   2.57d0,   2.57d0, &
-   2.57d0,   2.57d0,   2.57d0,   2.18d0,   2.57d0,   2.57d0,   2.57d0,   2.57d0, &
-   2.57d0,   2.57d0,   2.57d0,   2.57d0,   2.57d0,   2.57d0,   5*2.d0/
+   1.30d0,  1.64d0,  2.13d0,  2.19d0,  2.05d0,  2.00d0,  1.83d0,  1.72d0, &
+   1.72d0,  1.80d0,  2.66d0,  2.02d0,  2.41d0,  2.46d0,  2.11d0,  2.16d0, &
+   2.05d0,  2.20d0,  3.22d0,  2.54d0,  2.64d0,  2.64d0,  2.52d0,  2.40d0, &
+   2.46d0,  2.41d0,  2.40d0,  1.91d0,  1.64d0,  1.63d0,  2.19d0,  2.46d0, &
+   2.22d0,  2.22d0,  2.16d0,  2.36d0,  3.78d0,  3.44d0,  3.39d0,  3.33d0, &
+   3.28d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0,  1.91d0,  2.01d0,  1.85d0, &
+   2.26d0,  2.54d0,  2.53d0,  2.41d0,  2.32d0,  2.53d0,  4.00d0,  3.47d0, &
+   2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.81d0, &
+   2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.81d0,  2.57d0, &
+   2.57d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0,  2.05d0,  1.94d0,  1.81d0, &
+   2.29d0,  2.36d0,  2.64d0,  2.64d0,  2.63d0,  2.69d0,  2.57d0,  2.57d0, &
+   2.57d0,  2.57d0,  2.57d0,  2.18d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0, &
+   2.57d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0,  5*2.d0/
     lenabc = max(100, nspa*numat) 
+    ns = 0
+    nsp = 0
+    nspd = 0
+    do i = 1, numat
+      if (nlast(i) - nfirst(i) == 0) then
+        ns = ns + 1
+      else if (nlast(i) - nfirst(i) == 3) then
+        nsp = nsp + 1
+      else
+        nspd = nspd + 1
+      end if
+    end do
+    nden = 1*ns + 10*nsp + 45*nspd
     if (allocated(ipiden)) deallocate (ipiden)
     if (allocated(idenat)) deallocate (idenat)
     if (allocated(gden))   deallocate (gden)
@@ -1721,7 +1816,7 @@ subroutine cosini(l_print)
     if (allocated(arat))   deallocate (arat)
     if (allocated(amat))   deallocate (amat)
     allocate(ipiden(lm61), idenat(numat), gden(lm61), & 
-          qdenet(lm61,3), phinet(lenabc + 1,3), qscnet(lenabc + 1, 3), &
+          qdenet(lm61, 3), phinet(lenabc + 1, 3), qscnet(lenabc + 1, 3), &
           qscat(numat), stat = i)  
           qscat = 0.d0
     if (i /= 0) then
@@ -1729,8 +1824,8 @@ subroutine cosini(l_print)
       return
     end if       
     allocate(srad(numat), nn(3, numat), qden(lm61), &
-          iatsp(lenabc + 1), isude(2, 30*numat), nar_csm(lenabc + 1),&
-          arat(numat), sude(2,30*numat), nsetf(lenabc + 1), cosurf(4,lenabc), stat = i)
+          iatsp(lenabc + 1), isude(2, 30*numat), nar_csm(lenabc + 1), &
+          arat(numat), sude(2, 30*numat), nsetf(lenabc + 1), cosurf(4, lenabc), stat = i)
     if (i /= 0) then
       call memory_error("COSINI (1) in Cosmo")
       return
@@ -1738,20 +1833,20 @@ subroutine cosini(l_print)
     if (.not. mozyme) then    
       if (lenabc > 22000) then
         if (l_print) then
-          write(line,'(a,i5,a)')"Data set '"//trim(jobnam)//"' exists,"
-          write(0,'(//10x,a)')trim(line)
+          write(line, '(a, i5, a)')"Data set '"//trim(jobnam)//"' exists, "
+          write(0, '(//10x, a)')trim(line)
           call mopend(trim(line)) 
-          write(line,'(a)')"but is too large to run using COSMO."
-          write(0,'(//10x,a)')trim(line)
+          write(line, '(a)')"but is too large to run using COSMO."
+          write(0, '(//10x, a)')trim(line)
           call mopend(trim(line))
-          write(line,'(a,i5,a)')"(This job might run if MOZYME is used.)"
-          write(0,'(/10x,a,//)')trim(line)
-          write(iw,'(/10x,a,//)')trim(line)
+          write(line, '(a, i5, a)')"(This job might run if MOZYME is used.)"
+          write(0, '(/10x, a, //)')trim(line)
+          write(iw, '(/10x, a, //)')trim(line)
         end if
         moperr = .true.
         return
       end if
-      allocate(abcmat(lenabc), xsp(3,lenabc), nset(nppa*numat), bh(lenabc), stat = j)
+      allocate(abcmat(lenabc), xsp(3, lenabc), nset(nppa*numat), bh(lenabc), stat = j)
       allocate(bmat(lm61, lenabc), stat = i)
       j = j + i
       allocate(amat((lenabc*(lenabc + 1))/2), stat = i) 
@@ -1762,6 +1857,7 @@ subroutine cosini(l_print)
         call memory_error("COSINI (2) in Cosmo")
         return
       end if 
+      cmat = 0.d0
     end if 
     call extvdw (usevdw, rvdw)
     if (moperr) return
@@ -1772,23 +1868,31 @@ subroutine cosini(l_print)
       rsolv = reada (keywrd, inrsol)
     end if
     if (rsolv < 0.5d0) then
-      write (iw,*) "RSOLV IS SET TO 0.5"
+      write (iw, *) "RSOLV IS SET TO 0.5"
       return
     end if
     if (moperr) return
     ri1 = 2.d0
     incif = Index (keywrd, "N**2")
     if (incif /= 0) then
-      ri1 = reada (keywrd, incif+4)
+      ri1 = reada (keywrd, incif + 4)
       if (ri1 < 0.d0) then
-        write (iw,*) "     N**2 CANNOT BE NEGATIVE"
+        write (iw, *) "     N**2 CANNOT BE NEGATIVE"
         call mopend ("N**2 CANNOT BE NEGATIVE")
         return
       else if (0.d0 < ri1 .and. ri1 < 1.d0) then
-        write (iw,*) "     N**2 IS SMALLER THAN 1.d0, OK?"
+        write (iw, *) "     N**2 IS SMALLER THAN 1.d0, OK?"
       end if
     end if
-    fnsq = (ri1-1.d0) / (ri1+.5d0)
+    fnsq = (ri1 - 1.d0) / (ri1 + .5d0)
+!
+!  Set ffact for later use
+!
+    if (fepsi > 0.d0) then
+      ffact = fnsq/fepsi
+    else
+      ffact = 0.d0
+    end if
     nps = 0
    ! NO KEYWORD DELSC ANYMORE. PEOPLE MAY USE EXPLICIT
    ! DEFINITION OF RADII TO CHANGE FROM DEFAULTS! RDS IS REPLACED BY RSOLV
@@ -1798,7 +1902,7 @@ subroutine cosini(l_print)
     if (indise /= 0) then
       disex = reada (keywrd, indise)
     end if
-   ! FILL THE COSMO-RADII (SRAD) AND INDEX-VECTORS IDENAT AND IPIDEN
+   ! FILL THE COSMO - RADII (SRAD) AND INDEX - VECTORS IDENAT AND IPIDEN
     iden = 0
     do i = 1, numat
       nfi = nfirst(i)
@@ -1819,7 +1923,7 @@ subroutine cosini(l_print)
       else
         do j = 1, idel
           nfj = nfi - 1 + j
-          i0 = (nfj*(nfj-1)) / 2 + nfi - 1
+          i0 = (nfj*(nfj - 1)) / 2 + nfi - 1
           do k = 1, j
             iden = iden + 1
             ipiden(iden) = i0 + k
@@ -1837,17 +1941,17 @@ subroutine cosini(l_print)
    !
     n0(1) = nspa
     if (nspa /= 42) then
-      x = (nspa-2) / 10.d0 + 1d-8
+      x = (nspa - 2) / 10.d0 + 1d-8
       n1 = 10 * Int (Sqrt(x)) ** 2 + 2
       n2 = 30 * Int (Sqrt(x/3)) ** 2 + 2
       n0(1) = Max (n1, n2)
       n0(1) = Max (12, n0(1))
       if (nspa /= n0(1)) then
-        write (iw, "(A,I6)") "NSPA IS SET TO", n0 (1)
+        write (iw, "(A, I6)") "NSPA IS SET TO", n0 (1)
       end if
     end if
     nspa = n0(1)
-    n1 = (n0(1)-2) / 10
+    n1 = (n0(1) - 2) / 10
    !
    !   FOR HYDROGEN, USE ABOUT 1/3 THE NUMBER OF ATOMS.
    !
@@ -1859,18 +1963,18 @@ subroutine cosini(l_print)
    !   RESET N0(2) TO 12.  N0 = 42, 12
    !
     n0(2) = Max (n0(2), 12)
-    if (n0(1)+n0(2) > 1082) then
+    if (n0(1) + n0(2) > 1082) then
       call mopend ("CHOSE NSPA < 0.75*1082")
     end if
     call dvfill (n0(1), dirsm)
-    call dvfill (n0(2), dirsm(1, n0(1)+1))
+    call dvfill (n0(2), dirsm(1, n0(1) + 1))
     disex2 = 4 * (1.7d0*disex) ** 2 / nspa
     call dvfill (1082, dirvec)
 end subroutine cosini
 subroutine extvdw (vdw, refvdw)
-    use molkst_C, only: numat, keywrd, line
-    use chanel_C, only: iw
-    use common_arrays_C, only: nat 
+    use molkst_C, only : numat, keywrd, line
+    use chanel_C, only : iw
+    use common_arrays_C, only : nat 
     use elemts_C, only : cap_elemnt, elemnt
     implicit none
     double precision, dimension (107), intent (out) :: vdw
@@ -1881,18 +1985,18 @@ subroutine extvdw (vdw, refvdw)
    ! ... Executable Statements ...
    !
    !  Modify Van der Waal's radii of various atoms.  The format of
-   ! the keyword is: VDW(chemical symbol=n.nn:chemical symbol=n.nn ...)
-   ! e.g. VDW(:H=1.0:Cl=1.7)
+   ! the keyword is: VDW(chemical symbol = n.nn:chemical symbol = n.nn ...)
+   ! e.g. VDW(:H = 1.0:Cl = 1.7)
    !
-   i = index(keywrd," VDW(")
+   i = index(keywrd, " VDW(")
     if (i == 0) then
       line = " "
     else
       if (keywrd(i + 5:i + 5) /= ";") keywrd(i + 5:) = ";"//keywrd(i + 5:)
-      j = index(keywrd(i + 5:),")") + i + 5
+      j = index(keywrd(i + 5:), ")") + i + 5
       do k = i + 5, j
          if (keywrd(k:k) == ":") keywrd(k:k) = ";"
-         if (keywrd(k:k) == ",") keywrd(k:k) = ";"
+         if (keywrd(k:k) == ", ") keywrd(k:k) = ";"
       end do
       line = keywrd(i + 5:j - 1)
     end if
@@ -1911,12 +2015,12 @@ subroutine extvdw (vdw, refvdw)
     do i = 1, numat
       if (nat(i) > 102) cycle
       if (vdw(nat(i)) > 900.d0) then
-        write (line,*) "MISSING VAN DER WAALS RADIUS " // elemnt (nat(i))
+        write (line, *) "MISSING VAN DER WAALS RADIUS " // elemnt (nat(i))
         call mopend (trim(line))
         j = 2
         if (elemnt(nat(i)) (2:2) == " ") j = 1
-        write (iw, "(2x,3a)") "To correct this, add keyword 'VDW(", &
-       & elemnt (nat(i)) (1:j), "=n.nn)'"
+        write (iw, "(2x, 3a)") "To correct this, add keyword 'VDW(", &
+       & elemnt (nat(i)) (1:j), " = n.nn)'"
         return
       end if
     end do

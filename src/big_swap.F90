@@ -17,7 +17,7 @@
     use chanel_C, only : iw, iarc, input_fn, iden
     implicit none
     integer :: i, j, k, l, big_nvar, shell, loop, nloop, nset, store_mpack, store_n2elec, ipdb = 14
-    double precision :: stresses(40), gradients(40), gnorm_store
+    double precision :: stresses(100), gradients(100), gnorm_store
     double precision, allocatable :: big_xparam(:)
     integer :: ninsite(3)
     integer, allocatable :: active_site(:)
@@ -42,7 +42,7 @@
     if (i /= 0) gnorm_store = reada(keywrd, i)
     gradients = max(4.d0,min(20.d0,sqrt(numat*0.5d0)))    
     i = index(keywrd,  " LOCATE-TS") + 11
-    do j = i + 1, min(240,i + 100)
+    do j = i + 1, len_trim(keywrd)
       if (keywrd(j:j) == " ") exit
     end do
     k = index(keywrd(i:j), "C:")
@@ -55,6 +55,11 @@
         if (k >= 0 .and. k < 10) then
           nloop = nloop + 1
           stresses(nloop) = reada(keywrd,i)
+          if (stresses(nloop) > 999.d0) then
+            write(line,'(a, i3, a, f8.1, a)')"Stress for point", nloop, " is", stresses(nloop)," This is too large, max. = 999.0."
+            call mopend(trim(line))
+            return
+          end if
           do 
             i = i + 1
             if (ichar(keywrd(i:i)) /= ichar(".") .and. ichar(keywrd(i:i)) < ichar("0") .or. ichar(keywrd(i:i)) > ichar("9")) exit        
@@ -329,7 +334,7 @@
   absmin = 1.d6
   do
     if (times) then
-      call timer (" Before SETULB")
+      call timer ("Before SETULB")
     end if
     call dcopy (big_nvar, big_xparam, 1, xold, 1)
 !
@@ -339,7 +344,7 @@
     & 0.d0, wa, iwa, task,-1, csave, lsave, isave, dsave)
     if (moperr) goto 99
     if (times) then
-      call timer (" AFTER SETULB")
+      call timer ("AFTER SETULB")
     end if
     dsave(2) = dsave(2) + 1.d4
     if (task(1:2) == "FG") then
@@ -428,7 +433,7 @@
         absmin = escf_tot
       end if
       if (times) then
-        call timer (" AFTER COMPFG_TS")
+        call timer ("AFTER COMPFG_TS")
       end if
 !
 !  Write out this cycle
@@ -971,8 +976,8 @@
         call copy_r_1(parth_1,         parth)
         call copy_r_1(f_1,                 f)
         call copy_r_1(p_1,                 p)
-        pa = p*0.5d0
-        pb = pa
+        if (allocated(pa)) pa = p*0.5d0
+        if (allocated(pb)) pb = pa
       else
         nbonds(:numat) = nbonds_2
         ibonds(:,:numat) = ibonds_2 
@@ -1009,8 +1014,8 @@
         call copy_r_1(parth_2,         parth)
         call copy_r_1(f_2,                 f)
         call copy_r_1(p_2,                 p)
-        pa = p*0.5d0
-        pb = pa
+        if (allocated(pa)) pa = p*0.5d0
+        if (allocated(pb)) pb = pa
       end if  
       coord(:,:numat) = geo(:,:numat)
     end if

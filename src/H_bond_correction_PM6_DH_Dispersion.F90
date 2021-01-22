@@ -1,9 +1,8 @@
-double precision function PM6_DH_Dispersion(l_grad, dxyz)
+double precision function PM6_DH_Dispersion(l_grad)
   use molkst_C, only : numat, E_disp
-  use common_arrays_C, only: coord
+  use common_arrays_C, only: coord, dxyz
   implicit none
   logical, intent (in) :: l_grad
-  double precision, intent (inout) :: dxyz(3*numat)
   double precision, external :: PM6_DH_Disp
 !
 !  Local

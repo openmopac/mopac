@@ -47,20 +47,24 @@
 !
 ! compute energy
 !
-      subroutine edisp(max_elem, maxc, n, xyz, nat, c6ab, mxc, r2r4, r0ab, rcov, &
+      subroutine edisp(max_elem, maxc, n, nat, c6ab, mxc, r2r4, r0ab, rcov, &
         rs6, rs8, alp6, alp8, e6, e8)
       use funcon_C, only : a0
       implicit none  
       integer :: n, nat(*), max_elem, maxc, mxc(max_elem) 
-      double precision :: xyz(3, *), r0ab(max_elem, max_elem), r2r4(*)
+      double precision :: r0ab(max_elem, max_elem), r2r4(*)
       double precision :: rs6, rs8, alp6, alp8, rcov(max_elem)
       double precision :: c6ab(max_elem, max_elem, maxc, maxc, 3)
       double precision :: e6,  e8        
  
       integer :: iat, jat
-      double precision :: r, r2, r6, r8, tmp, dx, dy, dz, c6, c8, rthr, rthr2
+      double precision :: r, r2, r6, r8, tmp, c6, c8, rthr, rthr2
       double precision :: damp6, damp8, rr
       double precision :: cn(n) 
+      double precision, external :: distance
+!
+! In this subroutine, array "coord" is in atomic units, not Angstroms.
+!
 !
 !  Set cutoff for Edisp interactions, in Angstroms
 !
@@ -69,35 +73,33 @@
       rthr2 = (rthr/a0)**2 
       e6  =  0.d0
       e8  =  0.d0
-      call ncoord(n, rcov, nat, xyz, cn)
+      call ncoord(n, rcov, nat, cn)
       do iat  =  1, n-1
-         do jat  =  iat + 1, n
-            dx  =  xyz(1, iat)-xyz(1, jat)
-            dy  =  xyz(2, iat)-xyz(2, jat)
-            dz  =  xyz(3, iat)-xyz(3, jat)
-            r2  =  dx*dx + dy*dy + dz*dz
+        do jat  =  iat + 1, n
+          r = distance(iat, jat)
+          r2 = r**2
 !THR        
-            if (r2 > rthr2) cycle
-            r  =  sqrt(r2)
-            rr  =  r0ab(nat(jat), nat(iat))/r
+          if (r2 > rthr2) cycle
+          rr  =  r0ab(nat(jat), nat(iat))/r
 ! damping
-            tmp  =  rs6*rr   
-            damp6  =  1.d0/( 1.d0 + 6.d0*tmp**alp6 )
-            tmp  =  rs8*rr     
-            damp8  =  1.d0/( 1.d0 + 6.d0*tmp**alp8 )
+          tmp  =  rs6*rr   
+          damp6  =  1.d0/( 1.d0 + 6.d0*tmp**alp6 )
+          tmp  =  rs8*rr     
+          damp8  =  1.d0/( 1.d0 + 6.d0*tmp**alp8 )
 ! get C6
-            call getc6(maxc, max_elem, c6ab, mxc, nat(iat), nat(jat), cn(iat), cn(jat), c6)
-            r6  =  r2**3      
-            r8  =  r6*r2
+          call getc6(maxc, max_elem, c6ab, mxc, nat(iat), nat(jat), cn(iat), cn(jat), c6)
+          r6  =  r2**3      
+          r8  =  r6*r2
 ! r2r4 stored in main as sqrt
-            c8  =  3.0d0*c6*r2r4(nat(iat))*r2r4(nat(jat))
-            e6  =  e6 + c6*damp6/r6
-            e8  =  e8 + c8*damp8/r8          
-         end do
+          c8  =  3.0d0*c6*r2r4(nat(iat))*r2r4(nat(jat))
+          e6  =  e6 + c6*damp6/r6
+          e8  =  e8 + c8*damp8/r8          
+        end do
       end do
       return
       end
       FUNCTION ESYM(I)
+      integer, intent (in) :: i
       CHARACTER*2 ESYM
       CHARACTER*2 ELEMNT(94)
       DATA ELEMNT/'h ','he', &
@@ -115,7 +117,7 @@
       RETURN
       END
 
-! gradient of C6(iat, jat) wrt to xyz of kat or iat                       
+! gradient of C6(iat, jat) wrt to coord of kat or iat                       
 ! interpolate c6  
     subroutine getc6(maxc, max_elem, c6ab, mxc, iat, jat, nci, ncj, c6)
       implicit none
@@ -152,11 +154,11 @@
       endif
     end subroutine getc6
 ! hydrogen bond correction a la DH  +   (M. Korth)
-      subroutine hbsimple(n, at, xyz, hbscale, energy, l_grad, g)
+      subroutine hbsimple(n, at, coord, hbscale, energy, l_grad, g)
       use molkst_C, only : N_Hbonds, keywrd
       implicit none
       integer :: n, at(n)
-      double precision ::  xyz(3, n), hbscale, g(3, n), energy
+      double precision ::  coord(3, n), hbscale, g(3, n), energy
 ! gradient?
       logical :: l_grad
 
@@ -209,7 +211,7 @@
          if (at(i) == 7 .or. at(i) == 8 .or. at(i) == 9 .or. at(i) == 15 .or. at(i) == 16 .or. at(i) == 17)then
            do j  =  i  +  1, n
               if (at(j) == 7 .or. at(j) == 8 .or. at(j) == 9 .or. at(j) == 15 .or. at(j) == 16 .or. at(j) == 17)then
-                rab  =  ((xyz(1, i)-xyz(1, j))**2   +  (xyz(2, i)-xyz(2, j))**2   +  (xyz(3, i)-xyz(3, j))**2)
+                rab  =  ((coord(1, i)-coord(1, j))**2   +  (coord(2, i)-coord(2, j))**2   +  (coord(3, i)-coord(3, j))**2)
                 if (rab < thr) then
                   do k  =  1, n
                    if (at(k) == 1)nhb  =  nhb  +  1
@@ -227,7 +229,7 @@
          if (at(i) == 7 .or. at(i) == 8 .or. at(i) == 9 .or. at(i) == 15 .or. at(i) == 16 .or. at(i) == 17)then
            do j  =  i  +  1, n
               if (at(j) == 7 .or. at(j) == 8 .or. at(j) == 9 .or. at(j) == 15 .or. at(j) == 16 .or. at(j) == 17)then
-                rab  =  ((xyz(1, i)-xyz(1, j))**2   +  (xyz(2, i)-xyz(2, j))**2   +  (xyz(3, i)-xyz(3, j))**2)
+                rab  =  ((coord(1, i)-coord(1, j))**2   +  (coord(2, i)-coord(2, j))**2   +  (coord(3, i)-coord(3, j))**2)
                 if (rab < thr) then
                   do k  =  1, n
                     if (at(k) == 1)then
@@ -255,7 +257,7 @@
          typb  =  hbpar(at(B))
          shortcut  =  r0ab(typa, typb)
          cab  =  0.50d0*(scalehb(typa)  +  scalehb(typb))
-         call eabh(n, A, B, H, xyz, shortcut, cab, e)
+         call eabh(n, A, B, H, coord, shortcut, cab, e)
          if (e < -1.d0/627.51d0) N_Hbonds  =  N_Hbonds  +  1
          if (prt) call prt_hbonds(B, H, A, e*627.51d0)
          energy  =  energy  +  e
@@ -275,27 +277,27 @@
          cab  =  0.50d0*(scalehb(typa)  +  scalehb(typb))
          shortcut  =  r0ab(hbpar(at(A)), hbpar(at(B)))
          do j  =  1, 3
-         xyz(j, A)  =  xyz(j, A)  +  step
-         call eabh(n, A, B, H, xyz, shortcut, cab, er)
-         xyz(j, A)  =  xyz(j, A)-step*2.
-         call eabh(n, A, B, H, xyz, shortcut, cab, el)
-         xyz(j, A)  =  xyz(j, A)  +  step
+         coord(j, A)  =  coord(j, A)  +  step
+         call eabh(n, A, B, H, coord, shortcut, cab, er)
+         coord(j, A)  =  coord(j, A)-step*2.
+         call eabh(n, A, B, H, coord, shortcut, cab, el)
+         coord(j, A)  =  coord(j, A)  +  step
          g(j, A)  =  g(j, A)  +  (er-el)/(2.0d0*step)
          enddo
          do j  =  1, 3
-         xyz(j, B)  =  xyz(j, B)  +  step
-         call eabh(n, A, B, H, xyz, shortcut, cab, er)
-         xyz(j, B)  =  xyz(j, B)-step*2.
-         call eabh(n, A, B, H, xyz, shortcut, cab, el)
-         xyz(j, B)  =  xyz(j, B)  +  step
+         coord(j, B)  =  coord(j, B)  +  step
+         call eabh(n, A, B, H, coord, shortcut, cab, er)
+         coord(j, B)  =  coord(j, B)-step*2.
+         call eabh(n, A, B, H, coord, shortcut, cab, el)
+         coord(j, B)  =  coord(j, B)  +  step
          g(j, B)  =  g(j, B)  +  (er-el)/(2.0d0*step)
          enddo
          do j  =  1, 3
-         xyz(j, H)  =  xyz(j, H)  +  step
-         call eabh(n, A, B, H, xyz, shortcut, cab, er)
-         xyz(j, H)  =  xyz(j, H)-step*2.
-         call eabh(n, A, B, H, xyz, shortcut, cab, el)
-         xyz(j, H)  =  xyz(j, H)  +  step
+         coord(j, H)  =  coord(j, H)  +  step
+         call eabh(n, A, B, H, coord, shortcut, cab, er)
+         coord(j, H)  =  coord(j, H)-step*2.
+         call eabh(n, A, B, H, coord, shortcut, cab, el)
+         coord(j, H)  =  coord(j, H)  +  step
          g(j, H)  =  g(j, H)  +  (er-el)/(2.0d0*step)
          enddo
       enddo
@@ -306,10 +308,10 @@
 
 !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
-      subroutine eabh(n, A, B, H, xyz, shortcut, cab, energy)
+      subroutine eabh(n, A, B, H, coord, shortcut, cab, energy)
       implicit none
       integer :: A, B, H, n
-      double precision  :: xyz(3, n),  energy, shortcut, cab
+      double precision  :: coord(3, n),  energy, shortcut, cab
 
       double precision  :: rab, xy, cosabh, d2ij, d2ik, d2jk
       double precision  :: aterm, dampm, damps, dampl, xm, ym, zm, rhm, rab2
@@ -317,21 +319,21 @@
       double precision  :: alp  =  20d0
 
 ! AB distance
-         rab2  =     ((xyz(1, A)-xyz(1, B))**2   +  (xyz(2, A)-xyz(2, B))**2   +  (xyz(3, A)-xyz(3, B))**2)
+         rab2  =     ((coord(1, A)-coord(1, B))**2   +  (coord(2, A)-coord(2, B))**2   +  (coord(3, A)-coord(3, B))**2)
          rab  =  sqrt(rab2)
 ! cos angle A-H-B
-         D2IJ   =   (XYZ(1, A)-XYZ(1, H))**2  +   (XYZ(2, A)-XYZ(2, H))**2  +   (XYZ(3, A)-XYZ(3, H))**2
-         D2JK   =   (XYZ(1, H)-XYZ(1, B))**2  +   (XYZ(2, H)-XYZ(2, B))**2  +   (XYZ(3, H)-XYZ(3, B))**2
-         D2IK   =   (XYZ(1, A)-XYZ(1, B))**2  +   (XYZ(2, A)-XYZ(2, B))**2  +   (XYZ(3, A)-XYZ(3, B))**2
+         D2IJ   =   (coord(1, A)-coord(1, H))**2  +   (coord(2, A)-coord(2, H))**2  +   (coord(3, A)-coord(3, H))**2
+         D2JK   =   (coord(1, H)-coord(1, B))**2  +   (coord(2, H)-coord(2, B))**2  +   (coord(3, H)-coord(3, B))**2
+         D2IK   =   (coord(1, A)-coord(1, B))**2  +   (coord(2, A)-coord(2, B))**2  +   (coord(3, A)-coord(3, B))**2
          XY   =   SQRT(D2IJ*D2JK  +  1.d-14)
          cosabh   =   0.5D0 * (D2IJ  +  D2JK-D2IK) / XY
 ! angle term
          aterm   =   0.125d0*(cosabh-1.0d0)**4
 ! H-(AB) midpoint distance
-         xm  =  0.5*(XYZ(1, A)  +  XYZ(1, B))
-         ym  =  0.5*(XYZ(2, A)  +  XYZ(2, B))
-         zm  =  0.5*(XYZ(3, A)  +  XYZ(3, B))
-         rhm  =  sqrt((xyz(1, H)-xm)**2   +  (xyz(2, H)-ym)**2   +  (xyz(3, H)-zm)**2)
+         xm  =  0.5*(coord(1, A)  +  coord(1, B))
+         ym  =  0.5*(coord(2, A)  +  coord(2, B))
+         zm  =  0.5*(coord(3, A)  +  coord(3, B))
+         rhm  =  sqrt((coord(1, H)-xm)**2   +  (coord(2, H)-ym)**2   +  (coord(3, H)-zm)**2)
 ! H out of linear damping
          dampm  =  1.d0-1.d0/(1.d0  +  exp(-alp*(rhm/rab-1.d0)))
 ! short damping

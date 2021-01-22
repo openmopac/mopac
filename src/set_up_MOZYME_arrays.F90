@@ -13,7 +13,6 @@
 !
     use iter_C, only : pold, pold2, pold3, pbold, pbold2
 !
-    use chanel_C, only : iw
     implicit none
     integer :: i, j
 !
@@ -94,12 +93,12 @@
   fmo_dim = Min(300, norbs)*norbs
   allocate (fmo(fmo_dim), ifmo(2,fmo_dim), stat = i)
   if (j /= 0) then
-    write(iw,*)" Failed to assign memory in MOZYME"
     call mopend("Failed to assign memory in MOZYME")
     return
   end if  
   icocc = 0
   icvir = 0
+  kopt = 0
 !
 !   Create the ijbo array, if it exists?
 !

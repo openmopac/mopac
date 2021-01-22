@@ -3,7 +3,7 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      use molkst_C, only : natoms, nvar, ndep, ltxt, line
+      use molkst_C, only : natoms, nvar, ndep, ltxt, line, keywrd, refkey
       use parameters_C, only : ams
       USE symmetry_C, ONLY: locpar, idepfn, locdep 
       use common_arrays_C, only : atmass, loc, xparam, simbol, txtatm
@@ -282,6 +282,10 @@
       lopt(:,:natoms) = 0 
       do i = 1, nvar 
         lopt(loc(2,i),loc(1,i)) = 1 
-      end do      
+      end do  
+      if (nvar > 0 .and. index(keywrd, " SYMM") == 0) then
+        i = index(refkey(1), "          ")
+        refkey(1)(i:i + 9) = " SYMMETRY "
+      end if        
       return  
       end subroutine getgeg 

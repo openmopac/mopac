@@ -311,7 +311,7 @@
 !  As a guide, formic acid dimer has O - O: 2.67 Angstroms, stabilization should total 18.61 kcal/mol
 !              the H5O2(+) ion has O - O: 2.38 - 2.43 Angstroms
 !
-          short = - 2.5d0*exp(-80.d0*(max(XY_dist - 2.67d0, 0.d0))**2)*angle_cos**4
+          short = -2.5d0*exp(-80.d0*(max(XY_dist - 2.67d0, 0.d0))**2)*angle_cos**4
           EH_plus = EH_plus + short  
         end if 
       else

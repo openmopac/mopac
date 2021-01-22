@@ -21,8 +21,8 @@ subroutine vecprt_for_MOZYME(aa, numm)
 !
     numb = Abs (numm)
     if (numb > maxarr) then
-      write (iw,*) " VECPRT CAN ONLY PRINT ARRAYS OF SIZE .LE.", maxarr
-      write (iw,*) " AN ATTEMPT WAS MADE TO PRINT AN ARRAY OF SIZE", numb
+      write (iw,'(/10x,a,i5)') "VECPRT CAN ONLY PRINT ARRAYS OF SIZE LESS THAN", maxarr
+      write (iw,'(10x,a,i5)') "AN ATTEMPT WAS MADE TO PRINT AN ARRAY OF SIZE ", numb
       numb = maxarr
     end if
     linear = (numb*(numb+1)) / 2
@@ -54,7 +54,7 @@ subroutine vecprt_for_MOZYME(aa, numm)
               l = l + 1
               a(l) = aa((i*(i - 1))/2 + k)
             end if
-        end do
+          end do
         end if
       end do
       numb = j
@@ -132,7 +132,7 @@ subroutine vecprt_for_MOZYME(aa, numm)
     end if
     fact = 10.d0 ** (-i)
     if (Abs (fact-1.d0) > 0.001d0) then
-      write (iw, "(A,F16.6)") "Diagonal Terms should be Multiplied by", 1.d0 / &
+      write (iw, "(/10x,A,F16.6)") "Diagonal Terms should be Multiplied by", 1.d0 / &
      & fact
       do i = 1, numb
         a((i*(i+1))/2) = a((i*(i+1))/2) * fact

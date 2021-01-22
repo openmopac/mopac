@@ -8,10 +8,11 @@
       line, norbs, numcal, id, natoms, nl_atoms, time0, ncomments
       use maps_C, only : rxn_coord, lparam, react, latom, kloop
       use common_arrays_C, only : geo, xparam, profil, na, l_atom, coord, nat, &
-        loc, grad, all_comments
+        loc, grad, all_comments, p, q, labels
       use chanel_C, only : iw, ires, iarc, restart_fn, archive_fn, iw0, &
         ixyz, xyz_fn
       use elemts_C, only : elemnt
+      USE parameters_C, only : tore
 !***********************************************************************
 !DECK MOPAC
 !...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:32  03/09/06  
@@ -36,16 +37,17 @@
 !-----------------------------------------------
       integer , dimension(20) :: mdfp 
       integer :: npts, maxcyc, i, lloop, iloop, l, m, k, iw00, percent = 0, ipdb = 14, &
-        imodel = 0
-      real(double), dimension(3*numat) :: gd, xlast 
-      real(double), dimension(20) :: xdfp 
-      real(double) :: step, degree, c1, cputot, cpu1, cpu2, cpu3, stepc1, factor
-      logical :: use_lbfgs, opend, scale, debug
+        imodel = 0, ixyz1
+      real(double) :: step, degree, c1, cputot, cpu1, cpu2, cpu3, stepc1, factor, dip, &
+        dipvec(3), xdfp(20),  gd(3*numat), xlast(3*numat) 
+      logical :: use_lbfgs, opend, scale, debug, l_dipole
       character :: num1*1, num2*1, num3*1
+      real(double), external :: dipole
 !-----------------------------------------------
-      use_lbfgs = (index(keywrd,' LBFGS')/=0 .or. nvar > 2000 .and. index(keywrd,' EF') == 0)
+      use_lbfgs = (index(keywrd,' LBFGS') /=0 .or. nvar > 100 .and. index(keywrd,' EF') == 0)
       step = reada(keywrd,index(keywrd,'STEP') + 5) 
       debug = (index(keywrd, " DEBUG") /= 0)
+      l_dipole = (index(keywrd, " DIPOLE") /= 0)
       npts = nint(reada(keywrd,index(keywrd,'POINT') + 6)) 
 !
 !  THE SMALLEST VALUE IN THE PATH IS
@@ -77,6 +79,10 @@
         allocate(grad(nvar))
       end if
       open(unit=ixyz, file=xyz_fn)
+      if (l_dipole) then
+      ixyz1 = ixyz + 1
+      open(unit=ixyz1, file=xyz_fn(:len_trim(xyz_fn) - 4)//" for dipole.xyz")
+    end if   
 !
       kloop = 1 
       maxcyc = 100000 
@@ -129,7 +135,10 @@
       end if
       iw00 = iw0
       if (.not. debug) iw0 = -1  
-      if (index(keywrd, " HTML") /= 0) call write_path_html
+      if (index(keywrd, " HTML") /= 0) then
+        if (index(keywrd,' DIPOLE') /= 0) call write_path_html(2)
+        call write_path_html(1)
+      end if
       do iloop = kloop, npts 
         if (iloop - lloop >= maxcyc) tleft = -100.D0 
         time0 = second(1)
@@ -203,10 +212,21 @@
         num2 = char(max(ichar("0"), ichar("0") + min(9, int(log10(factor)) - 1)))
         num3 = char(max(ichar("0"), ichar("0") + min(9, int(log10(4.184d0*factor)) - 1)))        
         write(ixyz,'(a, i'//num1//', a, f1'//num2//'.3, a, f1'//num3//'.3, a)')"Profile.", iloop, &
-        " HEAT OF FORMATION =", escf, " KCAL =", escf*4.184d0, " KJ"
+        " HEAT OF FORMATION =", escf, " KCAL "
         do i = 1, numat
           if (l_atom(i)) write(ixyz,"(3x,a2,3f15.5)")elemnt(nat(i)), (coord(l,i),l=1,3)
         end do
+        if (l_dipole) then
+          call chrge (p, q) 
+          q(:numat) = tore(labels(:numat)) - q(:numat)           
+          dip = dipole(p, coord, dipvec,0)
+          write(ixyz1,"(i6,a)") nl_atoms," "
+          write(ixyz1,'(a, i'//num1//', a, f1'//num2//'.4, a)')"Profile.", iloop, &
+          " DIPOLE =", dip, " DEBYE"
+          do i = 1, numat
+            if (l_atom(i)) write(ixyz1,"(3x,a2,3f15.5)")elemnt(nat(i)), (coord(l,i),l=1,3)
+          end do
+        end if
         if (.not. debug) iw0 = -1
       end do 
       if (cputot > 1.d7) cputot = cputot - 1.d7
@@ -252,14 +272,19 @@
       if (allocated(react)) deallocate(react)
       return  
   end subroutine pathk 
-  subroutine write_path_html
+  subroutine write_path_html(mode)
     use chanel_C, only: input_fn
     use molkst_C, only : line, koment, escf, title
     implicit none
+    integer, intent (in) :: mode
     logical :: exists
     integer :: iprt=27, i, j
     double precision :: store_escf
-    line = input_fn(:len_trim(input_fn) - 4)//"html"
+    if (mode == 1) then
+      line = input_fn(:len_trim(input_fn) - 4)//"html"
+    else
+      line = input_fn(:len_trim(input_fn) - 5)//" for dipole.html"
+    end if
     open(unit=iprt, file=trim(line)) 
     write(iprt,"(a)")"<!DOCTYPE html> "
     write(iprt,"(a)")"<html>"
@@ -300,7 +325,11 @@
     write(iprt,"(a)")"return neg+xs"
     write(iprt,"(a)")"}"
     write(iprt,"(a)")""
-    line = input_fn(:len_trim(input_fn) - 4)//"xyz"
+    if (mode == 1) then
+      line = input_fn(:len_trim(input_fn) - 4)//"xyz"
+    else
+      line = input_fn(:len_trim(input_fn) - 5)//" for dipole.xyz"
+    end if
     do i = len_trim(line), 1, -1
       if (line(i:i) == "/" .or. line(i:i) == "\") exit
     end do
@@ -343,7 +372,11 @@
     write(iprt,"(a)")"  var Properties = Info[i].modelProperties"
     write(iprt,"(a)")"  var energy =  parseFloat(name.substring((name.toLowerCase() + "" kc"")."// &
       "split(""kc"")[0].lastIndexOf(""="") + 1)); //parse the name to pull out the energy"
-    write(iprt,"(a)")"  var label =  'Model = ' + modelnumber + ', Energy = ' + roundoff(energy,3) + ' Kcal/mol'"
+    if (mode == 2) then
+      write(iprt,"(a)")"  var label =  'Model = ' + modelnumber + ', Dipole = ' + roundoff(energy,3) + ' Debye'"
+    else
+      write(iprt,"(a)")"  var label =  'Model = ' + modelnumber + ', Energy = ' + roundoff(energy,3) + ' Kcal/mol'"
+    end if
     write(iprt,"(a)")"  A.push([i+1,0 + energy,modelnumber,label])"
     write(iprt,"(a)")"  }"
     write(iprt,"(a)")""
@@ -427,7 +460,11 @@
     write(iprt,"(a)")"   previousPoint = item.datapoint "
     write(iprt,"(a)")"   var y = item.datapoint[1]"
     write(iprt,"(a)")"   var model = item.datapoint[2]"
-    write(iprt,"(a)")"   var label = ""&nbsp;&nbsp;Model ""+ model + "", Energy = "" + y +"" Kcal/mol)"""
+    if (mode == 2) then
+      write(iprt,"(a)")"   var label = ""&nbsp;&nbsp;Model ""+ model + "", Dipole = "" + y +"" Debye"""
+    else
+      write(iprt,"(a)")"   var label = ""&nbsp;&nbsp;Model ""+ model + "", Energy = "" + y +"" Kcal/mol)"""
+    end if
     write(iprt,"(a)")"   showTooltip(item.pageX, item.pageY + 10, label, pos)"
     write(iprt,"(a)")"  }"
     write(iprt,"(a)")""

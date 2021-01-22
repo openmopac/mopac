@@ -8,10 +8,10 @@
     betas, betap, betad, alp, zsn, zpn, zdn, uss, upp, udd, gss, gpp, &
     gsp, gp2, hsp, pocord, alpb, xfac, f0sd_store, g2sd_store, dorbs, v_par, &
     f0sd, g2sd, CPE_Zeta, CPE_Z0, CPE_B, CPE_Xlo, CPE_Xhi, &
-    n_partyp_fn, n_partyp_alpb, n_partyp
+    n_partyp_fn, n_partyp_alpb
       use chanel_C, only : iw
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:04  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
+      use molkst_C, only : method_indo
+      use reimers_C, only : isok, nbfa, zcorea, zeta, zetad, zetawt, betaa, fg
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -53,11 +53,26 @@
     case (6)
       zd(ielmnt) = zd(ielmnt) * c1 + param
     case (7)
-      betas(ielmnt) = betas(ielmnt) * c1 + param
+!
+!  Add INDO switch for beta parameters
+!
+      if (method_indo) then
+        betaa(1, ielmnt) =  betaa(1, ielmnt) * c1 + param
+      else
+        betas(ielmnt) = betas(ielmnt) * c1 + param
+      end if
     case (8)
-      betap(ielmnt) = betap(ielmnt) * c1 + param
+      if (method_indo) then
+        betaa(2, ielmnt) =  betaa(2, ielmnt) * c1 + param
+      else
+        betap(ielmnt) = betap(ielmnt) * c1 + param
+      end if
     case (9)
-      betad(ielmnt) = betad(ielmnt) * c1 + param
+      if (method_indo) then
+        betaa(3, ielmnt) =  betaa(3, ielmnt) * c1 + param
+      else
+        betad(ielmnt) = betad(ielmnt) * c1 + param
+      end if
     case (10)
       gss(ielmnt) = gss(ielmnt) * c1 + param
     case (11)
@@ -100,8 +115,12 @@
       guess2(ielmnt, kfn) = guess2(ielmnt, kfn) * c1 + param
     case (29)
       guess3(ielmnt, kfn) = guess3(ielmnt, kfn) * c1 + param
-    case (n_partyp)
-      natorb(ielmnt) = Nint (param)
+    case (42)
+      if (method_indo) then
+        nbfa(ielmnt) = Nint (param)
+      else
+        natorb(ielmnt) = Nint (param)
+      end if
       dorbs(ielmnt) = (natorb(ielmnt) == 9)
       i = Nint (param)
       if (i /= 9 .and. i /= 4 .and. i /= 1) then
@@ -120,8 +139,75 @@
       xfac(nj,ni) = xfac(ni,nj)
     case (41)
       v_par(ielmnt) = v_par(ielmnt) * c1 + param
+!
+!  Add INDO parameters
+!
+    case (43)
+      zcorea(ielmnt) = zcorea(ielmnt) * c1 + param
+    case (44)
+      zeta(ielmnt)  = zeta(ielmnt) * c1 + param
+    case (45)
+      zetad(1,ielmnt) = zetad(1,ielmnt) * c1 + param
+    case (46)
+      zetad(2,ielmnt) = zetad(2,ielmnt) * c1 + param
+    case (47)
+      zetawt(1,ielmnt) = zetawt(1,ielmnt) * c1 + param
+    case (48)
+      zetawt(2,ielmnt) = zetawt(2,ielmnt) * c1 + param
+    case (49)
+      fg( 1,ielmnt) = fg( 1,ielmnt) * c1 + param
+    case (50)
+      fg( 2,ielmnt) = fg( 2,ielmnt) * c1 + param
+    case (51)
+      fg( 3,ielmnt) = fg( 3,ielmnt) * c1 + param
+    case (52)
+      fg( 4,ielmnt) = fg( 4,ielmnt) * c1 + param
+    case (53)
+      fg( 5,ielmnt) = fg( 5,ielmnt) * c1 + param
+    case (54)
+      fg( 6,ielmnt) = fg( 6,ielmnt) * c1 + param
+    case (55)
+      fg( 7,ielmnt) = fg( 7,ielmnt) * c1 + param
+    case (56)
+      fg( 8,ielmnt) = fg( 8,ielmnt) * c1 + param
+    case (57)
+      fg( 9,ielmnt) = fg( 9,ielmnt) * c1 + param
+    case (58)
+      fg(10,ielmnt) = fg(10,ielmnt) * c1 + param
+    case (59)
+      fg(11,ielmnt) = fg(11,ielmnt) * c1 + param
+    case (60)
+      fg(12,ielmnt) = fg(12,ielmnt) * c1 + param
+    case (61)
+      fg(13,ielmnt) = fg(13,ielmnt) * c1 + param
+    case (62)
+      fg(14,ielmnt) = fg(14,ielmnt) * c1 + param
+    case (63)
+      fg(15,ielmnt) = fg(15,ielmnt) * c1 + param
+    case (64)
+      fg(16,ielmnt) = fg(16,ielmnt) * c1 + param
+    case (65)
+      fg(17,ielmnt) = fg(17,ielmnt) * c1 + param
+    case (66)
+      fg(18,ielmnt) = fg(18,ielmnt) * c1 + param
+    case (67)
+      fg(19,ielmnt) = fg(19,ielmnt) * c1 + param
+    case (68)
+      fg(20,ielmnt) = fg(20,ielmnt) * c1 + param
+    case (69)
+      fg(21,ielmnt) = fg(21,ielmnt) * c1 + param
+    case (70)
+      fg(22,ielmnt) = fg(22,ielmnt) * c1 + param
+    case (71)
+      fg(23,ielmnt) = fg(23,ielmnt) * c1 + param
+    case (72)
+      fg(24,ielmnt) = fg(24,ielmnt) * c1 + param
     case default
       uss(ielmnt) = uss(ielmnt) * c1 + param
     end select
-    return
+!
+! If parameters are read in for an element, assume element is OK to use.
+!
+    if (method_indo) isok(ielmnt) = 1 
+  return
   end subroutine update 

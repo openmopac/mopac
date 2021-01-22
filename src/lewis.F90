@@ -45,13 +45,14 @@ subroutine lewis (use_cvs)
       store_coord = coord
     end if
     let = (Index (keywrd, " 0SCF") + Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") +  &
-      Index (keywrd, " LET") + Index (keywrd, " ADD-H") /= 0)
+      Index (keywrd, " GEO-OK") + Index (keywrd, " ADD-H") + Index (keywrd, " LET") /= 0)
     debug = (Index (keywrd, " LEWIS") /= 0)
 !
 !  Work out raw connectivity.  This depends only on the topology.
 !  Arrays nbonds and ibonds are filled here.
 !
     call set_up_dentate()   
+    if (use_cvs) call check_cvs(.true.)
 !
 !  Put limit on maximum number of bonds to an atom.
 !
@@ -76,7 +77,6 @@ subroutine lewis (use_cvs)
       case default
       end select
     end do
-    if (use_cvs) call check_cvs(.true.)
 !
 !  Check bonding of hydrogen atoms - check for bridges
 !
@@ -156,6 +156,7 @@ subroutine lewis (use_cvs)
         j = maxtxt/2 + 2
       end if
       write (iw, "(/,A,/)") "   TOPOGRAPHY OF SYSTEM"
+      line = " "
       write (iw,*) "  ATOM No. "//line(:j)//"  LABEL  "//line(:j)//"Atoms connected to this atom"
       if (j == 0) then
         do i = 1, numat
@@ -283,7 +284,6 @@ subroutine remove_bond(i)
               elemnt (nat(k))(j:2), im(k),")"
             call mopend(trim(line))
             write(iw,"(10x,a,i"//num1//",a,/)")"(Label for atom ", i, ": """//trim(txtatm(i))//""")"
-            write(iw,'(10x,a)')"(To continue, add ""LET"" to the keyword line)"
             inquire(unit=ilog, opened=opend) 
             if (log) write (ilog, "(a)")trim(line)
             ibad = ibad + 1
@@ -334,12 +334,12 @@ subroutine remove_bond(i)
             num2 = char(Int(log10(n     + 1.0)) + ichar("1"))
             num3 = char(Int(log10(im(i) + 1.0)) + ichar("1"))
             if (pdb_label) then
-              write (iw, "(a,i"//num3//",6a)") " Hydrogen atom ", im(i), &
+              write (iw, "(/,a,i"//num3//",6a)") " Hydrogen atom ", im(i), &
               & " bonds to """, txtatm(m), """ and """, txtatm(n),""""
             if (log) write (ilog, "(a,i"//num3//",6a)") " Hydrogen atom ", im(i), &
               & " bonds to """, txtatm(m), """ and """, txtatm(n),""""
             else
-              write (iw, "(a,i"//num3//",a,a2,i"//num1//",a,a2,i"//num2//")") " Hydrogen atom ", im(i), &
+              write (iw, "(/,a,i"//num3//",a,a2,i"//num1//",a,a2,i"//num2//")") " Hydrogen atom ", im(i), &
                 & " has covalent bonds to ", elemnt (nat(m)), im(m), " and ", elemnt (nat(n)), im(n)
               if (log) write (ilog, "(a,i"//num3//",a,a2,i"//num1//",a,a2,i"//num2//")") " Hydrogen atom ", im(i), &
                 & " has covalent bonds to ", elemnt (nat(m)), im(m), " and ", elemnt (nat(n)), im(n)
@@ -347,7 +347,7 @@ subroutine remove_bond(i)
           else if (m > 2 .and. prt) then
             if (ibad < 20) then
               num3 = char(Int(log10(im(i) + 1.0)) + ichar("1"))
-              write (iw, "(a,i"//num3//",a,a2,I5,a,a2,i5)") " Hydrogen atom ", im(i), " has more than two covalent bonds"
+              write (iw, "(/,a,i"//num3//",a,a2,I5,a,a2,i5)") " Hydrogen atom ", im(i), " has more than two covalent bonds"
               if (txtatm(im(i)) /= " ") then
                 j = im(i)
                 write(iw, '(5x, a)')"Atom label: """//txtatm(j)(:maxtxt)//""""
@@ -396,22 +396,22 @@ subroutine remove_bond(i)
   
   
   subroutine check_CVS(let)
-  use molkst_C, only: numat, keywrd, line, numcal, moperr
+  use molkst_C, only: numat, keywrd, line, numcal, moperr, nscf, maxtxt
   use common_arrays_C, only: txtatm, nat, coord, &
       nbonds, ibonds
   use elemts_C, only: elemnt
-  use mod_atomradii, only: radius
+  use mod_atomradii, only: radius, is_metal
   use chanel_C, only: iw
   implicit none
   logical, intent (in) :: let
   integer :: i, j, k, l, n, m, ii, ncvb, icalcn = -1, ik, cvb_atoms(60)
-  logical :: lbond, error, PDB_input, OO_first = .true.
+  logical :: lbond, error, PDB_input, OO_first = .true., made, first = .true.
   double precision :: r
   double precision, external :: reada
   double precision, allocatable :: store_coord(:,:)
   double precision, external :: distance
   character :: num*1, store*2000
-  save :: store_coord, OO_first
+  save :: store_coord, OO_first, first
     error = .false.
 !
 ! Most of the time, LET should be false, the commonest exceptions being 0SCF and RESEQ
@@ -455,6 +455,17 @@ subroutine remove_bond(i)
     k = 0
     if (i /= 0) then
       k = Index (keywrd(i:), ")") + i
+      if (keywrd(k:k) /= " ") then
+        write(iw,"(//10x,a)")" There must be a space after the closing parenthesis of the CVB keyword"
+        do
+          k = k + 1
+          if (keywrd(k:k) == " ") exit
+        end do
+        write(iw,'(/10x,a)')" CVB keyword: """//keywrd(i + 1:k-1)//'"'
+        if (index(keywrd, " 0SCF") /= 0) return
+        call mopend ("ERROR IN CVB KEYWORD")
+        return
+      end if
     end if
     if (k == i .and. i /= 0) then
       k = Index (keywrd(i + 3:), " ") + i + 3
@@ -513,23 +524,17 @@ subroutine remove_bond(i)
           OO_first = .false.
           cycle
         end if
-        call txt_to_atom_no(keywrd, j - 1, let, m)
-        if (moperr) return
-        if (m > numat) then
-          if (let) then
-!
-!  Jump over the faulty atom label
-!
-            k = Index (keywrd(i:), ")") + i
-            i = index(keywrd(i:k),"""") + i  
-            i = index(keywrd(i:k),"""") + i  
-            cycle
-          end if
-        end if        
+        call txt_to_atom_no(keywrd, j - 1, let)
+        if (moperr) return      
       end do
       k = Index (keywrd(i:), ")") + i
       ncvb = 0
+      if (first) then
+        write(iw,'(20x,a,/)')" Bonds made and broken by keyword CVB"
+        write(iw,'(9x,a)')"Atom #          Label                  Atom #          Label"
+      end if
       do
+        made = .true.
         j = Nint (reada (keywrd(i:k), 1))
         ii = Index (keywrd(i:k), ":") + i
         if (ii == i) then
@@ -603,7 +608,7 @@ subroutine remove_bond(i)
           do ii = 1, nbonds(j)
             if (ibonds(ii, j) == l .and. .not. let .and. index(keywrd, " GEO-OK") == 0 .and. &
               index(keywrd, " 0SCF") == 0) then
-              write(iw,"(a,i5,a,i5,a)")" The bond defined by CVB between atoms",j," and", &
+              write(iw,"(/,a,i5,a,i5,a)")" The bond defined by CVB between atoms",j," and", &
               l, " already exists.  Correct error and re-submit"
               write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
               write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
@@ -613,19 +618,29 @@ subroutine remove_bond(i)
             end if
           end do
           r = distance(j,l)
-          if (r > 3.d0*(radius(nat(j)) + radius(nat(l))) .and. .not. let .and. index(keywrd, " GEO-OK") == 0 .and. &
+          if (r > 3.d0*(radius(j) + radius(l)) .and. .not. let .and. index(keywrd, " GEO-OK") == 0 .and. &
               index(keywrd, " 0SCF") == 0) then
-            write(iw,'(a,i5,a,i5,a,f5.1,a)')" The bond defined by CVB between atoms", j, &
-            " and", l, " would be", r, " Angstroms long.  This is unrealistic."
-            write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
-            write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
-            write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", l, ": "//elemnt(nat(l)), "("//txtatm(l)//")", coord(:,l)
-            error = .true.
+            if (.not. is_metal(nat(j)) .and. .not. is_metal(nat(l))) then
+              write(iw,'(/,a,i5,a,i5,a,f5.1,a)')" The bond defined by CVB between atoms", j, &
+              " and", l, " would be", r, " Angstroms long.  This is unrealistic."
+              write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
+              write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
+              write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", l, ": "//elemnt(nat(l)), "("//txtatm(l)//")", coord(:,l)
+              error = .true.
+            end if
           end if
-          nbonds(j) = nbonds(j) + 1
-          nbonds(l) = nbonds(l) + 1
-          ibonds(nbonds(j), j) = l
-          ibonds(nbonds(l), l) = j
+!
+!  Do NOT add a bond if that bond already exists
+!
+          do ii = 1, nbonds(j)
+            if (ibonds(ii,j) == l) exit
+          end do
+          if (ii > nbonds(j)) then
+            nbonds(j) = nbonds(j) + 1
+            nbonds(l) = nbonds(l) + 1
+            ibonds(nbonds(j), j) = l
+            ibonds(nbonds(l), l) = j
+          end if
         else
 !
 !  make sure that the faulty bond actually exists.
@@ -669,18 +684,19 @@ subroutine remove_bond(i)
               exit
             end if
           end do
+          made = .false.
           if (.not. lbond .and. .not. let) then
             if (radius(i) > 0.1d0 .and. radius(j) > 0.1d0) then
             if (index(keywrd, " GEO-OK") == 0 .and. index(keywrd, " 0SCF") == 0) then
               
-            write(iw,"(a,i5,a,i5,a)")" The bond defined by CVB between atoms",j," and", &
+            write(iw,"(/,a,i5,a,i5,a)")" The bond defined by CVB between atoms",j," and", &
               l, " did not exist.  Correct error and re-submit"
             write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
             write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
             write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", l, ": "//elemnt(nat(l)), "("//txtatm(l)//")", coord(:,l)
             else
               if (index(keywrd, " LOCATE-TS") == 0 .and. index(keywrd, " 0SCF") == 0) then          
-                write(iw,"(a,i5,a,i5,a,/,a)")" The bond defined by CVB between atoms",j," and", &
+                write(iw,"(/,a,i5,a,i5,a,/,a)")" The bond defined by CVB between atoms",j," and", &
                 l, " did not exist,", " but, because GEO-OK is present, the job will continue."
               end if
             end if
@@ -688,7 +704,16 @@ subroutine remove_bond(i)
             end if
           end if
         end if     
-99  continue 
+99      continue 
+        if (.not. error .and. first) then
+          if (made) then            
+            write(iw,'(a8, i6,a,i8,a)')" Made",   j, " "//elemnt(nat(j))//"("//txtatm(j)(:maxtxt)//")", &
+              l, " "//elemnt(nat(l))//"("//txtatm(l)(:maxtxt)//")"
+          else
+            write(iw,'(a8, i6,a,i8,a)')" Broken", j, " "//elemnt(nat(j))//"("//txtatm(j)(:maxtxt)//")", &
+              l, " "//elemnt(nat(l))//"("//txtatm(l)(:maxtxt)//")"
+          end if          
+        end if
         do j = i, k
           if (keywrd(j:j) == "," .or. keywrd(j:j) == ";") exit
         end do   
@@ -719,16 +744,18 @@ subroutine remove_bond(i)
             end do do_k
             if (nbonds(j) == 1) cycle
           end if
-           if (txtatm(j) /= " ") then
+          if (nscf < 3) then
+            if (txtatm(j) /= " ") then
             num = char(ichar("1") + int(log10(j*1.01)))
             write(line,"(a, i"//num//",a)")"All bonds to atom ", j, ", label: """ &
             //txtatm(j)//""" have been deleted"
-           else
-             write(line,"(a,i5,a,3f10.5)") &
-             " All bonds to atom "//elemnt(nat(j)), j, " have been deleted. Coords:",coord(:,j)              
+            else
+              write(line,"(a,i5,a,3f10.5)") &
+              " All bonds to atom "//elemnt(nat(j)), j, " have been deleted. Coords:",coord(:,j)              
+            end if
+            call mopend(trim(line))
+            error = .true.
           end if
-          call mopend(trim(line))
-          error = .true.
         end if
       end do
     end if
@@ -736,16 +763,15 @@ subroutine remove_bond(i)
       if (index(keywrd, " GEO-OK") + index(keywrd, " 0SCF") == 0  ) then
         write(iw,"(/10x,a)")"To continue add ""GEO-OK"" or correct reported faults"
         call mopend("Fault in CVB keyword")
-        return 
-      else
-        moperr = .false.
-        error = .false.   
+        return  
       end if
     end if
+    if (let) moperr = .false.
     keywrd = store
+    first = .false.
     return
   end subroutine check_CVS
-  subroutine txt_to_atom_no(text, j_in, let, m)
+  subroutine txt_to_atom_no(text, j_in, let)
 !
 !  Convert atom number from text to a number.  Text can be PDB or Jmol
 !
@@ -761,9 +787,8 @@ subroutine remove_bond(i)
   implicit none
   character :: text*(*)
   integer, intent (in) :: j_in
-  integer, intent (out) :: m
   logical, intent (in) :: let
-  integer :: i, j, l, n, k
+  integer :: i, j, l, n, k, m
   character :: line*80, txt*30, num*1, txt2*30
   if (.not. pdb_label) then
     call mopend("Labeled atoms can only be used when atoms have labels")
@@ -772,7 +797,12 @@ subroutine remove_bond(i)
   end if
   j = j_in + 1
   l = index(text(j:),"""") + j
+  call upcase(text, len_trim(text))
   line = text(j:l - 2)
+  if (j > 2) then
+    num = text(j - 2:j - 2)
+    if (num >= "0" .and. num <= "9") call mopend("ERROR DETECTED IN CVB KEYWORD IMMEDIATELY BEFORE """//trim(line)//"""")
+  end if  
   txt2 = trim(line)
   if (line(1:1) == "[") then
     k = len_trim(line)

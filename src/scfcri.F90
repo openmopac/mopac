@@ -34,7 +34,6 @@ subroutine scfcri (selcon)
       i = Index (keywrd, " RELSCF")
       if (i /= 0) then
         scfcrt = reada (keywrd, i) * scfcrt
-        scfref = scfcrt
         write (iw, "('  SCF CRITERION =',G14.4)") scfcrt
         if (scfcrt < 1.d-5) then
 10000     format (//2 x, " THERE IS A RISK OF INFINITE LOOPING WITH", &
@@ -45,7 +44,6 @@ subroutine scfcri (selcon)
       i = Index (keywrd, " SCFCRT")
       if (i /= 0) then
         scfcrt = reada (keywrd, i)
-        scfref = scfcrt
         write (iw, "('  SCF CRITERION =',G14.4)") scfcrt
         if (scfcrt < 1.d-5) then
           write (iw, "(//2x,' THERE IS A RISK OF INFINITE LOOPING WITH', &
@@ -58,7 +56,6 @@ subroutine scfcri (selcon)
       !
       if (precis) then
         scfcrt = scfcrt * 0.01d0
-        scfref = scfcrt
       end if
       !
       ! For polarizability calculations, the default convergence should be 
@@ -68,6 +65,7 @@ subroutine scfcri (selcon)
         scfcrt = 1.d-4
       end if
       selcon = scfcrt
+      scfref = scfcrt
     else
       !
       !  IF POLARIZATION IS BEING CALCULATED, TIGHTEN SCF CRITERION
@@ -79,4 +77,5 @@ subroutine scfcri (selcon)
         selcon = scfref
       end if
     end if
+    return
 end subroutine scfcri

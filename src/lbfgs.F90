@@ -1,4 +1,4 @@
-    subroutine lbfgs (xparam, escf) 
+    subroutine lbfgs (xparam, escf)
 !
 !  Use the limited-memory quasi-Newton Broyden-Fletcher-Goldfarb-Shanno method for unconstrained optimization
 !
@@ -24,11 +24,12 @@
       double precision, intent (inout) :: escf
       double precision, dimension (nvar), intent (inout) ::  xparam
 !
-      character :: txt, csave*60, task*60
+      character :: txt, csave*60, task*60, line1*30
       logical :: resfil, times, lsave(4), geo_ref, restrt
-      integer :: i, itry1, icyc, niwa, nwa, maxcyc, alloc_stat, m, isave(44), nflush = 1
+      integer :: i, icyc, niwa, nwa, maxcyc, alloc_stat, m, isave(44), nflush = 1, &
+        n_bad = 0, max_bad
 !
-      double precision :: absmin, const, cycmx, stepmx, sum, tstep, tt0, rms, slog, &
+      double precision :: const, cycmx, stepmx, sum, tstep, tt0, rms, slog, &
      & tlast, tolerg, tprt, tx1, tx2, best_funct, best_gnorm, oldstp(12), dsave(29)
 !
       double precision, dimension(:), allocatable :: best_xparam, best_gradients, &
@@ -74,6 +75,15 @@
       end if
       if (Index (keywrd, " CYCLES") /= 0) then
         maxcyc = Nint (reada (keywrd, Index (keywrd, " CYCLES")))
+      end if
+      if (index(keywrd, " LET") /= 0) then
+        if (index(keywrd, " LET(") /= 0) then
+          max_bad = Nint (reada (keywrd, Index (keywrd, " LET(")))
+        else
+          max_bad = 60
+        end if
+      else
+        max_bad = 30
       end if
       if (Index (keywrd, "GNORM=") /= 0) then
         tolerg = reada (keywrd, Index (keywrd, "GNORM="))
@@ -130,8 +140,6 @@
       cycmx = 0.d0
       tlast = tleft
       resfil = .false.
-      itry1 = 0
-      absmin = 1.d6
       do
        !
        !  Check: Is there enough time for another cycle?
@@ -205,138 +213,129 @@
           end do
           call compfg (xparam, .true., escf, .true., grad, .true.)
           if (moperr) goto 99
-          if (absmin-escf < 1.d-7) then
-            itry1 = itry1 + 1
-            if (itry1 > 900 .or. (gnorm < 1.d0 .and. itry1 > 9)) then
-            write (iw, "(//,' HEAT OF FORMATION IS ESSENTIALLY STATIONARY')")
+          if (best_funct < escf) then
+            n_bad = n_bad + 1
+          else
+            n_bad = 0
+          end if
+!
+! Allow for quite large regions of instability in the optimization.
+!
+          if (n_bad > max_bad .or. (gnorm < 1.d0 .and. n_bad > (max_bad*2)/3)) then
+            write (iw, "(//10x,' HEAT OF FORMATION IS ESSENTIALLY STATIONARY')")
             iflepo = 3
-!
-!  If current point is not the best, then load in the best point
-!
-            if (best_funct < escf) then
-              escf = best_funct
-              gnorm = best_gnorm
-              xparam = best_xparam
-              grad = best_gradients
-              nc(:natoms) = best_nc(:natoms)
-            end if
-            deallocate (best_xparam, best_gradients, best_nc, stat=alloc_stat)
             exit
           end if
-        else
-          itry1 = 0
-          absmin = escf
-        end if
-        if (times) then
-          call timer (" AFTER COMPFG")
-        end if
-          !
-          !  Write out this cycle
-          !
-        nstep = nstep + 1
-        tx2 = second (2)
-        tstep = tx2 - tx1
-        cycmx = Max (tstep, cycmx)
-        tx1 = tx2
-        tleft = tleft - tstep
-        if (tlast-tleft > tdump) then
-          tlast = tleft
-          resfil = .true.
-          tt0 = second (1) - time0
-          call lbfsav (tt0, 1, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
-               & dsave, nstep, escf)
-          if (moperr) goto 99
-        end if
-        tleft = Max (0.d0, tleft)
-        call prttim (tleft, tprt, txt)
-        gnorm = dSqrt (ddot(nvar,grad, 1, grad, 1))
-        if (best_funct > escf) then
-!
-!  Store best result up to the present
-!
-          best_gnorm = gnorm
-          best_funct = escf
-          best_xparam = xparam
-          best_gradients = grad
-          best_nc(:natoms) = nc(:natoms)
-        end if
-!
-!   Write out current status
-!
-        if (id == 3 .and. nstep > 0) then
-          nstep = nstep - 1
-          call write_cell(iw)
-          call write_cell(iw0)
+          if (times) then
+            call timer ("AFTER COMPFG")
+          end if
+            !
+            !  Write out this cycle
+            !
           nstep = nstep + 1
-        end if
-        if (geo_ref) then
-          call  geo_diff(sum, rms, .false.)         
-          write(iw,'(/1x, a, f8.2, a, f8.4, a, f8.4, a, f11.2, a)') "Difference to Geo-Ref:", sum, &
-          " = total,", sum/numat, " = Average,", sqrt(rms/numat)," = RMS movement.    STRESS:", &
-          stress
-        end if
-        if (geo_ref) then
-          write(line,'(a,g15.7)')"  - STRESS:", escf - stress
-        else
-          line = " "
-        end if       
-        if (resfil) then          
-          write (line, '(" RESTART FILE WRITTEN,      TIME LEFT:", f6.2, &
-           & a1, "  GRAD.:", f10.3, " HEAT:", g14.7, a)') &
-           tprt, txt, Min (gnorm, 999999.999d0), escf, trim(line)
-          write(iw,"(a)")trim(line)   
-          call to_screen(trim(line))
-          endfile (iw) 
-          backspace (iw) 
-          if (log) write (ilog, '(a)', err = 1000)trim(line)
-          resfil = .false.
-        else
-          write (line, '(" CYCLE:", i6, " TIME:", f8.3, " TIME LEFT:", &
-                 & f6.2, a1, "  GRAD.:", f10.3, " HEAT:", g14.7, a)') &
-                 nstep, Min (tstep, 9999.99d0), tprt, txt, &
-                 & Min (gnorm, 999999.999d0), escf, trim(line)
-          write(iw,"(a)")trim(line)
-          endfile (iw) 
-          backspace (iw) 
-          if (log) write (ilog, "(a)")trim(line)                   
-          call to_screen(trim(line))
-        end if
-        if (mod(nstep,30) == 0) then
-          line = trim(input_fn)
-          call add_path(line)
-          i = len_trim(line) - 5
-          call to_screen(line(:i))
-        end if
-        if (nflush /= 0) then
-          if (Mod(nstep, nflush) == 0) then
+          tx2 = second (2)
+          tstep = tx2 - tx1
+          cycmx = Max (tstep, cycmx)
+          tx1 = tx2
+          tleft = tleft - tstep
+          if (tlast-tleft > tdump) then
+            tlast = tleft
+            resfil = .true.
+            tt0 = second (1) - time0
+            call lbfsav (tt0, 1, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
+                 & dsave, nstep, escf)
+            if (moperr) goto 99
+          end if
+          tleft = Max (0.d0, tleft)
+          call prttim (tleft, tprt, txt)
+          gnorm = dSqrt (ddot(nvar,grad, 1, grad, 1))
+          if (best_funct > escf) then
+  !
+  !  Store best result up to the present
+  !
+            best_gnorm = gnorm
+            best_funct = escf
+            best_xparam = xparam
+            best_gradients = grad
+            best_nc(:natoms) = nc(:natoms)
+          end if
+  !
+  !   Write out current status
+  !
+          if (id == 3 .and. nstep > 0) then
+            nstep = nstep - 1
+            call write_cell(iw)
+            call write_cell(iw0)
+            nstep = nstep + 1
+          end if
+          if (geo_ref) then
+            call  geo_diff(sum, rms, .false.)         
+            write(iw,'(/1x, a, f8.2, a, f8.4, a, f8.4, a, f11.2, a)') "Difference to Geo-Ref:", sum, &
+            " = total,", sum/numat, " = Average,", sqrt(rms/numat)," = RMS movement.    STRESS:", &
+            stress
+          end if
+          if (geo_ref) then
+            write(line1,'(a,g15.7)')"  - STRESS:", escf - stress
+          else
+            line1 = " "
+          end if       
+          if (resfil) then          
+            write (line, '(" RESTART FILE WRITTEN,      TIME LEFT:", f6.2, &
+             & a1, "  GRAD.:", f10.3, " HEAT:", g14.7, a)') &
+             tprt, txt, Min (gnorm, 999999.999d0), escf, trim(line1)
+            write(iw,"(a)")trim(line)   
+            call to_screen(trim(line))
             endfile (iw) 
             backspace (iw) 
-            if (log) then
-              endfile (ilog) 
-              backspace (ilog) 
+            if (log) write (ilog, '(a)', err = 1000)trim(line)
+            resfil = .false.
+          else
+            write (line, '(" CYCLE:", i6, " TIME:", f8.3, " TIME LEFT:", &
+                   & f6.2, a1, "  GRAD.:", f10.3, " HEAT:", g14.7, a)') &
+                   nstep, Min (tstep, 9999.99d0), tprt, txt, &
+                   & Min (gnorm, 999999.999d0), escf, trim(line1)
+            write(iw,"(a)")trim(line)
+            endfile (iw) 
+            backspace (iw) 
+            if (log) write (ilog, "(a)")trim(line)                   
+            call to_screen(trim(line))
+          end if
+          if (mod(nstep,30) == 0) then
+            line = trim(input_fn)
+            call add_path(line)
+            i = len_trim(line) - 5
+            call to_screen(line(:i))
+          end if
+          if (nflush /= 0) then
+            if (Mod(nstep, nflush) == 0) then
+              endfile (iw) 
+              backspace (iw) 
+              if (log) then
+                endfile (ilog) 
+                backspace (ilog) 
+              end if
             end if
           end if
-        end if
-        call to_screen("To_file: Geometry optimizing")
-        !
-        !  Write out the cosine of the angle that the new gradient makes
-        !  with the old gradient.  Ideally, this should be small.
-        !
-1000    call dcopy (nvar, grad, 1, gold, 1)
-        endfile (iw) 
-        backspace (iw) 
-        !
-        !  EXIT CRITERIA.  (The criteria in SETULB are ignored.)
-        if (gnorm < tolerg) then
-          iflepo = 3
+          call to_screen("To_file: Geometry optimizing")
+          !
+          !  Write out the cosine of the angle that the new gradient makes
+          !  with the old gradient.  Ideally, this should be small.
+          !
+  1000    call dcopy (nvar, grad, 1, gold, 1)
+          endfile (iw) 
+          backspace (iw) 
+          !
+          !  EXIT CRITERIA.  (The criteria in SETULB are ignored.)
+          if (gnorm < tolerg) then
+            iflepo = 3
+            exit
+          end if
+        else if (task(1:5) /= "NEW_X") then
+          write (iw, "(2A)") " L-BFGS Message:", task
+          iflepo = 9
           exit
         end if
-      else if (task(1:5) /= "NEW_X") then
-        write (iw, "(2A)") " L-BFGS Message:", task
-        iflepo = 9
-        exit
-      end if
-    end do
+      end do
 !
 !  If current point is not the best, then load in the best point
 !
@@ -437,7 +436,7 @@
        !
        !  Read in XPARAM and GRAD
        !
-        read (ires, iostat = j)old_numat, old_norbs, (xparam(i),i=1,nvar) 
+        read (ires, iostat = j)old_numat, old_norbs
         if (norbs /= old_norbs .or. numat /= old_numat .or. j /= 0) then
         call mopend("Restart file read in does not match current data set")
         return
@@ -452,11 +451,9 @@
     tt0 = tt0 - i*10000000 
     write (iw, '(10X,''TOTAL TIME USED SO FAR:'',F13.2,'' SECONDS'',/)') tt0 
         return
-1000    write (iw, "(//10X,'RESTART FILE EXISTS, BUT IS CORRUPT')")
-        call mopend ("RESTART FILE EXISTS, BUT IS CORRUPT")
+1000    call mopend ("RESTART FILE EXISTS, BUT IS CORRUPT")
         return
-1100    write (iw, "(//10X,'NO RESTART FILE EXISTS!')")
-        call mopend ("NO RESTART FILE EXISTS!")
+1100    call mopend ("NO RESTART FILE EXISTS!")
       end if
     end subroutine lbfsav
     subroutine setulb (n, m, x, l, u, nbd, f, g, factr, pgtol, wa, iwa, task, &
@@ -1220,7 +1217,7 @@
         end if
         if (nbd(i) == 0) then
           !                                this variable is always free
-          iwhere (i) = - 1 !
+          iwhere (i) = -1 !
           !           otherwise set x(i)=mid(x(i), u(i), l(i)).
         else
           cnstnd = .true.

@@ -15,7 +15,7 @@
       integer , dimension(2,9) :: loc 
       integer :: i, iatom, jatom, ibase, kj, icheck, jcheck, ii, jj 
       real(double), dimension(norbs) :: vect1, vect2 
-      real(double), dimension(5) :: h 
+      real(double), dimension(5) :: h = 0.d0
       real(double), dimension(3) :: p 
       real(double), dimension(5) :: d 
       real(double) :: sum 

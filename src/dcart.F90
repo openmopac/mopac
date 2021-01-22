@@ -264,12 +264,6 @@
                     cycle
                   end if
                 end if
-                if (.not.force) then 
-                  cdi(1,1) = cdi(1,1) + chnge2 
-                  cdi(2,1) = cdi(2,1) + chnge2 
-                  cdi(3,1) = cdi(3,1) + chnge2 
-                  call dhc (pdi, padi, pbdi, cdi, ndi, jf, jl, if, il, aa, 1) 
-                endif 
                 if (point) then
                   do l = 1, 3
                     cdi(l, 1) = coord(l, jj) + tvec(l, 1) * ik &
@@ -279,6 +273,12 @@
                   dxyz(1:3, iii+icuc) = dxyz(1:3, iii+icuc) - dstat(1:3)
                   dxyz(1:3, jjj+kkkk) = dxyz(1:3, jjj+kkkk) + dstat(1:3) 
                 else
+                  if (.not.force) then 
+                   cdi(1,1) = cdi(1,1) + chnge2 
+                   cdi(2,1) = cdi(2,1) + chnge2 
+                   cdi(3,1) = cdi(3,1) + chnge2 
+                   call dhc (pdi, padi, pbdi, cdi, ndi, jf, jl, if, il, aa, 1) 
+                  endif 
                   do k = 1, 3 
                     if (force) then 
                       cdi(k,2) = cdi(k,2) - chnge2 
@@ -409,21 +409,14 @@
         end do
       end if
       if (.not.debug) return 
-      write (iw, '(2/10X,''CARTESIAN COORDINATE DERIVATIVES'')') 
-      write (iw, '(7X,a)')"(Does NOT include post-SCF corrections)" 
-      write (iw, '(/3X,       ''NUMBER  ATOM '',5X,''X'',12X,''Y'',12X,''Z'',/)') 
       if (l123 == 1) then 
         write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i,elemnt(nat(i)),(dxyz(j,i),j=1,3),i=1,numtot) 
       else if (large) then 
-        write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i,elemnt(nat((i-1)/l123+1)), &
-          (dxyz(j,i),j=1,3),i=1,numtot) 
-      else 
-        write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i,elemnt(nat((i-1)/l123+1)),(dxyz(j,i) + &
-          dxyz(j,i+1) + dxyz(j,i+2),j=1,3),i=1,numtot - 2,3) 
+      call print_dxyz("(Does NOT include post-SCF corrections)")
       endif 
       if (id == 0) return  
       write (iw, &
-      '(2/10X,"CARTESIAN COORDINATE DERIVATIVES",/,"  NO. AT.     X            Y            Z",/)') 
+      '(2/10X,"CARTESIAN COORDINATE DERIVATIVES FOR THE CENTRAL UNIT CELL",/,"  NO. AT.     X            Y            Z",/)') 
       if (l123 == 1) then 
         write (iw, '(I6,A2,3F13.6)') (i,elemnt(nat(i)),(dxyz(j,i),j=1,3),i=1,numtot) 
       else if (large) then 
@@ -439,10 +432,6 @@
                 sumx = sumx + dxyz(1,loop) 
                 sumy = sumy + dxyz(2,loop) 
                 sumz = sumz + dxyz(3,loop) 
-                if (abs(dxyz(1,loop)) + abs(dxyz(2,loop)) + abs(dxyz(3,loop)) &
-                   <= 1.D-5) cycle  
-                write (iw, '(I6,A2,F13.6,2F13.6,3I4)') i, elemnt(nat(i)), &
-                (dxyz(k,loop),k=1,3), ik, jk, kl 
               end do 
             end do 
           end do 
@@ -450,7 +439,6 @@
           work2(2,i) = sumy 
           work2(3,i) = sumz 
         end do 
-        write (iw, *) ' Central Unit Cell Derivatives' 
         write (iw, '(I6,A2,F13.6,2F13.6)') (i,elemnt(nat(i)), &
         (work2(j,i),j=1,3), i = 1, numat) 
         if (id == 3) call xyzcry (tvec, numat, work2, iw) 
@@ -503,10 +491,52 @@
         if (r > cupper) then
           derp = 0.d0
         else
-          derp = - (cr+2*cr2*r) / (c+cr*r+cr2*r**2) ** 2
+          derp = -(cr+2*cr2*r) / (c+cr*r+cr2*r**2) ** 2
         end if
       else
         derp = -1 / r ** 2
       end if
-end function derp
+  end function derp
+  subroutine print_dxyz(header)
+!
+! Generic print of the array dxyz.  Use this wherever array dxyz needs to be printed
+!
+    use common_arrays_C, only : dxyz, nat
+!
+    USE molkst_C, only : numat, keywrd, l123, l11, l21, l31
+    USE chanel_C, only : iw 
+    USE elemts_C, only : elemnt 
+!
+    implicit none
+    character :: header*(*)
+    integer :: i1, j1, k1, i, k, j, l
+    double precision :: sum
+    logical :: large
+    large = index(keywrd,'LARGE') /= 0 
+    write (iw, '(2/10X,''CARTESIAN COORDINATE DERIVATIVES'')') 
+    write (iw, '(7X,a)')trim(header)
+    if (l123 == 1) then 
+      write (iw, '(/1X, a, /)')" NUMBER ATOM           X                Y                Z              Total" 
+      write (iw, '(I6,4x,a2,4F17.6)') (i, elemnt(nat(i)),(dxyz(i*3 - 3 + j), j = 1, 3), &
+        sqrt(dxyz(i*3)**2 + dxyz(i*3 - 1)**2 + dxyz(i*3 - 2)**2), i = 1, numat)
+    else if (large) then 
+      write (iw, '(/1X, a, /)')"       CELL           ATOM            X                Y                Z            Total" 
+      k = 0 
+      l = 0
+      do i1 = -l11, l11 
+        do j1 = -l21, l21 
+          do k1 = -l31, l31 
+            l = l + 1
+            do i = 1, numat              
+              k = k + 1 
+              sum = dxyz(k*3 - 2)**2 + dxyz(k*3 - 1)**2 + dxyz(k*3)**2
+              if (sum > 0.1d0) &
+              write (iw, '(I6, 2i4, i8, i4, 1x,a2,F13.6,3F17.6)')  i1, j1, k1, k, i, &
+                elemnt(nat(i)), (dxyz(k*3 - 3 + j), j = 1, 3), sqrt(sum)
+            end do
+          end do
+        end do
+      end do
+    endif 
+    end subroutine print_dxyz
 

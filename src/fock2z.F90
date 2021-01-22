@@ -19,7 +19,7 @@ end subroutine fock2z
 !
 subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
      & ione, coord)
-    use molkst_C, only: numat, norbs, mpack, numcal, method_PM7
+    use molkst_C, only: numat, norbs, mpack, numcal, l_feather
     use cosmo_C, only : useps
     use parameters_C, only: am, dd, ad, tore
     use funcon_C, only: ev, a0
@@ -432,8 +432,8 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
 
                     aee = 0.5d0 / am(ni) + 0.5d0 / am(nj)
                     w1 = ev / Sqrt (r2/(a0**2)+aee**2)
-                    if (method_PM7) then
-                      call to_point(r2, point, const)
+                    if (l_feather) then
+                      call to_point(sqrt(r2), point, const)
                       w1 = w1*const + (1.d0 - const)*point
                     end if   
                   else
@@ -478,7 +478,7 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
                       rp = Sqrt ((r/a0+da)**2+ade**2)
                       rm = Sqrt ((r/a0-da)**2+ade**2)
                       ri2 = ev * (0.5d0/rp-0.5d0/rm)
-                      if (method_PM7) then
+                      if (l_feather) then
                         call to_point(r, point, const)
                         ri2 = ri2*const 
                       end if  
@@ -495,7 +495,7 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
                       rp = Sqrt ((r/a0+da)**2+ade**2)
                       rm = Sqrt ((r/a0-da)**2+ade**2)
                       ri5 = -ev * (0.5d0/rp-0.5d0/rm)
-                      if (method_PM7) then
+                      if (l_feather) then
                         call to_point(r, point, const)
                         ri5 = ri5*const 
                       end if 
@@ -640,7 +640,7 @@ end subroutine fz2
 !
 subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
      & kopt, ione, coord)
-    use molkst_C, only: numat, norbs, mpack, numcal, method_PM7
+    use molkst_C, only: numat, norbs, mpack, numcal, l_feather
     use MOZYME_C, only : nijbo, &
        & direct, semidr
     use parameters_C, only: am, dd, ad, tore
@@ -718,7 +718,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
    !   MODE=-1:  REMOVE TERMS FROM FULL FOCK MATRIX.
    !
     if (mode ==-1) then
-      f(1:mpack) = - f(1:mpack)
+      f(1:mpack) = -f(1:mpack)
     end if
     l = 0
     do ii = 1, numat
@@ -750,9 +750,9 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
           jred = 1
           iim1 = ii - ione
           do jj = 1, iim1
-          if (ii == 5 .and. jj == 1) then
-            calcj = .false.
-            end if
+  !          if (ii == 13 .and. jj == 7) then
+  !            continue
+  !          end if
             calcj = (kopt(jred) == jj)
             if (calcj .and. jred < numat) then
               jred = jred + 1
@@ -1052,7 +1052,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
                     ni = nat(ii)
                     nj = nat(jj)
                     aee = 0.5d0 / am(ni) + 0.5d0 / am(nj)                    
-                    if (method_PM7) then
+                    if (l_feather) then
                       rij = sqrt(r2)
                       call to_point(rij, point, const)
                       w1 = ev / Sqrt (r2/(a0**2)+aee**2)
@@ -1102,7 +1102,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
                       rp = Sqrt ((r/a0+da)**2+ade**2)
                       rm = Sqrt ((r/a0-da)**2+ade**2)
                       ri2 = ev * (0.5d0/rp-0.5d0/rm)
-                      if (method_PM7) then
+                      if (l_feather) then
                         call to_point(r, point, const)
                         ri2 = ri2*const 
                       end if
@@ -1119,7 +1119,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
                       rp = Sqrt ((r/a0+da)**2+ade**2)
                       rm = Sqrt ((r/a0-da)**2+ade**2)
                       ri5 = -ev * (0.5d0/rp-0.5d0/rm)
-                      if (method_PM7) then
+                      if (l_feather) then
                         call to_point(r, point, const)
                         ri5 = ri5*const 
                       end if

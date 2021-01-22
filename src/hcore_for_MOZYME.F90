@@ -139,7 +139,7 @@ subroutine hcore_for_MOZYME ()
         mm = mm + 1
         h(i2) = uspd(mm)
         if (fldon) then
-          fnuc = - (efield(1)*coord(1, i) + efield(2)*coord(2, i) + &
+          fnuc = -(efield(1)*coord(1, i) + efield(2)*coord(2, i) + &
                & efield(3)*coord(3, i)) * fldcon
           h(i2) = h(i2) + fnuc
         end if

@@ -215,16 +215,12 @@
 !    'GEO-OK' IS SPECIFIED.
 !
       if (nelec < 0) then 
-        write (iw, *) &
-          ' NUMBER OF ELECTRONS IN M.O.S BELOW ACTIVE SPACE IS LESS THAN ZERO!' 
         meci = 0.D0 
         call mopend (&
            ' NUMBER OF ELECTRONS IN M.O.S BELOW ACTIVE SPACE IS LESS THAN ZERO') 
         return  
       endif 
       if (nelec + nmos > norbs) then 
-        write (iw, *) &
-      ' UPPER BOUND OF ACTIVE SPACE IS GREATER THAN THE NUMBER OF ORBITALS!' 
         meci = 0.D0 
         call mopend (&
        ' UPPER BOUND OF ACTIVE SPACE IS GREATER THAN THE NUMBER OF ORBITALS!') 
@@ -260,8 +256,6 @@
           write (iw, '(8F10.4)') (eigs(i),i=nelec + nmos + 1,min(norbs,nelec + &
             nmos + 5)) 
           write (iw, *) 
-          write (iw, '(10X,A)') &
-            '  JOB STOPPED.   TO CONTINUE, SPECIFY "GEO-OK"' 
           meci = 0.D0 
           call mopend ('JOB STOPPED. TO CONTINUE, SPECIFY "GEO-OK".') 
           return  
@@ -358,8 +352,6 @@
             if (index(line,'MICRO') /= 0) go to 200 
           end do 
   190     continue 
-          write (iw, &
-      '('' MICROSTATES SPECIFIED BY KEYWORDS BUT MISSING FROM DATA'')') 
           meci = 0.D0 
           call mopend (&
              'MICROSTATES SPECIFIED BY KEYWORDS BUT MISSING FROM DATA') 
@@ -408,7 +400,6 @@
           if (allocated(npermb)) deallocate(npermb)
           allocate(nperma(nmos, lima), npermb(nmos, limb), stat = i) 
           if (i /= 0) then
-            write(iw,*)" A problem occurred during memory assignment. The number of configurations is too large. "
             call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
             return
           end if
@@ -428,7 +419,6 @@
         if (allocated(microb)) deallocate(microb)
         allocate(microa(nmos, lab), microb(nmos,lab), stat = i) 
         if (i /= 0) then
-          write(iw,*)" A problem occurred during memory assignment. The number of configurations is too large. "
           call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
           return   
         end if  
@@ -447,7 +437,6 @@
       allocate(spin(lab), nalmat(lab), eig(lab + 1), vectci(30*lab), &
       & ispin(lab), oscil(3,lab + 4), ispqr(lab,nmeci + 1), stat = i)
       if (i /= 0) then
-          write(iw,*)" A problem occurred during memory assignment. The number of configurations is too large. "
           call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
           return   
         end if  
@@ -505,14 +494,12 @@
       if (prnt) write (iw, "(/,/,10x,' NO OF CONFIGURATIONS CONSIDERED =',i"//num1//")") lab 
       if (allocated(cdiag))  deallocate(cdiag)
       if (lab > maxci) then
-        write(iw,"(//,a)")"  Too many configurations requested"
-        write(iw,"(a,i7)")"  Number requested:", lab
         call mopend("Too many configurations requested")
+        write(iw,"(a,i7)")"  Number requested:", lab
         return
       end if
       allocate(conf(lab**2), cimat((lab*(lab + 1))/2 + 9), diag(lab), cdiag(lab), stat = i)
       if (i /= 0) then
-        write(iw,*)" A problem occurred during memory assignment. The number of configurations is too large. "
         call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
         return   
       end if  
@@ -578,10 +565,9 @@
       endif 
   400 continue 
       if (lab > maxci) then
-        write(iw,"(//,a)")"  Too many configurations requested"
+        call mopend("Too many configurations requested")
         write(iw,"(a,i7)")"  Number requested:", lab
         write(iw,"(a,i7)")"  Max. no. allowed:", maxci
-        call mopend("Too many configurations requested")
         return
       end if
       do i = 1, lab 
@@ -598,12 +584,10 @@
 !   BEFORE STARTING, CHECK THAT THE ROOT WANTED CAN EXIST
 !
       if (lab < lroot) then 
-        write (iw, &
-      '(2/10X,''C.I. IS OF SIZE LESS THAN ROOT SPECIFIED'')') 
-        write (iw, '(10X,''MODIFY SIZE OF C.I. OR ROOT NUMBER'')') 
-        meci = 0.D0 
         call mopend (&
        'C.I. IS OF SIZE LESS THAN ROOT SPECIFIED. MODIFY SIZE OF C.I. OR ROOT NUMBER.') 
+        write (iw, '(10X,''MODIFY SIZE OF C.I. OR ROOT NUMBER'')') 
+        meci = 0.D0 
         return  
       endif 
       if (prnt) then 
@@ -776,7 +760,6 @@
       endif 
     end do
       if (root_requested < 1) then 
-        write (iw, *) ' ROOT REQUESTED DOES NOT EXIST IN C.I.' 
         call mopend ("ROOT REQUESTED DOES NOT EXIST IN C.I.")
         write (iw,'(a,i5,a)')"  Root requested:",lroot,root_ir
         if (sing) write(iw,'(a)')"  State requested must be a Singlet."
@@ -853,8 +836,8 @@
       if (prnt) write (iw, '(A)')  ' The "+" symbol indicates the root used.' 
   580 format(i5,a,2f12.6,i6,a1,2x,a8,4x,a4,3f12.4) 
       if (root_requested == 0) then 
-        write (iw, '(2/10X,''THE STATE REQUIRED IS NOT PRESENT IN THE'')') 
-        write (iw, '(10X,  ''    SET OF CONFIGURATIONS AVAILABLE'')') 
+        call mopend (&
+       'THE STATE REQUIRED IS NOT PRESENT IN THE SET OF CONFIGURATIONS AVAILABLE') 
         write (iw, &
       '(/ 4X,''NUMBER OF STATES ACCESSIBLE USING CURRENT KEY-WORDS'',/)') 
         do i = 1, 7 
@@ -862,8 +845,6 @@
           write (iw, '((24X,A8,I4))') tspin(i), nint(cimat(i)) 
         end do 
         meci = 0.D0 
-        call mopend (&
-       'THE STATE REQUIRED IS NOT PRESENT IN THE SET OF CONFIGURATIONS AVAILABLE') 
         return  
       endif 
       maxvec = 0 

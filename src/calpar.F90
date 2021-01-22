@@ -6,9 +6,11 @@
       USE parameters_C, only : ios, iop, iod, qq, am, ad, aq, dd, &
       gpp, gp2, hsp, gss, gsp, &
       zs, zp, uss, upp, udd, eisol, &
-      f0sd, g2sd, f0sd_store, g2sd_store
+      f0sd, g2sd, f0sd_store, g2sd_store, &
+         dsd, dpd, ddd, zd
       USE funcon_C, only : ev
-      USE molkst_C, only : keywrd, method_pm7
+      USE molkst_C, only : keywrd, method_indo
+      USE reimers_C, only: zetad, zetawt, nbfa
       USE chanel_C, only : iw
 !...Translated by Pacific-Sierra Research 77to90  4.4G  08:24:24  03/10/06  
 !...Switches: -rl INDDO=2 INDIF=2 
@@ -23,12 +25,19 @@
       real(double), dimension(107) :: gssc, gspc, hspc, gp2c, gppc 
       real(double) :: p, p4,  hpp, qn, gdd1, d1, d2, df, hsp1, hsp2, d3, &
         gqq, q1, q2, qf, hpp1, hpp2, q3
+      real(double) :: zda, zdb, zwa, zwb, dsda, dsdb, dpda, dpdb, ddda, dddb
       double precision, external :: reada
       save nspqn 
 !----------------------------------------------- 
       data nspqn/ 2*1, 8*2, 8*3, 18*4, 18*5, 32*6, 21*0/  
 !
-! THE CONTINUATION LINES INDICATE THE PRINCIPAL QUANTUM NUMBER.
+      if (method_indo) then
+        do i = 1, 107
+          if (isnan(zs(i))) zs(i) = 0.d0
+          if (isnan(zp(i))) zp(i) = 0.d0
+          if (isnan(zd(i))) zd(i) = 1.d-6
+        end do
+      end if
 !
 !
 !     SET SCALING PARAMETER.
@@ -36,6 +45,10 @@
       p4 = p**4
       call sp_two_electron 
       am = 0.d0
+      ad = 0.d0
+      aq = 0.d0
+      dd = 0.d0
+      qq = 0.d0
       do i = 2, 97 
 !
 !  GSSC is the number of two-electron terms of type <SS|SS>
@@ -82,6 +95,47 @@
         qn = nspqn(i) 
         dd(i) = (2.D0*qn + 1)*(4.D0*zs(i)*zp(i))**(qn + 0.5D0)/(zs(i)+zp(i))**(2.D0*qn + 2)/sqrt(3.D0) 
         qq(i) = sqrt((4.D0*qn*qn + 6.D0*qn + 2.D0)/20.D0)/zp(i) 
+        if (method_indo) then
+          if (nbfa(i) > 4) then
+!           INDO d orbitals - since two Slater basis functions, calculate two
+!           terms and weights based on the coefficients
+            zda = zetad(1,i)
+            zdb = max(zetad(2,i), 1.d-8)
+            zwa = zetawt(1,i)
+            zwb = zetawt(2,i)
+  
+            dsda = (2.D0*zs(i))**(qn + 0.5D0) * (2.D0*zda)**(qn - 0.5D0) / (zs(i) + zda)**(2.D0*qn + 2)
+            dsda = dsda * (2.D0*qn + 1) * sqrt(2.D0*qn*(2.D0*qn - 1))
+  
+            dsdb = (2.D0*zs(i))**(qn + 0.5D0) * (2.D0*zdb)**(qn - 0.5D0) / (zs(i) + zdb)**(2.D0*qn + 2)
+            dsdb = dsdb * (2.D0*qn + 1) * sqrt(2.D0*qn*(2.D0*qn - 1))
+  
+            dsd(i) = sqrt((dsda*zwa + dsdb*zwb) / sqrt(15.D0))
+  
+  
+            dpda = (2.D0*zp(i))**(qn + 0.5D0) * (2.D0*zda)**(qn - 0.5D0) / (zp(i) + zda)**(2.D0*qn + 1)
+            dpda = dpda * sqrt(2.D0*qn*(2.D0*qn-1))
+  
+            dpdb = (2.D0*zp(i))**(qn + 0.5D0) * (2.D0*zdb)**(qn - 0.5D0) / (zp(i) + zdb)**(2.D0*qn + 1)
+            dpdb = dpdb * sqrt(2.D0*qn*(2.D0*qn-1))
+  
+            dpd(i)= (dpda*zwa + dpdb*zwb) / sqrt(5.D0)
+  
+  
+            ddda = (4.D0*qn*qn - 2.D0*qn) / (2*zda)**2
+            dddb = (4.D0*qn*qn - 2.D0*qn) / (2*zdb)**2
+  
+            ddd(i)= sqrt((ddda*zwa + dddb*zwb) / 7.D0)
+          else
+! Single-Slater d orbitals
+            dsd(i) = sqrt( (2.D0*zs(i))**(qn + 0.5D0) * (2.D0*zd(i))**(qn - 0.5D0) &
+                     / (zs(i) + zd(i))**(2.D0*qn + 2) &
+                     * (2.D0*qn + 1) * sqrt(2.D0*qn*(2.D0*qn - 1)) / sqrt(15.0))
+            dpd(i) = (2.D0*zp(i))**(qn + 0.5D0) * (2.D0*zd(i))**(qn - 0.5D0) &
+                     / (zp(i) + zd(i))**(2.D0*qn + 1) * sqrt(2.D0*qn*(2.D0*qn-1)) / sqrt(5.D0)
+            ddd(i) = sqrt( (4.D0*qn*qn - 2.D0*qn) / (2*zd(i))**2 / 7.D0)
+          end if
+        end if
 !     CALCULATE ADDITIVE TERMS, IN ATOMIC UNITS.
         jmax = 5 
         gdd1 = (hsp(i)/(ev*dd(i)**2))**(1.D0/3.D0) 

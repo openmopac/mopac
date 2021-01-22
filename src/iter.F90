@@ -13,7 +13,9 @@
     &    nclose, nopen, fract, numcal, mpack, iflepo, iscf, &
     &    enuclr, keywrd, gnorm, moperr, last, nscf, emin, &
          limscf, atheat, is_PARAM, id, line, lxfac, nalpha_open, &
-         nbeta_open
+         nbeta_open, method_indo
+      USE reimers_C, only: dd, ff, tot, cc0, aa, dtmp, nb2
+      use cosmo_C, only : useps
       Use mod_vars_cuda, only: lgpu
 #if GPU
       Use mod_vars_cuda, only: real_cuda, prec
@@ -35,6 +37,7 @@
       use swap_I
       use cnvg_I
       use chrge_I
+      use to_screen_I
       implicit none
       real(double) , intent(out) :: ee
       logical , intent(in) :: fulscf
@@ -42,17 +45,17 @@
       double precision :: selcon
       integer :: l, icalcn, itrmax, na2el, na1el, nb1el, ifill, &
         irrr, jalp, ialp, jbet, ibet, ihomo, ihomob, i, j, iemin, &
-        iemax, iredy, niter, modea, modeb
+        iemax, iredy, niter, modea, modeb, nl1, nl2, nu1, nu2
       double precision, dimension(numat) :: q
       double precision, dimension(10) :: escf0
       double precision :: plb, scfcrt, pl, bshift, pltest, trans, w1, w2, random, &
-        shift, shiftb, shfmax, ten, tenold, plchek, scorr, shfto, &
+        shift, shiftb = 0.d0, shfmax, ten, tenold, plchek, scorr, shfto, &
         shftbo, titer0, eold, diff, enrgy, titer, escf, &
-        sellim, sum, eold_alpha, eold_beta, theta(norbs)
+        sellim, sum, summ, eold_alpha, eold_beta, theta(norbs), ofract, sum1, sum2
       logical :: debug, prtfok, prteig, prtden, prt1el, minprt, newdg, prtpl, &
         prtvec, camkin, ci, okpuly, oknewd, times, force, allcon, &
         halfe, gs, capps, incitr, timitr, frst, bfrst, ready, glow,  &
-        makea, makeb, getout, l_param
+        makea, makeb, getout, l_param, opendd
       integer :: iopc_calcp
       character, dimension(3) :: abprt*5
       save icalcn, debug, prtfok, prteig, prtden, prt1el, abprt, plb, &
@@ -128,7 +131,7 @@
         if (index(keywrd,' SHIFT') /= 0) bshift = -reada(keywrd,index(keywrd,' SHIFT'))
         if (Abs(bshift) > 1.d-20) ten = bshift
         if (index(keywrd,' ITRY') /= 0) itrmax = nint(reada(keywrd,index(keywrd,' ITRY')))
-        ci = index(keywrd,' MICROS') + index(keywrd,' C.I.') /= 0
+        ci = index(keywrd,' MICROS') + index(keywrd,' C.I.') /= 0 .and. .not. method_indo
         okpuly = index(keywrd,' PULAY') /= 0
         oknewd = abs(bshift) < 0.001D0
         if (camkin .and. abs(bshift)>1.D-5) bshift = 4.44D0
@@ -168,8 +171,8 @@
 !  TRAPPED IN A S**2 = 0 STATE.
 !
             random = 1.0D0
-            glow = glow .or. gnorm<2.D0 .and. gnorm>1.D-9
-            if (.not.glow .and. uhf .and. na1el==nb1el) random = 1.1D0
+            glow = method_indo .or. glow .or. (gnorm<2.D0 .and. gnorm > 1.D-9)
+            if (.not. glow .and. uhf .and. na1el == nb1el) random = 1.1D0
             do i = 1, norbs
               j = (i*(i + 1))/2
               p(j) = pdiag(i)
@@ -408,7 +411,7 @@
             if (newdg .and. .not.(halfe .or. camkin)) then
               shiftb = ten - tenold
             else
-              shiftb = ten + eigs(ihomob+1) - eigs(ihomob) + shiftb
+              shiftb = ten + eigb(ihomob+1) - eigb(ihomob) + shiftb
             endif
             if (diff > 0.D0) shiftb = min(4.D0,shiftb)
             shiftb = max(-20.D0,min(shfmax,shiftb))
@@ -427,8 +430,7 @@
           shiftb = shftbo
           shift = shfto
         endif
-        if (id /= 0) shift = 0.D0
-        eigs(ihomo+1:norbs) = eigs(ihomo+1:norbs) + shift
+        if (id == 0) eigs(ihomo+1:norbs) = eigs(ihomo+1:norbs) + shift
         if (id /= 0) shift = -80.D0
         if (lxfac) shift=0.d0
         forall (i=1:mpack)
@@ -444,7 +446,7 @@
 !  TRAPPED IN A METASTABLE EXCITED ELECTRONIC STATE
 !
         random = 0.001D0
-        glow = glow .or. gnorm<2.D0 .and. gnorm>1.D-9
+        glow = method_indo .or. glow .or. (gnorm < 2.D0 .and. gnorm > 1.D-9)
         if (glow) random = 0.D0
         do i = 1, mpack
           random = -random   ! GBR: This sounds strange. Could Random variable be placed out of the loop?
@@ -456,7 +458,86 @@
   320 continue
       if (timitr) call timer ('BEFORE FOCKS')
       if (id /= 0) then
-        call fock2 (f, p, pa, w, w, wk, numat, nfirst, nlast, 2)
+        call fock2 (f, p, pa, w, w, wk, numat, nfirst, nlast, 2)        
+      else if (method_indo) then
+        if (.not. allocated(dd)) then
+          allocate(dd(mpack,2))
+          allocate(cc0(norbs,norbs))
+          allocate(aa(mpack))
+          allocate(ff(mpack,2))
+          allocate(dtmp(mpack,2))
+          nb2 = mpack
+! First round - fill dd based on occupied fractions
+          ofract = dble(nclose)*2/(dble(nclose) + dble(nopen))
+          do i=1,mpack
+            dd(i,1) = p(i) * ofract
+            dd(i,2) = p(i) * (1.D0 - ofract)
+          end do
+!          write (6,*) 'ofract',ofract,nclose,nopen
+          opendd = .False.
+        else
+! Following rounds - fill dd based on orbitals if open shell
+!          write (0,*) 'dd sum', c
+          if (nopen > nclose .and. pl < pltest*10 .and. abs(diff) < sellim*10) then
+            opendd = .True.
+          end if
+          if (opendd) then
+            l = 0
+            nl2 = 1
+            nu2 = nclose
+            nl1 = nclose + 1
+            nu1 = nopen
+!            write (0,*) 'nl',nl2,nu2,nl1,nu1,nclose,nopen
+            do i = 1, norbs
+              do j = 1, i
+                l = l + 1
+                sum2 = sum(c(i,nl2:nu2)*c(j,nl2:nu2))
+                sum1 = sum(c(i,nl1:nu1)*c(j,nl1:nu1))
+                dd(l,1) = sum2*2.D0
+                dd(l,2) = sum1
+              end do
+            end do
+          else
+            do i=1,mpack
+              dd(i,1) = p(i) - dd(i,2)
+            end do
+            do i=1,mpack
+              dd(i,1) = p(i)
+              dd(i,2) = 0.D0
+            end do
+          end if
+        end if
+!        do i = 1,6
+!          write (0,*) dd(i,1) + dd(i,2), p(i), dd(i,1) + dd(i,2) - p(i)
+!        end do
+!        write (6,*) 'p',p, pa, pb
+        do i=1,norbs
+          do j = 1,norbs
+            cc0(j,i) = c(i,j)
+          end do
+        end do
+
+        call scfmat(tot,shiftb)
+
+        do i=1,mpack
+! Use full Fock matrix (same for closed-shell, diff for open-shell)
+          f(i)  = aa(i)
+          dtmp(i,1) = dd(i,1)
+          dtmp(i,2) = dd(i,2)
+!          p(i) = dd(i,1) + dd(i,2)
+!          pa(i) = p(i)/2.D0
+!          pb(i) = p(i)/2.D0
+        end do
+
+        do i=1,norbs
+          do j = 1,norbs
+            c(j,i) = cc0(i,j)
+          end do
+        end do
+! dd and p contain the full density matrix (sum of alpha and beta electrons)
+        if (useps) then
+          call addfck (f,p)
+        end if
       else
         call fock2 (f, p, pa, w, w, w, numat, nfirst, nlast, 2)
       end if
@@ -464,8 +545,8 @@
         ee = helect(norbs,pa,h,f)*2.d0
         if (ci .or. halfe) then
           call eigenvectors_LAPACK(c, f, eigs, norbs)
-          sum = meci()
-          ee = ee + sum
+          summ = meci()
+          ee = ee + summ
         end if
         return
       end if
@@ -941,6 +1022,7 @@
 !
 !  PUT F AND FB INTO POLD IN ORDER TO NOT DESTROY F AND FB
 !  AND DO EXACT DIAGONALISATIONS
+!
         call dcopy(mpack,f,1,pold,1)
         call eigenvectors_LAPACK(c, pold, eigs, norbs)
         if (last == 1) call phase_lock(c, norbs)
@@ -954,10 +1036,10 @@
         endif
         if (ci .or. halfe) then
           if (timitr) call timer ('BEFORE MECI')
-          sum = meci()
+          summ = meci()
           if (timitr) call timer ('AFTER  MECI')
           if (moperr) return
-          ee = ee + sum
+          ee = ee + summ
           if (prtpl) then
             escf = (ee + enuclr)*enrgy + atheat
             write (iw, '(27X,''AFTER MECI, ENERGY  '',F14.7)') escf
@@ -1009,6 +1091,7 @@
       use chanel_C, only : iw, iden, density_fn
       use common_arrays_C, only : p, pa, pb
       use molkst_C, only: uhf, keywrd, norbs, numat, mozyme
+      use to_screen_I
 !
 ! Read and write the density matrix
 !
@@ -1019,8 +1102,9 @@
       integer, intent (in) :: mode
       integer :: io_stat, icount, old_norbs, old_numat
       logical :: formatted, opend
+      call l_control("NEWDEN", len("NEWDEN"), 1)
       if (mozyme) then
-        call pinout(mode)
+         if (Index (keywrd, " DENOUT") /= 0) call pinout(mode, .true.)
         return
       end if
       formatted = (Index(keywrd," DENOUTF") /= 0)
@@ -1067,11 +1151,13 @@
                 read (iden, iostat=io_stat) pb
               end if
             if (io_stat /= 0) then
-              call to_screen(' Beta Density Restart File missing or corrupt' )         
-              call to_screen(' (Most likely the previous job did not use UHF)' )
-              call mopend ('Beta Density Restart File missing or corrupt')
-              write (iw, '(A)') ' (Most likely the previous job did not use UHF)'
-              return
+              if (index(keywrd, " GEO-OK") == 0) then
+                call mopend("Beta Density Restart File missing or corrupt")
+                write(iw,'(10x,a)')'(Most likely the previous job did not use UHF)'
+                write(iw,'(10x,a)')"To continue, using the RHF density matrix as the starting point, add keyword ""GEO-OK"""
+                return
+              end if              
+              pb = pa
             end if
             p = pa + pb
           else

@@ -54,7 +54,7 @@ module to_screen_I
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
   method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, &
   uhf, nalpha, nbeta,  nclose, gnorm, mozyme, mol_weight, ilim, &
-  line, nscf, time0, sz, ss2, no_pKa, title, jobnam
+  line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no
 !
   use MOZYME_C, only : ncf, ncocc, noccupied, icocc_dim, cocc_dim, nvirtual, icvir_dim, &
   nncf, iorbs, cocc, icocc, ncvir, nnce, nce, icvir, cvir, tyres, size_mres, &
@@ -94,8 +94,8 @@ module to_screen_I
   double precision, allocatable :: overlap(:), c_lmo(:), comp(:), store_eigs(:)
   double precision, allocatable :: overlap2(:,:)
   character, dimension(:), allocatable :: namo_tmp*4, letters*1
-  character :: fmt8p4*5, fmt9p3*5, fmt10p1*5, fmt10p2*5, fmt10p3*5, fmt9p4*5, fmt10p4*5, fmt9p5*5, fmt13p5*5, fmt13p6*5, &
-  fmt7p4*5, irc_or_drc*1, num*1
+  character :: fmt8p4*5, fmt9p3*5, fmt10p1*5, fmt10p2*5, fmt10p3*5, fmt9p4*5, fmt10p4*5, fmtnnp4*5, fmt9p5*5, &
+  fmt13p5*5, fmt13p6*5, fmt7p4*5, irc_or_drc*1, num*1
   integer :: iwork(norbs), ifact(norbs + 1)
   integer, allocatable :: icomp(:), eigs_map(:)
   integer, external :: ijbo
@@ -416,9 +416,11 @@ module to_screen_I
         write(hook,"(3f"//fmt13p5//")")(press(i),i=1,3)
       end if
     end if
-    if (Abs(dip(4,3)) > 1.d-20) then
-      write(hook,"(a,sp, d"//fmt13p6//", a)")" DIPOLE:DEBYE=",dip(4,3)
-      write(hook,"(a,sp, 3d"//fmt13p5//", a)")" DIP_VEC:DEBYE[3]=",(dip(i,3), i = 1, 3)
+    if (.not. isnan(dip(4,3))) then
+      if (Abs(dip(4,3)) > 1.d-20) then
+        write(hook,"(a,sp, d"//fmt13p6//", a)")" DIPOLE:DEBYE=",dip(4,3)
+        write(hook,"(a,sp, 3d"//fmt13p5//", a)")" DIP_VEC:DEBYE[3]=",(dip(i,3), i = 1, 3)
+      end if
     end if
     if (no_pKa > 0) then
       num = char(ichar("1") +int(log10(ipKa_sorted(1) + 0.05)))
@@ -452,11 +454,14 @@ module to_screen_I
     if (nvar > 0) then
       sum = 0.d0
       do i = 1, nvar
-        sum = sum + abs(grad(i))
+        if (abs(grad(i)) > sum) sum = abs(grad(i))
       end do
       if (sum > 1.d-4) then
         write(hook,"(a,i"//paras//",a)")" GRADIENTS:KCAL/MOL/ANGSTROM[",nvar, "]="
-        write(hook,"(10f"//fmt9p4//")") (grad(i), i=1,nvar)
+        read(fmt9p4,'(3x,i2)')i
+        j = max(int(log10(sum)),1)
+        write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+        write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
       end if
     end if
 !
@@ -1017,7 +1022,7 @@ module to_screen_I
           write(hook,"(a,i"//orbs//")")" SIZE_OF_ACTIVE_SPACE=",nmos
           write(hook,"(a,i"//orbs//")")" NUMBER_MICROSTATES=",lab
           write(hook,"(a)")" #  microstate configurations are alpha first, then beta. One configuration per line"
-          write(hook,"(a,i5.5,a)")" MICROSTATE_CONFIGURATIONS[",lab*nmos,"]="
+          write(hook,"(a,i5.5,a)")" MICROSTATE_CONFIGURATIONS[",2*lab*nmos,"]="
           do i = 1, lab
             write(hook,"(25i5)")(microa(j,i),j = 1, nmos), (microb(j,i),j = 1, nmos)
           end do
@@ -1190,7 +1195,7 @@ module to_screen_I
 !
 !  Don't print processor-independent CPU times for quick jobs - that would waste too much time.
 !
-    if (time0 > 1.d0) then
+    if (time0 > 1.d0 .and. job_no < 4) then
 !
 !  Deliberately run a time-consuming calculation to work out CPU speed
 !  The "j" index is set to use up 1.0 seconds on the development computer.

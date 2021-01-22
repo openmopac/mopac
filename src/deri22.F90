@@ -136,7 +136,7 @@
 !     ----------------------------------------------------------------
 !     RETURNED IN FOC2 (PACKED CANONICAL).
       foc2 = 0.D0 
-      dpa = 0.5D0*dp
+      dpa(:l) = 0.5D0*dp(:l)
         call fock2 (foc2, dp, dpa, w, wj, wk, numat, nfirst, nlast, 2) 
 !
 !     BUILD DP AND EXTRACT FCI.

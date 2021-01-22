@@ -34,6 +34,7 @@ subroutine modchg ()
    !
    !    (Backbone atoms are -NH-CH-CO-)
    !
+    work = 0.d0
     do i = 1, numat
       j = at_res(i)
       work(j) = work(j) + q(i)
@@ -106,7 +107,6 @@ subroutine modchg ()
     use common_arrays_C, only : txtatm, nat, nbonds, ibonds
     implicit none
     integer :: i, j
-    logical :: is_H
     character :: ren_name(numat)*9, residue*9
 !
 ! Work out which residue each atom belongs to, and the location of the first atom
@@ -115,23 +115,32 @@ subroutine modchg ()
     nres = 0
     ren_name = " "
     if (.not. allocated(at_res)) allocate(at_res(numat + id))
-    do i = 1, numat
-      if (nat(i) /= 1 .or. nbonds(i) /= 1) then
-        residue = txtatm(i)(18:26)
-        is_H = .false.
-      else
-        j = ibonds(1,i)
-        residue = txtatm(j)(18:26)
-        is_H = .true.
-      end if
+!
+!  Do all non-hydrogen atoms
+!
+     do i = 1, numat
+      if (nat(i) == 1 .and. nbonds(i) == 1) cycle
+      residue = txtatm(i)(18:26)
       do j = 1, nres
         if (ren_name(j) == residue) exit
       end do
-      if (j > nres .and. .not. is_H) then
+      if (j > nres) then
         nres = nres + 1
         ren_name(j) = residue
         res_start(j) = i
       end if
+      at_res(i) = j
+     end do
+!
+! Do all hydrogen atoms
+!
+    do i = 1, numat
+      if (nat(i) /= 1 .or. nbonds(i) /= 1) cycle
+        j = ibonds(1,i)
+        residue = txtatm(j)(18:26)
+      do j = 1, nres
+        if (ren_name(j) == residue) exit
+      end do
       at_res(i) = j
     end do
     return

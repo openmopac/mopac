@@ -1,5 +1,5 @@
 subroutine dhc (p, pa, pb, xi, nat, if, il, jf, jl, dener, mode)
-    use molkst_C, only : numcal, cutofp, id, uhf
+    use molkst_C, only : numcal, cutofp, id, uhf, clower
     use helect_I
     implicit none
     integer, intent (in) :: if, il, jf, jl, mode
@@ -24,7 +24,7 @@ subroutine dhc (p, pa, pb, xi, nat, if, il, jf, jl, dener, mode)
       !  Switch to point charges for separations of more than 14 Angstroms
       !  (This is related to FACT in subroutine REPPD)
       !
-      cutof = Min (196.d0, (2.d0/3.d0*cutofp)**2)
+      cutof = clower**2
       lpoint = .false.
       icalcn = numcal
       ignor1 = .false.

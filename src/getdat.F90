@@ -24,8 +24,6 @@
       logical :: exists, arc_file, comments = .true.
       character :: text*90, line1*1000, num1*1, num2*1
       character, allocatable :: tmp_comments(:)*120
-      external getarg
-      integer, external :: iargc
       double precision, external :: reada
       save i 
 !-----------------------------------------------
@@ -177,6 +175,13 @@
 !  Now that the name of the data-set is known, set up all the other file-names
 !
         call init_filenames 
+      else
+        line = "MOPAC input data-set file: """//trim(jobnam)//""" does not exist."
+        write(0,'(//10x,a,//)')trim(line)
+        open(unit=iw, file='MOPAC Error message.txt') 
+        call to_screen(trim(line))
+        call mopend(trim(line))
+        return
       endif 
 !
 !  CLOSE UNIT IFILES(5) IN CASE IT WAS ALREADY PRE-ASSIGNED.
@@ -248,7 +253,6 @@
           if (io_stat /= 0) then
             write (line, '(a)') ' The run-time temporary file "'//trim(jobnam)//'.temp" cannot be written to.'
             open(unit=iw, file=trim(jobnam)//'.out') 
-            write(iw,"(a)")line
             if( .not. gui) write(0,"(///10x,a)")line
             call to_screen(line)
             call mopend (trim(line)) 
@@ -289,13 +293,13 @@
       if (i /= 0) keywrd(i:i+6) = "GEO_DAT"
       i = index(keywrd, "GEO-REF")
       if (i /= 0) keywrd(i:i+6) = "GEO_REF"
-      if (index(keywrd, " GEO_DAT") /= 0) then
+      if (index(keywrd, " GEO_DAT") + index(keywrd, " SETUP")/= 0) then
         nlines = nlines + 3
       else if (.not. is_PARAM .and. nlines < 4) then
         inquire(unit=iw, opened=exists) 
         if (.not. exists) open(unit=iw, file=trim(jobnam)//'.out') 
         if (keywrd /= " ") write(iw,'(3/10x,a,/)')" Data set does not contain "//&
-           "any atoms and GEO_DAT is not present on keyword line"
+           "any atoms and neither GEO_DAT or SETUP is  present on the keyword line"
       end if
       keywrd = "  "
       if (nlines == 1 .and. Len_trim(line1) > 0 .and. .not. is_PARAM) then  
@@ -359,6 +363,7 @@
           call to_screen ("'"//job_fn(1:j)//"'")
         end if
         line = job_fn
+        exists = .true.        
         goto 98
     end if   ! Line was one of first 5 lines
 !

@@ -268,15 +268,15 @@
           end do 
         end do 
         ii = ib - ia + 1
-      ii = (ii*(ii+1)) / 2
-      if (id /= 0) then
-        do i1 = kr, kr + ii * ii - 1
-          wk(i1) = 0.d0
-        end do
-      end if
-      if (ii /= 0) then
-        call wstore (w(kr), kr, ni, ii)
-      end if
+        ii = (ii*(ii+1)) / 2
+        if (id /= 0) then
+          do i1 = kr, kr + ii * ii - 1
+            wk(i1) = 0.d0
+          end do
+        end if
+        if (ii /= 0) then
+          call wstore (w(kr), kr, ni, ii)
+        end if
       end do 
       if (useps) then 
 ! In the following routine the dielectric correction to the core-core-

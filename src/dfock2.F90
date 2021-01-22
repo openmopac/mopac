@@ -36,7 +36,7 @@
       integer , dimension(256) :: jindex 
       integer :: icalcn, i, m, j, ij, ji, k, ik, l, kl, lk, kk, ia, ib, jk, kj&
         , ii, jj, ja, jb, i1, j1, ll, kr, ka 
-      real(double), dimension(16) :: pk, pja, pjb 
+      real(double), dimension(81) :: pk, pja, pjb 
       real(double) :: sumdia, sumoff, sum, elrep
 
       save itype, icalcn, jindex

@@ -7,7 +7,7 @@ subroutine greek (n1)
     integer :: i, ico, ihcr, ii, j, jatom1, jjj, k1, l, ll, m, ncurr, nnext
     integer :: nold4 = 0, nprev = 0
     character, dimension (22) :: types
-    integer, dimension (80) :: icurr, inext, iprev
+    integer, dimension (150) :: icurr, inext, iprev
     logical :: Trp, Ile
     data types / "G", "D", "E", "Z", "H", "T", "I", "K", "L", "M", &
    & "N", "X", "O", "P", "R", "S", "T", "U", "F", "C", "Y", "W" /

@@ -235,7 +235,7 @@ subroutine ligand (ires, start_res, nfrag)
           do j = 1, ninres
             k = inres(j)
             if (k <= numat) then
-              if (nat(k) < 99) then
+              if (nat(k) < 99 .or. (nat(k) > 99 .and. nat(k) < 107)) then
                 l = l + 1
                 n_ele(nat(k)) = n_ele(nat(k)) + 1
               end if
@@ -250,6 +250,7 @@ subroutine ligand (ires, start_res, nfrag)
           n_P = n_ele(15)
           attached = .false.
           res = -10000
+          n = 0
           loop_k: do k = 1, ninres
             m = inres(k)
             do l = 1, nbonds(m)

@@ -34,6 +34,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
     ires_start = ires
     first_res = .true.
     iatoms = .false.
+    jatom = 0
     do ires_loop = ires_start, maxres
       if (iatom == 0) goto 999
       if (iatoms(iatom)) goto 1000
@@ -208,7 +209,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
 !  MODIFY TXTATM TO ALLOW FOR DUMMY ATOMS
 !
     l = numat
-    do i = natoms, 1, -1
+    do i = natoms - id, 1, -1
       if (labels(i) /= 99) then
         txtatm(i) = txtatm(l)
         lused(i) = lused(l)

@@ -67,6 +67,7 @@
         call mopend("A problem occurred during memory assignment in ENPART.")
         return
       end if
+      ea = 0.d0
       if (.not.uhf) pb = pa 
       large = (index(keywrd, " LARGE") /= 0)
 !

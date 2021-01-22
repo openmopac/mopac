@@ -3,7 +3,7 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      use molkst_C, only : norbs, numcal, keywrd, mpack
+      use molkst_C, only : norbs, numcal, keywrd, mpack, method_indo
 !...Translated by Pacific-Sierra Research 77to90  4.4G  21:13:27  03/10/06  
 !...Switches: -rl INDDO=2 INDIF=2 
       implicit none
@@ -48,6 +48,11 @@
       faca = 0.0d0 
       damp = 1.D10 
       if (niter > 3) damp = 0.05d0 
+      if (method_indo) then
+        if (niter > 40) damp = 0.01D0
+        if (niter > 200) damp = 0.002D0
+        if (niter > 350) damp = 0.001D0
+      end if
       facb = 0.0d0 
       fac = 0.0d0 
       ii = mod(niter,3) 

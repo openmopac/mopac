@@ -9,39 +9,24 @@ logical function connected(atom_i, atom_j, criterion)
 !   then cell_ijk will hold the unit cell translation indices that move atom_j near to
 !   atom_i, zero therwise.
 !
-!   Vab is the postition of atom_i relative to atom_j
+!   Vab is the position of atom_i relative to atom_j
 !
 !   Rab is distance from atom_i to atom_j
 !
 !   if not "connected" then Rab, Vab, and cell_ijk are meaningless.
 !
-  use molkst_C, only : id, l11, l21, l31, Rab
-  use common_arrays_C, only: tvec, coord, cell_ijk, Vab
+  use molkst_C, only : id, Rab
+  use common_arrays_C, only: coord, Vab
   implicit none
   double precision ::  criterion
-  integer :: atom_i, atom_j, ii, jj, kk
-  double precision :: V_ab(3), R_ab
+  integer :: atom_i, atom_j
+  double precision, external :: distance
 !
   if (id == 0) then
     Vab = coord(:,atom_i) - coord(:,atom_j)
     Rab = Vab(1)**2 + Vab(2)**2 + Vab(3)**2 
   else
-    Rab = 1.d8
-    do ii = -l11, l11 
-      do jj = -l21, l21 
-        do kk = -l31, l31 
-          V_ab = coord(:,atom_i) - coord(:,atom_j) + tvec(:,1)*ii + tvec(:,2)*jj + tvec(:,3)*kk 
-          R_ab = V_ab(1)**2 + V_ab(2)**2 + V_ab(3)**2 
-          if (R_ab < Rab) then
-            Rab = R_ab
-            Vab = V_ab
-            cell_ijk(1) = ii
-            cell_ijk(2) = jj
-            cell_ijk(3) = kk
-          end if                  
-        end do 
-      end do 
-    end do 
+    Rab = distance(atom_i, atom_j)**2
   end if 
   connected = (Rab < criterion) 
   if (connected) Rab = sqrt(Rab)
@@ -54,7 +39,7 @@ subroutine find_XH_bonds(acc, nacc, h_b, nhb)
 !  nhb:   Number of hydrogen atoms involved in O-H or N-H bonds
 !  h_b:   Atom numbers of the hydrogen atoms
 !
-  use molkst_C, only : numat, method_PM7, method_pm6_dh_plus
+  use molkst_C, only : numat, method_PM7, method_pm6_dh_plus, method_pm6_d3h4, method_pm6_d3h4x
   use common_arrays_C, only: nat
   implicit none
   integer :: nacc, nhb
@@ -70,7 +55,10 @@ subroutine find_XH_bonds(acc, nacc, h_b, nhb)
     else if (method_PM7) then
       RAH = 1.4d0
       is = 8  ! Change to 16 ASAP
-    else
+    else if (method_pm6_d3h4 .or. method_pm6_d3h4x) then
+      RAH = 1.15d0
+      is = 8  
+    else      
       RAH = 1.15d0
       is = 16
     end if
@@ -117,18 +105,22 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
       RAH = 1.4d0 
       cutoff = 7.d0
     else
+!
+!  "cutoff" had been set to 7.0, but that had caused problems with the radial term "e_radial"
+!  in H_bonds4.F90.  "e_radial" increases sharply beyond 5.5 Angstroms.      
+!
       RAH = 1.15d0
-      cutoff = 7.d0
+      cutoff = 5.5d0
     end if
     do ii = 1, nacc_a
       i = acc_a(ii)   !  i = Acceptor atom bonded to H  
       do jj = 1, nb_a_h
-        j = bonding_a_h(jj)   !  j = Hydrogen bonded to acceptor atom
+        j = bonding_a_h(jj)   !  j = Hydrogen bond to acceptor atom
         if (connected(i, j, RAH**2)) then
           do kk = 1, nacc_b
             k = acc_b(kk)  
             if (k /= i) then
-              if (connected(k, j, cutoff**2)) then
+              if (connected(k, i, cutoff**2)) then
                 if (angle(k,j,i) > pi*0.5d0) then
 !
 !  Eliminate bonds of type O(n) - H - O(m) if O(m) - H - O(n) exists
@@ -149,17 +141,9 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
                   if (i1 /= nrpairs + 1) cycle                  
                   nrpairs = nrpairs + 1 !  k = Distant acceptor atom
                   if (nrpairs > max_h_bonds) then
-                    write(iw,'(a)')" The default array size for hydrogen bonds is too small"
-                    write(iw,'(a,i6,a,i6)')" Array size:", max_h_bonds,", estimated size needed:", &
-                      nint(float(max_h_bonds)*float(nacc_a)/float(ii))
-                    if (index(keywrd, "PM6-DH+") /= 0 ) then
-                      write(iw,'(a)')" If possible, use PM6-DH+=(text)"
-                      call web_message(iw,"PM6_DH_plus.html")
-                    else
-                      write(iw,'(a)')" If possible, use PM6-DH2=(text)"
-                      call web_message(iw,"PM6_DH2.html")
-                    end if
                     call mopend("The default array size for hydrogen bonds is too small")
+                    write(iw,'(9x,a,i6,a,i6)')" Array size:", max_h_bonds,", estimated size needed:", &
+                      nint(float(max_h_bonds)*float(nacc_a)/float(ii))
                     nrpairs = nrpairs - 1
                     return
                   end if
@@ -173,6 +157,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
         end if          
       end do
     end do
+    return
   end subroutine find_H__Y_bonds
  
   function truncation(R, limit, spread)
@@ -265,23 +250,37 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
   end subroutine all_h_bonds
 
   double precision function distance(a, b)
-    use common_arrays_C, only: coord, tvec
-    use molkst_C, only : id, l1u, l2u, l3u
+    use common_arrays_C, only: coord, tvec, cell_ijk, Vab
+    use molkst_C, only : id, l1u, l2u, l3u, temp_1, temp_2, temp_3
     implicit none
       integer :: a,  b
       integer :: ik, jk, kl
-      double precision :: coord1(3)
+      double precision :: coord1(3), sum
       if (id == 0) then
-        distance = sqrt((coord(1,a) - coord(1,b))**2 + (coord(2,a) - coord(2,b))**2 + (coord(3,a) - coord(3,b))**2)
+        temp_1 = coord(1, a)-coord(1, b)
+        temp_2 = coord(2, a)-coord(2, b)
+        temp_3 = coord(3, a)-coord(3, b)
+        distance = sqrt(temp_1**2 + temp_2**2 + temp_3**2)
+        Vab(:) = coord(:, a) - coord(:, b)
       else
         distance = 1.d6
         do ik = -l1u, l1u
           do jk = -l2u, l2u
             do kl = -l3u, l3u
               coord1(:) = coord(:, a) + tvec(:, 1)*ik + tvec(:, 2)*jk + tvec(:, 3)*kl
-              distance = Min (distance, (coord1(1)-coord(1, b))**2 &
-                                      + (coord1(2)-coord(2, b))**2 &
-                                      + (coord1(3)-coord(3, b))**2)
+              sum =  (coord1(1)-coord(1, b))**2 &
+                   + (coord1(2)-coord(2, b))**2 &
+                   + (coord1(3)-coord(3, b))**2
+              if (sum < distance) then
+                distance = sum 
+                temp_1 = coord1(1)-coord(1, b)
+                temp_2 = coord1(2)-coord(2, b)
+                temp_3 = coord1(3)-coord(3, b)
+                Vab(:) = coord1(:)-coord(:, b)
+                cell_ijk(1) = ik
+                cell_ijk(2) = jk
+                cell_ijk(3) = kl
+              end if
             end do
           end do
         end do

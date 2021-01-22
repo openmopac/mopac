@@ -103,9 +103,9 @@ module mod_atomradii
     !      Fr      Ra      Ac      Th      Pa      U       Np      Pu
          & 999.d0, 999.d0, 999.d0, 999.d0, 999.d0, 999.d0, 2.d0,   999.d0, &
     !      Am      Cm      Bk      Cf      Es      Fm      Md      No
-         & 999.d0, 999.d0, 999.d0, 999.d0, 999.d0, 2.d0,   2.d0,   999.d0, &
+         & 999.d0, 999.d0, 999.d0, 999.d0, 999.d0, 2.d0,   2.d0,   2.d0,   &
     !      Lr      Rf      Db      Sg      Tv
-         & 999.d0, 999.d0, 999.d0, 999.d0, 2.d0 /
+         & 2.d0,   2.d0,   2.d0,   2.d0, 2.d0 /
     !
     ! ********* Radii for cosmo solvation model *********
     ! These are the original Mopac values.  They are used when the old

@@ -1,5 +1,5 @@
 subroutine outer1 (ni_loc, nj, c1, c2, w, kr, e1b, e2a, enuc, mode, direct)
-    use molkst_C, only: l1u, l2u, l3u, method_PM7
+    use molkst_C, only: l1u, l2u, l3u, l_feather
     use parameters_C, only: natorb, tore, am
     use funcon_C, only: a0, ev
     use common_arrays_C, only: tvec
@@ -29,7 +29,7 @@ subroutine outer1 (ni_loc, nj, c1, c2, w, kr, e1b, e2a, enuc, mode, direct)
       aee = 0.5d0 / am(ni_loc) + 0.5d0 / am(nj)
       aee = aee * aee
       ww = ev / Sqrt (r*r+aee)
-      if (method_PM7) then
+      if (l_feather) then
         call to_point(rij, point, const)
         ww = ww*const + (1.d0 - const)*point
       end if 

@@ -8,11 +8,11 @@
 !
 !
   use funcon_C, only : a0, fpc_9, fpc_2
-  use molkst_C, only : numat, keywrd, E_hb, E_disp, numcal, method_pm8
-  use common_arrays_C, only: coord, nat 
+  use molkst_C, only : numat, keywrd, E_hb, E_disp, numcal, method_pm8, l123
+  use common_arrays_C, only: coord, nat, tvec
   use chanel_C, only : iw
   use elemts_C, only: elemnt
-  use parameters_C, only: par7, par8, par9
+  use parameters_C, only: par7, par8, par9, par10, par11
   implicit none   
   double precision, intent (inout) ::  dxyz(3, numat)
   logical, intent (in):: l_grad
@@ -22,7 +22,7 @@
   integer, parameter :: max_elem = 94, maxc = 5 ! maximum coordination number references per element  
   integer :: i, mxc(max_elem), icalcn = -1
   logical :: D3H4, first = .true.
-  double precision :: au_to_kcal, e6, e8, rs6, rs8, s6, s18, &
+  double precision :: au_to_kcal, e6, e8, rs6, rs8, s6, s18, store_tvec(3,3), &
     alp6, alp8, rs18, alp, ehb, hbscale
   double precision :: &
     c6ab(max_elem, max_elem, maxc, maxc, 3), & ! C6 for all element pairs 
@@ -31,7 +31,7 @@
     r0ab(max_elem, max_elem)                   ! cut - off radii for all element pairs
     double precision, allocatable :: &
     dxyz_temp(:,:),                          &  ! Contribution to gradient
-    xyz(:,:)                                    ! Coordinates in au
+    store_coord(:,:)                                    ! Coordinates in au
     
   save 
 !
@@ -82,17 +82,25 @@
       end if
       D3H4 = (method_PM8 .or. index(keywrd, "D3H4") + index(keywrd, "D3(H4)") /= 0) 
       if (D3H4) then
+! The D3H4 version of the dispersion
+! Used in PM6-D3H4 and its variants PM6-D3H4X, PM6-D3(H4)
+! I'VE CHECKED THAT THIS SETUP & THE PARAMETER VALUES READ FROM
+! parameters_for_PM6 YIELD CORRECT PM6-D3H4 energies
         s6   = par7
         alp  = par8
-        rs18 = 1.0d0
         rs6 = par9    
-        s18 = 1.009d0
-      else ! hard-wired
+        s18 = par10
+        rs18 = par11
+      else ! hard-wired 
+!
+! Grimme, S. (2012). "Supramolecular Binding Thermodynamics 
+! by Dispersion-Corrected Density Functional Theory." Chem. Eur. J.: 9955:9964.
+!
         s6   = 1.0d0
-        alp  = 14.0d0
         rs18 = 1.0d0
-        rs6 = 1.560d0
-        s18 = 1.009d0          
+        alp = 14.0d0
+        rs6 = 1.560d0   ! rs6 = s_(r,6) in Grimme's paper
+        s18 = 1.009d0   ! s18 = s_8 in Grimme's paper
       end if          
       hbscale = 1.301d0
       rs8   = rs18       
@@ -101,9 +109,12 @@
 !
 !   Switch from MOPAC (convert coordinates from Angstroms to au)
 !
-      allocate(dxyz_temp(3,numat), xyz(3,numat))
-      xyz = coord/a0  
-      call edisp(max_elem, maxc, numat, xyz, nat, c6ab, mxc, r2r4, r0ab, rcov, rs6, rs8, alp6, alp8, e6, e8)
+      store_tvec = tvec
+      allocate(dxyz_temp(3,numat*l123), store_coord(3,numat))
+      store_coord = coord(:,:numat)
+      coord(:,:numat) = coord(:,:numat)/a0  
+      tvec = tvec/a0
+      call edisp(max_elem, maxc, numat, nat, c6ab, mxc, r2r4, r0ab, rcov, rs6, rs8, alp6, alp8, e6, e8)
       e6 = e6*s6
       e8 = e8*s18    
       E_disp = (- e6 - e8)*au_to_kcal     
@@ -112,22 +123,24 @@
 ! HBOND
 !
       if (.not. D3H4) then
-        call hbsimple(numat, nat, xyz, hbscale, ehb, l_grad, dxyz_temp)
+        call hbsimple(numat, nat, coord, hbscale, ehb, l_grad, dxyz_temp)
       else
         ehb = 0.d0
       end if
       E_hb   = ehb*au_to_kcal
       dftd3  = E_disp + E_hb      
       if(l_grad)then
-        call gdisp(xyz, r0ab, rs6, alp6, c6ab, s6, mxc, rcov, dxyz_temp)
+        call gdisp(r0ab, rs6, alp6, c6ab, s6, s18,mxc, r2r4, rcov, rs8, alp8, dxyz_temp)
         dxyz = dxyz + 2.d0*dxyz_temp*au_to_kcal
         if (index(keywrd, " DERIV") > 0) then
           write (iw, '(/16X,a)')"GRIMME'S D3 CORRECTIONS" 
-          write (iw, '(3X,       ''NUMBER  ATOM '',5X,''X'',12X,''Y'',12X,''Z'',/)') 
+          write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)') 
           write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i, elemnt(nat(i)), dxyz_temp(:,i)*2.d0*au_to_kcal, i = 1,numat) 
         end if        
       endif
-      deallocate(dxyz_temp, xyz)
+      coord(:,:numat) = store_coord
+      tvec = store_tvec
+      deallocate(dxyz_temp, store_coord)
   end function dftd3
   
 

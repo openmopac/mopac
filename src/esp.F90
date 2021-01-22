@@ -435,6 +435,7 @@
 !-----------------------------------------------
       use reada_I 
       use espfit_I 
+      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -1832,6 +1833,7 @@
        qesp = 1.d9
        cespm = 1.d9
        cc = 1.d9
+       rnai1 = 0.d0
 
 
     end if

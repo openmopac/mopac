@@ -9,7 +9,7 @@
       use molkst_C, only : natoms, keywrd, numat, maxtxt, line, moperr, &
         numcal, id, units, Angstroms, arc_hof_1, arc_hof_2, keywrd_txt, pdb_label
 !
-      use chanel_C, only : iw, ir, input_fn
+      use chanel_C, only : iw, ir, input_fn, end_fn, iend
 !
       use common_arrays_C, only :atmass, simbol, txtatm, na_store, nat, l_atom, p
 !
@@ -239,8 +239,7 @@
         txtatm(natoms + 1) = line(i + 1:jj)         
         if (maxtxt == 27 .and. k - i - 1 /= 27) then
           if (index(keywrd, " GEO-OK") == 0) then
-            i = natoms + 1
-            no = char(Nint(log10(i + 1.1)) + ichar("1"))
+            no = char(Nint(log10(natoms + 1.1)) + ichar("1"))
             write(iw,'(//10x,a,i'//no//',a,i3,a)') "Atom label length of 27 detected, but atom ", natoms + 1, " has a label of", &
             k - i - 1, " characters."
             write(iw,'(/,a)')"Faulty line = '"//trim(line)//"'"
@@ -275,6 +274,7 @@
       endif 
 !   CLEAN THE INPUT DATA
       call upcase (line, ltl) 
+      if (index(line, " NEXT") /= 0) goto 120
 !
 !   INITIALIZE ISTART TO INTERPRET BLANKS AS ZERO'S
       istart(:10) = len_trim(line) + 1
@@ -479,17 +479,17 @@
           end do 
         endif 
       end if
+      pdb_label = (maxtxt > 25)
       if (line(istart(10):istart(10)) == '"' .or. line(istart(9):istart(9)) == '"' .or. &
         line(istart(8):istart(8)) == '"') then
-        pdb_label = (maxtxt == 26)
         call  l_control("CONTROL_NABC_in_PDB", len_trim("CONTROL_NABC_in_PDB"), 1) 
         end if
       string = trim(line)
       if (line(istart(10):istart(10)) == '"') then
-        call txt_to_atom_no(line, istart(10), .false., j)
+        call txt_to_atom_no(line, istart(10), .false.)
       end if
-      if (line(istart(9):istart(9)) == '"')   call txt_to_atom_no(line, istart(9), .false., j)
-      if (line(istart(8):istart(8)) == '"')   call txt_to_atom_no(line, istart(8), .false., j)
+      if (line(istart(9):istart(9)) == '"')   call txt_to_atom_no(line, istart(9), .false.)
+      if (line(istart(8):istart(8)) == '"')   call txt_to_atom_no(line, istart(8), .false.)
       if (moperr) then
         write(iw,'(/10x,a, i5)')" Error detected in definition of atom no.:", natoms
         write(iw,'(/,a)')" Text of faulty atom: '"//trim(elemnt(labels(natoms)))//&
@@ -547,11 +547,24 @@
       endif 
       if ( .not. mini .and. .not. l_gaussian) then
         if ((lopt(1,natoms) > 1 .or. lopt(2,natoms) > 1 .or. lopt(3,natoms) > 1) .and. natoms > 1) then
+          if (nvalue == 5 .and. lopt(2,natoms) > 1) &
+            l_gaussian = (line(istart(5):istart(5)) >= "A" .and. line(istart(5):istart(5)) <= "Z") 
+          if (nvalue == 3 .and. lopt(1,natoms) > 1) &
+            l_gaussian = (line(istart(3):istart(3)) >= "A" .and. line(istart(3):istart(3)) <= "Z") 
+          if (l_gaussian) then
+!
+!  Geometry contins indications that it is in Gaussian format, so return and try reading it again.
+!
+            natoms  = -1
+            return
+          end if
           iserr = 1
           write(iw,'(/10x,a,i5)')"Faulty atom:", natoms
           write(iw,'(/10x,a)')"Faulty line: """//trim(line)//""""
           call mopend("Unless MINI is used, optimization flags must be 1, 0, or -1")
           numcal = 2
+          if ((lopt(1,natoms) > 10 .or. lopt(2,natoms) > 10 .or. lopt(3,natoms) > 10) .and. natoms > 1) &
+            write(iw,'(/10x,a)')" If the geometry is in Gaussian format, add keyword ""AIGIN"" and re-run"
           return
         end if
       else
@@ -603,7 +616,7 @@
 !***********************************************************************
   120 continue 
       if (natoms == 0) then 
-        if (numcal == 1) call mopend ('Error in GETGEO') 
+        if (numcal == 1) call mopend (' Error detected while reading geometry') 
         return  
       endif 
       if ( .not. Angstroms) then
@@ -641,8 +654,6 @@
           if (na(i) /= 0) j = 1
         end do
         if ((j /= 0 .or. int .and. index(keywrd,' LET') == 0) .and. index(keywrd,' 0SCF') == 0) then 
-          write (iw, '(A)') &
-            ' COORDINATES MUST BE CARTESIAN WHEN VELOCITY VECTOR IS USED.' 
           call mopend ('COORDINATES MUST BE CARTESIAN WHEN VELOCITY VECTOR IS USED.') 
           return  
         endif 
@@ -652,15 +663,12 @@
           read (iread, '(A)') line 
           call nuchar (line, len_trim(line), react((i-1)*3+1), ndmy) 
           if (ndmy == 3) cycle  
-          write (iw, '(/10X,A)') &
-            '  THERE MUST BE EXACTLY THREE VELOCITY DATA PER LINE' 
           call mopend ('THERE MUST BE EXACTLY THREE VELOCITY DATA PER LINE.') 
           return  
         end do 
       endif
       if (ircdrc) then
         if (numat /= natoms) then
-          write(iw,*)" Only real atoms are allowed in IRC and DRC calculations."
           call mopend ('Only real atoms are allowed in IRC and DRC calculations.')
           return
         end if
@@ -716,12 +724,15 @@
         write (iw, '(//10x, a)') trim(line) 
         write(iw,'(/10x," Connectivity of atom ",i'//no//',": NA=",i'//no//',", NB=",i'//no//',", NC=",i'//no//')') &
         i, na(i), nb(i), nc(i)
-        if (na(i) > i .and. na(na(i)) /= 0) &
-          write(iw,'(/10x,a)')" NA is defined using internal coordinates" 
-        if (nb(i) > i .and. na(nb(i)) /= 0) &
-          write(iw,'(/10x,a)')" NB is defined using internal coordinates" 
-        if (nc(i) > i .and. na(nc(i)) /= 0) &
-          write(iw,'(/10x,a)')" NC is defined using internal coordinates" 
+        if (na(i) > i) then
+          if (na(na(i)) /= 0) write(iw,'(/10x,a)')" NA is defined using internal coordinates" 
+        end if
+        if (nb(i) > i) then
+          if (na(nb(i)) /= 0) write(iw,'(/10x,a)')" NB is defined using internal coordinates" 
+        end if
+        if (nc(i) > i) then
+          if(na(nc(i)) /= 0) write(iw,'(/10x,a)')" NC is defined using internal coordinates" 
+        end if
           call web_message(iw,"geometry_specification.html")
         if (i == 1) then 
           return  
@@ -733,6 +744,11 @@
         call mopend (trim(line) )  
         inquire (file = input_fn, exist = exists)
         if (exists) close(ir, status = 'delete', err = 99) 
+        inquire (file = end_fn, exist = exists)
+        if (exists) then
+          open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=j)
+          close(iend, status = 'delete', iostat=j)
+        end if
 99      stop
       end do 
       if (natoms > 0) then
@@ -812,6 +828,7 @@
           lopt(i:3,i) = 0 
         end do 
       endif 
+!      if (Index (keywrd, " NEWGEO") /= 0) call newflg ()
       return  
 ! ERROR CONDITIONS
   210 continue 

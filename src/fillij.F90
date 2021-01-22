@@ -1,7 +1,6 @@
   subroutine fillij (count)
-      use molkst_C, only: numat, natoms, cutofp, &
-           & id, n2elec, l1u, l2u, l3u, &
-           & keywrd, mpack, ispd
+      use molkst_C, only: numat, natoms, cutofp, id, n2elec, l1u, l2u, l3u, keywrd, mpack, &
+        ispd, line
       use common_arrays_C, only : tvec, coord
       use chanel_C, only: iw
       use MOZYME_C, only : cutofs, direct, semidr, &
@@ -85,21 +84,28 @@
       cutof2 = 9.9d0 ** 2
       if (cutofp < 100.d0) cutof2 = cutofp ** 2
       if (numat < 30)      cutof2 = 1.d6
+      line = trim(keywrd)
+      if (index(line," GEO_DAT") /= 0) then
+        i = index(line," GEO_DAT") + 9
+        j = index(line(i + 10:),'" ') + i + 9
+        line(i:j) = " "
+      end if
      
-      i = Index (keywrd, " CUTOFF=")
+      i = Index (line, " CUTOFF=")
       if (i /= 0) then
-        cutof1 = reada (keywrd, i+8) ** 2
-        cutof2 = cutof1 - 1.d-1
+        cutof1 = reada (line, i+8) 
+        cutof2 = (cutof1 - 1.d-1)**2
+        cutof1 = cutof1**2
       else
-        i = Index (keywrd, " CUTOF1=")
+        i = Index (line, " CUTOF1=")
         if (i /= 0) cutof1 = reada (keywrd, i+8) ** 2
-        i = Index (keywrd, " CUTOF2=")
+        i = Index (line, " CUTOF2=")
         if (i /= 0) cutof2 = reada (keywrd, i+8) ** 2
       end if
       !
-      i = Index (keywrd, " CUTOFS=")
+      i = Index (line, " CUTOFS=")
       if (i /= 0) then
-        cutofs = reada (keywrd, i+8) ** 2
+        cutofs = reada (line, i+8) ** 2
       else
         cutofs = 7.d0 ** 2
       end if

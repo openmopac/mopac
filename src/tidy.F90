@@ -135,8 +135,8 @@ subroutine tidy (nmos_loc, nc, ic, n01, c, n02, nnc_loc, ncmo, ln, mn, mode)
    !  20% unused space for a LMO to expand into.
    !
     i = n01 / nmos_loc
-    if (i+ispace < numat .and. ispace < Max (i/5, 20)) then
-      call pinout (1)
+    if (i + ispace < numat .and. ispace < Max (i/5, 20)) then
+      call pinout (1, .false.)
   !    write (iw, "(/,A,/,A,I8)") &
   !   & " There is not enough unused space left to ensure ", &
   !   & " that the next iteration can be done.  New memory being allocated:", &

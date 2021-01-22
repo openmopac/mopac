@@ -52,6 +52,7 @@
       mode = mode1 
       igui = -10 ! Set to impossible value
       store_maxtxt = maxtxt
+      if (index(keywrd, " NOTXT") /= 0) maxtxt = 0
       store_moperr = moperr
       moperr = .false.
       charge = (index(keywrd, " PRTCHAR") /= 0)
@@ -95,6 +96,8 @@
           if (Abs(ams(nat(i)) - atmass(i)) > 1.d-6) exit
         end do
         isotopes = (i <= numat)
+      else
+        isotopes = .false.
       end if
       cart = .true.
       do i = 1, natoms
@@ -107,9 +110,9 @@
       fmt3  = "13.7"
       if (maxtxt /= 0)  maxtxt = maxtxt + 2
       if (cart) then 
-        x = 0.d0
-        y = 0.d0
-        z = 0.d0
+        x = 1.d-8
+        y = 1.d-8
+        z = 1.d-8
         do i = 1, natoms
           x = max(x, abs(geo(1,i)))
           y = max(y, abs(geo(2,i)))
@@ -298,7 +301,8 @@
               blank(:j), geo(1,i), q(1), w, q(2), x, q(3), na(i), nb(i), nc(i) 
           endif 
         endif 
-      end do 
+			end do 
+	    moperr = (moperr .or. store_moperr)
       maxtxt = store_maxtxt
       if (mode == 1) return  
       write (iprt, *) 
@@ -346,7 +350,7 @@
           end if
           i = j + 1
         end do outer_loop
-        if (idepfn(i) == 19 .or. idepfn(i) == 18) then
+        if (na(i) > 0 .and. (idepfn(i) == 19 .or. idepfn(i) == 18)) then
           write (iprt, "(I4,I3,F13.9,10I5)") locpar (i), idepfn (i), &
                & depmul(n), (locdep(k), k=i, j)
         else

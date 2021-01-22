@@ -5,7 +5,7 @@ subroutine modgra ()
    !   (b) all side-chain atoms in each residue.
    !
    !***********************************************************************
-    use molkst_C, only: numat, nvar, id, maxtxt
+    use molkst_C, only: numat, nvar, maxtxt, natoms
     use chanel_C, only: iw
     use common_arrays_C, only : grad, loc, txtatm
     use MOZYME_C, only : nres, at_res, res_start
@@ -14,8 +14,7 @@ subroutine modgra ()
     double precision :: sum
     integer :: i, j
     logical :: L_protein
-    allocate(rgrad(numat + id), res_grad_b(numat + id), &
-      res_grad_s(numat + id))
+    allocate(rgrad(natoms), res_grad_b(natoms), res_grad_s(natoms))
     call build_res_start_etc()
 !
 !  Put atomic gradients into an atom-based array

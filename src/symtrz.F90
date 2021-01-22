@@ -54,11 +54,11 @@
 !   Store cartesian geometry
 !
      
-      cotim(:,:numat) = coord(:,:numat) 
+      cotim(:,1:numat) = coord(:,1:numat) 
 !
 !    Identify Molecular Point Group
 !
-      nat_store = nat
+      nat_store(1:numat) = nat(1:numat)
 !
 !  Change the atomic number to a function of the isotope.
 !  The multiplier "20" was chosen so that an isotope that was different by

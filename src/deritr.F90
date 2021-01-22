@@ -107,12 +107,12 @@
           call post_scf_corrections(sum, .false.)
           aa = aa + sum/const
         endif 
+        aa = aa + enuclr 
       end if
 !
 !  RESTORE THE DENSITY MATRIX (WHY?)
 !
       if (allocated (pa)) p = pa*2.D0 
-      aa = aa + enuclr 
       do i = 1, nvar 
         k = loc(1,i) 
         l = loc(2,i) 

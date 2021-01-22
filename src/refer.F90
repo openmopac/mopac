@@ -7,11 +7,12 @@
       use common_arrays_C, only : nat
       use molkst_C, only : numat, keywrd, is_PARAM, method_rm1, &
       method_mndo, method_am1, method_pm3, method_pm6, method_mndod, &
-      method_pm7, sparkle, method_pm8
+      method_pm7, sparkle, method_pm8, method_indo
       use parameters_C, only : gss
       use parameters_for_PM6_Sparkles_C, only : gss6sp
       use parameters_for_AM1_Sparkles_C, only : gssam1sp
       use parameters_for_PM3_Sparkles_C, only : gssPM3sp
+      use reimers_C, only : isok
 !***********************************************************************
 !DECK MOPAC
 !...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:00  03/09/06  
@@ -34,6 +35,18 @@
       data mix/ .FALSE./  
       elemns(:102) = .FALSE.
       elemns(nat(:numat)) = .TRUE. 
+      if (method_indo) then
+        allok = .true.
+        do i = 1,numat
+          if (.not. isok(nat(i))) allok = .false.
+        end do
+        if (.not. allok) then
+          write (iw, 40) 'SOME ELEMENTS HAVE BEEN SPECIFIED FOR WHICH', &
+            'NO PARAMETERS ARE AVAILABLE.  CALCULATION STOPPED.'
+          call mopend("Parameters for some elements are missing")
+        end if
+        return
+      end if
       if (method_pm6) then
         allok = .true.
         if (sparkle) then !  Check for Lanthanides
@@ -57,7 +70,7 @@
         write (iw, '(1x,a)') &
           &  """Optimization of Parameters for Semiempirical Methods V: Modification of NDDO Approximations", &
           &  "and Application to 70 Elements"", J. J. P. Stewart, J. Mol. Mod., 13, 1173-1213 (2007)", &
-          &  "URL: http://www.springerlink.com/content/ar33482301010477/fulltext.pdf"
+          &  "URL: https://link.springer.com/article/10.1007/s00894-007-0233-4"
         if (index(keywrd," PM6-DH+") /= 0) then
           write (iw, '(/,a)') " Reference for PM6-DH+:"  
           write(iw,'(1x,a)') &
@@ -97,7 +110,7 @@
         write (iw, '(1x,a)') &
           &  """Optimization of Parameters for Semiempirical Methods VI: More Modifications to the ", &
           & "NDDO Approximations and Re-optimization of Parameters"", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)", &
-          & "http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x"
+          & "https://link.springer.com/article/10.1007/s00894-012-1667-x"
         if (allok .or. is_PARAM) return  
         write (iw, 40) 'SOME ELEMENTS HAVE BEEN SPECIFIED FOR WHICH', &
           'NO PARAMETERS ARE AVAILABLE.  CALCULATION STOPPED.' 

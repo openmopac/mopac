@@ -67,7 +67,7 @@ subroutine check (nvec, nnc, nc, icvec, ic_dim, iorbs, ncvec, cvec, c_dim)
    !
    !   SEVERE ERROR IN LMO's.  QUIT THE JOB
    !
-    write (iw,*) " ERROR DETECTED IN SUBROUTINE CHECK"
+    call mopend(" ERROR DETECTED IN SUBROUTINE CHECK")
     write (iw, "(/,A,F12.6,/)") " MAGNITUDE OF ERROR:", error
     write (iw,*) " NUMBER OF VECTORS:", nvec
     write (iw, "(/,A,/)") " L.M.O.s WERE NORMALIZED TO"
@@ -95,5 +95,4 @@ subroutine check (nvec, nnc, nc, icvec, ic_dim, iorbs, ncvec, cvec, c_dim)
         write (iw,*) " NUMBER OF ORBITALS IN LMO:", l
       end if
     end do
-    call mopend ("Error detected in subroutine CHECK")
 end subroutine check

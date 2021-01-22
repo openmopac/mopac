@@ -25,8 +25,8 @@
 !  Collect error messages and print them at the end of each calculation
 !
 !     
-        use chanel_C, only : iw
-        use molkst_C, only : line
+        use chanel_C, only : iw, ir
+        use molkst_C, only : line, job_no, natoms
         implicit none
         integer, intent (in) :: ntxt
         character, intent (in) :: txt*(*)
@@ -35,7 +35,7 @@
 !
         integer, parameter :: lim = 120
         character :: messages(20)*(lim), blank*(lim)
-        integer :: nmessages = 0, i, max_txt
+        integer :: nmessages = 0, i, j, max_txt
         logical :: first = .true.
         save
         if (first) then
@@ -43,6 +43,24 @@
            first = .false.
         end if          
         if (ntxt == 1) then
+          if (natoms == 0 .and. job_no == 1) then
+            write(iw,'(/10x, a)')"Job failed to run because no atoms were detected in the system"
+            write(iw,'(10x, a, /)')"The start of the data-set is as follows:"
+            rewind (ir)
+            max_txt = 0
+            do i = 1, 9
+              read(ir, '(a)', iostat = j)line
+              if (j /= 0) exit
+              max_txt = max(max_txt, len_trim(line))
+            end do        
+            rewind (ir)
+            do i = 1, 9
+              read(ir, '(a)', iostat = j)line
+              if (j /= 0) exit
+              write(iw,'(a, i1, a)')" Line ", i, ": """//line(:max_txt)//""""
+            end do
+            if (i < 10) write(iw,'(/,a)')"          Then the end of the data-set was detected"
+          end if             
 !
 !   Write out messages
 !

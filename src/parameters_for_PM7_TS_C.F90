@@ -4,6 +4,7 @@
     betap7_TS, betad7_TS, gss7_TS, gsp7_TS, gpp7_TS, gp27_TS, hsp7_TS, polvo7_TS, poc_7_TS, &
     zsn7_TS, zpn7_TS, zdn7_TS, f0sd7_TS, g2sd7_TS, alp7_TS
     real(double), dimension(107,4) :: gues7_TS1, gues7_TS2, gues7_TS3
+    real(double), dimension(60) :: v_par7_TS
 !
 !                    Data for Element   1         Hydrogen
 !
@@ -1342,16 +1343,6 @@
 !                    Data for Element  99       Dummy atom
 !
       data   polvo7_TS( 99)/         0.791396D0/
-      data gues7_TS1( 99,1)/         8.947612D0/ ! = PAR1
-      data gues7_TS2( 99,1)/         6.024265D0/ ! = PAR2
-      data gues7_TS3( 99,1)/        -0.012037D0/ ! = PAR3
-      data gues7_TS1( 99,2)/         0.701333D0/ ! = PAR4
-      data gues7_TS2( 99,2)/        15.450118D0/ ! = PAR5
-      data gues7_TS3( 99,2)/         1.226593D0/ ! = PAR6
-      data gues7_TS1( 99,3)/         2.286419D0/ ! = PAR7
-      data gues7_TS2( 99,3)/        -0.171271D0/ ! = PAR8
-      data gues7_TS3( 99,3)/        -0.098822D0/ ! = PAR9
-      data gues7_TS1( 99,4)/        -0.308057D0/ ! = PAR10
 !
 !                    Data for Element 100       3+ Sparkle
 !
@@ -1383,6 +1374,17 @@
 !                    Data for Element 106        - Sparkle
 !
       data     alp7_TS(106)/         1.500000D0/
+      !
+!                     Global parameters
+!
+!
+      data   v_par7_TS(1)/    8.947612d0/  ! Used in ccrep for scalar correction of C-C triple bonds.
+      data   v_par7_TS(2)/    6.024265d0/  ! Used in ccrep for exponent correction of C-C triple bonds.
+      data   v_par7_TS(3)/   -0.012037d0/  ! Used in ccrep for scalar correction of O-H term.
+      data   v_par7_TS(4)/    0.701333d0/  ! Used in ccrep for exponent correction of C-C triple bonds.
+      data   v_par7_TS(7)/    0.900000d0/  ! Used in dftd3 to set "s6"  in D3H4
+      data   v_par7_TS(8)/   14.000000d0/  ! Used in dftd3 to set "alp" in D3H4
+      data   v_par7_TS(9)/    1.561000d0/  ! Used in dftd3 to set "rs6" in D3H4
   contains
   subroutine alpb_and_xfac_pm7_TS
     use parameters_C, only : xfac, alpb

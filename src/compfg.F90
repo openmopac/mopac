@@ -15,17 +15,21 @@
       use MOZYME_C, only : partf
 !
       use common_arrays_C, only : nat, loc, geo, na, nb, nc, geoa, &
-      & coord, xparef, aicorr, tvec, labels, pa, p, pdiag, f
+      & coord, xparef, aicorr, tvec, labels, pa, p, pdiag, f, nlast, h, nfirst, c, eigs
 !
       USE molkst_C, ONLY: numat, norbs, nelecs, nclose, nopen, fract, natoms, numcal, &
       & ndep, nvar, elect, enuclr, keywrd, moperr, emin, mozyme, method_PM7, lxfac, &
       atheat, id, pressure, method_pm6, density, stress, N_3_present, Si_O_H_present, &
       use_ref_geo, hpress, nsp2_corr, Si_O_H_corr, sum_dihed, method_PM6_D3H4X, method_PM6_D3H4, &
-      method_PM6_D3, method_pm7_minus, method_pm6_dh_plus, method_pm7_hh, method_pm8
+      method_PM6_D3, method_pm7_minus, method_pm6_dh_plus, method_pm7_hh, method_pm8, &
+      method_indo, mpack
 !
       use cosmo_C, only : iseps, useps, noeps, solv_energy
 !
       use linear_cosmo, only : ini_linear_cosmo, coscavz
+      use reimers_C, only: x, y, z, xz, zcore, beta, gamma, s, betao, ibf, &
+      & natm, r, nbf, nbt, nprn, iat, natt, zcorea, betaa, matind, n, &
+      & nprin, vnn, dm, ef, dd, ff, cc0, aa, dtmp, nb2, ppg, pg, nsym
 !
 !***********************************************************************
 !DECK MOPAC
@@ -67,6 +71,7 @@
         dh, l_locate_ts
       double precision, external :: xfac_value, reada
       real(double), external :: ddot
+      character :: tmpkey*241
 
       save debug, print, large, usedci, force, times, aider, degree, &
         icalcn, dh, l_locate_ts
@@ -125,6 +130,9 @@
             return
           end if
           if (mozyme) call ini_linear_cosmo
+        else
+          iseps = .false.
+          noeps = .false.
         end if
         aider = index(keywrd,'AIDER') /= 0 
         times = index(keywrd,'TIMES') /= 0 
@@ -201,6 +209,138 @@
         if (iseps) useps = .true.  
         if (l_locate_ts .or. int) call hcore_for_MOZYME () 
         if (moperr) return  
+      else if (method_indo) then
+! Set up Reimers data
+        if (allocated(x))     deallocate(x)
+        if (allocated(y))     deallocate(y)
+        if (allocated(z))     deallocate(z)
+        if (allocated(xz))    deallocate(xz)
+        if (allocated(zcore)) deallocate(zcore)
+        if (allocated(beta))  deallocate(beta)
+        if (allocated(gamma)) deallocate(gamma)
+        if (allocated(s))     deallocate(s)
+        if (allocated(betao)) deallocate(betao)
+        if (allocated(ibf))   deallocate(ibf)
+        if (allocated(natm))  deallocate(natm)
+        if (allocated(r))     deallocate(r)
+        if (allocated(nbf))   deallocate(nbf)
+        if (allocated(nbt))   deallocate(nbt)
+        if (allocated(nprn))  deallocate(nprn)
+        if (allocated(iat))   deallocate(iat)
+        if (allocated(natt))  deallocate(natt)
+        if (allocated(dd))    deallocate(dd)
+        if (allocated(cc0))   deallocate(cc0)
+        if (allocated(aa))    deallocate(aa)
+        if (allocated(ff))    deallocate(ff)
+        if (allocated(dtmp))  deallocate(dtmp)
+        if (allocated(dd))    deallocate(dd)
+        if (allocated(ppg))   deallocate(ppg)
+        if (allocated(pg))    deallocate(pg)
+        if (allocated(nsym))  deallocate(nsym)
+        allocate(x(numat))
+        allocate(y(numat))
+        allocate(z(numat))
+        allocate(xz(numat,3))
+        allocate(zcore(numat))
+        allocate(beta(mpack))
+        allocate(gamma(norbs,norbs))
+        gamma = 0.d0
+        allocate(s(mpack))
+        allocate(betao(norbs))
+        allocate(ibf(numat))
+        allocate(natm(numat))
+        allocate(r(numat,numat))
+        allocate(nbf(numat))
+        allocate(nbt(norbs))
+        allocate(nprn(norbs))
+        allocate(iat(norbs))
+        allocate(natt(norbs))
+
+        
+        matind(1) = 0
+        do i=2,50000
+          matind(i) = matind(i-1) + i-1
+        end do
+        n = norbs
+     !   na = numat
+
+        do i=1,numat
+          x(i) = coord(1,i)
+          y(i) = coord(2,i)
+          z(i) = coord(3,i)
+          xz(i,1) = coord(1,i)
+          xz(i,2) = coord(2,i)
+          xz(i,3) = coord(3,i)
+          zcore(i) = zcorea(labels(i))
+          ibf(i) = nfirst(i)
+          natm(i) = labels(i)
+          natt(i) = labels(i)
+          nbf(i) = nlast(i) - nfirst(i) + 1
+          do j=nfirst(i),nlast(i)
+            nbt(j) = j - nfirst(i)
+            iat(j) = i
+            if (j-nfirst(i).eq.0) then
+              betao(j) = betaa(1,labels(i))
+              nprn(j) = nprin(labels(i))
+            else if (j-nfirst(i).le.3) then
+              betao(j) = betaa(2,labels(i))
+              nprn(j) = nprin(labels(i))
+            else
+              betao(j) = betaa(3,labels(i))
+              nprn(j) = nprin(labels(i))-1
+            end if
+          end do
+        end do
+! Call Reimers INDO routine
+        call replsn ()
+
+        enuclr = vnn
+        call ovlap  (s,x,y,z)
+        call beta1  (s,betao,beta)
+! Add electric field correction - borrow code from hcore
+        tmpkey = trim(keywrd)
+        i = index(tmpkey,' FIELD(') + index(tmpkey,' FIELD=(')
+        if (i /= 0) then
+!   ERASE ALL TEXT FROM TMPKEY EXCEPT FIELD DATA
+          tmpkey(:i) = ' '
+          tmpkey(index(tmpkey,')'):) = ' '
+!   READ IN THE EFFECTIVE FIELD IN X,Y,Z COORDINATES
+          ef(1) = reada(tmpkey,i)
+          i = index(tmpkey,',')
+          if (i /= 0) then
+            tmpkey(i:i) = ' '
+            ef(2) = reada(tmpkey,i)
+            i = index(tmpkey,',')
+            if (i /= 0) then
+              tmpkey(i:i) = ' '
+              ef(3) = reada(tmpkey,i)
+            endif
+          endif
+          write (iw,'(/10X,''THE ELECTRIC FIELD IS'',3F10.5,&
+             &''VOLTS/ANGSTROM'',/)') ef
+! Reimers code uses E field in V/A
+          do i = 1,3
+            ef(i) = -ef(i)
+          end do
+! Back to Reimers-specific stuff
+          nb2 = mpack
+          if(.not. allocated(dm))     allocate(dm(nb2,3))
+          call dipol (x,y,z,dm)
+          call efmods (beta,zcore,dm)
+        end if
+! Put Reimers data back into h
+        do i= 1,mpack
+          h(i) = beta(i)
+        end do
+! Solvent correction
+        if (useps) then
+          call addnuc ()
+          call addhcr ()
+!     Put h back into beta
+          do i= 1,mpack
+            beta(i) = h(i)
+          end do
+        end if        
       else
         if (int) call hcore () 
         if (moperr) return
@@ -267,7 +407,14 @@
             noeps = .false.
             useps = .true.
             if ( .not. mozyme) then
-              call hcore () 
+              if (.not. method_indo) call hcore ()
+              if (method_indo) then
+                call addnuc ()
+                call addhcr ()
+                do i= 1,mpack
+                  beta(i) = h(i)
+                end do
+              end if
               call iter (elect, fulscf, .TRUE.) 
             end if    
           end if
@@ -294,7 +441,10 @@
         escf =  sum + escf
       end if
       atheat = atheat_store
-      if (escf < emin .or. emin == 0.D0) emin = escf      
+      if (escf < emin .or. emin == 0.D0) emin = escf    
+      if (method_indo) then
+        call output (c,eigs)
+      end if
 !
 ! FIND DERIVATIVES IF DESIRED
 !
@@ -320,7 +470,7 @@
 ! REFORM DENSITY MATRIX, IF A C.I. DONE AND EITHER THE LAST SCF OR A
 ! FORCE CALCULATION
 !
-      if (usedci .and. force) call mecip () 
+      if (usedci .and. force .and. .not. method_indo) call mecip () 
       return  
       end subroutine compfg 
 !

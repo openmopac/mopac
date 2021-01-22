@@ -6,22 +6,21 @@
 !
       use common_arrays_C, only : nfirst, nlast, nat, xparam, grad, nw, &
       p, pa, pb, labels, loc, time_start, l_atom, coord, txtatm, coorda, &
-      txtatm1
+      txtatm1, cell_ijk, eigs, c
 !
       USE molkst_C, only : gnorm, natoms, numat, nvar, numcal, job_no, nscf, id, &
         escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, verson, &
         time0, atheat, errtxt, isok, mpack, gui, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
-        MM_corrections, lxfac, trunc_1, trunc_2, method_PM8, bad_separator, good_separator, &
-        method_PM7, method_PM6, method_RM1, sparkle, itemp_1, maxtxt, koment, &
-        num_threads, nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax
+        MM_corrections, lxfac, trunc_1, trunc_2, bad_separator, good_separator, &
+        sparkle, itemp_1, maxtxt, koment, &
+        num_threads, nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax, step, &
+        density, norbs, method_indo, nclose, nopen
 !
-      USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles
+      USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
-      Use Parameters_for_PM7_Sparkles_C, only : gss7sp
-      Use Parameters_for_PM6_Sparkles_C, only : gss6sp
 !
-      use cosmo_C, only : iseps, useps, lpka, solv_energy
+      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi
 !
       USE funcon_C, only : fpc_9, fpc
 !
@@ -32,16 +31,19 @@
       USE chanel_C, only : ir, iw, iarc, output_fn, end_fn, iend, &
         archive_fn, log, ilog, xyz_fn, job_fn, log_fn
 !
-      use MOZYME_C, only : rapid, nres
+      use MOZYME_C, only : rapid, nres, refnuc
 !
-      use meci_C, only : nmos
+      use meci_C, only : nmos, lab
 !
       use elemts_C, only : elemnt, atom_names
-
+!
       use reada_I
       use to_screen_I
 
-       Use mod_vars_cuda, only: lgpu   
+      Use mod_vars_cuda, only: lgpu   
+!
+      USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
+          nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
 #if GPU
       Use iso_c_binding 
       Use mod_vars_cuda, only: ngpus, gpu_id
@@ -71,9 +73,9 @@
       use polar_I
       use pmep_I
       implicit none
-      integer ::  i, j, l
-      real(double) :: eat,  tim 
-      logical :: exists, opend, sparkles
+      integer ::  i, j, k, l
+      real(double) :: eat,  tim, store_fepsi
+      logical :: exists, opend, sparkles_available, l_OLDDEN
       double precision, external :: C_triple_bond_C
       character :: nokey(20)*10
       integer, external :: mkl_get_max_threads
@@ -87,7 +89,7 @@
       integer(c_size_t)  :: totalMem(6)
       logical            :: gpu_ok(6)
       character*3        :: on_off(6)
-      integer(c_int), dimension(6)	 :: clockRate, major, minor, name_size, k
+      integer(c_int), dimension(6)	 :: clockRate, major, minor, name_size
 #endif
 !-----------------------------------------------
       tore = ios + iop + iod
@@ -109,6 +111,7 @@
 !
 ! Read in all data; put it into a scratch file, "ir"
 !
+      moperr = .false.
       call getdat(ir,iw)
       call to_screen("To_file: Start of reading in data")
       if (natoms == 0 .or. moperr) return
@@ -116,6 +119,12 @@
 !   CLOSE UNIT IW IN CASE IT WAS ALREADY PRE-ASSIGNED
 !
       close(iw)
+!
+! WARNING - Replace with standard name, sometime.
+!
+      i = index(jobnam,' ') - 1
+      filenm = trim(jobnam)
+      lenf = i+1
       l = 0
  11   open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat = i)
       if (i /= 0) then
@@ -147,6 +156,16 @@
    10 continue
       numcal = numcal + 1      ! A new calculation
       job_no = job_no + 1      ! A new job
+      if (job_no > 1) then
+        backspace(ir)
+        read(ir,'(a)', iostat = i) line
+        if (i == 0) then
+          if (line /= " ") then
+            call upcase(line, len_trim(line))
+            if (index(line, "NEXT") /= 0) backspace(ir)
+          end if
+        end if
+      end if
       step_num = step_num + 1  ! New electronic structure, therefore increment step_num
       moperr = .FALSE.
       escf   = 0.d0
@@ -156,17 +175,37 @@
       E_hb   = 0.d0
       E_hh   = 0.d0
       solv_energy = 0.d0
+      step = 0.d0
+      density = 0.d0
+      area = 0.d0
+      store_fepsi = fepsi
+      fepsi = 0.d0
+      refnuc = 0.d0
       nres = 0
       nscf = 0
       nmos = 0
       na1 = 0
+      norbs = 0
+      lab = 0
       lpka = .false.
       stress = 0.d0
       no_pKa = 0
+      cell_ijk = 0
+      id = 0
       time0 = second(1)
       MM_corrections = .false.
       pdb_label = .false.
       state_Irred_Rep = " "
+      if (job_no > 1) then
+        i = index(keywrd, " BIGCYCL")
+        if (i /= 0) then
+          i = nint(reada(keywrd, i)) + 1
+          if (job_no < i) then
+            fepsi = store_fepsi
+            goto 90         
+          end if
+        end if
+      end if
       if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
       if (numcal > 1 .and. numcal < 4 .and. index(keywrd_txt," GEO_DAT") /= 0) then
 !
@@ -183,7 +222,17 @@
 !
       i = numcal
       call readmo
-      if (moperr .and. numcal == 1 .and. natoms > 1) goto 101
+!
+! Check to see if an old density matrix exists
+!
+      line = trim(job_fn)
+      i = len_trim(line)
+      if (i > 4) then
+        j = index(line(i - 4:), ".")
+        if (j /= 0) i = i - 6 + j
+      end if
+      inquire(file=line(:i)//".den", exist=l_OLDDEN)
+90      if (moperr .and. numcal == 1 .and. natoms > 1) goto 101
       if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
       if (numcal == 1) then
@@ -307,33 +356,34 @@
       if (index(keywrd,' EXTERNAL') /= 0) call datin (iw)
       if (moperr) go to 100
       sparkle = (index(keywrd, " SPARKL") /= 0)
-      sparkles = .false.
-      if (.not. method_RM1) then
-        do i = 1, natoms
-          if (labels(i) > 57 .and. labels(i) < 72) then
-            sparkles = .true.
-            exit
-          end if
-        end do
-      end if
-      if ((method_PM7 .or. method_PM6 .or. method_RM1) .and. sparkles) then
-        if (.not. sparkle) then
-          line = " "
-          do j = 1, 10
-            if (atom_names(labels(i))(j:j) /= " ") exit
-          end do
-          write (line, '(A,a)') ' Data are not available for ', atom_names(labels(i))(j:)//"."
-          if (index(keywrd, " 0SCF") == 0) then
-            if (method_PM7 .and. Abs(gss7sp(labels(i))) > 0.1d0 .or. &
-                method_PM6 .and. Abs(gss6sp(labels(i))) > 0.1d0) &
-              write(iw,*)" (Parameters are available if SPARKLE is used)"
-            call mopend(trim(line))
-            goto 100
+!
+!  Check to see if SPARKLES are needed and, if need, can they be used.
+!
+      sparkles_available = .true.
+!
+! Are SPARKLES needed?
+!
+      do i = 1, natoms
+        if (labels(i) > 83) cycle
+        if  (zs(labels(i)) < 0.1d0) then
+!
+! Can SPARKLES be used?
+!
+          sparkles_available = (sparkles_available .and. (gss(labels(i)) > 0.1d0))
+          if (.not. sparkle) then
+            line = " "
+            do j = 1, 10
+              if (atom_names(labels(i))(j:j) /= " ") exit
+            end do
+            write (line, '(A,a)') ' Data are not available for ', atom_names(labels(i))(j:)//"."
+            if (index(keywrd, " 0SCF") == 0) then
+              if (sparkles_available) write(iw,*)" (Parameters are available if SPARKLE is used)"
+              call mopend(trim(line))
+              goto 100
+            end if 
           end if
         end if
-      else
-        sparkle = .false.
-      end if
+      end do
       do i = 57,71
         if (zs(i) < 0.1d0) tore(i) = 3.d0
       end do
@@ -405,6 +455,7 @@
           end do
         end if
       end if
+      call delete_ref_key("RESIDUES", len_trim("RESIDUES"), ' ', 1)
       if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) call geochk()
       if ( index(keywrd," PDBOUT") /= 0 .and. maxtxt < 26 .and. index(keywrd," RESID") == 0) then
         if (maxtxt == 0) then
@@ -423,6 +474,12 @@
           return
         end if
       end if   
+      if (mozyme) then
+        if (index(keywrd, " PREC") /= 0) then
+          call l_control("PREC", len_trim("PREC"), -1)   
+          if (index(keywrd, " LET") == 0) call l_control("LET", len_trim("LET"), 1)   
+        end if
+      end if
       if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) nelecs = 0
       if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") + index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
         if (index(keywrd, " DISP") /= 0) then
@@ -497,7 +554,7 @@
               call l_control("ADD-H", len("ADD-H"), -1)
               numat = natoms - id
               numcal = numcal + 1
-              call mopend("HYDROGEN ATOMS ADDED")
+              call mopend("ADD-H: SYSTEM HAS BEEN HYDROGENATED")
               moperr = .false.
             end if
             call l_control("0SCF", len("0SCF"), 1)
@@ -565,7 +622,8 @@
 !
             j = 1
             do i = 1, numat
-              write(txtatm(i),'(a6,i5,a15)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)     
+              write(line,'(a6,i5,a15)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:) 
+              txtatm(i) = trim(line)
             end do 
           end if
           call geout (iarc)
@@ -600,6 +658,48 @@
         nw(i) = l
         l = l + ((nlast(i)-nfirst(i)+1)*(nlast(i)-nfirst(i)+2))/2
       end do
+      if (method_indo) then
+        if(.not. allocated(occfr)) allocate(occfr(2))
+        noh = nopen
+        nvl = nclose + 1
+        nel(1) = nclose * 2
+
+        norb(1) = nclose
+        norbl(1) = 1
+        norbh(1) = nclose
+        occfr(1) = 2.D0
+
+        if (nopen == nclose) then
+          nshell = 1
+
+        else
+          nshell = 2
+
+          nel(2) = nopen - nclose
+          norb(2) = nopen - nclose
+          norbl(2) = norbh(1) + 1
+          norbh(2) = nopen
+          occfr(2) = 1.D0
+          allocate(vca(2,2))
+          allocate(vcb(2,2))
+! One alpha electron per orbital
+          vca(2,2)= 1.D0
+          vcb(2,2)= 2.D0
+        endif
+! Set up CI data
+        if (index(keywrd,' CIS') /= 0 .or. index(keywrd,' MRCI') /= 0 .or. &
+            index(keywrd,' C.I.') /= 0 .or. index(keywrd,' C.A.S.') /= 0) then
+          multci = nopen - nclose + 1
+          if (index(keywrd,' SING') /= 0) multci = 1
+          if (index(keywrd,' DOUB') /= 0) multci = 2
+          if (index(keywrd,' TRIP') /= 0) multci = 3
+          if (index(keywrd,' QUAR') /= 0) multci = 4
+          if (allocated(evalmo)) deallocate(evalmo)
+          if (allocated(nbt))    deallocate(nbt)
+          allocate(evalmo(norbs))
+          allocate(nbt(norbs))
+        end if
+      end if
 !
 !  CALCULATE THE ATOMIC ENERGY
 !
@@ -655,7 +755,10 @@
         if (moperr) goto 101
         if (index(keywrd, " RAPID") /= 0) call set_up_rapid("ON")
       end if
-      if (index(keywrd,' 1SCF') /= 0) then
+      if (index(keywrd,' 1SCF') /= 0 .or. method_indo) then
+        if (method_indo .and. index(keywrd,' 1SCF') == 0) then
+          write (iw,*) "WARNING: INDO only performs single-point calculations"
+        end if
         iflepo = 1
         iscf = 1
         last = 1
@@ -692,7 +795,7 @@
           allocate(react(3*numat))
           react = 0.d0
         end if
-        if (index(keywrd, " HTML") /= 0) call write_path_html
+        if (index(keywrd, " HTML") /= 0) call write_path_html(1)
         call drc (react, react)
         iflepo = -1
       else if (index(keywrd, " LOCATE-TS") /= 0) then
@@ -742,6 +845,23 @@
         write(iw,'(/10x,a)')"Geometry optimization using EF"
         call to_screen(" Geometry optimization using EF")
         call ef (xparam, escf)
+      end if
+      if (method_indo .and. (index(keywrd,' CIS') /= 0 .or. index(keywrd,' MRCI') /= 0 .or.&
+            index(keywrd,' C.I.') /= 0 .or. index(keywrd,' C.A.S.') /= 0)) then
+        do i=1,norbs
+          evalmo(i) = eigs(i)
+          do j = 1,norbs
+            cc0(j,i) = c(i,j)
+          end do
+        end do
+        do i=1,natoms
+          k = 0
+          do j=nfirst(i),nlast(i)
+            nbt(j) = k
+            k = k+1
+          end do
+        end do
+        call rci()
       end if
 !
 !  Calculation done, now print results
@@ -813,7 +933,18 @@
           call l_control(trim(line), len_trim(line), 1)   
         end if
         call delete_MOZYME_arrays()
-          go to 10
+!
+! Delete density matrix if it was made by MOZYME
+!
+        if (.not. l_OLDDEN .and. index(keywrd, " NEWDEN") == 0) then
+          j = len_trim(end_fn)
+          inquire (file = end_fn(:j - 3)//"den", exist = exists)
+          if (exists) then
+            open(unit = iend, file = end_fn(:j - 3)//"den", status='OLD', iostat=i)
+            if (i == 0) close(iend, status = 'delete', iostat=i)
+          end if    
+        end if
+        go to 10
       end if
 !
 ! Carefully delete all arrays created using "allocate"
@@ -840,6 +971,12 @@
       inquire(unit=ir, opened=opend) 
       if (opend) close(ir, status = 'delete', err = 999)
 999   jobnam = " "
+      inquire(unit = ilog, opened = opend, name = line)
+      if (opend) then
+        rewind (ilog)
+        read(ilog,'(a)', iostat=i)line
+        if (i == -1) close(ilog, status = 'delete', iostat=i)
+      end if
       return
 end subroutine run_mopac
 subroutine special

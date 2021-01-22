@@ -51,7 +51,7 @@ module Common_arrays_C
   &  hblist,     & !  List of hydrogen bonds X-H --- Y and types used by PM6-DH2
   &  ijpars,     & !
   &  dummy2
-  real(double), dimension(3,3) :: tvec !  Translation vectors (for solid-state)
+  real(double), dimension(3,3) :: tvec = 0.d0 !  Translation vectors (for solid-state)
   integer ::         &
    cell_ijk(3),      &   !  Dispacement translation indices (for solid-state)
    breaks(400),      &   !  Locations of breaks in PDB structure
@@ -59,7 +59,7 @@ module Common_arrays_C
    time_end(8)           !
   Double Precision :: Vab(3)           !  Distance vector between two atoms in a solid.(for solid-state)
   character ::chains(100)*1            !  Names of chains in proteins
-  real(double) :: break_coords(3,400)   !  Locations of breaks in a PDB structure
+  real(double) :: break_coords(3,400) = 0.d0   !  Locations of breaks in a PDB structure
 !
   real(double), dimension (:), allocatable :: &
   &  xparam,     & !  Values of geometric parameters marked for optimization

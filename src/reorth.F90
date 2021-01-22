@@ -4,7 +4,6 @@ subroutine reorth (ws)
        & icvir_dim, cocc_dim, cvir_dim, ncf, nce, nncf, nnce, ncocc, ncvir, iorbs, &
        & icocc, icvir, cocc, cvir
     use common_arrays_C, only : nfirst
-    use chanel_C, only: iw
     implicit none
     double precision, dimension (norbs) :: ws
 !
@@ -126,7 +125,6 @@ subroutine reorth (ws)
 			 & iused, sumtot)
       end do
     end do
-    write (iw, "(A,F19.12)") " Total error:", sumtot
     deallocate (latom_loc, iused)
 1100 continue
 end subroutine reorth

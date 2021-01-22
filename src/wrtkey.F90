@@ -29,17 +29,18 @@ end subroutine wrtkey
 
 
 subroutine wrtchk (allkey)
-  use molkst_C, only: keywrd, id, is_PARAM, uhf, method_mndo, method_am1, & 
+  use molkst_C, only: keywrd, is_PARAM, uhf, method_mndo, method_am1, & 
   method_pm3, method_mndod, method_pm6, method_rm1, rhf, mozyme, line, &
-  method_pm7, method_pm8, koment, title, refkey
+  method_pm7, method_pm8, method_indo, koment, title, refkey
   use chanel_C, only: iw, input_fn
   use myword_I
   use to_screen_I
   implicit none
   logical :: birad, exci, ci, trip
-  integer :: i, j, k, l
+  integer :: i, j, k, l, nmos
   character :: ch
   character (len=1000), intent (inout) :: allkey
+  double precision, external :: reada
   birad = (Index (keywrd, " BIRAD") /= 0)
   exci  = (Index (keywrd, " EXCI") /= 0)
   ci    = (Index (keywrd, " C.I.") /= 0)
@@ -47,6 +48,16 @@ subroutine wrtchk (allkey)
   uhf   = (Index (keywrd, " UHF") /= 0)
   rhf   = (Index (keywrd, " RHF") + index(keywrd, " MECI") /= 0  &
     .or. ci .or. (.not. uhf .and. Index(keywrd, " OPEN") /= 0))
+  if (.not. (birad .or. exci .or. ci .or. (Index (keywrd, " INDO") /= 0) .or. (index(keywrd, " OPEN") /= 0))) then
+    if ((index(keywrd, " MECI") /= 0) .or. (index(keywrd, " CIS") /= 0)) then
+      if (index(keywrd, " CIS ") /= 0) call mopend("Keyword ""CIS"" used, but no C.I. defined")
+      if (index(keywrd, " CISD ") /= 0) call mopend("Keyword ""CISD"" used, but no C.I. defined")
+      if (index(keywrd, " CISDT ") /= 0) call mopend("Keyword ""CISDT"" used, but no C.I. defined")
+      if ((index(keywrd, " MECI") /= 0)) call mopend("Keyword ""MECI"" used, but no C.I. defined")
+      write(iw,'(/10x,a)')"Keyword ""C.I."" or ""OPEN"" must be present for the other C.I. keywords to be used"
+      return
+    end if
+  end if
   if (.not. (mozyme .or. (index(keywrd," PDBOUT") + index(keywrd," RESID") + index(keywrd," ADD-H")/= 0)) &
     .and. index(keywrd, " 0SCF") == 0) then
 !
@@ -85,14 +96,12 @@ subroutine wrtchk (allkey)
       if (index(keywrd(i:j), "=")  + index(keywrd," DENOUT") + &
         index(keywrd," VEC") + index(keywrd," ALLVE") == 0) then
         call mopend("Keyword RE-LOC only has meaning if DENOUT or VECTORS or ALLVECTORS is present")
-      end if                                               
+      end if  
+      if (index(keywrd, "BANANA") /= 0) &
+        call mopend("Keyword BANANA only works with keyword LOCAL, i.e. NOT with MOZYME")
+      if (index(keywrd, "RABBIT") /= 0) &
+        call mopend("Keyword RABBIT only works with keyword LOCAL, i.e. NOT with MOZYME")
     end if  
-    if (id /= 0) then
-      if (index(keywrd, " CUTOF") /= 0 ) then
-        call mopend("CUTOFx=n.nn -type keywords do not work with MOZYME for infinite systems")
-        return
-      end if
-    end if
     if (index(keywrd," 1SCF") /= 0 .and. index(keywrd," RAPID") /= 0) then
       call mopend("RAPID cannot be used with 1SCF")
       return     
@@ -147,15 +156,6 @@ subroutine wrtchk (allkey)
     call mopend ("INT cannot be used with XYZ")
   end if
 !
-!  COSMO does not work with polymers or other infinite systems
-!
-  if (id > 0 .and. Index(keywrd, "EPS=") /= 0) then
-    if (id == 1) write(iw,*) " COSMO cannot be used with polymers"
-    if (id == 2) write(iw,*) " COSMO cannot be used with layer systems"
-    if (id == 3) write(iw,*) " COSMO cannot be used with solids"
-    call mopend ("COSMO cannot be used with systems with Tv")
-  end if
-!
 !   Check T-PRIO MUST have DRC
 !
   if (Index (keywrd, " T-PRIO") /= 0 .and. Index (keywrd, " DRC") == 0) then
@@ -174,8 +174,9 @@ subroutine wrtchk (allkey)
     if (method_mndo)    i = i + 1
     if (method_mndod)   i = i + 1
     if (method_rm1)     i = i + 1
+    if (method_indo)    i = i + 1
     if (i > 1) then
-      write (iw, '(//10 x, " ONLY ONE OF MNDO, MNDOD, AM1, PM3, RM1, PM6, PM7, and PM8 ALLOWED")')            
+      write (iw, '(//10 x, " ONLY ONE OF MNDO, MNDOD, AM1, PM3, RM1, PM6, PM7, PM8, AND INDO ALLOWED")')            
 10000 format(/ / 10 x, "IMPOSSIBLE OPTION REQUESTED")
       call mopend("IMPOSSIBLE OPTION REQUESTED")
       return
@@ -224,6 +225,429 @@ subroutine wrtchk (allkey)
       write(iw,"(a)")" *  Either remove keyword pKa or change method to PM6."," *"
       call mopend("The pKa option only works with PM6. Calculation abandoned.")
         return
+    end if
+    if (Index(keywrd, " C.I.=") /= 0) then
+      j = Index (keywrd, " C.I.=(")
+      if (j /= 0) then
+        nmos = Nint (reada (keywrd, Index (keywrd, "C.I.=(")+5))
+      else 
+        nmos = Int (reada (keywrd, Index (keywrd, "C.I.")+4))
+      end if
+      if (nmos > 29 .and. .not. method_indo) then
+        write (iw, "(' *',/,a)") " *      Maximum size of open space = 29 M.O.s"
+        write (iw, "(a, i3,/,' *')") " *      Size requested:", nmos
+        call mopend("Maximum size of open space = 29 M.O.s")
+        return
+      else if (nmos < 1) then
+        write (iw, "(' *',/,a)") " *      Minimum size of open space = 1 M.O.s"
+        write (iw, "(a, i3,/,' *')") " *      Size requested:", nmos
+        call mopend("Minimum size of open space = 1 M.O.s")
+        return
+      end if
+    end if
+! INDO keywords incompatible with non-INDO methods
+    if (.not. method_indo) then
+      if (Index (keywrd, " C.I.D.") /= 0) then
+        write (6,*) "C.I.D. is only compatible with INDO"
+        call mopend("C.I.D. is only compatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " C.A.S.") /= 0) then
+        write (6,*) "C.A.S. is only compatible with INDO"
+        call mopend("C.A.S. is only compatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " MRCI") /= 0) then
+        write (6,*) "MRCI is only compatible with INDO"
+        call mopend("MRCI is only compatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " MAXCI") /= 0) then
+        write (6,*) "MAXCI is only compatible with INDO"
+        call mopend("MAXCI is only compatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " WRTCI") /= 0) then
+        write (6,*) "WRTCI is only compatible with INDO"
+        call mopend("WRTCI is only compatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " TDIP") /= 0) then
+        write (6,*) "TDIP is only compatible with INDO"
+        call mopend("TDIP is only compatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " WRTCONF") /= 0) then
+        write (6,*) "WRTCONF is only compatible with INDO"
+        call mopend("WRTCONF is only compatible with INDO")
+        return
+      end if
+! INDO incompatible with many standard MOPAC keywords
+    else
+! Incompatible CI options
+      if (Index (keywrd, " CIS ") /= 0 .and. Index (keywrd, " CISD ") /= 0) then
+        write (6,*) "CIS and CISD are incompatible keywords"
+        call mopend("CIS and CISD are incompatible keywords")
+        return
+      end if
+      if (Index (keywrd, " CIS ") /= 0 .and. Index (keywrd, " C.I.D.") /= 0) then
+        write (6,*) "CIS and C.I.D. are incompatible keywords"
+        call mopend("CIS and C.I.D. are incompatible keywords")
+        return
+      end if
+! Too high spin
+      if (Index (keywrd, " QUIN") /= 0 .or. Index (keywrd, " SEXT") /= 0 .or. &
+          Index (keywrd, " SEPT") /= 0 .or. Index (keywrd, " OCTE") /= 0 .or. &
+          Index (keywrd, " NONE") /= 0) then
+        write (6,*) "Spin is incompatible with INDO"
+        call mopend("Spin is incompatible with INDO")
+        return
+      end if
+
+! Keywords in wrtcon - exit if a bad combination specified
+      if (Index (keywrd, " FORCE") /= 0) then
+        write (6,*) "FORCE is incompatible with INDO"
+        call mopend("FORCE is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " LOCATE_TS") /= 0) then
+        write (6,*) "LOCATE_TS is incompatible with INDO"
+        call mopend("LOCATE_TS is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " MOZ") /= 0) then
+        write (6,*) "MOZYME is incompatible with INDO"
+        call mopend("MOZYME is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " LEWIS") /= 0) then
+        write (6,*) "LEWIS is incompatible with INDO"
+        call mopend("LEWIS is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " RESEQ") /= 0) then
+        write (6,*) "RESEQ is incompatible with INDO"
+        call mopend("RESEQ is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " CHARGES") /= 0) then
+        write (6,*) "CHARGES is incompatible with INDO"
+        call mopend("CHARGES is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " RAPID") /= 0) then
+        write (6,*) "RAPID is incompatible with INDO"
+        call mopend("RAPID is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " SITE") /= 0) then
+        write (6,*) "SITE is incompatible with INDO"
+        call mopend("SITE is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " PDBOUT") /= 0) then
+        write (6,*) "PDBOUT is incompatible with INDO"
+        call mopend("PDBOUT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " QMMM") /= 0) then
+        write (6,*) "QMMM is incompatible with INDO"
+        call mopend("QMMM is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " COMPAR") /= 0) then
+        write (6,*) "COMPAR is incompatible with INDO"
+        call mopend("COMPAR is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " BZ") /= 0) then
+        write (6,*) "BZ is incompatible with INDO"
+        call mopend("BZ is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " EXCI") /= 0) then
+        write (6,*) "EXCI is incompatible with INDO"
+        call mopend("EXCI is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " VELO") /= 0) then
+        write (6,*) "VELO is incompatible with INDO"
+        call mopend("VELO is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " ESR") /= 0) then
+        write (6,*) "ESR is incompatible with INDO"
+        call mopend("ESR is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " NOMM") /= 0) then
+        write (6,*) "NOMM is incompatible with INDO"
+        call mopend("NOMM is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " MMOK") /= 0) then
+        write (6,*) "MMOK is incompatible with INDO"
+        call mopend("MMOK is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " CISDT") /= 0) then
+        write (6,*) "CISDT is incompatible with INDO"
+        call mopend("CISDT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " COSCCH") /= 0) then
+        write (6,*) "COSCCH is incompatible with INDO"
+        call mopend("COSCCH is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " INVERT") /= 0) then
+        write (6,*) "INVERT is incompatible with INDO"
+        call mopend("INVERT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " ESP") /= 0) then
+        write (6,*) "ESP is incompatible with INDO"
+        call mopend("ESP is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " NSURF") /= 0) then
+        write (6,*) "NSURF is incompatible with INDO"
+        call mopend("NSURF is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " SCINCR") /= 0) then
+        write (6,*) "SCINCR is incompatible with INDO"
+        call mopend("SCINCR is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " SLOPE") /= 0) then
+        write (6,*) "SLOPE is incompatible with INDO"
+        call mopend("SLOPE is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " PDBOUT") /= 0) then
+        write (6,*) "PDBOUT is incompatible with INDO"
+        call mopend("PDBOUT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " NOTER") /= 0) then
+        write (6,*) "NOTER is incompatible with INDO"
+        call mopend("NOTER is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " XENO") /= 0) then
+        write (6,*) "XENO is incompatible with INDO"
+        call mopend("XENO is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " CHAINS") /= 0) then
+        write (6,*) "CHAINS is incompatible with INDO"
+        call mopend("CHAINS is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " SETPI") /= 0) then
+        write (6,*) "SETPI is incompatible with INDO"
+        call mopend("SETPI is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " PINOUT") /= 0) then
+        write (6,*) "PINOUT is incompatible with INDO"
+        call mopend("PINOUT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " REORTH") /= 0) then
+        write (6,*) "REORTH is incompatible with INDO"
+        call mopend("REORTH is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " RE-LOCAL") /= 0) then
+        write (6,*) "RE-LOCAL is incompatible with INDO"
+        call mopend("RE-LOCAL is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " ADD_H") /= 0) then
+        write (6,*) "ADD_H is incompatible with INDO"
+        call mopend("ADD_H is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " CONNOL") /= 0) then
+        write (6,*) "CONNOL is incompatible with INDO"
+        call mopend("CONNOL is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " ESPRST") /= 0) then
+        write (6,*) "ESPRST is incompatible with INDO"
+        call mopend("ESPRST is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " UHF") /= 0) then
+        write (6,*) "UHF is incompatible with INDO"
+        call mopend("UHF is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " STATIC") /= 0) then
+        write (6,*) "STATIC is incompatible with INDO"
+        call mopend("STATIC is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " POLAR") /= 0) then
+        write (6,*) "POLAR is incompatible with INDO"
+        call mopend("POLAR is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " RESI") /= 0) then
+        write (6,*) "RESI is incompatible with INDO"
+        call mopend("RESI is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " NOOPT") /= 0) then
+        write (6,*) "NOOPT is incompatible with INDO"
+        call mopend("NOOPT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " OPT") /= 0) then
+        write (6,*) "OPT is incompatible with INDO"
+        call mopend("OPT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " P=") /= 0) then
+        write (6,*) "P= is incompatible with INDO"
+        call mopend("P= is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " CUBE") /= 0) then
+        write (6,*) "CUBE is incompatible with INDO"
+        call mopend("CUBE is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " ESPGRID") /= 0) then
+        write (6,*) "ESPGRID is incompatible with INDO"
+        call mopend("ESPGRID is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " MICROS") /= 0) then
+        write (6,*) "MICROS is incompatible with INDO"
+        call mopend("MICROS is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " OPEN") /= 0) then
+        write (6,*) "OPEN is incompatible with INDO"
+        call mopend("OPEN is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " MS=") /= 0) then
+        write (6,*) "MS= is incompatible with INDO"
+        call mopend("MS= is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " ROOT") /= 0) then
+        write (6,*) "ROOT is incompatible with INDO"
+        call mopend("ROOT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " STEP") /= 0) then
+        write (6,*) "STEP is incompatible with INDO"
+        call mopend("STEP is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " MERS") /= 0) then
+        write (6,*) "MERS is incompatible with INDO"
+        call mopend("MERS is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " POINT") /= 0) then
+        write (6,*) "POINT is incompatible with INDO"
+        call mopend("POINT is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " IRC") /= 0) then
+        write (6,*) "IRC is incompatible with INDO"
+        call mopend("IRC is incompatible with INDO")
+        return
+      end if
+      if (Index (keywrd, " DRC") /= 0) then
+        write (6,*) "DRC is incompatible with INDO"
+        call mopend("DRC is incompatible with INDO")
+        return
+      end if
+
+! Keywords in wrtout - print a warning but let the calculation proceed
+      i = 0
+      if (Index (keywrd, " AUX")      /= 0) i = i + 1
+      if (Index (keywrd, " OUTPUT")   /= 0) i = i + 1
+      if (Index (keywrd, " NOCOM")    /= 0) i = i + 1
+      if (Index (keywrd, " ISOTOPE")  /= 0) i = i + 1
+      if (Index (keywrd, " DENOUT")   /= 0) i = i + 1
+      if (Index (keywrd, " OLDENS")   /= 0) i = i + 1
+      if (Index (keywrd, " CIOSCI")   /= 0) i = i + 1
+      if (Index (keywrd, " ENPART")   /= 0) i = i + 1
+      if (Index (keywrd, " GRAD")     /= 0) i = i + 1
+      if (Index (keywrd, " MINI")     /= 0) i = i + 1
+      if (Index (keywrd, " VEC")      /= 0) i = i + 1
+      if (Index (keywrd, " EIGEN")    /= 0) i = i + 1
+      if (Index (keywrd, " CARTAB")   /= 0) i = i + 1
+      if (Index (keywrd, " CHARST")   /= 0) i = i + 1
+      if (Index (keywrd, " DCART")    /= 0) i = i + 1
+      if (Index (keywrd, " DERI1")    /= 0) i = i + 1
+      if (Index (keywrd, " DERI2")    /= 0) i = i + 1
+      if (Index (keywrd, " DERITR")   /= 0) i = i + 1
+      if (Index (keywrd, " DERIV")    /= 0) i = i + 1
+      if (Index (keywrd, " DERIVO")   /= 0) i = i + 1
+      if (Index (keywrd, " MAKVEC")   /= 0) i = i + 1
+      if (Index (keywrd, " DIIS")     /= 0) i = i + 1
+      if (Index (keywrd, " FLEPO")    /= 0) i = i + 1
+      if (Index (keywrd, " FMAT")     /= 0) i = i + 1
+      if (Index (keywrd, " DFORCE")   /= 0) i = i + 1
+      if (Index (keywrd, " HCORE")    /= 0) i = i + 1
+      if (Index (keywrd, " FREQCY")   /= 0) i = i + 1
+      if (Index (keywrd, " LINMIN")   /= 0) i = i + 1
+      if (Index (keywrd, " RAMA")     /= 0) i = i + 1
+      if (Index (keywrd, " SYMOIR")   /= 0) i = i + 1
+      if (Index (keywrd, " GROUP")    /= 0) i = i + 1
+      if (Index (keywrd, " SYMTRZ")   /= 0) i = i + 1
+      if (Index (keywrd, " DENS")     /= 0) i = i + 1
+      if (Index (keywrd, " SPIN")     /= 0) i = i + 1
+      if (Index (keywrd, " PRNT")     /= 0) i = i + 1
+      if (Index (keywrd, " DISP")     /= 0) i = i + 1
+      if (Index (keywrd, " DEP")      /= 0) i = i + 1
+      if (Index (keywrd, " BONDS")    /= 0) i = i + 1
+      if (Index (keywrd, " ALLBO")    /= 0) i = i + 1
+      if (Index (keywrd, " SYBYL")    /= 0) i = i + 1
+      if (Index (keywrd, " FOCK")     /= 0) i = i + 1
+      if (Index (keywrd, " LARGE")    /= 0) i = i + 1
+      if (Index (keywrd, " HTML")     /= 0) i = i + 1
+      if (Index (keywrd, " PDBOUT")   /= 0) i = i + 1
+      if (Index (keywrd, " AIGOUT")   /= 0) i = i + 1
+      if (Index (keywrd, " GRAP")     /= 0) i = i + 1
+      if (Index (keywrd, " 1ELEC")    /= 0) i = i + 1
+      if (Index (keywrd, " SUPER")    /= 0) i = i + 1
+      if (Index (keywrd, " ALLVEC")   /= 0) i = i + 1
+      if (Index (keywrd, " H-PRIO")   /= 0) i = i + 1
+      if (Index (keywrd, " X-PRIO")   /= 0) i = i + 1
+      if (Index (keywrd, " T-PRIO")   /= 0) i = i + 1
+      if (Index (keywrd, " MECI")     /= 0) i = i + 1
+      if (Index (keywrd, " HESSIAN")  /= 0) i = i + 1
+      if (Index (keywrd, " LOCAL")    /= 0) i = i + 1
+      if (Index (keywrd, " MULLIK")   /= 0) i = i + 1
+      if (Index (keywrd, " PI")       /= 0) i = i + 1
+      if (Index (keywrd, " POTWRT")   /= 0) i = i + 1
+      if (Index (keywrd, " PMEP")     /= 0) i = i + 1
+      if (Index (keywrd, " PRTMEP")   /= 0) i = i + 1
+      if (Index (keywrd, " MINMEP")   /= 0) i = i + 1
+      if (Index (keywrd, " PL")       /= 0) i = i + 1
+      if (Index (keywrd, " PKA")      /= 0) i = i + 1
+      if (Index (keywrd, " POPS")     /= 0) i = i + 1
+      if (Index (keywrd, " BCC")      /= 0) i = i + 1
+      if (Index (keywrd, " Z=")       /= 0) i = i + 1
+      if (Index (keywrd, " HYPERF")   /= 0) i = i + 1
+      if (Index (keywrd, " THERMO")   /= 0) i = i + 1
+      if (Index (keywrd, " K=")       /= 0) i = i + 1
+      if (i > 0) then 
+        write (6,*) "WARNING: Specified print options may not behave as expected with INDO"
+        write (iw,*) "**********"
+        write (iw,*) "*  WARNING: Specified print options may not behave as expected with INDO"
+        write (iw,*) "**********"
+      end if
     end if
        !******************************************************************
        !
@@ -284,7 +708,7 @@ subroutine wrtcon (allkey)
   use molkst_C, only: keywrd, numat, pressure, id, mozyme, mers, natoms, &
     line, old_chrge
   use cosmo_C, only : fepsi, nspa
-  use chanel_C, only: iw
+  use chanel_C, only: iw, job_fn
   use meci_C, only : nmos
   use conref_C, only : fpcref
   use common_arrays_C, only :  lopt
@@ -292,12 +716,18 @@ subroutine wrtcon (allkey)
   use reada_I
   implicit none
   character (len=1000), intent (out) :: allkey
-  double precision :: epsi
+  double precision :: epsi, sum
   integer :: i, ielec, ilevel, j, k, l
   logical :: l_add_H = .false., l_temp
-  character, external :: get_a_name*300, get_text*100
+  character :: num*1, num1*1
+  character, external :: get_a_name*300, get_text*300
   integer, external :: end_of_keyword
   save :: l_add_H
+!
+!  COSMO does not work with polymers or other infinite systems
+!
+  if (id > 0 .and. Index(keywrd, "EPS=") /= 0) call l_control("EPS=", len_trim("EPS="), -1) 
+!
   i = index(keywrd, " LOCATE_TS") 
   if (i /= 0) keywrd(i:i + 9) = " LOCATE-TS"
   l_temp = (index(keywrd," MOZ") + index(keywrd," LEWIS") + index(keywrd," LOCATE-TS") + &
@@ -328,6 +758,7 @@ subroutine wrtcon (allkey)
     
     
   allkey = trim(keywrd)
+  if (myword(allkey, " NEXT"))   write (iw, '(" *  NEXT       - DO NOT USE A BLANK LINE AFTER THE PREVIOUS JOB")')
   if (myword(allkey, " CCDC "))  i = 0 ! Dummy assignment   - to clear CCDC
   if (myword(allkey, " MNDO "))  write (iw, '(" *  MNDO       - The MNDO Hamiltonian to be used")')
   if (myword(allkey, " AM1 "))   write (iw, '(" *  AM1        - The AM1 Hamiltonian to be used")')
@@ -340,15 +771,26 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " SPARKL")) write (iw, '(" *  SPARKLE    - Use SPARKLES when they exist.")')
   if (myword(allkey, " RM1 "))   write (iw, '(" *  RM1        - The RM1 Hamiltonian to be used")')
   if (myword(allkey, " PM5 "))   write (iw, '(" *  PM5        - METHOD NOT SUPPORTED. DEFAULT METHOD USED INSTEAD (See above)")')
+  if (myword(allkey, " INDO "))  write (iw, '(" *  INDO       - The INDO Hamiltonian to be used")')
+  if (myword(allkey,' MRCI'))    write (iw, '(" *  MRCI       -  Use multi-reference CI (specify ref dets using C.A.S.)")')
+  if (myword(allkey,' MAXCI='))  write (iw, '(" *  MAXCI =",i5," maximum CI states computed")') &
+    nint(reada(keywrd,index(keywrd, ' MAXCI')))
+  if (myword(allkey,' WRTCI='))  write (iw, '(" *  WRTCI =",i5," maximum CI states printed")') &
+    nint(reada(keywrd,index(keywrd, ' WRTCI')))
+  if (myword(allkey,' TDIP'))    write (iw, '(" *  TDIP       -  Print transition dipoles between excited states")')
+  if (myword(allkey,'WRTCONF=')) &
+    write (iw, '(" *  WRTCONF =",f8.4," - Print configurations with coefficients greater than cutoff")') &
+    reada(keywrd,index(keywrd, ' WRTCONF'))
 !
 !  The lack of space before QMMM on the next line is deliberate   - at allows MOL_QMMM as an option
 !
   if (myword(allkey, "QMMM "))   write (iw, '(" *  QMMM       - Generate energies and gradients for use in MM codes")')
   if (myword(allkey, " COMPAR")) write (iw, '(" *  COMPARE    - Compare two geometries")')
-  if (myword(allkey, " BZ"))     write (iw, '(" *  BZ         - Write file <name>.brz for use by program BZ")')
-  if (myword(allkey, " BIRAD"))  write (iw, '(" *  BIRADICAL- SYSTEM HAS TWO UNPAIRED ELECTRONS")')
+  if (myword(allkey, " BRZ"))    write (iw, '(" *  BRZ         - Write file <name>.brz for use by program BZ")')
+  if (myword(allkey, " BIRAD"))  write (iw, '(" *  BIRADICAL  - SYSTEM HAS TWO UNPAIRED ELECTRONS")')
   if (myword(allkey, " EXCI"))   write (iw, '(" *  EXCITED    - FIRST EXCITED STATE IS TO BE OPTIMIZED")')
   if (myword(allkey, " VELO"))   write (iw, '(" *  VELOCITY   - INPUT STARTING VELOCITIES FOR DRC")')
+  if (myword(allkey, " DIPO"))   write (iw, '(" *  DIPOLE     - PRINT DIPOLE INSTEAD OF ENERGY IN TRAJECTORIES")')
   if (myword(allkey, " GEO-OK")) write (iw, '(" *  GEO-OK     - OVERRIDE INTERATOMIC DISTANCE AND OTHER SAFETY CHECKS")')
   if (myword(allkey, " CHECK"))  write (iw, '(" *  CHECK      - RUN EXTRA INTERATOMIC DISTANCE CHECKS")')
   if (myword(allkey, " PM6-D")) then 
@@ -391,7 +833,7 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " NONE"))   write (iw, '(" *  NONET      - SPIN STATE DEFINED AS A NONET")')
   if (myword(allkey, " COSCCH")) write (iw, '(" *  COSCCH     - ADD IN COSMO CHARGE CORRECTIONS")')
   if (myword(allkey, " FIELD"))  write (iw, '(" *  FIELD      - AN EXTERNAL ELECTRIC FIELD IS TO BE USED")')
-  if (myword(allkey, " NOREOR")) write (iw, '(" *  NOREOR     - DO NOT REORIENTATE SYSTEM WHEN WORKING OUT THE SYMMETRY")')
+  if (myword(allkey, " NOREOR")) write (iw, '(" *  NOREOR     - DO NOT ALLOW THE SYSTEM TO BE REORIENTATED")')
   if (myword(allkey, " INVERT")) write (iw, '(" *  INVERT     - REVERSE ALL OPTIMIZATION FLAGS")')
   if (myword(allkey, " ESP "))   write (iw, '(" *  ESP        - ELECTROSTATIC POTENTIAL CALCULATION")')
   if (myword(allkey, " NSURF"))  write (iw, '(" *  NSURF      - NUMBER OF LAYERS")')
@@ -406,6 +848,7 @@ subroutine wrtcon (allkey)
   if ( .not. l_add_H) l_add_H = (index(keywrd, " ADD-H") /= 0)
   if (myword(allkey, " RESEQ"))  write (iw, '(" *  RESEQ      - RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT")')
   if (myword(allkey, " NORES"))  write (iw, '(" *  NORESEQ    - DO NOT RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT")')
+  if (myword(allkey, " MACRO"))  write (iw, '(" *  MACRO      - MODIFY METHODS TO SMOOTH NDDO - POINT-CHARGE TRANSITION")')
   i = index(keywrd," START_RES") + 1
   if (i > 1) then
     j = index(keywrd(i:),")") 
@@ -429,29 +872,30 @@ subroutine wrtcon (allkey)
     j = index(keywrd(i + 10:),'"') + i + 9 
     write (iw, '(" *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE """,a,"""")')keywrd(i+10:j   - 1)
     allkey(i:j) = " "
-    if (index(keywrd," SETPI") /= 0 .and. index(keywrd," SETPI=") == 0) then
-      if (index(keywrd," 0SCF") == 0) then
-        write(line,"(a)")" When GEO_DAT is used, SETPI must be in the form SETPI=<file>.txt "
-        call mopend(trim(line))
-        return
-      end if
-    end if
   end if
   if (myword(allkey, " GEO_REF")) then
     i = index(keywrd," GEO_REF")
     j = index(keywrd(i + 10:),'"') + i + 9 
+    k = index(keywrd(i:j), "SELF")
     if (index(keywrd(i:j), "SELF") /= 0) then
-       write (iw, '(" *  GEO_REF=""SELF""    - USE MOPAC DATA SET (<file>.mop) AS REFERENCE GEOMETRY")')
+      line = " *  GEO_REF=""SELF""    - USE MOPAC DATA SET """//keywrd(i + 10:j - 5) &
+        //trim(job_fn)//""" AS REFERENCE GEOMETRY"
+       write (iw, '(a)')trim(line)
     else   
-      write (iw, '(" *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE """,a,"""")')keywrd(i+10:j   - 1)
+      write (iw, '(" *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE """,a,"""")')keywrd(i + 10:j - 1)     
     end if
-    j = j + 1
-    k = j
-    if (allkey(j:j) /= " ") then                               
-      j = index(keywrd(j:), " ") + j   - 2
-      write (iw, '(3a)')" *  The constant 'c' in perturbation = sum( c*(deltax)**2 is set to "//allkey(k:j)//" kcal.mol-1.A-2"
+    if (keywrd(j + 1:j + 1) == " ") then
+      write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"    
+    else
+      sum = reada(keywrd(j:), 1)
+      if (sum < 0.1d0) then
+        write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"  
+      else
+        num = char(ichar("4") + int(log10(sum)))
+        write(iw,'(a, f'//num//'.1, a)') " *               (A BIAS OF",sum, &
+        " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"  
+      end if
     end if
-    allkey(i:j) = " "
   end if
   i = index(allkey," CHAIN") + 1
   if (i > 1) then
@@ -488,22 +932,22 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " STATIC")) write (iw, '(" *  STATIC     - CALCULATE STATIC FIELD POLARIZABILITIES")')
   i = index(allkey," SETUP=")
   if (i /= 0) then
-    line = get_text(allkey, i, 0)  ! delete file name plus delimiter, if any.
-    i = index(line, '"')
-    if (i > 0) then
-      if (line(i + 1:i + 1) /= '"') then
-        line = line(:i - 1)//trim(line(i + 1:))
-        j = index(line(i + 2:),'"')
-        if (j > 0) then
-          j = j + i + 1
-          if (line(j + 1:j + 1) /= '"') line = line(:j - 1)//trim(line(j + 1:))
-        end if
-      end if
-    end if        
-    if (myword(allkey, " SETUP")) i = i + 1  !  Dummy call to run "myword"
-    write (iw, '(" *  SETUP      - EXTRA KEYWORDS TO BE READ FROM FILE '''//trim(line(8:))//'''")')
-  else
-    if (myword(allkey, " SETUP")) write (iw, '(" *  SETUP      - EXTRA KEYWORDS TO BE READ FROM FILE SETUP")')
+    line = trim(get_text(allkey, i + 7, 0))  ! delete file name plus delimiter, if any.
+    allkey(i:i + 7) = " " 
+    i = len_trim(line)
+    if (i < 26) then
+      write (iw, '(" *  SETUP      - EXTRA KEYWORDS TO BE READ FROM FILE """, a, """")') trim(line)
+    else
+      write (iw, '(" *  SETUP      - EXTRA KEYWORDS TO BE READ FROM FILE:")')
+      write (iw, '("                 """, a, """")') trim(line)
+    end if
+  else 
+    i = index(allkey," SETUP")
+    if (i /= 0) then
+      j = index(allkey(i + 6:), " ") + i + 4
+      write (iw, '(" *  SETUP      - EXTRA KEYWORDS TO BE READ FROM FILE """,a,"""")')allkey(i + 1:j)
+      allkey(i + 1:j) = " "
+    end if
   end if  
   if (myword(allkey, " MAX"))    write (iw, '(" *  MAX        - GRID SIZE 23*23 ")')
   if (myword(allkey, " COSWRT")) write (iw, '(" *  COSWRT")')
@@ -530,6 +974,11 @@ subroutine wrtcon (allkey)
   if (i > 0) keywrd(i:) = " SITE="//keywrd(i + 5:)
   if (myword(allkey, " SITE=") .or. myword(allkey, " SITE(") )   then
     write (iw, '(" *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES ")')
+    if (index(keywrd, " RESIDU") /= 0) then
+      call mopend("THE PRESENCE OF KEYWORD ""RESIDUES"" PREVENTS KEYWORD ""SITE"" FROM WORKING CORRECTLY")
+      write(iw,*)
+      return
+    end if
     i = index(keywrd, " SITE=")
     do j = i, len_trim(keywrd)
       if (keywrd(j:j + 1) == ") ") exit
@@ -549,6 +998,12 @@ subroutine wrtcon (allkey)
         write (iw, '(" *  NOOPT-",a1,"    - DO NOT OPTIMIZE COORDINATES OF ATOMS OF TYPE ",a1)')line(j:j), line(j:j)
       else if (j   - i == 5) then
         write (iw, '(" *  NOOPT      - DO NOT OPTIMIZE ANY COORDINATES")')
+        if (index(keywrd, " OPT ") /= 0) then
+          write (iw, '(" *  OPT        - OPTIMIZE COORDINATES OF ALL ATOMS")')
+          write (iw, '(" *             - USE ""NOOPT"" OR ""OPT"" BUT NOT BOTH")')
+          call mopend("OPT AND NOOPT CANNOT BOTH BE PRESENT")
+          return          
+        end if
       else  
         write (iw, '(" ***NOOPT      - IMPROPER USE OF NOOPT KEYWORD, KEYWORD USED = ''", a,"''")')line(i + 1:j)
         call mopend("IMPROPER USE OF OPT KEYWORD")
@@ -582,8 +1037,19 @@ subroutine wrtcon (allkey)
           i = i + 5
           k = index(line(i:j + i), "=")
           if (k /= 0) then
-            write(iw,'(" *  OPT        - OPTIMIZE COORDINATES OF ALL ATOMS WITHIN ",/," *",15x,a, &
-            & " ANGSTROMS OF ATOMS WITH PDB LABEL ",a)') line(k + i:j + i - 6), line(i: k + i -2)
+            write(iw,'(" *  OPT        - OPTIMIZE COORDINATES OF ALL ATOMS WITHIN ")')
+            j = i + j
+            do
+              sum = reada(line, k + i)
+              write(iw,'(" *",14x,f5.2, " ANGSTROMS OF ATOMS WITH PDB LABEL ",a)') sum, line(i: k + i -2)
+              l = index(line(i:j), ",")
+              if (l /= 0) then
+                i = i + l
+                k = index(line(i:j), "=")
+              else
+                exit
+              end if
+            end do        
           else
             write(iw,'(" *  OPT        - OPTIMIZE COORDINATES OF ALL ATOMS IN RESIDUES:",/," *",15x,a, &
             & a)') line(k + i:j + i - 6), line(i: k + i -2)            
@@ -618,9 +1084,8 @@ subroutine wrtcon (allkey)
     if (myword(allkey, " P=")) then
       pressure = reada (keywrd, Index (keywrd, " P="))
       if (id == 1) then
-        write (iw, '(" *  P=         - TENSION IN POLYMER=", g13.6, &
-       & " NEWTONS PER MOLE")') pressure
-        pressure = -pressure * 10.d0 ** (-13) / 4.184
+        write (iw, '(" *  P=         - TENSION IN POLYMER=", g13.6, " NEWTONS PER MOLE")') pressure
+        pressure = -pressure * 10.d0 ** (-13) / 4.184d0
       else if (id == 2) then
       else if (id == 3) then
         i = Index (keywrd, " P=")
@@ -672,13 +1137,34 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " CHARGE=")) then
     i = Nint (reada (keywrd, Index (keywrd, " CHARGE=")))
     if (i == 0) then
-       write (iw,'(3(" *", /), " *", 15 x, "  CHARGE ON SYSTEM = 0", 3 (/, " *"))')
+      write (iw,'(3(" *", /), " *", 15 x, "  CHARGE ON SYSTEM = 0", 3 (/, " *"))')
     else
-        write (iw,'(3(" *", /), " *", 15 x, "  CHARGE ON SYSTEM =", SP,i6, 3 (/, " *"))') i
+      num = char(ichar("3") + max(int(log10(abs(i) + 0.05)),0))
+      write (iw,'(3(" *", /), " *", 15 x, "  CHARGE ON SYSTEM =", SP,i'//num//', 3 (/, " *"))') i
     end if
     if (id /= 0 .and. i /= 0) then
-      write(iw,"(10x,a)")" Infinite systems must have a zero charge on the unit cell."
+      write(iw,"(/10x,a)")"INFINITE SYSTEMS MUST HAVE A ZERO CHARGE ON THE UNIT CELL"
       call mopend("Unit cell has a charge. Correct fault and re-submit ")
+    end if
+  end if
+  if (Index(allkey, " C.I.D.") /= 0) then
+    j = Index (keywrd, " C.I.D.=(")
+    if (j /= 0) then
+      j = Index (keywrd(j:j+10), ",") + j   - 1
+      nmos = Nint (reada (keywrd, Index (keywrd, "C.I.D.=(")+7))
+      num = char(ichar("2") + int(log10(nmos*1.0)))
+      l = Int (reada (keywrd, j))
+      num1 = char(ichar("2") + int(log10(l*1.0)))
+      write (iw,'(" * C.I.D.=(N,M)-", i'//num1// &
+        ', " DOUBLY FILLED LEVELS USED IN A CI DOUBLES INVOLVING", i'//num//', " M.O.''S")') l, nmos
+     if (.not. myword(allkey, " C.I.D.=(")) return ! Impossible option used to delete keyword
+    else if (myword(allkey, " C.I.D.=")) then
+      nmos = Int (reada (keywrd, Index (keywrd, "C.I.D.")+7))
+      write (iw,' (" *  C.I.D.=N   -", i2, " M.O.S TO BE USED IN CI DOUBLES")') nmos
+    else
+      write (iw, "(' *',/,a)") " *      C.I.D. keyword must be of form 'C.I.D.=n' or 'C.I.D.=(n1,n2)' (See manual)"
+      call mopend("C.I.D. keyword must be of form 'C.I.D.=n' or 'C.I.D.=(n1,n2)'")
+      return
     end if
   end if
 !
@@ -689,9 +1175,11 @@ subroutine wrtcon (allkey)
     if (j /= 0) then
       j = Index (keywrd(j:j+10), ",") + j   - 1
       nmos = Nint (reada (keywrd, Index (keywrd, "C.I.=(")+5))
-      write (iw,'(" * C.I.=(N,M)-", i3, " DOUBLY FILLED LEVELS USED IN A",/, &
-     & " *             C.I. INVOLVING ", i2, " M.O.''S")')  &
-     Int (reada (keywrd, j)), nmos
+      num = char(ichar("2") + int(log10(nmos*1.0)))
+      l = Int (reada (keywrd, j))
+      num1 = char(ichar("2") + int(log10(l*1.0)))
+      write (iw,'(" *  C.I.=(N,M) -", i'//num1//', " DOUBLY FILLED LEVELS USED IN A C.I. INVOLVING", i' &
+        //num//', " M.O.''S")') l, nmos
      if (.not. myword(allkey, " C.I.=(")) return ! Impossible option used to delete keyword
     else if (myword(allkey, " C.I.=")) then
       nmos = Int (reada (keywrd, Index (keywrd, "C.I.")+5))
@@ -703,15 +1191,22 @@ subroutine wrtcon (allkey)
       call web_message(iw,"CI=n.html")
       return
     end if
-    if (nmos > 29) then
-      write (iw, "(' *',/,a)") " *      Maximum size of open space = 29 M.O.s"
-      write (iw, "(a, i3,/,' *')") " *      Size requested:", nmos
-      call mopend("Maximum size of open space = 29 M.O.s")
-      return
-    else if (nmos < 1) then
-      write (iw, "(' *',/,a)") " *      Minimum size of open space = 1 M.O.s"
-      write (iw, "(a, i3,/,' *')") " *      Size requested:", nmos
-      call mopend("Minimum size of open space = 1 M.O.s")
+  end if
+  if (Index(allkey, " C.A.S.") /= 0) then
+    j = Index (keywrd, " C.A.S.=(")
+    if (j /= 0) then
+      j = Index (keywrd(j:j+10), ",") + j   - 1
+      nmos = Nint (reada (keywrd, Index (keywrd, "C.A.S.=(")+7))
+      write (iw,'(" * C.A.S.=(N,M)-", i3, " DOUBLY FILLED LEVELS USED IN A",/, &
+     & " *             CAS REF DET GENERATION INVOLVING ", i2, " M.O.''S")')  &
+     Int (reada (keywrd, j)), nmos
+     if (.not. myword(allkey, " C.A.S.=(")) return ! Impossible option used to delete keyword
+    else if (myword(allkey, " C.A.S.=")) then
+      nmos = Int (reada (keywrd, Index (keywrd, "C.A.S.")+7))
+      write (iw,' (" *  C.A.S.=N   -", i2, " M.O.S TO BE USED IN CAS REF DET GENERATION")') nmos
+    else
+      write (iw, "(' *',/,a)") " *      C.A.S. keyword must be of form 'C.A.S.=n' or 'C.A.S.=(n1,n2)' (See manual)"
+      call mopend("C.A.S. keyword must be of form 'C.A.S.=n' or 'C.A.S.=(n1,n2)'")
       return
     end if
   end if
@@ -818,6 +1313,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP       - STEP-SIZE IN PATH =", f8.3)') &
    reada (keywrd, Index (keywrd, " STEP") + 4)
    if (index(keywrd, " POINT") == 0) call mopend ("KEYWORD POINT MISSING")
+	 if (index(keywrd, " 1SCF") /= 0) call mopend ("KEYWORD ""1SCF"" CANNOT BE USED WITH KEYWORD ""STEP""")
    i = 1
  end if
  if (i > 0) then
@@ -934,7 +1430,7 @@ subroutine wrtout (allkey)
   integer :: i, j
   intrinsic Index, Nint
   if (myword(allkey, " PRTINT"))  write (iw,'(" *  PRTINT     - INTERATOMIC DISTANCES TO BE PRINTED")')
-  if (myword(allkey, " PRTCHAR")) write (iw,'(" *  PRTCHARGE- PRINT CHARGES IN ARC FILE")')
+  if (myword(allkey, " PRTCHAR")) write (iw,'(" *  PRTCHARGE  - PRINT CHARGES IN ARC FILE")')
   if (index(allkey, " AUX") > 0) then
     i = index(allkey, " AUX(") + 1
     if (i > 1) then
@@ -944,7 +1440,8 @@ subroutine wrtout (allkey)
       i = index(allkey, " AUX")
       allkey(i:i + 3) = " "
     end if      
-                                  write (iw,'(" *  AUX        - OUTPUT AUXILIARY INFORMATION")')
+    write (iw,'(" *  AUX        - OUTPUT AUXILIARY INFORMATION")')
+    if (myword(allkey, " AUX")) i = i + 1
   end if
   if (index(allkey, " OUTPUT") > 0) then
     i = index(allkey, " OUTPUT(") + 1
@@ -976,7 +1473,7 @@ subroutine wrtout (allkey)
     if (prt_pops)          write (iw,'(" *           P - ATOMIC ORBITAL POPULATIONS")')
     if (prt_topo)          write (iw,'(" *           T - TOPOGRAPHY (ATOM CONNECTIVITY)")')
     if (prt_force)         write (iw,'(" *           F - FORCE MATRIX")')
-    if (prt_normal_coords) write (iw,'(" *           N - NORMAL COORDINATES)")')
+    if (prt_normal_coords) write (iw,'(" *           N - NORMAL COORDINATES")')
     if (prt_orientation)   write (iw,'(" *           O - ORIENTATION)")')
     if (prt_velocity)      write (iw,'(" *           V - VELOCITY)")')
     if (.not. myword(allkey, " OUTPUT")) return ! An impossible option
@@ -995,9 +1492,9 @@ subroutine wrtout (allkey)
   if (myword(allkey, " MOPAC"))   write (iw,'(" *  MOPAC      - USE OLD MOPAC CONVENTION FOR FIRST THREE ATOMS")')
   if (myword(allkey, " NOINT"))   write (iw,'(" *  NOINTER    - THIS KEYWORD HAS BEEN REPLACED BY PRTINT")')
   if (myword(allkey, " NOCOM"))   write (iw,'(" *  NOCOMMENTS - SUPPRESS PDB COMMENTS")')
-  if (myword(allkey, " ISOTOPE")) write (iw,'(" *  ISOTOPE    - FORCE MATRIX WRITTEN TO DISK (CHAN. 9 )")')
-  if (myword(allkey, " DENOUT"))  write (iw,'(" *  DENOUT     - DENSITY MATRIX OUTPUT ON CHANNEL 10")')
-  if (myword(allkey, " OLDENS"))  write (iw,'(" *  OLDENS     - INITIAL DENSITY MATRIX READ OF DISK")')
+  if (myword(allkey, " ISOTOPE")) write (iw,'(" *  ISOTOPE    - SAVE THE FORCE MATRIX FOR USE LATER")')
+  if (myword(allkey, " DENOUT"))  write (iw,'(" *  DENOUT     - SAVE DENSITY MATRIX FOR USE LATER")')
+  if (myword(allkey, " OLDENS"))  write (iw,'(" *  OLDENS     - INITIAL DENSITY MATRIX READ OFF DISK")')
   if (myword(allkey, " CIOSCI"))  write (iw,'(" *  CIOSCI     - PRINT WORKING IN SUBROUTINE CIOSCI")')
   if (myword(allkey, " ENPART"))  write (iw,'(" *  ENPART     - ENERGY TO BE PARTITIONED INTO COMPONENTS")')
   if (myword(allkey, " NOXYZ"))   write (iw,'(" *  NOXYZ      - CARTESIAN COORDINATES NOT TO BE PRINTED")')
@@ -1117,6 +1614,8 @@ subroutine wrtout (allkey)
   if (myword(allkey, " MECI"))   write (iw,'(" *  MECI       - M.E.C.I. WORKING TO BE PRINTED")')
   if (myword(allkey, " HESSIAN"))write (iw,'(" *  HESSIAN    - WRITE OUT HESSIAN FROM GEOMERY OPTIMIZATION")')
   if (myword(allkey, " LOCAL"))  write (iw,'(" *  LOCALIZE   - LOCALIZED ORBITALS TO BE PRINTED")')
+  if (myword(allkey, " BANANA")) write (iw,'(" *  BANANA     - MAKE LOCALIZED ORBITALS WITH BANANA BONDS")')
+  if (myword(allkey, " RABBIT")) write (iw,'(" *  RABBIT     - MAKE LOCALIZED ORBITALS WITH RABBIT EARS")')
   if (myword(allkey, " MULLIK")) write (iw,'(" *  MULLIK     - THE MULLIKEN ANALYSIS TO BE PERFORMED")')
   if (myword(allkey, " PI "))    write (iw,'(" *  PI         - BONDS MATRIX, SPLIT INTO SIGMA-PI-DELL", &
    & " COMPONENTS, TO BE PRINTED")')
@@ -1130,11 +1629,13 @@ subroutine wrtout (allkey)
   if (myword(allkey, " PKA"))    write (iw,'(" *  PKA        - PRINT pKa FOR MOST ACIDIC HYDROGEN")')
   if (myword(allkey, " POPS"))   write (iw,'(" *  POPS       - PRINT SCF ATOMIC ORBITAL POPULATIONS")')
   if (myword(allkey, " BCC"))    write (iw,'(" *  BCC        - THE SYSTEM IS BODY-CENTERED CUBIC")')
-  if (myword(allkey, " Z="))     write (iw,'(" *  Z=",I2,"     - NUMBER OF FORMULA UNITS IN UNIT CELL")') &
-   Nint(Reada(keywrd,Index(keywrd," Z=") + 2))
   if (myword(allkey, " EIGS"))   write (iw,'(" *  EIGS       - PRINT ALL EIGENVALUES IN ITER")')
   if (myword(allkey, " HYPERF")) write (iw,'(" *  HYPERFINE- HYPERFINE COUPLING CONSTANTS TO BE", " PRINTED")')
   if (myword(allkey, " THERMO")) write (iw,'(" *  THERMO     - THERMODYNAMIC QUANTITIES TO BE CALCULATED")')
+  if (myword(allkey, " Z=")) then
+		write (iw,'(" *  Z=",I2,"     - NUMBER OF FORMULA UNITS IN UNIT CELL")')Nint(Reada(keywrd,Index(keywrd," Z=") + 2))
+	  if (index(keywrd, " MERS") == 0) call mopend(" *  KEYWORD Z REQUIRES KEYWORD MERS TO BE USED")			
+	end if
   if (myword(allkey, " K=")) then
     i = Index (keywrd, " K=")
     write (iw,' (" *   K=        - BRILLOUIN ZONE STRUCTURE TO BE CALCULATED")')
@@ -1151,13 +1652,11 @@ subroutine wrtwor (allkey)
   use reada_I
   implicit none
   character (len=1000), intent (inout) :: allkey
-  character (len=20) :: spaces
   character :: ch, ch4*4
   character (len=7) :: chrono
   integer :: i, ii, j, k
   double precision :: time, sum_1, sum_2
   intrinsic Index, Min, Nint, Max
-  spaces = " "
   if (myword(allkey, " EIGINV"))     write (iw,'(" *  EIGINV     - USE HESSIAN EIGENVALUE REVERSION IN EF")')
   if (myword(allkey, " NONR"))       write (iw,'(" *  NONR       - DO NOT USE NEWTON-RAPHSON STEP IN EF")')
   if (myword(allkey, " SNAP"))       write (iw,'(" *  SNAP       - INCREASE PRECISION OF SYMMETRY ANGLES")')
@@ -1168,7 +1667,7 @@ subroutine wrtwor (allkey)
   if (myword(allkey, " OLDGEO"))     write (iw,'(" *  OLDGEO     - PREVIOUS GEOMETRY TO BE USED")')
   if (myword(allkey, " OLDFPC"))     write (iw,'(" *  OLDFPC     - OLD FUNDAMENTAL PHYSICAL CONSTANTS TO BE USED")')
   if (myword(allkey, " OLD_HESS"))   write (iw,'(" *  OLD_HESS   - USE THE OLD HESSIAN MATRIX")')
-  if (myword(allkey, " PREC"))       write (iw,'(" *  PRECISE    - CRITERIA TO BE INCREASED BY 100 TIMES")')
+  if (myword(allkey, " PREC"))       write (iw,'(" *  PRECISE    - TIGHTER CRITERIA TO BE USED")')
   if (myword(allkey, " NOANCI"))     write (iw,'(" *  NOANCI     - DO NOT USE ANALYTICAL C.I. DERIVATIVES")')
   if (myword(allkey, " DFP"))        write (iw,'(" *  DFP        - USE DAVIDON FLETCHER POWELL OPTIMIZER")')
   if (myword(allkey, " XYZ"))        write (iw,'(" *  XYZ        - CARTESIAN COORDINATE SYSTEM TO BE USED")')
@@ -1222,10 +1721,14 @@ subroutine wrtwor (allkey)
     do j = i + 3, 1000
       if (j == 1000 .or. keywrd(j+1:j+1) == " ") go to 1000
     end do
-1010  if (tleft < 99999.9d0) then
-      write (iw,'(" *  T=         - A TIME OF", f9.1, " ", a7, " REQUESTED")') tleft, chrono
-    else 
-      write (iw,'(" *  T=         - A TIME OF", g9.1, " ", a7, " REQUESTED")') tleft, chrono
+1010 if (tleft < 99999.9d0) then
+       ch = char(ichar("4") + int(log10(tleft)))
+       write (iw,'(" *  T=         - A TIME OF", f'//ch//'.1, " ", a, " REQUESTED")') tleft, trim(chrono)
+     else 
+       i = int(log10(tleft)) + 4
+       ch4(1:1) = char(ichar("0") + 1)
+       ch4(2:2) = char(ichar("0") + i - 10)
+       write (iw,'(" *  T=         - A TIME OF", f'//ch4(1:2)//'.1, " ", a, " REQUESTED")') tleft, trim(chrono)
     end if
 !
 !  Limit time to 9,999,999 seconds =115.74 days.
@@ -1251,7 +1754,8 @@ subroutine wrtwor (allkey)
     end if
     go to 1010
   else 
-    write (iw,'(" *  T=         - A TIME OF", f9.1, " ", a7, " REQUESTED")') tleft, "SECONDS"
+    ch = char(ichar("4") + int(log10(tleft)))
+    write (iw,'(" *  T=         - A TIME OF", f'//ch//'.1, " ", a7, " REQUESTED")') tleft, "SECONDS"
   end if
 1020 time = 1.0d0
   chrono = "SECONDS"
@@ -1262,10 +1766,14 @@ subroutine wrtwor (allkey)
     do j = i + 6, 1000
       if (j == 1000 .or. keywrd(j+1:j+1) == " ") go to 1030
     end do
-1040  if (tdump < 99999.9d0) then
-      write (iw,'(" *  DUMP=N     - RESTART FILE WRITTEN EVERY", f10.3, " ", a7)') tdump, chrono
-    else
-      write (iw,'(" *  DUMP=N     - RESTART FILE WRITTEN EVERY", g11.3, " ", a7)') tdump, chrono
+1040 if (tdump < 99999.9d0) then
+      ch = char(ichar("4") + int(log10(tdump)))
+      write (iw,'(" *  DUMP=N     - RESTART FILE WRITTEN EVERY", f'//ch//'.1, " ", a, " REQUESTED")') tdump, trim(chrono)
+    else 
+      i = int(log10(tdump)) + 4
+      ch4(1:1) = char(ichar("0") + 1)
+      ch4(2:2) = char(ichar("0") + i - 10)
+      write (iw,'(" *  DUMP=N     - RESTART FILE WRITTEN EVERY", f'//ch4(1:2)//'.1, " ", a, " REQUESTED")') tdump, trim(chrono)
     end if
     tdump = tdump * time
     go to 1050
@@ -1288,18 +1796,23 @@ subroutine wrtwor (allkey)
     end if
     go to 1040
   else 
-    write (iw, '(" *  DUMP=N     - RESTART FILE WRITTEN EVERY", f10.3, " ", a7)') tdump, "SECONDS"
+    ch = char(ichar("4") + int(log10(tdump)))
+    write (iw,'(" *  DUMP=N     - RESTART FILE WRITTEN EVERY", f'//ch//'.1, " ", a7, " REQUESTED")') tdump, "SECONDS"
   end if
 1050 if (index(keywrd, " LOCATE-TS") /= 0) then
        if (abs(tleft - 7200) < 0.1d0) tleft = 3.d6
        tdump = 3.d6
      end if
-    if (myword(allkey, " CYCLES")) &
-    write (iw,'(" *  CYCLES=    - DO A MAXIMUM OF", i6, " STEPS")') &
-    Nint (reada (keywrd, Index (keywrd, " CYCLES")))
-  if (myword(allkey, " BIGCYCLES")) &
-    write (iw,'(" *  BIGCYCLES= DO A MAXIMUM OF", i6, " BIG STEPS")') &
-    Nint (reada (keywrd, Index (keywrd, " BIGCYCLES")))
+  if (myword(allkey, " CYCLES")) then
+    sum_1 = reada (keywrd, Index (keywrd, " CYCLES"))
+    ch = char(ichar("2") + int(log10(sum_1)))
+    write (iw,'(" *  CYCLES=    - DO A MAXIMUM OF", i'//ch//', " STEPS")') Nint(sum_1)
+  end if
+  if (myword(allkey, " BIGCYCLES")) then
+    sum_1 = reada (keywrd, Index (keywrd, " BIGCYCLES"))
+    ch = char(ichar("2") + int(log10(sum_1)))
+    write (iw,'(" *  BIGCYCLES  - DO", i'//ch//', " BIG STEPS")') Nint(sum_1)
+  end if
 !
 !**********************************************************************
 !
@@ -1323,14 +1836,25 @@ subroutine wrtwor (allkey)
     i = Index (keywrd, " METAL=") 
     if (i == 0) keywrd = keywrd(:j + 5)//"="//trim(keywrd(j + 6:))
     i = Index (keywrd, " METAL")
-    j = Index (keywrd(i:), " ") + i 
-    j = Index (keywrd(i:j), ")") + i
-    if (j < i) then
+    j = Index (keywrd(i:), ") ") + i 
+     if (j < i) then
       write (iw,'(" *  METAL      - METALS ARE DEFINED AS BEING FULLY IONIC")')
     else
-      ii = max(9 + i - j, 1)
-      write (iw, '(" *  ", a, "- ELEMENTS DEFINED AS BEING FULLY IONIZED METALS")') &
-      keywrd(i + 8:j + 9)//spaces(:ii)
+      j = Index (keywrd(i:), ") ") + i 
+      if (index(keywrd(i:j), '"') /= 0) &
+        write (iw, '(" *               ATOMS DEFINED AS BEING FULLY IONIC", /," *",15x,a)') keywrd(i + 8:j - 2)//" ="
+    end if
+!
+! Convert PDB into atom-numbers
+!
+    do
+      k = index(keywrd(i:j), '"')
+      if (k == 0) exit
+      call txt_to_atom_no(keywrd(i:j), k, .false.)
+    end do
+    if (j > i) then
+      j = Index (keywrd(i:), ") ") + i 
+      write (iw, '(" *",15x,a)') keywrd(i + 8:j - 2)
     end if
     if (.not. myword(allkey, " METAL")) return ! dummy call to use "myword"
   end if
@@ -1472,8 +1996,9 @@ subroutine wrtwor (allkey)
     write (iw, 10870) reada (keywrd, Index (keywrd, "OMIN="))
   end if
   if (myword(allkey, " GNORM")) then
-10880 format (" *  GNORM=     - EXIT WHEN GRADIENT NORM DROPS BELOW ", g10.3)
-    write (iw, 10880) reada (keywrd, Index (keywrd, " GNORM"))
+    sum_2 = reada (keywrd, Index (keywrd, " GNORM"))
+    ch4 = char(ichar("6") + max(0, min(2,int(log10(sum_2 + 1.d-10)))))//".3"
+    write (iw, '(" *  GNORM      - EXIT WHEN GRADIENT NORM DROPS BELOW", f'//ch4//')') sum_2
   end if
   if (myword(allkey, " DELTA")) then
 10881 format (" *  DELTA=     - EXIT WHEN ENERGY DIFFERENCE DROPS BELOW ", g10.3)
@@ -1544,6 +2069,10 @@ subroutine wrtwor (allkey)
   if (myword(allkey, " CUTOFP=")) then
 11010 format (" *  CUTOFP=    - CUTOFF FOR POLYMER ELECTROSTATICS =", f6.2, "A")
     write (iw, 11010) reada (keywrd, Index (keywrd, " CUTOFP=")+8)
+  end if
+  if (myword(allkey, " CUTOFS=")) then
+    write (iw, '(" *  CUTOFS=    - CUTOFF FOR OVERLAP INTEGRALS IN " &
+      //"SOLIDS =", f6.2, " A")') reada (keywrd, Index (keywrd, " CUTOFS=")+8)
   end if
   if (myword(allkey, " NLMO=")) then
 11020 format (" *  NLMO=N     - AVERAGE NUMBER OF ATOMS PER LMO =", i4)

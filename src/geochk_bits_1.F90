@@ -20,10 +20,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
     txt_rad = " "
     j = -1
     i = index(keywrd," METAL")
-    if (i /= 0) then
-      j = index(keywrd(i + 1:)," ") + i + 1
-      j = index(keywrd(i:j),") ") + i
-    end if
+    if (i /= 0) j = index(keywrd(i:),") ") + i
     if (i == j .or. index(keywrd, " ADD-H") /= 0) then
       is_metal = .false.
       do i = 1, 102
@@ -57,7 +54,10 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
         j = 2
         if (cap_elemnt(i)(2:2) == " ") j = 1
         k = index(line, ";"//cap_elemnt(i)(:j)//"=")
-        if (k > 0) vdw(i) = reada(line, k)
+        if (k > 0) then
+          vdw(i) = reada(line, k)
+          is_metal(i) = .false.
+        end if
       end do
     end if
 !
@@ -89,13 +89,16 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
 !
     if (txt_rad /= " ") then
       paren = .false.
-      do i = 1, len_trim(txt_rad)
+      i = 0
+      do k = 1, len_trim(txt_rad)
+        i = i + 1
         if (paren) then
           paren = (txt_rad(i:i) /= ")")
         else
            paren = (txt_rad(i:i) == "(")
           if (ichar(txt_rad(i:i)) - ichar("0") <= 9 .and. ichar(txt_rad(i:i)) - ichar("0") > 0) then
             j = nint(reada(txt_rad(i:), 1))
+            i = i + int(log10(j*1.0001))
             radius(j) = -1.d0
             do j = i, len_trim(txt_rad)
               if (ichar(txt_rad(i:i)) - ichar("0") > 9 .or. &
@@ -702,7 +705,7 @@ end subroutine compare_sequence
     integer :: i, j, k, kk, l, m, n, n_cations, n_anions, n_C, n_H, n_O, C, pairs(2,200), n_pairs, &
       salt_bridges(2,200), n_salt, i_length, ii, jj, nh_cat, nh_ani, nmetals
     double precision :: r, cutoff, Rab(200), R_min, R_sorted(200)
-    character :: bits*10
+    character :: bits*10, num
     logical :: het
     double precision, external :: distance, reada
     logical, external :: near_a_metal
@@ -1005,7 +1008,8 @@ end subroutine compare_sequence
 !  Build new SITE keyword
 !
     if (n_salt > 0) then
-      write(iw,'(//19x, a, f5.1, a)')"Salt Bridges Found (Up to", cutoff," Angstroms)"
+      num = char(ichar("4") + int(log10(cutoff + 0.04999d0)))
+      write(iw,'(//19x, a, f'//num//'.1, a)')"Salt Bridges Found (Up to", cutoff," Angstroms)"
       write(iw,'(/4x,a,10x,a,28x,a,16x,a,/)')" No.","Cationic site","Anionic site","Dist. (Angstroms)"
      if (n_cat == 0) call update_txtatm(.true., .true.)
     else
@@ -1128,7 +1132,7 @@ subroutine update_txtatm(output, sort)
 !
   use common_arrays_C, only : nat, txtatm, txtatm1, coorda, nbonds, ibonds, coord, &
     breaks
-  USE molkst_C, ONLY: numat, numat_old, keywrd, pdb_label
+  USE molkst_C, ONLY: numat, numat_old, keywrd, pdb_label, line
   use MOZYME_C, only: tyres
   implicit none
   logical :: output, sort, pdb, update_chain
@@ -1285,7 +1289,8 @@ subroutine update_txtatm(output, sort)
 !
   j = 1
   do i = 1, numat
-    write(txtatm(i),'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)  
+    write(line,'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)  
+    txtatm(i) = trim(line)
     if (PDB .and. i == breaks(j)) j = j + 1     
   end do 
   return

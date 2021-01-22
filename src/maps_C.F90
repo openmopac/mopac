@@ -18,10 +18,11 @@
   &  latom2,   &
   &  lpara2
       double precision :: &
-  &  rxn_coord1,  &
-  &  rxn_coord2,  &
-  &  rxn_coord,   &
-  &  rc_escf,     &  !  Reaction coordinate Heat of Formation
-  &  ekin,        &  !  Kinetic energy
+  &  rxn_coord1 = 0.d0,   &
+  &  rxn_coord2 = 0.d0,   &
+  &  rxn_coord,           &
+  &  rc_escf,             &  !  Reaction coordinate Heat of Formation
+  &  rc_dipo,             &  !  Reaction coordinate dipole
+  &  ekin,                &  !  Kinetic energy
   &  dummy
       end module maps_C 

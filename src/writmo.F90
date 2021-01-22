@@ -1,15 +1,15 @@
-      subroutine writmo 
-      USE vast_kind_param, ONLY:  double 
+      subroutine  writmo 
+      USE vast_kind_param, ONLY: double 
       use cosmo_C, only : iseps, area, fepsi, cosvol, ediel, solv_energy
 !
       use molkst_C, only : numat, nclose, nopen, fract, nalpha, nelecs, nbeta, &
       & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, escf, &
       & keywrd, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
-      ijulian, jobnam, method_am1, method_pm3, method_mndod, line, mers, uhf, &
-      method_pm6, method_rm1, gui, density, formula, mozyme, mpack, stress, &
-      site_no, method_pm7,  method_PM7_ts, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
+      ijulian, jobnam, line, mers, uhf, method_indo, &
+      gui, density, formula, mozyme, mpack, stress, &
+      site_no, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
-      n_methods, methods, methods_keys, hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
+      hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
       prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label
 !
       use MOZYME_C, only : icocc, icvir, ncocc, ncvir, nvirtual, noccupied, &
@@ -52,14 +52,14 @@
       real(double), dimension (:), allocatable :: rxyz
       integer :: icalcn, i, loc11, loc21, nopn, j, k, l, m, kchrge, iwrite, mvar
       real(double) :: q2(numat), degree, xreact, eionis, vol, tim, xi, sum, &
-      dip, dumy(3), pKa_unsorted(numat), distortion, rms, gnorm_norm
-      logical :: ci, lprtgra, still, bcc, opend
+      dip, dumy(3), pKa_unsorted(numat), distortion, rms, gnorm_norm, escf_min
+      logical :: ci, lprtgra, still, bcc, opend, bigcycles
       character  :: type(3)*11, idate*24, gtype*13, grtype*14, &
-      flepo(18)*58, iter(2)*58, namfil*241, num*1
+      flepo(18)*58, iter(2)*58, namfil*241, num*2
       character, allocatable :: old_arc_file(:)*1000
       double precision, external :: dipole_for_MOZYME, dot
       integer, external :: ijbo
-      save type, flepo, iter, namfil, icalcn, i
+      save type, flepo, iter, namfil, icalcn, i, bigcycles, escf_min
 !***********************************************************************
 !
 !   WRITMO PRINTS OUT MOST OF THE RESULTS.
@@ -97,7 +97,16 @@
 !
 ! SUMMARY OF RESULTS (NOTE: THIS IS IN A SUBROUTINE SO IT
 !          CAN BE USED BY THE PATH OPTION)
-      if (icalcn == 0) namfil = '**NULL**' 
+      if (icalcn == 0) then
+        namfil = '**NULL**' 
+        escf_min = escf
+        bigcycles = (index(keywrd, " BIGCYC") /= 0)
+      end if
+      if (bigcycles) then
+        if (escf > escf_min) return
+        escf_min = escf
+        rewind (iarc)
+      end if        
       idate = ' ' 
       lprtgra = (index(keywrd,' GRAD') /= 0 .and. nvar > 0) 
       ci = index(keywrd,' C.I.') /= 0 
@@ -172,6 +181,8 @@
         write (iw, &
     '(10X,''RMS DISTORTION          ='',F17.5,'' Angstroms per atom (all atoms)'' )') sqrt(rms/numat)
       else
+        distortion = 0.d0
+        rms = 0.d0
         if (index(keywrd," PM7-TS") /= 0) then
           call PM7_TS
           return
@@ -197,8 +208,11 @@
         sum = (elect + enuclr)*fpc_9 + atheat + hpress + solv_energy*fpc_9 + nsp2_corr + Si_O_H_corr + sum_dihed + &
           e_disp + e_hb + e_hh
         write(iw,'(30x,"SUM =",f17.5,a,/)') sum, " KCAL/MOL"
-        if (abs(sum - escf) > 1.d-2) then
-          write(iw,'(a)')" WARNING - An energy term is missing!"
+        if (abs(sum - escf + stress) > 1.d-3*numat) then
+          write(iw,'(5x,"*",4x,a,/)')"WARNING - An energy term is incorrect or missing!"
+          write(iw, '(5x,"*",4x,''FINAL HEAT OF FORMATION     ='',F13.5,'' KCAL/MOL'')') escf - stress
+          write(iw,'(5x,"*",4x,"SUM OF CONTRIBUTIONS TO HoF =",f13.5,a)') sum, " KCAL/MOL"
+          write(iw,'(5x,"*",21x,"DIFFERENCE =",f13.5,a,/)') escf - stress - sum, " KCAL/MOL"
         end if
         if (N_Hbonds > 0)  write(iw,'(10x,"No. OF HYDROGEN BONDS   =", i11,7x,a)') N_Hbonds, "(H-bond Energy < -1.0 Kcal/mol)"
         if (index(keywrd, " DISP(") /= 0) then
@@ -208,15 +222,15 @@
       end if
       if (numat > 1 .and. iscf == 1 .and. escf > 1.d4 .and. index(keywrd, " CHECK") == 0) &
         write(iw,'(//10x,a,//)') "Calculated Heat of Formation is very large, re-run using keyword 'CHECK'"
-      if (id == 3) call write_unit_cell_HOF(iw)
+      if (id == 3 .or. id == 1) call write_unit_cell_HOF(iw)
       call to_screen(" Job: "//jobnam(1:len_trim(jobnam)))
       write (line,'(10x,a,f16.5,a)') "Final heat of formation = ",escf," kcal/mol"
       call to_screen(line)
-      gnorm_norm =  gnorm/sqrt(1.0*numat)
-      num = Char (min(2, max(0, Int(Log10( gnorm_norm))))+Ichar ("7"))
+      gnorm_norm =  gnorm/sqrt(1.0*numat) + 1.d-8
+      write(num, '(i2)')  max(0, Int(Log10( gnorm_norm))) + 7
       write (line, '(10X,''GRADIENT NORM           ='',F17.5, '' = '',f'//num//'.5, '' PER ATOM'')') gnorm, gnorm_norm
       call to_screen(line) 
-      if (id == 3 .and. iw0 > -1) call write_unit_cell_HOF(iw0)     
+      if ((id == 3 .or. id == 1) .and. iw0 > -1) call write_unit_cell_HOF(iw0)     
       if (index(keywrd,' EPS') /= 0) write (iw, '(10X,A,F14.2,A)') &
         'VAN DER WAALS AREA      =', area, ' SQUARE ANGSTROMS' 
       if (latom == 0) write (iw, '(/)') 
@@ -255,9 +269,6 @@
           hpress = -pressure * sum
           write (iw, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress 
-          write (iw, '(10X,''VOLUME                  ='',&
-          & F17.5,'' ANGSTROMS**3 ='',f9.3, '' CM**3/MOLE'')') &
-          sum,  sum*fpcref(1,10)*1.d-24 
           sum = -(4184.d0*10.d0**30)*pressure/fpcref(1,10)
           if (abs(sum) > 1.d9) then
             write (iw, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
@@ -331,8 +342,8 @@
       ' TO REDUCE GNORM FURTHER, TRY ADDING KEYWORD ''NOANCI'' AND RE-RUN THE JOB' 
       still = .TRUE. 
       if (latom == 0) then 
-        if (index(keywrd,' AIDER') == 0) then 
-          if (index(keywrd,' 1SCF')==0 .or. index(keywrd,' GRAD')/=0) then 
+        if (index(keywrd,' AIDER') == 0 .and. nvar > 0) then 
+          if (.not. isnan(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then 
 !
 !   CHECK THAT THE CARTESIAN COORDINATE GRADIENT IS ALSO SMALL
 !
@@ -344,8 +355,8 @@
 ! 
 ! where "sum" is the gradient norm of the entire system.
 !
-            if (sum > max(2.d0, 2.D0*gnorm*sqrt((numat*3.d0)/nvar)) .and. sum < sqrt(0.1d0*numat) .and. &
-            nclose == nopen .and. id == 0 .and. index(keywrd, "NOANCI") == 0) then
+            if (nvar < numat*3 - 5 .and. sum > max(2.d0, 2.D0*gnorm*sqrt((numat*3.d0)/nvar)) .and. &
+              sum < sqrt(0.1d0*numat) .and. nclose == nopen .and. id == 0 .and. index(keywrd, "NOANCI") == 0) then
               if (nvar /= 1 .or. index(keywrd," GRAD") + index(keywrd, "DERIV") > 0) then 
                 write (iw, '(9x,A)') &
                 ' WARNING -- GEOMETRY IS NOT AT A STATIONARY POINT' 
@@ -437,11 +448,14 @@
       if (id == 0) call dimens (coord, iw) 
       if (id == 3) then 
         vol = volume(tvec,3) 
+        call l_control("PRT", 3, 1)
         density = mol_weight*1.D24/fpc_10/vol
-        write (iw, '(/10X,A,F17.3,A,/10X,A,F21.3,A)') 'VOLUME OF UNIT CELL', &
-          vol, ' CUBIC ANGSTROMS', 'DENSITY        ', density, ' GRAMS/CC' 
- !       call write_cell(iw)
- !       call write_cell(iw0)
+        call write_cell(iw)
+        if (mers(1) > 1 .or. mers(2) > 1 .or. mers(3) > 1) &
+          write (iw, '(/10X,''VOLUME OF CLUSTER       ='',&
+          & F17.5,'' ANGSTROMS**3 ='',f9.3, '' CM**3/MOLE'')') &
+        vol,  vol*fpcref(1,10)*1.d-24 
+        write(iw,*)
         call write_pressure(iw)
         call write_pressure(iw0)
       end if
@@ -466,7 +480,7 @@
           if (pdb_label) call modgra ()          
         else
           write (iw, &
-      '(''   PARAMETER     ATOM    TYPE            VALUE       GRADIENT'')') 
+      '(''   PARAMETER     ATOM    TYPE            VALUE        GRADIENT'')') 
           do i = 1, nvar 
             j = loc(2,i) 
             k = loc(1,i) 
@@ -487,7 +501,7 @@
             type(2) = 'ANGLE      ' 
             type(3) = 'DIHEDRAL   ' 
           endif 
-            write (iw, '(I7,I11,1X,A2,4X,A11,F13.6,F13.6,2X,A13)') &
+            write (iw, '(I7,I11,1X,A2,4X,A11,F13.6,F14.6,2X,A13)') &
             i, k, elemnt(l), type(j), xi, grad(i), gtype 
           end do 
         end if
@@ -548,9 +562,12 @@
         write (iw, '(2/,''      MOLECULAR POINT GROUP   :   '',A4)') name 
         if (mozyme) then
           if (index(keywrd," RE-LOC") /= 0) then
-            write(iw,"(a,/)")"  LMOs being Re-Localized"
+            write(iw,"(10x,a,/)")"  LMOs being Re-Localized"
             call local_for_MOZYME("OCCUPIED")
-            call local_for_MOZYME("VIRTUAL")
+!
+!  Suppress re-localization of the virtual set.  Not of interest to users.
+!
+!            call local_for_MOZYME("VIRTUAL") 
           end if
           if ((index(keywrd,' VEC') + index(keywrd,' ALLVEC'))*nelecs /= 0) then 
             if (index(keywrd, " EIGEN") /= 0) then
@@ -596,7 +613,7 @@
 !   Correct density matrix, if necessary
 !
         if (nclose/=nopen .and. abs(fract - 2.d0) > 1.d-20 .and. &
-         fract > 1.d-20 .or. index(keywrd,' C.I.')/=0) call mecip () 
+         fract > 1.d-20 .or. index(keywrd,' C.I.') /= 0 .and. .not. method_indo) call mecip () 
         if (prt_charges) then
           write (iw, '(2/13X,'' NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS'',/)') 
           i = 0
@@ -676,7 +693,7 @@
           write (iw, '('' FOCK MATRIX '')') 
           call vecprt (f, norbs) 
         endif 
-        if (mers(1) /= 0 .and. .not. mozyme) then           
+        if (mers(1) /= 0 .and. .not. mozyme .and. index(keywrd, " BRZ") /= 0) then           
           bcc = index(keywrd,' BCC') /= 0 
           open(unit=ibrz, file=brillouin_fn, status='UNKNOWN') 
           write (ibrz,*) norbs, (max(mers(i),1), i = 1,3), bcc 
@@ -830,7 +847,7 @@
         endif 
         call to_screen("To_file: Normal output")
         i = nclose + nalpha 
-        if (index(keywrd,' LOCAL') /= 0) then 
+        if (index(keywrd,' LOCAL') + index(keywrd,' RABBIT') + index(keywrd,' BANANA') /= 0) then 
           call local (c, i, eigs, 1, "c ") 
           if (nbeta /= 0) then 
             write (iw, '(2/10X,'' LOCALIZED BETA MOLECULAR ORBITALS'')') 
@@ -992,21 +1009,18 @@
         sum = (elect + enuclr)*fpc_9 + atheat + hpress + solv_energy*fpc_9 + nsp2_corr + Si_O_H_corr + sum_dihed + &
           e_disp + e_hb + e_hh
         write(iwrite,'(30x,"SUM =",f17.5,a,/)') sum, " KCAL/MOL"
-        if (abs(sum - escf) > 1.d-2) then
-          write(iwrite,'(a)')" WARNING - An energy term is missing!"
+        if (abs(sum - escf + stress) > 1.d-3*numat) then
+          write(iwrite,'(5x,"*",4x,a,/)')"WARNING - An energy term is incorrect or missing!"
+          write(iwrite,'(5x,"*",4x,''FINAL HEAT OF FORMATION     ='',F13.5,'' KCAL/MOL'')') escf - stress
+          write(iwrite,'(5x,"*",4x,"SUM OF CONTRIBUTIONS TO HoF =",f13.5,a)') sum, " KCAL/MOL"
+          write(iwrite,'(5x,"*",21x,"DIFFERENCE =",f13.5,a,/)') escf - stress - sum, " KCAL/MOL"
         end if
-        if (N_Hbonds > 0)  write(iwrite,'(10x,"No. OF HYDROGEN BONDS   =", i11,7x,a)') N_Hbonds, "(H-bond Energy < -1.0 Kcal/mol)"       
-        if (index(keywrd, " DISP(") /= 0) then
-          call l_control("PRT", len_trim("PRT"), 1)   
-          i = iw
-          iw = iwrite
-          call post_scf_corrections(sum, .false.)
-          iw = i
-        end if
+        if (N_Hbonds > 0)  write(iwrite,'(10x,"No. OF HYDROGEN BONDS   =", i11,7x,a, /)') &
+          N_Hbonds, "(H-bond Energy < -1.0 Kcal/mol)"       
       end if
       if (numat > 1 .and. iscf == 1 .and. escf > 1.d4 .and. index(keywrd, " CHECK") == 0) &
         write(iwrite,'(//10x,a,//)') "Calculated Heat of Formation is very large, re-run using keyword 'CHECK'"
-      if (id == 3) call write_unit_cell_HOF(iwrite)
+      if (id == 3 .or. id == 1) call write_unit_cell_HOF(iwrite)
       if (state_Irred_Rep /= '    ') then 
          write (iwrite, &
       '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' ,''  STATE:  '',i2,1x,3A)') &
@@ -1029,9 +1043,6 @@
           sum =  volume (tvec, 3)
           write (iwrite, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress 
-          write (iwrite, '(10X,''VOLUME                  ='',&
-          & F17.5,'' ANGSTROMS**3 ='',f9.3, '' CM**3/MOLE'')') &
-          sum,  sum*fpcref(1,10)*1.d-24 
           sum = -(4184.d0*10.d0**30)*pressure/fpcref(1,10)
           if (abs(sum) > 1.d9) then
             write (iwrite, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
@@ -1039,6 +1050,16 @@
             write (iwrite, '(10X,''PRESSURE                ='',F17.5,'' Pascals''    )') sum
           end if
         end if
+      end if
+      if (id == 3) then
+        call l_control("PRT", 3, 1)
+        call write_cell(iwrite)
+        write(iwrite,'(" ")')
+        if (mers(1) > 1 .or. mers(2) > 1 .or. mers(3) > 1) &
+          write (iwrite, '(/10X,''VOLUME OF CLUSTER       ='',&
+          & F17.5,'' ANGSTROMS**3 ='',f9.3, '' CM**3/MOLE'')') &
+          vol,  vol*fpcref(1,10)*1.d-24 
+        write(iwrite,*)
       end if
       if (lprtgra .or. gnorm > 1.D-15 ) write (iwrite, &
         '(  10X,''GRADIENT NORM           ='',F17.5, '' = '',f'//num//'.5, '' PER ATOM'')') gnorm, gnorm/sqrt(1.0*numat)
@@ -1151,17 +1172,6 @@
              & " CUBIC ANGSTROMS"
       end if
       if (id == 0) call dimens (coord, iwrite) 
-      if (id == 3) then 
-        write (iwrite, '(/,19x,"THE SYSTEM IS A SOLID")') 
-        write (iwrite, '(/,"                UNIT CELL TRANSLATION VECTORS",/,/,&
-            "                 X                 Y                 Z")') 
-        write (iwrite,"('    T',i1,' = ',f14.7,'    ',f14.7,'    ',f14.7)") (i,(tvec(j,i),j=1,3),i=1,id) 
-        vol = volume(tvec,3) 
-        density = mol_weight*1.D24/fpc_10/vol
-        write (iwrite, '(/10X,A,F17.3,A,/10X,A,F21.3,A,/)') 'VOLUME OF UNIT CELL', &
-          vol, ' CUBIC ANGSTROMS', 'DENSITY        ', density, ' GRAMS/CC' 
-     !     call write_cell(iwrite)
-      end if
       write (iwrite, '(  10X,''SCF CALCULATIONS        =  '',I9)') nscf 
       call timout (iwrite) 
       if (index(keywrd," PRTCHAR") /= 0) then

@@ -4,7 +4,7 @@
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : tvec
-      use molkst_C, only : numcal, l1u, l2u, l3u, cutofp
+      use molkst_C, only : numcal, l1u, l2u, l3u, clower
 !...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:02  03/09/06  
 !...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
@@ -31,7 +31,7 @@
       integer :: icalcn, i, j, k, kb
       real(double), dimension(:), allocatable :: wsum, wmax, wbits
       real(double), dimension(3) :: xjuc 
-      real(double), dimension(45) :: e1bits, e2bits
+      real(double), dimension(45) :: e1bits = 0.d0, e2bits = 0.d0
       real(double), dimension(3) :: xdumy 
       real(double) :: one, cutof2, r, enubit
 
@@ -49,7 +49,7 @@
       data xdumy/ 3*0.D0/  
       if (icalcn /= numcal) then 
         icalcn = numcal 
-        cutof2 = min(196.d0, (2.d0/3.d0*cutofp)**2)
+        cutof2 = clower**2
       endif 
       one = 1.D0 
       if (Abs(xi(1) - xj(1)) <1.d-20 .and. Abs(xi(2) - xj(2)) <1.d-20 .and. &
@@ -102,10 +102,10 @@
 !
 !  Up to 3 Angstroms, use "exact" NDDO, beyond 3 Angstroms, use a Gauusian mixture.
 !
-      use molkst_C, only : method_PM7
+      use molkst_C, only : l_feather
       USE vast_kind_param, ONLY:  double 
         implicit none
-        real(double), dimension(45) :: e1bits, e2bits, e1bits_p, e2bits_p
+        real(double), dimension(45) :: e1bits, e2bits, e1bits_p = 0.d0, e2bits_p = 0.d0
         real(double), dimension(2025) :: wbits 
         double precision, intent (in):: r
         double precision, intent (inout):: enubit
@@ -114,7 +114,7 @@
         double precision :: const, enubit_p, dummy
         real(double), dimension(2025) :: wbits_p
         
-        if (method_PM7) then
+        if (l_feather) then
           call to_point(r, dummy, const)
         else
           if (r < 3.0d0) return
@@ -193,11 +193,6 @@ double precision function trunk (r)
     integer, save :: icalcn = 0
     double precision, save :: bound1, bound2, c, clim, cr, cr2, range
     if (icalcn /= numcal) then
-      !
-      !   Set constants for truncation function.
-      !
-      !   CLOWER = lower bound of truncation function, as a function of CUTOFP
-      clower = Min( cutofp*2.d0/3.d0, 13.0d0)
       bound1 = clower / cutofp
       !
       !   CUPPER = upper bound of truncation function, as a function of CUTOFP

@@ -34,7 +34,7 @@
         kro, ii, k
       real(double), dimension(45) :: e1b, de1b, e2a, de2a 
       real(double), dimension(9,9) :: di, ddi 
-      real(double), dimension(2026) :: wjd, dwjd  
+      real(double), dimension(2026) :: wjd = 0.d0, dwjd = 0.d0
       real(double) :: csave, enuc, denuc 
 !-----------------------------------------------
 !

@@ -117,7 +117,7 @@
       return  
       end subroutine dcopy 
 
-           subroutine dgemm(transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc) 
+      subroutine dgemm(transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
@@ -143,9 +143,9 @@
       real(double) , intent(in) :: beta 
       character  :: transa*(*) 
       character  :: transb*(*) 
-      real(double) , intent(in) :: a(lda,*) 
-      real(double) , intent(in) :: b(ldb,*) 
-      real(double) , intent(out) :: c(ldc,*) 
+      real(double) , intent(in) :: a(lda,k) 
+      real(double) , intent(in) :: b(ldb,k + n) ! "k + n" is here so that the debugger can be used
+      real(double) , intent(out) :: c(ldc,n) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------

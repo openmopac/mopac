@@ -14,7 +14,7 @@
       use parameters_C, only : tore
       USE elemts_C, only : elemnt  
       USE funcon_C, only : fpc_10, fpc_6, fpc_8, a0, ev, fpc_9
-      use to_screen_C, only : dipt, travel, freq, redmas, cnorml
+      use to_screen_C, only : dipt, travel, freq, redmas, cnorml, force_const
       USE chanel_C, only : iw
       use xyzint_I 
       use gmetry_I 
@@ -24,7 +24,6 @@
       use dipole_I
       use symtrz_I 
       use vecprt_I 
-      use write_trajectory_I
       use frame_I 
       use matou1_I 
       use matout_I 
@@ -41,8 +40,8 @@
       integer :: j, i, l, nvaold = 0, ndeold, iu, il, nvib, ij, &
         im1, ju, jl, ii, jj, ni, k, nto6, nrem6, iinc1, iinc2, store_natoms
       real(double), dimension(3,3*numat) :: deldip, trdip  
-      real(double), dimension(3,3) :: rot  
-      real(double) :: time2, tscf, tder, time1, time3, a, b, c, &
+      real(double), dimension(3,3) :: rot = 0.d0
+      real(double) :: time2, tscf, tder, time1, time3, a = 0.d0, b = 0.d0, c = 0.d0, &
         sum, const, summ, sum1, sym 
       real(double), dimension(:), allocatable :: store, ff, oldf, &
         velocity
@@ -67,18 +66,6 @@
         , 8, 4, 5, 6, 12, 4, 6, 6, 7, 7, 8, 16, 8, 8, 5, 10, 10, 10, 6, 12, 12&
         , 14, 14, 14, 8, 16, 12, 12, 24, 12, 24, 24, 24, 1, 2, 4*1/  
 !
-      if (.not. prt_normal_coords) then
-!
-!   Make sure that something can be printed
-!
-        if (index(keywrd, " MERS") + index(keywrd, " ISOT") + index(keywrd, " THERM") + &
-            index(keywrd, " IRC") == 0) then
-          call mopend("Keyword ""OUTPUT"" has been selected in a FORCE calculation.")
-          write(iw,'(10x,a)')"This prevents any useful results from being printed"
-          write(iw,'(10x,a)')"To prevent this message, replace ""OUTPUT"" with ""OUTPUT(N)"""
-          return
-        end if
-      end if
 !
 ! TEST GEOMETRY TO SEE IF IT IS OPTIMIZED
 !
@@ -164,23 +151,25 @@
 ! Deallocate grad and errfn in case the number of variables set in the input file was smaller
 ! than the number needed in FORCE
 !
-      if (allocated(grad))    deallocate (grad)
-      if (allocated(errfn))   deallocate (errfn)
-      if (allocated(dipt))    deallocate (dipt)
-      if (allocated(travel))  deallocate (travel)
-      if (allocated(freq))    deallocate (freq)
-      if (allocated(redmas))  deallocate (redmas)
-      if (allocated(cnorml))  deallocate (cnorml)
-      if (allocated(fmatrx))  deallocate (fmatrx)
+      if (allocated(grad))            deallocate (grad)
+      if (allocated(errfn))           deallocate (errfn)
+      if (allocated(dipt))            deallocate (dipt)
+      if (allocated(travel))          deallocate (travel)
+      if (allocated(force_const))     deallocate (force_const)
+      if (allocated(freq))            deallocate (freq)
+      if (allocated(redmas))          deallocate (redmas)
+      if (allocated(cnorml))          deallocate (cnorml)
+      if (allocated(fmatrx))          deallocate (fmatrx)
       allocate(cnorml(i**2), fmatrx((i*(i+1))/2),grad(i), ff(i**2), errfn(i), &
        & store((i*(i+1))/2), oldf((i*(i + 1))/2), dipt(3*numat), &
-       travel(3*numat), freq(3*numat), redmas(3*numat,2), stat = j)
+       travel(3*numat), force_const(3*numat), freq(3*numat), redmas(3*numat,2), stat = j)
        if (j /= 0) then
          write(iw,*)" Failed to allocate memory in FORCE"
          call mopend("Failed to allocate memory in FORCE")
          return
        end if
       errfn = 0.d0
+      grad = 0.d0
 !
 !   IF A RESTART, THEN TSCF AND TDER WILL BE FAULTY, THEREFORE SET TO -1
 !
@@ -231,13 +220,14 @@
           call to_screen("To_file: Normal output")
         end if    
         write (iw, '(2/10X,''GRADIENT NORM ='',F10.5)') gnorm 
-        if (gnorm > 10.D0 .and. .not. ts) then 
+        sum = max(10.d0, sqrt(float(numat))*2.d0)
+        if (gnorm > sum .and. .not. ts) then 
           if (index(keywrd,' LET ') /= 0) then 
              write (iw, &
         '(3/1X,''** GRADIENT IS VERY LARGE, BUT SINCE "LET" IS USED, CALCULATION WILL CONTINUE'')')
           else 
             write (iw, &
-        '(3/1X,''** GRADIENT IS TOO LARGE TO ALLOW THE FORCE MATRIX TO BE CALCULATED, (LIMIT=10) **'',2/)') 
+        '(3/1X,"** GRADIENT IS TOO LARGE TO ALLOW THE FORCE MATRIX TO BE CALCULATED, (LIMIT =",f5.1,") **",2/)') sum
             write (iw, "(/,A)") " THE GEOMETRY IS NOT AT A STATIONARY POINT ON THE POTENTIAL ENERGY SURFACE"
             write (iw, "(/,A)") " EITHER ADD 'LET' OR OPTIMIZE THE GEOMETRY SO THAT THE GEOMETRY IS AT A STATIONARY POINT."
             write (iw, "(A)") " (FOR A TRANSITION STATE, USE 'TS', FOR A GROUND STATE DO A NORMAL GEOMETRY OPTIMIZATION)"
@@ -247,23 +237,25 @@
           end if
         end if 
       end if      
-      if (index(keywrd,'THERMO')/=0 .and. gnorm>1.D0) then 
+      sum = max(1.d0, sqrt(float(numat))*0.2d0)
+      if (index(keywrd,'THERMO') /= 0 .and. gnorm > sum) then 
         write (iw, &
       '(2/30X,''**** WARNING ****'',2/10X,'' GRADIENT IS VERY LARGE FOR A THERMO CALCULATION'', &
       & /10X,'' RESULTS ARE LIKELY TO BE INACCURATE IF THERE ARE'')') 
         write (iw, &
           '(10X,'' ANY LOW-LYING VIBRATIONS (LESS THAN ABOUT 400CM-1)'')') 
         write (iw, &
-      '(10X,'' GRADIENT NORM SHOULD BE LESS THAN ABOUT 0.2 FOR THERMO'',&
-      &/10X,'' TO GIVE ACCURATE RESULTS'')') 
+      '(10X," GRADIENT NORM SHOULD BE LESS THAN ABOUT",f4.1," FOR THERMO",&
+      &/10X,'' TO GIVE ACCURATE RESULTS'')') sum
       endif 
       if ( .not. mozyme .and. .not. restrt) call mullik()
-      if (tscf > 0.D0) then 
+      if (tscf > 1.d-2) then 
         write (iw, '(2/10X,''TIME FOR SCF CALCULATION ='',F8.2)') tscf 
         write (iw, '( /10X,''TIME FOR DERIVATIVES     ='',F8.2)') tder 
       endif 
       if (ndeold > 0) write (iw, &
-      '(2/10X,''SYMMETRY WAS SPECIFIED, BUT CANNOT BE USED HERE'')') 
+      '(2/10X,''SYMMETRY WAS SPECIFIED, BUT CANNOT BE USED HERE'')')
+      c = 1.d0
       if ( .not. ts) call axis (a, b, c, rot)
       allocate (store_coord(3,numat))
       store_coord(:,:numat) = coord(:,:numat)
@@ -394,7 +386,7 @@
         endif 
       endif 
       n_trivial = nvar - nvib
-      call freqcy (fmatrx, freq, travel, .TRUE., deldip, ff, oldf, ts) 
+      call freqcy (fmatrx, freq, travel, force_const, .TRUE., deldip, ff, oldf, ts) 
 !
 !  CALCULATE ZERO POINT ENERGY
 !
@@ -492,7 +484,10 @@
 !   CARRY OUT IRC IF REQUESTED.
 !
       if (index(keywrd,'IRC') + index(keywrd,'DRC') /= 0) then 
-        if (index(keywrd, " HTML") /= 0) call write_path_html
+        if (index(keywrd, " HTML") /= 0) then
+           if (index(keywrd,' DIPOLE') /= 0) call write_path_html(2)
+           call write_path_html(1)
+        end if
         loc(1,:nvar) = 0 
         loc(2,:nvar) = 0 
         nvar = nvaold 
@@ -501,7 +496,7 @@
         call xyzint (coord, numat, na, nb, nc, 1.D0, geo) 
         last = 1 
         store_coord = coord
-        geo(:,:numat) = store_coord
+        geo(:,:numat) = store_coord(:,:numat)
         na = 0
         this_point = 0
         if (ts) then
@@ -542,8 +537,10 @@
 !
 !   First, reverse the reaction path already written.
 !
-          call write_trajectory(geo, 2)
-          call reverse_aux
+            If (index(keywrd,' DIPOLE') /= 0) call reverse_trajectory(2)
+            call reverse_trajectory(1)
+            call reverse_aux
+						call l_control("REVERSE", len("REVERSE"), 1)
             last = 1             
             geo(:,:numat) = store_coord
             na = 0
@@ -580,7 +577,7 @@
         end if
         goto 99  
       endif 
-      call freqcy (fmatrx, freq, deldip, .FALSE., deldip, ff, oldf, ts) 
+      call freqcy (fmatrx, freq, deldip, force_const, .FALSE., deldip, ff, oldf, ts) 
       if (prt_normal_coords) then
       write (iw, '(2/10X,'' MASS-WEIGHTED COORDINATE ANALYSIS (NORMAL COORDINATES)'')')  
         i = -nvar 
@@ -636,7 +633,7 @@
       if (allocated(travel))  deallocate (travel)
       if (allocated(freq))    deallocate (freq)
       if (allocated(redmas))  deallocate (redmas)
-      if (store_natoms /= natoms) then
+      if (store_natoms /= natoms + id) then
         natoms = -30; numat = -30
       end if
       return  

@@ -1,7 +1,12 @@
-subroutine pinout (mode)
+subroutine pinout (mode, l_use_disk)
    !**********************************************************************
    !
-   !   POUT WRITES ALL INFORMATION REGARDING THE LMO'S TO DISK
+   !   PINOUT WRITES ALL INFORMATION REGARDING THE LMO'S TO DISK
+   !
+   !  mode = 1             - Write LMO's to disk
+   !  mode = 0             - Read LMO's from disk
+   !  l_use_disk = .true.  - Use a disk
+   !  l_use_disk = .false. - Use a scratch disk
    !
    !**********************************************************************
     use molkst_C, only: numat, keywrd, nelecs, norbs, line
@@ -10,9 +15,10 @@ subroutine pinout (mode)
        & icvir_dim, cocc_dim, cvir_dim, icocc, icvir, cocc, cvir
     use chanel_C, only: iw, iden, density_fn
     use common_arrays_C, only : nbonds, ibonds
-
+    use to_screen_I
     implicit none
-    integer :: mode
+    integer, intent (in) :: mode
+    logical, intent (in) :: l_use_disk
 !
     logical :: opend, exists
     integer :: i, j, k, l, nocc, nvir
@@ -21,19 +27,42 @@ subroutine pinout (mode)
     nvir = norbs - nocc
     inquire (unit=iden, opened=opend)
     if (opend) then
-      close (unit=iden, status="KEEP")
-    end if
-    if (mode == 0) then
-      inquire (file=density_fn, exist = exists)
-      if ( .not. exists) then
-        write (line,"(10x,a)") " FILE " // trim(density_fn) // " IS MISSING"
-        write(iw,'(//,a)')trim(line)
-        call to_screen(line)
-        call mopend ("DENSITY file is missing")
-        return
+      if (l_use_disk) then
+!
+! Unconditionally close the file so it can be opened later on.
+!
+        close (unit = iden, status="KEEP", iostat = i)
+        if (i /= 0) then
+          inquire (unit=iden, opened=opend)
+          if (opend) then
+            close (unit=iden,  iostat = i)
+            if (i /= 0) return
+          end if
+        end if
+      else
+!
+!  The scratch file exists, so close it because it is going to be written to later on.
+!
+        if (mode == 1) close (unit = iden, iostat = i)      
       end if
     end if
-    open (unit=iden, file=density_fn, status="UNKNOWN", form="UNFORMATTED")
+    if (l_use_disk) then
+      if (mode == 0) then
+        inquire (file=density_fn, exist = exists)
+        if ( .not. exists) then
+          write (line,"(10x,a)") " FILE " // trim(density_fn) // " IS MISSING"
+          write(iw,'(//,a)')trim(line)
+          call to_screen(line)
+          call mopend ("DENSITY file is missing")
+          return
+        end if
+      end if
+    end if
+    if (l_use_disk) then
+      open (unit=iden, file=density_fn, status="UNKNOWN", form="UNFORMATTED")
+    else
+      open (unit=iden, status="SCRATCH", form="UNFORMATTED")
+    end if
     rewind (iden)
     if (mode == 1) then
       !
@@ -67,7 +96,7 @@ subroutine pinout (mode)
         end do
         write (iden) (cvir(j), j=ncvir(i)+1, ncvir(i)+l)
       end do
-      close (iden)
+      if (l_use_disk) close (iden)
       go to 1000
     else
     !
@@ -162,7 +191,7 @@ subroutine pinout (mode)
           k = k + l
           read (iden, end=1020, err=1020) (cvir(j), j=ncvir(i)+1, ncvir(i)+l)
         end do
-        close (iden)
+        if (l_use_disk) close (iden)
         go to 1000
       !
 1010    continue

@@ -23,13 +23,14 @@ subroutine getpdb (geo)
  !           NB     = INTEGER ARRAY FILLED WITH '0'S.
  !           NC     = INTEGER ARRAY FILLED WITH '0'S.
  !***********************************************************************\
-    double precision :: geo(3,*)
+    double precision :: geo(3,natoms)
 !
     integer, parameter :: maxel = 115
     character, save :: comma, space
     character :: typea, typer, ch
     character :: ele*3, letter*26
-    logical :: leadsp, lxyz, lchain, last_atom = .true., l_pdb, first = .true.
+    logical :: leadsp, lxyz, lchain, last_atom = .true., l_pdb, first = .true., &
+      l_letter(26)
     integer :: i, icomma, ii, j, k, khar, label, nline, npdb, nvalue, n_water = 0, &
       old_natoms = 0, numerr
     integer :: new_elements, defined_elements, previous_res, current_res
@@ -273,6 +274,7 @@ subroutine getpdb (geo)
 !
 !  Check that the residue number is a legal quantity
 !
+       if (line(18:20) == "***") line(18:20) = "UNK"
        do i = 23, 26
          if (line(i:i) /= " ") then
            if (line(i:i) > "9" .or. line(i:i) < "0") then
@@ -369,7 +371,7 @@ subroutine getpdb (geo)
      & (1:ntxt_loc(npdb)), ele(ntxt_loc(npdb)+1:3), nline
       cycle
 1010  label = ielem(i)
-      if (label == 0) then
+      if (label == 0 .or. label == 99) then
         natoms = natoms - 1
       else
  !
@@ -391,6 +393,22 @@ subroutine getpdb (geo)
         nc(natoms) = 0
       end if
     end do outer_loop
+!
+!  Ensure that all atoms have a chain-letter
+!
+    l_letter = .false.
+    do i = 1, natoms
+      if (txtatm(i)(22:22) /= " ") l_letter(ichar(txtatm(i)(22:22)) - ichar("A") + 1) = .true.
+    end do
+    do i = 1, 26
+      if (.not. l_letter(i)) exit
+    end do
+    if (i <= 26) then
+      j = i - 1
+      do i = 1, natoms
+        if (txtatm(i)(22:22) == " ") txtatm(i)(22:22) = char(ichar("A") + j)
+      end do
+    end if        
 1020 if (npdb /= 0) then
       write (iw,*) " THE SPECIES THAT WERE NOT RECOGNIZED CAN BE"
       write (iw,*) " RECOGNIZED BY USING THE FOLLOWING KEYWORD"

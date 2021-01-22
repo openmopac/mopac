@@ -3,7 +3,7 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      use molkst_C, only : numat
+      use molkst_C, only : numat, method_indo
       use common_arrays_C, only : nfirst, nlast, nat
       use chanel_C, only : iw
       use elemts_C, only : elemnt
@@ -30,8 +30,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(:), allocatable :: natom 
-      integer :: i, jlo, jhi, l, j, ka, kc, kb, la, lc, lb 
-      character , dimension(9) :: atorbs*2 
+      integer :: i, jlo, jhi, l, j, ka, kc, kb, la, lc, lb
+      character :: ref_atorbs(9,2)*2, atorbs(9)*2 
       character, dimension(:), allocatable :: itext*2, jtext*2 
 
       save atorbs 
@@ -50,7 +50,13 @@
 !
 !
 !***********************************************************************
-      data atorbs/ ' S', 'PX', 'PY', 'PZ', 'X2', 'XZ', 'Z2', 'YZ', 'XY'/  
+      data ref_atorbs/ ' S', 'PX', 'PY', 'PZ', 'X2', 'XZ', 'Z2', 'YZ', 'XY', &
+                       ' S', 'PX', 'PY', 'PZ', 'Z2', 'X2', 'XY', 'XZ', 'YZ'/
+      if (method_indo) then
+        atorbs(:) = ref_atorbs(:,2)
+      else
+        atorbs(:) = ref_atorbs(:,1)
+      end if
       i = max(ndim, 1)
       allocate (itext(i), jtext(i), natom(i))
       if (nlast(numat) /= nr) go to 30 

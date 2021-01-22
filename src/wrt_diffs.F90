@@ -188,7 +188,7 @@
         set_1_H_txt(i) = H_txt(i)(:31)//trim(H_txt(i)(37:68))
         set_1_H_dist(i) = H_txt(i)(32:36)
       end do
-      set_1_H_energy(:P_Hbonds) = H_energy(:P_Hbonds)
+      if (P_Hbonds > 0) set_1_H_energy(:P_Hbonds) = H_energy(:P_Hbonds)
       coord(:,:numat) = geoa(:,:numat)
       numcal = numcal + 1
       call get_H_bonds
@@ -200,7 +200,7 @@
         set_2_H_txt(i) = H_txt(i)(:31)//trim(H_txt(i)(37:68))
         set_2_H_dist(i) = H_txt(i)(32:36)
       end do
-      set_2_H_energy(:P_Hbonds) = H_energy(:P_Hbonds)
+      if (P_Hbonds > 0) set_2_H_energy(:P_Hbonds) = H_energy(:P_Hbonds)
       i = max(len_trim(geo_ref_name), len_trim(geo_dat_name))
       write(iw,'(//20x,a)')"Analysis of Non-Covalent Interactions"
 !

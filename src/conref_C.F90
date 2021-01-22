@@ -16,7 +16,7 @@
     data fpcref(2, 4) / 27.21d0 /
     data fpcref(1, 5) / 1.9872065d0 /           ! "R", the gas constant, in calories
     data fpcref(2, 5) / 1.98726d0 /
-    data fpcref(1, 6) / 6.6260755d-27 /         ! Planck's constant in Joule-seconds
+    data fpcref(1, 6) / 6.6260755d-27 /         ! Planck's constant in erg-seconds
     data fpcref(2, 6) / 6.626d-27 /
     data fpcref(1, 7) / 1.3806503d-16 /         ! Boltzmann's constant
     data fpcref(2, 7) / 1.3807d-16 /

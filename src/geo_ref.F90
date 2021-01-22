@@ -17,7 +17,7 @@
 !
       USE vast_kind_param, ONLY:  double 
 !
-      use chanel_C, only : ir, iw, output_fn, job_fn
+      use chanel_C, only : ir, iw, output_fn, job_fn, iarc, archive_fn
 !
       use molkst_C, only : numat, keywrd, nvar, id, natoms, moperr, line, refkey, density, &
         maxtxt, numat_old, koment, title, geo_ref_name, geo_dat_name, arc_hof_2, arc_hof_1, &
@@ -31,17 +31,16 @@
       use elemts_C, only: atom_names
       implicit none
 ! 
-      integer :: i, j, k, l, ii, jj, i4, j4, k4, iquit, numat_dat, numat_ref
+      integer :: i, j, k, l, ii, jj, i4, j4, k4, iquit, numat_dat, numat_ref, ub
       integer, allocatable :: map_atoms_A(:), atom_no(:)
       character, allocatable :: tmp_txt(:)*27, diffs(:)*80
       double precision, allocatable :: tmp_geoa(:,:)
       real(double) :: dum1, dum2, sum, rms, rms_min, sum1, sum2, sum3, &
         toler, xmin, sum4
       double precision, external :: reada
-      logical :: intern = .true., exists, bug, any_bug, swap, pdb, html, first, let, l_0SCF_HTML, &
-       l_self, l_swap
+      logical :: intern = .true., exists, bug, any_bug, swap, first, let, l_0SCF_HTML, opend
       logical, allocatable :: same(:), ok(:)
-      character :: line_1*1000, num, geo_dat*7
+      character :: line_1*1000, line_2*1000, num, geo_dat*7
 !
 !   For Geo-Ref to work, some very specific conditions must be satisfied.  
 !   So before attempting a GEO_REF calculation, check that the data are okay
@@ -50,12 +49,6 @@
         if (na(j) /= 0) exit
       end do 
       l_0SCF_HTML = (index(keywrd," 0SCF") /= 0 .and. index(keywrd, " HTML ") /= 0) 
-      if (nvar /= 3*numat + 3*id) then
-        if (index(keywrd," 0SCF") == 0) then
-          call mopend("GEO_REF requires all parameters to be optimized")
-          write(iw,"(a)")" (The easiest way to do this is to add ""OPT"" to the set of keywords.)"
-        end if
-      end if
 !
 ! Force geometry to be Cartesian
 !
@@ -74,45 +67,30 @@
       id = 0
       if (moperr) return
       allocate(geoa(3,natoms + 300), c(3,natoms + 300)) ! Generous safety factor for second geometry
-      do ii = 1, 6
-        line = " "//trim(refkey(ii))
-        call upcase(line, len_trim(line))
-        i = index(line," GEO_REF")
-        if (i /= 0) exit
-      end do
-      j = index(refkey(ii)(i + 10:),' ') + i + 8
-      if (index(line(i:j), '"')  + index(line(i:j), "'") == 0) then
+      i = index(keywrd," GEO_REF")
+      j = index(keywrd(i + 10:),' ') + i + 8
+      if (index(keywrd(i:j), '"')  + index(keywrd(i:j), "'") == 0) then
         write(line,'(a)')" File name after GEO_REF must be in quotation marks."
         call mopend(trim(line))
         return
       end if
-      j = index(refkey(ii)(i + 10:),'"') +  index(refkey(ii)(i + 10:), "'")
+      j = index(keywrd(i + 10:),'"') 
       if (j == 0) then
         write(line,'(a)')" File name after GEO_REF must end with a quotation mark."
         call mopend(trim(line))
         return
       end if
-      j = j + i + 8
-      line = refkey(ii)(i + 9:j)
+      do j = i + 10, i + 200
+        if (keywrd(j:j) == '"') exit
+      end do
+      line = keywrd(i + 10:j - 1)
       line_1 = trim(line)
       call upcase(line_1, len_trim(line_1))
-      if (line_1 == "SELF") then
-        if (index(keywrd, " 0SCF") == 0) then
-          line = output_fn(:len_trim(output_fn) - 3)//"mop"
-          refkey(ii)(i:) = "geo_ref="""//trim(line)//refkey(ii)(j + 1:)
-        end if
-      end if
-      geo_ref_name = trim(line)
-      k = index(keywrd," GEO_DAT") + 10
-      if (k > 10) then
-        do ii = 1, 6
-          line = " "//trim(refkey(ii))
-          call upcase(line, len_trim(line))
-          i = index(line," GEO_DAT")
-          if (i /= 0) exit
-        end do
-        j = index(refkey(ii)(i + 9:),'" ') + i + 7
-        geo_dat_name = refkey(ii)(i + 9:j)
+      geo_ref_name = trim(line) 
+      i = index(keywrd," GEO_DAT") + 10
+      if (i > 10) then
+        j = index(keywrd(i + 9:),'" ') + i + 7
+        geo_dat_name = keywrd(i:j)
       else
         geo_dat_name = trim(job_fn)
       end if 
@@ -149,8 +127,10 @@
           line = trim(geo_dat_name)
           call upcase(line, len_trim(line))
           line = line(len_trim(line) - 3:)
-          if (line == ".PDB") &
+          if (line == ".PDB") then
             call mopend("GEO_DAT file should not be a PDB file (It would be over-written)")
+            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_DAT file name's suffix "".pdb"" with "".ent"")"
+          end if
         else
           do i = len_trim(geo_dat_name), 1, -1
             if (geo_dat_name(i:i) == "/" .or. geo_dat_name(i:i) == "\") exit
@@ -169,8 +149,10 @@
           line = trim(geo_ref_name)
           call upcase(line, len_trim(line))
           line = line(len_trim(line) - 3:)
-          if (line == ".PDB") &
+          if (line == ".PDB") then
             call mopend("GEO_REF file should not be a PDB file (It would be over-written)")
+            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_REF file name's suffix "".pdb"" with "".ent"")"
+          end if
         else
           do i = len_trim(geo_ref_name), 1, -1
             if (geo_ref_name(i:i) == "/" .or. geo_ref_name(i:i) == "\") exit
@@ -231,7 +213,7 @@
           write(iw,'(10x,a)')"Line 1 of data file defined by GEO_REF: """//trim(refkey_ref(1))//""""
           line = trim(refkey_ref(1))
           call upcase(line, len_trim(line))
-          if (index(keywrd," GEO-DAT") + index(keywrd," GEO_DAT") /= 0) then
+          if (index(keywrd," GEO_DAT") /= 0) then
             call mopend("A data file defined by GEO_REF cannot use GEO_DAT to point to another file.")
             return
           else
@@ -263,8 +245,8 @@
       end do
       if (keywrd(i + 1: i + 1) == " ") then
         if (.not. l_0SCF_HTML .and. index(keywrd, "LOCATE-TS") + index(keywrd, "SADDLE") == 0) &
-          write(iw,'(/10x,a)')"By default, a restraining force of 3 kcal/mol/A^2 will be used"
-        density = 3.d0
+          write(iw,'(/10x,a)')"By default, no restraining force will be used"
+        density = 0.d0
       else
         density = reada(keywrd, i + 1)
         write(iw,'(/10x,a,f8.3,a)')"A restraining force of",density," kcal/mol/A^2 will be used"
@@ -280,7 +262,8 @@
 !
       ii = numat
       j = maxtxt   
-      call getgeo (99, labels, geoa, c, lopt, na, nb, nc, intern)        
+      call getgeo (99, labels, geoa, c, lopt, na, nb, nc, intern)  
+      if (index(keywrd, " OPT ") /= 0) lopt = 1
       deallocate(c)
       maxtxt = j
       if (moperr .and. natoms == 0) then
@@ -297,9 +280,6 @@
         call getpdb(geoa)
         ir = j
         numat_old = numat
-        pdb = .true.
-      else
-        pdb = .false.
       end if
 !
 ! Force geometry to be Cartesian, so that both systems are "clean"
@@ -314,7 +294,9 @@
           labels(j) = labels(i)
           txtatm(j) = txtatm(i)
         end if
-      end do      
+      end do    
+      numat = numat - id
+      numat_ref = numat
       id = 0
       if (index(keywrd, " 0SCF") == 0 .and. ii /= numat) then
         num = char(ichar("1") +int(log10(ii + 0.05)))
@@ -325,12 +307,10 @@
       end if
       txtatm1(:ii) = tmp_txt(:ii)   
       i = max(ii, numat, 26)
-      numat_ref = numat
       allocate (tmp_geoa(3,i), same(i), ok(i), diffs(i))
       diffs = " "
       same = .false.
       ok = .false.
-      l_self = (index(keywrd,"""SELF""") /= 0)
       call l_control("GEO_DAT", len_trim("GEO_DAT"), -1) 
       call l_control("GEO_REF", len_trim("GEO_REF"), -1)  
       if (index(keywrd," 0SCF") + index(keywrd, " LOCATE-TS") + index(keywrd, " SADDLE") /= 0) then
@@ -392,7 +372,8 @@
             end if
           end do
         end do
-        let = (index(keywrd," GEO-OK+") + index(keywrd, " LOCATE-TS") + index(keywrd, " SADDLE") /= 0) 
+        let = (index(keywrd, " LOCATE-TS") + index(keywrd, " SADDLE") /= 0 .or. &
+          (index(keywrd," GEO-OK+") /= 0 .and. index(keywrd, " COMPARE") /= 0)) 
         do j = 1, ii
 !
 !  Second pass
@@ -419,7 +400,7 @@
             write(diffs(l)(:40),'(3x,a)')txtatm1(j)
           end if 
         end do 
-        if (let) then ! Never used.  Buggy.  Either debug or delete
+        if (let) then 
           first = .true.
           do j = 1, ii
 !
@@ -483,8 +464,10 @@
           write(iw,'(/28x,a)')"Differences in atoms sets"
           write(iw,'(/10x,a,19x,a,/)')"Atoms in "//geo_dat//" only",    "Atoms in GEO_REF only"
           do i = 1, l
-            write(iw,'(4x,a)')trim(diffs(i))
+            write(iw,'(i4,a)')i, trim(diffs(i))
           end do
+          if (.not. let) &
+            write(iw,'(/5x,a)')"If ""LET"" is used, then some or all of these differences will be ignored"
         end if
         geoa(:,:k) = tmp_geoa(:,:k)
         tmp_txt(:k) = txtatm(:k)
@@ -535,12 +518,17 @@
         return
       end if
       call gmetry(geo, coord)
-      geo(:,:natoms) = coord
+      geo(:,:natoms) = coord(:,:natoms)
       call gmetry(geoa, coord)
-      geoa(:,:natoms) = coord
+      geoa(:,:natoms) = coord(:,:natoms)
       na(:natoms) = 0 
-      if (pdb_label .and. txtatm(1)(:4) == "ATOM" .and. txtatm1(1)(:4) == "ATOM" &
-        .and. index(keywrd,"""SELF""") == 0) then
+      if (index(keywrd, " NOREOR") /= 0) then
+        call geo_diff(sum, rms, .true.) 
+        sum1 = sum/numat       
+        sum2 = sqrt(rms/numat)
+        goto 98
+      end if
+      if (pdb_label .and. txtatm(1)(:4) == "ATOM" .and. txtatm1(1)(:4) == "ATOM") then
 !
 !  Put atoms in the reference data set into the same order as those in the current data set
 !
@@ -583,10 +571,14 @@
             end if                
           end if
         end do
+!
+!  At this point, txtatm1 holds the data from the input-dataset.
+!                 txtatm holds the data from the geo_ref dataset
+!
         k = 0
         do i = 1, numat
           do j = i + 1, numat
-            if (txtatm1(i)(12:) == txtatm1(j)(12:)) exit
+            if (txtatm(i)(12:) == txtatm(j)(12:)) exit
           end do
           if (j <= numat) then
             if ( .not. bug) then
@@ -597,7 +589,7 @@
               trim(geo_ref_name)//"' with the same labels"
             end if
             write(iw,'(10x,a,i6,a,i6,a)')"Atoms", i, " and", j, &
-              ";  Labels: ("//txtatm1(i)//") and ("//txtatm1(j)//")"
+              ";  Labels: ("//txtatm(i)(:maxtxt)//") and ("//txtatm(j)(:maxtxt)//")"
               bug = .true.
               k = k + 1
           end if
@@ -626,7 +618,7 @@
                 trim(geo_dat_name)//"' with no equivalent in the geo_ref file"
               end if
             end if
-            write(iw,'(10x,a,i6,a,i6,a)')"Atom", i, ";  Label: ("//txtatm1(i)//")"
+            write(iw,'(10x,a,i6,a,i6,a)')"Atom", i, ";  Label: ("//txtatm1(i)(:maxtxt)//")"
               bug = .true.
               any_bug = .true.
               k = k + 1
@@ -642,7 +634,7 @@
               write(iw,'(/10x,a,/)')"Atoms in the GEO_REF file '"// &
                 & trim(geo_ref_name)//"' with no equivalent in the data-set file"
             end if
-            write(iw,'(10x,a,i6,a,i6,a)')"Atom", i, ";  Label: ("//txtatm(i)//")"
+            write(iw,'(10x,a,i6,a,i6,a)')"Atom", i, ";  Label: ("//txtatm(i)(:maxtxt)//")"
               bug = .true.
               any_bug = .true.
               k = k + 1
@@ -742,7 +734,15 @@
       xmin = 1.d8  
       exists = .true.
       swap = (index(keywrd, " NOSWAP") == 0)
-      do ii = 1,30
+      if (index(keywrd, "NOREOR") /= 0) then
+        ub = -1
+        call geo_diff(sum, rms, .false.)         
+        sum1 = sum/numat       
+        sum2 = sqrt(rms/numat)    
+      else
+        ub = 30
+      end if
+      do ii = 1, ub
         call dock (geo, geoa, sum)     
         sum = 0.d0
         do i = 1, numat
@@ -886,7 +886,6 @@
 !
 !  Docking complete. Now un-swap GEO_REF
 !
-      l_swap = .false.
       do i = 1, numat
         do k = i, numat
           if (txtatm1(i) == txtatm(k)) then
@@ -900,7 +899,6 @@
               geo(j,k) = sum
             end do    
             txtatm1(k) = txtatm1(i)
-            l_swap = .true.
           end if
         end do
       end do
@@ -910,15 +908,16 @@
         call mopend (trim(line))
         return
       end if
-      if (index(keywrd,"""SELF""") == 0) write(iw,'(/24x,a)')"After docking"
+      write(iw,'(/24x,a)')"After docking"
       call geo_diff(sum, rms, .true.)  
-      if (trim(job_fn) == trim(geo_dat_name)) then
+98    if (trim(job_fn) == trim(geo_dat_name)) then
         line = "dataset"
       else
         line = "GEO_DAT"
       end if
-      if (.not. l_self) write(iw,'(/3x,a,f8.3,a,f8.4,a,f8.4,a)') &
-        "Difference between "//trim(line)//" and GEO_REF:", sum1*numat, &
+      num = char(ichar("5") + max(0, int(log10(sum1*numat + 1.d-20))))
+      write(iw,'(/3x,a,f'//num//'.3,a,f8.4,a,f8.4,a)') &
+        "Difference between "//trim(line)//" and GEO_REF: ", sum1*numat, &
         " = total,", sum1, " = Average,", sum2," = RMS, in Angstroms"    
       if (index(keywrd," 0SCF") /= 0 .and. sum1 < 1.d-6) then
         call mopend("The two systems are identical, so the job will stop here.")
@@ -936,8 +935,32 @@
         j = max(1,i - 7)
         if (line_1(i - 3: i) == ".TXT" .and. line_1(j:j) == ".") &
         geo_ref_name = geo_ref_name(:len_trim(geo_ref_name) - 4)
-        line = geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"
+        if (index(keywrd, " COMPARE") /= 0) then
+          if (index(trim(geo_ref_name), "'") /= 0) then
+            call mopend("When keyword ""COMPARE"" is used the GEO_REF filename"// &
+             " must not contain a single quotation mark, i.e., a ""'"" mark")
+            return
+          end if
+          if (index(trim(geo_dat_name), "'") /= 0) then
+            if (index(keywrd, "GEO_DAT") /= 0) then
+              call mopend("When keyword ""COMPARE"" is used the GEO_REF filename"// &
+               " must not contain a single quotation mark, i.e., a ""'"" mark")
+            else
+              call mopend("When keyword ""COMPARE"" is used the data-set filename"// &
+               " must not contain a single quotation mark, i.e., a ""'"" mark")
+            end if
+            return
+          end if        
+          do i = len_trim(job_fn), 1, -1
+            if (job_fn(i:i) == "/" .or. job_fn(i:i) == "\") exit
+          end do
+          line_1 =  job_fn(i + 1:len_trim(job_fn)-4)//"_"
+        else
+          line_1 = " "
+        end if
+        line = trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"
         call add_path(line)
+        line_2 = trim(line)
         open(unit = 99, file = trim(line), iostat = i)
         call l_control("HTML", len_trim("HTML"), -1)  
         coord(:,:numat) = geo(:,:numat)
@@ -982,35 +1005,13 @@
         i = index(line," GEO_REF")
         if (i /= 0) exit
       end do
-      if (index(keywrd,"""SELF""") == 0) then
-        if (.not. l_0SCF_HTML) then
-          line_1 = geo_dat_name
-          call upcase(line_1, len_trim(line_1))
-          i = len_trim(line_1)
-          if (line_1(i - 3: i) == ".TXT" .and. line_1(i - 7:i - 7) == ".") then
-            i = 7
-          else 
-            i = 3
-          end if
-          line = geo_dat_name(:len_trim(geo_dat_name) - i)//"new"
-          line_1 = geo_dat_name
-          call add_path(line)
-          open(unit = 99, file = trim(line), iostat = i)
-        end if
-      end if
       if (index(keywrd, " TS ") /= 0) then
         write(iw,'(/,a)')"    The average of the supplied and reference geometry will be written to:"
         write(iw,'(a)')"'"//trim(line)//"'"
         geo(:,:natoms) = 0.5d0*(geoa(:,:natoms) + geo(:,:natoms))
         call geout(99)
-      else if (.not. l_self) then 
-        if (.not. l_0SCF_HTML) then
-          if (l_swap) then
-            write(iw,'(/4x,a)')"The rotated-translated-re-arranged input geometry will be written to: '"//trim(line)//"'"
-          else
-            write(iw,'(/,a)')"    The rotated-translated input geometry will be written to: '"//trim(line)//"'"
-          end if
-        else
+      else 
+        if (l_0SCF_HTML) then
           do i = len_trim(output_fn), 1, -1
             if (output_fn(i:i) == "/" .or. output_fn(i:i) == "\") exit
           end do
@@ -1022,10 +1023,12 @@
           line_1 = job_fn
           call upcase(line_1, len_trim(line_1))
           j = len_trim(line_1)
-          if (line_1(j - 3: j) == ".TXT" .and. line_1(j - 7:j - 7) == ".") &
-          job_fn = job_fn(:len_trim(job_fn) - 4) 
+          if (j > 7) then
+            if (line_1(j - 3: j) == ".TXT" .and. line_1(j - 7:j - 7) == ".") &
+            job_fn = job_fn(:len_trim(job_fn) - 4) 
+          end if
           line = job_fn(i + 1:len_trim(job_fn) - 3)//"html"
-          write(iw,'(a)')"    '"//trim(line)//"'" 
+          write(iw,'(14x, a)')"'"//trim(line)//"'" 
 !
           line_1 = geo_dat_name
           call upcase(line_1, len_trim(line_1))
@@ -1034,10 +1037,13 @@
           if (line_1(i - 3: i) == ".TXT" .and. line_1(j:j) == ".") &
           geo_dat_name = geo_dat_name(:len_trim(geo_dat_name) - 4) 
           line = geo_dat_name(:len_trim(geo_dat_name) - 3)//"pdb"
-          write(iw,'(a)')"    '"//trim(line)//"'"
+          if (index(keywrd, " COMPARE") /= 0) then
+            write(iw,'(a)')"From GEO_REF: '"//trim(line_2)//"'"
+          else
+            write(iw,'(a)')"'"//trim(line_2)//"'"
+          end if
 !
-          line = geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"
-          write(iw,'(a)')"    '"//trim(line)//"'"         
+          line = geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"       
         end if
         line = refkey_ref(1)
         do i = 1,3
@@ -1061,26 +1067,28 @@
             call l_control(trim(line), len_trim(line), 1) 
             write(line,'(a,f12.3,a)')"DIFF=",sum1*numat
             call l_control(trim(line), len_trim(line), 1) 
-            line = geo_dat_name(:len_trim(geo_dat_name) - 3)//"pdb"
+            if (index(keywrd, " COMPARE") /= 0) then
+              do i = len_trim(job_fn), 1, -1
+                if (job_fn(i:i) == "/" .or. job_fn(i:i) == "\") exit
+              end do
+              line_1 =  job_fn(i + 1:len_trim(job_fn)-4)//"_"
+            else
+              line_1 = " "
+            end if
+            if (geo_dat_name(:len_trim(geo_dat_name) -3) == geo_ref_name(:len_trim(geo_ref_name) -3)) then
+              line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) - 4)//"_a.pdb"
+            else
+              line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) - 4)//".pdb"
+            end if
             coord(:,:numat) = geo(:,:numat)
             call add_path(line)            
-            open(unit = 99, file = trim(line), iostat = i)  
+            open(unit = 99, file = trim(line), iostat = i) 
+            if (index(keywrd, " COMPARE") /= 0) then
+              write(iw,'(a)')"From GEO_DAT: '"//trim(line)//"'"
+            else
+              write(iw,'(a)')"'"//trim(line)//"'"
+            end if 
             call pdbout(99)
-        else
-          koment = " NULL"
-          title = " NULL"
-          if (pdb) then
-            coord(:,:natoms) = geoa(:,:natoms)  
-            html = (index(keywrd, " HTML") /= 0) 
-            if (html) call l_control("HTML", len_trim("HTML"), -1)   
-            call pdbout(99)
-            if (html) call l_control("HTML", len_trim("HTML"), 1)  
-            coord(:,:numat) = geo(:,:numat)   ! Then restore the input geometry
-          else
-            refkey(1:3) = " "
-            call geout(99)                    ! Write out the re-organized reference data set.    
-            if (moperr) return
-          end if    
         end if
         do i = 1,3
           line = refkey_ref(i)
@@ -1094,6 +1102,17 @@
       deallocate(same)
       if (index(keywrd, " LOCATE-TS") == 0) then
         if (index(keywrd," 0SCF") + index(keywrd, " TS ") /= 0) then
+!
+! If a RESTART, generate an ARC file
+!
+          if (index(keywrd, " RESTART") /= 0) then
+            inquire(unit=iarc, opened=opend)
+            if (opend) close(iarc)
+            archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
+            open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+            rewind iarc
+            call geout (iarc) 
+          end if
           call mopend("GEO_REF with 0SCF: Job complete")
           return
         end if
@@ -1125,7 +1144,7 @@
     end do
     do i = 1, numat
       do j = i + 1, numat
-        if (txtatm(i)(12:) == txtatm(j)(12:)) exit
+        if (txtatm1(i)(12:) == txtatm1(j)(12:)) exit
       end do
       if (j <= numat .and. nat(i) /= 1) then
         if ( .not. bug) then
@@ -1140,7 +1159,7 @@
             trim(job_fn)//"' with the same labels"
           end if
           write(iw,'(10x,a,i6,a,i6,a)')"Atoms", i, " and", j, &
-          ";  Labels: ("//txtatm(i)//") and ("//txtatm(j)//")"
+          ";  Labels: ("//txtatm1(i)//") and ("//txtatm1(j)//")"
         end if
         bug = .true.
       end if

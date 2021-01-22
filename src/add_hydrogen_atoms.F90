@@ -25,6 +25,7 @@
   double precision, allocatable :: store_coord(:,:), store_atmass(:)
   character, allocatable :: store_txtatm(:)*27, store_txtatm1(:)*27
   double precision, external :: distance
+  integer, external :: nheavy
 !
 !  Number of hydrogen atoms on each atom in a residue
 !  
@@ -121,7 +122,7 @@
       end if
     end do
     numat = j
-    natoms = numat   
+    natoms = numat + id
     nmetals = 0
     store_atom_radius_covalent = atom_radius_covalent
     do i = 1, numat
@@ -201,6 +202,8 @@
 !
     allocate (hybrid(numat))
     hybrid = 0
+    dihedral = 0.d0
+    internal_dihedral = 0.d0
     do icc = 1, numat
       call h_type(22, icc, ionized, nH, nb_icc, nc_icc, nd_icc, bond_length, angle, dihedral, internal_dihedral, &
         hybrid, metals, nmetals)
@@ -294,6 +297,15 @@
 !   Get number of hydrogen atoms to be added from amino-acid residue
 !
           nH = i_add(j,an) 
+!
+! if "an" is 4, then this is a peptide oxygen atom.
+! check to see if it is a terminal atom, i.e., it is ...-(CR)-C-O
+!
+          if (an == 4) then
+            if (nheavy(ibonds(1,icc)) == 2) then
+              if (distance(icc, ibonds(1,icc)) > 1.35d0) nH = 1
+            end if
+          end if              
           if (nat(icc) == 8 .and. nbonds(icc) > 1) nH = 0
           if (an == 1 .and. nbonds(icc) == 1) then
             if (ionized) then
@@ -413,8 +425,10 @@
       labels(i) = 107
       nat(i) = 107
       geo(:,i)  = tvec(:, i - numat)
+      coord(:,i)  = tvec(:, i - numat)
     end do
     natoms = natoms + id
+    numat = numat + id
     call delete_ref_key("ADD-H", len_trim("ADD-H"), ' ', 1)
     return
   end subroutine add_hydrogen_atoms
@@ -549,6 +563,10 @@
       if (i > 6) then
         nH = 0
         if (nat(icc) == 8) then
+          if (nbonds(icc) < -2) then
+            numat = numat -1
+            return
+          end if
 !
 !  Water near to a metal atom.  Carefully add two hydrogen atoms
 !
@@ -1408,11 +1426,11 @@
             if (nat(ii) == 7) then
               if (nat(jj) == 7) then
                 sum = min(Rab, Rac)
-                if (sum < 1.35d0) then
+                if (sum < 1.35d0 .or. nbonds(ii) + nbonds(jj) > 4) then
                   nH = 0
                   hybrid(icc) = 2
                 else
-                  nH = 1  ! NO3, therefore add a hydrogen
+                  nH = 1  
                   angle = 120.d0
                   dihedral = 180.d0
                   hybrid(icc) = 3
@@ -2011,7 +2029,7 @@
 !  (This subroutine is generic, and is derived from subroutine geout)
 !
     use common_arrays_C, only : coord, nbonds, ibonds, nat
-    use molkst_C, only : numat
+    use molkst_C, only : numat, id, temp_1, temp_2, temp_3
     implicit none
     double precision, intent (in) :: bond_length, angle, dihedral
     integer, intent (in) :: na, nb, nc, nmetals, metals(nmetals)
@@ -2020,17 +2038,32 @@
       sinph, cosph, zqa, yza, xyb, ypa, coskh, sinkh, sina, cosd, &
       xd, yd, zd, xpd, ypd, zqd, xqd, yqd, xrd, cosa, sind, zpd
     integer :: k
+    double precision, external :: distance
     logical, external :: near_a_metal
       cosa = cos(angle) 
-      xb = coord(1,nb) - coord(1,na) 
-      yb = coord(2,nb) - coord(2,na) 
-      zb = coord(3,nb) - coord(3,na) 
+      if (id > 0) then
+        xb = distance(nb, na)
+        xb = temp_1
+        yb = temp_2
+        zb = temp_3
+      else        
+        xb = coord(1,nb) - coord(1,na) 
+        yb = coord(2,nb) - coord(2,na) 
+        zb = coord(3,nb) - coord(3,na) 
+      end if
       rbc = xb*xb + yb*yb + zb*zb 
       rbc = 1.0D00/sqrt(rbc) 
       if (nc /= 0) then
-        xa = coord(1,nc) - coord(1,na) 
-        ya = coord(2,nc) - coord(2,na) 
-        za = coord(3,nc) - coord(3,na) 
+        if (id > 0) then
+          xa = distance(nc, na)
+          xa = temp_1
+          ya = temp_2
+          za = temp_3
+        else  
+          xa = coord(1,nc) - coord(1,na) 
+          ya = coord(2,nc) - coord(2,na) 
+          za = coord(3,nc) - coord(3,na) 
+        end if
       else
         xa = 1.d0
         ya = 2.d0
@@ -2373,7 +2406,7 @@
 !  Check for Sulfur and Oxygen.  Maybe check for (not carbon)?
 !
       Sulfur =   (nat(icc) == 16 .and. Rab < 2.6d0)
-      Oxygen =   (nat(icc) == 8 .and. Rab < 2.1d0)
+      Oxygen =   (nat(icc) == 8 .and. Rab < 2.1d0 .and. Rac <= Rab)
       Nitrogen = (nat(icc) == 7 .and. Rab < 2.5d0 .and. Rac <= Rab)
       if (Rac < 1.5d0) exit   
       if ((Sulfur .or. Oxygen .or. Nitrogen)) exit       
@@ -2411,6 +2444,7 @@
       bond_length_2 = 10.d0
       nchain2 = 1
       l = 0
+      k = 0
       do j = 1, numat
         if (j == breaks(nchain2)) nchain2 = nchain2 + 1
         if (nat(j) == 1) cycle
@@ -2434,16 +2468,18 @@
           bond_length = sum
         end if
       end do
+      if (k > 0) then
 !
 ! Rab1 = bond length from hydrogen to the nearer heavy atom
 ! Rab2 = bond length from hydrogen to the more distant heavy atom
 ! h1   = atom that hydrogen is nearer to.
 ! h2   = atom that hydrogen is more distant from
 !
-      Rab1(i) = bond_length
-      h1(i) = k
-      Rab2(i) = bond_length_2
-      h2(i) = l
+        Rab1(i) = bond_length
+        h1(i) = k
+        Rab2(i) = bond_length_2
+        h2(i) = l
+      end if
     end do
     do j = 1, 20
       bond_length_2 = 100.d0
@@ -2571,7 +2607,8 @@
       breaks(nbreaks + 1) = 0
       j = 1
       do i = 1, numat
-        write(txtatm(i),'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)  
+        write(line,'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)  
+        txtatm(i) = trim(line)
         if (i == breaks(j)) j = j + 1         
       end do
   end subroutine reset_breaks

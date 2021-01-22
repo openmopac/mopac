@@ -116,7 +116,7 @@ subroutine prtgra ()
         do m = 1, 3
           if (loc(1, l) == i .and. loc(2, l) == m) then
             j = j + 1
-            tmp(j) = grad(l)
+            tmp(m) = grad(l)
             l = l + 1
           end if
         end do

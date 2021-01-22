@@ -91,10 +91,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
 !
     i = index(keywrd," METAL")
     if (i /= 0) then
-      do j = i + 6, len_trim(keywrd)
-        if (keywrd(j:j) == " ") exit
-      end do
-      j = index(keywrd(i:j),")") + i
+      j = index(keywrd(i:), ") ") + i
       if (i /= j) then
         line = keywrd(i + 7:j)
         do k = 1, 83
@@ -315,7 +312,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
       do j = 1, Lewis_tot
         jj = Lewis_elem(1,j)
         if (jj < 0) then
-          jj = - jj              ! Convert undetermined charged carbon
+          jj = -jj              ! Convert undetermined charged carbon
           Lewis_elem(2,j) = jj   ! into a cation
           Lewis_elem(1,j) = 0
           iz(jj) = iz(jj) - 1
@@ -353,7 +350,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
     do j = 1, Lewis_tot
       jj = Lewis_elem(1,j)
       if (jj < 0) then
-        jj = - jj
+        jj = -jj
         Lewis_elem(1,j) = jj
         n_lone_pairs = n_lone_pairs + 1
         if (iz(jj) == 1) iz(jj) = 0

@@ -47,7 +47,7 @@ subroutine geochk ()
     logical, dimension (:), allocatable :: ioptl
     integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, &
    & j, jbad, k, l, large, n1, new, alloc_stat, uni_res, mres, near_ions(100), &
-     maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10
+     maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10, nnumat
     integer, dimension(:), allocatable ::  mb    
     integer, save :: numbon(3), num_ions(-6:6)
     integer, dimension(:), allocatable :: nnbonds
@@ -251,6 +251,7 @@ subroutine geochk ()
         if (i /= 0 .and. index (keywrd, " ADD-H") == 0) then
           if (moperr) return
           j = index(keywrd(i:), ") ") + i
+          call upcase(keywrd(i:j), j - i + 1)
           allkey = keywrd(i:j)
           neutral = .false.
           if (index(keywrd(i:j),"""") == 0) then
@@ -432,6 +433,10 @@ subroutine geochk ()
       large = 1000000
     else
       large = 20
+    end if
+    nnumat = numat
+    if (id == 3) then
+      if (labels(natoms - 2) /= 107) numat = numat - 3
     end if
 !
 !   WORK OUT WHAT ATOMS ARE BONDED TO EACH OTHER.
@@ -845,7 +850,7 @@ subroutine geochk ()
               if (j < 10) then
                 write(txtatm(k)(15:15),'(i1)')j
               else
-                 write(txtatm(k)(15:16),'(i2)')j
+                 write(txtatm(k)(15:16),'(i2)')min(j, 99)
               end if                
             end if
           end do
@@ -919,6 +924,10 @@ subroutine geochk ()
       end if
     end if
     if (index(keywrd, " PDBOUT") /= 0) then
+      do i = 1, natoms
+        if (labels(i) == 99) write(txtatm(i), '(a, i5, a)')"HETATM", i, "  X   HET     "
+      end do
+      
 !
 !  Identify atoms where chain breaks occur
 !
@@ -934,8 +943,10 @@ subroutine geochk ()
 !
     call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
     if (index(keywrd, " RESEQ") /= 0) call delete_ref_key("RESEQ", len_trim("RESEQ"), ' ', 1)
+    numat = nnumat
+    natoms = max(natoms, numat)
     if (index(keywrd, " ADD-H") /= 0) return
-    if (index(keywrd, "CONTROL_no_MOZYME") /= 0) return
+    if (index(keywrd, "CHARGES") == 0 .and. index(keywrd, "CONTROL_no_MOZYME") /= 0) return
 !
 !  MODIFY IONS SO THAT IT REFERS TO ALL ATOMS (REAL AND DUMMY)
 !
@@ -983,8 +994,9 @@ subroutine geochk ()
       else
         j = maxtxt/2 + 2
       end if
-      call update_txtatm(.true., .false.)
+      if (lreseq) call update_txtatm(.true., .false.)
       if (prt_topo) then
+          line = " "
         write (iw, "(/,A,/)") "   TOPOGRAPHY OF SYSTEM"
         write (iw,*) "  ATOM No. "//line(:j)//"  LABEL  "//line(:j)//"Atoms connected to this atom"
         if (j == 0) then
@@ -1367,7 +1379,7 @@ subroutine geochk ()
       end if
       maxtxt = maxtxt_store
     end if
-    if (first_prt .and. noccupied /= 0 .and. (index(keywrd, " LEWIS") /= 0 .or. charges .or. &
+    if ((first_prt .and. .not. charges) .and. noccupied /= 0 .and. (index(keywrd, " LEWIS") /= 0 .or. &
       .not. lreseq .and. (ichrge /= 0 .or. irefq /= 0))) then
       num = char(ichar("3") + max(int(log10(abs(ichrge) + 0.05)),0))
       write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
@@ -1422,14 +1434,18 @@ subroutine geochk ()
       if (index(keywrd, " 0SCF") == 0) line = "JOB STOPPED BECAUSE"
       i = len_trim(line)
       if (i > 0) i = i + 1
-       num = char(ichar("2") + max(int(log10(abs(ichrge) + 0.05)),0))
+      j = max(abs(ichrge), abs(irefq))
+      k = min(ichrge, irefq)
+      num = char(ichar("2") + max(int(log10(j + 0.05)),0))
+      if (k < 0) num = char(ichar(num) + 1)
       if (charges) then
-        if (index(keywrd," CHARGES") == 0) then
+        if (index(keywrd," CHARGES") +index(keywrd," CHARGE=") == 0) then
           call mopend (line(:i)//"CHARGES MODIFIED BY SITE COMMAND")
         else if (noccupied > 0) then
           call write_sequence
           if (irefq /= ichrge) then
             write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM: ", ichrge
+            if (index(keywrd," CHARGE=") /= 0) &
             write (iw, "(10x,A,SP,I"//num//",A)") "CHARGE SPECIFIED IN DATA SET: ", irefq," IS INCORRECT." 
           else
             write (iw, "(SP/3x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM = ", ichrge, &
@@ -1463,7 +1479,7 @@ subroutine geochk ()
           num = char(ichar("3") + max(int(log10(abs(ichrge) + 0.05)),0))
           write (iw, "(10x,A,SP,I"//num//",a)") "BECAUSE KEYWORD ""CHARGE"" WAS NOT USED, THE COMPUTED CHARGE OF", &
           ichrge, " WILL BE USED IN THIS RUN."
-          sum = - dfloat(ichrge)/norbs
+          sum = -dfloat(ichrge)/norbs
           pdiag(:norbs) = pdiag(:norbs) + sum
         end if             
         nelecs = nelecs + irefq - ichrge     
@@ -1486,7 +1502,7 @@ subroutine geochk ()
           write(iw,"(/10x,a)")"If that is done, then the correct charge will be used."
           return  
         else if (id > 0) then
-          write(iw,"(10x,a)")" Infinite systems must have a zero charge on the unit cell."
+          write(iw,"(/10x,a)")"INFINITE SYSTEMS MUST HAVE A ZERO CHARGE ON THE UNIT CELL"
           call mopend("Unit cell has a charge. Correct fault and re-submit ")
           return
         else 
@@ -1516,9 +1532,6 @@ subroutine geochk ()
     if (ibad /= 0 .and. .not. let) then
       call mopend("ERROR")
       go to 1100
-    end if
-    if (Index (keywrd, " NEWGEO") /= 0) then
-      call newflg ()
     end if
     if (times) then
       call timer (" END OF GEOCHK")
@@ -1555,7 +1568,7 @@ subroutine geochk ()
 !
 !  Restore nbonds and ibonds in case they are modified within this subroutine
 !
-    nbonds(:numat) = nnbonds
+    nbonds(:numat) = nnbonds(:numat)
     ibonds(:,:numat) = iibonds(:,:numat)
 1100 continue
     if (Allocated (nnbonds))      deallocate (nnbonds, iibonds)

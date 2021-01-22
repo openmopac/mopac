@@ -146,7 +146,7 @@
       end do 
       if (graph) then 
         if (graph_formatted) then
-          write(igpt,"(i5, a)") numat," MOPAC-Graphical data Version 2012."//verson
+          write(igpt,"(i5, a)") numat," MOPAC-Graphical data Version 2016."//verson
           do i = 1, numat
             write(igpt,"(i4,f13.7,2f12.7,f9.4)")nat(i),(coord(j,i),j=1,3), q(i)
           end do 

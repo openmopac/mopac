@@ -616,7 +616,7 @@ icount = 0
 70 if (mcon == m) then
   optnew = resmax
 else
-  optnew = - dot_product( dx(1:n),  a(1:n, mcon) )
+  optnew = -dot_product( dx(1:n),  a(1:n, mcon) )
 end if
 if (icount == 0 .or. optnew < optold) then
   optold = optnew

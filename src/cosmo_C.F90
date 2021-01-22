@@ -31,6 +31,8 @@ module cosmo_C
     cif1, cif2,  & !
     cdiagi,      &
    fnsq, rsolv
+  real(double) :: ffact = 0.d0
+  double precision, dimension(:), allocatable :: diagsl
   double precision, dimension(3,3,1082) :: tm
   double precision, dimension(4,1082) :: dirsm, dirvec
   double precision, dimension(:), allocatable :: &

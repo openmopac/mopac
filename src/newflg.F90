@@ -10,18 +10,15 @@ subroutine newflg ()
      & " OR IF 'RESEQ' IS USED"
       call mopend ("NEWGEO cannot be used here")
     end if
-   !
-   !    Check that there are internal coordinates
-   !
-    do i = 1, numat
-      if (na(i) /= 0) go to 1000
-    end do
-    write (iw,*)
-    write (iw,*) "  There is a bug in MOZYME.  For unknown reasons,"
-    write (iw,*) &
-    &"  NEWGEO cannot be used here. (All the coordinates are Cartesian already!"
-    call mopend ("There is a bug in MOZYME")
-1000 k = 0
+!
+!    Force all coordinates to be internal
+!
+    call xyzint (coord, numat, na, nb, nc, 1.D0, geo)
+!
+!  Convert coordinates to Cartesian
+!
+    call gmetry(geo, coord)
+    k = 0
     do i = 1, numat
       if (txtatm(i)(:6) /= "ATOM  ") cycle
       if (txtatm(i)(13:15) /= " N " .and. txtatm(i)(13:15) /= " C ") cycle
@@ -39,7 +36,6 @@ subroutine newflg ()
     do i = 1, nvar
       xparam(i) = geo(loc(2, i), loc(1, i))
     end do
-    if (k == 0) then
-      write (iw,*) " WARNING!  NO BACKBONE ATOMS IDENTIFIED"
-    end if
+    if (k == 0) call mopend("KEYWORD ""NEWGEO"" USED, BUT NO BACKBONE ATOMS IDENTIFIED")
+    return
 end subroutine newflg

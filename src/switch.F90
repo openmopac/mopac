@@ -5,11 +5,19 @@
       USE parameters_C, only : alp, guess1, guess2, guess3, &
       betas, betap, betad, uss, upp, udd, zs, zp, zd, zsn, zpn, zdn, &
       gss, gsp, gpp, gp2, hsp, f0sd, g2sd, f0sd_store, g2sd_store, v_par, &
-      polvol, pocord, xfac, alpb, CPE_Zeta, CPE_Z0, CPE_B, CPE_Xlo, CPE_Xhi
+      polvol, pocord, xfac, alpb, CPE_Zeta, CPE_Z0, CPE_B, CPE_Xlo, CPE_Xhi, &
+      ams, npq, natorb
 !
 !    
-      USE molkst_C, only : keywrd, method_mndo, method_pm3, &
+      USE molkst_C, only : keywrd, method_mndo, method_pm3, method_indo, &
       & method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm8
+!
+!
+      USE parameters_for_INDO_C, only: isoki, nbfai, zetai, zetadi, &
+        zetawti, zcoreai, betaai, fgi
+
+      USE reimers_C, only: isok, nprin, nbfa, zcorea, weight,&
+        zeta, zetad, zetawt, betaa, fg, mg1sp, ifgfac
 !
 !  
       USE parameters_for_mndod_C, only : zsnd, zpnd, zdnd, ussd, uppd, uddd, &
@@ -40,8 +48,8 @@
 !
        USE parameters_for_PM7_TS_C, only : uss7_TS, upp7_TS, udd7_TS, zs7_TS, zp7_TS, zd7_TS, betas7_TS, &
          betap7_TS, betad7_TS, gss7_TS, gsp7_TS, gpp7_TS, gp27_TS, hsp7_TS, polvo7_TS, poc_7_TS, &
-         zsn7_TS, zpn7_TS, zdn7_TS, f0sd7_TS, g2sd7_TS, alp7_TS, gues7_TS1, gues7_TS2, gues7_TS3, &
-         alpb_and_xfac_pm7_ts
+         zsn7_TS, zpn7_TS, zdn7_TS, f0sd7_TS, g2sd7_TS, alp7_TS, v_par7_TS, alpb_and_xfac_pm7_ts, &
+         gues7_ts1, gues7_ts2, gues7_ts3 
 !
 !
       USE parameters_for_PM3_C, only : usspm3, upppm3, zspm3, zppm3, &
@@ -91,38 +99,60 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i
+      integer :: i, j
         pocord = 0.d0
         if (method_mndo) then 
 !
 !    SWITCH IN MNDO PARAMETERS
 !
-            guess1 = guesm1 
-            guess2 = guesm2 
-            guess3 = guesm3 
-            polvol = polvolm 
-            zs = zsm 
-            zp = zpm 
-            zd = zdm 
-            zsn = zsnm 
-            zpn = zpnm 
-            zdn = zdnm 
-            uss = ussm 
-            upp = uppm 
-            udd = uddm 
-            betas = betasm 
-            betap = betapm 
-            betad = betadm
-            alp = alpm 
-            gss = gssm 
-            gpp = gppm 
-            gsp = gspm 
-            gp2 = gp2m 
-            hsp = hspm 
-            f0sd = f0sdm
-            g2sd = g2sdm
-            pocord = pocm
-            call alpb_and_xfac_mndo
+          guess1 = guesm1 
+          guess2 = guesm2 
+          guess3 = guesm3 
+          polvol = polvolm 
+          zs = zsm 
+          zp = zpm 
+          zd = zdm 
+          zsn = zsnm 
+          zpn = zpnm 
+          zdn = zdnm 
+          uss = ussm 
+          upp = uppm 
+          udd = uddm 
+          betas = betasm 
+          betap = betapm 
+          betad = betadm
+          alp = alpm 
+          gss = gssm 
+          gpp = gppm 
+          gsp = gspm 
+          gp2 = gp2m 
+          hsp = hspm 
+          f0sd = f0sdm
+          g2sd = g2sdm
+          pocord = pocm
+          call alpb_and_xfac_mndo
+        else if (method_indo) then
+!
+!    SWITCH IN INDO PARAMETERS
+!
+          isok   = isoki
+          nbfa   = nbfai
+          zeta   = zetai
+          zetad  = zetadi
+          zetawt = zetawti
+          zcorea = zcoreai
+          betaa  = betaai
+          fg     = fgi
+          do i= 1,80
+            natorb(i) = nbfa(i)
+            nprin(i)  = npq(i,1)
+            weight(i) = ams(i)
+            do j= 1,11
+              fg(mg1sp-1+j,i)= fg(mg1sp-1+j,i) / ifgfac(j)
+            end do
+            zs(i) = zeta(i)
+            zp(i) = zeta(i)
+          end do
         else if (method_pm3) then 
 !
 !    SWITCH IN MNDO-PM3 PARAMETERS
@@ -321,6 +351,7 @@
           alp = alp7_TS
           pocord = poc_7_TS
           polvol = polvo7_TS
+          v_par = v_par7_TS
           call alpb_and_xfac_pm7_TS
         else if (method_pm7) then 
 !
@@ -575,7 +606,7 @@
       end do
       call fractional_metal_ion
       if (index(keywrd,' EXTERNAL') /= 0) return  
-      if (uss(1) > (-1.D0)) then 
+      if (.not. method_indo .and. uss(1) > (-1.D0)) then 
         call mopend (&
           'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM') 
         return  

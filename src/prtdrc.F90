@@ -1,24 +1,24 @@
-      subroutine prtdrc(deltt, xparam, ref, ekin, gtot, etot, velo0, mcoprt, ncoprt, parmax) 
+      subroutine prtdrc(deltt, xparam, ref, escf, ekin, gtot, etot, velo0, mcoprt, ncoprt, parmax, &
+          l_dipole, dip) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double  
-      USE molkst_C, only : numat, keywrd, numcal, escf, nvar, jloop => itemp_1
+      USE molkst_C, only : numat, keywrd, numcal, nvar, jloop => itemp_1, line
       use common_arrays_C, only : nat, na, nb, nc, p, na_store
       USE parameters_C, only : tore
       use chanel_C, only : iw, ires
       use drc_C, only: vref, vref0, allxyz, allvel, xyz3, vel3, allgeo, geo3, parref, &
-        time
+        time, now
       use reada_I 
       use chrge_I 
       use xyzint_I 
       use quadr_I 
-      use drcout_I 
       use dot_I 
       implicit none
-      real(double) , intent(in) :: deltt 
-      real(double) , intent(in) :: ekin 
+      real(double) , intent(in) :: deltt, escf, ekin, dip 
       real(double) , intent(inout) :: gtot 
+      logical, intent (in) :: l_dipole
       real(double)  :: etot 
       real(double), dimension(3*numat) :: xparam, ref, velo0
       integer, dimension (2, 3*numat) :: mcoprt  
@@ -30,18 +30,19 @@
       real(double), dimension(3) :: xold3 
       real(double), dimension(3*numat) :: geo 
       real(double), dimension(200) :: tsteps 
-      real(double), dimension(3) :: etot3, xtot3 
+      real(double), dimension(3) :: etot3, xtot3, dip3 
       real(double) :: gtot0, gtot1, escf0, escf1, ekin0, ekin1, etot0, etot1, &
-        xold0, xold1, xold2, refscf, totime, told2, told1, refx, tlast, &
-        stept, steph, stepx, tref, xtot0, xtot1, xtot2, etot2, escf2, ekin2, &
-        sum, deltat, t1, t2, sum1, dh, cc, bb, aa, c1, fract
-      logical :: goturn, ldrc      
+        xold0, xold1, xold2, refscf, totime, told2, told1, refx, tlast, old_sum, &
+        stept, steph, stepx, tref = 0.d0, xtot0, xtot1, xtot2, etot2, escf2, ekin2, &
+        sum, deltat, t1, t2, sum1, dh, cc, bb, aa, c1, fract, dip2 = 0.d0, dip1 = 0.d0, dip0 = 0.d0, &
+        suma, sumb, total = 0.d0
+      logical :: goturn, ldrc, exists, l_pdbout      
       character , dimension(3) :: cotype*2 
       character :: text1*3, text2*2 
       save  gtot0, gtot1, escf0, escf1, ekin0, ekin1, etot0, etot1&
         , xold0, xold1, xold2, refscf, cotype, iloop, totime, told2, told1, &
         icalcn, refx, tlast, goturn, ione, ldrc, stept, steph, stepx, &
-        tref, xtot0, xtot1, xtot2
+        tref, xtot0, xtot1, xtot2, dip1, dip0, old_sum, l_pdbout
 !-----------------------------------------------
 !********************************************************************
 !
@@ -70,9 +71,12 @@
         if (allocated(allgeo)) deallocate(allgeo)
         if (allocated(geo3)) deallocate(geo3)
         if (allocated(parref)) deallocate(parref)
+        if (allocated(now)) deallocate(now)
         i = 3*numat
         allocate(vref(i), vref0(i), allxyz(3,i), allvel(3,i), xyz3(3,i), vel3(3,i), &
-        allgeo(3,i), geo3(3,i), parref(i) )
+        allgeo(3,i), geo3(3,i), parref(i), now(i) )
+        now = ref
+        old_sum = 0.d0
         icalcn = numcal 
         totime = 0.D0 
         etot0 = 0.0D0 
@@ -96,6 +100,16 @@
         xtot0 = 0.D0 
         xtot1 = 0.D0 
         xtot2 = 0.D0 
+        if (.false.) then
+          line = "Debug.txt"
+          call add_path(line)
+          inquire (file=trim(line), exist = exists)
+          if (exists) then
+            open(unit=44, file=trim(line))
+            close(unit=44, status='DELETE') 
+          end if
+        end if
+        l_pdbout = (index(keywrd, " PDBOUT") /= 0)
         parref(:nvar) = xparam(:nvar) 
         etot = escf + ekin 
         tlast = 0.D0 
@@ -202,7 +216,12 @@
               ekin0, told2, told1, gtot1, gtot0, xold2, xold1, xold0, totime, &
               jloop, etot, refx, xtot1, xtot0  
         endif 
-      endif 
+      endif
+      if (iloop > 1000 .and. jloop < 3) then
+        call mopend("Step size is too large for a path to be generated")
+        return
+      end if
+      c1 = 0.d0
       if (escf < (-1.D8)) then 
           write (ires) (parref(i),i=1,nvar) 
           write (ires) (ref(i),i=1,nvar) 
@@ -226,15 +245,19 @@
       call chrge (p, charge) 
       charge(:numat) = tore(nat(:numat)) - charge(:numat) 
       deltat = deltt*1.D15 
-      na =  na_store 
-      call xyzint (xparam, numat, na, nb, nc, 57.29577951308232D0, geo) 
+      if ( .not. l_pdbout) then
+        na(:numat) =  na_store(:numat)
+        call xyzint (xparam, numat, na, nb, nc, 57.29577951308232D0, geo) 
+      end if
       if (iloop == 1) then 
         etot1 = etot0 
         etot0 = etot 
         escf1 = escf 
         escf0 = escf 
         ekin1 = ekin 
-        ekin0 = ekin 
+        ekin0 = ekin
+        dip1 = dip
+        dip0 = dip
         do j = 1, 3 
           allgeo(j,:nvar) = geo(:nvar) 
           allxyz(j,:nvar) = xparam(:nvar) 
@@ -279,6 +302,10 @@
       etot1 = etot0 
       etot0 = etot 
       call quadr (etot2, etot1, etot0, t1, t2, etot3(1), etot3(2), etot3(3)) 
+      dip2 = dip1 
+      dip1 = dip0 
+      dip0 = dip 
+      call quadr (dip2, dip1, dip0, t1, t2, dip3(1), dip3(2), dip3(3)) 
       ekin2 = ekin1 
       ekin1 = ekin0 
       ekin0 = ekin 
@@ -296,24 +323,28 @@
 !
 !   CALCULATE CHANGE IN GEOMETRY
 !
-      xold0 = 0.D0 
-      l = 0 
+      l = 0
       xtot0 = 0.D0 
+      sum = 0.D0 
       sum1 = 0.D0 
       do i = 1, numat 
-        sum = 0.D0 
-        sum1 = 0.D0 
+        suma = 0.d0
+        sumb = 0.d0
         do j = 1, 3 
           l = l + 1 
-          sum1 = sum1 + (allxyz(1,l)-ref(l))**2 
-          sum = sum + (allxyz(2,l)-allxyz(1,l))**2 
+          suma = suma + (allxyz(1,l) - ref(l))**2 
+          sumb = sumb + (allxyz(1,l) - now(l))**2
         end do 
+        sum = sum + sqrt(sumb)
+        sum1 = sum1 + sqrt(suma)
+      end do 
 !
 !  xtot0 is the change in geometry from the start of the run
 !  xold0 is the change in geometry from the last step
-        xold0 = xold0 + sqrt(sum) 
-        xtot0 = xtot0 + sqrt(sum1) 
-      end do 
+!
+      xold0 =  sum - old_sum
+      xtot0 = xtot0 + sum1 
+      old_sum = sum      
       call quadr (xtot2, xtot1, xtot0, t1, t2, xtot3(1), xtot3(2), xtot3(3)) 
       call quadr (xold2, xold2 + xold1, xold2 + xold1 + xold0, t1, t2, xold3(1), xold3(2), xold3(3)) 
 !**********************************************************************
@@ -430,8 +461,8 @@
             text1 = ' ' 
             text2 = ' ' 
             ii = 0 
-            call drcout (xyz3, geo3, vel3, nvar, totime, escf3, ekin3, etot3, &
-              xtot3, iloop, charge, fract, text1, text2, ii, jloop) 
+            call drcout (xyz3, geo3, vel3, nvar, totime, escf3, ekin3, etot3, dip3, &
+              xtot3, iloop, charge, fract, text1, text2, ii, jloop, l_dipole) 
             n = 0 
             do i = 1, ncoprt 
               k = mcoprt(1,i) 
@@ -447,8 +478,8 @@
                 write (iw, '(/,20(''****''))') 
               endif 
               time = totime + fract 
-              call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, &
-                xtot3, iloop, charge, fract, text1, text2, k, jloop) 
+              call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
+                xtot3, iloop, charge, fract, text1, text2, k, jloop, l_dipole) 
             end do 
             if (n /= 0) write (iw, '(/,20(''****''))') 
             if (abs(escf3(3)) > 1.D-20) fract = -escf3(2)/(escf3(3)*2.D0) 
@@ -475,8 +506,8 @@
               endif 
               if (escf3(3) < 0.D0) text1 = 'MAX' 
               text2 = ' ' 
-              call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, &
-                xtot3, iloop, charge, fract, text1, text2, 0, jloop) 
+              call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
+                xtot3, iloop, charge, fract, text1, text2, 0, jloop, l_dipole) 
             else 
               goturn = .FALSE. 
             endif 
@@ -485,9 +516,31 @@
               time = totime + tsteps(i) 
               text1 = ' ' 
               text2 = ' ' 
-              call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, &
-                xtot3, iloop, charge, tsteps(i), text1, text2, 0, jloop) 
+              call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
+                xtot3, iloop, charge, tsteps(i), text1, text2, 0, jloop, l_dipole) 
             end do 
+            if (.false.) then
+              line = "Debug.txt"
+              call add_path(line)
+              inquire (file=trim(line), exist = exists)
+              if (.not. exists) then
+                open(unit=44, file=trim(line))
+              end if
+              l = 0
+              sum = 0.D0 
+              do i = 1, numat 
+                suma = 0.d0
+                do j = 1, 3 
+                  l = l + 1 
+                  suma = suma + (allxyz(1,l) - now(l))**2 
+                end do 
+                sum = sum + sqrt(suma)
+              end do
+              total = total + sum
+              write(44,'(i5, 3f12.4)')jloop, escf3(1), sum, total
+            end if
+            old_sum = 0.d0
+            now(:) = allxyz(1,:)
           endif 
           n = 0 
           do i = 1, ncoprt 
@@ -504,8 +557,8 @@
               write (iw, '(/,20(''****''))') 
             endif 
             time = totime + fract 
-            call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, &
-              xtot3, iloop, charge, fract, text1, text2, k, jloop) 
+            call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
+              xtot3, iloop, charge, fract, text1, text2, k, jloop, l_dipole) 
           end do 
           if (n /= 0) write (iw, '(/,20(''****''))') 
         endif 
@@ -513,8 +566,8 @@
         text1 = " "
         text2 = " "
         time = 0.d0
-        call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, &
-                xtot3, iloop, charge, fract, text1, text2, 0, jloop)         
+        call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
+                xtot3, iloop, charge, fract, text1, text2, 0, jloop, l_dipole)         
       endif 
       totime = totime + told2 
       told2 = told1 

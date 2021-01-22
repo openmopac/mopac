@@ -58,7 +58,7 @@
 !    FACT IS THE CONVERSION FACTOR FROM KCAL/MOLE TO ERGS
 !
       fact = 4.184D0/fpc_10*1.D21 
-    !  fact = 1.d0/627.51*0.529**2
+!          = 4.184/6.0221367d23*10^21
 !
 ! SET UP CONSTANTS AND FLAGS
       na = 0
@@ -84,7 +84,7 @@
       restrt = index(keywrd,'RESTART') /= 0 
       if (index(keywrd,'NLLSQ') /= 0) restrt = .FALSE. 
       debug = index(keywrd,'FMAT') /= 0 
-      big = index(keywrd,'LARGE')/=0 .and. debug 
+      big = (index(keywrd,'LARGE') /= 0 .and. debug) 
       if (prnt) write (iw, &
       '(2/4X,''FIRST DERIVATIVES WILL BE USED IN THE CALCULATION OF SECOND DERIVATIVES'')') 
       tlast = tleft 
@@ -122,7 +122,6 @@
         write (iw, '(/10X,''TIME USED UP TO RESTART ='',F22.2)') totime 
       endif 
       lu = kountf 
-     ! numat = nvar/3 
       eigs(:nvar) = 0.D0 
       if (.not. ts) call symr 
       iskip = 0 
@@ -156,15 +155,12 @@
           call compfg (xparam, .TRUE., escf, .TRUE., g2old, .TRUE.) 
           if (moperr) return  
           xparam(i) = xparam(i) - delta 
-
-! For MOPAC BLAS          
-!          delta = delta*10.D0/sqrt(dot(g2old,g2old,nvar))
           delta = delta*10.D0/sqrt(ddot(nvar,g2old,1,g2old,1)) 
 !
 !   CONSTRAIN DELTA TO A 'REASONABLE' VALUE
 !
           delta = min(0.05D0,max(0.005D0,delta)) 
-          if (debug) write (iw, '(A,I3,A,F12.5)') ' STEP:', i, ' DELTA :', delta 
+          if (debug) write (iw, '(A,I3,A,F15.8)') ' STEP:', i, ' DELTA :', delta 
           g2old(1) = 100.D0 
           xparam(i) = xparam(i) + delta 
           emin = 0.d0
@@ -173,8 +169,6 @@
 !          
           if (debug) write (iw, '(A,F12.5)') ' GNORM +1.0*DELTA',  &
             & dsqrt(ddot(nvar,g2old,1,g2old,1)) 
-            !& sqrt(dot(g2old,g2old,nvar)) 
-!! For MOPAC BLAS                                
           xparam(i) = xparam(i) - delta*2.D0 
           g2rad = 100.D0 
           emin = 0.d0
@@ -183,10 +177,8 @@
           xparam(i) = xparam(i) + delta 
           if (debug) write (iw, '(A,F12.5)') ' GNORM -1.0*DELTA', &
             dsqrt(ddot(nvar,g2rad,1,g2rad,1)) 
-            !sqrt(dot(g2rad,g2rad,nvar))             
-! MOPAC BLAS            
         else 
-          if (debug) write (iw, '(A,I3,A,F12.5)') ' STEP:', i, ' DELTA :', delta 
+          if (debug) write (iw, '(A,I3,A,F15.8)') ' STEP:', i, ' DELTA :', delta 
         endif 
         xparam(i) = xparam(i) + 0.5D0*delta 
         grold = 100.D0 

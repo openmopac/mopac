@@ -15,7 +15,7 @@ subroutine mbonds (locc, lvir, f, catom, nfirst, ii, jj, ui, uj, lok, iorbs, &
 !
     logical :: ok
     integer :: nocc, nvir
-    integer :: i, i1, i2, iorbsi, iorbsj, j, j1, j2, k, l, m, ni, nj
+    integer :: i, i1 = 0, i2 = 0, iorbsi, iorbsj, j, j1 = 0, j2 = 0, k, l, m, ni, nj
     double precision :: alpha, beta, d, e, e11, e111, e12, e22, e221, one, &
    & sum, summax, summin
     integer, external :: ijbo

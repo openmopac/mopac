@@ -19,7 +19,7 @@
       & uhf, id, msdel, mol_weight, method_PM6, method_PM7, &
       is_PARAM, formula, ispd, mozyme, nvar, rhf, old_chrge, jobnam, &
       N_3_present, Si_O_H_present, nalpha_open, nbeta_open, pdb_label, &
-      method_rm1, use_ref_geo
+      method_rm1, use_ref_geo, method_indo
 !
       USE parameters_C, only : natorb, uss, upp, udd, tore, &
       dorbs, zd, zs, zp
@@ -28,7 +28,7 @@
 !
       use meci_C, only: nmos
 !
-      USE chanel_C, only : iw, log, ilog
+      USE chanel_C, only : iw, log, ilog, iarc, archive_fn
 !
       use elemts_C, only : elemnt
 !
@@ -50,6 +50,7 @@
       use gmetry_I 
       use symtrz_I 
       use vecprt_I 
+      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -62,9 +63,10 @@
         k, k1, j, ielec, ndoubl, ne, nupp, &
         ndown, l, iminr, jminr, icount, &
         ireal, jreal, ni, n1, n4, n9
+      integer(8) :: n2elec8
       real(double) :: elecs,  c(1), yy, w, sum, rmin   ! c(1) is for a dummy call
       logical :: debug, exci, sing, doub, trip, quar, quin, sext, sept, &
-        octe, none, birad, halfe, odd
+        octe, none, birad, halfe, odd, opend
       character :: num1*1
       real(double), dimension (:), allocatable :: rxyz
 !-----------------------------------------------
@@ -81,7 +83,7 @@
       end if
       elecs = -kharge 
       ndorbs = 0 
-      if (uss(1) > (-1.D0)) then 
+      if (.not. method_indo .and. uss(1) > (-1.D0)) then 
       call mopend (&
            'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM') 
         return  
@@ -89,18 +91,20 @@
 !
 !  Determine the number of atomic orbitals on each element
 !
-       do i = 1,100
-        dorbs(i) = (zd(i) > 1.d-8) 
-        if (dorbs(i)) then
-          natorb(i) = 9                   ! Element has "d"-orbitals
-        else if (zp(i) > 1.d-20) then
-          natorb(i) = 4                   ! Element has "p"-orbitals
-        else if (zs(i) > 1.d-20) then
-          natorb(i) = 1                   ! Element has one "s"-orbital
-        else
-          natorb(i) = 0                   ! Element has no orbitals
-        end if
-      end do
+      if (.not. method_indo) then
+        do i = 1,107
+          dorbs(i) = (zd(i) > 1.d-8) 
+          if (dorbs(i)) then
+            natorb(i) = 9                   ! Element has "d"-orbitals
+          else if (zp(i) > 1.d-20) then
+            natorb(i) = 4                   ! Element has "p"-orbitals
+          else if (zs(i) > 1.d-20) then
+            natorb(i) = 1                   ! Element has one "s"-orbital
+          else
+            natorb(i) = 0                   ! Element has no orbitals
+          end if
+        end do
+      end if
       numat = 0 
       ia = 1 
       ib = 0 
@@ -173,14 +177,20 @@
             if (txtatm(i)(14:14) >= 'a' .and. txtatm(i)(14:14) <= 'z') &
               txtatm(i)(14:14) = char(ichar(txtatm(i)(14:14)) + ichar("A") - ichar("a"))
             if(elemnt(j)(2:2) /= txtatm(i)(14:14) .and. elemnt(j)(2:2) /= txtatm(i)(13:13)) then
-              num1 = char(Int(log10(i + 0.5)) + ichar("2")) 
-              write(line,'(a,i'//num1//',a,a)')"Atom name for atom", i, &
-              " ("//elemnt(j)(2:2)//") does not match its label """//txtatm(i)//""""
-              write(iw,'(10x,a)')trim(line)
-              l = l + 1
-              if (l == 20) then
-                write(iw,'(/10x,a)') "Remaining errors not printed"
-                exit
+              if (j == 1 .and. txtatm(i)(13:13) == "D") then
+                txtatm(i)(13:13) = "H"
+              else if (j == 1 .and. txtatm(i)(14:14) == "D") then 
+                txtatm(i)(14:14) = "H"
+              else
+                num1 = char(Int(log10(i + 0.5)) + ichar("2")) 
+                write(line,'(a,i'//num1//',a,a)')"Atom name for atom", i, &
+                " ("//elemnt(j)(2:2)//") does not match its label """//txtatm(i)//""""
+                write(iw,'(10x,a)')trim(line)
+                l = l + 1
+                if (l == 20) then
+                  write(iw,'(/10x,a)') "Remaining errors not printed"
+                  exit
+                end if
               end if
             end if
           end do
@@ -215,8 +225,29 @@
 !
       if (index(keywrd, " ADD-H") == 0 .or. index(keywrd, " PDBOUT") /= 0 ) then
         call set_up_dentate
-        call check_cvs(.false.)
+        call check_cvs(index(keywrd, " GEO-OK") .ne. 0)
+        if (moperr) return
         call check_H(i)
+        if (i /= 0) then
+          if (Index (keywrd, " 0SCF") + Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") +  &
+            Index (keywrd, " GEO-OK") + Index (keywrd, " ADD-H") + Index (keywrd, " LET") == 0) then
+            write(iw,'(10x,a)') "Add keyword ""LET"" to allow job to continue"
+            call mopend ("A hydrogen atom is badly positioned")
+            if ( index(keywrd," PDBOUT") /= 0) then           
+              inquire(unit=iarc, opened=opend)
+              if (opend) close(iarc)
+                line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
+                if (index(keywrd, " HTML") /= 0) then
+                  do i = len_trim(line), 1, -1
+                    if (line(i:i) == "/" .or. line(i:i) == "\") exit
+                  end do
+                end if
+              open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+              rewind iarc
+              call pdbout(iarc)
+            end if
+          end if
+        end if
       end if
       if (use_ref_geo) call big_swap(0,1)
       if (id == 0) then
@@ -248,22 +279,26 @@
       end do
       ispd = n9
       if (id == 0) then
-         n2elec = 2025*n9 + 100*n4 + n1 + 2025*(n9*(n9 - 1))/2 + 450*n9*n4 + 45*n9*n1 + &
-     & 100*(n4*(n4 - 1))/2 + 10*n4*n1 + (n1*(n1 - 1))/2 + 10       
+        n2elec8 = (n4*(n4 - 1))/2
+        n2elec8 = 100*n2elec8 + 2025*n9 + 100*n4 + n1 + 2025*(n9*(n9 - 1))/2 + 450*n9*n4 + 45*n9*n1 + &
+     &  10*n4*n1 + (n1*(n1 - 1))/2 + 10       
       else
-         n2elec = 2025*n9 + 100*n4 + n1 + 2025*(n9*(n9 + 1))/2 + 450*n9*n4 + 45*n9*n1 + &
-     & 100*(n4*(n4 + 1))/2 + 10*n4*n1 + (n1*(n1 + 1))/2 + 10
+        n2elec8 = (n4*(n4 + 1))/2
+        n2elec8 = 100*n2elec8 + 2025*n9 + 100*n4 + n1 + 2025*(n9*(n9 + 1))/2 + 450*n9*n4 + 45*n9*n1 + &
+     &  10*n4*n1 + (n1*(n1 + 1))/2 + 10
       end if
-      if (.not. mozyme .and. n2elec < 0) then
+      if (.not. mozyme .and. n2elec8 > 2147483647) then
         if (Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") + index(keywrd, " ADD-H") &
           + index(keywrd, " 0SCF") == 0) then
           call mopend(" Data set '"//trim(jobnam)//"' exists, but is too large to run.")
-          write(iw,'(10x,a)')"(Maximum number of two-electron integrals allowed: 2147483647)"
+          write(iw,'(10x,a)')"(Maximum number of two-electron integrals allowed: 2,147,483,647)"
           write(iw,'(10x,a, i10,a)')"(Number of two-electron integrals exceeded this by:", &
-            2147483647 + n2elec,")"
+            n2elec8 - 2147483647,")"
+          write(iw,'(/10x,a, i10,a)')"(Try using MOZYME on this system)" 
           return
         end if
       end if
+      n2elec = int(n2elec8, kind(n2elec))
       if (ispd > 0 .and. index(keywrd, " ESP") /= 0) then
         line = " The ESP method does not work with 'd' orbitals"
         write(iw,'(//,10x,a)')trim(line)
@@ -278,18 +313,6 @@
 !
       lm61 = 45*n9 + 10*n4 + n1
       norbs = nlast(numat) 
-      if (id > 0) then
-        if (norbs < 18 .and. n9 > 0 .or. norbs < 8 .and. n4 > 0) then
-          if (n9 > 0) then
-            line = "Minimum number of orbitals allowed in this system is 18"
-          else
-            line = "Minimum number of orbitals allowed in this system is 8"
-          end if
-          write(iw,'(//,10x,a)')trim(line)
-          call mopend(trim(line))
-          return
-        end if
-      end if
       if (index(keywrd, " GRAPH") /= 0) then
         if (norbs > 9500) then
           write(line,'(a)')" The system is too large for 'GRAPH' to be used."
@@ -298,7 +321,12 @@
           return
         end if
       end if
-      mpack = (norbs*(norbs+1))/2
+      if (id /= 0) then
+        i = max(18, norbs)
+      else
+        i = norbs
+      end if
+      mpack = (i*(i+1))/2
       if (index(keywrd," 0SCF") /= 0) mpack = 1
 !
 !   NOW TO CALCULATE THE NUMBER OF LEVELS OCCUPIED
@@ -335,6 +363,11 @@
         else
           uhf = .true.          
         end if
+      end if
+      if (method_indo .and. uhf) then
+        write(iw,'(10x,a)')" INDO does not support UHF - defaulting to ROHF"
+        rhf = .true.
+        uhf = .false.
       end if
       if (uhf .and. index(keywrd," 0SCF") == 0) then
         if (index(keywrd," POLAR") /= 0) then
@@ -640,24 +673,26 @@
           nupp = 0
           ndown = 0
         end if
+        if (.not. method_indo) then
 !
 !  NUPP  = NUMBER OF ALPHA ELECTRONS IN ACTIVE SPACE
 !  NDOWN = NUMBER OF BETA  ELECTRONS IN ACTIVE SPACE
 !
-        if (nupp*ndown < 0 .or. nupp > nmos .or. ndown > nmos .or. nmos == 0) then 
-          write (iw, '(A)')' SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE' 
-          write (iw, '(a,i3)')' Number of alpha electrons in active space:', nupp 
-          write (iw, '(a,i3)')'  Number of beta electrons in active space:', ndown 
-          write (iw, '(a,i3)')'                      Size of active space:', nmos 
-          if (Index (keywrd, " MS") /= 0) then
-            call web_message(iw,"ms.html")
-          else
-            call web_message(iw,"active_space.html")
-          end if
-          call mopend ('SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE') 
-          return  
+          if (nupp*ndown < 0 .or. nupp > nmos .or. ndown > nmos .or. nmos == 0) then 
+            write (iw, '(A)')' SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE' 
+            write (iw, '(a,i3)')' Number of alpha electrons in active space:', nupp 
+            write (iw, '(a,i3)')'  Number of beta electrons in active space:', ndown 
+            write (iw, '(a,i3)')'                      Size of active space:', nmos 
+            if (Index (keywrd, " MS") /= 0) then
+              call web_message(iw,"ms.html")
+            else
+              call web_message(iw,"active_space.html")
+            end if
+            call mopend ('SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE') 
+            return  
+          endif 
         endif 
-      endif 
+      end if
       halfe = (nopen > nclose .and. Abs(fract -2.D0) > 1.d-20 .and. Abs(fract) > 1.d-20 &
       & .or. index(keywrd,'C.I.')/=0) 
       if (halfe) halfe = (.not. (index(keywrd,'EXCI') /= 0 .or. &
@@ -896,7 +931,8 @@ subroutine setcup
    !   to be correctly used.
    !
    !***********************************************************************
-    use molkst_C, only: cutofp, id, keywrd, l1u, l2u, l3u, l123, l11, l21, l31, line
+    use molkst_C, only: cutofp, id, keywrd, l1u, l2u, l3u, l123, l11, l21, l31, line, &
+      clower
     use common_arrays_C, only : tvec
     use chanel_C, only: iw
     use reada_I
@@ -917,6 +953,17 @@ subroutine setcup
     else
       cutofp = 30.d0
     end if
+!
+!   Set constants for truncation function.
+!
+!   CLOWER = lower bound of truncation function, as a function of CUTOFP
+!
+! Setting "clower" to 17 Angstroms seems to be okay for the gradients and for smoothness of the PES.
+! It had been 14 Angstroms, but that caused significant problems with the gradients.
+!
+!  If in doubt, test the gradients using DERITR
+!
+    clower = Min( cutofp*2.d0/3.d0, 17.0d0)
    !
    !   CALCULATE L1U, L2U, and L3U
    !
@@ -1029,8 +1076,8 @@ subroutine setcup
 end subroutine setcup
 subroutine write_cell(iprt)
   use molkst_C, only: mol_weight, escf, numat, keywrd, gnorm, &
-   line, mers, gui
-  use funcon_C, only: a0, ev, fpc_9, fpc_10
+   line, mers, gui, density
+  use funcon_C, only: a0, fpc_10
   use common_arrays_C, only: nat, tvec
   use ef_C, only : nstep
   use reada_I
@@ -1041,7 +1088,7 @@ subroutine write_cell(iprt)
   double precision :: ta, tb, tc, tab, tbc, tac, talpha, tbeta, tgamma, vol
   integer, dimension (100) :: nel
   save :: old_nstep
-    if (iprt < 0 .or. gui) return
+  if (iprt < 0 .or. gui) return
   if (iprt == 0) then
     if(old_nstep == nstep) return
     old_nstep = nstep
@@ -1101,12 +1148,27 @@ subroutine write_cell(iprt)
     z = k/i
   end if
   vol = volume (tvec, 3)
-  if (mers(1) > 0 .and. mers(2) > 0 .and. mers(3) > 0) then
-    write (line,'(i4,a,3f7.3,3f7.2,a,f8.2,a,f6.3,a,f10.3, a, f7.2)')nstep + 1," a, b, c, alpha, beta, gamma:", &
-    & tab*ta/mers(1), tab*tb/mers(2), tab*tc/mers(3), talpha, tbeta, tgamma, &
-    " Vol:",vol/(mers(1)*mers(2)*mers(3))," Density:",mol_weight * 1.d24 / fpc_10 / vol, &
-    " HoF:",escf/z," Grad:",gnorm/sqrt(z*1.d0)
-    write(iprt,"(a)")line(:len_trim(line))
+  if (mers(1) > 0 .and. mers(2) > 0 .and. mers(3) > 0 .and. index(keywrd, " PRT ") == 0) then
+    if (gnorm > 1.d-20) then
+      write (line,'(i4,a,3f7.3,3f7.2,a,f8.2,a,f6.3,a,f10.3, a, f7.2)')nstep + 1," a, b, c, alpha, beta, gamma:", &
+      & tab*ta/mers(1), tab*tb/mers(2), tab*tc/mers(3), talpha, tbeta, tgamma, &
+      " Vol:",vol/(mers(1)*mers(2)*mers(3))," Density:",mol_weight * 1.d24 / fpc_10 / vol, &
+      " HoF:",escf/z," Grad:",gnorm/sqrt(z*1.d0)
+      write(iprt,"(a)")line(:len_trim(line))
+    end if
+  end if
+  if (index(keywrd, " PRT ") /= 0) then
+    write (iprt, '(/10X,A,F15.3,A)') 'VOLUME OF UNIT CELL     =', &
+        vol/(max(1,mers(1))*max(1,mers(2))*max(1,mers(3))), ' CUBIC ANGSTROMS'
+    write (iprt, '(/10X,A,F15.3,A)') 'DENSITY                 =', density, ' GRAMS/CC' 
+    
+    write (iprt,'(28x, a, 8x, f7.3, a)')"  A   =", tab*ta/max(1,mers(1)), " ANGSTROMS"
+    write (iprt,'(28x, a, 8x, f7.3, a)')"  B   =", tab*tb/max(1,mers(2)), " ANGSTROMS"
+    write (iprt,'(28x, a, 8x, f7.3, a)')"  C   =", tab*tc/max(1,mers(3)), " ANGSTROMS"
+    write (iprt,'(28x, a, 8x, f7.3, a)')"ALPHA =",talpha, " DEGREES"
+    write (iprt,'(28x, a, 8x, f7.3, a)')"BETA  =",tbeta , " DEGREES"
+    write (iprt,'(28x, a, 8x, f7.3, a)')"GAMMA =",tgamma, " DEGREES"
+    call l_control("PRT", 3, -1)
   end if       
   return
 end subroutine write_cell
@@ -1114,6 +1176,7 @@ subroutine write_unit_cell_HOF(iprt)
   use molkst_C, only : keywrd, escf, numat, line, mers
   use common_arrays_C, only : nat
   use reada_I
+  use to_screen_I
   implicit none
   integer, intent(in) :: iprt
   integer :: i, j, k, l, z, nel(107), m
@@ -1124,7 +1187,7 @@ subroutine write_unit_cell_HOF(iprt)
         i = Index(keywrd, " Z=")
         if (i /= 0) then
           i = Nint(reada(keywrd,i))
-          z = mers(1)*mers(2)*mers(3)*i
+          z = max(1, mers(1))*max(1, mers(2))*max(1, mers(3))*i
           if (Index (keywrd, " BCC") /= 0) z = z/2
         else
           nel = 0
@@ -1172,6 +1235,7 @@ subroutine write_unit_cell_HOF(iprt)
       use funcon_C, only: fpc_10
       use common_arrays_C, only : grad, xparam, labels
       use volume_I
+      use to_screen_I
       implicit none
       integer, intent(in) :: iprt
       integer :: m, i1,i2, k, l, i, ndim
@@ -1202,8 +1266,8 @@ subroutine write_unit_cell_HOF(iprt)
                   call to_screen("can only be calculated if Cartesian coordinates are used.")
                 else
                   if (Abs(pressure) > 0.01d0) then
-                    write(iprt,*)"The pressure required to constrain translation vectors"
-                    write(iprt,*)"can only be calculated if Cartesian coordinates are used."
+                    write(iprt,'(/10x,a)')"The pressure required to constrain translation vectors"
+                    write(iprt,'(10x,a)')"can only be calculated if Cartesian coordinates are used."
                   end if
                 end if                
                 return

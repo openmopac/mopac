@@ -1,5 +1,5 @@
 subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
-    use molkst_C, only: l1u, l2u, l3u
+    use molkst_C, only: numcal, l1u, l2u, l3u, clower
     use parameters_C, only: natorb, tore
     use common_arrays_C, only: tvec
     implicit none
@@ -12,28 +12,30 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
     double precision, dimension (45), intent (out) :: e1b, e2a
 !
     logical :: si, sj
-    integer :: i, j, k, ki, l
-    double precision :: a, rij, rijx, w1, w2, w3, w4, w5, w6, w7
+    integer :: icalcn = 0, i, j, k, ki, l
+    double precision :: a, rij, rijx, w1, w2, w3, w4, w5, w6, w7, cutof2, enubit
     double precision, save :: gab
     double precision, dimension (3) :: x
     double precision, dimension (7) :: wb
     double precision, dimension (22) :: ri
+    double precision, dimension(45) :: e1bits, e2bits
+    save icalcn, cutof2
     if (mode == 0) then
-      !
-      !   Simple di-atomic
-      !
+!
+!   Simple di-atomic
+!
       x(1) = xi(1) - xj(1)
       x(2) = xi(2) - xj(2)
       x(3) = xi(3) - xj(3)
       rij = x(1) * x(1) + x(2) * x(2) + x(3) * x(3)
       rijx = Sqrt (rij)
       rij = rijx
-      !
-      ! *** COMPUTE INTEGRALS IN DIATOMIC FRAME
-      !
-      !   The last argument should be QS if the Tomasi model is
-      !   supported
-      !
+!
+! *** COMPUTE INTEGRALS IN DIATOMIC FRAME
+!
+!   The last argument should be QS if the Tomasi model is
+!   supported
+!
       call reppd (ni, nj, rij, ri, gab)
       a = 1.d0 / rijx
       x(1) = x(1) * a
@@ -50,7 +52,7 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
         e2a = 0.d0
       e1b(1) = -w1 * tore(nj)
       e2a(1) = -w1 * tore(ni)
-      !
+!
       if ( .not. direct) then
         w(1) = w1
       end if
@@ -78,7 +80,7 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
           w(4) = w4
         end if
       end if
-      !
+!
       if (si) then
         if (sj) then
           w5 = -ri(2) * x(1)
@@ -98,7 +100,7 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
             e1b(36) = e1b(1)
             e1b(45) = e1b(1)
           end if
-            !
+!
           if ( .not. direct) then
             w(5) = w5
             w(6) = w6
@@ -122,7 +124,7 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
             e1b(36) = e1b(1)
             e1b(45) = e1b(1)
           end if
-            !
+!
           if ( .not. direct) then
             w(2) = w2
             w(3) = w3
@@ -132,9 +134,13 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
       end if
       enuc = tore(ni) * tore(nj) * w1
     else
-      !
-      !   SOLID SYSTEM
-      !
+!
+!   SOLID SYSTEM
+!
+      if (icalcn /= numcal) then 
+        icalcn = numcal 
+        cutof2 = clower**2
+      endif 
       do i = 1, 10
         e1b(i) = 0.d0
         e2a(i) = 0.d0
@@ -159,56 +165,63 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
              & * k - xj(l)
             end do
             rij = x(1) * x(1) + x(2) * x(2) + x(3) * x(3)
-            rijx = Sqrt (rij)
-            rij = rijx
-               !
-               ! *** COMPUTE INTEGRALS IN DIATOMIC FRAME
-               !
-            call reppd (ni, nj, rij, ri, gab)
-               !
-            a = 1.d0 / rijx
-            x(1) = x(1) * a
-            x(2) = x(2) * a
-            x(3) = x(3) * a
-            if (Abs (x(3)) > 0.99999999d0) then
-              x(3) = Sign (1.d0, x(3))
+            if (rij >  cutof2) then
+!
+!  Interaction distance is greater than cutoff, so use point-charge
+!
+              rij = sqrt(rij)  
+              call point(rij, ni, nj, ri, l, e1bits, e2bits, enubit)
+              ri(4) = ri(1)
+              ri(6) = 0.d0
+            else 
+              rij = Sqrt (rij)
+!
+! *** COMPUTE INTEGRALS IN DIATOMIC FRAME
+!
+              call reppd (ni, nj, rij, ri, gab)      
             end if
-            wb(1) = ri(1)
-            e1b(1) = e1b(1) - wb(1) * tore(nj)
-            e2a(1) = e2a(1) - wb(1) * tore(ni)
-            if (sj) then
-              wb(2) = -ri(5) * x(1)
-              wb(3) = -ri(5) * x(2)
-              wb(4) = -ri(5) * x(3)
-              e2a(2) = e2a(2) - wb(2) * tore(ni)
-              e2a(3) = e2a(3) - wb(1) * tore(ni)
-              e2a(4) = e2a(4) - wb(3) * tore(ni)
-              e2a(6) = e2a(6) - wb(1) * tore(ni)
-              e2a(7) = e2a(7) - wb(4) * tore(ni)
-              e2a(10) = e2a(10) - wb(1) * tore(ni)
-            end if
-               !
-            if (si) then
+!
+              a = 1.d0 / rij
+              x(1) = x(1) * a
+              x(2) = x(2) * a
+              x(3) = x(3) * a
+              if (Abs (x(3)) > 0.99999999d0) x(3) = Sign (1.d0, x(3))
+              wb(1) = ri(1)
+              e1b(1) = e1b(1) - wb(1) * tore(nj)
+              e2a(1) = e2a(1) - wb(1) * tore(ni)
               if (sj) then
-                wb(5) = -ri(2) * x(1)
-                wb(6) = -ri(2) * x(2)
-                wb(7) = -ri(2) * x(3)
-                e1b(2) = e1b(2) - wb(5) * tore(nj)
-                e1b(3) = e1b(3) - wb(1) * tore(nj)
-                e1b(4) = e1b(4) - wb(6) * tore(nj)
-                e1b(6) = e1b(6) - wb(1) * tore(nj)
-                e1b(7) = e1b(7) - wb(7) * tore(nj)
-                e1b(10) = e1b(10) - wb(1) * tore(nj)
-              else
-                wb(2) = -ri(2) * x(1)
-                wb(3) = -ri(2) * x(2)
-                wb(4) = -ri(2) * x(3)
-                e1b(2) = e1b(2) - wb(2) * tore(nj)
-                e1b(3) = e1b(3) - wb(1) * tore(nj)
-                e1b(4) = e1b(4) - wb(3) * tore(nj)
-                e1b(6) = e1b(6) - wb(1) * tore(nj)
-                e1b(7) = e1b(7) - wb(4) * tore(nj)
-                e1b(10) = e1b(10) - wb(1) * tore(nj)
+                wb(2) = -ri(5) * x(1)
+                wb(3) = -ri(5) * x(2)
+                wb(4) = -ri(5) * x(3)
+                e2a(2) = e2a(2) - wb(2) * tore(ni)
+                e2a(3) = e2a(3) - wb(1) * tore(ni)
+                e2a(4) = e2a(4) - wb(3) * tore(ni)
+                e2a(6) = e2a(6) - wb(1) * tore(ni)
+                e2a(7) = e2a(7) - wb(4) * tore(ni)
+                e2a(10) = e2a(10) - wb(1) * tore(ni)
+              end if
+!
+              if (si) then
+                if (sj) then
+                  wb(5) = -ri(2) * x(1)
+                  wb(6) = -ri(2) * x(2)
+                  wb(7) = -ri(2) * x(3)
+                  e1b(2) = e1b(2) - wb(5) * tore(nj)
+                  e1b(3) = e1b(3) - wb(1) * tore(nj)
+                  e1b(4) = e1b(4) - wb(6) * tore(nj)
+                  e1b(6) = e1b(6) - wb(1) * tore(nj)
+                  e1b(7) = e1b(7) - wb(7) * tore(nj)
+                  e1b(10) = e1b(10) - wb(1) * tore(nj)
+                else
+                  wb(2) = -ri(2) * x(1)
+                  wb(3) = -ri(2) * x(2)
+                  wb(4) = -ri(2) * x(3)
+                  e1b(2) = e1b(2) - wb(2) * tore(nj)
+                  e1b(3) = e1b(3) - wb(1) * tore(nj)
+                  e1b(4) = e1b(4) - wb(3) * tore(nj)
+                  e1b(6) = e1b(6) - wb(1) * tore(nj)
+                  e1b(7) = e1b(7) - wb(4) * tore(nj)
+                  e1b(10) = e1b(10) - wb(1) * tore(nj)
               end if
             end if
             do l = 1, ki
@@ -219,7 +232,7 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
       end do
       enuc = tore(ni) * tore(nj) * w(1)
     end if
-   !
+!
     if ( .not. direct) then
       if (natorb(ni)*natorb(nj) == 0) then
         ki = 0
@@ -227,3 +240,4 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
       kr = kr + ki
     end if
 end subroutine outer2
+

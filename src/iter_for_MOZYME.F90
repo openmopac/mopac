@@ -17,6 +17,7 @@ subroutine iter_for_MOZYME (ee)
     use cosmo_C, only: useps, lpka, solv_energy
     use linear_cosmo, only : c_proc
     use reada_I
+    use to_screen_I
     implicit none
 !
     double precision, intent (out) :: ee
@@ -120,8 +121,9 @@ subroutine iter_for_MOZYME (ee)
         return
       end if
       if (Index (keywrd, " OLDEN") /= 0) then
-          call pinout(0)
+          call pinout(0, (index(keywrd, "SILENT") == 0))
           if (add_niter /= 0)  call l_control("OLDEN", len_trim("OLDEN"), -1)
+          if (add_niter /= 0)  call l_control("SILENT", len_trim("SILENT"), -1)
           if (moperr) return
           call density_for_MOZYME (p, 0, noccupied, partp)
           partp = p
@@ -226,7 +228,7 @@ subroutine iter_for_MOZYME (ee)
 !
 !  Read in old density
 !
-          call pinout (0)
+          call pinout (0, .false.)
           moperr = .false.
         else
           exit
@@ -255,7 +257,7 @@ subroutine iter_for_MOZYME (ee)
 !
 !  Read in old density
 !
-          call pinout (0)
+          call pinout (0, .false.)
           moperr = .false.
         else
           exit
@@ -315,13 +317,14 @@ subroutine iter_for_MOZYME (ee)
 !  Correct any small errors in normalization
 !
       call check (nocc1, nncf, ncf, icocc, icocc_dim, iorbs, ncocc, cocc, cocc_dim)
+      if (moperr) return
       call check (nvir1, nnce, nce, icvir, icvir_dim, iorbs, ncvir, cvir, cvir_dim)
       if (moperr) return
       if (Mod(niter+1, idnout) == 0) then
         write (iw, "(A)") " .den FILE TO BE WRITTEN OUT"
         endfile (iw) 
         backspace (iw) 
-        call pinout (1)
+        call pinout (1, .true.)
         write (iw, "(A)") " .den FILE WRITTEN OUT"
         endfile (iw) 
         backspace (iw) 
@@ -345,10 +348,10 @@ subroutine iter_for_MOZYME (ee)
 !
           numcal = numcal + 1
           add_niter = niter
-          call pinout(1)
+          call pinout(1, .false.)
           call l_control("OLDEN", len_trim("OLDEN"), 1)
           call l_control("SILENT", len_trim("SILENT"), 1)   
-     !     write(iw,*)"  PLS_faulty is true"
+          nscf = nscf - 1
           goto 80
         end if
       end if
@@ -448,22 +451,12 @@ subroutine iter_for_MOZYME (ee)
         if (mod(niter,3) == 2 .and. Abs (energy_diff) < 0.1d0) then
           use_three_point_extrap = .false.
           lstart = niter
-  !        if (prtpls) then
-  !          write (iw,&
-  !           & "('Three-point extrapolation turned off on iteration ',i3)") &
-  !           & niter
-  !        end if
           shift = 0.0d0
         end if
       else
         if (energy_diff > 0.0d0 .and. shift < 11.0d0 .and. &
              & niter > lstart+2) then
           shift = shift + 2.0d0
-  !        if (prtpls) then
-  !          write (iw,&
-  !           & "('Energy increasing. Level shift set to ', f6.1, ' eV')") &
-  !           & shift
-  !        end if
           lstart = niter
         end if
       end if
@@ -525,8 +518,6 @@ subroutine iter_for_MOZYME (ee)
       if (useps) then
             escf = escf + solv_energy * fpc_9
       endif
-      write (iw, "(/,A,F16.6,A,/)") &
-             & " ESCF AFTER RE-ORTHOGONALIZING LMOs", escf, " KCAL/MOL"
     end if
     nmol = numcal
     return

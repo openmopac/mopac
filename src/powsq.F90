@@ -131,6 +131,7 @@
       lpacifier = .false.
       percent = (100*(ilpr-1))/nvar
       write (iw, '(/, 10 x, "HESSIAN CALCULATED NUMERICALLY", /)')
+      test = 0.d0
       do iloop = ilpr, nvar 
         time1 = second(1) 
         xparam(iloop) = xparam(iloop) + xinc 

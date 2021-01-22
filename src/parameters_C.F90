@@ -10,17 +10,19 @@
     real(double), dimension(107,4) :: guess1, guess2, guess3 
     real(double), dimension(60) :: v_par = 0.d0
     real(double), dimension(6,107) :: ddp 
-    real(double), dimension(9,107) :: po 
-    real(double), dimension(107) :: betas, betap, betad 
-    real(double), dimension(107) :: uss, upp, udd
-    real(double), dimension(107) :: gpp, gp2, hsp, gss, gsp
+    real(double), dimension(9,107) :: po = 0.d0 
+    real(double), dimension(107) :: betas = 0.d0, betap = 0.d0, betad = 0.d0 
+    real(double), dimension(107) :: uss = 0.d0, upp = 0.d0, udd = 0.d0
+    real(double), dimension(107) :: gpp = 0.d0, gp2 = 0.d0, hsp = 0.d0, gss = 0.d0, gsp = 0.d0
     real(double), dimension(107) :: am, ad, aq, dd, qq
-    real(double), dimension(107) :: zs, zp, zd, zsn, zpn, zdn
+    real(double), dimension(107) :: dsd = 0.d0, dpd = 0.d0, ddd = 0.d0
+    real(double), dimension(107) :: zs, zp, zd, zsn = 0.d0, zpn = 0.d0, zdn = 0.d0
     real(double), dimension(107) :: eisol, eheat
     real(double), dimension(57:71) ::  eheat_sparkles
     real(double), dimension(107) :: ams
-    real(double), dimension (107) :: tore, polvol, pocord, f0dd, f2dd, f4dd, &
-    f0sd, g2sd, f0pd, f2pd, g1pd, g3pd, CPE_Zeta, CPE_Z0, CPE_B, CPE_Xlo, CPE_Xhi
+    real(double), dimension (107) :: tore, polvol, pocord, f0dd = 0.d0, f2dd = 0.d0, f4dd = 0.d0, &
+    f0sd = 0.d0, g2sd = 0.d0, f0pd = 0.d0, f2pd = 0.d0, g1pd = 0.d0, g3pd = 0.d0, CPE_Zeta = 0.d0, &
+      CPE_Z0 = 0.d0, CPE_B = 0.d0, CPE_Xlo = 0.d0, CPE_Xhi = 0.d0
     real(double), dimension (107) :: f0sd_store(107) ! Used by PARAM, not used in MOPAC
     real(double), dimension (107) :: g2sd_store(107) ! Used by PARAM, not used in MOPAC
     real(double), dimension (107) :: atom_radius_vdw, atom_radius_cosmo, &
@@ -29,7 +31,7 @@
     double precision :: dh2_a_parameters(6)
     integer, dimension (107,3) :: npq
     integer, dimension (107) :: iod, iop, ios, natorb, ndelec
-    integer, parameter :: n_partyp = 42, n_partyp_alpb = 39, n_partyp_fn = 27
+    integer, parameter :: n_partyp = 72, n_partyp_alpb = 39, n_partyp_fn = 27
     logical, dimension (107) :: main_group
     double precision :: par1,  par2,  par3,  par4,  par5,  par6,  par7,  par8,  par9,  par10, &
                         par11, par12, par13, par14, par15, par16, par17, par18, par19, par20, &
@@ -373,4 +375,34 @@ data npq(1:107,3) / &
     data partyp (40), defmin (40), defmax (40) / "XFAC_", 0.5d0, 30.d0 /
     data partyp (41), defmin (41), defmax (41) / "PAR  ", 0.5d0, 6.d0 /
     data partyp (42), defmin (42), defmax (42) / "NORBS", 0.9d0, 9.1d0/
+    data partyp (43)                           / "ZCORE"/
+    data partyp (44)                           / "ZSP  "/
+    data partyp (45)                           / "ZD1  "/
+    data partyp (46)                           / "ZD2  "/
+    data partyp (47)                           / "ZWT1 "/
+    data partyp (48)                           / "ZWT2 "/
+    data partyp (49)                           / "FG1  "/
+    data partyp (50)                           / "FG2  "/
+    data partyp (51)                           / "FG3  "/
+    data partyp (52)                           / "FG4  "/
+    data partyp (53)                           / "FG5  "/
+    data partyp (54)                           / "FG6  "/
+    data partyp (55)                           / "FG7  "/
+    data partyp (56)                           / "FG8  "/
+    data partyp (57)                           / "FG9  "/
+    data partyp (58)                           / "FG10 "/
+    data partyp (59)                           / "FG11 "/
+    data partyp (60)                           / "FG12 "/
+    data partyp (61)                           / "FG13 "/
+    data partyp (62)                           / "FG14 "/
+    data partyp (63)                           / "FG15 "/
+    data partyp (64)                           / "FG16 "/
+    data partyp (65)                           / "FG17 "/
+    data partyp (66)                           / "FG18 "/
+    data partyp (67)                           / "FG19 "/
+    data partyp (68)                           / "FG20 "/
+    data partyp (69)                           / "FG21 "/
+    data partyp (70)                           / "FG22 "/
+    data partyp (71)                           / "FG23 "/
+    data partyp (72)                           / "FG24 "/
       end module parameters_C 

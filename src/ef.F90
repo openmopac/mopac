@@ -5,6 +5,7 @@ subroutine ef (xparam, funct)
     use chanel_C, only: iw, ilog, log, iw0, input_fn
     use ef_C, only: nstep, negreq, iprnt, ef_mode, ddx, xlamd, &
        & xlamd0, skal, rmin, rmax
+    use maps_C, only : latom
     use second_I   
     use to_screen_I
 #if GPU      
@@ -88,6 +89,7 @@ subroutine ef (xparam, funct)
       end if
       return
     end if  
+    tstep = 0.d0
     pmat(:) = 0.d0
     bmat(:,:) = 0.d0
     u(:) = 0.d0
@@ -158,7 +160,7 @@ subroutine ef (xparam, funct)
       saddle = (Index (keywrd, " SADDLE") /= 0)
       first_time = .true.
     else
-      first_time = .false.
+      first_time = (latom /= 0)
     end if 
    !
    !  Assume that this is the last SCF, so that if geometry is optimized
@@ -193,7 +195,7 @@ subroutine ef (xparam, funct)
       iflepo = 2
       last = 1
       icalcn = numcal
-      write (iw, '(/, 5 x, "GRADIENT =", f9.5, "  IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
+      write (iw, '(/, 5 x, "GRADIENT =", f9.5, " IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
       go to 1030
     end if
    !
@@ -275,8 +277,8 @@ subroutine ef (xparam, funct)
 !  the cycle time.
 !
       if (tleft < (tstep - (t_hess2 - t_hess1))*two) go to 1030
+      call prttim (tleft, tprt, txt)
       if ( .not. saddle .and. tstep > 0.5d0 .or. first_time) then
-        call prttim (tleft, tprt, txt)
         if (ldump == 0) then
           if (id == 3) then
             call write_cell(iw)
@@ -287,6 +289,12 @@ subroutine ef (xparam, funct)
                 nstep + 1, Min (tstep, 9999.99d0), tprt, txt, &
                 & Min (gnorm, 999999.999d0), funct
           write(iw,"(a)")line(:len_trim(line))
+          if (mod(nstep + 1,30) == 0) then
+            line = trim(input_fn)
+            call add_path(line)
+            i = len_trim(line) - 5
+          call to_screen(line(:i))
+        end if
           endfile (iw) 
           backspace (iw) 
           if (log) write (ilog, "(a)")line(:len_trim(line))  
@@ -337,7 +345,6 @@ subroutine ef (xparam, funct)
         end if
       end if
       call to_screen("To_file: Geometry optimizing")
-
 !
 !  Store best result up to the present
 !
@@ -361,15 +368,12 @@ subroutine ef (xparam, funct)
          !
          !     ****** OPTIMIZATION TERMINATION ******
          !
-        write (iw, '(/, 5 x, "GRADIENT =", f9.5, "  IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
+        write (iw, '(/, 5 x, "GRADIENT =", f9.5, " IS LESS THAN CUTOFF =", f9.5,//)') rmx, tol2
         go to 1020
       else
         if (ef_mode == 0 .and. nstep > 5 .and. .not. l_geo_ok) then
           if (absmin-funct < 1.d-5) then
-            if (funct-absmin > 1.d0) then
-              itry1 = 0
-            end if
-            if (itry1 > 900 .or. (rmx < 0.1d0 .and. itry1 > 9)) then
+            if (itry1 > 15 .or. (rmx < 0.1d0 .and. itry1 > 9)) then
               write (iw, &
                  &"(//,' HEAT OF FORMATION IS ESSENTIALLY STATIONARY')")
               go to 1020
@@ -827,7 +831,7 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
     close(ires) 
     return  
   else 
-    read (ires, iostat = io_stat)old_numat, old_norbs, (xparam(i),i=1,nvar) 
+    read (ires, iostat = io_stat)old_numat, old_norbs
     if (norbs /= old_norbs .or. numat /= old_numat) then
         call mopend("Restart file read in does not match current data set")
         return

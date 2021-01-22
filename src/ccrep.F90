@@ -5,7 +5,7 @@
       USE vast_kind_param, ONLY:  double 
       use parameters_C, only : alp, tore, guess1, guess2, guess3, alpb, xfac, &
         par1, par2, par3, par4
-      use funcon_C, only : a0, ev
+      use funcon_C, only : a0
       use molkst_C, only : method_mndod, method_pm6, method_am1, &
         method_pm7, method_PM8
 !...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
@@ -57,7 +57,7 @@
           end if
         end if
       end if
-       if (abs(fff) > 1.d-5) then
+      if (abs(fff) > 1.d-5) then
      !
      ! Bond parameters defined
      !
@@ -141,6 +141,7 @@
        !
         enuclr = enuc * scale
       else 
+        abond = 0.d0
         if (method_pm6 .or. method_pm7 .or. method_pm8) then
           if (ni .gt. 56 .and. ni  .lt. 72 &
          .or. nj .gt. 56 .and. nj  .lt. 72 )then

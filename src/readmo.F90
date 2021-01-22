@@ -13,14 +13,14 @@
       USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar 
 !
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
-      & verson, method_mndo, method_am1, method_pm3, is_PARAM, line, nl_atoms, &
-      & method_mndod, moperr, maxatoms, koment, title, method_pm6, refkey, &
-      isok, ijulian, method_rm1, gui, Academic, site_no, method_pm6_dh2, caltyp, &
+      & verson, method_mndo, is_PARAM, line, nl_atoms, l_feather, &
+      & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
+      isok, ijulian, gui, Academic, site_no, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, num_bits, use_ref_geo, &
-      n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x,   &   
+      n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &   
       method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
-      method_pm7_minus, method_pm6_dh_plus, method_pm8, prt_coords, prt_cart, mozyme, pdb_label
+      method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label
 !
       use meci_C, only : maxci
 !
@@ -30,11 +30,11 @@
 !
       use common_arrays_C, only : xparam, loc, labels, nat, na, nb, nc, & 
         geo, coord, atmass, lopt, pibonds, l_atom, chains, pibonds_txt, &
-        coorda, txtatm, txtatm1, break_coords, breaks, nbonds
+        coorda, txtatm, txtatm1, break_coords, breaks, nbonds, tvec
 !
       use MOZYME_C, only : start_res, lstart_res, start_letter
 !
-      USE funcon_C, only : fpc_9, fpc
+      USE funcon_C, only : fpc
       use conref_C, only : fpcref 
 !
 !***********************************************************************
@@ -65,7 +65,7 @@
       integer :: ireact 
       integer , dimension(19,2) :: idepco 
       integer :: naigin, i, j, k, iflag, nreact, ij, iend, l, ii, jj, &
-        i4, j4, ir_temp, l_iw, from_data_set = 14
+        i4, j4, ir_temp, l_iw, from_data_set = 14, i_loop, setpi_limit = 50
       real(double), dimension(40) :: value 
       real(double), dimension(400) :: xyzt 
       real(double) :: degree, convrt, dum1, dum2, sum, Rab
@@ -155,26 +155,48 @@
       refkey_ref(2) = title
       call gettxt 
       if (moperr) return
-      i = index(keywrd, "GEO-DAT")
-      if (i /= 0) then
-        keywrd(i:i+6) = "GEO_DAT"
-        do j = 1, 3
-          line = refkey(j)
-          call upcase(line, len_trim(line))
-          i = index(line, "GEO-DAT")
-          if (i > 0) refkey(j)(i:i+6) = "GEO_DAT"
+!
+!  Convert any "SELF" into file-names
+!
+      do
+        line = trim(keywrd)
+        call upcase(line, len_trim(line))
+        i = index(line, "SELF")
+        if (i == 0) exit
+!
+! Isolate the path
+!
+        do l = i, 1, -1
+          if (keywrd(l:l) == '"') exit
         end do
-      end if
-      i = index(keywrd, "GEO-REF")
-      if (i /= 0) then
-        keywrd(i:i+6) = "GEO_REF"
-        do j = 1, 3
-          line = refkey(j)
-          call upcase(line, len_trim(line))
-          i = index(line, "GEO-REF")
-          if (i > 0) refkey(j)(i:i+6) = "GEO_REF"
+        line_2 = keywrd(l + 1:i - 1)
+!
+! If "SELF" without a suffix, use the name of the job.
+!
+        do k = len_trim(job_fn), 1, -1
+            if (job_fn(k:k) == "/" .or. job_fn(k:k) == "\") exit
         end do
-      end if
+        if (keywrd(i + 4:i + 4) == '"') then
+!
+!  "SELF" without a suffix, so use the name of the job.
+!
+          line_1 = trim(line_2)//trim(job_fn(k + 1:))
+          i = i + 4
+        else
+!
+!  "SELF" with a suffix, so use the name of the job but using the suffix from "SELF".
+!
+          j = index(job_fn(k + 1:), ".") + k 
+          line_1 = keywrd(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd(i + 4:i + 7)
+          i = i + index(keywrd(i:), '"') - 1
+        end if
+        call add_path(line_1)
+!
+! Replace "SELF"
+!
+        line = keywrd(1:l)//trim(line_1)//trim(keywrd(i:))
+        keywrd = trim(line)
+      end do
       if (index(keywrd, "GEO_DAT")  > 0) then
         if (moperr) then
           title = " "
@@ -184,42 +206,36 @@
 !
 !     Use geometry in file defined by GEO_DAT
 !
-        do l = 1, 6
-          line = " "//trim(refkey(l))
-          call upcase(line, len_trim(line))
-          i = index(line," GEO_DAT")
-          if (i /= 0) exit
-        end do
-        j = index(refkey(l)(i + 10:),' ') + i + 8
-        if (index(line(i:j), '"') + index(line(i:j), "'") == 0) then
+        i = index(keywrd,"GEO_DAT")
+        j = index(keywrd(i + 10:),' ') + i + 8
+        if (index(keywrd(i:j), '"') + index(line(i:j), "'") == 0) then
           write(line,'(a)')" File name after GEO_DAT must be in quotation marks."
           call mopend(trim(line))
           return
         end if
-        j = index(refkey(l)(i + 10:),'"')  + index(refkey(l)(i + 10:), "'")
+        j = index(keywrd(i + 10:),'"')  + index(keywrd(i + 10:), "'")
         if (j == 0) then
           write(line,'(a)')" File name after GEO_DAT must end with a quotation mark."
           call mopend(trim(line))
           return
         end if
-        j = j + i + 8
-        line = refkey(l)(i + 9:j)
+        j = index(keywrd(i + 10:), '"') + i + 8
+        line = keywrd(i + 9:j)
         line_1 = trim(line)
-        line_2 = job_fn
         call upcase(line_1, len_trim(line_1))
-        call upcase(line_2, len_trim(line_2))
+        line_2 = job_fn
         if (index(keywrd, "GEO-OK") == 0) then
           do i = len_trim(line_1), 1, -1
-            if (line_1(i:i) == "\" .or. line_1(i:i) == "/") exit
+            if (line_1(i:i) == "\") exit
           end do
           if (i > 0) line_1 = line_1(i + 1:)
           do i = len_trim(line_2), 1, -1
-            if (line_2(i:i) == "\" .or. line_2(i:i) == "/") exit
+            if (line_2(i:i) == "\") exit
           end do
-          if (i > 0) line_2 = line_2(i + 1:)          
+          if (i > 0) line_2 = line_2(i + 1:)  
           if (line_1(:len_trim(line_1) - 3) == line_2(:len_trim(line_2) - 3)) then
             if (line_1(len_trim(line_1) - 2:) == "ARC" .or. line_1(len_trim(line_1) - 2:) == "PDB") then
-              if (index(keywrd, " HTML") + index(keywrd, " PDBOUT") /= 0) then
+              if (len_trim(line) == len_trim(line_1) .and. index(keywrd, " HTML") + index(keywrd, " PDBOUT") /= 0) then
                 call mopend("The name of the geometry file defined by GEO_DAT is "// &
                 & "similar to the name of the job data set")
                 write(iw,"(/10x,a)")"Job name:    """//trim(job_fn)//""""
@@ -293,7 +309,7 @@
             if (line(i:i) /= " ") exit
           end do
           if (line(1:1) /= "*") then
-            write (ir, '(A)', iostat=i) trim(line(i:))
+            write (ir, '(A)', iostat=j) trim(line(i:))
             natoms = natoms + 1
           end if
         end do
@@ -306,11 +322,15 @@
       end if
       chains = " "
       if (index(keywrd,"OLDGEO") .ne. 0) then 
-        if (natoms == -30 .and. numat == - 30) then
+        if (natoms == -30 .and. numat == -30) then
           write(iw,'(/10x,a)')"OLDGEO cannot be used here."
           call mopend("A FORCE CALCULATION ON A SYSTEM THAT HAS DUMMY ATOMS CANNOT BE CONTINUED")
           return
         end if
+        do i = 1, id
+          coord(:, natoms + i) = tvec(:,i)
+        end do          
+        natoms = natoms + id        
         if (koment == " " .and. refkey_ref(1) /= " ") koment = trim(refkey_ref(1))
         if (title == " " .and. refkey_ref(2) /= " ") title = trim(refkey_ref(2))
 !
@@ -345,6 +365,32 @@
         allocate(txtatm1(numat))
         numat_old = numat
         txtatm1(:numat) = txtatm(:numat)
+        if (index(keywrd, " INT") /= 0) then
+          call xyzint (coord, numat, na, nb, nc, 1.d0, geo) 
+          lopt(:,1) = 0
+          lopt(2:,2) = 0
+          lopt(3,3) = 0
+        end if
+        if (index(keywrd, " XYZ") /= 0) then
+          numat = 0 
+          do i = 1, natoms 
+            if (labels(i) /= 99) then 
+              numat = numat + 1 
+              labels(numat) = labels(i)
+              txtatm(numat) = txtatm(i)
+              lopt(:,numat) = lopt(:,i)
+              na(numat) = 0
+            endif 
+            geo(:,i) = coord(:,i) 
+          end do 
+!
+!   If everything is marked for optimization then unconditionally mark the first
+!   three atoms for optimization
+!
+          if (k >= 3*numat - 6) lopt(:,:min(3, numat)) = 1
+          natoms = numat
+        end if
+        
       end if
       if (moperr) then
         natoms = 0
@@ -435,6 +481,8 @@
           end do
           i = index(keywrd, " CHAIN=")
           if (i /= 0) keywrd = keywrd(:i + 5)//"S"//trim(keywrd(i + 6:))
+          natoms = maxatoms
+          
           if (index(line, " PDB ") /= 0) then
             call getpdb(geo)
             coorda(:,:numat) = geo(:,:numat)
@@ -494,19 +542,26 @@
               + index(keywrd," ADD-H") == 0) &
                 call l_control("CONTROL_no_MOZYME", len_trim("CONTROL_no_MOZYME"), 1)    
           end if
+          if (maxtxt == 27 .and. index(keywrd, " HTML") /= 0) then
+!
+!  Delete residue code letter.  If it was present, then Jmol could give problems
+!
+            maxtxt = 26
+            txtatm1(:numat)(27:27) = " "
+            txtatm(:numat) = txtatm1(:numat)
+          end if
+!
+!  If the file contains PDB data, but no chain label, then force chain label "A" in.
+!
+          if (maxtxt == 26) then
+            do i = 1, numat
+              if (txtatm1(i)(22:22) /= " ") exit
+            end do
+            if (i > numat) txtatm1(:numat)(22:22) = "A"
+          end if
           if (index(keywrd, " RESIDUES ") /= 0) then
             txtatm(:numat) = " "
-            maxtxt = 0
-            do i = 1, numat
-              if (labels(i) == 99) exit
-            end do
-            do i = i + 1, numat
-              if (labels(i) < 99) then
-                call mopend("DUMMY ATOMS CANNOT BE PRESENT WHEN KEYWORD ""RESIDUE"" IS PRESENT")
-                write(iw,'(10x,a)')"(A simple way to remove dummy atoms is to add keyword ""XYZ"")"
-                return
-              end if
-            end do            
+            maxtxt = 0     
           end if
           if (natoms == -3) then
             if (index(keywrd, " COMPARE") /= 0) then
@@ -601,11 +656,9 @@
 #if BITS32
       num_bits = 32 
       maxci = 5000
-#elif BITS64
-      num_bits = 64
-      maxci = 20000
 #else
-    Set pre-processor directive BITS32 or BITS64.  This line causes a deliberate compile-time error
+      num_bits = 64
+      maxci = 10000
 #endif
       if (Academic) then
         if (site_no > 9999) then
@@ -712,6 +765,8 @@
         method_pm7 = (method_PM7 .or. method_PM7_ts .or. method_pm7_hh .or. method_pm7_minus)
         method_pm6 = (method_PM6 .or. method_pm6_dh2 .or. method_pm6_d3h4 .or. method_pm6_dh_plus .or. &
        & method_pm6_dh2x .or. method_pm6_d3h4x .or. method_pm6_d3 .or. method_pm6_d3_not_h4)
+        l_feather = (method_PM7 .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
+        l_feather_1 = (index(keywrd, " MACRO") /= 0)
         dh = " "
         i = index(keywrd, " PM6-D")
         if (i /= 0) then 
@@ -984,70 +1039,103 @@
           i = i + 5
           k = index(line(i:j + i), "=")
           if (k /= 0) then
+            i_loop = i
+            line_2 = trim(line)
+            lopt(:,:natoms) = 0
+            do
+              i = i_loop
+              j = index(line(i + 1:), ") ")
 !
 ! Keyword OPT("text"=n.nn) used, so use only atoms in the region of selected atoms.
 !
 !
 !  Text for selected atoms
 !
-            txt = line(i + 1: k + i - 3)
-            Rab = reada(line, k + i)
-            jj = 0
-            do i = 1, len_trim(txt)
-              if (txt(i:i) /= " ") then
+              txt = line(i + 1: k + i - 3)
+              ch = txt(1:1)
+              if (ch >= "a" .and. ch <= "z") txt(1:1) = char(ichar(ch) + ichar("A") - ichar("a"))
+              Rab = reada(line, k + i)
+              jj = 0
+              do i = 1, len_trim(txt)
+                if (txt(i:i) /= " ") then
+                  jj = jj + 1
+                  txt(jj:jj) = txt(i:i)
+                end if
+              end do
+              txt(jj + 1:) = " " 
+              do i = len_trim(txt), 1, -1
+                if (txt(i:i) > "9" .or. txt(i:i) < "0") exit
+              end do
+              txt = trim(txt(max(i,1):)) 
+              if (txt(1:1) >= "0" .and. txt(1:1) <= "9") then
+!
+! Ignore chain letter in test
+!
+                txt = "*"//trim(txt)
                 jj = jj + 1
-                txt(jj:jj) = txt(i:i)
               end if
-            end do
-            txt(jj + 1:) = " "    
-            if (txt(1:1) >= "0" .and. txt(1:1) <= "9") then
-              txt = "*"//trim(txt)
-              jj = jj + 1
-            end if
-            lopt(:,:natoms) = 0
-            do i = 1, natoms
+              do i = 1, natoms
 !
 !  l_use(i) = F:  not assigned
 !  l_use(i) = T:  Assigned because it matches the SITE word or it's within Rab of an atom defined by SITE
 !
-              line = txtatm(i)(22:)
-              j = 1
-              do ii = 1, len_trim(line)
-                if (line(ii:ii) /= " ") then
-                  line(j:j) = line(ii:ii)
-                  j = j + 1
-                end if
-              end do
-              if (len_trim(txt) == j - 1) then
-                do k = 1, jj
-                  if (txt(k:k) /= line(k:k) .and. txt(k:k) /= "*") exit
-                end do
-                if (k > jj) then
-                  l_use(i) = .true.
-                  do j = 1, natoms
-                    if (l_use(j)) cycle
-                    l_use(j) = (distance(i,j) < Rab) 
-                  end do
-                end if
-              end if
-            end do    
-            if (index(keywrd, " NOOPT") /= 0) then
-              do i = 1, natoms
-                if ( .not. l_use(i)) cycle
                 line = txtatm(i)(22:)
-                j = 1
+                j = 0
+                if (txt(1:1) == "*") then
+                  j = 1
+                  line(1:1) = " "
+                end if
                 do ii = 1, len_trim(line)
                   if (line(ii:ii) /= " ") then
-                    line(j:j) = line(ii:ii)
                     j = j + 1
+                    line(j:j) = line(ii:ii)
                   end if
                 end do
-                do k = 1, jj
-                  if (txt(k:k) /= line(k:k) .and. txt(k:k) /= "*") exit
+!
+!   "j" is the number of characters in the PDB chain letter plus residue number
+!
+!   "jj" is the number of characters in the keyword for the test
+!
+                if (len_trim(txt) == j) then
+                  do k = 1, jj
+                    if (txt(k:k) /= line(k:k) .and. txt(k:k) /= "*") exit
+                  end do
+                  if (k > jj) then
+                    l_use(i) = .true.
+                    do j = 1, natoms
+                      if (l_use(j)) cycle
+                      l_use(j) = (distance(i,j) < Rab) 
+                    end do
+                  end if
+                end if
+              end do    
+              if (index(keywrd, " NOOPT") /= 0) then
+                do i = 1, natoms
+                  if ( .not. l_use(i)) cycle
+                  line = txtatm(i)(22:)
+                  j = 1
+                  do ii = 1, len_trim(line)
+                    if (line(ii:ii) /= " ") then
+                      line(j:j) = line(ii:ii)
+                      j = j + 1
+                    end if
+                  end do
+                  do k = 1, jj
+                    if (txt(k:k) /= line(k:k) .and. txt(k:k) /= "*") exit
+                  end do
+                  l_use(i) = (k < jj + 1)
                 end do
-                l_use(i) = (k < jj + 1)
-              end do
-            end if
+              end if
+              line = trim(line_2)
+              j = index(line(i_loop + 1:), ") ") + i_loop
+              i = index(line(i_loop:j + i_loop), ",")
+              if (i == 0) exit
+!
+!  Move on to next residue
+!
+              i_loop = i_loop + i
+              k = index(line(i_loop:), "=") 
+            end do
           else  
 !
 !   Keyword OPT("text1"[,"text2"[,"text3"]]...) used, so use only atoms in the defined residues.
@@ -1066,17 +1154,20 @@
                   txt(jj:jj) = txt(i:i)
                 end if
               end do
-              txt(jj + 1:) = " "    
+              txt(jj + 1:) = " "   
+!
+! If no chain letter in the residue name, don't check for the chain letter in the protein
+!
+              ij = 22
               if (txt(1:1) >= "0" .and. txt(1:1) <= "9") then
-                txt = "*"//trim(txt)
-                jj = jj + 1
+                ij = 23
               end if
               do i = 1, natoms
 !
 !  l_use(i) = F:  not assigned
 !  l_use(i) = T:  Assigned because it matches the SITE word
 !
-                line_1 = txtatm(i)(22:)
+                line_1 = txtatm(i)(ij:)
                 j = 1
                 do ii = 1, len_trim(line_1)
                   if (line_1(ii:ii) /= " ") then
@@ -1086,7 +1177,7 @@
                 end do
                 if (len_trim(txt) == j - 1) then
                   do k = 1, jj
-                    if (txt(k:k) /= line_1(k:k) .and. txt(k:k) /= "*") exit
+                    if (txt(k:k) /= line_1(k:k)) exit
                   end do
                   if (k > jj) l_use(i) = .true.
                 end if
@@ -1150,7 +1241,11 @@
 !   FORCE OPTIMIZATION FLAGS OFF FOR DEPENDENT COORDINATES
 !
       j = 1 
-      if (xyz) j = 2 
+      if (xyz) j = 2
+      do i = 1, natoms
+        if (na(i) > 0) exit
+      end do
+      if (xyz .or. i > natoms) j = 2 
       do i = 1, ndep 
         lopt(idepco(idepfn(i),j),locdep(i)) = 0 
       end do 
@@ -1223,6 +1318,10 @@
             xparam(nvar) = geo(j,i) 
           end do 
         end do 
+        if (numat == 0) then
+          call mopend ('NO REAL ATOMS, ONLY DUMMY ATOMS AND/OR TRANSLATION VECTORS PRESENT') 
+          return
+        end if
       endif 
       if (index(keywrd, " MINI ") /= 0) then 
         nl_atoms = 0
@@ -1330,6 +1429,16 @@
           endif 
           iend = ireact + 1 
           react(iend) = -1.D12 
+          if (na(latom) > 0 .and. labels(1) < 99 .and. labels(latom) < 99 ) then
+            do i = 1, ireact
+              if (abs(react(i)) < 1.d-3) exit
+            end do
+            if (i <= ireact) then
+              write(line,'(a, i4, a)')"INTERATOMIC SEPARATION IS ZERO FOR POINT", i, " ON REACTION PATH"
+              call mopend (trim(line))  
+              return
+            end if
+          end if
         end if
       end if 
   250 continue 
@@ -1381,7 +1490,11 @@
         if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis') 
         call wrttxt (ilog) 
        endif 
-      if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1) 
+      if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1)
+      if (index(keywrd, " NOTXT") /= 0) then
+        maxtxt = 0
+        txtatm = " "
+      end if
       if (prt_coords) call geout(1)
       write(iw,*)
       if (moperr) return 
@@ -1474,7 +1587,7 @@
         end do
       end if
       if (index(keywrd, " SETPI") /= 0) then
-        i = min(10, numat)
+        i = min(setpi_limit, numat)
         if (allocated(pibonds)) deallocate(pibonds)
         if (allocated(pibonds_txt)) deallocate(pibonds_txt)
         allocate (pibonds(i,2), pibonds_txt(i))
@@ -1550,10 +1663,13 @@
                 if (j == i) exit
                 ij = index(line(j:),"""") + j 
                 line_1 = line(j:ij - 2)
+!
+! Do NOT use "txt_to_atom_no" in the next block - the format must be in PDB
+!
                 if (line_1(1:1) == "[") then
-  !
-  ! Atom defined using Jmol format
-  !
+!
+! Atom defined using Jmol format
+!
                   ii = index(line(j:ij - 2),".") + j
                   k = index(line(j:ij - 2),":") + j
                   jj = index(line(j:ij - 2),"]") + j
@@ -1624,6 +1740,14 @@
             call mopend(trim(line))
             return
           end if
+!
+! Check that the number of pi-bonds is within the limit
+!
+          if (l >= setpi_limit) then
+            write(line,'(a,i0,a,i0,a)') "The number of bonds provided to SETPI exceeds the limit of min(",setpi_limit,", ",numat,")"
+            call mopend(trim(line))
+            return
+          end if          
           pibonds(l,1) = ii
           pibonds(l,2) = jj
         end do
@@ -1724,23 +1848,32 @@
 !   i.e., the square of the vector sum of differences
 !
     use common_arrays_C, only : geo, geoa, txtatm, nat
-    use molkst_C, only : numat, keywrd, txtmax
+    use molkst_C, only : numat, keywrd, txtmax, line
     use chanel_C, only : iw
     use elemts_C, only : elemnt
+    use MOZYME_C, only : tyres
     implicit none
-    double precision :: sum, rms
-    logical :: prt, precise
-    double precision, allocatable :: move(:)
-    integer :: i, j, k, lim
-    logical :: first 
+    double precision, intent (out) :: sum, rms
+    logical, intent (in) :: prt
+    logical :: precise
+    integer :: i, j, k, lim, ires_l, ires_u
+    logical :: first, l_first 
     double precision :: dum1, sum1
     character :: num*7
-    save :: first
-    allocate (move(numat))
+    integer, allocatable :: No_atoms_in_residue(:)
+    double precision, allocatable :: move(:), residue_motion(:)
+    character, allocatable :: residue_name(:)*10
+    double precision, external :: reada
+    save :: first, l_first
+    allocate (move(numat), residue_motion(-100:numat), residue_name(-100:numat), No_atoms_in_residue(-100:numat))
 !
 !  Calculate the average and RMS differences of two geometries
 !
     precise = (index(keywrd, " PREC") /= 0)
+    residue_motion = 0.d0
+    No_atoms_in_residue = 0
+    ires_l = 10000
+    ires_u = -1000
     sum = 0.d0
     rms = 0.d0
     do i = 1, numat
@@ -1751,8 +1884,17 @@
       dum1 = sqrt(dum1)
       move(i) = dum1
       sum = sum + dum1
+      if (txtmax == 26) then
+        j = max(-100, nint(reada(txtatm(i), 24)))
+        ires_l = min(j, ires_l)
+        ires_u = max(j, ires_u)
+        residue_motion(j) = residue_motion(j) + move(i)
+        No_atoms_in_residue(j) = No_atoms_in_residue(j) + 1
+        residue_name(j) = txtatm(i)(17:26)
+      end if
     end do 
     first = .true.
+    l_first = .true.
     sum1 = 0.d0
     lim = numat
     if (.not. precise) lim = min(30, lim)
@@ -1788,7 +1930,45 @@
         exit  
       end if
     end do
-    deallocate (move)
+    if (prt) then
+      do i = ires_l, ires_u
+        if (residue_motion(i) > 1.d-10) residue_motion(i) = residue_motion(i)/No_atoms_in_residue(i)
+      end do   
+      line = " "
+      k = 0
+      do
+        k = k + 1
+        sum1 = 0.d0
+        do i = ires_l, ires_u
+          if (residue_motion(i) > sum1) then
+            sum1 = residue_motion(i)
+            j = i
+          end if
+        end do
+        if (sum1 < 0.1d0) exit
+        residue_motion(j) = 0.d0
+        if (l_first) then
+          write(iw,'(/5x, a, /)')"Residues that move a lot and their (Movement in Angstroms per atom)"
+          l_first = .false.
+        end if
+        do i = 1, 22
+          if (residue_name(j)(2:4) == tyres(i)) exit
+        end do
+        num = residue_name(j)(2:4)
+        if (i < 23) then
+          do i = 2, 3
+            num(i:i) = char(ichar(num(i:i)) + ichar("a") - ichar("A"))
+          end do
+        end if 
+        i = len_trim(line)
+        write(line(i + 1:),'(4x, a, f4.2, a)') num(1:3)//residue_name(j)(7:)//"(", min(sum1,9.99d0),")"
+        if (mod(k,5) == 0) then
+          write(iw,'(a)') trim(line)
+          line = " "
+        end if
+      end do  
+    end if
+    deallocate (move, residue_motion, residue_name)
     return
   end subroutine geo_diff
   subroutine add_path(file)
@@ -1799,6 +1979,11 @@
     integer :: i, j, n
     character :: path*241
     logical :: need_path, windows
+    if (file(1:1) == '"') then
+      i = len_trim(file)
+      path = file(2:i-1)
+      file = trim(path)
+    end if
 !
 !  Test to see if the file "file" already has an absolute path.
 !

@@ -440,7 +440,7 @@
     call Cpt_FirstOrderMatrix( N_qm, Id_qm, Crd_qm, Q_qm, Zeta_qm, Mmat, dMdQa )
     call Invert_Symmetric_Matrix( N, Eta, EtaInv )
     M = matmul( Mmat, Q0 )
-    C = - matmul(EtaInv, M )
+    C = -matmul(EtaInv, M )
     E =  dot_product( C, M ) + 0.5d0 * dot_product( C, matmul( Eta, C ) )
     do i=1, N_qm
        i1 = (i-1)*3 + 1

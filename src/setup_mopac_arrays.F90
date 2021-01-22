@@ -51,6 +51,28 @@
 !
   use to_screen_C, only : cnorml
 !
+   use reimers_C, only : natm,nbf,ibf,iat,nbt,&
+                 nprn,itrmet,&
+                 natt,nstr,&
+                 istr,nsym,ivv,npsn,mofrag,&
+                 nfocc,nfvir,icifrag,imp2d,imp2s,&
+                 isc,krefd,vv,iwk,&
+                 istate,nseig,icif,jcif,ncif,&
+                 nbtmo,iconf,nspn, &
+                 vca,vcb,occfr,&
+                 x,y,z,zcore,gamma, beta,betao,&
+                 s,r,ppg,pg,dd,ff,aa,&
+                 dm,xz,ci,evalmo,evalci,&
+                 spintr,cimatr,dmci,&
+                 stwt,e0,wk1,wk2,tr1,&
+                 wk3,occ,qgs,dipgs,&
+                 qbfcore,qbf,qcore,&
+                 dip,dtmp, &
+                 eec,ee2, &
+                 aocc,bocc,aor1,bor1,&
+                 aor,bor,aos,bos,aod,bod,&
+                 ao1,bo1,cc0,wk0,q0
+!
   implicit none
     integer :: n, mode, i, j
     double precision, external :: meci
@@ -110,7 +132,7 @@
           j = j + i
           allocate(c(norbs, norbs), eigs(norbs + 1), q(numat), stat=i)
           j = j + i
-          allocate(eigb(norbs), pold3(max(mpack, 400)), stat=i)
+          allocate(eigb(norbs + 1), pold3(max(mpack, 400)), stat=i)
           j = j + i
           allocate(errfn(3*natoms*l123), aicorr(nvar), stat=i)
           j = j + i
@@ -122,20 +144,19 @@
           pbold2(6*mpack), pbold3(max(mpack, 400)), stat=i)
           j = j + i          
           if (j /= 0) then
-            write(iw,'(/10x,a)')" A problem occurred during memory assignment, most likely the system is too big to run. "
             call mopend("A problem occurred during memory assignment, most likely the system is too big to run. ")
             call hint()
             return
           end if
           pold = 0.d0
           eigb = 0.d0
+          eigs = 0.d0
           if (uhf) pbold = 0.d0
           if (l123 > 1) then
             allocate(wk(n2elec + 2025), stat = i)
             if (i /= 0) then
-              write(iw,'(10x,a)')" Failed to allocate the two-electron integral array 'wk'"
+					    call mopend("Failed to allocate the two-electron integral array 'wk'")
               write(iw,"(10x,a,f9.2,a)") "  Size requested:",(n2elec*8.d0)/1.d6, "Mb"
-              call mopend("Failed to allocate the two-electron integral array 'wk'")
               call hint()
               return
             end if
@@ -337,7 +358,94 @@
     if (allocated(conf))       deallocate(conf, stat = i)
     if (allocated(vectci))     deallocate(vectci, stat = i)
     if (allocated(ispin))      deallocate(ispin, stat = i)
-    if (allocated(ispqr))      deallocate(ispqr, stat = i)
+    if (allocated(ispqr))      deallocate(ispqr, stat = i)    
+    if (allocated(natm))       deallocate(natm, stat = i)
+    if (allocated(nbf))        deallocate(nbf, stat = i)
+    if (allocated(ibf))        deallocate(ibf, stat = i)
+    if (allocated(iat))        deallocate(iat, stat = i)
+    if (allocated(nbt))        deallocate(nbt, stat = i)
+    if (allocated(nprn))       deallocate(nprn, stat = i)
+    if (allocated(itrmet))     deallocate(itrmet, stat = i)
+    if (allocated(natt))       deallocate(natt, stat = i)
+    if (allocated(nstr))       deallocate(nstr, stat = i)
+    if (allocated(istr))       deallocate(istr, stat = i)
+    if (allocated(nsym))       deallocate(nsym, stat = i)
+    if (allocated(ivv))        deallocate(ivv, stat = i)
+    if (allocated(npsn))       deallocate(nspn, stat = i)
+    if (allocated(mofrag))     deallocate(mofrag, stat = i)
+    if (allocated(nfocc))      deallocate(nfocc, stat = i)
+    if (allocated(nfvir))      deallocate(nfvir, stat = i)
+    if (allocated(icifrag))    deallocate(icifrag, stat = i)
+    if (allocated(imp2d))      deallocate(imp2d, stat = i)
+    if (allocated(imp2s))      deallocate(imp2s, stat = i)
+    if (allocated(isc))        deallocate(isc, stat = i)
+    if (allocated(krefd))      deallocate(krefd, stat = i)
+    if (allocated(vv))         deallocate(vv, stat = i)
+    if (allocated(iwk))        deallocate(iwk, stat = i)
+    if (allocated(istate))     deallocate(istate, stat = i)
+    if (allocated(nseig))      deallocate(nseig, stat = i)
+    if (allocated(icif))       deallocate(icif, stat = i)
+    if (allocated(jcif))       deallocate(jcif, stat = i)
+    if (allocated(ncif))       deallocate(ncif, stat = i)
+    if (allocated(nbtmo))      deallocate(nbtmo, stat = i)
+    if (allocated(iconf))      deallocate(iconf, stat = i)
+    if (allocated(nspn))       deallocate(nspn, stat = i)
+    if (allocated(vca))        deallocate(vca, stat = i)
+    if (allocated(vcb))        deallocate(vcb, stat = i)
+    if (allocated(occfr))      deallocate(occfr, stat = i)
+    if (allocated(x))          deallocate(x, stat = i)
+    if (allocated(y))          deallocate(y, stat = i)
+    if (allocated(z))          deallocate(z, stat = i)
+    if (allocated(zcore))      deallocate(zcore, stat = i)
+    if (allocated(gamma))      deallocate(gamma, stat = i)
+    if (allocated(beta))       deallocate(beta, stat = i)
+    if (allocated(betao))      deallocate(betao, stat = i)
+    if (allocated(s))          deallocate(s, stat = i)
+    if (allocated(r))          deallocate(r, stat = i)
+    if (allocated(ppg))        deallocate(ppg, stat = i)
+    if (allocated(pg))         deallocate(pg, stat = i)
+    if (allocated(dd))         deallocate(dd, stat = i)
+    if (allocated(ff))         deallocate(ff, stat = i)
+    if (allocated(aa))         deallocate(aa, stat = i)
+    if (allocated(dm))         deallocate(dm, stat = i)
+    if (allocated(xz))         deallocate(xz, stat = i)
+    if (allocated(ci))         deallocate(ci, stat = i)
+    if (allocated(evalmo))     deallocate(evalmo, stat = i)
+    if (allocated(evalci))     deallocate(evalci, stat = i)
+    if (allocated(spintr))     deallocate(spintr, stat = i)
+    if (allocated(cimatr))     deallocate(cimatr, stat = i)
+    if (allocated(dmci))       deallocate(dmci, stat = i)
+    if (allocated(stwt))       deallocate(stwt, stat = i)
+    if (allocated(e0))         deallocate(e0, stat = i)
+    if (allocated(wk1))        deallocate(wk1, stat = i)
+    if (allocated(wk2))        deallocate(wk2, stat = i)
+    if (allocated(tr1))        deallocate(tr1, stat = i)
+    if (allocated(wk3))        deallocate(wk3, stat = i)
+    if (allocated(occ))        deallocate(occ, stat = i)
+    if (allocated(qgs))        deallocate(qgs, stat = i)
+    if (allocated(dipgs))      deallocate(dipgs, stat = i)
+    if (allocated(qbfcore))    deallocate(qbfcore, stat = i)
+    if (allocated(qbf))        deallocate(qbf, stat = i)
+    if (allocated(qcore))      deallocate(qcore, stat = i)
+    if (allocated(dip))        deallocate(dip, stat = i)
+    if (allocated(dtmp))       deallocate(dtmp, stat = i)
+    if (allocated(eec))        deallocate(eec, stat = i)
+    if (allocated(ee2))        deallocate(ee2, stat = i)
+    if (allocated(aocc))       deallocate(aocc, stat = i)
+    if (allocated(bocc))       deallocate(bocc, stat = i)
+    if (allocated(aor1))       deallocate(aor1, stat = i)
+    if (allocated(bor1))       deallocate(bor1, stat = i)
+    if (allocated(aor))        deallocate(aor, stat = i)
+    if (allocated(bor))        deallocate(bor, stat = i)
+    if (allocated(aos))        deallocate(aos, stat = i)
+    if (allocated(bos))        deallocate(bos, stat = i)
+    if (allocated(aod))        deallocate(aod, stat = i)
+    if (allocated(bod))        deallocate(bod, stat = i)
+    if (allocated(ao1))        deallocate(ao1, stat = i)
+    if (allocated(bo1))        deallocate(bo1, stat = i)
+    if (allocated(cc0))        deallocate(cc0, stat = i)
+    if (allocated(wk0))        deallocate(wk0, stat = i)
+    if (allocated(q0))         deallocate(q0, stat = i)
     end if
   end subroutine setup_mopac_arrays
   subroutine memory_error(txt)

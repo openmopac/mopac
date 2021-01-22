@@ -34,8 +34,8 @@
       real(double), allocatable  :: bab(:,:), babinv(:) 
       real(double)  :: bcoef(1000) 
       integer :: icalcn, maxite, ifirst, i, nbsize, ilast, j, l, &
-        nres, ivar, nadd, nbsze, k, ll, iindex, jindex, limci, ib
-      real(double) :: const, time1, deter, test2, test, time2, sum, gse
+        nres, ivar, nadd, nbsze = 0, k, ll, iindex, jindex, limci, ib
+      real(double) :: const, time1, deter, test2 = 0.d0, test, time2, sum, gse
       logical , dimension(nvar_nvo) :: lconv 
       logical :: fail, debug, lbab     
       real(double), external :: ddot
@@ -101,6 +101,7 @@
 !***********************************************************************
       data icalcn/ 0/  
       allocate (bab(70,70), babinv(4900))
+      bab = 0.d0
 !
 !     * * * STEP 1 * * *
 !     BUILD UP THE INITIAL ORTHONORMALIZED BASIS.
@@ -110,19 +111,20 @@
         ib = max(lab,20)
         debug = index(keywrd,' DERI2') /= 0 
         const = fpc_9 
-        icalcn = numcal         
+        icalcn = numcal  
+        i = max(20*minear, (lab*(lab + 1))/2, mpack)
+        if (allocated(ab)) deallocate(ab)
+        allocate(ab(minear, i*2/minear))   
+        ab = 0.d0
+        maxite = min(min(60,int(sqrt(dble(nmeci**3)))),10000*2/nvar_nvo, i/minear)
         ifirst = min(nvar_nvo,1 + maxite/4) 
         k = max((lab*(lab + 1))/2, 20*mpack)
         if (allocated(b))  deallocate(b)
-        if (allocated(ab)) deallocate(ab)
         if (allocated(fb)) deallocate(fb)
         i = max(k, (maxci*(maxci + 1))/2)
         allocate(b(minear,i/minear))
         i = max(ninear, i/minear)
         allocate(fb(1,i))
-        i = max(20*minear, (lab*(lab + 1))/2, mpack)
-        allocate(ab(minear, i*2/minear))  
-        maxite = min(min(60,int(sqrt(dble(nmeci**3)))),10000*2/nvar_nvo, i/minear) 
       endif 
       fail = .FALSE. 
       nbsize = 0 

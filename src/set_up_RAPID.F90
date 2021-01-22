@@ -58,10 +58,11 @@ subroutine set_up_rapid (txt)
 !
   call picopt(-1)
   mode = 0
+  grad = 0.d0
   call compfg (xparam, .true., escf, .true., grad, (index(keywrd," RAPID") /= 0))
 !  From here on, any call to COMPFG will use the subset of atoms.
 !
-  call pinout (1)
+  call pinout (1, .true.)
 !
 !  Identify all the atoms that move.  The number of moving atoms is
 !  NUMRED

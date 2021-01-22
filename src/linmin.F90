@@ -16,6 +16,7 @@
 !-----------------------------------------------
       use compfg_I 
       use exchng_I 
+      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -177,15 +178,15 @@
           phi(2) - fin, vt(3), phi(3), phi(3) - fin 
           if (print) then  
           call to_screen(' ---QLINMN ')
-          write(line,"(5x,'LEFT   ...',f17.8,2f17.7)")vt(1), phi(1), phi(1) - fin
+          write(line,"(5x,'LEFT    ...',f17.8,2f17.7)")vt(1), phi(1), phi(1) - fin
           call to_screen(line)
-          write(line,"(5x,'CENTER ...',f17.8,2f17.7)") phi(2), phi(2) - fin, vt(3)
+          write(line,"(5x,'CENTER  ...',f17.8,2f17.7)") phi(2), phi(2) - fin, vt(3)
           call to_screen(line)
-          write(line,"(5x,'RIGHT  ...',f17.8,2f17.7)")vt(3), phi(3), phi(3) - fin 
+          write(line,"(5x,'RIGHT   ...',f17.8,2f17.7)")vt(3), phi(3), phi(3) - fin 
           call to_screen(line)
           end if
-   50   format(' ---QLINMN ',/,5x,'LEFT   ...',f17.8,2f17.7,/,5x,'CENTER ...',&
-          f17.8,2f17.7,/,5x,'RIGHT  ...',f17.8,2f17.7,/) 
+   50   format(' ---QLINMN ',/,5x,'LEFT    ...',f17.8,2f17.7,/,5x,'CENTER  ...',&
+          f17.8,2f17.7,/,5x,'RIGHT   ...',f17.8,2f17.7,/) 
         alpold = 0.D0 
         l180: do ictr = 3, maxlin 
           alpha = vt(2) - vt(3) 

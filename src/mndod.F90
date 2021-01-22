@@ -4,6 +4,7 @@
 !-----------------------------------------------
       USE parameters_C, only : am, ad, aq, dd, qq, dorbs, po, ddp, pocord, &
       zdn, natorb, main_group
+      use mndod_C, only : repd, aij
 !     *
 !     DEFINE SEVERAL PARAMETERS FOR D-ORBITAL CALCULATIONS.
 !     *
@@ -21,6 +22,8 @@
 !-----------------------------------------------
       integer :: ni, i 
 !-----------------------------------------------
+      repd = 0.d0
+      aij = 0.d0
       do ni = 1, 107 
         if (.not.dorbs(ni)) cycle  
         call aijm (ni) 
@@ -271,8 +274,14 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      if (abs(value) > 1.D-5) write (iw, '(I4,A7,2X,F13.8,2X,A)') i, para, &
-        value, txt 
+      double precision :: loc_value
+      if (isnan(value)) then
+        loc_value = 0.d0
+      else
+        loc_value = value
+      end if      
+      if (abs(loc_value) > 1.D-5) write (iw, '(I4,A7,2X,F13.8,2X,A)') i, para, &
+        loc_value, txt 
       return  
       end subroutine printp 
 
@@ -361,6 +370,8 @@
           'BOHR      CHARGE SEPARATION, SP, L=1') 
         call printp (i, 'DD3  ', ddp(3,i), &
           'BOHR      CHARGE SEPARATION, PP, L=2') 
+        call printp (i, ' =   ', ddp(3,i)/sqrt(2.d0), &
+          'BOHR      USING ORIGINAL MNDO PAPER FORMULA') 
         call printp (i, 'DD4  ', ddp(4,i), &
           'BOHR      CHARGE SEPARATION, SD, L=2') 
         call printp (i, 'DD5  ', ddp(5,i), &
@@ -402,6 +413,7 @@
         call printp(i, 'FN24 ', guess2(i,4), 'CORE-CORE VDW EXPONENT 4')
         call printp(i, 'FN34 ', guess3(i,4), 'CORE-CORE VDW POSITION 4')
         do j = 1, 100
+          if (isnan(alpb(i,j))) alpb(i,j)= 0.d0
         if (Abs (alpb(i,j)) > 1.d-5 .and. used(j)) then
             write (iw, "(I4,A6,i2,F13.8,2X,A)") i, "ALPB_", j,alpb(i,j), "ALPB factor"
             write (iw, "(I4,A6,i2,F13.8,2X,A)") i, "XFAC_", j,xfac(i,j), "XFAC factor"
@@ -418,7 +430,7 @@
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : natorb, dd, qq, am, ad, aq, po
-      use molkst_C, only : method_PM7
+      use molkst_C, only : l_feather
       use funcon_C, only : ev, a0 
     !  USE chanel_C, only : iw 
 !***********************************************************************
@@ -790,7 +802,7 @@
 !
         endif 
 !
-        if (method_PM7) then
+        if (l_feather) then
           call to_point(rij, point, const)
           ri(1) = ri(1)*const + (1.d0 - const)*point
           ri(2) = ri(2)*const
@@ -844,7 +856,7 @@
       use parameters_C, only : tore, dorbs
       use mndod_C, only : indexd, ind2, isym
       use funcon_C, only : ev, a0
-      use molkst_C, only : method_PM7
+      use molkst_C, only : l_feather
 !...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
 !...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
@@ -920,7 +932,7 @@
                   rep(numb) = -rep((-nold)) 
                 case (0)  
                   rep(numb) = rijkl(ni,nj,ij,kl,li,lj,lk,ll,0,r)*ev 
-                  if (method_PM7) then                    
+                  if (l_feather) then                    
                     call to_point(r*a0, point, const)
                     if (coulomb) then
                       rep(numb) =rep(numb)*const + (1.d0 - const)*point
@@ -1098,7 +1110,7 @@
       use funcon_C, only : a0, ev
       use mndod_C, only : indx, indexd, sp, sd, pp, dp, d_d, cored, inddd
       use parameters_C, only : natorb, iod, tore
-      use molkst_C, only : numcal, method_PM7
+      use molkst_C, only : numcal, l_feather, method_PM7
 !     *
 !     CALCULATION OF TWO-CENTER TWO-ELECTRON INTEGRALS
 !     IN THE MOLECULAR COODINATE SYSTEM BY 2.d0-STEP PROCEDURE
@@ -1157,13 +1169,12 @@
       rij = r
       r = r/a0 
       call spcore (ni, nj, r, cored) 
-      if (method_PM7) then
+      if (l_feather) then
         call to_point(rij, point, const)
       else
         const = 1.d0
         point = 0.d0
       end if
-
       call reppd2 (ni, nj, r, ri, rep, cored) ! add in "d" terms
       point = -(eV/r)*tore(nj)
       cored(1,1) = cored(1,1)*const + (1.d0 - const)*point
@@ -1726,8 +1737,7 @@
 !     CALCULATE THE NUCLEAR ATTRACTION INTEGRALS IN LOCAL COORDINATES.
 !     *
       data pxy/ 1.0d0, -0.5d0, -0.5d0, 0.5d0, 0.25d0, 0.25d0, 0.5d0/  
-      core(:4,1) = 0.d0 
-      core(:4,2) = 0.d0 
+      core = 0.d0 
 ! *** INITIALIZATION.
       r2 = r*r 
       aci = po(9,ni) 
@@ -2180,9 +2190,10 @@ end subroutine wstore
       integer, intent(in) :: n1 
       integer, intent(in) :: n2 
       integer, intent(in) :: l 
-      aijl = fx(n1+n2+l+1)/sqrt(fx(2*n1+1)*fx(2*n2+1))*(2*z1/(z1 + z2))**n1*sqrt(2&
-        *z1/(z1 + z2))*(2*z2/(z1 + z2))**n2*sqrt(2*z2/(z1 + z2))*2**l/(z1 + z2)&
-        **l 
+      double precision :: zz
+      zz = z1 + z2 + 1.d-20
+      aijl = fx(n1+n2+l+1)/sqrt(fx(2*n1+1)*fx(2*n2+1))*(2*z1/zz)**n1*sqrt(2&
+        *z1/zz)*(2*z2/zz)**n2*sqrt(2*z2/zz)*2**l/zz**l 
       return  
       end function aijl 
       end subroutine aijm 
@@ -2355,7 +2366,7 @@ end subroutine wstore
 !-----------------------------------------------
 ! *** ADDITIVE TERM FOR SS.
       fg = gss(ni) 
-      po(1,ni) = poij(0,1.d0,fg) 
+      if (fg > 0.1d0) po(1,ni) = poij(0,1.d0,fg) 
       if (ni >= 3) then 
 ! *** OTHER TERMS FOR SP BASIS.
 !     SP

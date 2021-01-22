@@ -113,7 +113,7 @@
       do
         i =index(line, '"')
         if (i == 0) exit
-        call txt_to_atom_no(line, i, .false., j)
+        call txt_to_atom_no(line, i, .false.)
         call  l_control("CONTROL_SYM_in_PDB", len_trim("CONTROL_SYM_in_PDB"), 1) 
         sym_pdb = .true.
         if (moperr) return

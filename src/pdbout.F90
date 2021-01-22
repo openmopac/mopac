@@ -1,6 +1,6 @@
 subroutine pdbout (mode1)
     use molkst_C, only: numat, natoms, ncomments, verson, line, nbreaks, id, &
-      maxtxt, keywrd, nelecs
+      maxtxt, keywrd, nelecs, escf, stress
     use chanel_C, only: iw, input_fn
     use elemts_C, only: elemnt
     use common_arrays_C, only: txtatm, nat, all_comments, p, labels, &
@@ -11,12 +11,14 @@ subroutine pdbout (mode1)
 !
     character :: ele_pdb*2, idate*24, num*1, x*1
     integer :: i, i1, i2, iprt, k, nline
-    logical :: ter, html
+    logical :: ter, html, ter_ok
     double precision :: sum
     intrinsic Abs, Char, Ichar
     double precision, allocatable :: q2(:), coord(:,:)
 !
     html = (index(keywrd, " HTML") /= 0)
+    ter_ok = (index(keywrd, " NOTER") == 0)
+    ter = .false.
     allocate (q2(numat), coord(3, natoms))
     if (allocated(p)) then
       if (index(keywrd, " 0SCF") /= 0) then
@@ -99,8 +101,21 @@ subroutine pdbout (mode1)
       end if
       line(81:) = " "
       write (iprt, "(A)") trim(line)
-      line = "REMARK  MOPAC 2016, Version: "//verson//" Date: "//idate(5:11)//idate(21:)//idate(11:16)
+      line = "REMARK  MOPAC 2016, Version: "//verson
       write (iprt, "(A)") trim(line)
+      line = "REMARK  Date: "//idate(5:11)//idate(21:)//idate(11:16)
+      write (iprt, "(A)") trim(line)
+      line = "REMARK  Heat of Formation ="  
+      sum = escf - stress
+      i = int(log10(abs(sum)) + 0.001d0) 
+      if ( sum < 0.d0) i = i + 1
+      if (i < 4) then
+        num = char(ichar("6") + i)
+        write (iprt, "(A, f"//num//".3, a)") trim(line), sum, " Kcal/mol"
+      else
+        num = char(ichar("6") + i - 10)
+        write (iprt, "(A, f1"//num//".3, a)") trim(line), sum, " Kcal/mol"
+      end if        
     end if
     if (maxtxt == 0 .and. txtatm(1) /= " ") then
       txtatm1(:natoms) = txtatm(:natoms)
@@ -118,7 +133,7 @@ subroutine pdbout (mode1)
 !
 
       nline = nline + 1
-      ter = (i == breaks(nbreaks))
+      if (ter_ok) ter = (i == breaks(nbreaks))
       if (ter) nbreaks = nbreaks + 1
       if (elemnt(labels(i)) (1:1) == " " .or. labels(i) == 99) then
         ele_pdb(1:1) = " "
@@ -157,11 +172,12 @@ subroutine pdbout (mode1)
     integer :: nres, i, j, k, nprt, ncol, biggest_res, iprt=27, icalcn = -1, it
     character :: res_txt(4000)*10, l_res*14, n_res*14, wrt_res*14, num*1, line_1*400
     integer, parameter :: limres = 260
-    logical :: exists, l_prt_res, l_geo_ref
+    logical :: exists, l_prt_res, l_geo_ref, l_compare
     double precision, external :: reada
     save :: icalcn
     if (icalcn == numcal) return
     icalcn = numcal
+    l_compare = (index(keywrd, " COMPARE") /= 0)
     l_prt_res = (index(keywrd," NORJSMOL") == 0)
     line = input_fn(:len_trim(input_fn) - 4)//"html"
     open(unit=iprt, file=trim(line)) 
@@ -185,11 +201,22 @@ subroutine pdbout (mode1)
         else
           l_res(10:10) = " "
         end if
+!
+! If the first character is a number, change it to "Q"
+!
         do k = 1, 6
           if (l_res(k:k) /= " ") exit
-        end do        
+        end do          
         if (l_res(k:k) >= "0" .and. l_res(k:k) <= "9") l_res(k:k) = "Q"
-        do k = 1, nres
+!
+! Change any spaces to "J"
+!
+        do k = k + 1, 9
+          if (l_res(k:k) == " ") then
+            if (txtatm(i)(:6) /= "HETATM") l_res(k:k) = "J"
+          end if
+        end do
+          do k = 1, nres
           if (res_txt(k) == l_res .or. l_res(1:7) == "   Q000") exit
         end do
         if (k > nres) then
@@ -228,15 +255,29 @@ subroutine pdbout (mode1)
     "disableInitialConsole: true, ", "addSelectionOptions: false,", "j2sPath: ""../jsmol/j2s"",", &
     "jarPath: ""../jsmol/java"",", "use: ""HTML5"", script: ", " "
     write(iprt,"(a)")"// Data set to be loaded", " "
-    line = input_fn(:len_trim(input_fn) - 4)//"pdb"
+    if (index(keywrd, " GRAPHF") /= 0) then
+      line = input_fn(:len_trim(input_fn) - 4)//"mgf"
+    else 
+      line = input_fn(:len_trim(input_fn) - 4)//"pdb"
+    end if
     do i = len_trim(line), 1, -1
       if (line(i:i) == "/" .or. line(i:i) == "\") exit
     end do
     write(iprt,"(a)") """load \"
     l_geo_ref = (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0)
     if (l_geo_ref) then
-      line = geo_dat_name(:len_trim(geo_dat_name) -3)//"pdb"//"' '"// &
-      geo_ref_name(:len_trim(geo_ref_name) -3)//"pdb"//"'; \"
+      if (l_compare) then
+        line_1 = line(i + 1:len_trim(line)-4)//"_"
+      else
+        line_1 = " "
+      end if     
+      if (geo_dat_name(:len_trim(geo_dat_name) -3) == geo_ref_name(:len_trim(geo_ref_name) -3)) then
+        line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) - 4)//"_a.pdb"//"' '"// &
+        trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; \"
+      else
+        line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) -3)//"pdb"//"' '"// &
+        trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; \"
+      end if
       write(iprt,"(10x,a)")"FILES '"//trim(line)
     else      
       write(iprt,"(10x,a)")"'"//trim(line(i + 1:))//"'; \"
@@ -320,7 +361,7 @@ subroutine pdbout (mode1)
         num = char(Int(log10(-j + 1.0)) + ichar("1"))
         write(n_res(6:),'(a1,i'//num//',a)')"_", -j, res_txt(i)(8:9)
       else
-        num = char(Int(log10(-j + 1.0)) + ichar("2"))
+        num = char(Int(log10(j + 1.0)) + ichar("2"))
         write(n_res(6:),'(i'//num//',a)')j, res_txt(i)(8:9)
       end if 
       wrt_res = n_res(2:4)//n_res(6:)
@@ -412,6 +453,23 @@ subroutine pdbout (mode1)
         write(iprt,"(a)")"</TD></TR>"
       end if
     end if
+    if (index(keywrd,  " IRC") + index(keywrd,  " STEP=") /= 0) then
+!
+!  Animation instructions
+!
+      write(iprt,"(a)")"<TR><TD> <a href=""javascript:Jmol.script(jmolApplet0,'model first;')"">first</a> </TD>"
+      write(iprt,"(a)")"<TD> <a href=""javascript:Jmol.script(jmolApplet0,'model last;')"">last</a> </TD></TR>"
+      write(iprt,"(a)")"<TR><TD> <a href=""javascript:Jmol.script(jmolApplet0,'model prev;')"">previous</a></TD> "
+      write(iprt,"(a)")"<TD> <a href=""javascript:Jmol.script(jmolApplet0,'model next;')"">next</a> </TD></TR>"
+      write(iprt,"(a)")"<TR><TD> <a href=""javascript:Jmol.script(jmolApplet0,'animation mode loop 0 0;animation play;')"">"// &
+      "loop</a>&nbsp;&nbsp;"
+      write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'animation off;')"">off</a> </TD> "
+      write(iprt,"(a)")"<TD> <a href=""javascript:Jmol.script(jmolApplet0,'animation mode palindrome 0 0;animation play;')"">"// &
+      "palindrome</a> </TD></TR>"
+!
+! End of animation instructions
+!    
+    end if
     write(iprt,"(a)") "<TR>"
 !
 !   Element(1,5)
@@ -483,6 +541,13 @@ subroutine pdbout (mode1)
         end if
         j = index(l_res, "-")
         if (j > 0) l_res(j:j) = "_"
+        if (n_res(2:4) == "UNK") then
+          if (res_txt(i)(1:3) == "UNK") then
+            n_res = "[UNK]"//res_txt(i)(4:7)
+          else
+            n_res = res_txt(i)(4:7)
+          end if            
+        end if
         write(iprt,"(2a)") "<TD> <a href=""javascript:Jmol.script(jmolApplet0,'if (!"//l_res, &
         ");   display ADD "//trim(n_res)//";  "//l_res//" = TRUE; else "
         write(iprt,"(2a)") " hide ADD "//trim(n_res)//";  "//l_res//" = FALSE; end if; ", &

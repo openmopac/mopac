@@ -1,4 +1,4 @@
-      real(kind(0.0d0)) function aababc (iocca1, ioccb1, iocca2, nmos, xy) 
+      real(kind(0.0d0))  function aababc (iocca1, ioccb1, iocca2, nmos, xy)  
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------

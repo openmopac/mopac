@@ -18,9 +18,9 @@ subroutine buildf (f, partf, mode)
        call memory_error ("buildf")
        goto 100
     end if
-    if (mode ==-1) f = partf - h
-    if (mode == 0) f =         h
-    if (mode == 1) f = partf + h
+    if (mode ==-1) f(:mpack) = partf(:mpack) - h(:mpack)
+    if (mode == 0) f(:mpack) =                 h(:mpack)
+    if (mode == 1) f(:mpack) = partf(:mpack) + h(:mpack)
     if (id == 0) then
       !
       !  Discrete system
