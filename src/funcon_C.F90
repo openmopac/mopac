@@ -12,7 +12,7 @@
       &  fpc_8,     & !
       &  fpc_9,     & !
       &  fpc_10   
-      double precision, dimension (10) :: fpc
+      double precision, dimension (10) :: fpc = 0.d0
       double precision, parameter :: pi = 3.14159265358979323846d0
       double precision, parameter :: twopi = 2.0d0 * pi
       equivalence (fpc(1), fpc_1), (fpc(2), fpc_2), (fpc(3), a0), (fpc(4), ev), &

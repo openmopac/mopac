@@ -138,7 +138,8 @@
         torsion_cos_2 = cos(torsion_value_2)
         if (torsion_cos_2 > torsion_cos) torsion_cos = torsion_cos_2 
       endif
-      if (distance(hblist(i, 9), hblist(i, 1)) > distance(hblist(i, 9), hblist(i, 2)) .and. torsion_check_set2) torsion_cos = 0.d0 
+      if (distance(hblist(i, 9), hblist(i, 1)) > distance(hblist(i, 9), hblist(i, 2)) .and. torsion_check_set2) &
+        torsion_cos = 0.d0 
       if (hblist(i, 3) == hblist(i, 4) .or. hblist(i, 9) == hblist(i, 4)) torsion_cos = 1.d0
       if (torsion_cos < 0) return
 !
@@ -227,7 +228,8 @@
         torsion_cos_2_new = cos(torsion_value_2)
         if (torsion_cos_2_new > torsion_cos_new)torsion_cos_new = torsion_cos_2_new 
       endif
-      if (distance(hblist(i, 9), hblist(i, 5)) > distance(hblist(i, 9), hblist(i, 6)) .and. torsion_check_set2) torsion_cos_new = 0.d0 
+      if (distance(hblist(i, 9), hblist(i, 5)) > distance(hblist(i, 9), hblist(i, 6)) .and. torsion_check_set2) &
+        torsion_cos_new = 0.d0 
       if (hblist(i, 7) == hblist(i, 8) .or. hblist(i, 9) == hblist(i, 8)) torsion_cos_new = 1.d0
    !   if (torsion_cos_new < 0.d0) return
       torsion_cos_new=abs(torsion_cos_new)

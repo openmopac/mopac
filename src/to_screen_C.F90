@@ -30,13 +30,17 @@ module to_screen_C
                ! Definition    Used for transferring matrix "a" in matou1 to here
                ! Units         Unknown
   redmas       ! Type          Reduced masses
-               ! Definition    Effective mass of vibrational frequence
+               ! Definition    Effective mass of vibrational frequencies
                ! Units         Atomic mass units (amu)
                !
   real (double), dimension (:), allocatable :: &
   dipt,      & ! Type          Transition dipoles for vibrational frequencies
                ! Definition    <ground state|eR(x)|vibrational state>
                ! Units         electrons
+force_const, & ! Type          Force constant
+               ! Definition    Force constant for of vibrational frequencies
+               ! Units         millidynes per Angstrom
+               !
   travel,    & ! Type          Distance traveled during a vibration
                ! Definition
                ! Units         Angstroms

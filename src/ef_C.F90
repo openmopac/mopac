@@ -7,8 +7,8 @@
       end module ef_C 
       module drc_C 
         USE vast_kind_param, ONLY:  double 
-        real(double), dimension(:), allocatable :: vref, vref0 
-        real(double), dimension(:,:), allocatable :: allxyz, allvel, xyz3, vel3, allgeo, geo3  
+        real(double), dimension(:), allocatable :: vref, vref0, now  
+        real(double), dimension(:,:), allocatable :: allxyz, allvel, xyz3, vel3, allgeo, geo3 
         real(double), dimension(:), allocatable :: parref
         double precision :: time
       end module drc_C 

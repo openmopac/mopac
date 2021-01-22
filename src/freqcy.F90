@@ -1,4 +1,4 @@
-      subroutine freqcy(fmatrx, freq, travel, eorc, deldip, ff, oldf, ts) 
+      subroutine freqcy(fmatrx, freq, travel, force_const, eorc, deldip, ff, oldf, ts) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
@@ -17,14 +17,13 @@
       logical , intent(in) :: eorc, ts
       real(double)  :: fmatrx((3*numat*(3*numat+1))/2) 
       real(double)  :: freq(3*numat) 
-      real(double) , intent(out) :: travel(3*numat) 
+      real(double) , intent(out) :: travel(3*numat), force_const(3*numat) 
       real(double)  :: deldip(3,3*numat) 
       real(double) , intent(out) :: oldf((3*numat*(3*numat+1))/2) 
 !
       integer :: loop, i, j, ij, iu, il, im1, ju, jl, ii, jj, l, linear, jii, k 
       real(double), dimension(numat*3) :: wtmass 
-      real(double) :: fact, c2pi, sumerr, sum, err, weight, const, summ, &
-        sum1 
+      real(double) :: fact, c2pi, sumerr, sum, err, weight, summ, sum1 
       logical :: bcc
 !********************************************************************
 !
@@ -152,11 +151,6 @@
       end do 
       freq(:nvar) = freq(:nvar)*1.D5 
 !
-!     CONST = SQRT(2*h*c*1.D11) = conversion from cm**(-1) to
-!             dyne-Angstroms
-!
-      const = sqrt(2.D0*fpc_6*fpc_8*1.D11) 
-!
 !    CALCULATE REDUCED MASSES, STORE IN REDMAS
 !
       do i = 1, nvar 
@@ -200,23 +194,26 @@
           redmas(i, 2) = 0.d0
           sum = 0.d0
         end if
+        force_const(i) = freq(i)*redmas(i,1)*1.d-5
         freq(i) = sign(sqrt(fact*abs(freq(i)))*c2pi,freq(i)) 
+!
+! Convert frequency into SI units (ergs)
+!
+        sum = freq(i)*fpc_6*fpc_8
+!
+! Travel, in Angstroms
+!
+        if (force_const(i) == 0.D0) then
+          travel(i) = 0.D0
+        else
+          travel(i) = sqrt(2.d0*sum/(force_const(i)*1.d5))*1.d8
+        end if
+        if (travel(i) > 1.D0) travel(i) = 0.D0 
         if (abs(freq(i)) < abs(sum1)*1.D+20) then 
           sum1 = sqrt(abs(freq(i)/(sum1*1.D-5))) 
         else 
           sum1 = 0.D0 
-        endif 
-!
-!    CONST=SQRT(A*B*C) WHERE
-!         A= CONVERSION OF CM**(-1) TO (ERGS PER ATOM = DYNE.ANGSTROMS)
-!         B= MILLIDYNES TO DYNES
-!         C= CENTIMETERS TO ANGSTROMS
-!
-!         TRAVEL(I)=SUM1*0.0063024D0
-!
-        if (sum<0.D0 .or. sum>100) sum = 0.D0 
-        travel(i) = sum1*const 
-        if (travel(i) > 1.D0) travel(i) = 0.D0 
+        end if 
       end do 
       if (eorc) then 
 !

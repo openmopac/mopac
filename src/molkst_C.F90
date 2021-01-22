@@ -38,7 +38,7 @@ module molkst_C
   &  ndep = 0, & !  Number of dependent coordinates, related by symmetry
   &  nvar = 0, & !  Number of coordinate that are to be optimized
                  !
-  &  nclose,   & !  Term        Number of doubly-occupied M.O.s
+  &  nclose,    &!  Term        Number of doubly-occupied M.O.s
                  !  Units       Molecular orbitals
                  !  Min. value  0
                  !  Max. value  nelecs/2  
@@ -96,6 +96,8 @@ module molkst_C
   &  n2elec,   & !  Number of two-electron integrals
   &  nscf,     & !  Number of SCF calculations done
   &  iscf,     & !  Index of message of how the SCF ended
+  &  npulay    & !  Total number of previous SCF solutions in Pulay converger
+  &  = 10,     & !  Default set to standard value in quantum chemistry codes
   &  iflepo,   & !  Index of message of how the geometry operation ended
   &  maxtxt,   & !  Maximum number of characters in labeled atoms (e.g. C(on Si))
   &  last,     & !  
@@ -171,7 +173,7 @@ module molkst_C
                      !  Max. value  2.0
                      !  Default     0.0
                      !
-  &  gnorm,        & !  Term        Scalar of gradient vector
+  &  gnorm = 0.d0, & !  Term        Scalar of gradient vector
                      !  Units       kcal/mol/(Angstrom - Radians)
                      !  Definition  The square root of the sum of the squares of the gradient components
                      !

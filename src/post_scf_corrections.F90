@@ -4,7 +4,7 @@ subroutine post_scf_corrections(correction, l_grad)
 !    Add dispersion, hydrogen bonding, extra H-H repulsion, and other energies to
 !    improve intermolecular interaction geometries and energies.
 !
-  use molkst_C, only : keywrd, E_disp, E_hb, E_hh, method_pm7, method_PM6, P_Hbonds, &
+  use molkst_C, only : keywrd, E_disp, E_hb, E_hh, method_pm7, P_Hbonds, &
     method_pm6_dh_plus, method_pm6_dh2, method_pm6_d3h4, method_pm6_dh2x, method_pm6_d3h4x, &
     method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, method_pm7_minus, method_PM8
   use common_arrays_C, only: dxyz
@@ -60,6 +60,7 @@ subroutine post_scf_corrections(correction, l_grad)
   E_hh       = 0.d0
   E_disp     = 0.d0
   P_Hbonds   = 0
+  if (.not. allocated(dxyz)) allocate (dxyz(1))
   if (method_pm6_d3h4x) then
     correction = correction + dftd3(l_grad, dxyz)
     correction = correction + H_bonds4(l_grad, dxyz)

@@ -86,7 +86,7 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
           call dtrttp('u', norbs, xmat, norbs, pp, i )
           deallocate(xmat,stat=i)
 #endif
-	      case(5)   ! Option to use dsyrk from BLAS 
+        case(5)   ! Option to use dsyrk from BLAS 
 
           allocate(xmat(norbs,norbs),stat = i)
           forall (j = 1:norbs, i=1:norbs) xmat(i, j) = 0.d0

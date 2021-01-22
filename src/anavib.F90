@@ -7,7 +7,7 @@
       use common_arrays_C, only : nat, coord
       USE elemts_C, only : elemnt 
       USE funcon_C, only : fpc_10, fpc_8, pi
-      use to_screen_C, only : travel, redmas
+      use to_screen_C, only : travel, redmas, force_const
       USE chanel_C, only : iw 
       USE symmetry_C, only :  jndex, namo
 !...Translated by Pacific-Sierra Research 77to90  4.4G  11:19:44  03/16/06  
@@ -33,7 +33,7 @@
       real(double), dimension(10) :: fij 
       real(double) :: tot, vdw, eab, eb, ea, sum, xj, yj, zj, xi, yi, zi, x, y, z, e, shift, radial, ans 
       character :: pad*20, num*1, num1*1
-      logical :: vib1, vib2, vib3, vib4, vib5
+      logical :: vib1, vib2, vib3, vib4, vib5, vib6
 
       save vanrad 
 !-----------------------------------------------
@@ -74,7 +74,8 @@
         vib2 = .TRUE. 
         vib3 = .TRUE. 
         vib4 = .TRUE. 
-        vib5 = .TRUE. 
+        vib5 = .TRUE.
+        vib6 = .TRUE.
         j3 = 0 
         l = 0 
         tot = 0.D0 
@@ -173,22 +174,25 @@
               j, pad(:npad - 4), e, ans, radial 
             if (vib1) then 
               write (iw, &
-      '(/," VIBRATION",I5,I5,A4, '//num1//'x, "ATOM PAIR", '//num1//'x, "ENERGY CONTRIBUTION    RADIAL")') &
+      '(/," VIBRATION",I11,I5,A4, '//num1//'x, "  ATOM PAIR", '//num1//'x, "ENERGY CONTRIBUTION    RADIAL")') &
        k, jndex(k), namo(k) 
-              write (iw, '('' FREQ.   '',F10.2,a)') eigs(k), trim(line)
+              write (iw, '('' FREQUENCY        '',F9.2,a)') eigs(k), trim(line)
               vib1 = .FALSE. 
             else if (vib2) then 
               vib2 = .FALSE. 
-              write (iw, '('' T-DIPOLE'',F10.4,a)') dipt(k), trim(line)
+              write (iw, '('' TRANSITION DIPOLE'',F9.4,a)') dipt(k), trim(line)
             else if (vib3) then 
               vib3 = .FALSE.
-              write (iw, '('' TRAVEL  '',F10.4,a)') travel(k), trim(line)
+              write (iw, '('' TRAVEL (Ang.)    '',F9.4,a)') travel(k), trim(line)
             else if (vib4) then 
               vib4 = .FALSE. 
-              write (iw, '('' RED. MASS'',F9.4,a)') redmas(k,1), trim(line)
+              write (iw, '('' REDUCED MASS     '',F9.4,a)') redmas(k,1), trim(line)
             else if (vib5) then
               vib5 = .false.
-              write (iw, '('' EFF. MASS'',F9.4,a)') redmas(k,2), trim(line)
+              write (iw, '('' EFFECTIVE MASS   '',F9.4,a)') redmas(k,2), trim(line)
+            else if (vib6) then
+              vib6 = .false.
+              write (iw, '('' FORCE CONSTANT   '',F9.4,a)') force_const(k), trim(line)
             else 
               iline = iline + 1 
               write (iw, & 
@@ -201,10 +205,11 @@
           write (iw, '(/,'' VIBRATION'',I4)') k 
           write (iw, '(  '' FREQ.    '',F8.2)') eigs(k) 
         endif 
-        if (vib2) write (iw, '(  '' T-DIPOLE '',F9.4)') dipt(k) 
-        if (vib3) write (iw, '(  '' TRAVEL   '',F9.4)') travel(k) 
-        if (vib4) write (iw, '(  '' RED. MASS'',F9.4)') redmas(k, 1) 
-        if (vib5) write (iw, '(  '' EFF. MASS'',F9.4)') min(9999.9999d0,max(-999.9999d0,redmas(k, 2))) 
+        if (vib2) write (iw, '(  '' TRANSITION DIPOLE'',F9.4)') dipt(k) 
+        if (vib3) write (iw, '(  '' TRAVEL (Ang.)    '',F9.4)') travel(k) 
+        if (vib4) write (iw, '(  '' REDUCED MASS     '',F9.4)') redmas(k, 1) 
+        if (vib5) write (iw, '(  '' EFFECTIVE MASS   '',F9.4)') min(9999.9999d0,max(-999.9999d0,redmas(k, 2))) 
+        if (vib6) write (iw, '(  '' FORCE CONSTANT   '',F9.4)') force_const(k)
         end if
       end do 
       return  

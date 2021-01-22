@@ -14,7 +14,7 @@
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
       use reada_I 
-      use second_I 
+      use second2_I 
       use pdgrid_I 
       use surfac_I  
       use potcal_I 
@@ -25,7 +25,7 @@
       integer :: n, i 
       real(double) :: scincr, time1 
 !-----------------------------------------------
-      time1 = second (1)
+      time1 = second2 (1)
       if (index(keywrd, " CUBE") /= 0 .or. index(keywrd, " ESPGRID") /= 0) then
         call new_esp()
         return
@@ -57,7 +57,7 @@
         n = 4 
       endif 
 !
-      time1 = second(1) 
+      time1 = second2(1) 
 !
 !     NOW CALCULATE THE SURFACE POINTS
 !
@@ -80,7 +80,7 @@
 !
 !     END OF CALCULATION
 !
-      time1 = second(1) - time1 
+      time1 = second2(1) - time1 
       write (iw, 20) 'TIME TO CALCULATE ESP:', time1, ' SECONDS' 
    20 format(/,9x,a,f8.2,a) 
       return  
@@ -435,6 +435,7 @@
 !-----------------------------------------------
       use reada_I 
       use espfit_I 
+      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s

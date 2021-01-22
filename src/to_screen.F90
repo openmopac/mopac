@@ -50,11 +50,11 @@ module to_screen_I
 !
   use polar_C, only : omega, alpavg
 !
-  use molkst_C, only : numat, norbs, escf, nelecs, elect, enuclr, verson, &
+  use molkst_C, only : numat, norbs, escf, nelecs, nclose, nopen, elect, enuclr, verson, &
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
   method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, &
   uhf, nalpha, nbeta,  nclose, gnorm, mozyme, mol_weight, ilim, &
-  line, nscf, time0, sz, ss2, no_pKa, title, jobnam
+  line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no, fract
 !
   use MOZYME_C, only : ncf, ncocc, noccupied, icocc_dim, cocc_dim, nvirtual, icvir_dim, &
   nncf, iorbs, cocc, icocc, ncvir, nnce, nce, icvir, cvir, tyres, size_mres, &
@@ -69,13 +69,13 @@ module to_screen_I
   use cosmo_C, only : area, solv_energy, cosvol
 !
   use meci_C, only : deltap, nmos, occa, microa, microb, lab, nstate, vectci, &
-    root_requested, eig, nelec
+    root_requested, eig, nelec, rjkab
 !
   use maps_C, only : rxn_coord, rc_escf, ekin, lparam, latom
 !
   use drc_C, only: time
 !
-  use second_I
+  use second2_I
   use reada_I
   implicit none
   character (len=*) :: text
@@ -94,8 +94,8 @@ module to_screen_I
   double precision, allocatable :: overlap(:), c_lmo(:), comp(:), store_eigs(:)
   double precision, allocatable :: overlap2(:,:)
   character, dimension(:), allocatable :: namo_tmp*4, letters*1
-  character :: fmt8p4*5, fmt9p3*5, fmt10p1*5, fmt10p2*5, fmt10p3*5, fmt9p4*5, fmt10p4*5, fmt9p5*5, fmt13p5*5, fmt13p6*5, &
-  fmt7p4*5, irc_or_drc*1, num*1
+  character :: fmt8p4*5, fmt9p3*5, fmt10p1*5, fmt10p2*5, fmt10p3*5, fmt9p4*5, fmt10p4*5, fmtnnp4*5, fmt9p5*5, &
+  fmt13p5*5, fmt13p6*5, fmt7p4*5, irc_or_drc*1, num*1
   integer :: iwork(norbs), ifact(norbs + 1)
   integer, allocatable :: icomp(:), eigs_map(:)
   integer, external :: ijbo
@@ -291,6 +291,14 @@ module to_screen_I
 !
   end if
   if (L_MO_s) L_MO_s = (moa_upper - moa_lower > -1)
+  if (nelecs == 0) then
+    L_MO_s = .false.
+    L_overlap = .false.
+    L_Density = .false.
+    eigen = .false.
+    lnmobs = .false.
+    lnmoas = .false.
+  end if
 !
 !  Set up options for various types of calculation
 !
@@ -430,16 +438,31 @@ module to_screen_I
       write(hook,"(a,sp, d"//fmt13p6//",a)")" VOLUME:CUBIC ANGSTROMS=",cosvol
       if (Abs(solv_energy) > 1.d-6) write(hook,"(a,sp, d"//fmt13p6//",a)")" DIEL_ENER:EV=",solv_energy
     end if
-    write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",-eigs(nelecs/2)
+    if (.not. mozyme) then
+      if (nalpha > 0) then
+        eig_min = -eigs(nalpha)
+        if (nbeta > 0) eig_min = min(eig_min,-eigb(nbeta))
+      else if (nelecs == 1) then
+        eig_min = -eigs(1)
+      else if (nelecs > 1) then
+        if (nopen > 0) eig_min = -eigs(nopen)
+        if (nclose > 0) eig_min = min(eig_min,-eigs(nclose))
+!   CORRECTION TO I.P. OF DOUBLETS
+        if (nopen - nclose == 1 .and. fract <= 1.99D0) eig_min = eig_min + 0.5D0*rjkab(1,1) 
+      end if
+      if (nelecs > 0) write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",eig_min
+    end if
     write(hook,"(a,sp, d"//fmt13p6//",a)")" SPIN_COMPONENT=",sz
     write(hook,"(a,sp, d"//fmt13p6//",a)")" TOTAL_SPIN=",ss2
     num = char(ichar("1") +int(log10(nscf + 0.05)))
     write(hook,"(a,i"//num//")")" NUMBER_SCF_CYCLES=",nscf
-    num = char(ichar("1") +int(log10(nalpha + 0.05)))
-    write(hook,"(a,i"//num//")")" NUM_ALPHA_ELECTRONS=",nalpha
-    num = char(ichar("1") +int(log10(nbeta + 0.05)))
-    write(hook,"(a,i"//num//")")" NUM_BETA_ELECTRONS=",nbeta
-      sum = second(1) - time0
+    if (uhf) then
+      num = char(ichar("1") +int(log10(nalpha + 0.05)))
+      write(hook,"(a,i"//num//")")" NUM_ALPHA_ELECTRONS=",nalpha
+      num = char(ichar("1") +int(log10(nbeta + 0.05)))
+      write(hook,"(a,i"//num//")")" NUM_BETA_ELECTRONS=",nbeta
+    endif
+      sum = second2(1) - time0
       i = int(sum*0.000001D0)
       sum = sum - i*1000000
     write(hook,"(a,sp, d"//fmt13p6//",a)")" CPU_TIME:SEC=",sum
@@ -447,6 +470,10 @@ module to_screen_I
     write(hook,"(a,sp, d"//fmt13p6//",a)")" TOTAL_ENERGY:EV=",elect + enuclr + solv_energy
     write(hook,"(a,i"//paras//",a)")" ATOM_X_OPT:ANGSTROMS[",3*numat, "]="
     write(hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
+    if(nelecs == 0)then
+      call chrge (p, q)
+      q(:numat) = tore(nat(:numat)) - q(:numat)
+    end if
     write(hook,"(a,i"//atoms//",a)")" ATOM_CHARGES[",numat,"]="
     write(hook,"(sp,10f"//fmt9p5//")") (q(i), i=1,numat)
     if (nvar > 0) then
@@ -456,7 +483,10 @@ module to_screen_I
       end do
       if (sum > 1.d-4) then
         write(hook,"(a,i"//paras//",a)")" GRADIENTS:KCAL/MOL/ANGSTROM[",nvar, "]="
-        write(hook,"(10f"//fmt9p4//")") (grad(i), i=1,nvar)
+        read(fmt9p4,'(3x,i2)')i
+        j = max(int(log10(sum)),0)        
+        write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+        write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
       end if
     end if
 !
@@ -972,6 +1002,7 @@ module to_screen_I
       end if
       if (index(keywrd, " BOND") /= 0)  &
         call write_screen_bonds(compressed, orbs2, hook, fmt9p4)
+      if (L_MO_s) &
       call print_M_O_data(hook, moa_lower, moa_upper, lnmoas, mob_lower, mob_upper, lnmobs, orbs, fmt9p3)
     end if
 !
@@ -1190,20 +1221,20 @@ module to_screen_I
 !
 !  Don't print processor-independent CPU times for quick jobs - that would waste too much time.
 !
-    if (time0 > 1.d0) then
+    if (time0 > 1.d0 .and. job_no < 4) then
 !
 !  Deliberately run a time-consuming calculation to work out CPU speed
 !  The "j" index is set to use up 1.0 seconds on the development computer.
 !  Do NOT change this quantity!
 !
-      bk = second(2)
+      bk = second2(2)
       bi = 0.d0
       do j = 1,142083
         do i = 1,1000
           bi = bi + 1.d0/i
         end do
       end do
-      bk = second(2) - bk
+      bk = second2(2) - bk
       write(hook,"(a,f12.2)")" CPU_TIME:ARBITRARY_UNITS[1]=",time0/bk
     end if
     write(hook,"(a)")" END OF MOPAC FILE"

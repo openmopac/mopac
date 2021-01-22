@@ -85,7 +85,11 @@ subroutine wrtchk (allkey)
       if (index(keywrd(i:j), "=")  + index(keywrd," DENOUT") + &
         index(keywrd," VEC") + index(keywrd," ALLVE") == 0) then
         call mopend("Keyword RE-LOC only has meaning if DENOUT or VECTORS or ALLVECTORS is present")
-      end if                                               
+      end if  
+      if (index(keywrd, "BANANA") /= 0) &
+        call mopend("Keyword BANANA only works with keyword LOCAL, i.e. NOT with MOZYME")
+      if (index(keywrd, "RABBIT") /= 0) &
+        call mopend("Keyword RABBIT only works with keyword LOCAL, i.e. NOT with MOZYME")
     end if  
     if (id /= 0) then
       if (index(keywrd, " CUTOF") /= 0 ) then
@@ -346,9 +350,10 @@ subroutine wrtcon (allkey)
   if (myword(allkey, "QMMM "))   write (iw, '(" *  QMMM       - Generate energies and gradients for use in MM codes")')
   if (myword(allkey, " COMPAR")) write (iw, '(" *  COMPARE    - Compare two geometries")')
   if (myword(allkey, " BZ"))     write (iw, '(" *  BZ         - Write file <name>.brz for use by program BZ")')
-  if (myword(allkey, " BIRAD"))  write (iw, '(" *  BIRADICAL- SYSTEM HAS TWO UNPAIRED ELECTRONS")')
+  if (myword(allkey, " BIRAD"))  write (iw, '(" *  BIRADICAL  - SYSTEM HAS TWO UNPAIRED ELECTRONS")')
   if (myword(allkey, " EXCI"))   write (iw, '(" *  EXCITED    - FIRST EXCITED STATE IS TO BE OPTIMIZED")')
   if (myword(allkey, " VELO"))   write (iw, '(" *  VELOCITY   - INPUT STARTING VELOCITIES FOR DRC")')
+  if (myword(allkey, " DIPO"))   write (iw, '(" *  DIPOLE     - PRINT DIPOLE INSTEAD OF ENERGY IN TRAJECTORIES")')
   if (myword(allkey, " GEO-OK")) write (iw, '(" *  GEO-OK     - OVERRIDE INTERATOMIC DISTANCE AND OTHER SAFETY CHECKS")')
   if (myword(allkey, " CHECK"))  write (iw, '(" *  CHECK      - RUN EXTRA INTERATOMIC DISTANCE CHECKS")')
   if (myword(allkey, " PM6-D")) then 
@@ -1117,6 +1122,8 @@ subroutine wrtout (allkey)
   if (myword(allkey, " MECI"))   write (iw,'(" *  MECI       - M.E.C.I. WORKING TO BE PRINTED")')
   if (myword(allkey, " HESSIAN"))write (iw,'(" *  HESSIAN    - WRITE OUT HESSIAN FROM GEOMERY OPTIMIZATION")')
   if (myword(allkey, " LOCAL"))  write (iw,'(" *  LOCALIZE   - LOCALIZED ORBITALS TO BE PRINTED")')
+  if (myword(allkey, " BANANA")) write (iw,'(" *  BANANA     - MAKE LOCALIZED ORBITALS WITH BANANA BONDS")')
+  if (myword(allkey, " RABBIT")) write (iw,'(" *  RABBIT     - MAKE LOCALIZED ORBITALS WITH RABBIT EARS")')
   if (myword(allkey, " MULLIK")) write (iw,'(" *  MULLIK     - THE MULLIKEN ANALYSIS TO BE PERFORMED")')
   if (myword(allkey, " PI "))    write (iw,'(" *  PI         - BONDS MATRIX, SPLIT INTO SIGMA-PI-DELL", &
    & " COMPONENTS, TO BE PRINTED")')
@@ -1151,13 +1158,11 @@ subroutine wrtwor (allkey)
   use reada_I
   implicit none
   character (len=1000), intent (inout) :: allkey
-  character (len=20) :: spaces
   character :: ch, ch4*4
   character (len=7) :: chrono
   integer :: i, ii, j, k
   double precision :: time, sum_1, sum_2
   intrinsic Index, Min, Nint, Max
-  spaces = " "
   if (myword(allkey, " EIGINV"))     write (iw,'(" *  EIGINV     - USE HESSIAN EIGENVALUE REVERSION IN EF")')
   if (myword(allkey, " NONR"))       write (iw,'(" *  NONR       - DO NOT USE NEWTON-RAPHSON STEP IN EF")')
   if (myword(allkey, " SNAP"))       write (iw,'(" *  SNAP       - INCREASE PRECISION OF SYMMETRY ANGLES")')
@@ -1323,14 +1328,25 @@ subroutine wrtwor (allkey)
     i = Index (keywrd, " METAL=") 
     if (i == 0) keywrd = keywrd(:j + 5)//"="//trim(keywrd(j + 6:))
     i = Index (keywrd, " METAL")
-    j = Index (keywrd(i:), " ") + i 
-    j = Index (keywrd(i:j), ")") + i
-    if (j < i) then
+    j = Index (keywrd(i:), ") ") + i 
+     if (j < i) then
       write (iw,'(" *  METAL      - METALS ARE DEFINED AS BEING FULLY IONIC")')
     else
-      ii = max(9 + i - j, 1)
-      write (iw, '(" *  ", a, "- ELEMENTS DEFINED AS BEING FULLY IONIZED METALS")') &
-      keywrd(i + 8:j + 9)//spaces(:ii)
+      j = Index (keywrd(i:), ") ") + i 
+      if (index(keywrd(i:j), '"') /= 0) &
+        write (iw, '(" *               ATOMS DEFINED AS BEING FULLY IONIC", /," *",15x,a)') keywrd(i + 8:j - 2)//" ="
+    end if
+!
+! Convert PDB into atom-numbers
+!
+    do
+      k = index(keywrd(i:j), '"')
+      if (k == 0) exit
+      call txt_to_atom_no(keywrd(i:j), k, .false.)
+    end do
+    if (j > i) then
+      j = Index (keywrd(i:), ") ") + i 
+      write (iw, '(" *",15x,a)') keywrd(i + 8:j - 2)
     end if
     if (.not. myword(allkey, " METAL")) return ! dummy call to use "myword"
   end if
@@ -1560,8 +1576,8 @@ subroutine wrtwor (allkey)
   end if
 if (myword(allkey,' SETGPU=')) then
         i = index(keywrd,' SETGPU=')
-     	j = nint(reada(keywrd,i))
-    	write (iw,'(" *  SETGPU=   - YOUR CALCULATION WILL RUN IN THE GPU NUM. = ",i2)') j           
+        j = nint(reada(keywrd,i))
+        write (iw,'(" *  SETGPU=   - YOUR CALCULATION WILL RUN IN THE GPU NUM. = ",i2)') j           
   endif
   if (myword(allkey,' CPUTHREADS=')) then 
      i = index(keywrd,' CPUTHREADS=')

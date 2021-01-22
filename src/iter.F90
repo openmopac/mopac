@@ -12,8 +12,8 @@
       USE molkst_C, ONLY: numat, norbs, nalpha, nbeta, uhf, &
     &    nclose, nopen, fract, numcal, mpack, iflepo, iscf, &
     &    enuclr, keywrd, gnorm, moperr, last, nscf, emin, &
-         limscf, atheat, is_PARAM, id, line, lxfac, nalpha_open, &
-         nbeta_open
+    &    limscf, atheat, is_PARAM, id, line, lxfac, nalpha_open, &
+    &    nbeta_open, npulay
       Use mod_vars_cuda, only: lgpu
 #if GPU
       Use mod_vars_cuda, only: real_cuda, prec
@@ -23,7 +23,7 @@
       use reada_I
       use mopend_I
       use vecprt_I
-      use second_I
+      use second2_I
       use timer_I
       use fock2_I
       use writmo_I
@@ -35,6 +35,7 @@
       use swap_I
       use cnvg_I
       use chrge_I
+      use to_screen_I
       implicit none
       real(double) , intent(out) :: ee
       logical , intent(in) :: fulscf
@@ -332,7 +333,7 @@
       incitr = modea/=3 .and. modeb/=3
       if (incitr) niter = niter + 1
       if (timitr) then
-        titer = second(1)
+        titer = second2(1)
         write (iw, *)
         if (niter > 1) write (iw, '(a,f9.2,a,/)') &
           '     TIME FOR ITERATION:', titer - titer0, ' WALL CLOCK SECONDS'
@@ -383,7 +384,11 @@
               shift = -0.1D0
             endif
           else
-            shift = ten + eigs(ihomo+1) - eigs(ihomo) + shift
+            if (ihomo < norbs) then
+              shift = ten + eigs(ihomo+1) - eigs(ihomo) + shift
+            else
+              shift = 0.D0
+            endif
           endif
           if (diff > 0.D0) then
             if (shift > 4.D0) shfmax = 4.5D0
@@ -408,7 +413,11 @@
             if (newdg .and. .not.(halfe .or. camkin)) then
               shiftb = ten - tenold
             else
-              shiftb = ten + eigs(ihomob+1) - eigs(ihomob) + shiftb
+              if (ihomob < norbs) then
+                shiftb = ten + eigb(ihomob+1) - eigb(ihomob) + shiftb
+              else
+                shiftb = 0.D0
+              endif
             endif
             if (diff > 0.D0) shiftb = min(4.D0,shiftb)
             shiftb = max(-20.D0,min(shfmax,shiftb))
@@ -722,12 +731,12 @@
               if (lgpu) then
 #if GPU
                  call pulay_for_gpu (f, pa, norbs, pold, pold2, pold3, &
-                 & jalp, ialp, 6*mpack, frst, pl)
+                 & jalp, ialp, npulay*mpack, frst, pl)
 #endif
               else
 
                  call pulay (f, pa, norbs, pold, pold2, pold3, &
-                 & jalp, ialp, 6*mpack, frst, pl)
+                 & jalp, ialp, npulay*mpack, frst, pl)
               endif
           endif
 
@@ -737,21 +746,25 @@
 ! WHERE POSSIBLE, USE THE PULAY-STEWART METHOD, OTHERWISE USE BEPPU'S  *
 !                                                                      *
 !***********************************************************************
-          if (halfe .or. camkin) then
+! JEM NOTE: pseudo-diagonalization does less work, but it is less stable
+!           and slower because a large fraction of its work is stuck
+!           using BLAS level-1 operations right now. This could be
+!           accelerated using a QR diagonalization analog at some point ...
+!          if (halfe .or. camkin) then
             if (timitr) call timer ('BEFORE FULL DIAG')
             call eigenvectors_LAPACK(c, f, eigs, norbs)
             if (timitr) call timer ('AFTER  FULL DIAG')
-          else
-            if (lgpu) then
-               if (timitr) call timer ('BEFORE GPU DIAG')
-               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
-               if (timitr) call timer ('AFTER  GPU DIAG')
-            else
-              if (timitr) call timer ('BEFORE CPU DIAG')
-               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
-               if (timitr) call timer ('AFTER  CPU DIAG')
-            endif
-          endif
+!          else
+!            if (lgpu) then
+!               if (timitr) call timer ('BEFORE GPU DIAG')
+!               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
+!               if (timitr) call timer ('AFTER  GPU DIAG')
+!            else
+!              if (timitr) call timer ('BEFORE CPU DIAG')
+!               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
+!               if (timitr) call timer ('AFTER  CPU DIAG')
+!            endif
+!          endif
         else
           if (timitr) call timer ('BEFORE FULL DIAG')
           call eigenvectors_LAPACK(c, f, eigs, norbs)
@@ -830,11 +843,11 @@
               if (lgpu) then
 #if GPU
                  call pulay_for_gpu (fb, pb, norbs, pbold, pbold2, pbold3, &
-                 & jbet, ibet, 6*mpack, bfrst, plb)
+                 & jbet, ibet, npulay*mpack, bfrst, plb)
 #endif
               else
                 call pulay (fb, pb, norbs, pbold, pbold2, pbold3, &
-                 & jbet, ibet, 6*mpack, bfrst, plb)
+                 & jbet, ibet, npulay*mpack, bfrst, plb)
               endif
           endif
 
@@ -844,21 +857,25 @@
 ! WHERE POSSIBLE, USE THE PULAY-STEWART METHOD, OTHERWISE USE BEPPU'S  *
 !                                                                      *
 !***********************************************************************
-            if (halfe .or. camkin) then
+! JEM NOTE: pseudo-diagonalization does less work, but it is less stable
+!           and slower because a large fraction of its work is stuck
+!           using BLAS level-1 operations right now. This could be
+!           accelerated using a QR diagonalization analog at some point ...
+!            if (halfe .or. camkin) then
               if (timitr) call timer ('BEFORE FULL DIAG')
               call eigenvectors_LAPACK(cb, fb, eigb, norbs)
               if (timitr) call timer ('AFTER  FULL DIAG')
-            else
-              if (lgpu) then
-                 if (timitr) call timer ('BEFORE GPU DIAG')
-                 call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
-                 if (timitr) call timer ('AFTER  GPU DIAG')
-              else
-                if (timitr) call timer ('BEFORE CPU DIAG')
-                call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
-                if (timitr) call timer ('AFTER  CPU DIAG')
-              endif
-            endif
+!            else
+!              if (lgpu) then
+!                 if (timitr) call timer ('BEFORE GPU DIAG')
+!                 call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
+!                 if (timitr) call timer ('AFTER  GPU DIAG')
+!              else
+!                if (timitr) call timer ('BEFORE CPU DIAG')
+!                call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
+!                if (timitr) call timer ('AFTER  CPU DIAG')
+!              endif
+!            endif
           else
             if (timitr) call timer ('BEFORE FULL DIAG')
             call eigenvectors_LAPACK(cb, fb, eigb, norbs)
@@ -1009,6 +1026,7 @@
       use chanel_C, only : iw, iden, density_fn
       use common_arrays_C, only : p, pa, pb
       use molkst_C, only: uhf, keywrd, norbs, numat, mozyme
+      use to_screen_I
 !
 ! Read and write the density matrix
 !

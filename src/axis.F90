@@ -4,7 +4,7 @@
       use common_arrays_C, only : atmass, coord
       USE chanel_C, only : iw
       use to_screen_C, only : rot, xyzmom
-      USE funcon_C, only : fpc_6, fpc_8, fpc_9, fpc_10, pi
+      USE funcon_C, only : fpc_6, fpc_8, fpc_10, pi
       implicit none
       real(double) , intent(out) :: a 
       real(double) , intent(out) :: b 
@@ -77,9 +77,9 @@
       sumwx = sumwx/mol_weight 
       sumwy = sumwy/mol_weight 
       sumwz = sumwz/mol_weight 
-      x(:numat) = coord(1,:) - sumwx 
-      y(:numat) = coord(2,:) - sumwy 
-      z(:numat) = coord(3,:) - sumwz 
+      x(:numat) = coord(1,:numat) - sumwx 
+      y(:numat) = coord(2,:numat) - sumwy 
+      z(:numat) = coord(3,:numat) - sumwz 
 !***********************************************************************
 !
 !    MATRIX FOR MOMENTS OF INERTIA IS OF FORM

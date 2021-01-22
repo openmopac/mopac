@@ -8,13 +8,14 @@
       & tleft, nscf, tdump, time0, line
       use common_arrays_C, only : xparam, grad
       use reada_I 
-      use second_I 
+      use second2_I 
       use parsav_I 
       use compfg_I 
       use geout_I 
       use mopend_I 
       use locmin_I 
       use prttim_I 
+      use to_screen_I
       implicit none
       real(double), dimension (:,:), allocatable  :: q, r
       integer :: icyc, irst, jrst, maxcyc, m, nrst, ifrtl, nsst, ixso, &
@@ -94,7 +95,7 @@
       nrst = 4 
       tlast = tleft 
       resfil = .FALSE. 
-      tleft = tleft - second(2) + time0 
+      tleft = tleft - second2(2) + time0 
 !     **********
 !     SET UP COUNTERS AND SWITCHES
 !     **********
@@ -123,7 +124,7 @@
         close(igpt) 
         ncount = iiium(5) 
         xparam(:nvar) = xlast(:nvar) 
-        time1 = second(2) 
+        time1 = second2(2) 
         if (index(keywrd,' 1SCF') /= 0) then 
           iflepo = 13 
           last = 1 
@@ -154,7 +155,7 @@
 !     **********
 !     MAIN LOOP
 !     **********
-      time1 = second(2) 
+      time1 = second2(2) 
    60 continue 
       ifrtl = ifrtl + 1 
       icyc = icyc + 1 
@@ -441,7 +442,7 @@
       go to 660 
   590 continue 
       time2 = time1 
-      time1 = second(2) 
+      time1 = second2(2) 
       tcycle = time1 - time2 
       tleft = tleft - tcycle 
       if (tleft < 0.0D0) tleft = -0.1D0 

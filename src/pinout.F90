@@ -10,7 +10,7 @@ subroutine pinout (mode)
        & icvir_dim, cocc_dim, cvir_dim, icocc, icvir, cocc, cvir
     use chanel_C, only: iw, iden, density_fn
     use common_arrays_C, only : nbonds, ibonds
-
+    use to_screen_I
     implicit none
     integer :: mode
 !

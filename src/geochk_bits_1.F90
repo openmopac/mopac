@@ -20,10 +20,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
     txt_rad = " "
     j = -1
     i = index(keywrd," METAL")
-    if (i /= 0) then
-      j = index(keywrd(i + 1:)," ") + i + 1
-      j = index(keywrd(i:j),") ") + i
-    end if
+    if (i /= 0) j = index(keywrd(i:),") ") + i
     if (i == j .or. index(keywrd, " ADD-H") /= 0) then
       is_metal = .false.
       do i = 1, 102
@@ -89,13 +86,16 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
 !
     if (txt_rad /= " ") then
       paren = .false.
-      do i = 1, len_trim(txt_rad)
+      i = 0
+      do k = 1, len_trim(txt_rad)
+        i = i + 1
         if (paren) then
           paren = (txt_rad(i:i) /= ")")
         else
            paren = (txt_rad(i:i) == "(")
           if (ichar(txt_rad(i:i)) - ichar("0") <= 9 .and. ichar(txt_rad(i:i)) - ichar("0") > 0) then
             j = nint(reada(txt_rad(i:), 1))
+            i = i + int(log10(j*1.0001))
             radius(j) = -1.d0
             do j = i, len_trim(txt_rad)
               if (ichar(txt_rad(i:i)) - ichar("0") > 9 .or. &
