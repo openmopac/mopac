@@ -2089,8 +2089,8 @@ subroutine wrtwor (allkey)
   end if
 if (myword(allkey,' SETGPU=')) then
         i = index(keywrd,' SETGPU=')
-     	j = nint(reada(keywrd,i))
-    	write (iw,'(" *  SETGPU=   - YOUR CALCULATION WILL RUN IN THE GPU NUM. = ",i2)') j           
+        j = nint(reada(keywrd,i))
+        write (iw,'(" *  SETGPU=   - YOUR CALCULATION WILL RUN IN THE GPU NUM. = ",i2)') j           
   endif
   if (myword(allkey,' CPUTHREADS=')) then 
      i = index(keywrd,' CPUTHREADS=')

@@ -9,7 +9,7 @@
       txtatm1, cell_ijk, eigs, c
 !
       USE molkst_C, only : gnorm, natoms, numat, nvar, numcal, job_no, nscf, id, &
-        escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, verson, &
+        escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
         time0, atheat, errtxt, isok, mpack, gui, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, bad_separator, good_separator, &
@@ -22,7 +22,7 @@
 !
       use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi
 !
-      USE funcon_C, only : fpc_9, fpc
+      USE funcon_C, only : fpc_9
 !
       USE maps_C, only : latom, react, rxn_coord
 !
@@ -50,7 +50,7 @@
       Use gpu_info
       Use settingGPUcard
 #endif
-      use second_I
+      use second2_I
       use geout_I
       use wrttxt_I
       use geoutg_I
@@ -78,7 +78,9 @@
       logical :: exists, opend, sparkles_available, l_OLDDEN
       double precision, external :: C_triple_bond_C
       character :: nokey(20)*10
+#ifdef MKL
       integer, external :: mkl_get_max_threads
+#endif
 #if GPU
       logical :: lgpu_ref
       logical(c_bool)    :: hasGpu = .false.
@@ -95,16 +97,18 @@
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
       call fordd                          ! More constants, for use by MNDO-d
-      inquire (directory = "C:/", exist = exists)
-      if (exists) then
-        bad_separator = "/"
-        good_separator = "\"
-        if (verson(7:7) == " ") verson(7:7) = "W"
-      else
+! MOPAC ideally should be OS agnostic, and I'll gradually be deprecating OS-dependent parts of the code
+! Windows should be able to handle a '/' directory separator, although I need to verify this ...
+!      inquire (directory = "C:/", exist = exists)
+!      if (exists) then
+!        bad_separator = "/"
+!        good_separator = "\"
+!        if (verson(7:7) == " ") verson(7:7) = "W"
+!      else
         bad_separator = "\"
         good_separator = "/"
-        if (verson(7:7) == " ") verson(7:7) = "L"
-      end if
+!        if (verson(7:7) == " ") verson(7:7) = "L"
+!      end if
       lgpu = .false.
       trunc_1 = 7.0d0    ! Beyond 7.0 Angstroms, use exact point-charge
       trunc_2 = 0.22d0   ! Multiplier in Gaussian: exp(-trunc_2*(trunc_1 - Rab)^2)
@@ -144,7 +148,7 @@
       rewind iw
       isok = .TRUE.
       errtxt = 'Job stopped by operator'
-      tim = second(1)
+      tim = second2(1)
       call date_and_time(VALUES=time_start)
       if (moperr) goto 101
 !
@@ -192,7 +196,7 @@
       no_pKa = 0
       cell_ijk = 0
       id = 0
-      time0 = second(1)
+      time0 = second2(1)
       MM_corrections = .false.
       pdb_label = .false.
       state_Irred_Rep = " "
@@ -236,6 +240,7 @@
       if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
       if (numcal == 1) then
+#ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
         i = index(keywrd, " THREADS")
         if (i > 0) then
@@ -243,6 +248,7 @@
           num_threads = min(max(1,i), num_threads)
         end if
         call mkl_set_num_threads(num_threads)
+#endif
 #if GPU
         gpuName(1:6) = '' ; name_size(1:6) = 0 ; totalMem(1:6) = 0 ; clockRate(1:6) = 0
         hasDouble(1:6) = .false. ; gpu_ok(1:6) = .false.
@@ -765,7 +771,7 @@
         i = index(keywrd,' GRAD')
         grad(:nvar) = 0.D0
         numcal = numcal + 1
-        tim = second(1)
+        tim = second2(1)
         call to_screen(" Single point calculation")
         call compfg (xparam, .TRUE., escf, .TRUE., grad, i /= 0)
       else if (index(keywrd,' SADDLE') /= 0) then
@@ -823,7 +829,7 @@
         i = index(keywrd,' GRAD')
         grad(:nvar) = 0.D0
         numcal = numcal + 1
-        tim = second(1)
+        tim = second2(1)
         call to_screen(" Single point calculation")
         call compfg (xparam, .TRUE., escf, .TRUE., grad, i /= 0)
       else if (index(keywrd,' DFP') + index(keywrd,' FLEPO') + &
@@ -888,7 +894,7 @@
         endif
       endif
   100 continue
-      tim = tim + second(2)
+      tim = tim + second2(2)
       if (tim > 1.d7) tim = tim - 1.d7
       inquire(unit = ilog, opened = opend, name = line)
       if (opend) opend = (index(line, log_fn) /= 0)

@@ -44,7 +44,7 @@
 !  If LET is specified, the input orientation will be used.
 !
       if (.not.let) then 
-        call axis (sum, sum, sum, rotvec) 
+        call axis (sumx, sumy, sumz, rotvec) 
         write (iw, 20) 
    20   format(/,' ROTATION MATRIX FOR ORIENTATION OF MOLECULE:'/) 
         do i = 1, 3 
@@ -440,7 +440,7 @@
       real(double) :: sum, hyfsp
       real(double), save :: wtmol = 0.0d0
       logical, save :: first, chargd 
-	  integer, external :: ijbo
+      integer, external :: ijbo
 !-----------------------------------------------
 !
 !***********************************************************************

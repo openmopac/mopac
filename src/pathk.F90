@@ -22,7 +22,7 @@
 !-----------------------------------------------
       use reada_I 
       use dfpsav_I 
-      use second_I 
+      use second2_I 
       use ef_I 
       use geout_I 
       use wrttxt_I 
@@ -93,7 +93,7 @@
       if (allocated(profil)) deallocate(profil)
       if (allocated(react)) deallocate(react)
       allocate(profil(npts + 1), react(npts + 1))
-      profil(1) = 0.D0 
+      profil = 0.D0 
       react(1) = geo(lparam,latom) 
       if (use_lbfgs) then 
         write (iw, '(/10x,''ABOUT TO ENTER L-BFGS FROM PATHK'')') 
@@ -141,8 +141,8 @@
       end if
       do iloop = kloop, npts 
         if (iloop - lloop >= maxcyc) tleft = -100.D0 
-        time0 = second(1)
-        cpu1 = second(2) 
+        time0 = second2(1)
+        cpu1 = second2(2) 
         if (iloop > 1 .and. scale) then
           factor = geo(lparam,latom)/rxn_coord
           do i = 1, latom - 1
@@ -174,7 +174,7 @@
         if (i /= 0) keywrd(i:i+5) = " "
         if (iflepo == (-1) .or. tleft < 0.d0 ) goto 99         
         kloop = kloop + 1 
-        cpu2 = second(2) 
+        cpu2 = second2(2) 
         cpu3 = cpu2 - cpu1 
         cputot = cputot + cpu3 
         profil(iloop) = escf 

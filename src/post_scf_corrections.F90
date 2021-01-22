@@ -49,7 +49,7 @@ subroutine post_scf_corrections(correction, l_grad)
 ! PM6-D3H4X: Brahmkshatriya, P. S.; Dobes, P.; Fanfrlik, J.; Rezac, J.; Paruch, K.; Bronowska, 
 ! A.; Lepsik, M.; Hobza, P. "Quantum Mechanical Scoring: Structural and Energetic Insights into 
 ! Cyclin-Dependent Kinase 2 Inhibition by Pyrazolo[1,5-a]pyrimidines" Curr. Comput.-Aid. Drug. 
-! 2013 , 9 (1), 118–129.
+! 2013 , 9 (1), 118ï¿½129.
 !
   prt = (index(keywrd," 0SCF ") + index(keywrd," PRT ") /= 0 .and. index(keywrd," DISP") /= 0)
   correction = 0.d0

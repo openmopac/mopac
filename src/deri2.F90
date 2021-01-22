@@ -8,7 +8,7 @@
       USE chanel_C, only : iw
       use derivs_C, only : b, ab, fb
       use common_arrays_C, only : c, w, eigs
-      use second_I 
+      use second2_I 
       use deri22_I 
       use deri23_I 
       use mxm_I 
@@ -128,7 +128,7 @@
       endif 
       fail = .FALSE. 
       nbsize = 0 
-      if (debug) time1 = second(1) 
+      if (debug) time1 = second2(1) 
 !
 !        NORMAL CASE. USE F ONLY.
 !
@@ -251,7 +251,7 @@
        & KEYWORD "NOANCI" AND RESUBMIT') 
           goto 99  
         endif 
-        time2 = second(1) 
+        time2 = second2(1) 
         write (iw, &
           '('' ELAPSED TIME IN RELAXATION'',F15.3,'' SECOND'')') time2 - time1 
       endif 
@@ -346,7 +346,7 @@
 !     THE END .
       end do 
       if (debug) write (iw, &
-      '('' ELAPSED TIME IN C.I-ENERGY RELAXATION'',F15.3,'' SECOND'')') second(1) - time2 
+      '('' ELAPSED TIME IN C.I-ENERGY RELAXATION'',F15.3,'' SECOND'')') second2(1) - time2 
   99  deallocate(bab, babinv)
       return  
       end subroutine deri2 

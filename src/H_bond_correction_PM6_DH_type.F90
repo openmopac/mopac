@@ -3,9 +3,9 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !    Add a dispersion E_disp, a coulombic, EC, and a repulsive correction, ER,
 !    to improve intermolecular interaction energies.
 !
-  use molkst_C, only : numat, E_hb, N_Hbonds, method_pm7, method_PM6, l123, l1u, l2u, l3u, &
-    method_pm6_dh_plus, method_pm6_dh2, method_pm6_d3h4, method_pm6_dh2x, method_pm6_d3h4x, &
-    method_pm6_d3, method_pm6_d3_not_h4, line, id, numcal
+  use molkst_C, only : numat, E_hb, N_Hbonds, method_pm7, l123, l1u, l2u, l3u, &
+    method_pm6_dh_plus, method_pm6_dh2, method_pm6_dh2x, &
+    line, id, numcal
   use parameters_C, only : tore
   use common_arrays_C, only: coord, nat, q, p, hblist, dxyz, cell_ijk
   use to_screen_I
@@ -18,11 +18,12 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
     nrpairs, max_h_bonds, icalcn = -1
   logical :: n_h_bonds, first = .true.
   integer, allocatable :: nrbondsa(:), nrbondsb(:)
-  double precision :: EC, ER, vector(numat), sum, sum1, delta = 1.d-5, covrad(94)
+  double precision, allocatable :: vector(:)
+  double precision :: EC, ER, sum, sum1, delta = 1.d-5, covrad(94)
   double precision, external :: EC_plus_ER, EH_plus  
   logical, external :: connected
   
-  save  
+  save
    data covrad /& 
   &0.32d0,  0.46d0,  1.20d0,  0.94d0,  0.77d0,  0.75d0,  0.71d0,  0.63d0,  0.64d0,  0.67d0, &
   &1.40d0,  1.25d0,  1.13d0,  1.04d0,  1.10d0,  1.02d0,  0.99d0,  0.96d0,  1.76d0,  1.54d0, &
@@ -45,7 +46,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
       if (nat(j) == 8 .or. nat(j) == 7) max_h_bonds = max_h_bonds + 1
     end do
     if (id == 0) then
-      max_h_bonds = max_h_bonds*110
+      max_h_bonds = max_h_bonds*125
     else
       max_h_bonds = max_h_bonds*250
     end if
@@ -57,7 +58,8 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   if (allocated(nrbondsa))   deallocate(nrbondsa)
   if (allocated(nrbondsb))   deallocate(nrbondsb) 
   if (allocated(hblist))     deallocate(hblist) 
-  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), stat=i)   
+  if (allocated(vector))     deallocate(vector) 
+  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), vector(numat), stat=i)   
     if (i /= 0) then
     line = " Cannot allocate arrays for PM6-DH+"
     call to_screen(trim(line))
@@ -178,7 +180,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   double precision :: xa_dist, xb_dist, xh_dist, xc_dist, sum, sum1, old_dist
   double precision, external :: distance, bonding
   logical :: hbs1_ok, hbs2_ok
- 
+  hbs1_ok = .false.
 !
 !  Identify atoms associated with the hydrogen bonds
 !

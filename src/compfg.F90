@@ -515,6 +515,7 @@
           h(45) = h(15)
           f = h
           call fock1dorbs(f, p, pa, 45, w, i, 1, 9, 45)
+          xfac_value = 0.0d0 ! dummy return value for unaccessed branch
           return
         end if
         r = coord(1,2) 

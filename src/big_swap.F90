@@ -260,7 +260,7 @@
   use ef_C, only : nstep
 !
   use reada_I
-  use second_I
+  use second2_I
   use to_screen_I
   implicit none
   integer, intent (in) :: big_nvar
@@ -318,7 +318,7 @@
     oldstp(i) = 1.d0
   end do
   tlast = tleft
-  tx2 = second (2)
+  tx2 = second2 (2)
   tx1 = tx2
 !
 !  Turn OFF all bounds checking.  This saves memory and speeds things up
@@ -439,14 +439,14 @@
 !  Write out this cycle
 !
     jcyc = jcyc + 1
-    tx2 = second (2)
+    tx2 = second2 (2)
     tstep = tx2 - tx1
     cycmx = Max (tstep, cycmx)
     tx1 = tx2
     tleft = tleft - tstep
     if (tlast-tleft > tdump) then
       tlast = tleft
-      tt0 = second (1) - time0
+      tt0 = second2 (1) - time0
       call lbfsav (tt0, 1, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
             & dsave, jcyc, escf_tot)
       if (moperr) goto 99
@@ -663,12 +663,18 @@
     logical , intent(in) :: lgrad 
     double precision, intent(in) :: big_xparam(2*nvar)
     double precision, intent (out) :: big_grad(2*nvar) 
-    double precision :: xparam(nvar) 
+    double precision, allocatable :: xparam(:)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-    integer :: i
-    save 
+    integer :: i, nparam = -1
+    save xparam, nparam
+!  Reallocate xparam as needed
+   if (nparam < nvar) then
+     if(nparam >= 0) deallocate(xparam)
+     nparam = nvar
+     allocate(xparam(nparam))
+   end if
 !
 !  Save the current point
 !
@@ -1333,7 +1339,7 @@
 !
 !
     integer :: i, k, l
-    double precision, external :: second, reada
+    double precision, external :: second2, reada
     
     
       call l_control("TS", len("TS"), -1)
@@ -1347,7 +1353,7 @@
       write(line,'(a,f0.1)')"DDMIN=0 GNORM=",gnorm_lim
       call l_control(trim(line), len_trim(line), 1)
       numcal = numcal + 1
-      time0 = second(1)
+      time0 = second2(1)
       if (nvar > 0) then
         call lbfgs(xparam,escf)
         do i = 1, nvar 
@@ -1378,7 +1384,7 @@
 !  Local
 !
     integer :: i
-    double precision, external :: second
+    double precision, external :: second2
     logical :: opend    
     if (l_ts) then
       line = "TS"
@@ -1414,7 +1420,7 @@
     end if
     call l_control("GNORM=3", len("GNORM=3"), 1)
     geoa(:,:numat) = geo(:,:numat)
-    time0 = second(1)
+    time0 = second2(1)
     if (loop == 2) call l_control("OLD_HESS", len("OLD_HESS"), 1)
     if (l_ts) then
       call l_control("TS", len("TS"), 1)

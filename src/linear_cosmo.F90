@@ -3042,7 +3042,7 @@ contains
 
         call get_legendre (p, cos_t, pmn)
 
-        psi(0, 0) = psi(0, 0) + Cmplx(qq)
+        psi(0, 0) = psi(0, 0) + Cmplx(qq, 0.d0, dcmplx_kind)
 
         t = 1.d0
         do n1 = 1, p

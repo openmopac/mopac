@@ -203,13 +203,17 @@
 !
 ! Travel, in Angstroms
 !
-        travel(i) = sqrt(2.d0*sum/(force_const(i)*1.d5))*1.d8
+        if (force_const(i) == 0.D0) then
+          travel(i) = 0.D0
+        else
+          travel(i) = sqrt(2.d0*sum/(force_const(i)*1.d5))*1.d8
+        end if
         if (travel(i) > 1.D0) travel(i) = 0.D0 
         if (abs(freq(i)) < abs(sum1)*1.D+20) then 
           sum1 = sqrt(abs(freq(i)/(sum1*1.D-5))) 
         else 
           sum1 = 0.D0 
-        endif 
+        end if 
       end do 
       if (eorc) then 
 !
