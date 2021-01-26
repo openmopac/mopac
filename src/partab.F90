@@ -33,7 +33,7 @@ subroutine partab
     integer, dimension (4) :: nzs
     integer, dimension (4) :: sortl
     double precision :: errors(300), yparam(300), dummy(2)
-    double precision, external :: second2
+    double precision, external :: seconds
     intrinsic Abs, Index, Int, Min
     data ipfile / 16, 17, 18, 19 /
 !------------------------------------------------------------------------
@@ -67,7 +67,7 @@ subroutine partab
    &     Dipole         Diff. Ref.')")
     write (ipfile(3), "(67X,'Exp.     Calc.')")
     write (ifiles_8, "(a,26x,2A)") "   Molecule     ","         Time  Heat      ", "Dipole   I.P.     Geometry     Total"
-    itime = Int (second2 (1))
+    itime = Int (seconds (1))
      if (large) then
         inquire (unit=iw, opened=opend)
         if (.not. opend) then
@@ -153,7 +153,7 @@ subroutine partab
     !
     !  Write out information on this system
     !
-      i = Int (second2 (1))
+      i = Int (seconds (1))
       if (is_a_ref(loop)) then
       write (ifiles_8, "(A48,I5)") koment, i - itime
         cycle

@@ -1,4 +1,4 @@
-      real(kind(0.0d0)) function second2 (mode) 
+      real(kind(0.0d0)) function seconds (mode) 
 !
 !  If mode = 1:   Get current CPU time - CPU_0, and return without checking for <file>.end
 !     mode = 2:   Get current CPU time - CPU_0, and return after checking for <file>.end,
@@ -18,13 +18,17 @@
       save 
 !******************************************************
 !
-!   SECOND, ON EXIT, CONTAINS THE NUMBER OF CPU SECONDS
+!   SECONDS, ON EXIT, CONTAINS THE NUMBER OF CPU SECONDS
 !   SINCE THE START OF THE CALCULATION.
+!
+!   NOTE: THIS FUNCTION WAS NAMED 'SECOND' IN OLDER
+!         MOPAC VERSIONS, WHICH IS THE NAME OF A GNU
+!         FORTRAN INTRINSIC FUNCTION
 !
 !******************************************************
       data setok/ .TRUE./  
       data shut/ 0.D0/                      
-      second2 = 0.D0 ! dummy time upon failure
+      seconds = 0.D0 ! dummy time upon failure
       if (first) then 
         first = .false. 
 !
@@ -102,7 +106,7 @@
       isec  = itim1(7)
       imsec = itim1(8)
       wall_clock_1 = float(3600*ihour + 60*imin + isec) + (float(imsec)/1.e3 )         
-      second2 = dble(wall_clock_1 - wall_clock_0) + shut 
+      seconds = dble(wall_clock_1 - wall_clock_0) + shut 
       
       if (is_PARAM) return
  11   endfile (iw, iostat = i99) 
@@ -126,4 +130,4 @@
       end if
       backspace (iw)
       return
-      end function second2 
+      end function seconds 

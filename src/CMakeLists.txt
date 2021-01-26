@@ -2,7 +2,7 @@
 target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
 target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
 
-target_sources(mopac-common PRIVATE
+target_sources(mopac-lib PRIVATE
 # GPU-related files
 #        ${CMAKE_CURRENT_SOURCE_DIR}/mod_gpu_info.F90
 #        ${CMAKE_CURRENT_SOURCE_DIR}/pulay_for_gpu_I.F90
@@ -104,6 +104,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl1_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkld_I.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dimens_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dist2_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dmecip_I.F90
@@ -281,7 +282,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/schmit_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/scprm_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/search_I.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/second2_I.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/seconds_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/set_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/setup3_I.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/solrot_I.F90
@@ -355,6 +356,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_AM1_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_AM1_Sparkles_C.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_INDO_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM3_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM3_Sparkles_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM6_C.F90
@@ -368,6 +370,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_mndo_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_mndod_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/polar_C.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/reimers_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/refkey_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rotate_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/symmetry_C.F90
@@ -381,6 +384,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_PM6_DH_type.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_bits.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/H_bonds4.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/Hydrogen_bond_corrections.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/MOZYME_eigs.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/Password.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/aababc.F90
@@ -409,6 +413,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/bonds_for_MOZYME.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/buildf.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/calpar.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/ci.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/capcor.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ccrep.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/charmo.F90
@@ -428,11 +433,13 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/compfg.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/convert_storage.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/copyc6.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/cosci.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/cosmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dang.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/datin.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/datinp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dcart.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/ddiag.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/delsta.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/denrot.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/denrot_for_MOZYME.F90
@@ -468,6 +475,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/dihed.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dimens.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dipole_for_MOZYME.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/direct.F90
@@ -489,6 +497,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/esp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/esp_utilities.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/exchng.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/excite.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/extract_parameter.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/fillij.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/filusp.F90
@@ -535,7 +544,9 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/ijbo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ijkl.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/init_filenames.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/input.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/interp.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/integral.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/intfc.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/invfn.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ionout.F90
@@ -604,6 +615,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/outer1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/outer2.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/output_cc_rep_fn.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/ovlp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pardip.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/parfg.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pargeo.F90
@@ -635,6 +647,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/rapid1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rapid2.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/rapid3.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/rci.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/react1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/reada.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/readmo.F90
@@ -650,10 +663,11 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/rsp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/run_mopac.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/savgeo.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/scf.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/scfcri.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/schmib.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/schmit.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/second2.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/seconds.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/selmos.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/set.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/set_up_MOZYME_arrays.F90
@@ -666,6 +680,7 @@ target_sources(mopac-common PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/sort.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/sp_two_electron.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/static_polarizability.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/subs.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/supdot.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/superd.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/swap.F90

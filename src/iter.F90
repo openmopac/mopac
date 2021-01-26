@@ -25,7 +25,7 @@
       use reada_I
       use mopend_I
       use vecprt_I
-      use second2_I
+      use seconds_I
       use timer_I
       use fock2_I
       use writmo_I
@@ -335,7 +335,7 @@
       incitr = modea/=3 .and. modeb/=3
       if (incitr) niter = niter + 1
       if (timitr) then
-        titer = second2(1)
+        titer = seconds(1)
         write (iw, *)
         if (niter > 1) write (iw, '(a,f9.2,a,/)') &
           '     TIME FOR ITERATION:', titer - titer0, ' WALL CLOCK SECONDS'

@@ -9,7 +9,7 @@
       use reada_I 
       use getgeo_I 
       use mopend_I 
-      use second2_I 
+      use seconds_I 
       use geout_I 
       use compfg_I 
       use writmo_I 
@@ -146,7 +146,7 @@
         call mopend ("THE TWO GEOMETRIES IN SADDLE ARE IDENTICAL.")
         return
       end if   
-      time0 = second2(2) 
+      time0 = seconds(2) 
       maxcyc = 100000 
       if (index(keywrd,' BIGCYCLES') /= 0) maxcyc = nint(reada(keywrd,index(&
         keywrd,' BIGCYCLES'))) 
@@ -154,7 +154,7 @@
       one = 1.D0 
       dell = 0.1D0 
       eold = -2000.D0 
-      time1 = second2(2) 
+      time1 = seconds(2) 
       swap = 0.D0 
       do iloop = 1, maxstp 
         if (iloop >= maxcyc) tleft = -100.D0 
@@ -249,7 +249,7 @@
             call mopend("BOTH SYSTEMS ARE ON THE SAME SIDE OF THE TRANSITION STATE.")             
             return  
           endif 
-          time2 = second2(2) 
+          time2 = seconds(2) 
           write (iw, '('' TIME='',F9.2)') time2 - time1 
           time1 = time2 
           write (iw, '(''  REACTANTS AND PRODUCTS SWAPPED AROUND'')') 

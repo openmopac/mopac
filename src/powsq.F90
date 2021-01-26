@@ -5,7 +5,7 @@
       use funcon_C, only : a0
       use common_arrays_C, only : loc, grad, xparam, gnext1, gmin1
       use chanel_C, only : iw, ilog, log, iw0
-      use second2_I 
+      use seconds_I 
       use reada_I 
       use compfg_I 
       use vecprt_I 
@@ -51,7 +51,7 @@
 !        *****  TEXAS.  DECEMBER 1973                           *****
 !
       data icalcn/ 0/  
-      tleft = tleft - second2(1) + time0 
+      tleft = tleft - seconds(1) + time0 
       tstep = 0.d0
       if (icalcn /= numcal) then 
         icalcn = numcal 
@@ -62,7 +62,7 @@
         maxcyc = 100000 
         if (index(keywrd,' CYCLES') /= 0) maxcyc = nint(reada(keywrd,index(keywrd,' CYCLES'))) 
         scf1 = index(keywrd,' 1SCF') /= 0 
-        time1 = second2(2) 
+        time1 = seconds(2) 
         time2 = time1 
         icyc = 0 
         jcyc = 0
@@ -134,7 +134,7 @@
       write (iw, '(/, 10 x, "HESSIAN CALCULATED NUMERICALLY", /)')
       test = 0.d0
       do iloop = ilpr, nvar 
-        time1 = second2(1) 
+        time1 = seconds(1) 
         xparam(iloop) = xparam(iloop) + xinc 
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .TRUE.) 
         if (scf1) go to 390 
@@ -146,7 +146,7 @@
           write(line,"(i5,a,i4,a)")iloop," of",nvar," steps completed"
           call to_screen(line) 
         end if
-        time2 = second2(2) 
+        time2 = seconds(2) 
         tstep = time2 - time1 
         tleft = tleft - tstep
         time1 = time2
@@ -355,7 +355,7 @@
       bmat(:nvar,id) = sig(:nvar)/a0 
       gnext1(:nvar) = gmin1(:nvar) 
       time1 = time2 
-      time2 = second2(2) 
+      time2 = seconds(2) 
       tstep = time2 - time1 
       tleft = tleft - tstep 
       if (tleft < 0.0D0) tleft = -0.1D0 

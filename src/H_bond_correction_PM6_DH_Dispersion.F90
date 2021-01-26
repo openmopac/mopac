@@ -38,7 +38,7 @@ double precision function PM6_DH_Disp(set_a, nsa)
 !  "A Transferable H-bonding Correction For Semiempirical Quantum-Chemical Methods"
 !  Martin Korth, Michal Pitonak, Jan Rezac and Pavel Hobza, 
 ! 
-!  J Chem Theory and Computation 6:344-352 (2010)
+!  J Chem Theory and Computation 6:344-352 (2010)
 !
   use common_arrays_C, only: nat, nbonds, tvec, coord
   use molkst_C, only : Rij => Rab, method_PM7, numcal, line, id, l11, l21, l31, numat

@@ -94,7 +94,7 @@
       deallocate(wmax, wbits, wsum)
       return  
       end subroutine solrot 
-      subroutine nddo_to_point(wbits, e1bits, e2bits, enubit, rij, ni, nj)
+      subroutine nddo_to_point(wbits, e1bits, e2bits, enubit, r, ni, nj)
 !
 ! NDDO_to_point smoothly transitions the two center integrals from NDDO to point-charge
 ! as the distance increases.  This is done by steadily mixing more and more point-charge
@@ -107,7 +107,7 @@
         implicit none
         real(double), dimension(45) :: e1bits, e2bits, e1bits_p = 0.d0, e2bits_p = 0.d0
         real(double), dimension(2025) :: wbits 
-        double precision, intent (in):: rij
+        double precision, intent (in):: r
         double precision, intent (inout):: enubit
         integer, intent (in) :: ni, nj
         integer :: kb
@@ -117,28 +117,28 @@
         if (l_feather) then
           call to_point(r, dummy, const)
         else
-          if (rij < 3.0d0) return
-          const = Exp (-0.025d0*(rij - 3.d0)**2)
+          if (r < 3.0d0) return
+          const = Exp (-0.025d0*(r - 3.d0)**2)
         end if
-        call point (rij, ni, nj, wbits_p, kb, e1bits_p, e2bits_p, enubit_p)
+        call point (r, ni, nj, wbits_p, kb, e1bits_p, e2bits_p, enubit_p)
         wbits(1:kb) = const*wbits(1:kb) +(1.d0-const)*wbits_p(1:kb)
         e1bits = const*e1bits + (1.d0 - const)*e1bits_p
         e2bits = const*e2bits + (1.d0 - const)*e2bits_p
         enubit = const*enubit + (1.d0 - const)*enubit_p
       end subroutine nddo_to_point
 
-  subroutine point (rij, ni, nj, w, kr, e1b, e2a, enuc)
+  subroutine point (r, ni, nj, w, kr, e1b, e2a, enuc)
   use funcon_C, only : a0, ev
   use parameters_C, only : tore, natorb
   implicit none
   integer, intent (in) :: ni, nj
   integer, intent (out) :: kr
-  double precision, intent (in) :: rij
+  double precision, intent (inout) :: r
   double precision, intent (out) :: enuc
   double precision, dimension (45), intent (out) :: e1b, e2a
   double precision, dimension (*), intent (out) :: w
   integer :: i, j, ii, jj, nii, njj
-  double precision :: ee, ee1, ee2, r
+  double precision :: ee, ee1, ee2
   double precision, external :: trunk
 !
 !   In solid-state work, if an interatomic distance is larger than
@@ -146,7 +146,7 @@
 !   approximation, in which the point-charge is located at a distance
 !   that depends on the interatomic distance (see trunk) 
 !
-    r = trunk (rij)
+    r = trunk (r)
     ee = ev * a0 / r
     ee1 = -ee * tore(nj)
     ee2 = -ee * tore(ni)
@@ -180,16 +180,16 @@
     !
     enuc = -ee1 * tore(ni)
 end subroutine point
-double precision function trunk (rij)
+double precision function trunk (r)
 !
 !  In solids, change the apparent distance so that the Madelung sum can be 
 !  solved.
 !
-!   rij: Distance in Angstroms
+!   r: Distance in Angstroms
 !
     use molkst_C, only: numcal, clower, cutofp, cupper
     implicit none
-    double precision, intent (in) :: rij
+    double precision, intent (in) :: r
     integer, save :: icalcn = 0
     double precision, save :: bound1, bound2, c, clim, cr, cr2, range
     if (icalcn /= numcal) then
@@ -201,7 +201,7 @@ double precision function trunk (rij)
       bound2 = cupper / cutofp
       range = bound2 - bound1
       !
-      !   Truncation function = C+CR*rij+CR2*rij**2
+      !   Truncation function = C+CR*R+CR2*R**2
       !
       c = -0.5d0 * bound1 ** 2 * cutofp / range
       cr = 1.0d0 + bound1 / range
@@ -216,20 +216,20 @@ double precision function trunk (rij)
    !  Need a smooth function in the region of CUTOFP
    !
    !  Function has form:
-   !    Up to CLOWER  r=rij
+   !    Up to CLOWER  R=R
    !    At CLOWER,  slope = 1.0
    !    Between CLOWER and CUPPER = Monotomic increase,
    !    with rate of increase dropping from 1.0 to 0.0
    !    At CUPPER, slope = 0
-   !    Above CUTOFP   r=CUTOFP
-    if (rij > clower) then
-      if (rij > cupper) then
+   !    Above CUTOFP   R=CUTOFP
+    if (r > clower) then
+      if (r > cupper) then
         trunk = clim
       else
-        trunk = c + cr * rij + cr2 * rij ** 2
+        trunk = c + cr * r + cr2 * r ** 2
       end if
     else
-      trunk = rij
+      trunk = r
     end if
 end function trunk
 

@@ -18,7 +18,7 @@
       use ef_C, only : nstep
 !
       use reada_I
-      use second2_I
+      use seconds_I
       use to_screen_I
       implicit none
       double precision, intent (inout) :: escf
@@ -102,7 +102,7 @@
         oldstp(i) = 1.d0
       end do
       tlast = tleft
-      tx2 = second2 (2)
+      tx2 = seconds (2)
       tx1 = tx2
       tleft = tleft - tx2 + time0
     !
@@ -156,7 +156,7 @@
           end if
           write (iw, "(//10x,' - THE CALCULATION IS BEING DUMPED TO DISK')")
           write (iw, "(10x,'   RESTART IT USING THE KEYWORD ""RESTART""')")
-          tt0 = second2 (1) - time0
+          tt0 = seconds (1) - time0
           call lbfsav (tt0, 1, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
                & dsave, nstep, escf)
           iflepo = -1
@@ -233,7 +233,7 @@
             !  Write out this cycle
             !
           nstep = nstep + 1
-          tx2 = second (2)
+          tx2 = seconds (2)
           tstep = tx2 - tx1
           cycmx = Max (tstep, cycmx)
           tx1 = tx2
@@ -241,7 +241,7 @@
           if (tlast-tleft > tdump) then
             tlast = tleft
             resfil = .true.
-            tt0 = second (1) - time0
+            tt0 = seconds (1) - time0
             call lbfsav (tt0, 1, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
                  & dsave, nstep, escf)
             if (moperr) goto 99

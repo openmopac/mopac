@@ -23,7 +23,10 @@ if(DEFINED ENV{MKLROOT})
   add_definitions(-DMKL)
   if(DEFINED ENV{OMPROOT})
     message("environment variable OMPROOT is defined, building threaded MKL w/ OMPROOT as the path to libiomp5")
-    target_link_libraries(mopac PUBLIC mopac_all -Wl,-rpath,$ENV{OMPROOT}
+    target_link_libraries(mopac PUBLIC mopac-lib -Wl,-rpath,$ENV{OMPROOT}
+                          $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a 
+                          $ENV{MKLROOT}/lib/libmkl_core.a -L$ENV{OMPROOT} -liomp5 -lpthread -lm -ldl)
+    target_link_libraries(param PUBLIC mopac-lib -Wl,-rpath,$ENV{OMPROOT}
                           $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a 
                           $ENV{MKLROOT}/lib/libmkl_core.a -L$ENV{OMPROOT} -liomp5 -lpthread -lm -ldl)
 #                          -dynamiclib -lgfortran -static-libgfortran

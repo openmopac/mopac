@@ -27,7 +27,7 @@ subroutine direct(cycle_no)
     double precision, dimension (numvar) :: dstep
     double precision, dimension (300) :: differ, errors, yparam
     logical, dimension (maxfns) :: lfact_here
-    double precision, external :: second2, reada
+    double precision, external :: seconds, reada
   !
   !.. Intrinsic Functions ..
     intrinsic Abs, Index, Int
@@ -80,7 +80,7 @@ subroutine direct(cycle_no)
     ergmod = 0.d0
     nfns = 0
     phase = - phase
-    itime = Int (second2 (1))
+    itime = Int (seconds (1))
     if (cycle_no == 14) then
      i = 1
     end if
@@ -91,7 +91,7 @@ subroutine direct(cycle_no)
     do loop = 1, nmols
       molnum = molnum + 1
       tleft = 10000.d0
-      time0 = second2(1)
+      time0 = seconds(1)
     !
     !  Restore all information for molecule number LOOP
     !
@@ -417,7 +417,7 @@ subroutine direct(cycle_no)
           koment(i:i+1) = ". "
         end do
       endif
-       i = Int (second2 (1))
+       i = Int (seconds (1))
       if(is_a_ref(loop)) then
       write (ifiles_8, "(A49,I4)") koment, i - itime
       else

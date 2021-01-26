@@ -5,9 +5,10 @@
 !        Use mod_vars_cuda, only: ngpus
         Use mamult_I  
         Use iso_c_binding
+#if GPU
         Use call_gemm_cublas
         Use mamult_cuda_i 
-        use common_arrays_C, only : ifact                 
+        use common_arrays_C, only : ifact
 #endif
         implicit none
         Integer :: iopc,ndim,mdim           
@@ -34,9 +35,11 @@
           case (1) ! mamult
             call mamult (a, b, c, ndim, beta)      
           case (2) ! mamult_gpu
+#if GPU
             igrid = 512 ; iblock = 512 
             tt = 0.0
             call mamult_gpu(a, b, c, ndim, mdim, ifact, beta, igrid, iblock, tt, 0)
+#endif
           case (3) ! dgemm
             allocate (xa(ndim,ndim), xb(ndim,ndim), xc(ndim,ndim),stat=i)
         

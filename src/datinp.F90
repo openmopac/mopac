@@ -32,7 +32,7 @@
 !
     use chanel_C, only : iw, ir, igpt, ilog, job_fn
 !----------------------------------------------------------------------------
-    use second2_I
+    use seconds_I
     use reada_I
     implicit none
     character :: dr, gr, hr, jr
@@ -125,7 +125,7 @@
     ilowz = Ichar ("z")
     icapa = Ichar ("A")
     icapz = Ichar ("Z")
-    told = second2 (1)
+    told = seconds (1)
     max_atom = 1000
     if (Index (contrl, " MAXAT") /= 0) max_atom = Nint(reada(contrl, Index(contrl," MAXAT"))) 
 
@@ -1092,7 +1092,7 @@
 !    WHEN IT DEFAULTS TO 0.D0.
 ! IF GWT=N.NNN IS SPECIFIED, THIS CAN BE OVER-RIDDEN BY "NOGEO".
 !
-            tnow = second2 (1)
+            tnow = seconds (1)
             itime = Int (tnow-told)
             told = tnow
             if(koment == " ")then

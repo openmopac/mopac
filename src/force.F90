@@ -18,7 +18,7 @@
       USE chanel_C, only : iw
       use xyzint_I 
       use gmetry_I 
-      use second2_I 
+      use seconds_I 
       use compfg_I 
       use axis_I 
       use dipole_I
@@ -179,15 +179,15 @@
       debug = index(keywrd,'DFORCE') /= 0 
       large = index(keywrd,'LARGE') /= 0 
       restrt = index(keywrd,'RESTART') /= 0 
-      time1 = second2(1) 
+      time1 = seconds(1) 
       if (.not. restrt) then
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.) 
         if (moperr) goto 99
         write (iw,'(2/10X,''HEAT OF FORMATION ='',F15.6,'' KCALS/MOLE'')') escf 
-        time2 = second2(1) 
+        time2 = seconds(1) 
         tscf = time2 - time1 
         call compfg (xparam, .TRUE., escf, .FALSE., grad, .TRUE.) 
-        time3 = second2(1) 
+        time3 = seconds(1) 
         tder = time3 - time2 
         if (prnt) then
           if (ts) then
@@ -249,10 +249,10 @@
       &/10X,'' TO GIVE ACCURATE RESULTS'')') sum
       endif 
       if ( .not. mozyme .and. .not. restrt) call mullik()
-      if (tscf > 1.d-2) then 
+      if (tscf > 0.D0) then 
         write (iw, '(2/10X,''TIME FOR SCF CALCULATION ='',F8.2)') tscf 
         write (iw, '( /10X,''TIME FOR DERIVATIVES     ='',F8.2)') tder 
-!      endif 
+      endif 
       if (ndeold > 0) write (iw, &
       '(2/10X,''SYMMETRY WAS SPECIFIED, BUT CANNOT BE USED HERE'')')
       c = 1.d0

@@ -75,7 +75,7 @@ module to_screen_I
 !
   use drc_C, only: time
 !
-  use second2_I
+  use seconds_I
   use reada_I
   implicit none
   character (len=*) :: text
@@ -464,7 +464,7 @@ module to_screen_I
       num = char(ichar("1") +int(log10(nbeta + 0.05)))
       write(hook,"(a,i"//num//")")" NUM_BETA_ELECTRONS=",nbeta
     endif
-      sum = second2(1) - time0
+      sum = seconds(1) - time0
       i = int(sum*0.000001D0)
       sum = sum - i*1000000
     write(hook,"(a,sp, d"//fmt13p6//",a)")" CPU_TIME:SEC=",sum
@@ -1229,14 +1229,14 @@ module to_screen_I
 !  The "j" index is set to use up 1.0 seconds on the development computer.
 !  Do NOT change this quantity!
 !
-      bk = second2(2)
+      bk = seconds(2)
       bi = 0.d0
       do j = 1,142083
         do i = 1,1000
           bi = bi + 1.d0/i
         end do
       end do
-      bk = second2(2) - bk
+      bk = seconds(2) - bk
       write(hook,"(a,f12.2)")" CPU_TIME:ARBITRARY_UNITS[1]=",time0/bk
     end if
     write(hook,"(a)")" END OF MOPAC FILE"

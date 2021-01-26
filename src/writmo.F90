@@ -40,7 +40,7 @@
       use meci_I
       use geoutg_I 
       use dipole_I
-      use second2_I
+      use seconds_I
       use volume_I
       use to_screen_I
       implicit none
@@ -445,8 +445,7 @@
       if (mol_weight > 0.1D0) write (iw, &
         '(    10X,''MOLECULAR WEIGHT        ='',F16.4)') mol_weight 
       call gmetry (geo, coord) 
-! DEPRECATED ON 20190801
-!      if (id == 0) call dimens (coord, iw) 
+      if (id == 0) call dimens (coord, iw) 
       if (id == 3) then 
         vol = volume(tvec,3) 
         call l_control("PRT", 3, 1)
@@ -462,7 +461,7 @@
       end if
       if (latom == 0) write (iw, '(/)') 
       write (iw, '(10X,''SCF CALCULATIONS        =   '',I8 )') nscf 
-      tim = second2(1) - time0 
+      tim = seconds(1) - time0 
       i = int(tim*0.000001D0) 
       tim = tim - i*1000000 
       call date_and_time(VALUES=time_end)
@@ -861,7 +860,7 @@
         endif 
         if (index(keywrd,' ENPART') /= 0) call enpart () 
       endif 
-      if (second2(2) - time0 > 1.d7 .or. index(keywrd,' DENOUT') /= 0) call den_in_out(1)
+      if (seconds(2) - time0 > 1.d7 .or. index(keywrd,' DENOUT') /= 0) call den_in_out(1)
       if ((ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20 .or. &
         index(keywrd,' SIZE') /= 0) .and. index(keywrd,' MECI') + index(keywrd,' ESR')/=0) then 
         write (iw, &
@@ -1172,23 +1171,7 @@
         write (iwrite, "(10X,A,F14.2,A)") "COSMO VOLUME            =", cosvol, &
              & " CUBIC ANGSTROMS"
       end if
-<<<<<<< HEAD
       if (id == 0) call dimens (coord, iwrite) 
-=======
-! DEPRECATED ON 20190801
-!      if (id == 0) call dimens (coord, iwrite) 
-      if (id == 3) then 
-        write (iwrite, '(/,19x,"THE SYSTEM IS A SOLID")') 
-        write (iwrite, '(/,"                UNIT CELL TRANSLATION VECTORS",/,/,&
-            &"                 X                 Y                 Z")') 
-        write (iwrite,"('    T',i1,' = ',f14.7,'    ',f14.7,'    ',f14.7)") (i,(tvec(j,i),j=1,3),i=1,id) 
-        vol = volume(tvec,3) 
-        density = mol_weight*1.D24/fpc_10/vol
-        write (iwrite, '(/10X,A,F17.3,A,/10X,A,F21.3,A,/)') 'VOLUME OF UNIT CELL', &
-          vol, ' CUBIC ANGSTROMS', 'DENSITY        ', density, ' GRAMS/CC' 
-     !     call write_cell(iwrite)
-      end if
->>>>>>> molssi_branch
       write (iwrite, '(  10X,''SCF CALCULATIONS        =  '',I9)') nscf 
       call timout (iwrite) 
       if (index(keywrd," PRTCHAR") /= 0) then

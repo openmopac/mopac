@@ -50,7 +50,7 @@
       Use gpu_info
       Use settingGPUcard
 #endif
-      use second2_I
+      use seconds_I
       use geout_I
       use wrttxt_I
       use geoutg_I
@@ -148,7 +148,7 @@
       rewind iw
       isok = .TRUE.
       errtxt = 'Job stopped by operator'
-      tim = second2(1)
+      tim = seconds(1)
       call date_and_time(VALUES=time_start)
       if (moperr) goto 101
 !
@@ -196,7 +196,7 @@
       no_pKa = 0
       cell_ijk = 0
       id = 0
-      time0 = second2(1)
+      time0 = seconds(1)
       MM_corrections = .false.
       pdb_label = .false.
       state_Irred_Rep = " "
@@ -771,7 +771,7 @@
         i = index(keywrd,' GRAD')
         grad(:nvar) = 0.D0
         numcal = numcal + 1
-        tim = second2(1)
+        tim = seconds(1)
         call to_screen(" Single point calculation")
         call compfg (xparam, .TRUE., escf, .TRUE., grad, i /= 0)
       else if (index(keywrd,' SADDLE') /= 0) then
@@ -829,7 +829,7 @@
         i = index(keywrd,' GRAD')
         grad(:nvar) = 0.D0
         numcal = numcal + 1
-        tim = second2(1)
+        tim = seconds(1)
         call to_screen(" Single point calculation")
         call compfg (xparam, .TRUE., escf, .TRUE., grad, i /= 0)
       else if (index(keywrd,' DFP') + index(keywrd,' FLEPO') + &
@@ -894,7 +894,7 @@
         endif
       endif
   100 continue
-      tim = tim + second2(2)
+      tim = tim + seconds(2)
       if (tim > 1.d7) tim = tim - 1.d7
       inquire(unit = ilog, opened = opend, name = line)
       if (opend) opend = (index(line, log_fn) /= 0)
