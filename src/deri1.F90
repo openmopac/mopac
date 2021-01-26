@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : numat, nopen, numcal, keywrd, norbs, mpack, &
       & n2elec
       use chanel_C, only : iw
@@ -23,17 +22,17 @@
       implicit none
       integer , intent(in) :: number
       integer , intent(in) :: minear 
-      real(double) , intent(out) :: grad 
-      real(double)  :: f(mpack) 
-      real(double)  :: fd(mpack) 
-      real(double) , intent(in) :: scalar(mpack) 
-      real(double), intent(out) :: work(norbs, norbs)
+      double precision , intent(out) :: grad 
+      double precision  :: f(mpack) 
+      double precision  :: fd(mpack) 
+      double precision , intent(in) :: scalar(mpack) 
+      double precision, intent(out) :: work(norbs, norbs)
 !
       integer ::  icalcn, nati, natx, i, l, j, nend, loop, ninit, n1&
         , n2, lcut, k, ll, ncol
-      real(double) :: const, step, enucl2, gse, sum 
+      double precision :: const, step, enucl2, gse, sum 
       logical :: debug      
-      real(double), external :: ddot
+      double precision, external :: ddot
       save debug, icalcn, const
 !-----------------------------------------------
 !********************************************************************

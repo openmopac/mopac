@@ -5,17 +5,16 @@
 !  "r" holds the orientation matrix that rotates the system so that it is orientated 
 !  along the principal axes
 ! 
-      USE vast_kind_param, ONLY:  double 
       USE symmetry_C, only : nclass, elem 
       use dtran2_I 
       implicit none
       integer , intent(in) :: ioper 
       logical , intent(inout) :: first 
-      real(double) , intent(inout) :: d(5) 
-      real(double) , intent(in) :: r(3,3) 
+      double precision , intent(inout) :: d(5) 
+      double precision , intent(in) :: r(3,3) 
       integer :: i, k 
-      real(double), dimension(5,5,12) :: t1 
-      real(double), dimension(3,3) :: s 
+      double precision, dimension(5,5,12) :: t1 
+      double precision, dimension(3,3) :: s 
       double precision :: h(5)
 !-----------------------------------------------
       if (first) then 

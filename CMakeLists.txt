@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.11)
 project(openmopac LANGUAGES Fortran C)
 
 # Define a library and an executable for MOPAC
-add_definitions(-DBITS64) # the other valid flag is BITS32
 add_library(mopac-lib)
 add_executable(mopac)
 add_executable(param)

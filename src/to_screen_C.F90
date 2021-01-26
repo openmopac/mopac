@@ -1,10 +1,9 @@
 module to_screen_C
-  USE vast_kind_param, ONLY:  double 
 !
 !  This module contains all the quantities relating to the system being calculated
 !  that are likely to be used in the subroutine "to_screen".
 !
-  real (double) :: &
+  double precision :: &
   rot(3), &    ! Type          Rotational constants
                ! Definition    Frequencies of the three rotational constants
                ! Units         cm**(-1)
@@ -21,7 +20,7 @@ module to_screen_C
                ! Definition    Point-charge and hybrid components of dipole in X, Y, and Z, and totals
                ! Units         Debye
                !
-  real (double), dimension (:,:), allocatable :: &
+  double precision, dimension (:,:), allocatable :: &
   fcint,     & ! Type          Internal force constants
                ! Definition    Force constants for all coordinates of all atoms, using the coordinate system supplied
                ! Units         Millidynes/Angstrom and millidynes per radian
@@ -33,7 +32,7 @@ module to_screen_C
                ! Definition    Effective mass of vibrational frequencies
                ! Units         Atomic mass units (amu)
                !
-  real (double), dimension (:), allocatable :: &
+  double precision, dimension (:), allocatable :: &
   dipt,      & ! Type          Transition dipoles for vibrational frequencies
                ! Definition    <ground state|eR(x)|vibrational state>
                ! Units         electrons

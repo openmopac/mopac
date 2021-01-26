@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : ndep
       USE symmetry_C, ONLY: locpar, idepfn, locdep, depmul
       use common_arrays_C, only : geo
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:04  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -18,7 +15,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: n, i, locn, j 
-      real(double) :: value 
+      double precision :: value 
 !-----------------------------------------------
 !**********************************************************************
 !
@@ -53,13 +50,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double
       use chanel_C, only : iw 
       use molkst_C, only : numcal
       use common_arrays_C, only : na
       use funcon_C, only : pi
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:20  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -71,9 +65,9 @@
       integer , intent(out) :: l 
       integer , intent(in) :: m 
       integer , intent(in) :: loc 
-      real(double) , intent(out) :: w 
-      real(double) , intent(in) :: fact 
-      real(double) , intent(in) :: a(3,*) 
+      double precision , intent(out) :: w 
+      double precision , intent(in) :: fact 
+      double precision , intent(in) :: a(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------

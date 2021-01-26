@@ -2,10 +2,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:10  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -13,16 +10,16 @@
       integer , intent(in) :: mono3 
       integer , intent(in) :: n 
       integer , intent(in) :: m 
-      real(double) , intent(in) :: bottom 
-      real(double) , intent(in) :: top 
-      real(double) , intent(inout) :: eref(mono3,n) 
-      real(double) , intent(inout) :: dd(m) 
+      double precision , intent(in) :: bottom 
+      double precision , intent(in) :: top 
+      double precision , intent(inout) :: eref(mono3,n) 
+      double precision , intent(inout) :: dd(m) 
 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, ii, k
-      real(double) :: range, x, b, a, spread, partj, partk 
+      double precision :: range, x, b, a, spread, partj, partk 
 !-----------------------------------------------
       dd(:500) = 0.D0 
 !

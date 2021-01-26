@@ -1,5 +1,4 @@
       subroutine mtxm(a, nar, b, nbr, c, ncc)  
-      USE vast_kind_param, ONLY:  double 
       Use mod_vars_cuda, only: lgpu
 #if GPU
       Use call_gemm_cublas
@@ -9,9 +8,9 @@
       integer  :: nar 
       integer  :: nbr 
       integer  :: ncc 
-      real(double)  :: a(nbr,nar) 
-      real(double)  :: b(nbr,ncc) 
-      real(double)  :: c(nar,ncc)  
+      double precision  :: a(nbr,nar) 
+      double precision  :: b(nbr,ncc) 
+      double precision  :: c(nar,ncc)  
 !-----------------------------------------------
 !     MATRIX PRODUCT C(NAR,NCC) = (A(NBR,NAR))' * B(NBR,NCC)
 !     ALL MATRICES RECTANGULAR , PACKED.

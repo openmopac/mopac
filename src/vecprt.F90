@@ -1,18 +1,17 @@
       subroutine vecprt(a, numm) 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat, mozyme
       use common_arrays_C, only : nfirst, nlast, nat
       use chanel_C, only : iw
       use elemts_C, only : elemnt
       implicit none
       integer , intent(in) :: numm 
-      real(double) , intent(inout) :: a(*) 
+      double precision , intent(inout) :: a(*) 
 !
 ! Local
 !
       integer , dimension(:), allocatable :: natom 
       integer :: i, jlo, jhi, l, k, numb, limit, kk, na, ll, m, ma, n 
-      real(double) :: sumax, fact 
+      double precision :: sumax, fact 
       character :: line(21)*6, atorbs(9)*2, fmt*31
       character, dimension(:), allocatable :: itext*2, jtext*2 
       save atorbs 

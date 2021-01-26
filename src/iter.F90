@@ -1,5 +1,4 @@
       subroutine iter(ee, fulscf, rand)
-      USE vast_kind_param, ONLY:  double
       use common_arrays_C, only : eigs, p, pa, pb, cb, h, &
        &  c, nat, nfirst, nlast, eigb, pdiag, f, w, wk, fb
       use iter_C, only : pold, pold2, pbold, pbold2, &
@@ -39,7 +38,7 @@
       use chrge_I
       use to_screen_I
       implicit none
-      real(double) , intent(out) :: ee
+      double precision , intent(out) :: ee
       logical , intent(in) :: fulscf
       logical , intent(in) :: rand
       double precision :: selcon

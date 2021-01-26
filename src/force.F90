@@ -1,5 +1,4 @@
       subroutine force() 
-      USE vast_kind_param, ONLY:  double 
 !
       use molkst_C, only : natoms, ndep,  nvar, gnorm, iflepo, keywrd, &
       & last, numat, escf, id, jloop => itemp_1, numcal, n_trivial => itemp_2, &
@@ -39,15 +38,15 @@
       integer , dimension(natoms) :: nar, nbr, ncr 
       integer :: j, i, l, nvaold = 0, ndeold, iu, il, nvib, ij, &
         im1, ju, jl, ii, jj, ni, k, nto6, nrem6, iinc1, iinc2, store_natoms
-      real(double), dimension(3,3*numat) :: deldip, trdip  
-      real(double), dimension(3,3) :: rot = 0.d0
-      real(double) :: time2, tscf, tder, time1, time3, a = 0.d0, b = 0.d0, c = 0.d0, &
+      double precision, dimension(3,3*numat) :: deldip, trdip  
+      double precision, dimension(3,3) :: rot = 0.d0
+      double precision :: time2, tscf, tder, time1, time3, a = 0.d0, b = 0.d0, c = 0.d0, &
         sum, const, summ, sum1, sym 
-      real(double), dimension(:), allocatable :: store, ff, oldf, &
+      double precision, dimension(:), allocatable :: store, ff, oldf, &
         velocity
-      real(double), dimension (:,:), allocatable :: store_coord
+      double precision, dimension (:,:), allocatable :: store_coord
       logical :: restrt, linear, debug, prnt, large, ts
-      real(double), external :: ddot
+      double precision, external :: ddot
 !**********************************************************************
 !
 !   FORCE CALCULATES THE FORCE CONSTANTS FOR THE MOLECULE, AND THE

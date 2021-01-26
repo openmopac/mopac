@@ -89,8 +89,6 @@
 !          is given by the keywords MNDO, AM1, PM3, or MNDOD
 !
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:03:42  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------

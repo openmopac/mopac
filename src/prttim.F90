@@ -2,15 +2,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:35:39  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(in) :: tleft 
-      real(double) , intent(out) :: tprt 
+      double precision , intent(in) :: tleft 
+      double precision , intent(out) :: tprt 
       character , intent(out) :: txt 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s

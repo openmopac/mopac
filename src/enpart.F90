@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : h, p, pa, pb, nfirst, nlast, nat, &
       & coord, w, set_a, set_b
       use molkst_C, only : numat, uhf, keywrd, E_disp, E_hb, numcal, itemp_1
@@ -17,8 +16,6 @@
 !----------------------------------------------------------*
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:12  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -32,10 +29,10 @@
       jb, ka, ik, iss, nj, kinc, jap1, kc, kk, jss, l, iap1, ij, jij, jkl, &
       im,km,kik,lm, kil, kjk, i3, jm, kjl, kb, k3, jk, l3, il, jl, j3, numat1, j1, j4, &
       parts(10), nparts, iu, ju
-      real(double), dimension(45) :: e1b, e2a 
-      real(double), dimension(:), allocatable :: w2 
-      real(double), allocatable, dimension(:,:) :: ea, e, ex
-      real(double) :: t, sum1, aa, sum, eau, eae, tone, oneii, onejj, g, &
+      double precision, dimension(45) :: e1b, e2a 
+      double precision, dimension(:), allocatable :: w2 
+      double precision, allocatable, dimension(:,:) :: ea, e, ex
+      double precision :: t, sum1, aa, sum, eau, eae, tone, oneii, onejj, g, &
         bb, pij, eabr, eabx, eabee, eaben, eabnn, eabrx, &
         eabe, ttwo, et 
       logical :: si, sj, large

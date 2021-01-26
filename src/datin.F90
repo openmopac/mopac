@@ -2,15 +2,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : partyp, n_partyp, n_partyp_alpb, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
       use molkst_C, only : keywrd, lpars, line
       use chanel_C, only : iext
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:05  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -26,7 +23,7 @@
       integer :: i, j, l, iparam, k, ielmnt, jelmnt, nref, &
       loop, mpar
 
-      real(double) :: param
+      double precision :: param
       logical :: exists, lv_par(60) = .false.
       character (len=500), dimension (10) :: file
       character :: text*80,  ch*1

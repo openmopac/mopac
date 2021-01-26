@@ -1,5 +1,4 @@
      subroutine drc(startv, startk) 
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : nvar, tleft, escf, gnorm, ndep, numat, keywrd, &
       line, nopen, nclose, moperr, jloop => itemp_1, prt_velocity
       USE chanel_C, only : iw, ires, iscr, restart_fn, iw0
@@ -12,24 +11,24 @@
       use compfg_I 
       use to_screen_I
       implicit none
-      real(double) :: startv(9*numat*numat) 
-      real(double) , intent(in) :: startk(3*numat) 
+      double precision :: startv(9*numat*numat) 
+      double precision , intent(in) :: startk(3*numat) 
 !
       integer :: i, l, j, iskin,   iloop, k, kl, ncoprt, bigcycles, jloop_lim, i_constant = 1, &
         ii, i1, maxcyc, iupper, ilp, io_stat, ilim, iw00, percent, n_escf, n_min, iwd = 9
       integer, dimension(2,3*numat) :: mcoprt
-      real(double), dimension(3*numat) :: velo0, velo1, velo2, velo3, gerror, grold2 
-      real(double), dimension(10) :: past10 
-      real(double), dimension(3*numat) :: grold 
-      real(double), dimension(3,numat) :: georef 
-      real(double) :: ekin, elost1, etold, dlold2, tnow, oldtim, delold, gtot, &
+      double precision, dimension(3*numat) :: velo0, velo1, velo2, velo3, gerror, grold2 
+      double precision, dimension(10) :: past10 
+      double precision, dimension(3*numat) :: grold 
+      double precision, dimension(3,numat) :: georef 
+      double precision :: ekin, elost1, etold, dlold2, tnow, oldtim, delold, gtot, &
         accu, gnlim, half, addonk, deltat, quadr, etot, const, one, summ, &
         summas, ams, error, velvec, delta1, elost, sum, dummy, tcycle, &
         old_hof, new_hof, start_hof=1.d20, minstep, escf_old, &
         escf_diff, stepx, escf_min, stepxx, dipvec(3), dip = 0.d0, cnvg
       logical :: addk, letot, let, velred, opend, parmax, debug, l_debug = .false., l_irc, &
         l_dipole
-      real(double), external :: ddot, dipole
+      double precision, external :: ddot, dipole
 !***********************************************************************
 !                                                                      *
 !    DRC IS DESIGNED TO FOLLOW A REACTION PATH FROM THE TRANSITION     *

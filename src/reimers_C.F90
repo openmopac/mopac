@@ -1,5 +1,4 @@
       module reimers_C 
-      USE vast_kind_param, ONLY:  double 
 ! Full module added by RMG
       integer :: n, na, nb2, nham, ix, iy, &
                  nlocl, nstrt, ndump, ion, nstop, &
@@ -22,7 +21,7 @@
       character*2   ::  iatsym(80)
       character*3   ::  kind(9)
       character*80  ::  line
-      real(double)  ::  alpha(9,9)
+      double precision  ::  alpha(9,9)
       character*3   ::  nmptg(8), nmrep(8,8), cisym(8)
       character*80  ::  ident
       character*8   ::  ldcomp(3)
@@ -30,7 +29,7 @@
       character*8, allocatable :: lab(:)
       logical*1     ::  fastci, ixeof, sing, dbls, mrci
 
-      real(double) :: emaxci, vnn, dipsym, value, &
+      double precision :: emaxci, vnn, dipsym, value, &
                  zeta(80), zetad(2,80), zetawt(2,80), &
                  weight(80), zcorea(80), betaa(3,80), fg(24,80), &
                  f0(2,2) = 0.d0, tomk,g(74,8), &
@@ -50,7 +49,7 @@
                  istate(:), nseig(:), icif(:), jcif(:), ncif(:), &
                  nbtmo(:), iconf(:), nspn(:)
 
-      real(double), allocatable :: vca(:,:), vcb(:,:), occfr(:), &
+      double precision, allocatable :: vca(:,:), vcb(:,:), occfr(:), &
                  x(:), y(:), z(:), zcore(:), gamma(:,:), beta(:), &
                  betao(:), s(:), r(:,:), ppg(:,:), pg(:,:), dd(:,:), &
                  ff(:,:), aa(:), cc0(:,:), dm(:,:), xz(:,:), ci(:,:), &
@@ -74,7 +73,7 @@
      &                  mg2sd, mg1pd, mf2pd, mg3pd, mf2dd, mf4dd, &
      &                  mr1sppd, mr2sddd, mr2sdpp
 
-      real(double) :: au2ev,au2ang,au2cm,debye
+      double precision :: au2ev,au2ang,au2cm,debye
 
       data au2ev,au2ang,au2cm,debye / &
        27.2114D0, 0.529177D0, 219475.3D0, 4.80294D0 /

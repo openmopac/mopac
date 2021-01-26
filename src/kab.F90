@@ -2,24 +2,21 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !#      SUBROUTINE KAB(IA,JA, PK, W, KINDEX, F)
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:22  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ia 
       integer , intent(in) :: ja 
-      real(double) , intent(in) :: pk(*) 
-      real(double) , intent(in) :: w(*) 
-      real(double) , intent(inout) :: f(*) 
+      double precision , intent(in) :: pk(*) 
+      double precision , intent(in) :: w(*) 
+      double precision , intent(inout) :: f(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: m, j1, j, j2, j3 
-      real(double), dimension(16) :: sum 
+      double precision, dimension(16) :: sum 
 !-----------------------------------------------
       sum(1) = pk(1)*w(1) + pk(2)*w(2) + pk(3)*w(4) + pk(4)*w(7) + pk(5)*w(11)&
          + pk(6)*w(12) + pk(7)*w(14) + pk(8)*w(17) + pk(9)*w(31) + pk(10)*w(32)&

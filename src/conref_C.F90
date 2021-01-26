@@ -1,6 +1,5 @@
   module conref_C 
-    USE vast_kind_param, ONLY:  double 
-    real(double), dimension(2,10) :: fpcref 
+    double precision, dimension(2,10) :: fpcref 
 !
 !   Fundamental physical constants
 !

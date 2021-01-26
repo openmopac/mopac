@@ -2,13 +2,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : r
       USE molkst_C, ONLY: numat 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  09:16:02  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -23,15 +20,15 @@
       integer , intent(in) :: i 
       integer , intent(in) :: n 
       integer, dimension (numat, 120), intent (in) :: ipo
-      real(double) , intent(inout) :: h(*) 
-      real(double) , intent(inout) :: dip(3,*) 
+      double precision , intent(inout) :: h(*) 
+      double precision , intent(inout) :: dip(3,*) 
 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k, i3, i6, k3, k6, j, l, l3, l6, j3, j6, iel33, im1t3, istart 
-      real(double), dimension(9) :: temp, temp2 
-      real(double) :: fact 
+      double precision, dimension(9) :: temp, temp2 
+      double precision :: fact 
 !-----------------------------------------------
 !****************************************************************
 !

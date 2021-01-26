@@ -1,10 +1,8 @@
       module Parameters_for_PM3_C 
-      USE vast_kind_param, ONLY:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  20:31:02  03/10/06  
-      real(double), dimension(107) :: usspm3, upppm3, zspm3, zppm3, &
+      double precision, dimension(107) :: usspm3, upppm3, zspm3, zppm3, &
         betasp, betapp, betadp, alppm3, gsspm3, gsppm3, gpppm3, gp2pm3, &
         hsppm3, polvolpm3, zsnpm3, zpnpm3, zdnpm3, f0sdpm3, g2sdpm3
-      real(double), dimension(107,4) :: guesp1, guesp2, guesp3 
+      double precision, dimension(107,4) :: guesp1, guesp2, guesp3 
 !
 !       Data for Element   1:     Hydrogen
 !

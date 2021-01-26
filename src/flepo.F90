@@ -1,5 +1,4 @@
       subroutine flepo(xparam, nvar, funct1) 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numcal, gnorm, iflepo, keywrd, emin, tleft, &
       & time0, moperr, nscf, limscf, tdump, last, cosine, line
       use common_arrays_C, only : hesinv, grad
@@ -16,17 +15,17 @@
       use to_screen_I
       implicit none
       integer  :: nvar 
-      real(double)  :: funct1 
-      real(double)  :: xparam(nvar) 
+      double precision  :: funct1 
+      double precision  :: xparam(nvar) 
 !
       integer , dimension(9) :: mdfp 
       integer :: icalcn, igg1, nrst, ihdim, itry1, jcyc, lnstop, irepet, jnrst&
         , ncount, maxcyc, i, ireset, icyc, i80, ii, j, k, nto6, &
         iinc1, iinc2, ic 
-      real(double), dimension(nvar) :: xvar, gvar, xd, gd, glast, xlast, gg, &
+      double precision, dimension(nvar) :: xvar, gvar, xd, gd, glast, xlast, gg, &
         pvect 
-      real(double), dimension(9) :: xdfp 
-      real(double) :: rst, sfact, dell, einc, del, const, rootv, delhof, tolerf&
+      double precision, dimension(9) :: xdfp 
+      double precision :: rst, sfact, dell, einc, del, const, rootv, delhof, tolerf&
         , tolerg, tolrg, tolerx, drop, frepf, cncadd, absmin, alpha, pnorm, &
         cycmx, cos, tx1, tx2, tlast, totime, therb, gnormr, step, funct2, &
         gdnorm, sum, deltag, deltax, ggd, yhy, sy, xvari, ggi, pnlast, dott, &
@@ -34,7 +33,7 @@
       logical :: restrt, geook, dfp, saddle, minprt, print, thiel, okf, &
         resfil, lgrad 
       character :: txt      
-      real(double), external :: ddot
+      double precision, external :: ddot
       save mdfp, icalcn, rst, sfact, dell, einc, igg1, del, restrt, geook, dfp&
         , const, saddle, minprt, rootv, print, delhof, tolerf, tolerg, nrst, &
         thiel, tolrg, tolerx, drop, frepf, ihdim, cncadd, absmin, itry1, &

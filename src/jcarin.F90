@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat, nvar, ndep, id, l1u, l2u, l3u, l123, &
       natoms
       use common_arrays_C, only : geo, coord, loc, tvec
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:22  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -26,10 +23,10 @@
       integer , intent(out) :: ncol 
       integer , intent(in) :: il 
       integer , intent(in) :: iu 
-      real(double) , intent(in) :: step 
+      double precision , intent(in) :: step 
       logical , intent(in) :: preci 
-      real(double) , intent(in) :: xparam(3*natoms) 
-      real(double) , intent(inout) :: b(iu - il + 1,3*numat*l123) 
+      double precision , intent(in) :: xparam(3*natoms) 
+      double precision , intent(inout) :: b(iu - il + 1,3*numat*l123) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -37,7 +34,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ivar, jvar, j, ij, ii, im, jl, kl, j1, j2
-      real(double), dimension(:), allocatable :: coold 
+      double precision, dimension(:), allocatable :: coold 
 !-----------------------------------------------
 !     JACOBIAN dCARTESIAN/dINTERNAL, WORKED OUT BY FINITE DIFFERENCE.
 !  INPUT

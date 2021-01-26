@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE molkst_C, ONLY: norbs, nelecs, numcal, ndep, nvar, &
       & enuclr, keywrd, natoms, escf, elect, method_pm7, mozyme, moperr
       use common_arrays_C, only : loc, geo, p, pa, coord, errfn
@@ -10,8 +9,6 @@
       USE chanel_C, only : iw 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  17:52:28  03/12/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -28,9 +25,9 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, i, k, l, j
-      real(double) :: xderiv 
-      real(double), dimension(3*natoms) :: xparam
-      real(double) :: delta, const, aa, xstore, ee, escf_store, enuclr_store, &
+      double precision :: xderiv 
+      double precision, dimension(3*natoms) :: xparam
+      double precision :: delta, const, aa, xstore, ee, escf_store, enuclr_store, &
       elect_store, sum
       logical :: debug, PM6_H, precise
 

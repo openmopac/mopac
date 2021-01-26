@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : coord, na, labels, atmass, p, q, xparam
       use molkst_C, only : numat, nvar, keywrd, tleft, moperr, natoms, tdump, &
       emin, mozyme
@@ -21,24 +20,24 @@
       implicit none
       integer , intent(out) :: nreal 
       logical, intent (in) :: ts
-      real(double) , intent(in) :: tscf 
-      real(double) , intent(in) :: tder 
-      real(double)  :: heat 
-      real(double)  :: fmatrx(((3*numat + 1)*(3*numat))/2) 
-      real(double)  :: deldip(3,3*numat)  
-      real(double)  :: evecs(9*numat*numat) 
+      double precision , intent(in) :: tscf 
+      double precision , intent(in) :: tder 
+      double precision  :: heat 
+      double precision  :: fmatrx(((3*numat + 1)*(3*numat))/2) 
+      double precision  :: deldip(3,3*numat)  
+      double precision  :: evecs(9*numat*numat) 
 !
       integer ::  i, lin, maxcyc, istart, jstart, kountf, lu, iskip, j, &
         ii, ll, l, k, kk, iloop
-      real(double), dimension(3*natoms) :: grad, grold
-      real(double), dimension(3) :: del2 
-      real(double), dimension(3*natoms) :: g2old, eigs, g2rad, fconst, dumy
-      real(double) :: fact, tlast, totime, time2, estime, delta, &
+      double precision, dimension(3*natoms) :: grad, grold
+      double precision, dimension(3) :: del2 
+      double precision, dimension(3*natoms) :: g2old, eigs, g2rad, fconst, dumy
+      double precision :: fact, tlast, totime, time2, estime, delta, &
         time3, tstep, estim, escf
       logical :: debug, restrt, prnt, resfil, precis, big 
       character :: line*120
       double precision, external :: dipole_for_MOZYME     
-      real(double), external :: ddot, dot       
+      double precision, external :: ddot, dot       
       save fact 
 !**********************************************************************
 !

@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, ONLY: numat, norbs, nclose, nopen, fract, natoms, numcal, &
       & ndep, nvar, keywrd, cosine, moperr, mpack, isok, id, l123, line, nscf, &
       pressure, l1u, l2u, l3u, method_PM7, method_pm8        
@@ -13,8 +12,6 @@
       use derivs_C, only : aidref, work2
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  17:57:06  03/12/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -41,17 +38,17 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double), intent(in)  :: geo(3,natoms) 
-      real(double), intent(inout)  :: gradnt(nvar) 
+      double precision, intent(in)  :: geo(3,natoms) 
+      double precision, intent(inout)  :: gradnt(nvar) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: idelta, icalcn, i, j, nstep, nw2, ncol
-      real(double), dimension(3) :: change 
-      real(double) :: coord(3*natoms), gold(3*natoms), xparam(3*natoms)
+      double precision, dimension(3) :: change 
+      double precision :: coord(3*natoms), gold(3*natoms), xparam(3*natoms)
 
 
-      real(double) :: grlim, sum, gnorm, step, press, summ, press1, &
+      double precision :: grlim, sum, gnorm, step, press, summ, press1, &
       press2, press3
       logical :: scf1, halfe, slow, aifrst, debug, precis, intn, geochk, ci, &
         aic, noanci, field, saddle, DH_correction, l_redo_bonds

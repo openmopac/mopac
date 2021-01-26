@@ -8,8 +8,6 @@
 !     *
 !     DEFINE SEVERAL PARAMETERS FOR D-ORBITAL CALCULATIONS.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -53,15 +51,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       use parameters_C, only : dorbs, f0dd, f2dd, f4dd, f0sd, g2sd, f0pd, f2pd, g1pd, &
       & g3pd
       use mndod_C, only : repd
 !     *
 !     ONE-CENTER TWO-ELECTRON INTEGRALS FOR SPD-BASIS.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -75,7 +70,7 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: s3, s5, s15, r066, r266, r466, r016, r244, r036, r236, &
+      double precision :: s3, s5, s15, r066, r266, r466, r016, r244, r036, r236, &
         r155, r355, r125, r234, r246 
 !-----------------------------------------------
       data s3/ 1.7320508D0/  
@@ -157,38 +152,35 @@
       return  
       end subroutine inighd 
  
-      real(kind(0.0d0)) function poij (l, d, fg) 
+      double precision function poij (l, d, fg) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : ev
 !     *
 !     DETERMINE ADDITIVE TERMS RHO=POIJ FOR TWO-CENTER TWO-ELECTRON
 !     INTEGRALS FROM THE REQUIREMENT THAT THE APPROPRIATE ONE-CENTER
 !     TWO-ELECTRON INTEGRALS ARE REPRODUCED.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: l 
-      real(double) , intent(in) :: d 
-      real(double) , intent(in) :: fg 
+      double precision , intent(in) :: d 
+      double precision , intent(in) :: fg 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
-      real(double), parameter :: epsil = 1.0D-08 
-      real(double), parameter :: g1 = 0.382D0 
-      real(double), parameter :: g2 = 0.618D0 
+      double precision, parameter :: epsil = 1.0D-08 
+      double precision, parameter :: g1 = 0.382D0 
+      double precision, parameter :: g2 = 0.618D0 
       integer, parameter :: niter = 100 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i 
-      real(double) :: dsq, ev4, ev8, a1, a2, delta, y1, y2, f1, f2 
+      double precision :: dsq, ev4, ev8, a1, a2, delta, y1, y2, f1, f2 
 !-----------------------------------------------
       if (l == 0) then 
         poij = 0.5d0*ev/fg 
@@ -247,16 +239,13 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE chanel_C, only : iw 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: i 
-      real(double) , intent(in) :: value 
+      double precision , intent(in) :: value 
       character , intent(in) :: para*(*) 
       character , intent(in) :: txt*(*) 
 !-----------------------------------------------
@@ -286,8 +275,6 @@
       & g1pd, g3pd, guess1, guess2, guess3
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -416,7 +403,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : natorb, dd, qq, am, ad, aq, po
       use molkst_C, only : l_feather
       use funcon_C, only : ev, a0 
@@ -451,23 +437,21 @@
 !***********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ni 
       integer , intent(in) :: nj 
-      real(double) , intent(in) :: rij 
-      real(double) , intent(out) :: ri(22), gab
+      double precision , intent(in) :: rij 
+      double precision , intent(out) :: ri(22), gab
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(22) :: nri 
       integer :: i 
-      real(double), dimension(72) :: arg, sqr 
-      real(double) :: td, pp, ev1, ev2, ev3, ev4, r, aee, da, qa, ade, aqe, &
+      double precision, dimension(72) :: arg, sqr 
+      double precision :: td, pp, ev1, ev2, ev3, ev4, r, aee, da, qa, ade, aqe, &
         rsq, xxx, ee, db, qb, aed, aeq, axx, adq, aqd, aqq, yyy, zzz, www, &
         dze, qzze, qxxe, edz, eqzz, eqxx, dxdx, dzdz, dzqxx, qxxdz, dzqzz, &
         qzzdz, qxxqxx, qxxqyy, qxxqzz, qzzqxx, qzzqzz, dxqxz, qxzdx, qxzqxz, const, &
@@ -840,13 +824,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       use parameters_C, only : tore, dorbs
       use mndod_C, only : indexd, ind2, isym
       use funcon_C, only : ev, a0
       use molkst_C, only : l_feather
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -857,10 +838,10 @@
 !-----------------------------------------------
       integer  :: ni 
       integer  :: nj 
-      real(double)  :: r 
-      real(double) , intent(in) :: ri(22) 
-      real(double) , intent(out) :: rep(491) 
-      real(double) , intent(out) :: core(10,2)  
+      double precision  :: r 
+      double precision , intent(in) :: ri(22) 
+      double precision , intent(out) :: rep(491) 
+      double precision , intent(out) :: core(10,2)  
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -993,15 +974,12 @@
       end subroutine reppd2 
 
 
-      real(kind(0.0d0)) function rijkl (ni, nj, ij, kl, li, lj, lk, ll, ic, r) 
+      double precision function rijkl (ni, nj, ij, kl, li, lj, lk, ll, ic, r) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use parameters_C, only : ddp, po
       use mndod_C, only : indx, ch
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1019,12 +997,12 @@
       integer , intent(in) :: lk 
       integer , intent(in) :: ll 
       integer , intent(in) :: ic 
-      real(double)  :: r 
+      double precision  :: r 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: l1min, l1max, lij, l2min, l2max, lkl, l1, l2, lmin, m, mm 
-      real(double) :: sum, pij, dij, pkl, dkl, add, s1, ccc 
+      double precision :: sum, pij, dij, pkl, dkl, add, s1, ccc 
 !-----------------------------------------------
 !     *
 !
@@ -1094,7 +1072,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : a0, ev
       use mndod_C, only : indx, indexd, sp, sd, pp, dp, d_d, cored, inddd
       use parameters_C, only : natorb, iod, tore
@@ -1105,8 +1082,6 @@
 !     *
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1125,22 +1100,22 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer  :: kr 
-      real(double)  :: ci(3) 
-      real(double)  :: cj(3)
-      real(double), dimension(*)  :: w 
-      real(double)  :: enuc 
-      real(double), dimension(171) :: en
+      double precision  :: ci(3) 
+      double precision  :: cj(3)
+      double precision, dimension(*)  :: w 
+      double precision  :: enuc 
+      double precision, dimension(171) :: en
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(45) :: met 
       integer :: limkl, kl, ii, kk, limij, istep, i, i1, j1, ij, jj, mm, k, l, &
         iw, iminus, j, ij1, jw, icalcn = 0, li, lj
-      real(double), dimension(45,45) :: v 
-      real(double), dimension(22) :: ri 
-      real(double), dimension(491) :: rep 
-      real(double), dimension(2025) :: ww 
-      real(double) :: r, wrepp, cc, gab, sum, rij, const, point
+      double precision, dimension(45,45) :: v 
+      double precision, dimension(22) :: ri 
+      double precision, dimension(491) :: rep 
+      double precision, dimension(2025) :: ww 
+      double precision :: r, wrepp, cc, gab, sum, rij, const, point
       logical, dimension(45,45) :: logv 
 !-----------------------------------------------
 !
@@ -1390,35 +1365,32 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use parameters_C, only : dorbs
       use mndod_C, only : sp, pp, sd, dp, d_d
 !     *
 !     ROTATION MATRIX FOR A GIVEN ATOM PAIR I-J (I.GT.J).
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: nj 
       integer , intent(in) :: ni 
-      real(double) , intent(out) :: r 
-      real(double) , intent(in) :: coordi(3) 
-      real(double) , intent(in) :: coordj(3) 
+      double precision , intent(out) :: r 
+      double precision , intent(in) :: coordi(3) 
+      double precision , intent(in) :: coordj(3) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
-      real(double), parameter :: small = 1.0D-07 
-      real(double), parameter :: pt5sq3 = 0.8660254037841D0 
+      double precision, parameter :: small = 1.0D-07 
+      double precision, parameter :: pt5sq3 = 0.8660254037841D0 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k
-      real(double), dimension(3,3) :: p 
-      real(double), dimension(5,5) :: d 
-      real(double) :: x11, x22, x33, b, sqb, sb, ca, sa, cb, c2a, c2b, s2a, s2b 
+      double precision, dimension(3,3) :: p 
+      double precision, dimension(5,5) :: d 
+      double precision :: x11, x22, x33, b, sqb, sb, ca, sa, cb, c2a, c2b, s2a, s2b 
 !-----------------------------------------------
 ! *** CALCULATE GEOMETRIC DATA AND INTERATOMIC DISTANCE.
 !     CA  = COS(PHI)    , SA  = SIN(PHI)
@@ -1577,11 +1549,10 @@
       end subroutine rotmat 
 
 
-      real(kind(0.0d0)) function rsc (k, na, ea, nb, eb, nc, ec, nd, ed) 
+      double precision function rsc (k, na, ea, nb, eb, nc, ec, nd, ed) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE mndod_C, only : fx, b
       use funcon_C, only : ev
 !     *
@@ -1593,8 +1564,6 @@
 !     NC,ND -PRINCIPLE QUANTUM NUMBER OF AO,CORRESPONDING ELECTRON 2
 !     EC,ED -EXPONENTS OF AO,CORRESPONDING ELECTRON 2
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1604,15 +1573,15 @@
       integer , intent(in) :: nb 
       integer , intent(in) :: nc 
       integer , intent(in) :: nd 
-      real(double) , intent(in) :: ea 
-      real(double) , intent(in) :: eb 
-      real(double) , intent(in) :: ec 
-      real(double) , intent(in) :: ed 
+      double precision , intent(in) :: ea 
+      double precision , intent(in) :: eb 
+      double precision , intent(in) :: ec 
+      double precision , intent(in) :: ed 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nab, ncd, n, m, i, m1, m2 
-      real(double) :: aea, aeb, aec, aed, ecd, eab, e, ae, a2, acd, aab, ff, c, s0, s1, s2, s3 
+      double precision :: aea, aeb, aec, aed, ecd, eab, e, ae, a2, acd, aab, ff, c, s0, s1, s2, s3 
 !-----------------------------------------------
       aea = log(ea) 
       aeb = log(eb) 
@@ -1652,25 +1621,24 @@
 
 
       subroutine scprm(ni, r066, r266, r466, r016, r244, r036, r236, r155, r355, r125, r234, r246) 
-      USE vast_kind_param, ONLY:  double 
       USE mndod_C, only : iii, iiid 
       use parameters_C, only : zsn, zpn, zdn
       implicit none
       integer , intent(in) :: ni 
-      real(double) , intent(out) :: r066 
-      real(double) , intent(out) :: r266 
-      real(double) , intent(out) :: r466 
-      real(double) , intent(out) :: r016 
-      real(double) , intent(out) :: r244 
-      real(double) , intent(out) :: r036 
-      real(double) , intent(out) :: r236 
-      real(double) , intent(out) :: r155 
-      real(double) , intent(out) :: r355 
-      real(double) , intent(out) :: r125 
-      real(double) , intent(out) :: r234 
-      real(double) , intent(out) :: r246 
+      double precision , intent(out) :: r066 
+      double precision , intent(out) :: r266 
+      double precision , intent(out) :: r466 
+      double precision , intent(out) :: r016 
+      double precision , intent(out) :: r244 
+      double precision , intent(out) :: r036 
+      double precision , intent(out) :: r236 
+      double precision , intent(out) :: r155 
+      double precision , intent(out) :: r355 
+      double precision , intent(out) :: r125 
+      double precision , intent(out) :: r234 
+      double precision , intent(out) :: r246 
       integer :: ns, nd 
-      real(double) :: es, ep, ed 
+      double precision :: es, ep, ed 
       double precision, external :: rsc
 !-----------------------------------------------
       ns = iii(ni) 
@@ -1698,27 +1666,24 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use parameters_C, only : tore, po, ddp
       use funcon_C, only : ev
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ni 
       integer , intent(in) :: nj 
-      real(double) , intent(in) :: r 
-      real(double) , intent(out) :: core(10,2) 
+      double precision , intent(in) :: r 
+      double precision , intent(out) :: core(10,2) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i 
-      real(double), dimension(7) :: pxy 
-      real(double), dimension(4) :: ai, aj 
-      real(double), dimension(7) :: xi, xj 
-      real(double) :: r2, aci, acj, ssi, ssj, ppj, da, qa, twoqa, adj, aqj, ppi&
+      double precision, dimension(7) :: pxy 
+      double precision, dimension(4) :: ai, aj 
+      double precision, dimension(7) :: xi, xj 
+      double precision :: r2, aci, acj, ssi, ssj, ppj, da, qa, twoqa, adj, aqj, ppi&
         , db, qb, adi, aqi, twoqb 
 !-----------------------------------------------
 !     *
@@ -1795,7 +1760,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use parameters_C, only : eisol
 !***********************************************************************
 !
@@ -1803,18 +1767,16 @@
 !           those atoms that have partly filled "d" shells
 !
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ni 
-      real(double) , intent(in) :: r016 
-      real(double) , intent(in) :: r066 
-      real(double) , intent(in) :: r244 
-      real(double) , intent(in) :: r266 
-      real(double) , intent(in) :: r466 
+      double precision , intent(in) :: r016 
+      double precision , intent(in) :: r066 
+      double precision , intent(in) :: r244 
+      double precision , intent(in) :: r266 
+      double precision , intent(in) :: r466 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -1891,29 +1853,26 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       use mndod_C, only : indexd, indx, ind2, sp, sd, pp, dp, d_d
 !     *
 !     ROTATION OF TWO-ELECTRON TWO-CENTER INTEGRALS IN SPD BASIS
 !     FIRST STEP
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ii 
       integer , intent(in) :: kk 
-      real(double) , intent(in) :: rep(491) 
-      real(double) , intent(out) :: v(45,45) 
+      double precision , intent(in) :: rep(491) 
+      double precision , intent(out) :: v(45,45) 
       logical , intent(out) :: logv(45,45) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(45) :: met 
       integer :: limkl, k, i1, j1, ij, k1, l1, kl, nd, ll, mm, l 
-      real(double) :: wrepp 
+      double precision :: wrepp 
 !-----------------------------------------------
       data met/ 1, 2, 3, 2, 3, 3, 2, 3, 3, 3, 4, 5, 5, 5, 6, 4, 5, 5, 5, 6, 6, &
         4, 5, 5, 5, 6, 6, 6, 4, 5, 5, 5, 6, 6, 6, 6, 4, 5, 5, 5, 5*6/  
@@ -2016,12 +1975,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !     *
 !     STORE TWO-CENTER TWO-ELECTRON INTEGRALS IN A SQUARE MATRIX.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2029,8 +1985,8 @@
       integer , intent(inout) :: kr 
       integer , intent(in) :: limij 
       integer , intent(in) :: limkl 
-      real(double) , intent(in) :: ww(limkl,limij) 
-      real(double) , intent(out) :: w(*) 
+      double precision , intent(in) :: ww(limkl,limij) 
+      double precision , intent(out) :: w(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2124,7 +2080,6 @@ end subroutine wstore
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE mndod_C, only : aij,  iii, iiid, fx
       use parameters_C, only : zs, zp, zd, dorbs
 !     *
@@ -2137,8 +2092,6 @@ end subroutine wstore
 !     SECOND INDEX      L+1 FROM DEFINITION OF MULTIPOLE.
 !     THIRD  INDEX      ATOMIC NUMBER.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2148,7 +2101,7 @@ end subroutine wstore
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nsp, nd 
-      real(double) :: z1, z2, z3, zz 
+      double precision :: z1, z2, z3, zz 
 !-----------------------------------------------
 !     *
 !
@@ -2172,9 +2125,9 @@ end subroutine wstore
       contains 
 
 
-      real(double) function aijl (z1, z2, n1, n2, l) 
-      REAL(double), intent(in) :: z1 
-      REAL(double), intent(in) :: z2 
+      double precision function aijl (z1, z2, n1, n2, l) 
+      double precision, intent(in) :: z1 
+      double precision, intent(in) :: z2 
       integer, intent(in) :: n1 
       integer, intent(in) :: n2 
       integer, intent(in) :: l 
@@ -2186,11 +2139,10 @@ end subroutine wstore
       end function aijl 
       end subroutine aijm 
 
-      real(kind(0.0d0)) function charg (r, l1, l2, m, da, db, add) 
+      double precision function charg (r, l1, l2, m, da, db, add) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !     *
 !     INTERACTION BETWEEN 2 POINT-CHARGE CONFIGURATIONS (MNDO-D).
 !     *
@@ -2201,8 +2153,6 @@ end subroutine wstore
 !     DB     CHARGE SEPARATION OF CONFIGURATION 2.
 !     ADD    ADDITIVE TERM
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2210,14 +2160,14 @@ end subroutine wstore
       integer , intent(in) :: l1 
       integer , intent(in) :: l2 
       integer , intent(in) :: m 
-      real(double) , intent(in) :: r 
-      real(double) , intent(in) :: da 
-      real(double) , intent(in) :: db 
-      real(double) , intent(in) :: add 
+      double precision , intent(in) :: r 
+      double precision , intent(in) :: da 
+      double precision , intent(in) :: db 
+      double precision , intent(in) :: add 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: dzdz, dxdx, qqzz, qzzq, dzqzz, qzzdz, zzzz, xyxy, ab, &
+      double precision :: dzdz, dxdx, qqzz, qzzq, dzqzz, qzzdz, zzzz, xyxy, ab, &
         dxqxz, aa, qxzdx, qxzqxz 
 !-----------------------------------------------
 !
@@ -2320,7 +2270,6 @@ end subroutine wstore
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use parameters_C, only : dorbs, gss, hsp, gpp, gp2, ddp, po
       use mndod_C, only :  aij, repd
 !     *
@@ -2336,8 +2285,6 @@ end subroutine wstore
 !     USED IN THE EVALUATION OF THE CORE-ELECTRON ATTRACTIONS AND
 !     CORE-CORE REPULSIONS.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2350,7 +2297,7 @@ end subroutine wstore
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: fg, d, da 
+      double precision :: fg, d, da 
 !-----------------------------------------------
 ! *** ADDITIVE TERM FOR SS.
       fg = gss(ni) 
@@ -2403,7 +2350,6 @@ end subroutine wstore
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : mpack
       use mndod_C, only : sp, sd, pp, dp, d_d, cored, inddd, inddp, indpp
 !***********************************************************************
@@ -2411,8 +2357,6 @@ end subroutine wstore
 !   ELENUC - Nuclear stabilization terms added to one-electron matrix
 !
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2421,7 +2365,7 @@ end subroutine wstore
       integer , intent(in) :: ib 
       integer , intent(in) :: ja 
       integer , intent(in) :: jb 
-      real(double) , intent(inout) :: h(mpack)  
+      double precision , intent(inout) :: h(mpack)  
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2536,8 +2480,6 @@ end subroutine wstore
 !     fx(30)     FACTORIALS.
 !     B(30,30)      BINOMIAL COEFFICIENTS.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -2564,8 +2506,6 @@ end subroutine wstore
 !     *
 !     DEFINITION OF INDICES AND LOGICAL VARIABLES.
 !     *
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s

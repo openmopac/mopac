@@ -1,7 +1,6 @@
   module Parameters_for_RM1_Sparkles_C
-    use vast_kind_param, ONLY:  double  
-    real(double), dimension(107) ::  gssrm1sp, alprm1sp
-    real(double), dimension(107,2) :: guesrm1sp1, guesrm1sp2, guesrm1sp3
+    double precision, dimension(107) ::  gssrm1sp, alprm1sp
+    double precision, dimension(107,2) :: guesrm1sp1, guesrm1sp2, guesrm1sp3
 !
 !       Data for Element  57:                       Lanthanum
 !

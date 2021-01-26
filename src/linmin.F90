@@ -2,15 +2,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : moperr, numcal, keywrd, cosine, line
       use common_arrays_C, only : loc
       use chanel_C, only : iw
       use funcon_C, only : pi
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:22  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -23,20 +20,20 @@
 !-----------------------------------------------
       integer  :: nvar 
       integer , intent(inout) :: ic 
-      real(double)  :: alpha 
-      real(double)  :: funct 
-      real(double) , intent(in) :: dott 
+      double precision  :: alpha 
+      double precision  :: funct 
+      double precision , intent(in) :: dott 
       logical , intent(inout) :: okf 
-      real(double)  :: xparam(nvar) 
-      real(double) , intent(inout) :: pvect(nvar) 
+      double precision  :: xparam(nvar) 
+      double precision , intent(inout) :: pvect(nvar) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: left, right, center, icalcn, i, maxlin, nsame, ictr 
-      real(double), dimension(3) :: phi 
-      real(double), dimension(4) :: vt, grad ! grad is not used in linmin
-      real(double), dimension(nvar) :: xstor, xparef 
-      real(double) :: alpold, xmaxm, delta1, delta2, xnear, ymaxst, pabs, &
+      double precision, dimension(3) :: phi 
+      double precision, dimension(4) :: vt, grad ! grad is not used in linmin
+      double precision, dimension(nvar) :: xstor, xparef 
+      double precision :: alpold, xmaxm, delta1, delta2, xnear, ymaxst, pabs, &
         fin, ssqlst, fmax, fmin, sqstor, energy = 0.d0, estor, alfs, beta, gamma, s&
         , xxm, funold, hlast, drop, sum
       logical :: print, diis 

@@ -1,10 +1,9 @@
       subroutine rsp(a, n, root, vect) 
-      USE vast_kind_param, ONLY:  double 
       implicit none
       integer  :: n 
-      real(double)  :: a(*) 
-      real(double), intent (out)  :: root(n) 
-      real(double)  :: vect(n,n) 
+      double precision  :: a(*) 
+      double precision, intent (out)  :: root(n) 
+      double precision  :: vect(n,n) 
 !
 ! Trivial case: n = 1
 !

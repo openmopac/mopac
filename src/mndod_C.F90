@@ -1,5 +1,4 @@
       module mndod_C 
-      USE vast_kind_param, ONLY:  double 
       integer, dimension(9,9) :: indexd, indx 
       integer, dimension(243) :: intij, intkl, intrep 
       integer, dimension(107) :: iii, iiid 
@@ -10,18 +9,18 @@
       integer, dimension(45,45) :: ind2 
       integer, dimension(491) :: isym 
       integer :: nalp 
-      real(double), dimension(45,0:2,-2:2) :: ch      
-      real(double), dimension(500) :: alpb, xfac 
-      real(double), dimension(6,107) :: aij 
-      real(double), dimension(52,107) :: repd 
-      real(double), dimension(10,2) :: cored 
-      real(double), dimension(3,3) :: sp 
-      real(double), dimension(5,5) :: sd 
-      real(double), dimension(6,3,3) :: pp 
-      real(double), dimension(15,5,3) :: dp 
-      real(double), dimension(15,5,5) :: d_d 
-      real(double), dimension(30) :: fx   !   Factorials:  fx(i) = i!
-      real(double), dimension(30,30) :: b  !   Binomial expansion (Pascal's triangle): b(1,1) = 1
+      double precision, dimension(45,0:2,-2:2) :: ch      
+      double precision, dimension(500) :: alpb, xfac 
+      double precision, dimension(6,107) :: aij 
+      double precision, dimension(52,107) :: repd 
+      double precision, dimension(10,2) :: cored 
+      double precision, dimension(3,3) :: sp 
+      double precision, dimension(5,5) :: sd 
+      double precision, dimension(6,3,3) :: pp 
+      double precision, dimension(15,5,3) :: dp 
+      double precision, dimension(15,5,5) :: d_d 
+      double precision, dimension(30) :: fx   !   Factorials:  fx(i) = i!
+      double precision, dimension(30,30) :: b  !   Binomial expansion (Pascal's triangle): b(1,1) = 1
      
       data iii/ 2*1, 8*2, 8*3, 18*4, 18*5, 32*6, 21*0/  
       data iiid/ 30*3, 18*4, 32*5, 6*6, 21*0/  

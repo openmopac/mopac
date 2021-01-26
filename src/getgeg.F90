@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : natoms, nvar, ndep, ltxt, line, keywrd, refkey
       use parameters_C, only : ams
       USE symmetry_C, ONLY: locpar, idepfn, locdep 
@@ -10,8 +9,6 @@
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:16  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -31,7 +28,7 @@
       integer , intent(out) :: na(*) 
       integer , intent(out) :: nb(*) 
       integer , intent(out) :: nc(*) 
-      real(double)  :: geo(3,*)  
+      double precision  :: geo(3,*)  
 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
@@ -43,7 +40,7 @@
       integer , dimension(:,:), allocatable :: lgeo 
       integer :: i, nerr, numat, maxtxt, k, iline, nvalue, j, ivar, kerr, merr&
         , l, n, lerr 
-      real(double) :: sum, degree 
+      double precision :: sum, degree 
       logical :: leadsp 
       character , dimension(:,:), allocatable :: tgeo*12 
       character :: string*80 

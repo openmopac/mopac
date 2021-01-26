@@ -1,11 +1,8 @@
 !     ******************************************************************
-      real(kind(0.0d0)) function digit (string, istart) 
+      double precision function digit (string, istart) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  09:34:53  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -16,7 +13,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i0, i9, ineg, ipos, idot, ispc, l, idig, i, n, j 
-      real(double) :: c1, c2, deciml 
+      double precision :: c1, c2, deciml 
       logical :: sign 
 !-----------------------------------------------
 !     FORTRAN FUNCTION TO CONVERT NUMERIC FIELD TO DOUBLE PRECISION

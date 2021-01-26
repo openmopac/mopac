@@ -2,12 +2,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : norbs, numat, lm61
       USE cosmo_C, only : iseps
       use common_arrays_C, only : nfirst, nlast, w 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  15:19:39  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -19,18 +16,18 @@
 !-----------------------------------------------
       integer , intent(in) :: nelec 
       integer , intent(in) :: nmos 
-      real(double) , intent(in) :: cp(norbs,nmos) 
-      real(double) , intent(in) :: cf(norbs,norbs) 
-      real(double) , intent(inout) :: dijkl(norbs,nmos,(nmos*(nmos + 1))/2) 
-      real(double)  :: cij(lm61) 
-      real(double)  :: ckl(lm61) 
-      real(double)  :: wcij(lm61) 
-      real(double) , intent(out) :: xy(nmos,nmos,nmos,nmos) 
+      double precision , intent(in) :: cp(norbs,nmos) 
+      double precision , intent(in) :: cf(norbs,norbs) 
+      double precision , intent(inout) :: dijkl(norbs,nmos,(nmos*(nmos + 1))/2) 
+      double precision  :: cij(lm61) 
+      double precision  :: ckl(lm61) 
+      double precision  :: wcij(lm61) 
+      double precision , intent(out) :: xy(nmos,nmos,nmos,nmos) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ij, i, j, ipq, ii, ip, k, l, kk 
-      real(double) :: sum 
+      double precision :: sum 
 !-----------------------------------------------
 !***********************************************************************
 !

@@ -12,7 +12,6 @@
 !     **** The routine makes two passes: first, do determine the CI	****
 !     **** state identity, second to generate the MP2 perturbation	****
 !     **** corrections to all of the CI matrix elements.		****
-      USE vast_kind_param, ONLY:  double
       use reimers_C, only:  n, nb2, matind, nbt, nel, nshell, norb, &
           norbl, norbh, vnn, ixprd, nmrep, stwt, nptg, nr, ns, nslwr, &
           nsupr, istr, nsym, mofrag, icifrag, nconf, multci, nci, &
@@ -44,7 +43,7 @@
       logical*1, allocatable :: aoc(:), boc(:)
       character*8       param
       integer           i, j, k
-      real (double)     ediel
+      double precision  ediel
       logical*1, external :: permca
       param = " "
       if (param == "xxxxxxxx") return
@@ -667,7 +666,6 @@
           mspn, nsym
       USE chanel_C, only : iw
       use cosmo_C, only : useps
-      USE vast_kind_param, ONLY:  double
 
       implicit none
 !     **** MP2 storage in excite and spcls ****
@@ -686,7 +684,7 @@
       logical*1          ao(nov), bo(nov), ao1(nov, mspn), bo1(nov, mspn), &
                          aocc(nov, mspn, nex), bocc(nov, mspn, nex)
       logical            isrefd
-      real(double)       ediel
+      double precision       ediel
 
 !     *********** check that its of the correct symmetry ************
       iisym = 1

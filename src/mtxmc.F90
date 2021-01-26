@@ -2,9 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:27:20  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -15,9 +12,9 @@
 !-----------------------------------------------
       integer , intent(in) :: nar 
       integer  :: nbr 
-      real(double)  :: a(nbr,nar) 
-      real(double)  :: b(nbr,nar) 
-      real(double)  :: c(*) 
+      double precision  :: a(nbr,nar) 
+      double precision  :: b(nbr,nar) 
+      double precision  :: c(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------

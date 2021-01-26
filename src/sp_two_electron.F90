@@ -5,9 +5,6 @@
       use parameters_C, only : zsn, zpn, gss, gsp, gpp, gp2, hsp, &
       main_group
       use mndod_C, only : iii
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !----------------------------------------------- 
@@ -16,7 +13,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ni, ns 
-      real(double) :: es, ep, r033, r233
+      double precision :: es, ep, r033, r233
       double precision, external :: rsc
 !
       do ni = 1, 80 

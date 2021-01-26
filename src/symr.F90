@@ -2,15 +2,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat
       use common_arrays_C, only : coord 
       use chanel_C, only : iw
       use symmetry_C, only : nclass, r, ipo, elem, nsym, nent
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:03  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -25,7 +22,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nvalue, i, ndflt, k, j, n 
-      real(double) :: x, y, z, xa, ya, za, dist 
+      double precision :: x, y, z, xa, ya, za, dist 
       logical :: prob 
 !-----------------------------------------------
 !
@@ -137,14 +134,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : nsym, r, ipo, name
       USE molkst_C, ONLY: numat 
       USE chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  15:34:19  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -153,12 +147,12 @@
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
       integer, parameter :: maxfun = 120 
-      real(double), parameter :: tol = 1D-2 
+      double precision, parameter :: tol = 1D-2 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, n, m 
-      real(double) :: res 
+      double precision :: res 
 !-----------------------------------------------
 !****************************************************************
 !

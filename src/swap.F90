@@ -2,11 +2,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE chanel_C, only : iw
       use iter_C, only : psi => pbold, stdpsi => pbold2
-!...Translated by Pacific-Sierra Research 77to90  4.4G  15:04:36  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -15,13 +12,13 @@
       integer , intent(in) :: mdim 
       integer , intent(in) :: nocc 
       integer , intent(inout) :: ifill 
-      real(double) , intent(inout) :: c(mdim,mdim) 
+      double precision , intent(inout) :: c(mdim,mdim) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer ::  i, jfill 
-      real(double) :: sum, summax, x 
-      real(double), external :: ddot
+      double precision :: sum, summax, x 
+      double precision, external :: ddot
       
 !-----------------------------------------------
 !******************************************************************

@@ -2,20 +2,17 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat, norbs, nclose, nalpha, nbeta, escf, &
       keywrd
       use common_arrays_C, only : coord, eigs
       use chanel_C, only : isyb, syb_fn
-!...Translated by Pacific-Sierra Research 77to90  4.4G  09:17:07  02/26/07  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: kchrge 
-      real(double) , intent(in) :: eionis, chr(numat)
-      real(double) , intent(inout) :: dip 
+      double precision , intent(in) :: eionis, chr(numat)
+      double precision , intent(inout) :: dip 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -63,15 +60,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : numat, keywrd
       use common_arrays_C, only : nfirst, nlast, nat, pb, chrg
       use parameters_C, only : tore
       use chanel_C, only : iw, isyb
       use elemts_C, only : elemnt
       use to_screen_I
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:09:48  02/26/07  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -81,9 +75,9 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, if, il, j, k 
-      real(double), dimension(numat) :: pop
-      real(double) :: sum 
-      real(double), allocatable :: Pot(:), Dipole_correction(:)
+      double precision, dimension(numat) :: pop
+      double precision :: sum 
+      double precision, allocatable :: Pot(:), Dipole_correction(:)
       double precision :: Ene
 !-----------------------------------------------
 !

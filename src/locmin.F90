@@ -1,5 +1,4 @@
       subroutine locmin(m, xparam, nvar, p, ssq, alf, efs, ncount) 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numcal, keywrd, escf
       use chanel_C, only : iw
       use exchng_I
@@ -7,19 +6,19 @@
       implicit none
       integer , intent(in) :: m, nvar
       integer  :: ncount
-      real(double) , intent(inout) :: ssq 
-      real(double) , intent(inout) :: alf 
-      real(double)  :: xparam(nvar) 
-      real(double) , intent(inout) :: p(nvar) 
-      real(double)  :: efs(nvar) 
+      double precision , intent(inout) :: ssq 
+      double precision , intent(inout) :: alf 
+      double precision  :: xparam(nvar) 
+      double precision , intent(inout) :: p(nvar) 
+      double precision  :: efs(nvar) 
       integer ::  left, right, center, mxcnt2, iprint, icalcn, i, mxct, ictr 
-      real(double), dimension(nvar) ::  xstor, gstor 
-      real(double), dimension(3) :: phi, vt 
-      real(double) :: xmaxm, scale, eps, tee, ymaxst, xcrit, xminm, fin, t, &
+      double precision, dimension(nvar) ::  xstor, gstor 
+      double precision, dimension(3) :: phi, vt 
+      double precision :: xmaxm, scale, eps, tee, ymaxst, xcrit, xminm, fin, t, &
         tscale, sqstor, energy = 0.d0, estor, alfs, tlast, flast, f, alpha, beta, &
         gamma, abg, s, amdis, sscale, sum, sum2 
       logical :: debug, lower      
-      real(double), external :: ddot
+      double precision, external :: ddot
       save  xmaxm, scale, eps, debug, tee, ymaxst, xcrit, mxcnt2, iprint, icalcn 
       data icalcn/ 0/  
 !***********************************************************************

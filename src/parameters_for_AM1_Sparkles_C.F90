@@ -1,7 +1,6 @@
       module Parameters_for_AM1_Sparkles_C 
-      USE vast_kind_param, ONLY:  double 
-      real(double), dimension(107) :: alpam1sp, gssam1sp
-      real(double), dimension(107,4) :: guesam1sp1, guesam1sp2, guesam1sp3         
+      double precision, dimension(107) :: alpam1sp, gssam1sp
+      double precision, dimension(107,4) :: guesam1sp1, guesam1sp2, guesam1sp3         
 !
 !       Data for Element  57:    Lanthanum
 !

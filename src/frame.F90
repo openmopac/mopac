@@ -2,11 +2,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : coord, atmass
       use molkst_C, only : id, n_trivial => itemp_2
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:15  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -20,16 +17,16 @@
 !-----------------------------------------------
       integer  :: numat 
       integer  :: mode 
-      real(double) , intent(inout) :: fmat(*)    
+      double precision , intent(inout) :: fmat(*)    
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, k, n3, l 
-      real(double), dimension(6,3*numat) :: vib 
-      real(double), dimension(3,3) :: rot 
-      real(double) :: shift(6) 
-      real(double), dimension(3,numat) :: coord1 
-      real(double) :: sum, wtmass, x, y, z, sums(6)
+      double precision, dimension(6,3*numat) :: vib 
+      double precision, dimension(3,3) :: rot 
+      double precision :: shift(6) 
+      double precision, dimension(3,numat) :: coord1 
+      double precision :: sum, wtmass, x, y, z, sums(6)
 !-----------------------------------------------
 !**********************************************************************
 !

@@ -1,10 +1,8 @@
       module Parameters_for_MNDO_C 
-      USE vast_kind_param, ONLY:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  20:31:02  03/10/06  
-      real(double), dimension(107) :: ussm, uppm, uddm, zsm, zpm, zdm, betasm, &
+      double precision, dimension(107) :: ussm, uppm, uddm, zsm, zpm, zdm, betasm, &
         betapm, betadm, alpm, gssm, gspm, gppm, gp2m, hspm, polvom, &
         zsnm, zpnm, zdnm, polvolm, f0sdm, g2sdm, pocm
-      real(double), dimension(107,4) :: guesm1, guesm2, guesm3   
+      double precision, dimension(107,4) :: guesm1, guesm2, guesm3   
 !
 !       Data for Element   1:     Hydrogen
 !

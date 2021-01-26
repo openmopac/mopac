@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : nat, geo, &
       & coord
       USE molkst_C, only : numat, keywrd, moperr, mxmep => itemp_1
@@ -18,8 +17,6 @@
 !***********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -34,9 +31,9 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer ::  nmep, i 
-      real(double), dimension(3,numat*50 + 1000) :: potpt 
-      real(double), dimension(107) :: alpw 
-      real(double) :: t1 
+      double precision, dimension(3,numat*50 + 1000) :: potpt 
+      double precision, dimension(107) :: alpw 
+      double precision :: t1 
 !----------------------------------------------- 
       data alpw/ 2.92D0, 4*0.0D0, 4.36D0, 6.95D0, 9.22D0, 5.53D0, 0.0D0, 4*&
         0.0D0, 2.3D0, 2.6D0, 3.32D0, 17*0.0D0, 3.32D0, 72*0.0D0/  
@@ -91,7 +88,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : nat, nfirst, nlast
       use molkst_C, only : numat
       use funcon_C, only : ev
@@ -104,8 +100,6 @@
 !**********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -119,19 +113,19 @@
 !-----------------------------------------------
       integer , intent(in) :: nonzo 
       integer , intent(in) :: id 
-      real(double) , intent(out) :: ui 
-      real(double) , intent(in) :: pp(*) 
-      real(double) , intent(in) :: ria(*) 
-      real(double)  :: w(3) 
-      real(double)  :: co(3,*) 
+      double precision , intent(out) :: ui 
+      double precision , intent(in) :: pp(*) 
+      double precision , intent(in) :: ria(*) 
+      double precision  :: w(3) 
+      double precision  :: co(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: j, mn, i, ia, ib, ni, i2, i1, k 
-      real(double), dimension(10) :: e1b 
-      real(double), dimension(nonzo) :: vp 
-      real(double), dimension(107) :: alpw, aw 
-      real(double) :: enuclr, rr, xx, yy, zz, fnear, enuc 
+      double precision, dimension(10) :: e1b 
+      double precision, dimension(nonzo) :: vp 
+      double precision, dimension(107) :: alpw, aw 
+      double precision :: enuclr, rr, xx, yy, zz, fnear, enuc 
 !-----------------------------------------------
 !                                    AM1 PARAMETERS (FOR H,C,N,O,F,CL)
       data alpw/ 2.92D0, 4*0.0D0, 4.36D0, 6.95D0, 9.22D0, 5.53D0, 0.0D0, 4*&
@@ -193,7 +187,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw
       use molkst_C, only : keywrd, numat, mxmep => itemp_1
       use common_arrays_C, only : nat
@@ -206,8 +199,6 @@
 !***********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -220,21 +211,21 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(inout) :: nmep 
-      real(double) , intent(in) :: co(3,*) 
-      real(double) , intent(out) :: potpt(3,*) 
+      double precision , intent(in) :: co(3,*) 
+      double precision , intent(out) :: potpt(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(:), allocatable :: ias 
       integer ::  layer, ishel, i, ipoint, iatom, nnbr, jatom, ncon
-      real(double), dimension(100) :: vander 
-      real(double), dimension(3,1000) :: con 
-      real(double), dimension(:), allocatable :: rad 
-      real(double), dimension(3,200) :: cnbr 
-      real(double), dimension(200) :: rnbr 
-      real(double), dimension(3) :: ci, temp0 
-      real(double), dimension(3,2) :: cw 
-      real(double) :: scale, dens, scincr, pi, rw, den, ri, d2
+      double precision, dimension(100) :: vander 
+      double precision, dimension(3,1000) :: con 
+      double precision, dimension(:), allocatable :: rad 
+      double precision, dimension(3,200) :: cnbr 
+      double precision, dimension(200) :: rnbr 
+      double precision, dimension(3) :: ci, temp0 
+      double precision, dimension(3,2) :: cw 
+      double precision :: scale, dens, scincr, pi, rw, den, ri, d2
       logical :: si 
 !-----------------------------------------------
 !
@@ -365,28 +356,25 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !****************************************************************
 !     COLLISION CHECK OF PROBE WITH NEIGHBORING ATOMS
 !     FOR CONNOLLY SURFACE ONLY.
 !****************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: nnbr 
       integer , intent(in) :: ishape 
-      real(double) , intent(in) :: rw 
-      real(double) , intent(in) :: cw(3) 
-      real(double) , intent(in) :: cnbr(3,200) 
-      real(double) , intent(in) :: rnbr(200) 
+      double precision , intent(in) :: rw 
+      double precision , intent(in) :: cw(3) 
+      double precision , intent(in) :: cnbr(3,200) 
+      double precision , intent(in) :: rnbr(200) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i 
-      real(double) :: sumrad, vect1, vect2, vect3, sr2, dd2 
+      double precision :: sumrad, vect1, vect2, vect3, sr2, dd2 
 !-----------------------------------------------
 !
       collis = .FALSE. 
@@ -419,7 +407,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : natorb, tore, am, ad, aq, dd, qq
       USE funcon_C, only : a0, ev
 !*********************************************************************
@@ -427,22 +414,20 @@
 ! REFERENCE G.P.FORD AND B.WANG, J.COMPUT.CHEM. 14 (1993)1101.
 !                            WRITTEN BY BINGZE WANG, 10 OCTOBER 1991.
 !*********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ni 
-      real(double) , intent(in) :: rij 
-      real(double) , intent(out) :: ri(22) 
-      real(double) , intent(out) :: core(4,2) 
+      double precision , intent(in) :: rij 
+      double precision , intent(out) :: ri(22) 
+      double precision , intent(out) :: core(4,2) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i 
-      real(double), dimension(72) :: arg, sqr 
-      real(double) ::  ev1, ev2, pp, r, aee, da, qa, ade, aqe, rsq, xxx&
+      double precision, dimension(72) :: arg, sqr 
+      double precision ::  ev1, ev2, pp, r, aee, da, qa, ade, aqe, rsq, xxx&
         , ee 
 !----------------------------------------------- 
       ev1 = ev*0.5D0 
@@ -501,7 +486,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE rotate_C, only : ccore, css1, csp1, cpps1, cppp1
       use parameters_C, only : natorb, tore
 !**********************************************************************
@@ -509,8 +493,6 @@
 !  INTO MOLECULAR COORDINATES FOR PMEP COMPUTATIONS.
 !                                  WRITTEN BY BINGZE WANG, NOV. 1991
 !**********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -520,17 +502,17 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer  :: ni 
-      real(double) , intent(out) :: enuc 
-      real(double)  :: rij 
-      real(double) , intent(in) :: xi(3) 
-      real(double) , intent(in) :: xj(3) 
-      real(double) , intent(out) :: e1b(10) 
+      double precision , intent(out) :: enuc 
+      double precision  :: rij 
+      double precision , intent(in) :: xi(3) 
+      double precision , intent(in) :: xj(3) 
+      double precision , intent(out) :: e1b(10) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double), dimension(3) :: x, y, z 
-      real(double), dimension(22) :: ri 
-      real(double) :: rijx, gam, a, xx11, xx21, xx22, xx31, xx32, xx33, yy11, &
+      double precision, dimension(3) :: x, y, z 
+      double precision, dimension(22) :: ri 
+      double precision :: rijx, gam, a, xx11, xx21, xx22, xx31, xx32, xx33, yy11, &
         yy21, yy22, zz11, zz21, zz22, zz31, zz32, zz33, yyzz11, yyzz21, yyzz22 
 !-----------------------------------------------
       x(1) = xi(1) - xj(1) 
@@ -605,23 +587,20 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !*******************************************************************
 !  GENERATE UNIT VECTORS OVER SPHERE. FOR CONNOLLY SURFACE ONLY
 !*******************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(inout) :: n 
-      real(double) , intent(out) :: u(3,n) 
+      double precision , intent(out) :: u(3,n) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nequat, nvert, nu, i, nhor, j 
-      real(double) :: pi, fi, z, xy, fj, x, y 
+      double precision :: pi, fi, z, xy, fj, x, y 
 !-----------------------------------------------
       pi = 4.D0*atan(1.D0) 
       nequat = int(sqrt(n*pi)) 
@@ -654,7 +633,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw
       use molkst_C, only : numat
       use common_arrays_C, only : nat
@@ -664,8 +642,6 @@
 !********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -678,16 +654,16 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(inout) :: nmep 
-      real(double) , intent(in) :: co(3,*) 
-      real(double) , intent(out) :: potpt(3,*) 
+      double precision , intent(in) :: co(3,*) 
+      double precision , intent(out) :: potpt(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, ia, npnt, l, jz 
-      real(double), dimension(53) :: vderw 
-      real(double), dimension(100) :: dist 
-      real(double), dimension(3) :: xmin, xmax 
-      real(double) :: shell, grid, closer, vdmax, xstart, ystart, zstart, zgrid&
+      double precision, dimension(53) :: vderw 
+      double precision, dimension(100) :: dist 
+      double precision, dimension(3) :: xmin, xmax 
+      double precision :: shell, grid, closer, vdmax, xstart, ystart, zstart, zgrid&
         , ygrid, xgrid 
 !----------------------------------------------- 
 !
@@ -794,7 +770,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE common_arrays_C, only : ch, p, nat => nat
       USE elemts_C, only : elemnt 
       use chanel_C, only : iw
@@ -808,8 +783,6 @@
 !        G.P.FORD AND B. WANG J.COMPT.CHEM. 14(1993)1101.
 !                                       BINGZE WANG ON 19 AUGUST 1993
 !**********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -825,27 +798,27 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: nmep 
-      real(double)  :: co(3,*) 
-      real(double)  :: potpt(3,*) 
-      real(double)  :: al(1000) 
-      real(double)  :: a(numat + 4,numat + 4) 
-      real(double)  :: d(numat,nmep) 
-      real(double)  :: d1(numat,nmep) 
+      double precision  :: co(3,*) 
+      double precision  :: potpt(3,*) 
+      double precision  :: al(1000) 
+      double precision  :: a(numat + 4,numat + 4) 
+      double precision  :: d(numat,nmep) 
+      double precision  :: d1(numat,nmep) 
       logical       :: cequiv(numat,numat) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: iz, numat0, k, i, nonzo, ip, j, l, ieq 
-      real(double), dimension(numat) :: q 
-      real(double), dimension(mxmep) :: ep 
-      real(double), dimension(numat + 4) :: b 
-      real(double), dimension(mpack) :: pp 
-      real(double), dimension(numat) :: qsc, qq 
-      real(double) :: rms, rrms, dipx, dipy, dipz, au, cf, bohr1, au1, dx&
+      double precision, dimension(numat) :: q 
+      double precision, dimension(mxmep) :: ep 
+      double precision, dimension(numat + 4) :: b 
+      double precision, dimension(mpack) :: pp 
+      double precision, dimension(numat) :: qsc, qq 
+      double precision :: rms, rrms, dipx, dipy, dipz, au, cf, bohr1, au1, dx&
         , dy, dz, xk, yk, zk, xp, yp, zp, dki, ui, ajk, det,qi, epc, epi, dip 
       logical :: idip 
 ! For Mopac BLAS      
-      real(double), external :: ddot
+      double precision, external :: ddot
 !
       
 !-----------------------------------------------
@@ -1027,7 +1000,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : keywrd, moperr, numat, lm61
       use common_arrays_C, only : nat, p
       use chanel_C, only : iw, imep
@@ -1040,8 +1012,6 @@
 !*********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1055,21 +1025,21 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: c1(3,numat) 
+      double precision  :: c1(3,numat) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(numat) :: mx, my 
       integer :: need1, natm, icase, iback, i, nonzo, npx, npy, k, ip, &
         m, n, imin, ny, minima, j 
-      real(double), dimension(lm61) :: pp 
-      real(double), dimension(3) :: w, r0 
-      real(double), dimension(3,3) :: t 
-      real(double), dimension(numat) :: ria, vmin 
-      real(double), dimension(3,numat) :: cw 
-      real(double), dimension(200) :: uu 
-      real(double), dimension(3,numat) :: cmep 
-      real(double) :: step, cut, z0, xm, ym, t11, t12, t13, t21, t22, t23, t31&
+      double precision, dimension(lm61) :: pp 
+      double precision, dimension(3) :: w, r0 
+      double precision, dimension(3,3) :: t 
+      double precision, dimension(numat) :: ria, vmin 
+      double precision, dimension(3,numat) :: cw 
+      double precision, dimension(200) :: uu 
+      double precision, dimension(3,numat) :: cmep 
+      double precision :: step, cut, z0, xm, ym, t11, t12, t13, t21, t22, t23, t31&
         , t32, t33, xx0, yy0, zz0, xxw, yyw, zzw, step1, xx1, yy1, zz1, stepm, &
         xx2, yy2, zz2, stepn, rmin, rr, ui 
       logical :: prtmep, minmep 
@@ -1264,7 +1234,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : keywrd, numat, line
       use common_arrays_C, only : nat
       use chanel_C, only : iw, ir
@@ -1276,8 +1245,6 @@
 !*********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1291,20 +1258,20 @@
 !-----------------------------------------------
       integer  :: icase 
       integer , intent(out) :: iback 
-      real(double) , intent(out) :: xm 
-      real(double) , intent(out) :: ym 
-      real(double) , intent(in) :: step 
-      real(double)  :: z0 
-      real(double) , intent(in) :: c(3,*) 
-      real(double) , intent(inout) :: r0(3) 
-      real(double) , intent(inout) :: t(3,3) 
-      real(double) , intent(out) :: c1(3,*) 
+      double precision , intent(out) :: xm 
+      double precision , intent(out) :: ym 
+      double precision , intent(in) :: step 
+      double precision  :: z0 
+      double precision , intent(in) :: c(3,*) 
+      double precision , intent(inout) :: r0(3) 
+      double precision , intent(inout) :: t(3,3) 
+      double precision , intent(out) :: c1(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer ::  n1, n2, n3, i, k, j, is, il 
-      real(double), dimension(3) :: c0 
-      real(double) :: x2, y2, z2, rr2, r2, r21, x3, y3, z3, rr3, r3, r31, cos1&
+      double precision, dimension(3) :: c0 
+      double precision :: x2, y2, z2, rr2, r2, r21, x3, y3, z3, rr3, r3, r31, cos1&
         , p41, x34, y34, z34, r341, x6, y6, z6, x62, y62, z62, r621, x4, y4, z4&
         , x63, y63, z63, r631, r41, z5, y5, x5, r51, xi, yi, cs, cl 
 !----------------------------------------------- 
@@ -1557,7 +1524,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat
       use common_arrays_C, only : nfirst, nlast
 !*********************************************************************
@@ -1566,8 +1532,6 @@
 !*********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:03:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -1576,8 +1540,8 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(out) :: mn 
-      real(double) , intent(in) :: p(*) 
-      real(double) , intent(out) :: pp(*) 
+      double precision , intent(in) :: p(*) 
+      double precision , intent(out) :: pp(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------

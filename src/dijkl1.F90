@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat, norbs
       use common_arrays_C, only : nfirst, nlast
       use meci_C, only : nmos
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:09  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -20,12 +17,12 @@
 !-----------------------------------------------
       integer , intent(in) :: n 
       integer , intent(in) :: nati 
-      real(double) , intent(in) :: c(n,*) 
-      real(double)  :: w(*) 
-      real(double)  :: cij(10*norbs) 
-      real(double)  :: wcij(10*norbs) 
-      real(double) , intent(inout) :: ckl(10*norbs) 
-      real(double) , intent(out) :: xy(nmos,nmos,nmos,nmos) 
+      double precision , intent(in) :: c(n,*) 
+      double precision  :: w(*) 
+      double precision  :: cij(10*norbs) 
+      double precision  :: wcij(10*norbs) 
+      double precision , intent(inout) :: ckl(10*norbs) 
+      double precision , intent(out) :: xy(nmos,nmos,nmos,nmos) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -34,7 +31,7 @@
 !-----------------------------------------------
       integer , dimension(0:8) :: nb 
       integer :: na, i, j, ipq, ii, ip, i77, kr, js, nbj, nbi, k, ll, l 
-      real(double) :: sum 
+      double precision :: sum 
 
       save nb 
 !-----------------------------------------------

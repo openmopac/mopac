@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, numat, keywrd, nbeta
       use common_arrays_C, only : nat, nfirst, nlast, p, pa, pb
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:23  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -23,8 +20,8 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer  :: nocc, iprint
-      real(double)  :: c(norbs,norbs) 
-      real(double)  :: eig(norbs) 
+      double precision  :: c(norbs,norbs) 
+      double precision  :: eig(norbs) 
       character*2 :: txt
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
@@ -34,11 +31,11 @@
 !-----------------------------------------------
       integer , dimension(20) :: iel 
       integer :: niter, i, j, iter, k, k1, kl, ku, il, iu, i1, ii 
-      real(double), dimension(norbs) :: eig1, psi1, psi2, cii, refeig 
-      real(double) :: eps, sum, xijjj, xjiii, xiiii, xjjjj, xijij, xiijj, dij, &
+      double precision, dimension(norbs) :: eig1, psi1, psi2, cii, refeig 
+      double precision :: eps, sum, xijjj, xjiii, xiiii, xjjjj, xijij, xiijj, dij, &
         dii, djj, aij, bij, ca, sa, sum1, x, co 
       character :: elemnt(99)*2, num_1*1, num_2*1 
-      real(double), allocatable  :: cold(:,:) 
+      double precision, allocatable  :: cold(:,:) 
 
       save elemnt 
 !-----------------------------------------------

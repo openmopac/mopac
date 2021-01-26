@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : keywrd, moperr
       use chanel_C, only : iw
       use esp_C, only : scale, den, nesp
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -23,7 +20,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: n, i 
-      real(double) :: scincr, time1 
+      double precision :: scincr, time1 
 !-----------------------------------------------
       time1 = seconds (1)
       if (index(keywrd, " CUBE") /= 0 .or. index(keywrd, " ESPGRID") /= 0) then
@@ -89,7 +86,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat, natoms
       use common_arrays_C, only : geo, coord, labels, nat
       use esp_C, only : nesp, potpt, co
@@ -99,8 +95,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -111,10 +105,10 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icntr, i, j, ia, npnt, l, jz 
-      real(double), dimension(53) :: vderw 
-      real(double), dimension(100) :: dist 
-      real(double), dimension(3) :: xmin, xmax 
-      real(double) :: shell, grid, closer, vdmax, xstart, ystart, zstart, zgrid&
+      double precision, dimension(53) :: vderw 
+      double precision, dimension(100) :: dist 
+      double precision, dimension(3) :: xmin, xmax 
+      double precision :: shell, grid, closer, vdmax, xstart, ystart, zstart, zgrid&
         , ygrid, xgrid 
 !-----------------------------------------------
 ! 
@@ -235,15 +229,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only :geo, coord, labels, nat
       use molkst_C, only : numat, natoms
       use esp_C, only : nesp, rad, dens, scale, potpt, co, den
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -258,13 +249,13 @@
 !-----------------------------------------------
       integer , dimension(numat) :: ias 
       integer :: icntr, i, ipoint, iatom, nnbr, jatom, ncon
-      real(double), dimension(100) :: vander 
-      real(double), dimension(3,1000) :: con 
-      real(double), dimension(3,200) :: cnbr 
-      real(double), dimension(200) :: rnbr 
-      real(double), dimension(3) :: ci, temp0 
-      real(double), dimension(3,2) :: cw 
-      real(double) :: pi, rw, ri, d2 
+      double precision, dimension(100) :: vander 
+      double precision, dimension(3,1000) :: con 
+      double precision, dimension(3,200) :: cnbr 
+      double precision, dimension(200) :: rnbr 
+      double precision, dimension(3) :: ci, temp0 
+      double precision, dimension(3,2) :: cw 
+      double precision :: pi, rw, ri, d2 
       logical :: si 
 !-----------------------------------------------
 !***********************************************************************
@@ -418,7 +409,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : keywrd, numat, ux, uy, uz, method_mndo
       USE common_arrays_C, only : q, nat
       use funcon_C, only : a0
@@ -428,8 +418,6 @@
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -441,7 +429,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, ieq 
-      real(double) :: dipx, dipy, dipz, slope, dip
+      double precision :: dipx, dipy, dipz, slope, dip
 !-----------------------------------------------
 !***********************************************************************
 !
@@ -594,7 +582,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat, keywrd, nopen, fract, nclose
       use overlaps_C, only : allc, allz
       use parameters_C, only : tore, zs, zp
@@ -615,8 +602,8 @@
       implicit none
 !
       integer :: j1, i, m, k, j, nqn, ipc,  in, l
-      real(double) :: norm 
-      real(double) :: pi,  t, fval, sum, ra, rij 
+      double precision :: norm 
+      double precision :: pi,  t, fval, sum, ra, rij 
       logical :: potwrt, sto3g 
       pi = 4.D0*atan(1.D0) 
 !
@@ -858,7 +845,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE esp_C, only : nesp, cf, co, potpt, idip, iz, dx, dy, dz, &
       & b_esp, esp_array, rms, rrms
       use common_arrays_C, only : q
@@ -866,8 +852,6 @@
       use funcon_C, only : a0, fpc_1, fpc_8
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -880,7 +864,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k, j, i, info
-      real(double) ::rik, rij, espc, atmp
+      double precision ::rik, rij, espc, atmp
       integer, allocatable :: ipiv(:)
       double precision, allocatable :: a(:,:)
     !
@@ -967,7 +951,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw, iesr, restart_fn
       use funcon_C, only : a0
       use molkst_C, only : keywrd
@@ -977,14 +960,12 @@
       & icd, exs, ce, indc, nesp
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ipx2, i, jstart, iesps, np, ic, ipr, istart, j, iesp, iref, k, ips, jps 
-      real(double) :: pi, potp1, potp2, potp3, ref, res, term, f, ts, term1, fi, ts1 
+      double precision :: pi, potp1, potp2, potp3, ref, res, term, f, ts, term1, fi, ts1 
 !-----------------------------------------------
       a0 = a0 
 !
@@ -1146,20 +1127,17 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use esp_C, only : cen, ex, iam, cc, is_esp, ip, npr, ncc, icd, ovl, &
       &  dx_array, dy_array, dz_array, td, ce, exs, expn, rnai, ewcx, ewcy, ewcz
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
       integer :: ic
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ipr, istart, i, j, np, ips, jps
-      real(double) :: pi 
+      double precision :: pi 
 !-----------------------------------------------
 !
 !     CALCULATE DISTANCE ARRAYS
@@ -1266,8 +1244,6 @@
       USE overlaps_C, only : allc, allz
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
@@ -1355,12 +1331,10 @@
       end subroutine setup3 
 
 !****************************************************************
-      real(kind(0.0d0)) function dex2 (m) 
+      double precision function dex2 (m) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1387,23 +1361,20 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: n 
-      real(double) , intent(in) :: x 
-      real(double) , intent(out) :: fval 
+      double precision , intent(in) :: x 
+      double precision , intent(out) :: fval 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ku, k, i 
-      real(double), dimension(21) :: ff 
-      real(double), dimension(200) :: term 
-      real(double) :: a0, a1s2, pie4, a1, xsw, e, fac0, fact, term0, sum, suma, &
+      double precision, dimension(21) :: ff 
+      double precision, dimension(200) :: term 
+      double precision :: a0, a1s2, pie4, a1, xsw, e, fac0, fact, term0, sum, suma, &
         sum1 
 !-----------------------------------------------
 !***********************************************************************
@@ -1516,7 +1487,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : a0
       use chanel_C, only : iw, iesr, esr_fn
       use esp_C, only : cen, ex, tf, fv, iam, cc, isc, is_esp, ip, npr, ncc, ipe, &
@@ -1525,8 +1495,6 @@
       use molkst_C, only : keywrd
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 
 !   L o c a l   V a r i a b l e s
@@ -1534,7 +1502,7 @@
       integer,  allocatable, dimension (:) :: id 
       integer :: idn, idc, ipx2, np, i, l, j, jstart, iesps, iesp, il&
         , iref, k, ic, ipr, istart, in, ir, ir2, ips, jps, mptd
-      real(double) :: pi, potp1, potp2, potp3, ref, res, term, f, ts, &
+      double precision :: pi, potp1, potp2, potp3, ref, res, term, f, ts, &
         term1, fi, ts1, term2, fii, ts2
 !-----------------------------------------------
       idn = 10 
@@ -1842,7 +1810,6 @@
     !-----------------------------------------------
     !   M o d u l e s 
     !-----------------------------------------------
-          USE vast_kind_param, ONLY:  double 
           use molkst_C, only : numat, natoms
           use common_arrays_C, only : geo, coord, labels, nat
           use esp_C, only : nesp, co   
@@ -1852,22 +1819,20 @@
     !
     !***********************************************************************
     !DECK MOPAC
-    !...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:13  03/09/06  
-    !...Switches: -rl INDDO=2 INDIF=2 
     !-----------------------------------------------
     !   I n t e r f a c e   B l o c k s
     !-----------------------------------------------
           use mopend_I 
           implicit none
         !.. Formal Arguments ..
-          real(double), dimension (3), intent (out) :: xmin
-          real(double), dimension (3), intent (out) :: xmax
+          double precision, dimension (3), intent (out) :: xmin
+          double precision, dimension (3), intent (out) :: xmax
     !-----------------------------------------------
     !   L o c a l   V a r i a b l e s
     !-----------------------------------------------
           integer :: icntr, i, j, ia 
-          real(double), dimension(53) :: vderw 
-          real(double) :: shell, vdmax
+          double precision, dimension(53) :: vderw 
+          double precision :: shell, vdmax
     !-----------------------------------------------
     ! 
           data vderw/ 53*0.0D0/  

@@ -2,13 +2,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : ifact, i1fact, ptot2
       use molkst_C, only : numcal, norbs, mpack
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:07  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -25,10 +22,10 @@
       integer , intent(in) :: nati 
       integer , intent(in) :: nfirst(numat) 
       integer , intent(in) :: nlast(numat) 
-      real(double)  :: f(mpack) 
-      real(double) , intent(in) :: ptot(mpack) 
-      real(double) , intent(in) :: p(mpack) 
-      real(double)  :: w(*) 
+      double precision  :: f(mpack) 
+      double precision , intent(in) :: ptot(mpack) 
+      double precision , intent(in) :: p(mpack) 
+      double precision  :: w(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -36,8 +33,8 @@
       integer , dimension(256) :: jindex 
       integer :: icalcn, i, m, j, ij, ji, k, ik, l, kl, lk, kk, ia, ib, jk, kj&
         , ii, jj, ja, jb, i1, j1, ll, kr, ka 
-      real(double), dimension(81) :: pk, pja, pjb 
-      real(double) :: sumdia, sumoff, sum, elrep
+      double precision, dimension(81) :: pk, pja, pjb 
+      double precision :: sumdia, sumoff, sum, elrep
 
       save itype, icalcn, jindex
 !-----------------------------------------------

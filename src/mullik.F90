@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
       use molkst_C, only : numat, nelecs, nclose, nopen, fract,  &
         keywrd, norbs, id, verson, method_pm6, uhf, nalpha, nbeta, &
@@ -31,10 +30,10 @@
       integer :: i, if, il, im1, k, ii, j, jf, jl, ij, icalcn=0, mo_l, mo_u
       character, dimension(:), allocatable :: namo_tmp*4  
       character :: paras*1
-      real(double), dimension(norbs) :: eig 
-      real(double), dimension(:), allocatable :: store, vecs, store_h
-      real(double), dimension(:, :), allocatable :: work
-      real(double) :: bi, bj, sum, summ, q2(numat)
+      double precision, dimension(norbs) :: eig 
+      double precision, dimension(:), allocatable :: store, vecs, store_h
+      double precision, dimension(:, :), allocatable :: work
+      double precision :: bi, bj, sum, summ, q2(numat)
       logical :: graph, graph_formatted, namo_ok
 ! GBR_new_addition
       integer :: nlower

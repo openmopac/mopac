@@ -3,10 +3,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : numcal
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -14,16 +11,16 @@
       integer , intent(inout) :: kr
       integer , intent(in) :: na 
       integer , intent(in) :: nb 
-      real(double) , intent(in) :: w(*) 
-      real(double) , intent(inout) :: wca(45) 
-      real(double) , intent(inout) :: wcb(45) 
-      real(double) , intent(in) :: ca(45) 
-      real(double) , intent(in) :: cb(45) 
+      double precision , intent(in) :: w(*) 
+      double precision , intent(inout) :: wca(45) 
+      double precision , intent(inout) :: wcb(45) 
+      double precision , intent(in) :: ca(45) 
+      double precision , intent(in) :: cb(45) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, ij, i, j, kl, k, l, nna, nnb, n1, n2
-      real(double) :: aa, sum, bb 
+      double precision :: aa, sum, bb 
       integer, dimension (45) :: in 
 
       save icalcn 

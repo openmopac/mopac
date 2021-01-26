@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE parameters_C, only : ios, iop, iod, qq, am, ad, aq, dd, &
       gpp, gp2, hsp, gss, gsp, &
       zs, zp, uss, upp, udd, eisol, &
@@ -12,8 +11,6 @@
       USE molkst_C, only : keywrd, method_indo
       USE reimers_C, only: zetad, zetawt, nbfa
       USE chanel_C, only : iw
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:24:24  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -22,10 +19,10 @@
       integer , dimension(107) :: nspqn 
       integer :: i, k, l, jmax, j
       character :: num*1, file_name*120
-      real(double), dimension(107) :: gssc, gspc, hspc, gp2c, gppc 
-      real(double) :: p, p4,  hpp, qn, gdd1, d1, d2, df, hsp1, hsp2, d3, &
+      double precision, dimension(107) :: gssc, gspc, hspc, gp2c, gppc 
+      double precision :: p, p4,  hpp, qn, gdd1, d1, d2, df, hsp1, hsp2, d3, &
         gqq, q1, q2, qf, hpp1, hpp2, q3
-      real(double) :: zda, zdb, zwa, zwb, dsda, dsdb, dpda, dpdb, ddda, dddb
+      double precision :: zda, zdb, zwa, zwb, dsda, dsdb, dpda, dpdb, ddda, dddb
       double precision, external :: reada
       save nspqn 
 !----------------------------------------------- 
@@ -250,15 +247,14 @@
     if (j < 10) then
       rewind (param_out)
       write (param_out,"(a)") "  module Parameters_for_PM"//num//"_C"        
-      write (param_out,"(a)") "    use vast_kind_param, ONLY:  double  "
-      write (param_out,"(a)") "    real(double), dimension(107) :: uss"//num//", upp"//num//", udd" &
+      write (param_out,"(a)") "    double precision, dimension(107) :: uss"//num//", upp"//num//", udd" &
       //num//", zs"//num//", zp"//num//", zd"//num//", betas"//num//", &"
       write (param_out,"(a)") "    betap"//num//", betad"//num//", gss"//num//", gsp"//num//", gpp" &
       //num//", gp2"//num//", hsp"//num//", polvo"//num//", poc_"//num//", &"
       write (param_out,"(a)") "    zsn"//num//", zpn"//num//", zdn"//num//", f0sd"//num//", g2sd"//num//", alp"//num//", &"
       write (param_out,"(a)") "    CPE_Zet"//num//", CPE_Z0"//num//", CPE_B"//num//", CPE_Xlo"//num//", CPE_Xhi"//num//""
-      write (param_out,"(a)") "    real(double) :: v_par"//num//"(60) "
-      write (param_out,"(a)") "    real(double), dimension(107,4) :: gues"//num//"1, gues"//num//"2, gues"//num//"3" 
+      write (param_out,"(a)") "    double precision :: v_par"//num//"(60) "
+      write (param_out,"(a)") "    double precision, dimension(107,4) :: gues"//num//"1, gues"//num//"2, gues"//num//"3" 
       do i = 1, 107 
         if (zs(i) < 1.d-20 .and. gss(i) < 1.d-20 .and. Abs(guess1(i,1)) &
         + Abs(alp(i)) < 1.d-20) cycle 

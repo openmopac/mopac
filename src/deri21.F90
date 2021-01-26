@@ -1,5 +1,4 @@
       subroutine deri21(a, nvar_nvo, minear, ifirst, vnert, pnert, b, ncut) 
-      USE vast_kind_param, ONLY:  double 
       use mtxmc_I 
       use mxm_I 
       implicit none
@@ -7,14 +6,14 @@
       integer  :: minear 
       integer , intent(in) :: ifirst 
       integer  :: ncut 
-      real(double)  :: a(minear,nvar_nvo) 
-      real(double)  :: vnert(nvar_nvo) 
-      real(double)  :: pnert(nvar_nvo) 
-      real(double)  :: b(minear,nvar_nvo) 
+      double precision  :: a(minear,nvar_nvo) 
+      double precision  :: vnert(nvar_nvo) 
+      double precision  :: pnert(nvar_nvo) 
+      double precision  :: b(minear,nvar_nvo) 
 !
       integer :: i, l
-      real(double), dimension(4) :: work 
-      real(double) :: cutoff, sum2, sum 
+      double precision, dimension(4) :: work 
+      double precision :: cutoff, sum2, sum 
 !***********************************************************************
 !
 !     LEAST-SQUARE ANALYSIS OF A SET OF ANALYTICAL POINTS {A} :

@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : nat, nlast, nfirst
       use molkst_C, only : numat
       USE parameters_C, only : gpp, gp2, hsp, gss, gsp
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:14  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
       implicit none
 !-----------------------------------------------
@@ -18,10 +15,10 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(inout) :: f(*) 
-      real(double)  :: ptot(*) 
-      real(double)  :: pa(*) 
-      real(double) , intent(in) :: pb(*) 
+      double precision , intent(inout) :: f(*) 
+      double precision  :: ptot(*) 
+      double precision  :: pa(*) 
+      double precision , intent(in) :: pb(*) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -29,7 +26,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ii, ia, ib, ni, nbases, ka, l, j, m 
-      real(double) :: ptpop, papop 
+      double precision :: ptpop, papop 
 !-----------------------------------------------
 ! *********************************************************************
 !

@@ -1,11 +1,10 @@
   module Parameters_for_PM7_C
-    use vast_kind_param, ONLY:  double  
-    real(double), dimension(107) :: uss7, upp7, udd7, zs7, zp7, zd7, betas7, &
+    double precision, dimension(107) :: uss7, upp7, udd7, zs7, zp7, zd7, betas7, &
     betap7, betad7, gss7, gsp7, gpp7, gp27, hsp7, polvo7, poc_7, &
     zsn7, zpn7, zdn7, f0sd7, g2sd7, alp7, &
     CPE_Zet7, CPE_Z07, CPE_B7, CPE_Xlo7, CPE_Xhi7
-    real(double) :: v_par7(60) 
-    real(double), dimension(107,4) :: gues71, gues72, gues73
+    double precision :: v_par7(60) 
+    double precision, dimension(107,4) :: gues71, gues72, gues73
 !
 !                    Data for Element   1         Hydrogen
 !

@@ -1,5 +1,4 @@
       subroutine powsq() 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : tleft, time0, numcal, keywrd, last, &
       &  nscf, tdump, nvar, iflepo, escf, line
       use funcon_C, only : a0
@@ -13,20 +12,20 @@
       use prttim_I 
       use to_screen_I
       implicit none
-      real(double)  :: hess(nvar,nvar) 
-      real(double)  :: bmat(nvar,nvar) 
-      real(double)  :: pmat(nvar*nvar) 
-      real(double)  :: pvec(nvar*nvar) 
+      double precision  :: hess(nvar,nvar) 
+      double precision  :: bmat(nvar,nvar) 
+      double precision  :: pmat(nvar*nvar) 
+      double precision  :: pvec(nvar*nvar) 
 !
       integer , dimension(9) :: ipow 
       integer :: icyc, iloop, icalcn, maxcyc, i, ilpr, if, j, jcyc, ij, k, l, &
         il, ik, ip1, id, percent
-      real(double), dimension(nvar) :: sig, e1, e2, p, work, eig, q 
-      real(double) :: time1, time2, tlast, xinc, rho2, tol2, gmin, tstep, &
+      double precision, dimension(nvar) :: sig, e1, e2, p, work, eig, q 
+      double precision :: time1, time2, tlast, xinc, rho2, tol2, gmin, tstep, &
         sum, alpha, rmu, sk, pmax, tprt, amin, anext, test
       logical :: debug, restrt, times, scf1, resfil, lpacifier
       character :: txt      
-      real(double), external :: ddot
+      double precision, external :: ddot
       save debug, restrt, times, scf1, resfil, time1, time2, icyc, tlast, &
         iloop, xinc, rho2, tol2, icalcn 
 !*********************************************************************
@@ -401,23 +400,22 @@
       return  
       end subroutine powsq 
       subroutine search(xparam, alpha, sig, nvar, gmin, funct, amin, anext ) 
-      USE vast_kind_param, ONLY:  double 
       USE common_arrays_C, only : gmin1, gnext1
       use chanel_C, only : iw
       use molkst_C, only : numcal, keywrd 
       use compfg_I   
       implicit none
       integer  :: nvar 
-      real(double) , intent(inout) :: alpha 
-      real(double) , intent(inout) :: gmin 
-      real(double)  :: funct, amin, anext
-      real(double)  :: xparam(*) 
-      real(double) , intent(in) :: sig(*) 
+      double precision , intent(inout) :: alpha 
+      double precision , intent(inout) :: gmin 
+      double precision  :: funct, amin, anext
+      double precision  :: xparam(*) 
+      double precision , intent(in) :: sig(*) 
       integer :: looks, icalcn, i, itrys 
-      real(double), dimension(nvar) :: grad, xref, gref, xmin1 
-      real(double) :: g, tiny, tolerg, gb, gstore, gminn, ta, tb, ga, sum, gtot 
+      double precision, dimension(nvar) :: grad, xref, gref, xmin1 
+      double precision :: g, tiny, tolerg, gb, gstore, gminn, ta, tb, ga, sum, gtot 
       logical :: debug       
-      real(double), external :: ddot
+      double precision, external :: ddot
       save debug, g, tiny, looks, tolerg, icalcn 
 !***********************************************************************
 !
@@ -549,7 +547,6 @@
 !
       end subroutine search 
       subroutine powsav(hess, grad, xparam, pmat, iloop, bmat, ipow) 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : nvar, keywrd, numat, norbs
       use maps_C, only : latom
       use chanel_C, only : iw, ires, restart_fn
@@ -560,15 +557,15 @@
       implicit none
       integer  :: iloop 
       integer  :: ipow(9) 
-      real(double)  :: hess(nvar,*) 
-      real(double)  :: grad(*) 
-      real(double)  :: xparam(*) 
-      real(double)  :: pmat(*) 
-      real(double)  :: bmat(nvar,*) 
+      double precision  :: hess(nvar,*) 
+      double precision  :: grad(*) 
+      double precision  :: xparam(*) 
+      double precision  :: pmat(*) 
+      double precision  :: bmat(nvar,*) 
 !
       integer :: i, k, l, j, linear, old_numat, old_norbs
-      real(double) :: funct1      
-      real(double), external :: ddot    
+      double precision :: funct1      
+      double precision, external :: ddot    
 !-----------------------------------------------
 !*********************************************************************
 !

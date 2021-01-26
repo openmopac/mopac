@@ -2,13 +2,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, numat, n2elec
       use common_arrays_C, only : nat, nfirst, nlast
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:08  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -19,11 +16,11 @@
 !-----------------------------------------------
       integer , intent(in) :: nati 
       integer , intent(in) :: natx 
-      real(double) , intent(out) :: enuclr 
-      real(double) , intent(in) :: step 
-      real(double)  :: coord(3,numat) 
-      real(double) , intent(inout) :: h(*) 
-      real(double) , intent(out) :: ww(n2elec) 
+      double precision , intent(out) :: enuclr 
+      double precision , intent(in) :: step 
+      double precision  :: coord(3,numat) 
+      double precision , intent(inout) :: h(*) 
+      double precision , intent(out) :: ww(n2elec) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -32,10 +29,10 @@
 !-----------------------------------------------
       integer :: i, kr, ia, ib, ni, j, ja, jb, nj, i2, i1, ij, &
         kro, ii, k
-      real(double), dimension(45) :: e1b, de1b, e2a, de2a 
-      real(double), dimension(9,9) :: di, ddi 
-      real(double), dimension(2026) :: wjd = 0.d0, dwjd = 0.d0
-      real(double) :: csave, enuc, denuc 
+      double precision, dimension(45) :: e1b, de1b, e2a, de2a 
+      double precision, dimension(9,9) :: di, ddi 
+      double precision, dimension(2026) :: wjd = 0.d0, dwjd = 0.d0
+      double precision :: csave, enuc, denuc 
 !-----------------------------------------------
 !
 !  DHCORE GENERATES THE 1-ELECTRON  AND 2-ELECTRON INTEGRALS DERIVATIVES
@@ -98,7 +95,7 @@
 !     Two-electron one and two center terms.
 !
         call rotate (ni, nj, coord(1,nati), coord(1,j), wjd, kr, e1b, e2a, enuc) 
-              kr = kro
+        kr = kro
         coord(natx,nati) = csave - step
         call rotate (ni, nj, coord(1,nati), coord(1,j), dwjd, kr, de1b, de2a, denuc) 
         k = kr - kro 
@@ -108,7 +105,7 @@
             ww(i + kro) = wjd(i + 1)          
           end do
         end if 
-      coord(natx,nati) = csave 
+        coord(natx,nati) = csave 
         enuclr = enuclr + enuc - denuc 
 !
 !   ADD ON THE ELECTRON-NUCLEAR ATTRACTION TERM FOR ATOM I.

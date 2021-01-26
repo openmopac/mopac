@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       use meci_C, only : nmos, lab, occa, nalmat, microa, microb, nelec, &
       & nstate, vectci, deltap
       use common_arrays_C, only : c, p
@@ -10,8 +9,6 @@
     
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:25  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -21,7 +18,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, id, jd, ix, iy, ij, k 
-      real(double) :: sum,  delta(norbs, nmos)
+      double precision :: sum,  delta(norbs, nmos)
 !-----------------------------------------------
 !***********************************************************************
 !

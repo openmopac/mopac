@@ -2,12 +2,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use meci_C, only : occa, microa, microb, nmos, lab
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:24  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -16,11 +13,11 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(out) :: gse 
-      real(double) , intent(in) :: eigs(*) 
-      real(double)  :: eiga(*) 
-      real(double) , intent(out) :: diag(*) 
-      real(double)  :: xy(nmos,nmos,nmos,nmos) 
+      double precision , intent(out) :: gse 
+      double precision , intent(in) :: eigs(*) 
+      double precision  :: eiga(*) 
+      double precision , intent(out) :: diag(*) 
+      double precision  :: xy(nmos,nmos,nmos,nmos) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -28,7 +25,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j 
-      real(double) :: x 
+      double precision :: x 
 !-----------------------------------------------
 !***********************************************************************
 !

@@ -1,5 +1,4 @@
 module meci_C
-  USE vast_kind_param, ONLY:  double 
   integer, parameter :: mmci = 70
   integer ::         &
   &  nmos,           & !  Type        Number of M.O.s in active space in C.I.
@@ -22,7 +21,7 @@ module meci_C
   &  k,              &
   &  dummy
   
-  real(double) ::    &
+  double precision ::    &
   &  cif1,           & !
   &  cif2,           & !
   &  cdiagi
@@ -39,7 +38,7 @@ module meci_C
 
   integer, dimension(:,:), allocatable :: ispqr 
 
-  real(double), dimension(:), allocatable :: &
+  double precision, dimension(:), allocatable :: &
   &  cdiag,  & !
   &  occa,   & ! Type        Initial M.O. occupancy
                ! Definition  Number of electrons in each M.O. of the SCF in the active space
@@ -51,7 +50,7 @@ module meci_C
   &  vectci    ! Type        State vector of interest
                ! Definition  nstate State vectors, each of length lab, if not degenerate, nstate = 1
 
-  real(double), dimension(:,:), allocatable :: &
+  double precision, dimension(:,:), allocatable :: &
   &  rjkaa,  & ! Type  
   &  rjkab,  & !
   &  deltap, & ! Type        Change in molecular orbital occupancy as a result of C.I.
@@ -59,9 +58,9 @@ module meci_C
                ! Units       Electrons
   &  cxy       !
 
-  real(double), dimension(:,:,:), allocatable :: &
+  double precision, dimension(:,:,:), allocatable :: &
   &  dijkl
-  real(double), dimension(:,:,:,:), allocatable :: &
+  double precision, dimension(:,:,:,:), allocatable :: &
   &  xy
 
   integer, dimension(:,:), allocatable :: &

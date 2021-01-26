@@ -2,25 +2,22 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !#      SUBROUTINE JAB(IA,JA,LLPERM,JINDEX, JJNDEX,PJA,PJB,W, F)
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:22  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ia 
       integer , intent(in) :: ja 
-      real(double) , intent(in) :: pja(16) 
-      real(double) , intent(in) :: pjb(16) 
-      real(double) , intent(in) :: w(*) 
-      real(double) , intent(inout) :: f(*) 
+      double precision , intent(in) :: pja(16) 
+      double precision , intent(in) :: pjb(16) 
+      double precision , intent(in) :: w(*) 
+      double precision , intent(inout) :: f(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, i5, iia, ija, ioff, joff, i6 
-      real(double), dimension(10) :: suma, sumb 
+      double precision, dimension(10) :: suma, sumb 
 !-----------------------------------------------
 
       suma(1) = pja(1)*w(1) + pja(2)*w(11) + pja(3)*w(31) + pja(4)*w(61) + pja(&

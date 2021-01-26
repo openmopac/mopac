@@ -3,7 +3,6 @@
 !   Follow a reaction path in which the step-size is a constant,
 !   Keywords STEP and POINTS are used
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : iflepo, numat, keywrd, nvar, tleft, escf, &
       line, norbs, numcal, id, natoms, nl_atoms, time0, ncomments
       use maps_C, only : rxn_coord, lparam, react, latom, kloop
@@ -15,8 +14,6 @@
       USE parameters_C, only : tore
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:32  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -38,11 +35,11 @@
       integer , dimension(20) :: mdfp 
       integer :: npts, maxcyc, i, lloop, iloop, l, m, k, iw00, percent = 0, ipdb = 14, &
         imodel = 0, ixyz1
-      real(double) :: step, degree, c1, cputot, cpu1, cpu2, cpu3, stepc1, factor, dip, &
+      double precision :: step, degree, c1, cputot, cpu1, cpu2, cpu3, stepc1, factor, dip, &
         dipvec(3), xdfp(20),  gd(3*numat), xlast(3*numat) 
       logical :: use_lbfgs, opend, scale, debug, l_dipole
       character :: num1*1, num2*1, num3*1
-      real(double), external :: dipole
+      double precision, external :: dipole
 !-----------------------------------------------
       use_lbfgs = (index(keywrd,' LBFGS') /=0 .or. nvar > 100 .and. index(keywrd,' EF') == 0)
       step = reada(keywrd,index(keywrd,'STEP') + 5) 

@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
       use parameters_C, only : ams
 !
@@ -19,8 +18,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:17  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -44,7 +41,7 @@
       integer, intent(out)  :: na(*) 
       integer, intent(out)  :: nb(*) 
       integer, intent(out)  :: nc(*) 
-      real(double), intent(out)  :: geo(3,*), xyz(3,*)
+      double precision, intent(out)  :: geo(3,*), xyz(3,*)
       logical :: int, lmop, solid, exists, get_q
 
 !-----------------------------------------------
@@ -56,7 +53,7 @@
       integer , dimension(40) :: istart 
       integer :: i, icapa, icapz, iserr, k, icomma, khar, nvalue, label, j, ndmy, &
       jj, ltl, max_atoms, ii
-      real(double) :: weight, real, sum 
+      double precision :: weight, real, sum 
       logical :: lxyz, velo, leadsp, ircdrc, saddle, lturn, mini, l_gaussian
       character , dimension(107) :: elemnt*2 
       character :: space, nine, zero, comma, string*120, ele*2, turn, no

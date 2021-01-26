@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE ef_C, ONLY: alparm, x0, x1, x2, iloop 
       USE maps_C, only : rxn_coord, latom, kloop
       use common_arrays_C, only : na, geo, geoa, grad, hesinv, profil 
@@ -11,8 +10,6 @@
       USE chanel_C, only : iw, ires, restart_fn
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:50:30  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -25,13 +22,13 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: totime 
-      real(double)  :: funct1 
+      double precision  :: totime 
+      double precision  :: funct1 
       integer  :: mdfp(9) 
-      real(double)  :: xparam(nvar) 
-      real(double)  :: gd(nvar) 
-      real(double)  :: xlast(nvar) 
-      real(double)  :: xdfp(9)  
+      double precision  :: xparam(nvar) 
+      double precision  :: gd(nvar) 
+      double precision  :: xlast(nvar) 
+      double precision  :: xdfp(9)  
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------

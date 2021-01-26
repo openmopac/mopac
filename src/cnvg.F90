@@ -2,24 +2,21 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, numcal, keywrd, mpack, method_indo
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:13:27  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: niter 
-      real(double) , intent(out) :: pl 
-      real(double) , intent(inout) :: pnew(mpack) 
-      real(double) , intent(inout) :: p(mpack) 
-      real(double) , intent(inout) :: p1(norbs) 
+      double precision , intent(out) :: pl 
+      double precision , intent(inout) :: pnew(mpack) 
+      double precision , intent(inout) :: p(mpack) 
+      double precision , intent(inout) :: p1(norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, ii, k, i, ie, j 
-      real(double) :: rhfuhf, faca, damp, facb, fac, sum1, a, sa, sum2, sum0, &
+      double precision :: rhfuhf, faca, damp, facb, fac, sum1, a, sa, sum2, sum0, &
         sum 
       logical :: extrap 
 

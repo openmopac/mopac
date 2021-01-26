@@ -2,21 +2,18 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use overlaps_C, only : fact
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:01  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(in) :: x 
-      real(double) , intent(out) :: bf(13) 
+      double precision , intent(in) :: x 
+      double precision , intent(out) :: bf(13) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k, io, last, i, m 
-      real(double) :: absx, expx, expmx, y, xf 
+      double precision :: absx, expx, expmx, y, xf 
 !-----------------------------------------------
 !**********************************************************************
 !

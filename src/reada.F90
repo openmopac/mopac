@@ -1,9 +1,7 @@
-      real(kind(0.0d0)) function reada (string, istart) 
+      double precision function reada (string, istart) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-!...Translated by Pacific-Sierra Research 77to90  4.4G  09:33:41  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------

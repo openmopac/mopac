@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use parameters_C, only : natorb, am, ad, aq, dd, qq, tore
 
 !***********************************************************************
@@ -49,8 +48,6 @@
 !***********************************************************************
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:00  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -60,16 +57,16 @@
 !-----------------------------------------------
       integer , intent(in) :: ni 
       integer , intent(in) :: nj 
-      real(double) , intent(in) :: rij 
-      real(double) , intent(in) :: cutoff 
-      real(double) , intent(in) :: a0 
-      real(double) , intent(in) :: ev 
-      real(double) , intent(in) :: ev1 
-      real(double) , intent(in) :: ev2 
-      real(double) , intent(in) :: ev3 
-      real(double) , intent(in) :: ev4 
-      real(double) , intent(out) :: ri(22) 
-      real(double) , intent(out) :: core(4,2) 
+      double precision , intent(in) :: rij 
+      double precision , intent(in) :: cutoff 
+      double precision , intent(in) :: a0 
+      double precision , intent(in) :: ev 
+      double precision , intent(in) :: ev1 
+      double precision , intent(in) :: ev2 
+      double precision , intent(in) :: ev3 
+      double precision , intent(in) :: ev4 
+      double precision , intent(out) :: ri(22) 
+      double precision , intent(out) :: core(4,2) 
 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
@@ -78,8 +75,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i 
-      real(double), dimension(72) :: arg, sqr 
-      real(double) :: td, pp, r, aee, da, qa, ade, aqe, rsq, xxx, ee, db, qb, &
+      double precision, dimension(72) :: arg, sqr 
+      double precision :: td, pp, r, aee, da, qa, ade, aqe, rsq, xxx, ee, db, qb, &
         aed, aeq, axx, adq, aqd, aqq, yyy, zzz, www, dze, qzze, qxxe, edz, eqzz&
         , eqxx, dxdx, dzdz, dzqxx, qxxdz, dzqzz, qzzdz, qxxqxx, qxxqyy, qxxqzz&
         , qzzqxx, qzzqzz, dxqxz, qxzdx, qxzqxz 

@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : numat, keywrd, nvar, mers, id
       USE common_arrays_C, only : atmass, coord, tvec
       USE funcon_C, only : fpc_10, fpc_8, fpc_6, pi
@@ -13,17 +12,17 @@
       use frame_I  
       use symtrz_I 
       implicit none
-      real(double)  :: ff(*) 
+      double precision  :: ff(*) 
       logical , intent(in) :: eorc, ts
-      real(double)  :: fmatrx((3*numat*(3*numat+1))/2) 
-      real(double)  :: freq(3*numat) 
-      real(double) , intent(out) :: travel(3*numat), force_const(3*numat) 
-      real(double)  :: deldip(3,3*numat) 
-      real(double) , intent(out) :: oldf((3*numat*(3*numat+1))/2) 
+      double precision  :: fmatrx((3*numat*(3*numat+1))/2) 
+      double precision  :: freq(3*numat) 
+      double precision , intent(out) :: travel(3*numat), force_const(3*numat) 
+      double precision  :: deldip(3,3*numat) 
+      double precision , intent(out) :: oldf((3*numat*(3*numat+1))/2) 
 !
       integer :: loop, i, j, ij, iu, il, im1, ju, jl, ii, jj, l, linear, jii, k 
-      real(double), dimension(numat*3) :: wtmass 
-      real(double) :: fact, c2pi, sumerr, sum, err, weight, summ, sum1 
+      double precision, dimension(numat*3) :: wtmass 
+      double precision :: fact, c2pi, sumerr, sum, err, weight, summ, sum1 
       logical :: bcc
 !********************************************************************
 !

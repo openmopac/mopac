@@ -1,11 +1,10 @@
   module Parameters_for_PM8_C
-    use vast_kind_param, ONLY:  double  
-    real(double), dimension(107) :: uss8, upp8, udd8, zs8, zp8, zd8, betas8, &
+    double precision, dimension(107) :: uss8, upp8, udd8, zs8, zp8, zd8, betas8, &
     betap8, betad8, gss8, gsp8, gpp8, gp28, hsp8, polvo8, poc_8, &
     zsn8, zpn8, zdn8, f0sd8, g2sd8, alp8, &
     CPE_Zet8, CPE_Z08, CPE_B8, CPE_Xlo8, CPE_Xhi8
-    real(double) :: v_par8(60) 
-    real(double), dimension(107,4) :: gues81, gues82, gues83
+    double precision :: v_par8(60) 
+    double precision, dimension(107,4) :: gues81, gues82, gues83
 !
 !                    Data for Element   1         Hydrogen
 !

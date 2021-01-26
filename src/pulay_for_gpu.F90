@@ -1,6 +1,5 @@
       subroutine pulay_for_gpu(f, p, n, fppf, fock, emat, &
                         & lfock, nfock, msize, start, pl) 
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw
       use molkst_C, only : numcal, keywrd, mpack
 #if GPU
@@ -14,22 +13,22 @@
       integer , intent(inout) :: lfock 
       integer , intent(inout) :: nfock 
       integer , intent(in) :: msize 
-      real(double) , intent(out) :: pl 
+      double precision , intent(out) :: pl 
       logical , intent(inout) :: start 
-      real(double)  :: f(mpack) 
-      real(double)  :: p(mpack) 
-      real(double)  :: fppf(6*mpack)
-      real(double) , intent(inout) :: fock(*) 
-      real(double) , intent(inout) :: emat(20,20) 
+      double precision  :: f(mpack) 
+      double precision  :: p(mpack) 
+      double precision  :: fppf(6*mpack)
+      double precision , intent(inout) :: fock(*) 
+      double precision , intent(inout) :: emat(20,20) 
       integer :: icalcn, maxlim, linear, mfock, lbase, i, nfock1, j, l, il, ii, idim, kdim
-      real(double), dimension(1000) :: evec 
-      real(double), dimension(20) :: coeffs 
-      real(double) :: const, d, sum 
+      double precision, dimension(1000) :: evec 
+      double precision, dimension(20) :: coeffs 
+      double precision :: const, d, sum 
       logical :: debug  
 #if GPU
       integer :: igrid, iblock
 #endif        
-      real(double), external :: ddot       
+      double precision, external :: ddot       
       
       save icalcn, maxlim, debug, linear, mfock 
 !-----------------------------------------------

@@ -1,11 +1,8 @@
-      real(kind(0.0d0)) function capcor (nat, nfirst, nlast, p, h) 
+      double precision function capcor (nat, nfirst, nlast, p, h) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:02  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -13,13 +10,13 @@
       integer , intent(in) :: nat(numat) 
       integer , intent(in) :: nfirst(numat) 
       integer , intent(in) :: nlast(numat) 
-      real(double) , intent(in) :: p(*) 
-      real(double) , intent(in) :: h(*) 
+      double precision , intent(in) :: p(*) 
+      double precision , intent(in) :: h(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, ni, il, iu, j, ii, k, jl, kk 
-      real(double) :: sum 
+      double precision :: sum 
 !-----------------------------------------------
 !*****************************************************************
 !

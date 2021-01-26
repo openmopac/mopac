@@ -2,9 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:06  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -14,14 +11,14 @@
       integer , intent(in) :: nocc 
       integer , intent(in) :: nfract 
       integer , intent(in) :: mode 
-      real(double) , intent(in) :: occ, fract 
-      real(double) , intent(in) :: c(mdim,mdim)
-      real(double) , intent(inout) :: p((norbs*(norbs + 1))/2) 
+      double precision , intent(in) :: occ, fract 
+      double precision , intent(in) :: c(mdim,mdim)
+      double precision , intent(inout) :: p((norbs*(norbs + 1))/2) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: norbs2, nl2, nu2, nl1, nu1, l, i, j 
-      real(double) :: sign, frac, const, sum2, sum1 
+      double precision :: sign, frac, const, sum2, sum1 
 !-----------------------------------------------
 !***********************************************************************
 !

@@ -54,17 +54,16 @@
       end subroutine getocc
 
       subroutine diagci(cimat, aocc, bocc, diagsl)
-      use vast_kind_param, ONLY:  double
       use molkst_C, only : mpack
       use reimers_C, only : nconf, nov, nex, matind, mspn, &
                            aor1, bor1
 
       implicit none
-      real(double) :: cimat(*), deltap(mpack), &
+      double precision :: cimat(*), deltap(mpack), &
                       diagsl(nconf)
       logical*1 :: aocc(nov, mspn, nex), bocc(nov, mspn, nex)
       integer :: iconf, io(4), iv(4), nm, nio
-      real(double) :: ener
+      double precision :: ener
 !***********************************************************************
 !   RMG - compute the correction to the diagonal terms of the CI matrix
 !   due to solvation, as in Klamt, J. Phys. Chem. 1996, 100, 3349.
@@ -91,19 +90,18 @@
       end subroutine diagci
 
       subroutine corrci(cimat, cist, aocc, bocc, diagsl, eval)
-      use vast_kind_param, ONLY:  double
       use molkst_C, only : mpack, keywrd
       use reimers_C, only : nconf, nov, nex, mspn
       USE chanel_C, only : iw
       implicit none
-      real(double) :: cimat(nconf*(nconf + 1)/2), deltap(mpack), &
+      double precision :: cimat(nconf*(nconf + 1)/2), deltap(mpack), &
                       diagsl(nconf), eval(nconf), cist(nconf, nconf), &
 !                      dpall(mpack, nconf), ucener(nconf), eorig(nconf)
                       ucener(nconf), eorig(nconf)
       logical*1 :: aocc(nov, mspn, nex), bocc(nov, mspn, nex)
 
       integer :: ist
-      real(double) :: ener
+      double precision :: ener
 !***********************************************************************
 !   RMG - compute the correction to the final CI states. First compute
 !   the energies without the diagonal corrections. Then compute the
@@ -143,13 +141,12 @@
 
 
       subroutine unsolv(cimat, cist, diagsl, ucener)
-      use vast_kind_param, ONLY:  double
       use reimers_C, only : nconf, matind
       implicit none 
-      real(double) :: cimat(nconf*(nconf + 1)/2), cist(nconf, nconf), &
+      double precision :: cimat(nconf*(nconf + 1)/2), cist(nconf, nconf), &
                       diagsl(nconf), ucener(nconf)
       integer :: iconf, ist, nm, jconf
-      real(double) :: ener, etmp
+      double precision :: ener, etmp
 !***********************************************************************
 !   RMG - Compute the energies of the CI states without the diagonal
 !   energy corrections. Un - correct the CI matrix, then multiply with the
@@ -181,17 +178,16 @@
 
       
       subroutine stdeltap(cist, aocc, bocc, dpstat, ist)
-      USE vast_kind_param, ONLY:  double
       use molkst_c, only : mpack
       use reimers_C, only : nconf, nov, nex, &
           mspn, aor1, bor1
       implicit none
-      real(double) :: dpstat(mpack), cist(nconf, nconf), &
+      double precision :: dpstat(mpack), cist(nconf, nconf), &
                       deltap(mpack)
       logical*1 :: aocc(nov, mspn, nex), bocc(nov, mspn, nex)
       integer :: iorb, ist, iconf
       integer :: io(4), iv(4), nio
-      real(double) :: prob(nconf)
+      double precision :: prob(nconf)
 !***********************************************************************
 !   RMG - Compute the AO density for the full CI states. Loop over all
 !   involved excitations to get the overall change in density.
@@ -225,11 +221,10 @@
 
       
       subroutine exdeltap(io, iv, nio, deltap)
-      USE vast_kind_param, ONLY:  double
       use molkst_c, only : mpack
       use reimers_C, only : n, matind, cc0
       implicit none 
-      real(double)  :: deltap(mpack)
+      double precision  :: deltap(mpack)
       integer :: i, j, ia, occ, vir, &
                  io(4), iv(4), nio
 !***********************************************************************
@@ -253,15 +248,14 @@
 
       
       subroutine solenr(deltap, dcie)
-      USE vast_kind_param, ONLY:  double
       use cosmo_C, only : amat, bmat, nden, gden, ipiden, nps, &
            nsetf, fnsq
       use molkst_c, only : mpack
       use funcon_C, only : a0, ev
       implicit none
-      real(double)  :: deltap(mpack), qsc(nps), phi(nps), qden(nden)
+      double precision  :: deltap(mpack), qsc(nps), phi(nps), qden(nden)
       integer :: i, j
-      real(double) :: dcie, fcon
+      double precision :: dcie, fcon
 !***********************************************************************
 !   RMG - adapted from dmecip subroutine in MOPAC
 !
@@ -297,17 +291,16 @@
       end subroutine solenr
 
       subroutine staticsolv(ao, bo, ener)
-      USE vast_kind_param, ONLY:  double
       use cosmo_C, only : bmat, nden, gden, ipiden, nps, qscnet
       use molkst_c, only : mpack
       use funcon_C, only : a0, ev
       use reimers_C, only : n, nov, cc0, ncore
 
       implicit none
-      real(double)  :: p(mpack), phi(nps), qden(nden)
+      double precision  :: p(mpack), phi(nps), qden(nden)
       logical*1 :: ao(nov), bo(nov)
       integer :: a, i, j, k, k0, kocc
-      real(double) :: ener, fcon
+      double precision :: ener, fcon
 !***********************************************************************
 !   RMG - Compute the interaction energy of an excited-state electron
 !   density (p) with the ground-state surface charges (qdenet(2)).

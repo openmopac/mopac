@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double    
       USE molkst_C, ONLY:  keywrd, numat, norbs
       USE chanel_C, only : ires, iw, restart_fn
       use common_arrays_C, only : aicorr, errfn
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:17:05  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -24,9 +21,9 @@
 !-----------------------------------------------
       integer , intent(in) :: mode 
       integer  :: n, m, iiium(6)
-      real(double)  :: q(n,n) 
-      real(double), dimension(n) :: efslst, xlast
-      real(double)  :: r(n + 2,n + 2) 
+      double precision  :: q(n,n) 
+      double precision, dimension(n) :: efslst, xlast
+      double precision  :: r(n + 2,n + 2) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------

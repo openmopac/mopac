@@ -2,25 +2,22 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:04  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: norbi 
       integer , intent(in) :: norbj 
-      real(double) , intent(in) :: x2 
-      real(double) , intent(in) :: y2 
-      real(double) , intent(in) :: z2 
-      real(double) , intent(out) :: r 
-      real(double) , intent(out) :: c(75) 
+      double precision , intent(in) :: x2 
+      double precision , intent(in) :: y2 
+      double precision , intent(in) :: z2 
+      double precision , intent(out) :: r 
+      double precision , intent(out) :: c(75) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nij 
-      real(double) :: rt34, rt13, xy, ca, cb, sa, sb, c2a, c2b, s2a, s2b 
+      double precision :: rt34, rt13, xy, ca, cb, sa, sb, c2a, c2b, s2a, s2b 
 !-----------------------------------------------
       data rt34/ 0.86602540378444D0/  
       data rt13/ 0.57735026918963D0/  

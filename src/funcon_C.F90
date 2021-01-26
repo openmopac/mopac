@@ -1,7 +1,5 @@
       module funcon_C 
-      USE vast_kind_param, only:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  08:33:33  03/09/06  
-      real(double) :: &
+      double precision :: &
       &  fpc_1,     & !
       &  fpc_2,     & !
       &  a0,        & !

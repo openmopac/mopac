@@ -1,6 +1,4 @@
       module elemts_C 
-      USE vast_kind_param, ONLY:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  08:50:09  03/09/06  
       character, dimension(107) :: elemnt*2, cap_elemnt*2
       character (len=12), dimension(107) :: atom_names
       data elemnt/ ' H', 'He', 'Li', 'Be', ' B', ' C', ' N', ' O', ' F', 'Ne', &

@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw, ilog, igpt, log
       use molkst_C, only : iflepo, keywrd, last, moperr, escf, nvar, &
       & tleft, nscf, tdump, time0, line
@@ -17,17 +16,17 @@
       use prttim_I 
       use to_screen_I
       implicit none
-      real(double), dimension (:,:), allocatable  :: q, r
+      double precision, dimension (:,:), allocatable  :: q, r
       integer :: icyc, irst, jrst, maxcyc, m, nrst, ifrtl, nsst, ixso, &
         np1, np2, jcyc, i, j, jj, ii, i1, j1, k, jend, ncount
       integer, dimension(6) :: iiium
-      real(double), dimension(nvar) :: y, efs, p, xlast
-      real(double) :: alf, ssq, pn, tol2, tols1, tols2, tols5, tols6, tlast,  &
+      double precision, dimension(nvar) :: y, efs, p, xlast
+      double precision :: alf, ssq, pn, tol2, tols1, tols2, tols5, tols6, tlast,  &
         eps, t, time1, temp, prt, efsss, sin, cos, work, pnlast, pn2, ttmp, &
         ssqlst, time2, tcycle, yn, const, ytail, bet, tmp, tolx, tprt 
       logical :: middle, resfil
       character :: txt      
-      real(double), external :: ddot
+      double precision, external :: ddot
 !***********************************************************************
 !
 !  NLLSQ IS A NON-DERIVATIVE, NONLINEAR LEAST-SQUARES MINIMIZER. IT USES

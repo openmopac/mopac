@@ -1,5 +1,4 @@
       subroutine  writmo 
-      USE vast_kind_param, ONLY: double 
       use cosmo_C, only : iseps, area, fepsi, cosvol, ediel, solv_energy
 !
       use molkst_C, only : numat, nclose, nopen, fract, nalpha, nelecs, nbeta, &
@@ -48,10 +47,10 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
 
-      real(double) ::  gcoord(3,numat) 
-      real(double), dimension (:), allocatable :: rxyz
+      double precision ::  gcoord(3,numat) 
+      double precision, dimension (:), allocatable :: rxyz
       integer :: icalcn, i, loc11, loc21, nopn, j, k, l, m, kchrge, iwrite, mvar
-      real(double) :: q2(numat), degree, xreact, eionis, vol, tim, xi, sum, &
+      double precision :: q2(numat), degree, xreact, eionis, vol, tim, xi, sum, &
       dip, dumy(3), pKa_unsorted(numat), distortion, rms, gnorm_norm, escf_min
       logical :: ci, lprtgra, still, bcc, opend, bigcycles
       character  :: type(3)*11, idate*24, gtype*13, grtype*14, &

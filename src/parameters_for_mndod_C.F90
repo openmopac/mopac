@@ -1,7 +1,5 @@
       module Parameters_for_MNDOD_C 
-      USE vast_kind_param, ONLY:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  10:47:05  03/09/06  
-      real(double), dimension(107) :: ussd, uppd, zsd, zpd, betasd, betapd, &
+      double precision, dimension(107) :: ussd, uppd, zsd, zpd, betasd, betapd, &
         alpd, gssd, gppd, gspd, gp2d, hspd, uddd, zdd, betadd, zsnd, zpnd, zdnd&
         , poc_d
 !

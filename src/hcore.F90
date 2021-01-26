@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE molkst_C, only : numcal, numat, norbs, id, l1u, l2u, l3u, &
       & keywrd, enuclr, n2elec, efield, mpack, line
       use common_arrays_C, only : nfirst, nlast, nat, uspd, &
@@ -14,8 +13,6 @@
       use overlaps_C, only : cutof1, cutof2
       USE chanel_C, only : iw
      
-!...Translated by Pacific-Sierra Research 77to90  4.4G  15:30:15  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -33,9 +30,9 @@
       integer :: icalcn, ione 
       integer :: i, j, k, kr, ia, ib, ni, i1, i2, j1, io1, jo1, im1, &
         ja, jb, nj, ii, jj, kro, q_at, link_at, mol_at 
-      real(double), dimension(45) :: e1b(45), e2a(45), di(9,9), wjd(2025), wkd(2025), xj(3), dibits(9,9)
-      real(double), allocatable:: vqc(:)
-      real(double) ::  xf, yf, zf, const, fldcon, hterme, fnuc, half, enuc 
+      double precision, dimension(45) :: e1b(45), e2a(45), di(9,9), wjd(2025), wkd(2025), xj(3), dibits(9,9)
+      double precision, allocatable:: vqc(:)
+      double precision ::  xf, yf, zf, const, fldcon, hterme, fnuc, half, enuc 
       logical :: fldon, first, debug, lmolaris_qmmm, exists
       character :: tmpkey*241
       save first, debug, icalcn, ione, vqc, lmolaris_qmmm

@@ -2,11 +2,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:18:55  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -16,8 +13,8 @@
 !-----------------------------------------------
       integer , intent(in) :: numat 
       integer , intent(in) :: jump 
-      real(double) , intent(inout) :: coord(3,numat) 
-      real(double) , intent(in) :: r(3,3) 
+      double precision , intent(inout) :: coord(3,numat) 
+      double precision , intent(in) :: r(3,3) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -25,7 +22,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j
-      real(double), dimension(3) :: help 
+      double precision, dimension(3) :: help 
 !-----------------------------------------------
 !***********************************************************************
 !

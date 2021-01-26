@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numcal, norbs, mpack, n2elec, id, numat_ref => numat
       use cosmo_C, only : useps
       
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:14  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -23,12 +20,12 @@
       integer  :: numat, mode
       integer  :: nfirst(numat_ref) 
       integer  :: nlast(numat_ref) 
-      real(double)  :: f(mpack) 
-      real(double) , intent(in) :: ptot(mpack) 
-      real(double)  :: p(mpack) 
-      real(double)  :: w(n2elec) 
-      real(double) , intent(in) :: wj(n2elec) 
-      real(double) , intent(in) :: wk(n2elec) 
+      double precision  :: f(mpack) 
+      double precision , intent(in) :: ptot(mpack) 
+      double precision  :: p(mpack) 
+      double precision  :: w(n2elec) 
+      double precision , intent(in) :: wj(n2elec) 
+      double precision , intent(in) :: wk(n2elec) 
       
  
 !-----------------------------------------------
@@ -38,13 +35,13 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(:), allocatable :: ifact, i1fact 
-      real(double), dimension(:,:), allocatable  :: ptot2
+      double precision, dimension(:,:), allocatable  :: ptot2
       integer :: ione, icalcn 
       integer , dimension(256) :: jindex 
       integer :: i, m, j, ij, ji, k, ik, l, kl, lk, jl, i1, ia, ib, jk, kj, kk&
         , ii, iminus, jj, ja, jb, ll, j1, ka, kb, kc, il 
-      real(double), dimension(81) :: pk, pja, pjb 
-      real(double) :: sumdia, sumoff, sum, aa, bb, aj, ak, a 
+      double precision, dimension(81) :: pk, pja, pjb 
+      double precision :: sumdia, sumoff, sum, aa, bb, aj, ak, a 
       logical :: lid, deriv
 
       save ifact, i1fact, ione, lid, icalcn, jindex, ptot2 

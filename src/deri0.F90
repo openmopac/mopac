@@ -2,24 +2,21 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:06  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: n 
-      real(double) , intent(in) :: fract 
+      double precision , intent(in) :: fract 
       integer , intent(in) :: nbo(3) 
-      real(double) , intent(in) :: e(n) 
-      real(double) , intent(out) :: scalar(*) 
-      real(double) , intent(inout) :: diag(*) 
+      double precision , intent(in) :: e(n) 
+      double precision , intent(out) :: scalar(*) 
+      double precision , intent(inout) :: diag(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nopen, l, j, i 
-      real(double) :: shift, const 
+      double precision :: shift, const 
 !-----------------------------------------------
 !
 !     COMPUTE THE DIAGONAL DOMINANT PART OF THE SUPER-MATRIX AND

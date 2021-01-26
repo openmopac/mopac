@@ -9,7 +9,6 @@ module Common_arrays_C
 !  Quantities which have only a one-line descriptionis are of no interest outside MOPAC.
 !  The data-type for each quantity is given at the start of the statement
 !
-  USE vast_kind_param, only:  double
   implicit none
   integer, dimension (:), allocatable :: &
   &  labels,     & !  Term          Atomic numbers (all atoms, real, dummy, Tv)
@@ -51,7 +50,7 @@ module Common_arrays_C
   &  hblist,     & !  List of hydrogen bonds X-H --- Y and types used by PM6-DH2
   &  ijpars,     & !
   &  dummy2
-  real(double), dimension(3,3) :: tvec = 0.d0 !  Translation vectors (for solid-state)
+  double precision, dimension(3,3) :: tvec = 0.d0 !  Translation vectors (for solid-state)
   integer ::         &
    cell_ijk(3),      &   !  Dispacement translation indices (for solid-state)
    breaks(400),      &   !  Locations of breaks in PDB structure
@@ -59,9 +58,9 @@ module Common_arrays_C
    time_end(8)           !
   Double Precision :: Vab(3)           !  Distance vector between two atoms in a solid.(for solid-state)
   character ::chains(100)*1            !  Names of chains in proteins
-  real(double) :: break_coords(3,400) = 0.d0   !  Locations of breaks in a PDB structure
+  double precision :: break_coords(3,400) = 0.d0   !  Locations of breaks in a PDB structure
 !
-  real(double), dimension (:), allocatable :: &
+  double precision, dimension (:), allocatable :: &
   &  xparam,     & !  Values of geometric parameters marked for optimization
   &  xparef,     & !  Reference copy of xparam
   &  uspd,       & !  Initial values of one-electron diagonal (Uss, Upp, and Udd)
@@ -148,7 +147,7 @@ module Common_arrays_C
                    !  Units         cal/(K.Mol)
   &  S_tot         !  Term          Entropy at temperatures in T_range
                    !  Units         cal/(K.Mol)
-  real(double), dimension (:,:), allocatable :: &
+  double precision, dimension (:,:), allocatable :: &
   &  geo,        & !  Term          Geometry
                    !  Definition    Coordinates of all atoms in units defined by input
                    !  Units         Angstroms and radians

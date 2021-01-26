@@ -2,11 +2,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double
       use common_arrays_C, only: tvec
       use molkst_C, only : numat, id, l11, l21, l31
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:33:12  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -14,12 +11,12 @@
       integer , intent(in) :: i 
       integer , intent(in) :: j 
       integer , intent(in) :: k 
-      real(double) , intent(out) :: angle 
-      real(double) , intent(in) :: xyz(3,numat + 3) 
+      double precision , intent(out) :: angle 
+      double precision , intent(in) :: xyz(3,numat + 3) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: d2ij, d2jk, d2ik, xy, temp, Vab(3), Rab
+      double precision :: d2ij, d2jk, d2ik, xy, temp, Vab(3), Rab
       integer :: ii, jj, kk
 !-----------------------------------------------
 !********************************************************************

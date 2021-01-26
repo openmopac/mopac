@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double    
       USE molkst_C, only : numat, norbs, keywrd, moperr
       use meci_C, only : lab, maxci
       use common_arrays_C, only : nfirst, nlast, coord, nat, atmass
       USE symmetry_C, only :  jndex, nclass, elem, namo, jelem
       USE chanel_C, only : iw 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:01:53  03/16/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -22,14 +19,14 @@
 !-----------------------------------------------
       integer, intent (in)  :: itype 
       logical, intent(in) :: geteig 
-      real(double)  :: vects(*) 
-      real(double)  :: eigs(*) 
+      double precision  :: vects(*) 
+      double precision  :: eigs(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k, ierror, i, j, nvecs, nat_store(numat)
-      real(double), dimension(3,numat) :: cotim 
-      real(double), dimension(3,3) :: r 
+      double precision, dimension(3,numat) :: cotim 
+      double precision, dimension(3,3) :: r 
 !-----------------------------------------------
 !**************************************************************
 !                                                             *

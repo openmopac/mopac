@@ -1,19 +1,16 @@
-      real(kind(0.0d0)) function dot (x, y, n) 
+      double precision function dot (x, y, n) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:33:41  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: n 
-      real(double) , intent(in) :: x(n) 
-      real(double) , intent(in) :: y(n)
+      double precision , intent(in) :: x(n) 
+      double precision , intent(in) :: y(n)
 !For MOPAC BLAS        
-      real(double), external :: ddot
+      double precision, external :: ddot
 !
       
 !-----------------------------------------------

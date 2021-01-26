@@ -1,6 +1,4 @@
       module journal_references_C 
-      USE vast_kind_param, ONLY:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  11:05:00  03/09/06   
       character (len=100), dimension(107) :: refmn, refpm6, refam, refpm3, refmd, refrm1, refpm7, refrm1_sparkles, refpm8
       character, dimension(107,9) :: allref*100
       equivalence (refmn(1),  allref(1,1)), &

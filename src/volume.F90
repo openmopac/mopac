@@ -1,20 +1,17 @@
-      real(kind(0.0d0)) function volume (vecs, ndim) 
+      double precision function volume (vecs, ndim) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  17:49:42  03/20/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ndim 
-      real(double) , intent(in) :: vecs(3,ndim) 
+      double precision , intent(in) :: vecs(3,ndim) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: a, b, gamma, sing 
+      double precision :: a, b, gamma, sing 
 !-----------------------------------------------
 !**********************************************************************
 !

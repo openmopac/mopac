@@ -2,23 +2,20 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !  A subroutine that will multiply two 3 by 3 matricies in the following
 !     fashion:    C = A(transpose) B A
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  09:18:42  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(in) :: a(9) 
-      real(double) , intent(in) :: b(9) 
-      real(double) , intent(out) :: c(9) 
+      double precision , intent(in) :: a(9) 
+      double precision , intent(in) :: b(9) 
+      double precision , intent(out) :: c(9) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double), dimension(9) :: t 
+      double precision, dimension(9) :: t 
 !-----------------------------------------------
 !
 !

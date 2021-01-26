@@ -2,12 +2,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-   USE vast_kind_param, ONLY:  double 
    use funcon_C, only : pi
    use common_arrays_C, only: tvec
    use molkst_C, only : id, l11, l21, l31
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:09  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -20,12 +17,12 @@
    integer , intent(in) :: j 
    integer , intent(in) :: k 
    integer , intent(in) :: l 
-   real(double), intent (out)  :: angle 
-   real(double) , intent(in) :: xyz(3,*) 
+   double precision, intent (out)  :: angle 
+   double precision , intent(in) :: xyz(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-   real(double) :: xi1, xj1, xl1, yi1, yj1, yl1, zi1, zj1, zl1, dist, cosa, &
+   double precision :: xi1, xj1, xl1, yi1, yj1, yl1, zi1, zj1, zl1, dist, cosa, &
      ddd, yxdist, xi2, xl2, yi2, yl2, costh, sinth, cosph, sinph, yj2, yi3, &
      yl3, rmin_ik, rmin_jk, rmin_lk, Vab_ik(3), Vab_jk(3), Vab_lk(3), Vab(3), &
      Rab

@@ -1,7 +1,6 @@
   module Parameters_for_INDO_C
-    use vast_kind_param, ONLY:  double
     integer      :: isoki(80),nbfai(80)
-    real(double) :: zetai(80),zetadi(2,80),zetawti(2,80), &
+    double precision :: zetai(80),zetadi(2,80),zetawti(2,80), &
                     zcoreai(80),betaai(3,80), fgi(24,80)
 
 ! INDO parameter structure:

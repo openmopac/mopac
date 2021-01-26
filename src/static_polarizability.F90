@@ -2,13 +2,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : keywrd, numat, natoms, nvar, escf, ndep
       use chanel_C, only : iw
       use common_arrays_C, only : geo, coord, nat, labels, na
       use elemts_C, only : elemnt
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:10:34  11/02/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -20,9 +17,9 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, k, l
-      real(double), dimension(1) :: grad 
-      real(double), dimension(3,3) :: rotvec 
-      real(double) :: sum, sumx, sumy, sumz, summax
+      double precision, dimension(1) :: grad 
+      double precision, dimension(3,3) :: rotvec 
+      double precision :: sum, sumx, sumy, sumz, summax
       logical :: let 
 !-----------------------------------------------
 !**********************************************************************
@@ -121,7 +118,6 @@
       end subroutine static_polarizability 
 !
       subroutine ffhpol() 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : keywrd, numat, efield,escf
       use common_arrays_C, only : geo, nat
       use parameters_C, only : tore
@@ -135,14 +131,14 @@
 !
       integer :: nbdip, nbcnt, ngcnt, id, ivl, kd, kvl, &
         idm1, jd, i3, counter
-      real(double), dimension(3) :: eigs 
-      real(double), dimension(9) :: vectrs 
-      real(double), dimension(3) :: dipe4 
-      real(double), dimension(6) :: apole4 
-      real(double), dimension(3) :: dipdp 
-      real(double), dimension(6) :: apoldp 
-      real(double), dimension(3) :: dip1p, dip1m, dip2p, dip2m 
-      real(double) :: autokc, autodb, autovm, efval, sfe&
+      double precision, dimension(3) :: eigs 
+      double precision, dimension(9) :: vectrs 
+      double precision, dimension(3) :: dipe4 
+      double precision, dimension(6) :: apole4 
+      double precision, dimension(3) :: dipdp 
+      double precision, dimension(6) :: apoldp 
+      double precision, dimension(3) :: dip1p, dip1m, dip2p, dip2m 
+      double precision :: autokc, autodb, autovm, efval, sfe&
         , hnuc, heat1p, grad(1), heat1m, heat2p, heat2m, eterm, dmu, &
         ae, aki, hnucj, hpp, hpm, hmm, hmp, &
         h2pp, h2pm, h2mm, h2mp, aterm, aij, &
@@ -408,7 +404,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : p, nfirst, nlast, nat, geo
       use molkst_C, only : numat, mozyme
       use funcon_C, only : a0, fpc_8, fpc_1
@@ -417,8 +412,6 @@
 !  MODIFICATION OF DIPOLE SUBROUTINE FOR USE IN THE CALUCLATION
 !  OF THE INDUCED DIPOLES FOR POLARIZABILITIES.
 !...............................................................
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:36:25  11/02/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -428,17 +421,17 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(out) :: dipvec(3) 
+      double precision , intent(out) :: dipvec(3) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, l, j, ni, ia, k 
-      real(double), dimension(numat) :: q, q2 
-      real(double), dimension(3) :: center 
-      real(double), dimension(3,numat) :: coord 
-      real(double), dimension(4,3) :: dip 
-      real(double) :: sum, hyfsp
-      real(double), save :: wtmol = 0.0d0
+      double precision, dimension(numat) :: q, q2 
+      double precision, dimension(3) :: center 
+      double precision, dimension(3,numat) :: coord 
+      double precision, dimension(4,3) :: dip 
+      double precision :: sum, hyfsp
+      double precision, save :: wtmol = 0.0d0
       logical, save :: first, chargd 
       integer, external :: ijbo
 !-----------------------------------------------

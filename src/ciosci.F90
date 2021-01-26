@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       use molkst_C, only: numat,  norbs, keywrd
       use common_arrays_C, only : coord, nfirst, nlast, nat
       USE parameters_C, only : dd, zp, zd
@@ -11,8 +10,6 @@
       use chanel_C, only: iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:04  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -28,10 +25,10 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(in) :: vects(norbs,norbs) 
-      real(double) , intent(inout) :: oscil(3,*) 
-      real(double), dimension(:,:), allocatable :: t4
-      real(double) , intent(in) :: conf(lab*lab) 
+      double precision , intent(in) :: vects(norbs,norbs) 
+      double precision , intent(inout) :: oscil(3,*) 
+      double precision, dimension(:,:), allocatable :: t4
+      double precision , intent(in) :: conf(lab*lab) 
       integer :: lroot
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -39,14 +36,14 @@
       integer , dimension(14) :: ll 
       integer :: loop, iloop, iatom, i, j, k, l, m, ii, ij, jj, istate, &
       nd, npp, ns
-      real(double), dimension(norbs,nmos) :: vect1, vect2 
-      real(double), dimension(nmos,nmos) :: t2 
-      real(double), dimension(lab) :: work 
+      double precision, dimension(norbs,nmos) :: vect1, vect2 
+      double precision, dimension(nmos,nmos) :: t2 
+      double precision, dimension(lab) :: work 
       integer, dimension (107), save :: nspqn
       double precision, dimension (numat) :: sppol
       double precision, dimension (:), allocatable :: pdpol
       character (len=1) :: type (3)
-      real(double) :: sum 
+      double precision :: sum 
       logical :: debug 
 !***********************************************************************
 !

@@ -1,6 +1,4 @@
       subroutine xxx(type, i, j, k, l, r) 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:05  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s

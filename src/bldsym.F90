@@ -2,12 +2,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE symmetry_C, only : elem, cub
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:01  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -29,7 +26,7 @@
 !-----------------------------------------------
       integer , dimension(3,20) :: j 
       integer :: i
-      real(double) :: twopi, angle 
+      double precision :: twopi, angle 
 
       save j, twopi 
 !-----------------------------------------------

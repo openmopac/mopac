@@ -3,31 +3,29 @@
 ! This module holds all the parameters for the elements.  It is filled
 ! from the reference parameter sets 
 !
-      USE vast_kind_param, ONLY:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  11:04:16  03/09/06  
     logical, dimension(107) :: dorbs
-    real(double), dimension(107) :: alp 
-    real(double), dimension(107,4) :: guess1, guess2, guess3 
-    real(double), dimension(60) :: v_par = 0.d0
-    real(double), dimension(6,107) :: ddp 
-    real(double), dimension(9,107) :: po = 0.d0 
-    real(double), dimension(107) :: betas = 0.d0, betap = 0.d0, betad = 0.d0 
-    real(double), dimension(107) :: uss = 0.d0, upp = 0.d0, udd = 0.d0
-    real(double), dimension(107) :: gpp = 0.d0, gp2 = 0.d0, hsp = 0.d0, gss = 0.d0, gsp = 0.d0
-    real(double), dimension(107) :: am, ad, aq, dd, qq
-    real(double), dimension(107) :: dsd = 0.d0, dpd = 0.d0, ddd = 0.d0
-    real(double), dimension(107) :: zs, zp, zd, zsn = 0.d0, zpn = 0.d0, zdn = 0.d0
-    real(double), dimension(107) :: eisol, eheat
-    real(double), dimension(57:71) ::  eheat_sparkles
-    real(double), dimension(107) :: ams
-    real(double), dimension (107) :: tore, polvol, pocord, f0dd = 0.d0, f2dd = 0.d0, f4dd = 0.d0, &
+    double precision, dimension(107) :: alp 
+    double precision, dimension(107,4) :: guess1, guess2, guess3 
+    double precision, dimension(60) :: v_par = 0.d0
+    double precision, dimension(6,107) :: ddp 
+    double precision, dimension(9,107) :: po = 0.d0 
+    double precision, dimension(107) :: betas = 0.d0, betap = 0.d0, betad = 0.d0 
+    double precision, dimension(107) :: uss = 0.d0, upp = 0.d0, udd = 0.d0
+    double precision, dimension(107) :: gpp = 0.d0, gp2 = 0.d0, hsp = 0.d0, gss = 0.d0, gsp = 0.d0
+    double precision, dimension(107) :: am, ad, aq, dd, qq
+    double precision, dimension(107) :: dsd = 0.d0, dpd = 0.d0, ddd = 0.d0
+    double precision, dimension(107) :: zs, zp, zd, zsn = 0.d0, zpn = 0.d0, zdn = 0.d0
+    double precision, dimension(107) :: eisol, eheat
+    double precision, dimension(57:71) ::  eheat_sparkles
+    double precision, dimension(107) :: ams
+    double precision, dimension (107) :: tore, polvol, pocord, f0dd = 0.d0, f2dd = 0.d0, f4dd = 0.d0, &
     f0sd = 0.d0, g2sd = 0.d0, f0pd = 0.d0, f2pd = 0.d0, g1pd = 0.d0, g3pd = 0.d0, CPE_Zeta = 0.d0, &
       CPE_Z0 = 0.d0, CPE_B = 0.d0, CPE_Xlo = 0.d0, CPE_Xhi = 0.d0
-    real(double), dimension (107) :: f0sd_store(107) ! Used by PARAM, not used in MOPAC
-    real(double), dimension (107) :: g2sd_store(107) ! Used by PARAM, not used in MOPAC
-    real(double), dimension (107) :: atom_radius_vdw, atom_radius_cosmo, &
+    double precision, dimension (107) :: f0sd_store(107) ! Used by PARAM, not used in MOPAC
+    double precision, dimension (107) :: g2sd_store(107) ! Used by PARAM, not used in MOPAC
+    double precision, dimension (107) :: atom_radius_vdw, atom_radius_cosmo, &
     &  atom_radius_cosmo_oldcav
-    real(double), dimension(100,100) :: xfac, alpb
+    double precision, dimension(100,100) :: xfac, alpb
     double precision :: dh2_a_parameters(6)
     integer, dimension (107,3) :: npq
     integer, dimension (107) :: iod, iop, ios, natorb, ndelec

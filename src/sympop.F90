@@ -2,12 +2,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : nsym, ipo
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:35:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -18,8 +15,8 @@
 !-----------------------------------------------
       integer  :: i 
       integer , intent(out) :: iskip 
-      real(double)  :: h(*) 
-      real(double)  :: deldip(3,*) 
+      double precision  :: h(*) 
+      double precision  :: deldip(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------

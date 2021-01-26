@@ -2,14 +2,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : fpc_5, fpc_6, fpc_7, fpc_8, fpc_10, pi
       use molkst_C, only : keywrd, title, koment, mol_weight, &
       cp298 => temp_1, s298 => temp_2, ilim
       use common_arrays_C, only : T_range, HOF_tot, H_tot, Cp_tot, S_tot
       use chanel_C, only : iw
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:04  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -19,18 +16,18 @@
 !   D u m m y   A r g u m e n T s
 !-----------------------------------------------
       integer , intent(in) :: nvibs 
-      real(double) , intent(in) :: a 
-      real(double) , intent(in) :: b 
-      real(double) , intent(in) :: c 
-      real(double) , intent(in) :: sym 
-      real(double) , intent(in) :: escf 
+      double precision , intent(in) :: a 
+      double precision , intent(in) :: b 
+      double precision , intent(in) :: c 
+      double precision , intent(in) :: sym 
+      double precision , intent(in) :: escf 
       logical , intent(in) :: linear 
-      real(double) , intent(inout) :: vibs(*) 
+      double precision , intent(inout) :: vibs(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: it1, it2, istep, i, itemp, ir 
-      real(double) :: R, h, ak, ac, qtr2, T, c1, qv, hv, cpv, sv1, wi, ewj, &
+      double precision :: R, h, ak, ac, qtr2, T, c1, qv, hv, cpv, sv1, wi, ewj, &
         ewjr, e0, sv, qr, cpr, hr, sr, qint, hint, cpint, sint, qtr, cptr, htr&
         , str, cptot, stot, htot, h298 
       character :: tmpkey*241 

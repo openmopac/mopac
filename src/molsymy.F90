@@ -1,5 +1,4 @@
       subroutine molsym(coord, ierror, r) 
-      USE vast_kind_param, ONLY:  double 
       use bldsym_I 
       use symopr_I
       use plato_I  
@@ -13,15 +12,15 @@
       use molkst_C, only : numat, keywrd, moperr
       implicit none
       integer , intent(out) :: ierror 
-      real(double)  :: coord(3,numat) 
-      real(double)  :: r(3,3) 
+      double precision  :: coord(3,numat) 
+      double precision  :: r(3,3) 
       integer , dimension(6) :: icyc 
       integer :: i, j, k, l, ij, iturn, iqual, kndex, icheck, naxes, iz, ix, iy 
-      real(double), dimension(6) :: f 
-      real(double), dimension(3) :: ew, help 
-      real(double), dimension(3,3) :: rhelp 
-      real(double), dimension(3) :: shift 
-      real(double) :: toler, wmol, sum, rxy, tole, distxy, rmin, sina, &
+      double precision, dimension(6) :: f 
+      double precision, dimension(3) :: ew, help 
+      double precision, dimension(3,3) :: rhelp 
+      double precision, dimension(3) :: shift 
+      double precision :: toler, wmol, sum, rxy, tole, distxy, rmin, sina, &
         cosa, theta, total 
       logical :: linear, cubic, axis, sphere, debug, reorie, iscube, used(10)
 !***************************************************************
@@ -453,14 +452,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : ielem, elem, jelem
       use molkst_C, only : numat
       use common_arrays_C, only : nat
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:03  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -470,8 +466,8 @@
 !-----------------------------------------------
       integer , intent(in) :: ioper 
       integer , intent(out) :: iqual 
-      real(double) , intent(in) :: toler 
-      real(double) , intent(in) :: coord(3,numat) 
+      double precision , intent(in) :: toler 
+      double precision , intent(in) :: coord(3,numat) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -479,7 +475,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: iresul, i, j 
-      real(double), dimension(3) :: help 
+      double precision, dimension(3) :: help 
 !-----------------------------------------------
 !***********************************************************************
 !
@@ -522,12 +518,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : ielem, jy, nclass
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:23  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -543,8 +536,8 @@
 !-----------------------------------------------
       integer  :: numat 
       integer , intent(out) :: ierror 
-      real(double)  :: coord(3,numat) 
-      real(double)  :: r(3,3) 
+      double precision  :: coord(3,numat) 
+      double precision  :: r(3,3) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -552,7 +545,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, iqual 
-      real(double) :: toler 
+      double precision :: toler 
 !-----------------------------------------------
 !*********************************************************************
 !
@@ -589,12 +582,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : cub, ielem
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:31  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -609,8 +599,8 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer  :: numat 
-      real(double)  :: coord(3,numat) 
-      real(double)  :: r(3,3) 
+      double precision  :: coord(3,numat) 
+      double precision  :: r(3,3) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -618,8 +608,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, jota, iqual, j 
-      real(double), dimension(2) :: wink 
-      real(double) :: toler, wink2, sina, cosa, sinb, cosb 
+      double precision, dimension(2) :: wink 
+      double precision :: toler, wink2, sina, cosa, sinb, cosb 
 
       save wink, toler 
 !-----------------------------------------------
@@ -714,14 +704,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw
       use molkst_C, only : numat
       use common_arrays_C, only : nat
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:33  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -736,8 +723,8 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       logical, intent(out) :: cubic
-      real(double)  :: coord(3,numat) 
-      real(double)  :: r(3,3) 
+      double precision  :: coord(3,numat) 
+      double precision  :: r(3,3) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -745,9 +732,9 @@
       integer , dimension(3) :: ipoly 
       integer ::  i, l, j, ii, k, i1, j1, m, i3, i2, ligand_type, &
       store_ligand, j2, k1, k2
-      real(double), dimension(3) :: allr 
-      real(double), dimension(3,3) :: xyz 
-      real(double) :: toler = 0.1d0, xmin, dist, r2j, angle, sum, buff, buff1, &
+      double precision, dimension(3) :: allr 
+      double precision, dimension(3,3) :: xyz 
+      double precision :: toler = 0.1d0, xmin, dist, r2j, angle, sum, buff, buff1, &
       rmin, ymin, dist1, dist2
 
       save toler 
@@ -1033,15 +1020,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : nclass, igroup, group, allrep, &
       & nallop,ntbs, ntab, nallg, name, nirred, ielem, jx, jy
       use molkst_C, only : numcal, keywrd
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:02  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1060,7 +1044,7 @@
       integer , dimension(ngps) :: nope, nrep 
       integer :: icalcn, i, j, k, l, nopers, nreprs, nstabl, kl, ku, istart, &
         igp, nzz, nz, prnt
-      real(double) :: buff, fz, fn 
+      double precision :: buff, fz, fn 
       logical :: debug, first, large 
       character, dimension(20) :: class*9 
 
@@ -1205,8 +1189,6 @@
       return  
       end subroutine cartab 
       logical function symdec (n1, ielem) 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:50:03  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s

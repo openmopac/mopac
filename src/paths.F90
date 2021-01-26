@@ -2,7 +2,6 @@ subroutine paths()
 !-----------------------------------------------
 !   Follow a reaction path in which the values of the coordinate are supplied by the user
 !-----------------------------------------------
-    USE vast_kind_param, ONLY:  double 
     use molkst_C, only : iflepo, numat, keywrd, nvar, tleft, &
           & time0, escf, norbs, moperr, line, nl_atoms
     use maps_C, only : lparam, react, latom, rxn_coord
@@ -12,8 +11,6 @@ subroutine paths()
     use elemts_C, only : elemnt
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:32  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -28,7 +25,7 @@ subroutine paths()
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
     integer :: maxcyc, i, j, ii, lpr, npts, iw00, percent = 0, ipdb = 14, imodel = 0
-    real(double) :: x3, c3, cc1, cc2, cb1, cb2, delf0, delf1, aconst, bconst, cconst, c1
+    double precision :: x3, c3, cc1, cc2, cb1, cb2, delf0, delf1, aconst, bconst, cconst, c1
     logical :: lef, debug
 !-----------------------------------------------
 

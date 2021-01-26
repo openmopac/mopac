@@ -3,7 +3,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE molkst_C, only : numat, keywrd, numcal, nvar, jloop => itemp_1, line
       use common_arrays_C, only : nat, na, nb, nc, p, na_store
       USE parameters_C, only : tore
@@ -16,22 +15,22 @@
       use quadr_I 
       use dot_I 
       implicit none
-      real(double) , intent(in) :: deltt, escf, ekin, dip 
-      real(double) , intent(inout) :: gtot 
+      double precision , intent(in) :: deltt, escf, ekin, dip 
+      double precision , intent(inout) :: gtot 
       logical, intent (in) :: l_dipole
-      real(double)  :: etot 
-      real(double), dimension(3*numat) :: xparam, ref, velo0
+      double precision  :: etot 
+      double precision, dimension(3*numat) :: xparam, ref, velo0
       integer, dimension (2, 3*numat) :: mcoprt  
       integer, intent(in) ::  ncoprt
       logical, intent(in) :: parmax
       integer ::  iloop, icalcn, ione, i, l, j, nfract, ii, n, k 
-      real(double), dimension(3) :: escf3, ekin3
-      real(double), dimension(numat) :: charge 
-      real(double), dimension(3) :: xold3 
-      real(double), dimension(3*numat) :: geo 
-      real(double), dimension(200) :: tsteps 
-      real(double), dimension(3) :: etot3, xtot3, dip3 
-      real(double) :: gtot0, gtot1, escf0, escf1, ekin0, ekin1, etot0, etot1, &
+      double precision, dimension(3) :: escf3, ekin3
+      double precision, dimension(numat) :: charge 
+      double precision, dimension(3) :: xold3 
+      double precision, dimension(3*numat) :: geo 
+      double precision, dimension(200) :: tsteps 
+      double precision, dimension(3) :: etot3, xtot3, dip3 
+      double precision :: gtot0, gtot1, escf0, escf1, ekin0, ekin1, etot0, etot1, &
         xold0, xold1, xold2, refscf, totime, told2, told1, refx, tlast, old_sum, &
         stept, steph, stepx, tref = 0.d0, xtot0, xtot1, xtot2, etot2, escf2, ekin2, &
         sum, deltat, t1, t2, sum1, dh, cc, bb, aa, c1, fract, dip2 = 0.d0, dip1 = 0.d0, dip0 = 0.d0, &

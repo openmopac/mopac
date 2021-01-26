@@ -1,14 +1,11 @@
-      real(kind(0.0d0)) function charvi (vects, jorb, ioper, r, nvecs) 
+      double precision function charvi (vects, jorb, ioper, r, nvecs) 
 !-----------------------------------------------
 !   M o d u l elem s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use symmetry_C, only : elem, jelem
       use molkst_C, only : numat
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:03  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m elem t elem r s
@@ -19,18 +16,18 @@
       integer , intent(in) :: jorb 
       integer , intent(in) :: ioper 
       integer , intent(in) :: nvecs 
-      real(double) , intent(in) :: vects(nvecs,nvecs) 
-      real(double) , intent(in) :: r(3,3) 
+      double precision , intent(in) :: vects(nvecs,nvecs) 
+      double precision , intent(in) :: r(3,3) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l elem s
 !-----------------------------------------------
       integer :: iatom, jatom 
-      real(double), dimension(:), allocatable :: vect1, vect2 
-      real(double), dimension(5) :: h 
-      real(double), dimension(3) :: p 
-      real(double) :: sum 
+      double precision, dimension(:), allocatable :: vect1, vect2 
+      double precision, dimension(5) :: h 
+      double precision, dimension(3) :: p 
+      double precision :: sum 
 ! For Mopac BLAS      
-      real(double), external :: ddot
+      double precision, external :: ddot
 !
       
 !-----------------------------------------------

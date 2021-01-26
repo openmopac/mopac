@@ -1,5 +1,4 @@
     Subroutine eigenvectors_LAPACK(eigenvecs, xmat, eigvals, ndim)  
-      USE vast_kind_param, ONLY:  double 
       USE chanel_C, only : iw
       Use mod_vars_cuda, only: lgpu, ngpus
 #if GPU
@@ -12,13 +11,13 @@
       
       implicit none
       Integer :: ndim
-      Real(double) :: eigenvecs(ndim,ndim), &
+      double precision :: eigenvecs(ndim,ndim), &
                     & eigvals(ndim),xmat((ndim*(ndim+1))/2)                  
       integer :: i, j
       Integer :: lwork, liwork, info 
-      Real(double),dimension(1:10) :: work_tmp
+      double precision,dimension(1:10) :: work_tmp
       Integer, dimension(1:10) :: iwork_tmp
-      Real(double), allocatable :: work(:)
+      double precision, allocatable :: work(:)
       Integer, allocatable :: iwork(:)          
 !==============================================================================   
 ! Code to find all eigenvectors and all eigenvalues for a symmetric General matrix 

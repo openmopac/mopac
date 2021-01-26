@@ -3,7 +3,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE funcon_C, only : a0, fpc_9
       USE molkst_C, only : keywrd, numcal, mpack
       USE analyt_C, only : ds, dg, dr, g, nztype
@@ -12,8 +11,6 @@
       use chanel_C, only : irot
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -29,20 +26,20 @@
       integer , intent(in) :: iia 
       integer , intent(in) :: iid 
       integer , intent(in) :: nat(2) 
-      real(double) , intent(in) :: psum(mpack) 
-      real(double) , intent(in) :: palpha(mpack) 
-      real(double) , intent(in) :: pbeta(mpack) 
-      real(double)  :: coord(3,2) 
-      real(double) , intent(inout) :: eng(3) 
+      double precision , intent(in) :: psum(mpack) 
+      double precision , intent(in) :: palpha(mpack) 
+      double precision , intent(in) :: pbeta(mpack) 
+      double precision  :: coord(3,2) 
+      double precision , intent(inout) :: eng(3) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, jd, ja, id, ia, j, i, ni, istart, nj, jstart&
         , ix, isp, iol, k, ka, kg, l, la, lg, is, ig, m, mn&
         , n, kk, ll, kl, mk, nk, ml, nl, i22
-      real(double), dimension(3) :: eaa, eab, enuc 
-      real(double), dimension(4) :: bi, bj 
-      real(double) ::  r2, rij, r0, rr, del1, termaa, termab&
+      double precision, dimension(3) :: eaa, eab, enuc 
+      double precision, dimension(4) :: bi, bj 
+      double precision ::  r2, rij, r0, rr, del1, termaa, termab&
         , del2, del3, c1, termnc, &
         part1, part2, part3, f3, dd, anam1, termk, bb, aa 
       logical :: am1
@@ -300,10 +297,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE analyt_C, only : dr, dg, tdx, tdy, tdz, g, tx, ty, tz
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -322,14 +316,14 @@
       integer , intent(in) :: jd 
       integer  :: ix 
       integer , intent(inout) :: isp 
-      real(double)  :: rij 
-      real(double)  :: tomb 
-      real(double)  :: coord(3,*) 
+      double precision  :: rij 
+      double precision  :: tomb 
+      double precision  :: coord(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ib, jb, k, kk, l, ll, m, mm, n, nn 
-      real(double) :: temp1, temp2 
+      double precision :: temp1, temp2 
 !-----------------------------------------------
       if (ni>1 .or. nj>1) call rotat (coord, i, j, ix, rij, tomb, 2) 
       ib = max0(ia,id) 
@@ -464,26 +458,23 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : a0, ev
       use molkst_C, only : numcal
       use parameters_C, only : natorb, am, ad, aq, dd, qq
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ni 
       integer , intent(in) :: nj 
-      real(double) , intent(in) :: rr 
-      real(double) , intent(in) :: del1 
-      real(double) , intent(out) :: dg(22) 
+      double precision , intent(in) :: rr 
+      double precision , intent(in) :: del1 
+      double precision , intent(out) :: dg(22) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn 
-      real(double) :: term, da, db, qa, qb, aee, ee, ade, aqe, dze, &
+      double precision :: term, da, db, qa, qb, aee, ee, ade, aqe, dze, &
         qzze, qxxe, aed, aeq, edz, eqzz, eqxx, add, adq, aqd, aqq, dxdx, dzdz, &
         dzqxx, qxxdz, dzqzz, qzzdz, qxxqxx, qxxqyy, qxxqzz, qzzqxx, qzzqzz, &
         dxqxz, qxzdx, qxzqxz 
@@ -634,10 +625,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE analyt_C, only : tx, ty, tz,  tdx, tdy, tdz 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -646,13 +634,13 @@
       integer , intent(in) :: j 
       integer , intent(in) :: ix 
       integer , intent(in) :: idx 
-      real(double) , intent(in) :: rij 
-      real(double) , intent(in) :: del1 
-      real(double) , intent(in) :: coord(3,25) 
+      double precision , intent(in) :: rij 
+      double precision , intent(in) :: del1 
+      double precision , intent(in) :: coord(3,25) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: xd, yd, zd, rxy, ryz, rzx, term, tmp 
+      double precision :: xd, yd, zd, rxy, ryz, rzx, term, tmp 
 !-----------------------------------------------
       xd = coord(1,i) - coord(1,j) 
       yd = coord(2,i) - coord(2,j) 
@@ -745,12 +733,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE overlaps_C, only :  ccc,  zzz
       use funcon_C, only : a0
       USE analyt_C, only : ds 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -759,16 +744,16 @@
       integer , intent(in) :: n 
       integer , intent(in) :: is 
       integer , intent(in) :: iol 
-      real(double) , intent(in) :: rr 
-      real(double) , intent(in) :: del1 
-      real(double) , intent(in) :: del2 
-      real(double) , intent(in) :: del3 
+      double precision , intent(in) :: rr 
+      double precision , intent(in) :: del1 
+      double precision , intent(in) :: del2 
+      double precision , intent(in) :: del3 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j 
-      real(double), dimension(6,6) :: ss 
-      real(double) :: apb, amb, adb, adr, abn 
+      double precision, dimension(6,6) :: ss 
+      double precision :: apb, amb, adb, adr, abn 
 !-----------------------------------------------
 !***********************************************************************
 !                                                                      *

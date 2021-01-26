@@ -6,8 +6,6 @@
       gui, line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2
       use chanel_C, only : iw0, job_fn, input_fn, iw
       use common_arrays_C, only : all_comments
-!...Translated by Pacific-Sierra Research 77to90  4.4G  22:53:42  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !----------------------------------------------- 

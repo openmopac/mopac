@@ -1,5 +1,4 @@
       subroutine react1 
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : keywrd, natoms, moperr, numat, nvar, keywrd_txt, &
       tleft,  gnorm, escf, cosine, mpack, step, time0, iflepo, line, density
       use chanel_C, only : iw, ir
@@ -16,16 +15,16 @@
       use to_screen_I
       implicit none
       integer :: linear, iflag, i, maxstp, maxcyc, j, k, iloop, lopt(3,natoms)
-      real(double), dimension(3*numat) :: xold, grold
-      real(double) :: stepmx,  x, sumx, sumy, sumz, sum, &
+      double precision, dimension(3*numat) :: xold, grold
+      double precision :: stepmx,  x, sumx, sumy, sumz, sum, &
         step0, one, dell, eold, time1, swap, funct1, time2, gold, c1, c2, &
         dist
-      real(double), dimension(:,:), allocatable :: xyz
-      real(double), dimension(:), allocatable ::  pastor, pbstor
+      double precision, dimension(:,:), allocatable :: xyz
+      double precision, dimension(:), allocatable ::  pastor, pbstor
       logical :: gradnt, finish, intl 
       logical , dimension(2) :: gok 
       logical :: lef      
-      real(double), external :: ddot    
+      double precision, external :: ddot    
 !-----------------------------------------------
 !***********************************************************************
 !

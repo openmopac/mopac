@@ -1,7 +1,6 @@
   module Parameters_for_PM7_Sparkles_C
-    use vast_kind_param, ONLY:  double  
-    real(double), dimension(107) ::  gss7sp, alp7sp
-    real(double), dimension(107,2) :: gues7sp1, gues7sp2, gues7sp3
+    double precision, dimension(107) ::  gss7sp, alp7sp
+    double precision, dimension(107,2) :: gues7sp1, gues7sp2, gues7sp3
 !
 !       Data for Element  57:                       Lanthanum
 !

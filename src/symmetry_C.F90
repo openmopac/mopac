@@ -1,5 +1,4 @@
 module symmetry_C
-    USE vast_kind_param, ONLY:  double 
     integer, parameter :: ntbs = 38
     
     save
@@ -33,11 +32,11 @@ module symmetry_C
   integer, dimension(:,:), allocatable :: &
   &  ipo,    & ! 
   &  jelem 
-  real(double), dimension(3,3)              :: cub 
-  real(double), dimension(9,120)            :: r
-  real(double), dimension(3,3,20)           :: elem
-  real(double), dimension(20,5)             :: group
-  real(double), dimension(:), allocatable   :: depmul
+  double precision, dimension(3,3)              :: cub 
+  double precision, dimension(9,120)            :: r
+  double precision, dimension(3,3,20)           :: elem
+  double precision, dimension(20,5)             :: group
+  double precision, dimension(:), allocatable   :: depmul
   integer, dimension(:), allocatable        :: locpar, idepfn, locdep
 
   

@@ -1,5 +1,4 @@
       subroutine mxv(a, nar, vecx, nbr, vecy) 
-      USE vast_kind_param, ONLY:  double 
       Use mod_vars_cuda, only: lgpu
 #if GPU
       Use mod_vars_cuda, only: prec
@@ -9,9 +8,9 @@
       integer, parameter :: incy = 1, incx = 1
       integer  :: nar 
       integer  :: nbr 
-      real(double)  :: a(nar,nbr) 
-      real(double)  :: vecx(nbr) 
-      real(double)  :: vecy(nar) 
+      double precision  :: a(nar,nbr) 
+      double precision  :: vecx(nbr) 
+      double precision  :: vecy(nar) 
 !
 !     RECTANGULAR MATRIX-VECTOR PRODUCT C=A*B.
 !     EACH MATRIX IS ENTIRELY FULLFILLED AND PACKED.

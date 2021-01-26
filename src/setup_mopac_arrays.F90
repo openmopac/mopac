@@ -150,7 +150,6 @@
           j = j + i          
           if (j /= 0) then
             call mopend("A problem occurred during memory assignment, most likely the system is too big to run. ")
-            call hint()
             return
           end if
           p = 0.d0
@@ -164,7 +163,6 @@
             if (i /= 0) then
 					    call mopend("Failed to allocate the two-electron integral array 'wk'")
               write(iw,"(10x,a,f9.2,a)") "  Size requested:",(n2elec*8.d0)/1.d6, "Mb"
-              call hint()
               return
             end if
           end if
@@ -463,15 +461,5 @@
     character (len=*) :: txt
     write(iw,'(/10x,a,/)')"Unable to allocate memory in subroutine "//txt(:len_trim(txt))
     call mopend(txt(:len_trim(txt)))
-    call hint()
     return
   end subroutine memory_error
-  subroutine hint()
-    use molkst_C, only : num_bits
-    use chanel_C, only : iw
-    if (num_bits == 32) write(iw,'(/,10(/10x,a))') &
-    " This version of MOPAC uses a 32-bit architecture.", &
-    " The job might run if a 64-bit version of MOPAC is used", &
-    " To download a 64-bit version, go to http://openmopac.net/Download_MOPAC_Executable_Step2.html"
-    return
-  end subroutine hint

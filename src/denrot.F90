@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, numat, mpack, id, l1u, l2u, l3u, &
       mozyme
 !
@@ -11,8 +10,6 @@
       use common_arrays_C, only : nat, geo, nfirst, nlast, coord, p, tvec
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:05  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -27,11 +24,11 @@
       integer , dimension(9) :: isp 
       integer :: iprt, i, if, il, ipq, ii, i1, j1, j, mm, nn, kk, jf, jl, jpq, &
         jj, k, ll, l, l1, l2, ij, limit, na, m, ma, n 
-      real(double), dimension(9,9) :: arot 
-      real(double), dimension(3,5,5) :: c 
-      real(double), dimension(9,9) :: pab, vect 
-      real(double), dimension(:), allocatable :: b
-      real(double) :: delx, dely, delz, rmin, r, delxm, delym, delzm, sum 
+      double precision, dimension(9,9) :: arot 
+      double precision, dimension(3,5,5) :: c 
+      double precision, dimension(9,9) :: pab, vect 
+      double precision, dimension(:), allocatable :: b
+      double precision :: delx, dely, delz, rmin, r, delxm, delym, delzm, sum 
       character , dimension(21) :: line*6 
       character , dimension(9) :: atorbs*7 
       character, dimension(norbs) :: itext*7, jtext*2 

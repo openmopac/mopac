@@ -1,8 +1,7 @@
-      real(kind(0.0d0)) function charst (vects, ntype, istate, ioper, r,nvecs, first) 
+      double precision function charst (vects, ntype, istate, ioper, r,nvecs, first) 
 !-----------------------------------------------
 !   M o d u l elem s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double
       USE meci_C, only : nalmat, microa, microb, lab, conf, nmos
       use chanel_C, only : iw
       use symmetry_C, only : elem, jelem
@@ -15,8 +14,8 @@
       integer , intent(in) :: nvecs 
       logical  :: first 
       integer , intent(in) :: ntype(norbs) 
-      real(double) , intent(in) :: vects(nvecs,nmos) 
-      real(double)  :: r(3,3) 
+      double precision , intent(in) :: vects(nvecs,nmos) 
+      double precision  :: r(3,3) 
 !-----------------------------------------------
 !   L o c a l   P a r a m elem t elem r s
 !-----------------------------------------------
@@ -31,13 +30,13 @@
       integer :: nstate, j, i, iloop, iatom, jatom, ibase, kj, icheck, jcheck, &
         ii, jj, k, l, ne, ia1, ia2, ia3, ib1, ib2, ib3, nai, ja1, ja2, ja3, jb1&
         , jb2, jb3, nbi 
-      real(double), dimension(:,:), allocatable :: vect1, vect2 
-      real(double) :: h(5), p(3), d(5) 
-      real(double), dimension(:,:), allocatable :: t2, t4
-      real(double), dimension(:), allocatable :: work
-      real(double) :: sum, det, suma, sumb 
+      double precision, dimension(:,:), allocatable :: vect1, vect2 
+      double precision :: h(5), p(3), d(5) 
+      double precision, dimension(:,:), allocatable :: t2, t4
+      double precision, dimension(:), allocatable :: work
+      double precision :: sum, det, suma, sumb 
       logical :: posita, positb, debug 
-      real(double), external :: ddot
+      double precision, external :: ddot
 !-----------------------------------------------
 !***********************************************************************
 !

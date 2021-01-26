@@ -2,22 +2,19 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:34:14  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: n 
-      real(double) , intent(in) :: a 
-      real(double) , intent(out) :: b 
-      real(double) , intent(in) :: c 
-      real(double) , intent(out) :: d 
-      real(double) , intent(in) :: t 
-      real(double) , intent(out) :: q 
-      real(double) , intent(in) :: x(*) 
-      real(double) , intent(out) :: y(*) 
+      double precision , intent(in) :: a 
+      double precision , intent(out) :: b 
+      double precision , intent(in) :: c 
+      double precision , intent(out) :: d 
+      double precision , intent(in) :: t 
+      double precision , intent(out) :: q 
+      double precision , intent(in) :: x(*) 
+      double precision , intent(out) :: y(*) 
 !-----------------------------------------------
 !********************************************************************
 !

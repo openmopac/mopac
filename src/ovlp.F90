@@ -4,7 +4,6 @@
 
       subroutine ovlap (s, x, y, z)
 
-      USE vast_kind_param, ONLY:  double
       use reimers_C, only : n, na, natm, iat, nbt, nprn, nbeta, &
           zeta, zetad, zetawt, fssig, fpsig, fppi, fdsig, fdpi, &
           fddel, pp, bincoe, fact, d, e, fspdf, kflag, jflag
@@ -25,7 +24,7 @@
                         ka, kb, kl, klp1, knat, knp, la, lh, minkm, nm
       character*9       atomk, atomkx, atomj, atomjx
       logical           agovlp
-      real(double)      agfact
+      double precision      agfact
 
       data one/1.d0/, two/2.d0/, zero/0.0d0/
       data langl/0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3/

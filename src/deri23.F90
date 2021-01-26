@@ -1,17 +1,16 @@
       subroutine deri23(f, fd, e, fci, cmo, emo, ninear, minear) 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nopen, fract
       use meci_C, only : nelec, nmos, nbo     
       implicit none
       integer :: minear, ninear
-      real(double) , intent(in) :: f(minear) 
-      real(double) , intent(in) :: fd(ninear) 
-      real(double) , intent(in) :: e(norbs) 
-      real(double)  :: fci(minear) 
-      real(double) , intent(out) :: cmo(norbs,norbs) 
-      real(double)  :: emo(*) 
+      double precision , intent(in) :: f(minear) 
+      double precision , intent(in) :: fd(ninear) 
+      double precision , intent(in) :: e(norbs) 
+      double precision  :: fci(minear) 
+      double precision , intent(out) :: cmo(norbs,norbs) 
+      double precision  :: emo(*) 
       integer :: l, nend, loop, ninit, n1, n2, i, j, ncol
-      real(double) :: const, diffe, com, scal 
+      double precision :: const, diffe, com, scal 
 !-----------------------------------------------
 !**********************************************************************
 !  1) UNPACK THE C.I-ACTIVE M.O. DERIVATIVES IN M.O. BASIS,

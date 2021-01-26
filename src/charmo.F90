@@ -1,5 +1,4 @@
-      real(kind(0.0d0)) function charmo (vects, ntype, jorb, ioper, r, nvecs, first) 
-      USE vast_kind_param, ONLY:  double 
+      double precision function charmo (vects, ntype, jorb, ioper, r, nvecs, first) 
       use symmetry_C, only : elem, jelem
       use molkst_C, only : norbs, numat
       implicit none
@@ -8,18 +7,18 @@
       integer , intent(in) :: nvecs 
       logical, intent(inout)  :: first 
       integer , intent(in) :: ntype(*) 
-      real(double) , intent(in) :: vects(nvecs,nvecs) 
-      real(double)  :: r(3,3) 
+      double precision , intent(in) :: vects(nvecs,nvecs) 
+      double precision  :: r(3,3) 
       integer , dimension(2,3) :: ip 
       integer , dimension(2,5) :: id 
       integer , dimension(2,9) :: loc 
       integer :: i, iatom, jatom, ibase, kj, icheck, jcheck, ii, jj 
-      real(double), dimension(norbs) :: vect1, vect2 
-      real(double), dimension(5) :: h = 0.d0
-      real(double), dimension(3) :: p 
-      real(double), dimension(5) :: d 
-      real(double) :: sum 
-      real(double), external :: ddot
+      double precision, dimension(norbs) :: vect1, vect2 
+      double precision, dimension(5) :: h = 0.d0
+      double precision, dimension(3) :: p 
+      double precision, dimension(5) :: d 
+      double precision :: sum 
+      double precision, external :: ddot
 !-----------------------------------------------
 !
 !  Trivial case:  Operation is 'E', the identity.

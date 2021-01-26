@@ -2,12 +2,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use meci_C, only : microa, microb, nalmat, ispqr, is, iiloop, jloop 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:25  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       use babbcd_I 
       use aabbcd_I 
       use aabacd_I 
@@ -22,9 +19,9 @@
 !-----------------------------------------------
       integer  :: nmos 
       integer , intent(in) :: lab 
-      real(double), dimension(*), intent(in)  :: xy 
-      real(double) , intent(in) :: diag(*) 
-      real(double) , intent(out) :: cimat(*) 
+      double precision, dimension(*), intent(in)  :: xy 
+      double precision , intent(in) :: diag(*) 
+      double precision , intent(out) :: cimat(*) 
 !-----------------------------------------------
 !   L o c a l   V a r iiloop a b l e s
 !-----------------------------------------------

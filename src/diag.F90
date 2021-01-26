@@ -1,18 +1,17 @@
       subroutine diag(fao, vector, nocc, eig, mdim, n) 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, mpack
       implicit none
       integer , intent(in) :: nocc 
       integer , intent(in) :: mdim 
       integer , intent(in) :: n 
-      real(double) , intent(in) :: fao(mpack) 
-      real(double) , intent(inout) :: vector(mdim,mdim) 
-      real(double) , intent(in) :: eig(mdim) 
+      double precision , intent(in) :: fao(mpack) 
+      double precision , intent(inout) :: vector(mdim,mdim) 
+      double precision , intent(in) :: eig(mdim) 
 !
       integer :: lumo, ij, i, kk, j, k, j1, k2, m 
-      real(double), dimension(norbs) :: ws 
-      real(double) ::  bigeps = 1.5d-007, tiny, sum, a, b, c, d, e, alpha, beta 
-      real(double), allocatable :: fmo(:)
+      double precision, dimension(norbs) :: ws 
+      double precision ::  bigeps = 1.5d-007, tiny, sum, a, b, c, d, e, alpha, beta 
+      double precision, allocatable :: fmo(:)
 !***********************************************************************
 !
 !   "FAST" DIAGONALISATION PROCEDURE.

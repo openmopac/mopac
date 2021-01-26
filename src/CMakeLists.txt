@@ -702,7 +702,6 @@ target_sources(mopac-lib PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/upcase.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/update.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/values.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/vastkind.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/vecprt.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/vecprt_for_MOZYME.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/volume.F90

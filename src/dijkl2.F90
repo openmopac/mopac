@@ -1,14 +1,13 @@
       subroutine dijkl2(dc) 
-      USE vast_kind_param, ONLY:  double 
       use meci_C, only : dijkl, xy, nmos
       use molkst_C, only : norbs
       implicit none
-      real(double)  :: dc(norbs,nmos) 
+      double precision  :: dc(norbs,nmos) 
 !
       integer :: ij, i, j, kl, k, ll, l 
-      real(double) :: val, val2 
+      double precision :: val, val2 
       logical :: lij, lkl       
-      real(double), external :: ddot   
+      double precision, external :: ddot   
 !***********************************************************************
 !     RELAXATION OF 2-ELECTRONS INTEGRALS IN M.O BASIS.
 !

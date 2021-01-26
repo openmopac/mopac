@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : natoms, numcal, step, id, nvar, keywrd
       use common_arrays_C, only : labels, geoa, na, nb, nc, tvec, loc, &
       xparam, txtatm
@@ -11,8 +10,6 @@
       use funcon_C, only : pi
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:18  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -22,8 +19,8 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) :: geo(3,natoms) 
-      real(double) , intent(out) :: coord(3,natoms) 
+      double precision :: geo(3,natoms) 
+      double precision , intent(out) :: coord(3,natoms) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -31,11 +28,11 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, j, i, mb, mc, ma, k, l, counter
-      real(double) :: sum, error, ccos, cosa, xb, yb, zb, rbc, xa, ya, za, xyb&
+      double precision :: sum, error, ccos, cosa, xb, yb, zb, rbc, xa, ya, za, xyb&
         , xpa, xpb, costh, sinth, ypa, sinph, cosph, zqa, yza, coskh, sinkh, &
         sina, sind, cosd, xd, yd, zd, ypd, zpd, xpd, zqd, xqd, yqd, xrd
       character, dimension(4) :: ndimen*16 
-      real(double), dimension(3, natoms) :: geovec
+      double precision, dimension(3, natoms) :: geovec
       save ndimen, icalcn, counter
 !-----------------------------------------------
       data icalcn/ 0/, counter/0/

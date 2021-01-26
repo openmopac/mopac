@@ -1,22 +1,21 @@
       subroutine axis(a, b, c, evec) 
-      USE vast_kind_param, ONLY:  double  
       use molkst_C, only : numcal, keywrd, mol_weight, numat
       use common_arrays_C, only : atmass, coord
       USE chanel_C, only : iw
       use to_screen_C, only : rot, xyzmom
       USE funcon_C, only : fpc_6, fpc_8, fpc_10, pi
       implicit none
-      real(double) , intent(out) :: a 
-      real(double) , intent(out) :: b 
-      real(double) , intent(out) :: c 
-      real(double)  :: evec(3,3) 
+      double precision , intent(out) :: a 
+      double precision , intent(out) :: b 
+      double precision , intent(out) :: c 
+      double precision  :: evec(3,3) 
       integer :: icalcn, i, j 
-      real(double), dimension(6) :: t 
-      real(double), dimension(numat) :: x, y, z 
-      real(double), dimension(3) ::  eig 
-      real(double) :: const1, const2, sumwx, sumwy, sumwz, sum 
+      double precision, dimension(6) :: t 
+      double precision, dimension(numat) :: x, y, z 
+      double precision, dimension(3) ::  eig 
+      double precision :: const1, const2, sumwx, sumwy, sumwz, sum 
       logical :: first      
-      real(double), external :: ddot
+      double precision, external :: ddot
       save t, eig, first, icalcn 
 !***********************************************************************
 !

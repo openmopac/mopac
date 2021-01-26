@@ -2,25 +2,22 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !****************************************************************
 !
 !     GENERATE UNIT VECTORS OVER SPHERE. USED BY SURFAC ONLY.
 !
 !****************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:16  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(inout) :: n 
-      real(double) , intent(out) :: u(3,n) 
+      double precision , intent(out) :: u(3,n) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nequat, nvert, nu, i, nhor, j 
-      real(double) :: pi, fi, z, xy, fj, x, y 
+      double precision :: pi, fi, z, xy, fj, x, y 
 !-----------------------------------------------
       pi = 4.D0*atan(1.D0) 
       nequat = int(sqrt(n*pi)) 
@@ -52,30 +49,27 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !****************************************************************
 !
 !     COLLISION CHECK OF PROBE WITH NEIGHBORING ATOMS
 !     USED BY SURFAC ONLY.
 !
 !****************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:16  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: nnbr 
       integer , intent(in) :: ishape 
-      real(double) , intent(in) :: rw 
-      real(double) , intent(in) :: cw(3) 
-      real(double) , intent(in) :: cnbr(3,200) 
-      real(double) , intent(in) :: rnbr(200) 
+      double precision , intent(in) :: rw 
+      double precision , intent(in) :: cw(3) 
+      double precision , intent(in) :: cnbr(3,200) 
+      double precision , intent(in) :: rnbr(200) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i 
-      real(double) :: sumrad, vect1, vect2, vect3, sr2, dd2 
+      double precision :: sumrad, vect1, vect2, vect3, sr2, dd2 
 !-----------------------------------------------
       if (nnbr > 0) then 
 !

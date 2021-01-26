@@ -3,7 +3,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : na, nb, nc, labels, loc, nat, c, eigs
       use molkst_C, only : natoms, numcal, keywrd, numat, title, koment, line
       use maps_C, only : rxn_coord, rc_escf, ekin, rc_dipo
@@ -14,17 +13,17 @@
       implicit none
       integer, intent(in) :: nvar, iloop, ii 
       integer, intent(inout) :: jloop
-      real(double), intent(in) :: time, fract 
+      double precision, intent(in) :: time, fract 
       character, intent(in) :: text1*3, text2*2 
-      real(double), intent(in) :: xyz3(3,nvar), geo3(3,3*numat), vel3(3,nvar), &
+      double precision, intent(in) :: xyz3(3,nvar), geo3(3,3*numat), vel3(3,nvar), &
         escf3(3), ekin3(3), etot3(3), dip3(3), xtot3(3), charge(natoms) 
       logical, intent (in) :: l_dipole
 !
       integer, dimension(3) :: iel1 
       integer :: i, icalcn, iprint, l, j, ivar, k
-      real(double), dimension(3,numat) :: xyz, vel 
-      real(double), dimension(3) :: gg 
-      real(double) :: etot, errr, last_point, last_rxn_coord = 10.d0
+      double precision, dimension(3,numat) :: xyz, vel 
+      double precision, dimension(3) :: gg 
+      double precision :: etot, errr, last_point, last_rxn_coord = 10.d0
       logical :: drc, large, graph, run_local
       character :: alpha*2, frmat*1
       save i, drc, icalcn, iprint, large, graph, &

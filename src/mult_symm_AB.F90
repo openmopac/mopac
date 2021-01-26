@@ -1,7 +1,6 @@
 ! ---------------------------------------------------------------------------------------
       subroutine mult_symm_AB(a, b, alpha, ndim, mdim, c, beta, iopc)
 
-        Use vast_kind_param, only: double
 !        Use mod_vars_cuda, only: ngpus
         Use mamult_I  
         Use iso_c_binding
@@ -22,9 +21,9 @@
 #else
         real(c_double), dimension(mdim) :: a, b, c  
 #endif
-        real(double), allocatable, dimension(:,:) :: xa, xb, xc
+        double precision, allocatable, dimension(:,:) :: xa, xb, xc
         
-        real(double) :: alpha,beta
+        double precision :: alpha,beta
         
         continue    
                 

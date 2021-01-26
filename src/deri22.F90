@@ -3,7 +3,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : nopen, numat, norbs, n2elec
       use common_arrays_C, only : nfirst, nlast
       use meci_C, only : nmos, nbo, nelec
@@ -16,16 +15,16 @@
       integer , intent(in) :: minear 
       integer , intent(in) :: ninear 
       double precision :: c(norbs,norbs), work(norbs,norbs), foc2(norbs**2)
-      real(double), allocatable  :: dp(:), dpa(:)
-      real(double)  :: b(minear) 
-      real(double)  :: ab(minear) 
-      real(double)  :: fci(ninear) 
-      real(double)  :: w(n2elec) 
-      real(double) , intent(in) :: diag(*) 
-      real(double) , intent(in) :: scalar(*)  
+      double precision, allocatable  :: dp(:), dpa(:)
+      double precision  :: b(minear) 
+      double precision  :: ab(minear) 
+      double precision  :: fci(ninear) 
+      double precision  :: w(n2elec) 
+      double precision , intent(in) :: diag(*) 
+      double precision , intent(in) :: scalar(*)  
 !
       integer :: i, l, j, nend, loop, ninit, n1, n2, icount, ncol
-      real(double) :: wj(1) = 0.d0, wk(1) = 0.d0  ! Dummys - wj and wk are used by solids only. 
+      double precision :: wj(1) = 0.d0, wk(1) = 0.d0  ! Dummys - wj and wk are used by solids only. 
       double precision, external :: ddot, dot
 !***********************************************************************
 !  1) BUILD THE 2-ELECTRON FOCK MATRIX DEPENDING ON B AS FOLLOWS :

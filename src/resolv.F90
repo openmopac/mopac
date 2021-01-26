@@ -1,20 +1,19 @@
       subroutine resolv(c, cold, mdim, eig, nocc, size_of_LMO) 
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : nfirst, nlast
       use molkst_C, only : norbs, numat, keywrd
       implicit none
       integer , intent(in) :: mdim 
       integer , intent(in) :: nocc 
-      real(double) , intent(inout) :: c(mdim,mdim) 
-      real(double) , intent(in) :: cold(mdim,mdim) 
-      real(double) , intent(in) :: eig(nocc), size_of_LMO(nocc) 
+      double precision , intent(inout) :: c(mdim,mdim) 
+      double precision , intent(in) :: cold(mdim,mdim) 
+      double precision , intent(in) :: eig(nocc), size_of_LMO(nocc) 
 !
       integer , dimension(4) :: idegen 
       integer :: loop, j, k, nsec, i, ij, ii, jj, l, mo1, mo2, mo3, atom_a, atom_b
-      real(double), dimension(10) :: sec 
-      real(double), dimension(16) :: vec 
-      real(double), dimension(4) :: eigs 
-      real(double) :: thresh, sum1, sum, coi, coj, sum2, sum3, &
+      double precision, dimension(10) :: sec 
+      double precision, dimension(16) :: vec 
+      double precision, dimension(4) :: eigs 
+      double precision :: thresh, sum1, sum, coi, coj, sum2, sum3, &
         sqrt_2, sqrt_3, sqrt_23, sqrt_6
       logical :: l_banana, l_rabbit, lone_pair, multiple
       logical, allocatable :: used_MO(:)

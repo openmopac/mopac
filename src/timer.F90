@@ -2,14 +2,13 @@
 !
 !  Write out CPU and wall-clock times for the current step, and total times
 !
-      USE vast_kind_param, ONLY:  double 
       Use molkst_C, only : wall_clock_0, wall_clock_1, CPU_1, CPU_0
       USE chanel_C, only : iw 
       use seconds_I 
       implicit none
       character , intent(in) :: a*(*) 
       character :: b*20
-      real(double) :: CPU_start, CPU_last, CPU_now 
+      double precision :: CPU_start, CPU_last, CPU_now 
       real :: wall_clock_last, dummy
       logical :: first 
       save first, CPU_start, CPU_last, wall_clock_last

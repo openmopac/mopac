@@ -2,13 +2,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-  USE vast_kind_param, ONLY:  double 
   use molkst_C, only : id, method_pm7
   use parameters_C, only: natorb
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:01  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !
   implicit none
 !-----------------------------------------------
@@ -17,19 +14,19 @@
   integer  :: ni 
   integer  :: nj 
   integer , intent(inout) :: kr 
-  real(double) , intent(out) :: enuc 
-  real(double) , intent(in) :: xi(3) 
-  real(double) , intent(in) :: xj(3) 
-  real(double) , intent(out) :: w(2025) 
-  real(double) , intent(out) :: e1b(45) 
-  real(double) , intent(out) :: e2a(45) 
+  double precision , intent(out) :: enuc 
+  double precision , intent(in) :: xi(3) 
+  double precision , intent(in) :: xj(3) 
+  double precision , intent(out) :: w(2025) 
+  double precision , intent(out) :: e1b(45) 
+  double precision , intent(out) :: e2a(45) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
   integer :: i, li, lj, ik, k  
-  real(double) ::  rijx, rij
-  real(double), dimension(3) :: x 
-  real(double), dimension(171) :: en
+  double precision ::  rijx, rij
+  double precision, dimension(3) :: x 
+  double precision, dimension(171) :: en
 !-----------------------------------------------
 !***********************************************************************
 !

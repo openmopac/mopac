@@ -1,16 +1,15 @@
-      real(kind(0.0d0)) function seconds (mode) 
+      double precision function seconds (mode) 
 !
 !  If mode = 1:   Get current CPU time - CPU_0, and return without checking for <file>.end
 !     mode = 2:   Get current CPU time - CPU_0, and return after checking for <file>.end,
 !                 if <file>.end exists, and contains anything, increase time by 10^8 seconds.
 !
-      USE vast_kind_param, ONLY:  double 
       USE chanel_C, only : iw, iend, end_fn, output_fn
       use molkst_C, only : is_PARAM, wall_clock_0, wall_clock_1, CPU_1, CPU_0, prt_coords
       use geout_I 
       implicit none
       integer , intent(in) :: mode 
-      real(double) :: shut 
+      double precision :: shut 
       logical :: setok, exists, first = .true., opend
       character :: x 
       integer :: i99, l

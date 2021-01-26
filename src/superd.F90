@@ -2,12 +2,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double
       use chanel_C, only : iw 
       use elemts_C, only : elemnt
       use parameters_C, only: natorb
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:03  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -16,14 +13,14 @@
       integer , intent(in) :: nelecs 
       integer , intent(in) :: numat 
       integer , intent(in) :: nat(numat) 
-      real(double) , intent(in) :: c(norbs,norbs) 
-      real(double) , intent(in) :: eigs(norbs) 
+      double precision , intent(in) :: c(norbs,norbs) 
+      double precision , intent(in) :: eigs(norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ihomo, isize, i, ii, k, j, l, ll 
-      real(double), dimension(4) :: orb 
-      real(double) :: alpha, totloc, totnuc, cdens, deloc, denuc, seltot, &
+      double precision, dimension(4) :: orb 
+      double precision :: alpha, totloc, totnuc, cdens, deloc, denuc, seltot, &
         selpol, sum 
 !-----------------------------------------------
       ihomo = nelecs/2 

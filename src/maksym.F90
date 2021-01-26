@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : nvar, ndep, natoms
       use symmetry_C, only : locpar, idepfn, locdep
       use funcon_C, only : pi
@@ -10,8 +9,6 @@
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:24  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -25,7 +22,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, loop, locl 
-      real(double) :: twopi, xref 
+      double precision :: twopi, xref 
 !-----------------------------------------------
 !*********************************************************************
 !

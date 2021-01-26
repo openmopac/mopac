@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       use common_arrays_C, only : na, coord, geo, loc, labels, &
       & simbol, nb, nc, txtatm
       use molkst_C, only : natoms, nvar, ndep, maxtxt
@@ -11,8 +10,6 @@
       use elemts_C, only : elemnt
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:16  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -34,7 +31,7 @@
 !-----------------------------------------------
       integer , dimension(3,natoms) :: igeo 
       integer :: i, j, nopt, nbi, nci, l, nchars
-      real(double) :: degree, w, x 
+      double precision :: degree, w, x 
       character , dimension(3,natoms) :: line*14 
       character , dimension(3) :: type 
       character , dimension(3*natoms) :: optdat*14 

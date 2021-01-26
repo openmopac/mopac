@@ -1,6 +1,5 @@
       subroutine deri2(minear, f, fd, fci, ninear, nvar_nvo, dxyzr,  throld, &
       diag, scalar, work) 
-      USE vast_kind_param, ONLY:  double  
       USE funcon_C, only : fpc_9
       USE meci_C, only : nelec, nstate, lab, nmeci, nmos, xy, &
       & vectci, maxci
@@ -23,22 +22,22 @@
       integer  :: minear 
       integer  :: ninear 
       integer  :: nvar_nvo
-      real(double) , intent(in) :: throld  
-      real(double)  :: f(minear,nvar_nvo) 
-      real(double)  :: fd(ninear,nvar_nvo) 
-      real(double)  :: fci(ninear,nmeci*(nmeci + 1)*10/ninear) 
-      real(double)  :: work(*) 
-      real(double) , intent(inout) :: dxyzr(nvar_nvo) 
-      real(double)  :: diag(mpack) 
-      real(double)  :: scalar(mpack) 
-      real(double), allocatable  :: bab(:,:), babinv(:) 
-      real(double)  :: bcoef(1000) 
+      double precision , intent(in) :: throld  
+      double precision  :: f(minear,nvar_nvo) 
+      double precision  :: fd(ninear,nvar_nvo) 
+      double precision  :: fci(ninear,nmeci*(nmeci + 1)*10/ninear) 
+      double precision  :: work(*) 
+      double precision , intent(inout) :: dxyzr(nvar_nvo) 
+      double precision  :: diag(mpack) 
+      double precision  :: scalar(mpack) 
+      double precision, allocatable  :: bab(:,:), babinv(:) 
+      double precision  :: bcoef(1000) 
       integer :: icalcn, maxite, ifirst, i, nbsize, ilast, j, l, &
         nres, ivar, nadd, nbsze = 0, k, ll, iindex, jindex, limci, ib
-      real(double) :: const, time1, deter, test2 = 0.d0, test, time2, sum, gse
+      double precision :: const, time1, deter, test2 = 0.d0, test, time2, sum, gse
       logical , dimension(nvar_nvo) :: lconv 
       logical :: fail, debug, lbab     
-      real(double), external :: ddot
+      double precision, external :: ddot
       save debug, icalcn, maxite, ifirst, limci, ib, const
 !********************************************************************
 !

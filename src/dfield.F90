@@ -2,15 +2,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : tore  
       USE molkst_C, only :numat, efield
       USE funcon_C, only : ev, a0, fpc_9
       use common_arrays_C, only : nat, p, dxyz
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:08:38  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -29,8 +26,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i
-      real(double), dimension(numat) :: q2 
-      real(double) :: fldcon 
+      double precision, dimension(numat) :: q2 
+      double precision :: fldcon 
 !-----------------------------------------------
       call chrge (p, q2) 
       q2(:numat) = tore(nat(:numat)) - q2(:numat) 

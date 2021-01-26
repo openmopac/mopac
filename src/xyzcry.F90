@@ -2,22 +2,19 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  07:57:15  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: numat 
       integer , intent(in) :: iw 
-      real(double) , intent(inout) :: tvec(3,3) 
-      real(double) , intent(inout) :: dxyz(3,*) 
+      double precision , intent(inout) :: tvec(3,3) 
+      double precision , intent(inout) :: dxyz(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j 
-      real(double) :: sum, ca, sa, sum1 
+      double precision :: sum, ca, sa, sum1 
 !-----------------------------------------------
 !
 !   Convert Cartesian derivatives into fractional unit cell derivatives.

@@ -3,11 +3,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE chanel_C, only : iw, ires, restart_fn
       use molkst_C, only : numat, norbs
-!...Translated by Pacific-Sierra Research 77to90  4.4G  07:59:25  03/16/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -19,13 +16,13 @@
       integer  :: ipt 
       integer , intent(in) :: nvar 
       integer  :: jstart 
-      real(double)  :: time 
-      real(double)  :: refh 
-      real(double)  :: deldip(3,*) 
-      real(double)  :: fmatrx((nvar*(nvar+1))/2) 
-      real(double)  :: coord(nvar) 
-      real(double)  :: evecs(nvar**2) 
-      real(double)  :: fconst(nvar) 
+      double precision  :: time 
+      double precision  :: refh 
+      double precision  :: deldip(3,*) 
+      double precision  :: fmatrx((nvar*(nvar+1))/2) 
+      double precision  :: coord(nvar) 
+      double precision  :: evecs(nvar**2) 
+      double precision  :: fconst(nvar) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------

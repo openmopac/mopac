@@ -3,7 +3,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       Use mod_vars_cuda, only: lgpu
 #if GPU
       Use call_gemm_cublas
@@ -11,9 +10,9 @@
 #endif
       implicit none
       integer , intent(in) :: n 
-      real(double) , intent(in) :: c(n,n) 
-      real(double) , intent(in) :: s(n,n) 
-      real(double) , intent(out) :: vecs(n,n)   
+      double precision , intent(in) :: c(n,n) 
+      double precision , intent(in) :: s(n,n) 
+      double precision , intent(out) :: vecs(n,n)   
 !
 !  Local variables
 !

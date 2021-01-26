@@ -1,6 +1,4 @@
       logical function myword (keywrd, testwd) 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:35:31  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s

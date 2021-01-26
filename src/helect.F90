@@ -1,23 +1,20 @@
-      real(kind(0.0d0)) function helect (n, p, h, f) 
+      double precision function helect (n, p, h, f) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:34:42  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: n 
-      real(double) , intent(in) :: p(*) 
-      real(double) , intent(in) :: h(*) 
-      real(double) , intent(in) :: f(*) 
+      double precision , intent(in) :: p(*) 
+      double precision , intent(in) :: h(*) 
+      double precision , intent(in) :: f(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k, nn, i, jj
-      real(double) :: ed, ee 
+      double precision :: ed, ee 
 !-----------------------------------------------
 !***********************************************************************
 !

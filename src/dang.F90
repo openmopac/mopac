@@ -2,22 +2,19 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:33:27  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(inout) :: a1 
-      real(double) , intent(inout) :: a2 
-      real(double) , intent(inout) :: b1 
-      real(double) , intent(inout) :: b2 
-      real(double) , intent(out) :: rcos 
+      double precision , intent(inout) :: a1 
+      double precision , intent(inout) :: a2 
+      double precision , intent(inout) :: b1 
+      double precision , intent(inout) :: b2 
+      double precision , intent(out) :: rcos 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: zero, anorm, bnorm, sinth, costh 
+      double precision :: zero, anorm, bnorm, sinth, costh 
 !-----------------------------------------------
 !*********************************************************************
 !

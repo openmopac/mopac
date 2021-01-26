@@ -2,11 +2,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : tvec
       use molkst_C, only : numcal, l1u, l2u, l3u, clower
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:02  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -18,22 +15,22 @@
       integer  :: ni 
       integer  :: nj 
       integer , intent(inout) :: kr 
-      real(double) , intent(out) :: enuc 
-      real(double) , intent(in) :: xi(3) 
-      real(double) , intent(in) :: xj(3) 
-      real(double) , intent(out) :: wj(2025) 
-      real(double) , intent(out) :: wk(2025) 
-      real(double) , intent(inout) :: e1b(45) 
-      real(double) , intent(inout) :: e2a(45) 
+      double precision , intent(out) :: enuc 
+      double precision , intent(in) :: xi(3) 
+      double precision , intent(in) :: xj(3) 
+      double precision , intent(out) :: wj(2025) 
+      double precision , intent(out) :: wk(2025) 
+      double precision , intent(inout) :: e1b(45) 
+      double precision , intent(inout) :: e2a(45) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !----------------------------------------------- 
       integer :: icalcn, i, j, k, kb
-      real(double), dimension(:), allocatable :: wsum, wmax, wbits
-      real(double), dimension(3) :: xjuc 
-      real(double), dimension(45) :: e1bits = 0.d0, e2bits = 0.d0
-      real(double), dimension(3) :: xdumy 
-      real(double) :: one, cutof2, r, enubit
+      double precision, dimension(:), allocatable :: wsum, wmax, wbits
+      double precision, dimension(3) :: xjuc 
+      double precision, dimension(45) :: e1bits = 0.d0, e2bits = 0.d0
+      double precision, dimension(3) :: xdumy 
+      double precision :: one, cutof2, r, enubit
 
       save xdumy, icalcn, cutof2
 !-----------------------------------------------
@@ -103,16 +100,15 @@
 !  Up to 3 Angstroms, use "exact" NDDO, beyond 3 Angstroms, use a Gauusian mixture.
 !
       use molkst_C, only : l_feather
-      USE vast_kind_param, ONLY:  double 
         implicit none
-        real(double), dimension(45) :: e1bits, e2bits, e1bits_p = 0.d0, e2bits_p = 0.d0
-        real(double), dimension(2025) :: wbits 
+        double precision, dimension(45) :: e1bits, e2bits, e1bits_p = 0.d0, e2bits_p = 0.d0
+        double precision, dimension(2025) :: wbits 
         double precision, intent (in):: r
         double precision, intent (inout):: enubit
         integer, intent (in) :: ni, nj
         integer :: kb
         double precision :: const, enubit_p, dummy
-        real(double), dimension(2025) :: wbits_p
+        double precision, dimension(2025) :: wbits_p
         
         if (l_feather) then
           call to_point(r, dummy, const)

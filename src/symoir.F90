@@ -2,15 +2,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE symmetry_C, ONLY: jndex, namo, nirred, nclass, name, jx, group
       USE meci_C, only : lab 
       use molkst_C, only : keywrd, numat
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:03  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -27,18 +24,18 @@
       integer , intent(in) :: itype 
       integer  :: nvecs 
       integer , intent(in) :: imat  
-      real(double)  :: vects(nvecs,*) 
-      real(double) , intent(in) :: eigs(*) 
-      real(double)  :: r(3,3) 
-      real(double)  :: carmat(imat,20)  
+      double precision  :: vects(nvecs,*) 
+      double precision , intent(in) :: eigs(*) 
+      double precision  :: r(3,3) 
+      double precision  :: carmat(imat,20)  
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(20) :: icount 
       integer , dimension(nvecs) :: ntype 
       integer :: korb, i, jj, j, nfind, ifound, l, ik, k 
-      real(double), dimension(20) :: tchar 
-      real(double) :: toler, check 
+      double precision, dimension(20) :: tchar 
+      double precision :: toler, check 
       logical :: first, r3, debug 
       character :: names*4 
 

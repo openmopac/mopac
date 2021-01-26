@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE molkst_C, only : norbs, numat, nopen, fract, nclose, nelecs, nalpha, &
       nbeta, keywrd, mozyme, maxtxt
       use common_arrays_C, only : nfirst, nlast, nat, p, c, pa, pb, cb, bondab
@@ -10,8 +9,6 @@
       USE chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:47:36  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -25,7 +22,7 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !----------------------------------------------- 
-      real(double), allocatable  :: b(:,:),  sdm(:), aux(:,:), &
+      double precision, allocatable  :: b(:,:),  sdm(:), aux(:,:), &
       pspin(:), spinab(:)
     
 !-----------------------------------------------
@@ -36,9 +33,9 @@
 !-----------------------------------------------
       integer :: nopn, k, i, j, n, m, mu, l, ij, ll, kk, il, ih, &
         ilih, ibab(100)
-      real(double), dimension(numat) :: spna, v, fv, sq, aq, tq, pm, sp, sd, &
+      double precision, dimension(numat) :: spna, v, fv, sq, aq, tq, pm, sp, sd, &
         spsa, spsq 
-      real(double) :: zkappa, sum, a, x, da, aa, valenc, bab(100), sumlim
+      double precision :: zkappa, sum, a, x, da, aa, valenc, bab(100), sumlim
       logical :: ci, nci, kci, lall
 !-----------------------------------------------
 !
@@ -287,9 +284,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:47:36  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -298,14 +292,14 @@
       integer , intent(in) :: norbs 
       integer , intent(in) :: ndubl 
       integer , intent(in) :: nsingl 
-      real(double) , intent(in) :: fract 
-      real(double) , intent(in) :: c(mdim,mdim) 
-      real(double) , intent(out) :: sdm((mdim*(mdim + 1))/2) 
+      double precision , intent(in) :: fract 
+      double precision , intent(in) :: c(mdim,mdim) 
+      double precision , intent(out) :: sdm((mdim*(mdim + 1))/2) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nl1, nu1, l, i, j
-      real(double) :: frac, sum1 
+      double precision :: frac, sum1 
 !-----------------------------------------------
 !**********************************************************************
 !

@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : numcal, numat, nopen, nclose, norbs, gnorm, &
       & fract, keywrd, mpack, moperr, lm61, n2elec
       use meci_C, only : nbo, nmos, nelec, lab
@@ -10,8 +9,6 @@
       use chanel_C, only : iw 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  14:24:19  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -19,17 +16,17 @@
    !   use deri1_I 
    !   use deri2_I 
       implicit none 
-      real(double), dimension(:), allocatable  :: scalar, diag, fmooff, &
+      double precision, dimension(:), allocatable  :: scalar, diag, fmooff, &
       work
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer ::  minear, ninear, nvax, icalcn, i, ilast, ifirst, j, k, l, ll, &
       n1, n2
-      real(double), dimension(nmos*norbs + 1) :: fmoon 
-      real(double), dimension(3*numat) :: dxyzr 
-      real(double), dimension(nmos*norbs*20) :: eigbb 
-      real(double) :: sum, throld, sumx, sumy, sumz 
+      double precision, dimension(nmos*norbs + 1) :: fmoon 
+      double precision, dimension(3*numat) :: dxyzr 
+      double precision, dimension(nmos*norbs*20) :: eigbb 
+      double precision :: sum, throld, sumx, sumy, sumz 
       logical :: debug, dcar, large, relaxd 
       character :: blank*60 
 

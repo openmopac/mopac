@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
       use chanel_C, only : iw, ir, iarc, ilog, log_fn, archive_fn, &
       ires, restart_fn, output_fn, job_fn
@@ -17,7 +16,7 @@
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
       isok, ijulian, gui, Academic, site_no, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
-      ncomments, itemp_1, nbreaks, numat_old, maxtxt, num_bits, use_ref_geo, &
+      ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &   
       method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
       method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label
@@ -39,8 +38,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:00  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -66,9 +63,9 @@
       integer , dimension(19,2) :: idepco 
       integer :: naigin, i, j, k, iflag, nreact, ij, iend, l, ii, jj, &
         i4, j4, ir_temp, l_iw, from_data_set = 14, i_loop, setpi_limit = 50
-      real(double), dimension(40) :: value 
-      real(double), dimension(400) :: xyzt 
-      real(double) :: degree, convrt, dum1, dum2, sum, Rab
+      double precision, dimension(40) :: value 
+      double precision, dimension(400) :: xyzt 
+      double precision :: degree, convrt, dum1, dum2, sum, Rab
       double precision, external :: snapth, distance
       logical :: intern = .true., aigeo, xyz, opend, exists, l_rewind = .true., l_int
       logical, allocatable :: l_use(:)
@@ -653,30 +650,24 @@
           if (numcal == 1 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
         end if
       end if
-#if BITS32
-      num_bits = 32 
-      maxci = 5000
-#else
-      num_bits = 64
       maxci = 10000
-#endif
       if (Academic) then
         if (site_no > 9999) then
           write (iw, '(A,i6,a,i3,a)') ' ** Site#:',site_no, &
-          & '        For non-commercial use only    Version '//verson, num_bits, 'BITS **' 
+          & '        For non-commercial use only           Version '//verson, ' **' 
         else
           write (iw, '(A,i5,a,i3,a)') ' ** Site#:',site_no, &
-          & '         For non-commercial use only    Version '//verson, num_bits, 'BITS **' 
+          & '         For non-commercial use only           Version '//verson, ' **' 
         end if
       else
         if (site_no == -1) then
           write (iw, '(A)') ' **  Evaluation copy      E-mail support: MrMOPAC@ATT.net     Version '//verson//' **'
         else if (site_no > 9999) then
           write (iw, '(A,i6,a,i3,a)') ' ** Site#:',site_no, &
-          & ' E-mail support:    MrMOPAC@ATT.net    Version '//verson, num_bits, 'BITS **' 
+          & '  E-mail support:    MrMOPAC@ATT.net           Version '//verson, ' **' 
         else
           write (iw, '(A,i5,a,i3,a)') ' ** Site#:',site_no, &
-          & '  E-mail support:    MrMOPAC@ATT.net    Version '//verson, num_bits, 'BITS **' 
+          & '  E-mail support:    MrMOPAC@ATT.net           Version '//verson, ' **' 
         end if
       end if
                

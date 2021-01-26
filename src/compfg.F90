@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
       USE funcon_C, only : fpc_9  
 !
@@ -33,8 +32,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:18:48  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -53,24 +50,24 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(out) :: escf 
+      double precision , intent(out) :: escf 
       logical , intent(in) :: int 
       logical, intent(in)  :: fulscf 
       logical , intent(in) :: lgrad 
-      real(double) , intent(in) :: xparam(nvar) 
-      real(double)  :: grad(nvar) 
+      double precision , intent(in) :: xparam(nvar) 
+      double precision  :: grad(nvar) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, i, j, k, l
-      real(double), dimension(3) :: degree 
-      real(double) :: angle, atheat_store, sum
+      double precision, dimension(3) :: degree 
+      double precision :: angle, atheat_store, sum
       double precision, external ::  nsp2_correction, Si_O_H_correction
       double precision, external :: helecz
       logical :: debug, print, large, usedci, force, times, aider, &
         dh, l_locate_ts
       double precision, external :: xfac_value, reada
-      real(double), external :: ddot
+      double precision, external :: ddot
       character :: tmpkey*241
 
       save debug, print, large, usedci, force, times, aider, degree, &

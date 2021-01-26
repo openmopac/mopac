@@ -1,8 +1,7 @@
-      real(kind(0.0d0)) function dipole (p, coord, dipvec, mode) 
+      double precision function dipole (p, coord, dipvec, mode) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double  
       USE molkst_C, only : numat, keywrd, numcal, ux, uy, uz, mpack, &
       mol_weight
       USE parameters_C, only : ddp, dd
@@ -10,8 +9,6 @@
       USE funcon_C, only : fpc_8, fpc_1, a0
       USE chanel_C, only : iw
       use common_arrays_C, only : nfirst, nlast, nat, atmass, q
-!...Translated by Pacific-Sierra Research 77to90  4.4G  09:21:03  03/16/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -20,15 +17,15 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: mode 
-      real(double) , intent(in) :: p(mpack) 
-      real(double) , intent(inout) :: coord(3,*) 
-      real(double) , intent(out) :: dipvec(3) 
+      double precision , intent(in) :: p(mpack) 
+      double precision , intent(inout) :: coord(3,*) 
+      double precision , intent(out) :: dipvec(3) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, i, j, ni, ia, ib, l, k, ll 
-      real(double), dimension(3) :: center 
-      real(double) :: sum, hyfsp, xt, hyfpd, dx, dy, dz, factdm 
+      double precision, dimension(3) :: center 
+      double precision :: sum, hyfsp, xt, hyfpd, dx, dy, dz, factdm 
       logical :: first, chargd, force 
 
       save first, chargd, force, icalcn 

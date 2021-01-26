@@ -1,5 +1,4 @@
       module chanel_C 
-      USE vast_kind_param, ONLY:  double 
       integer :: &
      & iw0       = -1, & !    Abbrev. output, for GUI (By default, not used)
      & ifiles_1  =  1, &

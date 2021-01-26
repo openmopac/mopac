@@ -1,13 +1,10 @@
-      real(kind(0.0d0)) function babbcd (iocca1, ioccb1, iocca2, ioccb2, nmos, &
+      double precision function babbcd (iocca1, ioccb1, iocca2, ioccb2, nmos, &
         xy) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:01  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -17,7 +14,7 @@
       integer , intent(in) :: ioccb1(nmos) 
       integer , intent(in) :: iocca2(nmos) 
       integer , intent(in) :: ioccb2(nmos) 
-      real(double) , intent(in) :: xy(nmos,nmos,nmos,nmos) 
+      double precision , intent(in) :: xy(nmos,nmos,nmos,nmos) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -25,7 +22,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ij, i, j, k, l 
-      real(double) :: one 
+      double precision :: one 
 !-----------------------------------------------
 !**********************************************************************
 !

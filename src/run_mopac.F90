@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double
 !
       use common_arrays_C, only : nfirst, nlast, nat, xparam, grad, nw, &
       p, pa, pb, labels, loc, time_start, l_atom, coord, txtatm, coorda, &
@@ -74,7 +73,7 @@
       use pmep_I
       implicit none
       integer ::  i, j, k, l
-      real(double) :: eat,  tim, store_fepsi
+      double precision :: eat,  tim, store_fepsi
       logical :: exists, opend, sparkles_available, l_OLDDEN
       double precision, external :: C_triple_bond_C
       character :: nokey(20)*10

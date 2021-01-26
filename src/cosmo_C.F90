@@ -1,5 +1,4 @@
 module cosmo_C
-  USE vast_kind_param, ONLY:  double
   implicit none
   logical :: iseps, noeps, useps, lpka
   integer :: nspa, nps, nps2, nden, lenabc, nppa = 1082, &
@@ -15,7 +14,7 @@ module cosmo_C
   integer, dimension(:,:), allocatable :: &
   & isude,   & !
   & nn
-  real(double) ::&
+  double precision ::&
     fepsi,       & ! Dielectric factor =  (e-1)/(e+0.5), e = dielectric constant
                    !
     rds, disex2, &
@@ -31,7 +30,7 @@ module cosmo_C
     cif1, cif2,  & !
     cdiagi,      &
    fnsq, rsolv
-  real(double) :: ffact = 0.d0
+  double precision :: ffact = 0.d0
   double precision, dimension(:), allocatable :: diagsl
   double precision, dimension(3,3,1082) :: tm
   double precision, dimension(4,1082) :: dirsm, dirvec

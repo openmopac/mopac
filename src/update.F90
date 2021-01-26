@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
     use parameters_C, only : natorb, guess1, guess2, guess3, zs, zp, zd, &
     betas, betap, betad, alp, zsn, zpn, zdn, uss, upp, udd, gss, gpp, &
@@ -18,7 +17,7 @@
 !-----------------------------------------------
       integer , intent(in) :: iparam 
       integer , intent(in) :: ielmnt 
-      real(double) , intent(in) :: c1, param 
+      double precision , intent(in) :: c1, param 
 !-----------------------------------------------
 !***********************************************************************
 !

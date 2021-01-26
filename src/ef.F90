@@ -11,7 +11,6 @@ subroutine ef (xparam, funct)
 #if GPU      
     Use mod_vars_cuda, only: real_cuda
 #endif
-    USE vast_kind_param, ONLY:  double             
     implicit none
     double precision, dimension (nvar), intent (inout) :: xparam
     double precision, intent (inout) :: funct
@@ -64,7 +63,7 @@ subroutine ef (xparam, funct)
            best_grad
     double precision, dimension(:,:), allocatable :: p, coord
     double precision, dimension(:,:), allocatable, save :: bmat 
-    real(double), external :: ddot
+    double precision, external :: ddot
 !      
     
     intrinsic Abs, Index, Int, Max, Min, Mod, Sqrt
@@ -742,7 +741,6 @@ end subroutine ef
 
 subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
      & oldf, d, vmode)
-  USE vast_kind_param, ONLY:  double 
   USE maps_C, only : rxn_coord, latom, kloop
   use molkst_C, only : nvar, keywrd, nscf, is_PARAM, norbs, numat, mozyme, prt_gradients
   use common_arrays_C, only : profil
@@ -753,19 +751,19 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
   use mopend_I 
   implicit none
   integer :: il 
-  real(double)  :: tt0 
-  real(double)  :: funct 
+  double precision  :: tt0 
+  double precision  :: funct 
   integer  :: ipow(9) 
-  real(double)  :: hess(nvar,nvar) 
-  real(double)  :: grad(nvar), oldf(*), d(nvar), vmode(nvar)
-  real(double)  :: xparam(nvar) 
-  real(double)  :: pmat(*) 
-  real(double)  :: bmat(nvar,nvar) 
+  double precision  :: hess(nvar,nvar) 
+  double precision  :: grad(nvar), oldf(*), d(nvar), vmode(nvar)
+  double precision  :: xparam(nvar) 
+  double precision  :: pmat(*) 
+  double precision  :: bmat(nvar,nvar) 
 !
   integer ::  i, j, linear, io_stat, old_numat, old_norbs
-  real(double) :: funct1 
+  double precision :: funct1 
   logical :: opend     
-  real(double), external :: ddot
+  double precision, external :: ddot
 !*********************************************************************
 !
 ! EFSAV STORES AND RETRIEVE DATA USED IN THE EF GEOMETRY
@@ -1101,7 +1099,6 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
     use chanel_C, only: iw
     use ef_C, only: skal, ef_mode, iprnt, ddx, xlamd, xlamd0
     use molkst_C, only: numcal, numat
-    USE vast_kind_param, ONLY:  double    
     implicit none
     logical, intent (in) :: donr, rrscal, ts
     logical, intent (inout) :: lorjk
@@ -1124,7 +1121,7 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
     save :: store_ddx
 
 !For MOPAC BLAS            
-    real(double), external :: ddot
+    double precision, external :: ddot
 !      
     
    !

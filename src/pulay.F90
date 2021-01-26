@@ -1,5 +1,4 @@
       subroutine pulay(f, p, n, fppf, fock, emat, lfock, nfock, msize, start, pl) 
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw
       use molkst_C, only : numcal, keywrd, mpack, npulay
       use mamult_I  
@@ -10,20 +9,20 @@
       integer , intent(inout) :: lfock 
       integer , intent(inout) :: nfock 
       integer , intent(in) :: msize 
-      real(double) , intent(out) :: pl 
+      double precision , intent(out) :: pl 
       logical , intent(inout) :: start 
-      real(double)  :: f(mpack) 
-      real(double)  :: p(mpack) 
-      real(double)  :: fppf(*) 
-      real(double) , intent(inout) :: fock(*) 
-      real(double) , intent(inout) :: emat(npulay+1,npulay+1) 
+      double precision  :: f(mpack) 
+      double precision  :: p(mpack) 
+      double precision  :: fppf(*) 
+      double precision , intent(inout) :: fock(*) 
+      double precision , intent(inout) :: emat(npulay+1,npulay+1) 
 !
       integer :: icalcn, maxlim, linear, mfock, lbase, i, nfock1, j, l, il, ii 
-      real(double), dimension((npulay+1)**2) :: evec 
-      real(double), dimension(npulay) :: coeffs 
-      real(double) :: const, d, sum 
+      double precision, dimension((npulay+1)**2) :: evec 
+      double precision, dimension(npulay) :: coeffs 
+      double precision :: const, d, sum 
       logical :: debug      
-      real(double), external :: ddot
+      double precision, external :: ddot
 !
       save icalcn, maxlim, debug, linear, mfock 
 !-----------------------------------------------
@@ -154,12 +153,11 @@
       end subroutine pulay 
 
       subroutine pack_matrix(unpacked, packed, size) 
-        USE vast_kind_param, ONLY:  double 
         implicit none
         integer :: info
         integer , intent(in) :: size
-        real(double) , intent(in) :: unpacked(size, size)
-        real(double) , intent(out) :: packed(*)
+        double precision , intent(in) :: unpacked(size, size)
+        double precision , intent(out) :: packed(*)
   !-----------------------------------------------
   !***********************************************************************
   !
@@ -178,12 +176,11 @@
         end subroutine pack_matrix
 
         subroutine unpack_matrix(packed, unpacked, size) 
-          USE vast_kind_param, ONLY:  double 
           implicit none
           integer :: info, i, j
           integer , intent(in) :: size
-          real(double) , intent(in) :: packed(*)
-          real(double) , intent(out) :: unpacked(size, size)
+          double precision , intent(in) :: packed(*)
+          double precision , intent(out) :: unpacked(size, size)
     !-----------------------------------------------
     !***********************************************************************
     !
@@ -207,13 +204,12 @@
           end subroutine unpack_matrix
 
           subroutine sym_commute(mat1, mat2, mat3, size)
-            USE vast_kind_param, ONLY:  double 
             implicit none
             integer :: i, j
             integer , intent(in) :: size
-            real(double) , intent(in) :: mat1(size, size)
-            real(double) , intent(in) :: mat2(size, size)
-            real(double) , intent(out) :: mat3(size, size)
+            double precision , intent(in) :: mat1(size, size)
+            double precision , intent(in) :: mat2(size, size)
+            double precision , intent(out) :: mat3(size, size)
     !-----------------------------------------------
     !***********************************************************************
     !

@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
       use common_arrays_C, only : nfirst, nlast, nat, p, pa, pb, tvec, &
       nbonds, ibonds, geoa, geo
@@ -26,8 +25,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  14:54:27  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -40,8 +37,8 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: coord(3,numat) 
-      real(double)  :: dxyz(3,numat*l123)  
+      double precision  :: coord(3,numat) 
+      double precision  :: dxyz(3,numat*l123)  
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -50,14 +47,14 @@
 !-----------------------------------------------
       integer :: icalcn, icuc, numtot, i, j, ii, iii, im1, if, il, jj, &
         jjj, jf, jl, kkkk, ik, jk, kl, l, ij, k, loop, i2, j2, Si, O, H
-      real(double), dimension(3,numat) :: work2 
-      real(double), dimension(171) :: pdi, padi, pbdi 
-      real(double), dimension(3,2) :: cdi 
-      real(double), dimension(numat) :: q
+      double precision, dimension(3,numat) :: work2 
+      double precision, dimension(171) :: pdi, padi, pbdi 
+      double precision, dimension(3,2) :: cdi 
+      double precision, dimension(numat) :: q
       integer :: ndi(2), ione
-      real(double) :: chnge, chnge2, const, aa, ee, deriv, del, angle, refh, &
+      double precision :: chnge, chnge2, const, aa, ee, deriv, del, angle, refh, &
         heat, sum, sumx, sumy, sumz, half, rij, der, dstat(3) = 0.d0
-      real(double), external :: derp, nsp2_atom_correction, Si_O_H_bond_correction
+      double precision, external :: derp, nsp2_atom_correction, Si_O_H_bond_correction
       logical :: debug, force, large, refeps, point
       integer, external :: ijbo
       save debug, force, large, chnge, chnge2, icalcn, ione, const

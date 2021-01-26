@@ -1,6 +1,5 @@
      subroutine interp(np, nq, mode, e, fp, cp, theta, vec_interp, fock_interp, &
      p_interp, h_interp, vecl, eold_ref) 
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : keywrd, numcal, norbs
       use common_arrays_C, only : 
       use chanel_C, only : iw
@@ -12,22 +11,22 @@
       integer  :: np 
       integer  :: nq 
       integer , intent(inout) :: mode 
-      real(double) , intent(in) :: e 
-      real(double) , intent(in) :: fp((norbs*(norbs + 1))/2) 
-      real(double) , intent(inout) :: cp(norbs,norbs) 
-      real(double) , dimension (norbs, norbs), intent (inout) :: vec_interp, &
+      double precision , intent(in) :: e 
+      double precision , intent(in) :: fp((norbs*(norbs + 1))/2) 
+      double precision , intent(inout) :: cp(norbs,norbs) 
+      double precision , dimension (norbs, norbs), intent (inout) :: vec_interp, &
     & fock_interp, p_interp
-      real(double) , dimension (norbs*norbs), intent (inout) :: h_interp
-      real(double), dimension(norbs), intent (inout) :: theta 
-      real(double), intent (inout)  :: vecl(norbs*norbs)
-      real(double), intent(inout) :: eold_ref
+      double precision , dimension (norbs*norbs), intent (inout) :: h_interp
+      double precision, dimension(norbs), intent (inout) :: theta 
+      double precision, intent (inout)  :: vecl(norbs*norbs)
+      double precision, intent(inout) :: eold_ref
 !
       integer ::  icalcn, minpq, np1, np2, ii, i, i1, j, k, ik, ipoint, j1, &
         ij, il, k1, k2      
-      real(double) :: xold, zero, ff, dum, dedx, deold, xnow, denow, enow, ck, sk      
+      double precision :: xold, zero, ff, dum, dedx, deold, xnow, denow, enow, ck, sk      
       integer :: npnts 
-      real(double), dimension(12) :: x, f, df 
-      real(double) :: xlow, xhigh, xmin, emin
+      double precision, dimension(12) :: x, f, df 
+      double precision :: xlow, xhigh, xmin, emin
       logical :: debug 
       save
 !-----------------------------------------------
@@ -339,20 +338,17 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:02  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
       integer :: npnts 
-      real(double), dimension(12) :: x, f, df 
-      real(double) :: xlow, xhigh, xmin, fmin, dfmin
+      double precision, dimension(12) :: x, f, df 
+      double precision :: xlow, xhigh, xmin, fmin, dfmin
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k1, j2, n1, k 
-      real(double) :: close, big, huge, ustep, dstep, step, xstart, xstop, dx, &
+      double precision :: close, big, huge, ustep, dstep, step, xstart, xstop, dx, &
         x1, x2, dum, a, b, c, bb, ac3, xk, r, fm 
       logical :: skip1, skip2 
 

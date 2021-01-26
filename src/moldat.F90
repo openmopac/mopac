@@ -7,7 +7,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
       use common_arrays_C, only : nfirst, nlast, nat, uspd, txtatm, &
       & pdiag, labels, coord, geo, atmass, na, nbonds, ibonds
@@ -39,8 +38,6 @@
 !              starting populations, etc.
 !
 !***********************************************************************
-!...Translated by Pacific-Sierra Research 77to90  4.4G  18:38:35  03/15/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -64,11 +61,11 @@
         ndown, l, iminr, jminr, icount, &
         ireal, jreal, ni, n1, n4, n9
       integer(8) :: n2elec8
-      real(double) :: elecs,  c(1), yy, w, sum, rmin   ! c(1) is for a dummy call
+      double precision :: elecs,  c(1), yy, w, sum, rmin   ! c(1) is for a dummy call
       logical :: debug, exci, sing, doub, trip, quar, quin, sext, sept, &
         octe, none, birad, halfe, odd, opend
       character :: num1*1
-      real(double), dimension (:), allocatable :: rxyz
+      double precision, dimension (:), allocatable :: rxyz
 !-----------------------------------------------
       debug = index(keywrd,'MOLDAT') /= 0 
 !

@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : labels, na, nb, nc, geo, nat, loc, txtatm, &
       & p, atmass, all_comments, pibonds_txt, l_atom
       USE parameters_C, only : tore, ams
@@ -14,8 +13,6 @@
       use maps_C, only : lpara1, latom1, lpara2, latom2, latom, lparam 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:50:09  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -30,8 +27,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: mode, iprt, i, j, n, ia, ii, k, igui, store_maxtxt
-      real(double), dimension(natoms) :: q2 
-      real(double) :: degree, w, x, y, z
+      double precision, dimension(natoms) :: q2 
+      double precision :: degree, w, x, y, z
       logical :: cart, lxyz, isotopes, charge, store_moperr, nabc_pdb, sym_pdb
       character , dimension(3) :: q*2 
       character :: flag1*2, flag0*2, flagn*2, blank*80, fmt1*4, fmt2*4, fmt3*4, num*1

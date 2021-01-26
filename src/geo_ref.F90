@@ -15,7 +15,6 @@
 !
 ! During this process, swap pairs of atoms, if that will lower the RMS difference.
 !
-      USE vast_kind_param, ONLY:  double 
 !
       use chanel_C, only : ir, iw, output_fn, job_fn, iarc, archive_fn
 !
@@ -35,7 +34,7 @@
       integer, allocatable :: map_atoms_A(:), atom_no(:)
       character, allocatable :: tmp_txt(:)*27, diffs(:)*80
       double precision, allocatable :: tmp_geoa(:,:)
-      real(double) :: dum1, dum2, sum, rms, rms_min, sum1, sum2, sum3, &
+      double precision :: dum1, dum2, sum, rms, rms_min, sum1, sum2, sum3, &
         toler, xmin, sum4
       double precision, external :: reada
       logical :: intern = .true., exists, bug, any_bug, swap, first, let, l_0SCF_HTML, opend

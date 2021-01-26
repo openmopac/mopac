@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw, iarc, ires, iump, archive_fn, ump_fn, &
       restart_fn, iw0
 !
@@ -17,8 +16,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:20  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -34,7 +31,7 @@
 !-----------------------------------------------
       integer :: npts1, npts2, maxcyc, i, iloop, jloop, j, k, ij, l, &
       iw00, percent = 0, max_count, big_loop, loop, io_stat 
-      real(double) :: step1, step2, degree, c1, c2, cputot, &
+      double precision :: step1, step2, degree, c1, c2, cputot, &
         escf, cpu1, cpu2, cpu3, geo11, geo22, sum
       character :: formt*4, num*1
       logical :: restrt, useef, opend, minimize_energy_in_grid = .false., use_p

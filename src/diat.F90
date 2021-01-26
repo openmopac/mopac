@@ -2,9 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:08  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -21,8 +18,8 @@
 !-----------------------------------------------
       integer, intent(in)  :: ni 
       integer, intent(in)  :: nj 
-      real(double), intent(in)  :: xj(3) 
-      real(double), intent(out)  :: di(9,9) 
+      double precision, intent(in)  :: xj(3) 
+      double precision, intent(out)  :: di(9,9) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -31,13 +28,13 @@
       integer :: icalcn 
       integer :: i, j, ia, ib, newk, nk1, iss, jss, k, kss, kmin, kmax, lmin, &
         lmax, l, ii, jj, pi, pj
-      real(double), dimension(3,3,3) :: s 
-      real(double), dimension(3) :: ul1, ul2 
-      real(double), dimension(3,5,5) :: c 
-      real(double), dimension(27) :: slin 
-      real(double), dimension(3,5) :: c1, c2, c3, c4, c5 
-      real(double), dimension(3,3) :: s1, s2, s3 
-      real(double) :: x2, y2, z2, r, aa, bb
+      double precision, dimension(3,3,3) :: s 
+      double precision, dimension(3) :: ul1, ul2 
+      double precision, dimension(3,5,5) :: c 
+      double precision, dimension(27) :: slin 
+      double precision, dimension(3,5) :: c1, c2, c3, c4, c5 
+      double precision, dimension(3,3) :: s1, s2, s3 
+      double precision :: x2, y2, z2, r, aa, bb
       logical :: use_diat2(107)
 
       save ival, icalcn, use_diat2
@@ -155,10 +152,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE overlaps_C, only : sa, sb, a, b, isp, ips
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:08  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -169,20 +163,20 @@
 !-----------------------------------------------
       integer  :: na 
       integer  :: nb 
-      real(double)  :: esa 
-      real(double)  :: epa 
-      real(double) , intent(in) :: r12 
-      real(double)  :: esb 
-      real(double)  :: epb 
-      real(double) , intent(in) :: a0 
-      real(double) , intent(inout) :: s(3,3,3) 
+      double precision  :: esa 
+      double precision  :: epa 
+      double precision , intent(in) :: r12 
+      double precision  :: esb 
+      double precision  :: epb 
+      double precision , intent(in) :: a0 
+      double precision , intent(inout) :: s(3,3,3) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(17) :: inmb 
       integer , dimension(78) :: iii 
       integer :: jmax, jmin, nbond, ii
-      real(double) :: rab, rab4, w, rt3, d, e, rab6 
+      double precision :: rab, rab4, w, rt3, d, e, rab6 
 
       save inmb, iii 
 !-----------------------------------------------
@@ -344,14 +338,11 @@
       end select 
 !
       end subroutine diat2 
-      real(kind(0.0d0)) function ss (na, nb, la1, lb1, m1, ua, ub, r1, a0) 
+      double precision function ss (na, nb, la1, lb1, m1, ua, ub, r1, a0) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use overlaps_C, only : fact
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:02  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -365,19 +356,19 @@
       integer , intent(in) :: la1 
       integer , intent(in) :: lb1 
       integer , intent(in) :: m1 
-      real(double) , intent(in) :: ua 
-      real(double) , intent(in) :: ub 
-      real(double) , intent(in) :: r1 
-      real(double) , intent(in) :: a0 
+      double precision , intent(in) :: ua 
+      double precision , intent(in) :: ub 
+      double precision , intent(in) :: r1 
+      double precision , intent(in) :: a0 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: m, lb, la, i, i1, j, n, lam1, lbm1, ia, ic, ib, id, iab, k1, &
         k2, k3, k4, k5, iaf, k6, ibf 
-      real(double), dimension(0:2,0:2,0:2) :: aff 
-      real(double), dimension(0:19) :: af, bf 
-      real(double), dimension(0:12,0:12) :: bi 
-      real(double) :: r, p, b, quo, sum, sum1 
+      double precision, dimension(0:2,0:2,0:2) :: aff 
+      double precision, dimension(0:19) :: af, bf 
+      double precision, dimension(0:12,0:12) :: bi 
+      double precision :: r, p, b, quo, sum, sum1 
       logical :: first 
 
       save first, aff, bi 

@@ -6,7 +6,6 @@
 !  Dimension 2: The largest distance in the plane perpendicular to Dimension 1, between any two atoms.
 !  Dimension 3: The largest distance in the direction orthogonal to dimensions 1 and 2, between any two atoms.
 !
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat
       use common_arrays_C, only : nat
       use elemts_C, only : elemnt
@@ -14,15 +13,15 @@
       use symopr_I 
       implicit none
       integer , intent(in) :: iw 
-      real(double)  :: coord(3,numat) 
+      double precision  :: coord(3,numat) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(3,2) :: ij 
       integer :: l, loop, j, k, kmax, lmax, i, kk, ll
-      real(double), dimension(3,3) :: c 
-      real(double), dimension(3) :: dim 
-      real(double) :: x1, y1, z1, rabmax, rmax, r, xy, ca, cb, sa, sb, ymin, &
+      double precision, dimension(3,3) :: c 
+      double precision, dimension(3) :: dim 
+      double precision :: x1, y1, z1, rabmax, rmax, r, xy, ca, cb, sa, sb, ymin, &
         ymax, store_coords(3,numat), sum
 !-----------------------------------------------
     if (numat == 1) return

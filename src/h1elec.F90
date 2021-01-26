@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -15,15 +14,15 @@
 !-----------------------------------------------
       integer  :: ni 
       integer  :: nj 
-      real(double) , intent(in) :: xi(3) 
-      real(double) , intent(in) :: xj(3) 
-      real(double)  :: smat(9,9) 
+      double precision , intent(in) :: xi(3) 
+      double precision , intent(in) :: xj(3) 
+      double precision  :: smat(9,9) 
       
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: j, norbi, norbj 
-      real(double) :: bi(9), bj(9), xjuc(3), rab
+      double precision :: bi(9), bj(9), xjuc(3), rab
 !-----------------------------------------------
 !***********************************************************************
 !

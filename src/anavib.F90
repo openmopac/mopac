@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : numat, line
       use common_arrays_C, only : nat, coord
       USE elemts_C, only : elemnt 
@@ -10,28 +9,26 @@
       use to_screen_C, only : travel, redmas, force_const
       USE chanel_C, only : iw 
       USE symmetry_C, only :  jndex, namo
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:19:44  03/16/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: n3 
       integer , intent(in) :: nv 
-      real(double) , intent(in) :: eigs(n3) 
-      real(double) , intent(in) :: dipt(n3) 
-      real(double) , intent(in) :: vibs(n3,n3) 
-      real(double) , intent(inout) :: rij((numat*(numat + 1))/2) 
-      real(double) , intent(in) :: hess((3*numat*(3*numat + 1))/2) 
-      real(double) , intent(inout) :: f((numat*(numat + 1))/2) 
+      double precision , intent(in) :: eigs(n3) 
+      double precision , intent(in) :: dipt(n3) 
+      double precision , intent(in) :: vibs(n3,n3) 
+      double precision , intent(inout) :: rij((numat*(numat + 1))/2) 
+      double precision , intent(in) :: hess((3*numat*(3*numat + 1))/2) 
+      double precision , intent(inout) :: f((numat*(numat + 1))/2) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(10) :: ijf 
       integer :: l, i, j, iline, k, j3, linear, j1, i1, jj, ii, ij, j2, i3, i2, npad
-      real(double), dimension(107) :: vanrad 
-      real(double), dimension(10) :: fij 
-      real(double) :: tot, vdw, eab, eb, ea, sum, xj, yj, zj, xi, yi, zi, x, y, z, e, shift, radial, ans 
+      double precision, dimension(107) :: vanrad 
+      double precision, dimension(10) :: fij 
+      double precision :: tot, vdw, eab, eb, ea, sum, xj, yj, zj, xi, yi, zi, x, y, z, e, shift, radial, ans 
       character :: pad*20, num*1, num1*1
       logical :: vib1, vib2, vib3, vib4, vib5, vib6
 

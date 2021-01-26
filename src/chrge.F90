@@ -2,13 +2,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only:  nfirst, nlast
       use molkst_C, only: numat, norbs, mozyme
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  08:44:05  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -17,8 +14,8 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
      
-      real(double) , intent(out) :: q(numat) 
-      real(double) , intent(in) :: p((norbs*(norbs+1))/2) 
+      double precision , intent(out) :: q(numat) 
+      double precision , intent(in) :: p((norbs*(norbs+1))/2) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------

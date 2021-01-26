@@ -1,5 +1,4 @@
 module molkst_C
-  USE vast_kind_param, only:  double 
 !
 !  This module contains all the scalars relating to the system being calculated. 
 !  Every entry is unique, and has the same meaning in every subroutine.
@@ -136,14 +135,13 @@ module molkst_C
   &  N_Hbonds, & !  Number of hydrogen bonds, with energy < -1 kcal/mol, found in system
   &  P_Hbonds, & !  Number of hydrogen bonds found in system
   &  num_threads, & !  Number of threads to be used (in parallel work)
-  &  num_bits, & !  Number of bits used in architecture (32 or 64)
   &  dummy
   real ::          &
     CPU_0,         & !  Start of CPU time (in seconds)
     CPU_1,         & !  Curresnt CPU time (in seconds)
     wall_clock_0,  & !  Start of wall-clock time (in seconds)
     wall_clock_1     !  Current wall-clock time (in seconds)
-  real(double) ::  &
+  double precision ::  &
   & arc_hof_1,     & !  Heat of formation from an old ARC file
   & arc_hof_2,     & !  Heat of formation from another old ARC file
   &  escf,         & !  Term        Heat of formation at 298 K

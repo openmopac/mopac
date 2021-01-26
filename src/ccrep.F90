@@ -2,29 +2,26 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use parameters_C, only : alp, tore, guess1, guess2, guess3, alpb, xfac, &
         par1, par2, par3, par4
       use funcon_C, only : a0
       use molkst_C, only : method_mndod, method_pm6, method_am1, &
         method_pm7, method_PM8
-!...Translated by Pacific-Sierra Research 77to90  4.4G  12:41:19  03/10/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ni 
       integer , intent(in) :: nj 
-      real(double) , intent(inout) :: r 
-      real(double) , intent(in) :: gab
-      real(double) , intent(out) :: enuclr 
+      double precision , intent(inout) :: r 
+      double precision , intent(in) :: gab
+      double precision , intent(out) :: enuclr 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nt, ig, i, j
     !  logical :: opend
-      real(double) :: alpni, alpnj, enuc, abond, fff, scale, eni=88.d0, enj, ax
+      double precision :: alpni, alpnj, enuc, abond, fff, scale, eni=88.d0, enj, ax
 !-----------------------------------------------
 !     CONVERT TO ANGSTROM AND INITIALIZE VARIABLES.
       r = r*a0 

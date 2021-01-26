@@ -1,8 +1,7 @@
-      real(kind(0.0d0)) function meci () 
+      double precision function meci () 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use meci_C, only : rjkaa, rjkab, microa, microb, nmeci, nelec, nstate, &
       & lab, labsiz, cdiagi, cdiag, occa, maxci, nalmat, conf, nmos, &
       & vectci, xy, dijkl, ispin, eig, ispqr,  k, deltap, root_requested
@@ -35,14 +34,14 @@
         iuj, iofset, il, iu, irep(maxci), smult, jroot
       integer, dimension (20, 20) :: qn_temp
       integer, dimension(:,:), allocatable :: nperma, npermb 
-      real(double), dimension(:), allocatable :: eiga, cimat, spin, cij, ckl, wcij, &
+      double precision, dimension(:), allocatable :: eiga, cimat, spin, cij, ckl, wcij, &
         delta
-      real(double), dimension(:), allocatable :: diag 
-      real(double), dimension(nmeci, nmeci) :: deltapp
-      real(double), dimension(:,:), allocatable :: oscil
-      real(double), dimension(3) :: work 
-      real(double) :: xx, x, gse, y, sum, summ 
-      real(double), allocatable :: overlap(:)
+      double precision, dimension(:), allocatable :: diag 
+      double precision, dimension(nmeci, nmeci) :: deltapp
+      double precision, dimension(:,:), allocatable :: oscil
+      double precision, dimension(3) :: work 
+      double precision :: xx, x, gse, y, sum, summ 
+      double precision, allocatable :: overlap(:)
       logical :: debug, large, prnt, lspin, lspin1, peci, first1, bigprt, sing, &
         doub, trip, quar, quin, sext, prnt2, geook, getmic, sept, octe, none, &
         cis, cisd, cisdt

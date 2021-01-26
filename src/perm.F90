@@ -1,6 +1,4 @@
       subroutine perm(iperm, nels, nmos, nperms, limci) 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:33  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       use meci_C, only : maxci
       implicit none
 !-----------------------------------------------

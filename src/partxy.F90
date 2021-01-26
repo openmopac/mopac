@@ -2,13 +2,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numcal, numat, lm61
       use common_arrays_C, only : nfirst, nlast
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:32  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -18,9 +15,9 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: c34(*) 
-      real(double)  :: pq34(lm61) 
-      real(double)  :: w(*)  
+      double precision  :: c34(*) 
+      double precision  :: pq34(lm61) 
+      double precision  :: w(*)  
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -30,7 +27,7 @@
       integer , dimension(-1:8) :: nb 
       integer :: icalcn, iband, kr, ls, ii, ia, ib, lsp, i, &
         j, lsw, k, l, jband, js, jj
-      real(double) :: aa, sum, bb 
+      double precision :: aa, sum, bb 
       save nb, icalcn 
 !-----------------------------------------------
 !------------------------------------------------------------------

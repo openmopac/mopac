@@ -1,6 +1,5 @@
     subroutine getsym (locpar, idepfn, locdep, depmul)
     use molkst_C, only: natoms, ndep, moperr, id
-    USE vast_kind_param, ONLY:  double 
     use chanel_C, only : iw, ir
     use common_arrays_C, only : na
     use molkst_C, only : line
@@ -14,8 +13,6 @@
     double precision, dimension (natoms), intent (out) :: depmul
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:17  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -26,8 +23,8 @@
 !-----------------------------------------------
       integer , dimension(100) :: ivalue 
       integer :: n, nvalue, i, ll, j, l, nerror, n_used, i_sym(4)
-      real(double) :: sum
-      real(double), dimension(100) :: value 
+      double precision :: sum
+      double precision, dimension(100) :: value 
       character , dimension(19) :: texti*60, textx*60 
       character, dimension(19,2) :: text*60 
       character, dimension(38) :: used*60

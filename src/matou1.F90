@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : numat, norbs, nalpha, nclose, keywrd
       use common_arrays_C, only : nfirst, nlast, nat
       use chanel_C, only : iw
@@ -11,8 +10,6 @@
       USE symmetry_C, only :  jndex, namo
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:24  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -24,8 +21,8 @@
       integer , intent(inout) :: nr 
       integer , intent(in) :: ndim 
       integer , intent(in) :: iflag 
-      real(double) , intent(in) :: a(nr,nr) 
-      real(double) , intent(in) :: b(ndim) 
+      double precision , intent(in) :: a(nr,nr) 
+      double precision , intent(in) :: b(ndim) 
 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s

@@ -2,23 +2,20 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : pi
-!...Translated by Pacific-Sierra Research 77to90  4.4G  09:48:01  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ioper 
-      real(double) , intent(inout) :: r(3,3) 
-      real(double) , intent(inout) :: t(5,5,12) 
+      double precision , intent(inout) :: r(3,3) 
+      double precision , intent(inout) :: t(5,5,12) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i 
-      real(double), dimension(2,4) :: f 
-      real(double) :: tol, s12, s3, one, r1, r2, r3, check, arg, b, sina, g&
+      double precision, dimension(2,4) :: f 
+      double precision :: tol, s12, s3, one, r1, r2, r3, check, arg, b, sina, g&
         , a, e1, x1, e2, e3, e4, x2, x3, x4, ta, tg 
       logical :: right 
 

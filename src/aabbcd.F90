@@ -1,14 +1,11 @@
-      real(kind(0.0d0)) function aabbcd (iocca1, ioccb1, iocca2, ioccb2, nmos, &
+      double precision function aabbcd (iocca1, ioccb1, iocca2, ioccb2, nmos, &
         xy) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE meci_C, only : ispqr, is, iiloop, jloop
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:46:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -21,7 +18,7 @@
       integer , intent(in) :: ioccb1(nmos) 
       integer , intent(in) :: iocca2(nmos) 
       integer , intent(in) :: ioccb2(nmos) 
-      real(double) , intent(in) :: xy(nmos,nmos,nmos,nmos) 
+      double precision , intent(in) :: xy(nmos,nmos,nmos,nmos) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -29,7 +26,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, k, l, m, ij 
-      real(double) :: xr 
+      double precision :: xr 
 !-----------------------------------------------
 !**********************************************************************
 !

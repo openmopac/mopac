@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : nat, na, labels, &
       & geo, coord, w, c, tvec
       USE parameters_C, only : polvol
@@ -14,8 +13,6 @@
       USE chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -36,15 +33,15 @@
       use ngidri_I 
       use ngoke_I 
       implicit none
-      real(double), allocatable, dimension (:,:) :: x1, x2, x3, x4, x5, x6, x7, x8, &
+      double precision, allocatable, dimension (:,:) :: x1, x2, x3, x4, x5, x6, x7, x8, &
         x19, x10, x11, x12, x13
       integer :: i, j, k, l, iwflb, ibet, igam, maxitu, maxita, &
         nfreq, iwfla, ref_na(natoms)
-      real(double), dimension(nvar) :: grad 
-      real(double), dimension(3,3) :: rotvec, tempv 
-      real(double), dimension(10) :: dataev 
-      real(double), dimension(3,natoms) :: refgeo 
-      real(double) :: a, b, sum, sumx, sumy, sumz, summax, atpol, heat0, &
+      double precision, dimension(nvar) :: grad 
+      double precision, dimension(3,3) :: rotvec, tempv 
+      double precision, dimension(10) :: dataev 
+      double precision, dimension(3,natoms) :: refgeo 
+      double precision :: a, b, sum, sumx, sumy, sumz, summax, atpol, heat0, &
         atol, btol, hartr, omegau, cc
       logical :: let 
       character :: polkey*241 
@@ -400,9 +397,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -412,16 +406,16 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer  :: norbs 
-      real(double) , intent(in) :: ua(norbs,norbs) 
-      real(double) , intent(in) :: ga(norbs,norbs) 
-      real(double) , intent(in) :: ub(norbs,norbs) 
-      real(double) , intent(in) :: gb(norbs,norbs) 
-      real(double)  :: t(norbs,norbs) 
+      double precision , intent(in) :: ua(norbs,norbs) 
+      double precision , intent(in) :: ga(norbs,norbs) 
+      double precision , intent(in) :: ub(norbs,norbs) 
+      double precision , intent(in) :: gb(norbs,norbs) 
+      double precision  :: t(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j
-      real(double) :: sum1, sum2 
+      double precision :: sum1, sum2 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE CREATES THE NEW T MATRIX
@@ -457,20 +451,17 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: norb 
-      real(double) , intent(in) :: f(norb,norb) 
-      real(double) , intent(out) :: g(norb,norb) 
-      real(double) , intent(in) :: c(norb,norb) 
+      double precision , intent(in) :: f(norb,norb) 
+      double precision , intent(out) :: g(norb,norb) 
+      double precision , intent(in) :: c(norb,norb) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -478,8 +469,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j
-      real(double), dimension(norbs) :: work 
-      real(double) :: term, term2 
+      double precision, dimension(norbs) :: work 
+      double precision :: term, term2 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE FORMS THE G MATRIX BY TRANSFORMING F WITH C
@@ -501,14 +492,11 @@
       end subroutine transf 
 
 
-      real(kind(0.0d0)) function trsub (ul, x, ur, l1, lm, ndim) 
+      double precision function trsub (ul, x, ur, l1, lm, ndim) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 ! THIS PROGRAM CALCULATES TRACES OF MATRICES
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -516,14 +504,14 @@
       integer , intent(in) :: l1 
       integer , intent(in) :: lm 
       integer , intent(in) :: ndim 
-      real(double) , intent(in) :: ul(ndim,ndim) 
-      real(double) , intent(in) :: x(ndim,ndim) 
-      real(double) , intent(in) :: ur(ndim,ndim) 
+      double precision , intent(in) :: ul(ndim,ndim) 
+      double precision , intent(in) :: x(ndim,ndim) 
+      double precision , intent(in) :: ur(ndim,ndim) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, k, l 
-      real(double) :: sum, suml 
+      double precision :: sum, suml 
 !-----------------------------------------------
 !
       sum = 0.0D00 
@@ -541,13 +529,10 @@
       end function trsub 
 
 
-      real(kind(0.0d0)) function trudgu (ul, x, ur, l1, lm, ndim) 
+      double precision function trudgu (ul, x, ur, l1, lm, ndim) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -555,14 +540,14 @@
       integer , intent(in) :: l1 
       integer , intent(in) :: lm 
       integer , intent(in) :: ndim 
-      real(double) , intent(in) :: ul(ndim,ndim) 
-      real(double) , intent(in) :: x(ndim,ndim) 
-      real(double) , intent(in) :: ur(ndim,ndim) 
+      double precision , intent(in) :: ul(ndim,ndim) 
+      double precision , intent(in) :: x(ndim,ndim) 
+      double precision , intent(in) :: ur(ndim,ndim) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, k, l 
-      real(double) :: sum, suml 
+      double precision :: sum, suml 
 !-----------------------------------------------
 !
       sum = 0.0D00 
@@ -580,13 +565,10 @@
       end function trudgu 
 
 
-      real(kind(0.0d0)) function trugdu (ul, x, ur, l1, lm, ndim) 
+      double precision function trugdu (ul, x, ur, l1, lm, ndim) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -594,14 +576,14 @@
       integer , intent(in) :: l1 
       integer , intent(in) :: lm 
       integer , intent(in) :: ndim 
-      real(double) , intent(in) :: ul(ndim,ndim) 
-      real(double) , intent(in) :: x(ndim,ndim) 
-      real(double) , intent(in) :: ur(ndim,ndim) 
+      double precision , intent(in) :: ul(ndim,ndim) 
+      double precision , intent(in) :: x(ndim,ndim) 
+      double precision , intent(in) :: ur(ndim,ndim) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, k, l 
-      real(double) :: sum, suml 
+      double precision :: sum, suml 
 !-----------------------------------------------
 !
       sum = 0.0D00 
@@ -619,13 +601,10 @@
       end function trugdu 
 
 
-      real(kind(0.0d0)) function trugud (ul, x, ur, l1, lm, ndim) 
+      double precision function trugud (ul, x, ur, l1, lm, ndim) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -633,14 +612,14 @@
       integer , intent(in) :: l1 
       integer , intent(in) :: lm 
       integer , intent(in) :: ndim 
-      real(double) , intent(in) :: ul(ndim,ndim) 
-      real(double) , intent(in) :: x(ndim,ndim) 
-      real(double) , intent(in) :: ur(ndim,ndim) 
+      double precision , intent(in) :: ul(ndim,ndim) 
+      double precision , intent(in) :: x(ndim,ndim) 
+      double precision , intent(in) :: ur(ndim,ndim) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, k, l 
-      real(double) :: sum, suml 
+      double precision :: sum, suml 
 !-----------------------------------------------
 !
       sum = 0.0D00 
@@ -658,13 +637,10 @@
       end function trugud 
 
 
-      real(kind(0.0d0)) function wrdkey (keywrd, key, nk, refkey, nr, def) 
+      double precision function wrdkey (keywrd, key, nk, refkey, nr, def) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -675,7 +651,7 @@
 !-----------------------------------------------
       integer , intent(in) :: nk 
       integer , intent(in) :: nr 
-      real(double) , intent(in) :: def 
+      double precision , intent(in) :: def 
       character  :: keywrd*241 
       character , intent(in) :: key*(*) 
       character , intent(in) :: refkey*(*) 
@@ -720,16 +696,13 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: m 
-      real(double) , intent(out) :: x(m,m) 
+      double precision , intent(out) :: x(m,m) 
 !-----------------------------------------------
 !
 !  ZEROM ZEROS THE MATRIX X
@@ -743,7 +716,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, keywrd, nclose, numat
       use chanel_C, only : iw
       use funcon_C, only: a0, ev
@@ -755,8 +727,6 @@
 !  USED TO COMPUTE THE FREQUENCY DEPENDENT POLARIZABILITY AND FOR
 !  SOLVING THE SECOND-ORDER PROBLEM.
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -783,23 +753,23 @@
 !-----------------------------------------------
       integer , intent(in) :: iwfla 
       integer , intent(in) :: maxita 
-      real(double)  :: atol 
-      real(double)  :: u(norbs,norbs) 
-      real(double)  :: f(norbs,norbs) 
-      real(double)  :: g(norbs,norbs) 
-      real(double)  :: uold(norbs,norbs) 
-      real(double)  :: h1(norbs,norbs) 
-      real(double)  :: d(norbs,norbs) 
-      real(double)  :: da(norbs,norbs) 
-      real(double)  :: w2(*) 
-      real(double)  :: c(*) 
-      real(double)  :: w(*) 
+      double precision  :: atol 
+      double precision  :: u(norbs,norbs) 
+      double precision  :: f(norbs,norbs) 
+      double precision  :: g(norbs,norbs) 
+      double precision  :: uold(norbs,norbs) 
+      double precision  :: h1(norbs,norbs) 
+      double precision  :: d(norbs,norbs) 
+      double precision  :: da(norbs,norbs) 
+      double precision  :: w2(*) 
+      double precision  :: c(*) 
+      double precision  :: w(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: nsqr, iposu, iposg, id, icount, ic, j, iexp
-      real(double), dimension(3,3) :: allalp 
-      real(double) :: cmptim, alpold, diff, alphaw, dela, &
+      double precision, dimension(3,3) :: allalp 
+      double precision :: cmptim, alpold, diff, alphaw, dela, &
       const
       logical :: last, debug 
       character, dimension(3) :: alab 
@@ -963,25 +933,22 @@
       end subroutine alphaf 
 
 
-      real(kind(0.0d0)) function aval (h, d, norbs) 
+      double precision function aval (h, d, norbs) 
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: norbs 
-      real(double) , intent(in) :: h(norbs,norbs) 
-      real(double) , intent(in) :: d(norbs,norbs) 
+      double precision , intent(in) :: h(norbs,norbs) 
+      double precision , intent(in) :: d(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j 
-      real(double) :: sum 
+      double precision :: sum 
 !-----------------------------------------------
 !.................................................................
 !  COMPUTE POLARIZABILITY AS TRACE OF H*D
@@ -1001,22 +968,19 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: norbs 
       integer , intent(in) :: nclose 
-      real(double) , intent(out) :: bdcon(norbs,norbs) 
-      real(double) , intent(in) :: ua(norbs,norbs) 
-      real(double) , intent(in) :: ub(norbs,norbs) 
-      real(double) , intent(in) :: c(norbs,norbs) 
+      double precision , intent(out) :: bdcon(norbs,norbs) 
+      double precision , intent(in) :: ua(norbs,norbs) 
+      double precision , intent(in) :: ub(norbs,norbs) 
+      double precision , intent(in) :: c(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -1024,8 +988,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, l, k 
-      real(double), dimension(norbs) :: w1, w2, w3, w4 
-      real(double) :: sum1, sum2, sum3, sum4, s3, s4 
+      double precision, dimension(norbs) :: w1, w2, w3, w4 
+      double precision :: sum1, sum2, sum3, sum4, s3, s4 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE IS USED TO COMPUTE THE FIRST-ORDER DENSITY
@@ -1080,11 +1044,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1095,11 +1056,11 @@
 !-----------------------------------------------
       integer  :: norbs 
       integer , intent(in) :: nclose 
-      real(double) , intent(in) :: bdcon(norbs,norbs) 
-      real(double) , intent(in) :: uab(norbs,norbs) 
-      real(double) , intent(in) :: c(norbs,norbs) 
-      real(double)  :: d(norbs,norbs) 
-      real(double) , intent(inout) :: da(norbs,norbs) 
+      double precision , intent(in) :: bdcon(norbs,norbs) 
+      double precision , intent(in) :: uab(norbs,norbs) 
+      double precision , intent(in) :: c(norbs,norbs) 
+      double precision  :: d(norbs,norbs) 
+      double precision , intent(inout) :: da(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -1107,8 +1068,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: j, k, l, i 
-      real(double), dimension(norbs) :: w1 
-      real(double) :: sum, s1, s2 
+      double precision, dimension(norbs) :: w1 
+      double precision :: sum, s1, s2 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE IS USED TO COMPUTE THE FIRST-ORDER DENSITY
@@ -1159,7 +1120,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, numat, nclose, line
       use common_arrays_C, only : eigs, nat, nfirst, nlast, coord
       use chanel_C, only : iw
@@ -1168,8 +1128,6 @@
 ! THIS SUBROUTINE CALCULATES ITERATIVE BETA VALUES FOR
 ! THE ELECTROOPTIC POCKELS EFFECT AND OPTICAL RECTIFICATION
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1198,29 +1156,29 @@
 !-----------------------------------------------
       integer  :: iwflb 
       integer , intent(in) :: maxitu 
-      real(double)  :: btol 
-      real(double)  :: ua(norbs,norbs) 
-      real(double)  :: ub(norbs,norbs) 
-      real(double)  :: f(norbs,norbs) 
-      real(double)  :: ga(norbs,norbs) 
-      real(double)  :: gb(norbs,norbs) 
-      real(double)  :: t(norbs,norbs) 
-      real(double)  :: h1(norbs,norbs) 
-      real(double)  :: d(norbs,norbs) 
-      real(double)  :: da(norbs,norbs) 
-      real(double)  :: uab(norbs,norbs) 
-      real(double)  :: uold1(norbs,norbs) 
-      real(double)  :: g(norbs,norbs) 
-      real(double)  :: x(norbs,norbs) 
-      real(double)  :: c(*) 
-      real(double)  :: w(*) 
+      double precision  :: btol 
+      double precision  :: ua(norbs,norbs) 
+      double precision  :: ub(norbs,norbs) 
+      double precision  :: f(norbs,norbs) 
+      double precision  :: ga(norbs,norbs) 
+      double precision  :: gb(norbs,norbs) 
+      double precision  :: t(norbs,norbs) 
+      double precision  :: h1(norbs,norbs) 
+      double precision  :: d(norbs,norbs) 
+      double precision  :: da(norbs,norbs) 
+      double precision  :: uab(norbs,norbs) 
+      double precision  :: uold1(norbs,norbs) 
+      double precision  :: g(norbs,norbs) 
+      double precision  :: x(norbs,norbs) 
+      double precision  :: c(*) 
+      double precision  :: w(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(9) :: ida, idb 
       integer :: maxsq, iposu, iposg, ipose, iposum, id, ia, ib, jpu, jpg, &
         icount, ic 
-      real(double) :: maxu, one, bavx, bavy, bavz, cmptim, betaw, diff, bvec 
+      double precision :: maxu, one, bavx, bavy, bavz, cmptim, betaw, diff, bvec 
       logical :: last 
       character, dimension(3) :: alab 
 
@@ -1494,7 +1452,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use common_arrays_C, only : eigs, nat, nfirst, nlast, coord
       use chanel_C, only : iw
       use molkst_C, only : norbs, nclose, numat, keywrd, line
@@ -1503,8 +1460,6 @@
 ! THIS SUBROUTINE CALCULATES ITERATIVE BETA VALUES FOR SECOND HARMONIC
 ! GENERATION.
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1533,31 +1488,31 @@
 !-----------------------------------------------
       integer  :: iwflb 
       integer , intent(in) :: maxitu 
-      real(double)  :: btol 
-      real(double)  :: ua(norbs,norbs) 
-      real(double)  :: ub(norbs,norbs) 
-      real(double)  :: f(norbs,norbs) 
-      real(double)  :: ga(norbs,norbs) 
-      real(double)  :: gb(norbs,norbs) 
-      real(double)  :: t(norbs,norbs) 
-      real(double)  :: h1(norbs,norbs) 
-      real(double)  :: d(norbs,norbs) 
-      real(double)  :: da(norbs,norbs) 
-      real(double)  :: uab(norbs,norbs) 
-      real(double)  :: uold1(norbs,norbs) 
-      real(double)  :: g(norbs,norbs) 
-      real(double)  :: x(norbs,norbs) 
-      real(double)  :: c(*) 
-      real(double)  :: w(*) 
+      double precision  :: btol 
+      double precision  :: ua(norbs,norbs) 
+      double precision  :: ub(norbs,norbs) 
+      double precision  :: f(norbs,norbs) 
+      double precision  :: ga(norbs,norbs) 
+      double precision  :: gb(norbs,norbs) 
+      double precision  :: t(norbs,norbs) 
+      double precision  :: h1(norbs,norbs) 
+      double precision  :: d(norbs,norbs) 
+      double precision  :: da(norbs,norbs) 
+      double precision  :: uab(norbs,norbs) 
+      double precision  :: uold1(norbs,norbs) 
+      double precision  :: g(norbs,norbs) 
+      double precision  :: x(norbs,norbs) 
+      double precision  :: c(*) 
+      double precision  :: w(*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(6) :: ida, idb 
       integer :: maxsq, iposu, iposg, ipose, iposum, id, ia, ib, jpu, jpg, &
         icount, ic, i, j 
-      real(double) :: maxu 
-      real(double), dimension(3,3,3) :: allbet 
-      real(double) :: one, bavx, bavy, bavz, cmptim, betaw, diff, bvec, &
+      double precision :: maxu 
+      double precision, dimension(3,3,3) :: allbet 
+      double precision :: one, bavx, bavy, bavz, cmptim, betaw, diff, bvec, &
         au_to_esu = 8.639418d-33
       logical :: last, debug 
       character, dimension(3) :: alab 
@@ -1836,12 +1791,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
 ! THIS SUBROUTINE CALCULATES THE TRACE OF UGU MATRICES
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1854,17 +1806,17 @@
 !-----------------------------------------------
       integer  :: nclose 
       integer  :: norbs 
-      real(double) , intent(out) :: term 
-      real(double)  :: u0a(norbs,norbs) 
-      real(double)  :: g0a(norbs,norbs) 
-      real(double)  :: u1b(norbs,norbs) 
-      real(double)  :: g1b(norbs,norbs) 
-      real(double)  :: u1c(norbs,norbs) 
-      real(double)  :: g1c(norbs,norbs) 
+      double precision , intent(out) :: term 
+      double precision  :: u0a(norbs,norbs) 
+      double precision  :: g0a(norbs,norbs) 
+      double precision  :: u1b(norbs,norbs) 
+      double precision  :: g1b(norbs,norbs) 
+      double precision  :: u1c(norbs,norbs) 
+      double precision  :: g1c(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: t1a, t2a, t3a, t4a, t5a, t6a, t1b, t2b, t3b, t4b, t5b, &
+      double precision :: t1a, t2a, t3a, t4a, t5a, t6a, t1b, t2b, t3b, t4b, t5b, &
         t6b 
 !-----------------------------------------------
       t1a = trugud(u0a,g1b,u1c,nclose,norbs,norbs) 
@@ -1889,13 +1841,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
 ! THIS SUBROUTINE CALCULATES TRACE OF UGU MATRICES
 ! WHEN A,B,C DIRECTIONS ARE DIFFERENT
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1908,17 +1857,17 @@
 !-----------------------------------------------
       integer  :: nclose 
       integer  :: norbs 
-      real(double) , intent(out) :: term 
-      real(double)  :: u2a(norbs,norbs) 
-      real(double)  :: g2a(norbs,norbs) 
-      real(double)  :: u1b(norbs,norbs) 
-      real(double)  :: g1b(norbs,norbs) 
-      real(double)  :: u1c(norbs,norbs) 
-      real(double)  :: g1c(norbs,norbs) 
+      double precision , intent(out) :: term 
+      double precision  :: u2a(norbs,norbs) 
+      double precision  :: g2a(norbs,norbs) 
+      double precision  :: u1b(norbs,norbs) 
+      double precision  :: g1b(norbs,norbs) 
+      double precision  :: u1c(norbs,norbs) 
+      double precision  :: g1c(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: t1a, t2a, t3a, t4a, t5a, t6a, t1b, t2b, t3b, t4b, t5b, &
+      double precision :: t1a, t2a, t3a, t4a, t5a, t6a, t1b, t2b, t3b, t4b, t5b, &
         t6b 
 !-----------------------------------------------
       t1a = trudgu(u2a,g1b,u1c,nclose,norbs,norbs) 
@@ -1943,12 +1892,9 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
 ! THIS SUBROUTINE CALCULATES TRACE OF UGU MATRICES
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1961,15 +1907,15 @@
 !-----------------------------------------------
       integer  :: nclose 
       integer  :: norbs 
-      real(double) , intent(out) :: term 
-      real(double)  :: u1(norbs,norbs) 
-      real(double)  :: g1(norbs,norbs) 
-      real(double)  :: u2(norbs,norbs) 
-      real(double)  :: g2(norbs,norbs) 
+      double precision , intent(out) :: term 
+      double precision  :: u1(norbs,norbs) 
+      double precision  :: g1(norbs,norbs) 
+      double precision  :: u2(norbs,norbs) 
+      double precision  :: g2(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: t1a, t2a, t3a, t1b, t2b, t3b 
+      double precision :: t1a, t2a, t3a, t1b, t2b, t3b 
 !-----------------------------------------------
       t1a = trudgu(u2,g1,u1,nclose,norbs,norbs) 
       t2a = trugud(u1,g1,u2,nclose,norbs,norbs) 
@@ -1987,11 +1933,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : ev
       USE polar_C, only : omega 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1999,22 +1942,22 @@
       integer , intent(in) :: norbs 
       integer , intent(in) :: nclose 
       integer , intent(in) :: iwflb 
-      real(double) , intent(out) :: diff 
-      real(double) , intent(out) :: maxu 
-      real(double) , intent(in) :: btol 
+      double precision , intent(out) :: diff 
+      double precision , intent(out) :: maxu 
+      double precision , intent(in) :: btol 
       logical , intent(out) :: last 
-      real(double) , intent(in) :: ua(norbs,norbs) 
-      real(double) , intent(in) :: ub(norbs,norbs) 
-      real(double) , intent(inout) :: uab(norbs,norbs) 
-      real(double) , intent(in) :: t(norbs,norbs) 
-      real(double) , intent(inout) :: uold1(norbs,norbs) 
-      real(double) , intent(in) :: gab(norbs,norbs) 
-      real(double) , intent(in) :: eigs(norbs) 
+      double precision , intent(in) :: ua(norbs,norbs) 
+      double precision , intent(in) :: ub(norbs,norbs) 
+      double precision , intent(inout) :: uab(norbs,norbs) 
+      double precision , intent(in) :: t(norbs,norbs) 
+      double precision , intent(inout) :: uold1(norbs,norbs) 
+      double precision , intent(in) :: gab(norbs,norbs) 
+      double precision , intent(in) :: eigs(norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, kll, kul, k, l 
-      real(double) :: hartr, sum, udif 
+      double precision :: hartr, sum, udif 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE CREATES THE NEW TRANSFORMATION MATRIX U
@@ -2094,16 +2037,13 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: m 
-      real(double) , intent(in) :: h(m,m) 
-      real(double) , intent(out) :: f(m,m) 
+      double precision , intent(in) :: h(m,m) 
+      double precision , intent(out) :: f(m,m) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2129,9 +2069,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2139,7 +2076,7 @@
       integer , intent(in) :: len 
       integer , intent(in) :: idaf 
       integer , intent(in) :: ns 
-      real(double)  :: v(len) 
+      double precision  :: v(len) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2156,10 +2093,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : iw, idaf, ioda, irecln
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2171,7 +2105,7 @@
 !-----------------------------------------------
       integer , intent(in) :: len 
       integer , intent(in) :: nrec 
-      real(double)  :: v(len) 
+      double precision  :: v(len) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2220,10 +2154,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use chanel_C, only : ioda, ifilen, irecst, idaf, irecln, iw
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2235,7 +2166,7 @@
 !-----------------------------------------------
       integer , intent(in) :: len 
       integer , intent(in) :: nrec 
-      real(double)  :: v(len) 
+      double precision  :: v(len) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2296,9 +2227,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2306,7 +2234,7 @@
       integer , intent(in) :: len 
       integer , intent(in) :: idaf 
       integer , intent(in) :: ns 
-      real(double) , intent(in) :: v(len) 
+      double precision , intent(in) :: v(len) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2323,23 +2251,20 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: norbs 
       integer , intent(in) :: nclose 
-      real(double) , intent(in) :: u(norbs,norbs) 
-      real(double) , intent(in) :: c(norbs,norbs) 
-      real(double) , intent(out) :: d(norbs,norbs) 
-      real(double) , intent(out) :: da(norbs,norbs) 
-      real(double) , intent(inout) :: w2(norbs,norbs) 
+      double precision , intent(in) :: u(norbs,norbs) 
+      double precision , intent(in) :: c(norbs,norbs) 
+      double precision , intent(out) :: d(norbs,norbs) 
+      double precision , intent(out) :: da(norbs,norbs) 
+      double precision , intent(inout) :: w2(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -2347,8 +2272,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: j, k, l, i 
-      real(double), dimension(norbs) :: w1 
-      real(double) :: sum 
+      double precision, dimension(norbs) :: w1 
+      double precision :: sum 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE IS USED TO COMPUTE THE FIRST-ORDER DENSITY
@@ -2393,11 +2318,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : ev
       USE polar_C, only : omega 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2409,20 +2331,20 @@
       integer  :: norbs 
       integer , intent(in) :: nclose 
       integer , intent(in) :: iwflb 
-      real(double)  :: eigsab(norbs,norbs) 
-      real(double) , intent(in) :: eigs(norbs) 
-      real(double) , intent(in) :: gab(norbs,norbs) 
-      real(double) , intent(in) :: ga(norbs,norbs) 
-      real(double) , intent(in) :: gb(norbs,norbs) 
-      real(double) , intent(in) :: ua(norbs,norbs) 
-      real(double) , intent(in) :: ub(norbs,norbs) 
-      real(double) , intent(in) :: uab(norbs,norbs) 
-      real(double)  :: udms(norbs,norbs) 
+      double precision  :: eigsab(norbs,norbs) 
+      double precision , intent(in) :: eigs(norbs) 
+      double precision , intent(in) :: gab(norbs,norbs) 
+      double precision , intent(in) :: ga(norbs,norbs) 
+      double precision , intent(in) :: gb(norbs,norbs) 
+      double precision , intent(in) :: ua(norbs,norbs) 
+      double precision , intent(in) :: ub(norbs,norbs) 
+      double precision , intent(in) :: uab(norbs,norbs) 
+      double precision  :: udms(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j
-      real(double) :: hartr, omval, s1, s2 
+      double precision :: hartr, omval, s1, s2 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE CREATES THE NEW EPSILON MATRIX AND UDMS MATRIX
@@ -2476,14 +2398,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : gss, gsp, gpp, gp2, hsp
       use common_arrays_C, only : nat, nfirst, nlast
       use molkst_C, only : numat
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -2492,15 +2411,15 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: ndim 
-      real(double) , intent(inout) :: f(ndim,ndim) 
-      real(double) , intent(in) :: ptot(ndim,ndim) 
-      real(double) , intent(in) :: pa(ndim,ndim) 
-      real(double) , intent(in) :: pb(ndim,ndim) 
+      double precision , intent(inout) :: f(ndim,ndim) 
+      double precision , intent(in) :: ptot(ndim,ndim) 
+      double precision , intent(in) :: pa(ndim,ndim) 
+      double precision , intent(in) :: pb(ndim,ndim) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ii, ia, ib, ni, iplus, j, iminus, icc
-      real(double) :: ptpop, papop 
+      double precision :: ptpop, papop 
       logical :: first 
 
       save first 
@@ -2566,13 +2485,10 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE molkst_C, only : numat, norbs
       use common_arrays_C, only : nfirst, nlast
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -2580,9 +2496,9 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double) , intent(inout) :: f(norbs,norbs) 
-      real(double) , intent(in) :: ptot(norbs,norbs) 
-      real(double) , intent(in) :: w(*) 
+      double precision , intent(inout) :: f(norbs,norbs) 
+      double precision , intent(in) :: ptot(norbs,norbs) 
+      double precision , intent(in) :: w(*) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -2590,7 +2506,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: ii, iim1, ia, ib, jj, ja, jb, i, j, k, l, kk 
-      real(double) :: fij, fkl, a, aint 
+      double precision :: fij, fkl, a, aint 
 !-----------------------------------------------
 !*******************************************************************
 !
@@ -2652,18 +2568,15 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: norbs 
       integer , intent(in) :: itw 
-      real(double) , intent(in) :: sign 
-      real(double) , intent(out) :: a(norbs,norbs) 
-      real(double) , intent(in) :: b(norbs,norbs) 
+      double precision , intent(in) :: sign 
+      double precision , intent(out) :: a(norbs,norbs) 
+      double precision , intent(in) :: b(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2686,10 +2599,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE parameters_C, only : dd 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2704,8 +2614,8 @@
       integer , intent(in) :: nfirst(numat) 
       integer , intent(in) :: nlast(numat) 
       integer , intent(in) :: nat(numat) 
-      real(double)  :: h1(norbs,norbs) 
-      real(double) , intent(in) :: coord(3,*) 
+      double precision  :: h1(norbs,norbs) 
+      double precision , intent(in) :: coord(3,*) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2756,21 +2666,18 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : ev
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: norbs 
-      real(double) , intent(inout) :: f(norbs,norbs) 
-      real(double) , intent(in) :: h(norbs,norbs) 
+      double precision , intent(inout) :: f(norbs,norbs) 
+      double precision , intent(in) :: h(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      real(double) :: hartr
+      double precision :: hartr
 !-----------------------------------------------
 !
 ! HPLUSF ADDS THE 1 AND 2-ELECTRON PARTS OF THE FOCK MATRIX
@@ -2785,11 +2692,8 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : ev
        USE polar_C, only : omega 
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2800,18 +2704,18 @@
 !-----------------------------------------------
       integer  :: norbs 
       integer , intent(in) :: nclose 
-      real(double) , intent(out) :: diff 
-      real(double) , intent(in) :: atol 
+      double precision , intent(out) :: diff 
+      double precision , intent(in) :: atol 
       logical , intent(out) :: last 
-      real(double)  :: u(norbs,norbs) 
-      real(double) , intent(inout) :: uold(norbs,norbs) 
-      real(double) , intent(in) :: g(norbs,norbs) 
-      real(double) , intent(in) :: eigs(norbs) 
+      double precision  :: u(norbs,norbs) 
+      double precision , intent(inout) :: uold(norbs,norbs) 
+      double precision , intent(in) :: g(norbs,norbs) 
+      double precision , intent(in) :: eigs(norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: k, i, j 
-      real(double) :: hartr, udif 
+      double precision :: hartr, udif 
 !-----------------------------------------------
 !
 !  THIS SUBROUTINE CREATES THE NEW TRANSFORMATION MATRIX U
@@ -2853,14 +2757,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nclose
       use chanel_C, only : iw
        USE polar_C, only : omega 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2874,15 +2775,15 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: x(norbs,norbs) 
-      real(double)  :: gd3(norbs,norbs) 
-      real(double)  :: ud3(norbs,norbs) 
-      real(double)  :: g1(norbs,norbs) 
-      real(double)  :: u1(norbs,norbs) 
-      real(double)  :: gs(norbs,norbs) 
-      real(double)  :: usmd(norbs,norbs) 
-      real(double)  :: eps(norbs,norbs) 
-      real(double)  :: us(norbs,norbs)  
+      double precision  :: x(norbs,norbs) 
+      double precision  :: gd3(norbs,norbs) 
+      double precision  :: ud3(norbs,norbs) 
+      double precision  :: g1(norbs,norbs) 
+      double precision  :: u1(norbs,norbs) 
+      double precision  :: gs(norbs,norbs) 
+      double precision  :: usmd(norbs,norbs) 
+      double precision  :: eps(norbs,norbs) 
+      double precision  :: us(norbs,norbs)  
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -2890,8 +2791,8 @@
       integer , dimension(3,3) :: ipair 
       integer :: msq, jgarc, juarc, jurec, jgrec, jg2rec, ju2rec, ju2mrc, &
         jeprec, ie, ia, ib, ic, id, icd, ibd, ibc, imove, j2, j34 
-      real(double), dimension(9) :: gamma 
-      real(double) :: one, gav, yy, gave 
+      double precision, dimension(9) :: gamma 
+      double precision :: one, gav, yy, gave 
       character, dimension(3) :: alab 
 
       save alab, ida, idb, idc, idd, ipair 
@@ -3025,14 +2926,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nclose
       use chanel_C, only : iw
        USE polar_C, only : omega 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3046,15 +2944,15 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: x(norbs,norbs) 
-      real(double)  :: gd3(norbs,norbs) 
-      real(double)  :: ud3(norbs,norbs) 
-      real(double)  :: g1(norbs,norbs) 
-      real(double)  :: u1(norbs,norbs) 
-      real(double)  :: gs(norbs,norbs) 
-      real(double)  :: usmd(norbs,norbs) 
-      real(double)  :: eps(norbs,norbs) 
-      real(double)  :: us(norbs,norbs) 
+      double precision  :: x(norbs,norbs) 
+      double precision  :: gd3(norbs,norbs) 
+      double precision  :: ud3(norbs,norbs) 
+      double precision  :: g1(norbs,norbs) 
+      double precision  :: u1(norbs,norbs) 
+      double precision  :: gs(norbs,norbs) 
+      double precision  :: usmd(norbs,norbs) 
+      double precision  :: eps(norbs,norbs) 
+      double precision  :: us(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -3066,8 +2964,8 @@
       integer :: msq, jgarc, juarc, jurec, jgrec, jg2rec, ju2rec, ju2mrc, &
         jeprec, ie, ia, ib, ic, id, icd, ibd, ibc, imove, j2, j34, j3u, j3g, &
         j3e, j3um 
-      real(double), dimension(15) :: gamma 
-      real(double) :: one, gav, yy, gave 
+      double precision, dimension(15) :: gamma 
+      double precision :: one, gav, yy, gave 
       character, dimension(3) :: alab 
 
       save alab, ida, idb, idc, idd, ip, ipair 
@@ -3285,14 +3183,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nclose
        USE polar_C, only : omega 
       use chanel_C, only : iw
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3306,15 +3201,15 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: x(norbs,norbs) 
-      real(double)  :: gd3(norbs,norbs) 
-      real(double)  :: ud3(norbs,norbs) 
-      real(double)  :: g1(norbs,norbs) 
-      real(double)  :: u1(norbs,norbs) 
-      real(double)  :: gs(norbs,norbs) 
-      real(double)  :: usmd(norbs,norbs) 
-      real(double)  :: eps(norbs,norbs) 
-      real(double)  :: us(norbs,norbs) 
+      double precision  :: x(norbs,norbs) 
+      double precision  :: gd3(norbs,norbs) 
+      double precision  :: ud3(norbs,norbs) 
+      double precision  :: g1(norbs,norbs) 
+      double precision  :: u1(norbs,norbs) 
+      double precision  :: gs(norbs,norbs) 
+      double precision  :: usmd(norbs,norbs) 
+      double precision  :: eps(norbs,norbs) 
+      double precision  :: us(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -3325,8 +3220,8 @@
       integer , dimension(3,3) :: ip, ipair 
       integer :: msq, jgarc, juarc, jurec, jgrec, ie, ia, ib, ic, id, icd, ibd&
         , ibc, imove, j2, j34, jg2rec, ju2rec, ju2mrc, jeprec 
-      real(double), dimension(15) :: gamma 
-      real(double) :: one, gav, yy, gave 
+      double precision, dimension(15) :: gamma 
+      double precision :: one, gav, yy, gave 
       character, dimension(3) :: alab 
 
       save alab, ida, idb, idc, idd, ip, ipair 
@@ -3490,14 +3385,11 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nclose
       use chanel_C, only : iw
        USE polar_C, only : omega 
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3512,15 +3404,15 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: igam 
-      real(double)  :: x(norbs,norbs) 
-      real(double)  :: gd3(norbs,norbs) 
-      real(double)  :: ud3(norbs,norbs) 
-      real(double)  :: g1(norbs,norbs) 
-      real(double)  :: u1(norbs,norbs) 
-      real(double)  :: gs(norbs,norbs) 
-      real(double)  :: usmd(norbs,norbs) 
-      real(double)  :: eps(norbs,norbs) 
-      real(double)  :: us(norbs,norbs)  
+      double precision  :: x(norbs,norbs) 
+      double precision  :: gd3(norbs,norbs) 
+      double precision  :: ud3(norbs,norbs) 
+      double precision  :: g1(norbs,norbs) 
+      double precision  :: u1(norbs,norbs) 
+      double precision  :: gs(norbs,norbs) 
+      double precision  :: usmd(norbs,norbs) 
+      double precision  :: eps(norbs,norbs) 
+      double precision  :: us(norbs,norbs)  
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -3528,8 +3420,8 @@
       integer , dimension(3,3) :: ip, ipair 
       integer :: msq, jgarc, juarc, jurec, jgrec, ie, ia, ib, ic, id, icd, ibd&
         , ibc, imove, j2, j34, jg2rec, ju2rec, ju2mrc, jeprec 
-      real(double), dimension(15) :: gamma 
-      real(double) :: one, gav, yy, gave 
+      double precision, dimension(15) :: gamma 
+      double precision :: one, gav, yy, gave 
       character, dimension(3) :: alab 
 
       save alab, ida, idb, idc, idd, ip, ipair 
@@ -3754,7 +3646,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nclose, line
       use chanel_C, only : iw
        USE polar_C, only : omega 
@@ -3764,8 +3655,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3779,23 +3668,23 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: u1x(norbs,norbs) 
-      real(double)  :: u1y(norbs,norbs) 
-      real(double)  :: u1z(norbs,norbs) 
-      real(double)  :: u2x(norbs,norbs) 
-      real(double)  :: u2y(norbs,norbs) 
-      real(double)  :: u2z(norbs,norbs) 
-      real(double)  :: g1x(norbs,norbs) 
-      real(double)  :: g1y(norbs,norbs) 
-      real(double)  :: g1z(norbs,norbs) 
-      real(double)  :: g2x(norbs,norbs) 
-      real(double)  :: g2y(norbs,norbs) 
-      real(double)  :: g2z(norbs,norbs) 
+      double precision  :: u1x(norbs,norbs) 
+      double precision  :: u1y(norbs,norbs) 
+      double precision  :: u1z(norbs,norbs) 
+      double precision  :: u2x(norbs,norbs) 
+      double precision  :: u2y(norbs,norbs) 
+      double precision  :: u2z(norbs,norbs) 
+      double precision  :: g1x(norbs,norbs) 
+      double precision  :: g1y(norbs,norbs) 
+      double precision  :: g1z(norbs,norbs) 
+      double precision  :: g2x(norbs,norbs) 
+      double precision  :: g2y(norbs,norbs) 
+      double precision  :: g2z(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: maxsq 
-      real(double) :: bavx, bavy, bavz, bxxx, byxx, bzxx, bxxy, byxy, bzxy, &
+      double precision :: bavx, bavy, bavz, bxxx, byxx, bzxx, bxxy, byxy, bzxy, &
         bxxz, byxz, bzxz, bxyx, byyx, bzyx, bxyy, byyy, bzyy, bxyz, byyz, bzyz&
         , bxzx, byzx, bzzx, bxzy, byzy, bzzy, bxzz, byzz, bzzz, bvec 
 !-----------------------------------------------
@@ -3938,7 +3827,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nclose, line
       use chanel_C, only : iw 
       USE polar_C, only : omega 
@@ -3948,8 +3836,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3962,23 +3848,23 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: u0x(norbs,norbs) 
-      real(double)  :: u1y(norbs,norbs) 
-      real(double)  :: u1z(norbs,norbs) 
-      real(double)  :: u1x(norbs,norbs) 
-      real(double)  :: u0y(norbs,norbs) 
-      real(double)  :: u0z(norbs,norbs) 
-      real(double)  :: g0x(norbs,norbs) 
-      real(double)  :: g1y(norbs,norbs) 
-      real(double)  :: g1z(norbs,norbs) 
-      real(double)  :: g1x(norbs,norbs) 
-      real(double)  :: g0y(norbs,norbs) 
-      real(double)  :: g0z(norbs,norbs) 
+      double precision  :: u0x(norbs,norbs) 
+      double precision  :: u1y(norbs,norbs) 
+      double precision  :: u1z(norbs,norbs) 
+      double precision  :: u1x(norbs,norbs) 
+      double precision  :: u0y(norbs,norbs) 
+      double precision  :: u0z(norbs,norbs) 
+      double precision  :: g0x(norbs,norbs) 
+      double precision  :: g1y(norbs,norbs) 
+      double precision  :: g1z(norbs,norbs) 
+      double precision  :: g1x(norbs,norbs) 
+      double precision  :: g0y(norbs,norbs) 
+      double precision  :: g0z(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: maxsq 
-      real(double) :: bavx, bavy, bavz, bxxx, byxx, bzxx, bxxy, byxy, bzxy, &
+      double precision :: bavx, bavy, bavz, bxxx, byxx, bzxx, bxxy, byxy, bzxy, &
         bxxz, byxz, bzxz, bxyx, byyx, bzyx, bxyy, byyy, bzyy, bxyz, byyz, bzyz, &
         bxzx, byzx, bzzx, bxzy, byzy, bzzy, bxzz, byzz, bzzz, bvec, &
         au_to_esu = 8.639418d-33
@@ -4122,7 +4008,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : norbs, nclose
       use chanel_C, only : iw
        USE polar_C, only : omega 
@@ -4132,8 +4017,6 @@
 !
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -4146,23 +4029,23 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: u0x(norbs,norbs) 
-      real(double)  :: u1y(norbs,norbs) 
-      real(double)  :: u1z(norbs,norbs) 
-      real(double)  :: u1x(norbs,norbs) 
-      real(double)  :: u0y(norbs,norbs) 
-      real(double)  :: u0z(norbs,norbs) 
-      real(double)  :: g0x(norbs,norbs) 
-      real(double)  :: g1y(norbs,norbs) 
-      real(double)  :: g1z(norbs,norbs) 
-      real(double)  :: g1x(norbs,norbs) 
-      real(double)  :: g0y(norbs,norbs) 
-      real(double)  :: g0z(norbs,norbs) 
+      double precision  :: u0x(norbs,norbs) 
+      double precision  :: u1y(norbs,norbs) 
+      double precision  :: u1z(norbs,norbs) 
+      double precision  :: u1x(norbs,norbs) 
+      double precision  :: u0y(norbs,norbs) 
+      double precision  :: u0z(norbs,norbs) 
+      double precision  :: g0x(norbs,norbs) 
+      double precision  :: g1y(norbs,norbs) 
+      double precision  :: g1z(norbs,norbs) 
+      double precision  :: g1x(norbs,norbs) 
+      double precision  :: g0y(norbs,norbs) 
+      double precision  :: g0z(norbs,norbs) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: maxsq 
-      real(double) :: bavx, bavy, bavz, bxxx, byxx, bzxx, bxxy, byxy, bzxy, &
+      double precision :: bavx, bavy, bavz, bxxx, byxx, bzxx, bxxy, byxy, bzxy, &
         bxxz, byxz, bzxz, bxyx, byyx, bzyx, bxyy, byyy, bzyy, bxyz, byyz, bzyz&
         , bxzx, byzx, bzzx, bxzy, byzy, bzzy, bxzz, byzz, bzzz, bvec 
 !-----------------------------------------------
@@ -4311,8 +4194,6 @@
 !
 !     - - - - OPEN MASTER DICTIONARY FILE 10 - - - -
 !
-!...Translated by Pacific-Sierra Research 77to90  4.4G  21:23:38  03/14/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s

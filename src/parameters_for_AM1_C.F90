@@ -1,10 +1,8 @@
       module Parameters_for_AM1_C 
-      USE vast_kind_param, ONLY:  double 
-!...Created by Pacific-Sierra Research 77to90  4.4G  20:31:02  03/10/06  
-      real(double), dimension(107) :: ussam1, uppam1, uddam1, zsam1, zpam1, zdam1, &
+      double precision, dimension(107) :: ussam1, uppam1, uddam1, zsam1, zpam1, zdam1, &
         betasa, betapa, betada, alpam1, gssam1, gspam1, gppam1, gp2am1, hspam1, &
         polvolam1, zsnam1, zpnam1, zdnam1, f0sdam1, g2sdam1
-      real(double), dimension(107,4) :: guesa1, guesa2, guesa3         
+      double precision, dimension(107,4) :: guesa1, guesa2, guesa3         
 !
 !       Data for Element   1:     Hydrogen
 !

@@ -1,5 +1,4 @@
 subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp, iopc)
-      Use vast_kind_param, only: double
 #if GPU
       Use mod_vars_cuda, only: real_cuda, prec, nthreads_gpu, nblocks_gpu
       Use iso_c_binding    
@@ -10,11 +9,11 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
       implicit none
       Integer :: ndubl, nsingl, mode, mpack, norbs, nl1, nl2, nu1, nu2, i, j, &
 	           & nl21, nl11, iopc
-      real(double),allocatable :: xmat(:,:)
-      real(double) :: c(norbs,norbs), pp(mpack)
-      real(double) :: cst, sign, fract, frac, occ
+      double precision,allocatable :: xmat(:,:)
+      double precision :: c(norbs,norbs), pp(mpack)
+      double precision :: cst, sign, fract, frac, occ
 #if GPU
-      real(double), allocatable :: pdens(:)
+      double precision, allocatable :: pdens(:)
 #endif
       if (ndubl /= 0 .and. nsingl > (norbs/2) .and. mode /= 2) then
         !

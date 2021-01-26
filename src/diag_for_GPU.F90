@@ -1,5 +1,4 @@
 subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
-    Use vast_kind_param, only: double
 #ifdef MKL
     use molkst_C, only: num_threads
 #endif
@@ -12,16 +11,16 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
 #endif
     implicit none
     integer, intent (in) :: nocc, mpack, norbs
-    real(double), dimension (mpack), intent (in) :: fao
-    real(double), dimension (norbs, norbs), intent (inout) :: vector
-    real(double), dimension (norbs), intent (in) :: eig
-    real(double), allocatable, dimension (:) :: fmo
+    double precision, dimension (mpack), intent (in) :: fao
+    double precision, dimension (norbs, norbs), intent (inout) :: vector
+    double precision, dimension (norbs), intent (in) :: eig
+    double precision, allocatable, dimension (:) :: fmo
     integer :: lumo, mdim, n, nvirt, i, ij, in, j,  norbs2
-    real(double) :: bigeps = 1.5d-007
-    real(double) :: a, alpha, b, beta, d, e, tiny, x
-    real(double), allocatable, dimension(:,:)  :: fck
+    double precision :: bigeps = 1.5d-007
+    double precision :: a, alpha, b, beta, d, e, tiny, x
+    double precision, allocatable, dimension(:,:)  :: fck
 #if GPU
-    real(double), allocatable, dimension(:,:)  :: ci0,ca0 ! alp,bet
+    double precision, allocatable, dimension(:,:)  :: ci0,ca0 ! alp,bet
 #endif
     integer :: kk      
 !

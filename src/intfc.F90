@@ -2,7 +2,6 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use molkst_C, only : natoms, nvar, numat, l123, l1u, l2u, l3u
       use common_arrays_C, only : na, nb, nc, geo, loc, labels, nat
       use chanel_C, only : iw
@@ -11,8 +10,6 @@
       use to_screen_I
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  10:47:21  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -24,9 +21,9 @@
       integer , intent(in) :: nar(natoms) 
       integer , intent(in) :: nbr(natoms) 
       integer , intent(in) :: ncr(natoms) 
-      real(double) , intent(in) :: fmatrx((3*numat*(3*numat + 1))/2) 
-      real(double)  :: xparam(nvar) 
-      real(double) , intent(in) :: georef(3,natoms) 
+      double precision , intent(in) :: fmatrx((3*numat*(3*numat + 1))/2) 
+      double precision  :: xparam(nvar) 
+      double precision , intent(in) :: georef(3,natoms) 
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
@@ -34,7 +31,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: j, i, ilim, n3, k, ncol
-      real(double) :: step, stepi, sum, dumy(3*numat*l123)
+      double precision :: step, stepi, sum, dumy(3*numat*l123)
       logical :: precis, lxyz
 !-----------------------------------------------
       nvar = 0 

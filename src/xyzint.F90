@@ -2,10 +2,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       use funcon_C, only : pi
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:04:59  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -15,18 +12,18 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      real(double)  :: degree 
+      double precision  :: degree 
       integer :: numat
       integer  :: na(numat) 
       integer  :: nb(numat) 
       integer  :: nc(numat) 
-      real(double)  :: xyz(3,numat) 
-      real(double)  :: geo(3,numat) 
+      double precision  :: xyz(3,numat) 
+      double precision  :: geo(3,numat) 
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, im1, k, l
-      real(double) :: sum, r 
+      double precision :: sum, r 
 !-----------------------------------------------
 !**********************************************************************
 !

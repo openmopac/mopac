@@ -2,15 +2,12 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      USE vast_kind_param, ONLY:  double 
       USE common_arrays_C, only : nat, nfirst, nlast
       use molkst_C, only : numat
       USE overlaps_C, only : ccc, zzz, allc, allz 
       use parameters_C, only : zs, zp
 !***********************************************************************
 !DECK MOPAC
-!...Translated by Pacific-Sierra Research 77to90  4.4G  11:05:02  03/09/06  
-!...Switches: -rl INDDO=2 INDIF=2 
       implicit none
 
 !-----------------------------------------------
@@ -20,7 +17,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, ni, ia, nqn
-      real(double) :: xi 
+      double precision :: xi 
 !-----------------------------------------------
 !     SET-UP THE STEWART'S STO-6G EXPANSIONS
 !                                     1S

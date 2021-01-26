@@ -249,7 +249,6 @@
 !    D.C. Liu and J. Nocedal. On the Limited Memory Method for Large Scale Optimization (1989),
 !    Mathematical Programming B, 45, 3, pp. 503-528. 
 !
-  USE vast_kind_param, ONLY:  double 
   use molkst_C, only: tleft, time0, iflepo, tdump, gnorm, keywrd, density, &
   moperr, nvar, id, line, numat, refkey, title
 !
@@ -279,7 +278,7 @@
   double precision, dimension(:), allocatable :: bot, gold, top, xold, wa, big_grad, store_big_grad
   integer, dimension (:), allocatable :: iwa, nbd
 ! For Mopac BLAS      
-  real(double), external :: ddot, dot
+  double precision, external :: ddot, dot
 !
   save :: tlast, first
 !
