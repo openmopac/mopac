@@ -264,7 +264,7 @@
             if (major(i) >= 2  .and. hasDouble(i)) then
               gpu_ok(i) = .true.
               j = j + 1
-            endif
+            end if
           end do          
           lgpu_ref = (j >= 1)
         end if
@@ -287,9 +287,9 @@
               if (.not. lstat) then
                 write (6,*) 'Problem to set GPU card ID = ', gpu_id
                 stop
-              endif                             
-            endif                        
-          endif
+              end if                             
+            end if                        
+          end if
           if (l == 0) then   ! Select GPU automatically               
             do i = 1, nDevices
              if (gpu_ok(i)) then
@@ -299,22 +299,22 @@
                 if (.not. lstat) then
                   write (6,*) 'Problem to set GPU card ID = ', gpu_id
                   stop
-                endif                 
+                end if                 
                 exit
-              endif
-            enddo                  
-          endif
+              end if
+            end do                  
+          end if
         else
           nDevices = 0
           ngpus = 0
-        endif
+        end if
 !
 !  For small systems, using a GPU takes longer than not using a GPU,
 !  so do not use a GPU for small systems.  The lower limit, 100, is just a guess.
 !
         lgpu = (lgpu_ref .and. natoms > 100) ! Warning - there are problems with UHF calculations on small systems
 #endif
-      endif
+      end if
       if (.not. gui .and. numcal == 1 .and. natoms == 0) then
         write(line,'(2a)')" Data set exists, but does not contain any atoms."
         write(0,'(//10x,a,//)')trim(line)
@@ -634,7 +634,7 @@
           call geout (iarc)
         end if
         go to 100
-      endif
+      end if
       if (pdb_label) call compare_txtatm(moperr, moperr)
       if (moperr) then
         if (index(keywrd," GEO-OK") /= 0) then
@@ -690,7 +690,7 @@
 ! One alpha electron per orbital
           vca(2,2)= 1.D0
           vcb(2,2)= 2.D0
-        endif
+        end if
 ! Set up CI data
         if (index(keywrd,' CIS') /= 0 .or. index(keywrd,' MRCI') /= 0 .or. &
             index(keywrd,' C.I.') /= 0 .or. index(keywrd,' C.A.S.') /= 0) then
@@ -879,19 +879,19 @@
         if (index(keywrd,' POLAR') /= 0) then
           call polar ()
           if (moperr) go to 100
-        endif
+        end if
         if (index(keywrd,' STATIC') /= 0) then
           numcal = numcal + 1 !  In case POLAR was also used
           call static_polarizability
           if (moperr) go to 100
-        endif
+        end if
         if (index(keywrd,'PMEP') /= 0) call pmep ()
         if (moperr) go to 100
         if (index(keywrd,' ESP') /= 0) then
           call esp ()
           if (moperr) go to 100
-        endif
-      endif
+        end if
+      end if
   100 continue
       tim = tim + seconds(2)
       if (tim > 1.d7) tim = tim - 1.d7

@@ -56,7 +56,7 @@
         if (j /= 0) then 
           call mopend ('Fatal error in trying to open RESTART file') 
           return  
-        endif 
+        end if 
 !
 !   A restart file exists, but cannot be mounted.  Delete it.
 !   If it can't be deleted, carry on regardless.
@@ -65,7 +65,7 @@
           position='asis') 
         close(ires, status='DELETE', iostat=i99) 
         go to 10 
-      endif 
+      end if 
       rewind ires 
       if (ipt == 0) then 
 !
@@ -106,6 +106,6 @@
         write (ires) jstart, (fconst(i),i=1,nvar)  
         call den_in_out(1)
         close(ires) 
-      endif 
+      end if 
       return  
       end subroutine forsav 

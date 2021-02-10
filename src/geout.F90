@@ -12,7 +12,6 @@
       USE chanel_C, only : iw
       use maps_C, only : lpara1, latom1, lpara2, latom2, latom, lparam 
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -60,7 +59,7 @@
 !
         natoms = numat 
         lxyz = .FALSE. 
-      endif 
+      end if 
       if (mode == 1) then 
         flag1 = ' *' 
         flag0 = '  ' 
@@ -76,7 +75,7 @@
         end if
         flagn = '-1' 
         iprt = abs(mode) 
-      endif 
+      end if 
       degree = 57.29577951308232D0 
       if (lxyz) degree = 1.D0 
       blank = ' ' 
@@ -151,7 +150,7 @@
         q2(:numat) = tore(nat(:numat)) - q2(:numat) 
       else 
         q2(:numat) = 0.D0 
-      endif 
+      end if 
       n = 1 
       ia = loc(1,1) 
       ii = 0 
@@ -178,7 +177,7 @@
             if (w > 180.000001D0) then 
               x = x + 180.D0 
               w = 360.D0 - w 
-            endif 
+            end if 
 !
 !  CONSTRAIN DIHEDRAL TO DOMAIN -180 - 180 DEGREES
 !
@@ -187,7 +186,7 @@
         else
           w = geo(2,i) 
           x = geo(3,i)  
-        endif 
+        end if 
         if (latom == i) q(lparam) = flagn 
         if ( .not. gui .and. latom1 == i) q(lpara1) = flagn 
         if (latom2 == i) q(lpara2) = flagn 
@@ -240,7 +239,7 @@
           else
             j = max(9,maxtxt + 3) 
           end if
-        endif 
+        end if 
         if (index(blank(:j),"(") /= 0) then
           if (index(blank(:j),")") == 0) then
             if (index(blank(j + 1:j + 1), ")") /= 0) j = j + 1
@@ -263,12 +262,12 @@
             else 
               write (iprt, '(1X,A,F'//fmt1//',1X,A2,F'//fmt2//',1X,A2,F'//fmt3//',1X,A2,a)') &
               blank(:j), geo(1,i), q(1), w, q(2), x, q(3), " "
-            endif 
+            end if 
           else !  Print in output style
             if (maxtxt == 0) j = 9
             write (iprt, '(i6,6x,A,F'//fmt1//',1X,A2,F'//fmt2//',1X,A2,F'//fmt3//',1X,A2,a)')i  &
               , blank(:j), geo(1,i), q(1), w, q(2), x, q(3) 
-          endif 
+          end if 
         else 
           if (mode /= 1) then  !  Print suitable for reading as a data-set
             if (maxtxt == 0 .and. .not. isotopes) j = 4
@@ -290,16 +289,16 @@
             else 
               write (iprt, '(1X,A,F'//fmt1//',1X,A2,F'//fmt2//',1X,A2,F'//fmt3//',1X,A2,3I6)') &
                 blank(:j), geo(1,i), q(1), w, q(2), x, q(3), na(i), nb(i), nc(i) 
-            endif 
+            end if 
           else !  Print in output style
             if (maxtxt == 0) j = 9
             write (iprt, &
               '(I6,6X,A,F'//fmt1//',1X,A2,F'//fmt2//',1X,A2,F'//fmt3//',1X,A2,I6,2I6)') i, &
               blank(:j), geo(1,i), q(1), w, q(2), x, q(3), na(i), nb(i), nc(i) 
-          endif 
-        endif 
-			end do 
-	    moperr = (moperr .or. store_moperr)
+          end if 
+        end if 
+      end do 
+      moperr = (moperr .or. store_moperr)
       maxtxt = store_maxtxt
       if (mode == 1) return  
       write (iprt, *) 

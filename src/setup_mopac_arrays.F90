@@ -161,7 +161,7 @@
           if (l123 > 1) then
             allocate(wk(n2elec + 2025), stat = i)
             if (i /= 0) then
-					    call mopend("Failed to allocate the two-electron integral array 'wk'")
+              call mopend("Failed to allocate the two-electron integral array 'wk'")
               write(iw,"(10x,a,f9.2,a)") "  Size requested:",(n2elec*8.d0)/1.d6, "Mb"
               return
             end if

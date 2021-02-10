@@ -7,7 +7,6 @@
       use chanel_C, only : iw
       use elemts_C, only : elemnt
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s

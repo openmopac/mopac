@@ -14,7 +14,6 @@
       use parameters_for_PM3_Sparkles_C, only : gssPM3sp
       use reimers_C, only : isok
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -36,7 +35,7 @@
       if (method_indo) then
         allok = .true.
         do i = 1,numat
-          if (.not. isok(nat(i))) allok = .false.
+          if (isok(nat(i)) == 0) allok = .false.
         end do
         if (.not. allok) then
           write (iw, 40) 'SOME ELEMENTS HAVE BEEN SPECIFIED FOR WHICH', &
@@ -154,7 +153,7 @@
         else 
           write (iw, '(A)') allref(i,mode)(:len_trim(allref(i,mode)))
           if (mode == 7) exit
-        endif 
+        end if 
       end do 
       if (mix .and. .not.mixok) then 
         write (iw, 40) 'SOME ELEMENTS HAVE BEEN SPECIFIED FOR WHICH ONLY MNDO'&
@@ -164,7 +163,7 @@
           'SPECIFY "PARASOK" IN THE KEYWORDS' 
           call mopend ('MIXED PARAMETER SETS.  USE "PARASOK" TO CONTINUE') 
         return  
-      endif 
+      end if 
       if (allok .or. is_PARAM .or. index(keywrd, "0SCF") /= 0) return  
       write (iw, 40) 'SOME ELEMENTS HAVE BEEN SPECIFIED FOR WHICH', &
         'NO PARAMETERS ARE AVAILABLE.  CALCULATION STOPPED.' 

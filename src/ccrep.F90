@@ -21,7 +21,7 @@
 !-----------------------------------------------
       integer :: nt, ig, i, j
     !  logical :: opend
-      double precision :: alpni, alpnj, enuc, abond, fff, scale, eni=88.d0, enj, ax
+      double precision :: alpni, alpnj, enuc, abond, fff, scale, eni, enj, ax
 !-----------------------------------------------
 !     CONVERT TO ANGSTROM AND INITIALIZE VARIABLES.
       r = r*a0 
@@ -146,6 +146,8 @@
           else
             scale = 10.d0*exp((-2.18d0*r)) ! This is a generic core-core term.
           end if
+          eni = 0.d0
+          enj = 0.d0
         else
           eni = exp((-alpni*r)) 
           enj = exp((-alpnj*r)) 
@@ -157,7 +159,7 @@
         if (nt == 8 .or. nt == 9) then 
           if (ni == 7 .or. ni == 8) scale = scale + (r - 1.D0)*eni 
           if (nj == 7 .or. nj == 8) scale = scale + (r - 1.D0)*enj 
-        endif 
+        end if 
 !
 !  End of probable dead code
 !
@@ -180,13 +182,13 @@
       else
           i = 4
           if (fff > 1.d-4) i = 0
-      endif
+      end if
       do ig = 1, i 
         if (abs(guess1(ni,ig)) > 0.D0) then 
           ax = guess2(ni,ig)*(r - guess3(ni,ig))**2 
           if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,ig)*&
             exp((-ax)) 
-        endif 
+        end if 
         if (abs(guess1(nj,ig)) <= 0.D0) cycle  
         ax = guess2(nj,ig)*(r - guess3(nj,ig))**2 
         if (ax > 25.D0) cycle  

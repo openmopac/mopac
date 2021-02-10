@@ -35,6 +35,7 @@
 !
 !*********************************************************************
       data atorbs/ ' S', 'PX', 'PY', 'PZ', 'X2', 'XZ', 'Z2', 'YZ', 'XY'/
+      l = 0
       if (mozyme) then
         call vecprt_for_MOZYME(a,numm)
         return
@@ -53,7 +54,7 @@
         do i = 1, numm 
           a((i*(i+1))/2) = a((i*(i+1))/2)*fact 
         end do 
-      endif 
+      end if 
       if (numat /= 0 .and. numat == numm) then 
 !
 !    PRINT OVER ATOM COUNT
@@ -80,8 +81,8 @@
             jtext(i) = '  ' 
             natom(i) = i 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
       line = '------' 
       limit = (numb*(numb + 1))/2 
       kk = 8 
@@ -108,7 +109,7 @@
           write (iw, "(' ',21a6)") (line(n),n=1,ma) 
           kk = 4 
           ll = 0 
-        endif 
+        end if 
         write (iw, "(' ', a2, 1x, a2, i5, 10f11.6)") itext(i), jtext(i), natom(i), (a(n), n = k, l) 
       end do 
       if (l >= limit) go to 110 
@@ -122,6 +123,6 @@
         do i = 1, numm 
           a((i*(i+1))/2) = a((i*(i+1))/2)/fact 
         end do 
-      endif 
+      end if 
       return  
       end subroutine vecprt 

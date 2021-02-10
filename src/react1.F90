@@ -177,12 +177,12 @@
         else 
           call flepo (xparam, nvar, escf) 
           if (moperr) return  
-        endif 
+        end if 
         if (linear == 0 .and. allocated(pa)) then 
           linear = mpack
           pastor = pa 
           pbstor = pb
-        endif 
+        end if 
         i = 0
         do j = 1, numat
           do k = 1,3
@@ -194,7 +194,7 @@
           write (iw, '(2/10X,''FOR POINT'',I5,'' SECOND STRUCTURE'')') iloop 
         else 
           write (iw, '(2/10X,''FOR POINT'',I5,'' FIRST  STRUCTURE'')') iloop 
-        endif 
+        end if 
         write (iw, '('' DISTANCE A - B  '',F12.6)') step 
         sum = step
 !
@@ -208,7 +208,7 @@
         if (gradnt) then 
           write (iw, '(''  ACTUAL GRADIENTS OF THIS POINT'')') 
           write (iw, '(8F10.4)') (grad(i),i=1,nvar) 
-        endif 
+        end if 
         write (iw, '('' HEAT            '',F12.6)') funct1 
         gnorm = dsqrt(ddot(nvar,grad,1,grad,1)) 
         write (iw, '('' GRADIENT NORM   '',F12.6)') gnorm 
@@ -220,7 +220,7 @@
           write (line, '( "  SECOND ",i5,2f18.6,3f16.6)') iloop, sum,  funct1, gnorm, cosine
         else 
           write (line, '( "  FIRST  ",i5,2f18.6,3f16.6)') iloop, sum, funct1, gnorm, cosine
-        endif
+        end if
         call to_screen(trim(line))
         if (intl) then
           xyz = geo(:,:numat)
@@ -239,7 +239,7 @@
             swap = 0.D0 
           else 
             swap = 0.5D0 
-          endif 
+          end if 
 !
 !   SWAP REACTANT AND PRODUCT AROUND
 !
@@ -247,7 +247,7 @@
           if (finish) then 
             call mopend("BOTH SYSTEMS ARE ON THE SAME SIDE OF THE TRANSITION STATE.")             
             return  
-          endif 
+          end if 
           time2 = seconds(2) 
           write (iw, '('' TIME='',F9.2)') time2 - time1 
           time1 = time2 
@@ -285,7 +285,7 @@
           if (finish) exit  
         else 
           one = 1.D0 
-        endif 
+        end if 
       end do 
       iflepo = 18
       write (iw, '('' AT END OF STEPWISE ASCENT OF REACTION BARRIER'')') 

@@ -8,7 +8,6 @@
       use common_arrays_C, only : na
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -47,7 +46,7 @@
 !
           j = int(sign(0.5D0,xparam(i))+xparam(i)/twopi) 
           xparam(i) = xparam(i) - j*twopi 
-        endif 
+        end if 
         xstore(i) = xparam(i) 
       end do 
       do loop = 1, nvar 

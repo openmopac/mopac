@@ -98,7 +98,7 @@
           end do 
           write (iw, *) ' Orientation Matrix' 
           write (iw, '(3F12.6)') r 
-        endif 
+        end if 
         do i = 2, nclass 
           call mult33 (r, i) 
         end do 
@@ -108,8 +108,8 @@
           do i = 1, nclass 
             write (iw, '(3F12.6)') ((elem(j,k,i),j = 1,3),k = 1,3) 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
 !
 !    Characterize Eigenvectors
 !
@@ -127,12 +127,12 @@
 !
           jndex(:numat) = nlast(:numat) - nfirst(:numat) + 1 
           nvecs = norbs 
-        endif 
+        end if 
         if (nvecs >= 1) then 
           i = nvecs 
           if (itype == 3) i = lab 
           call symoir (itype, vects, eigs, nvecs, r, i) 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
       end subroutine symtrz 

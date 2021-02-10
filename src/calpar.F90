@@ -33,6 +33,7 @@
           if (isnan(zs(i))) zs(i) = 0.d0
           if (isnan(zp(i))) zp(i) = 0.d0
           if (isnan(zd(i))) zd(i) = 1.d-6
+          if(zd(i) == 0.d0) zd(i) = 1.d-6
         end do
       end if
 !
@@ -92,7 +93,7 @@
         qn = nspqn(i) 
         dd(i) = (2.D0*qn + 1)*(4.D0*zs(i)*zp(i))**(qn + 0.5D0)/(zs(i)+zp(i))**(2.D0*qn + 2)/sqrt(3.D0) 
         qq(i) = sqrt((4.D0*qn*qn + 6.D0*qn + 2.D0)/20.D0)/zp(i) 
-        if (method_indo) then
+        if (method_indo .and. i<=80) then
           if (nbfa(i) > 4) then
 !           INDO d orbitals - since two Slater basis functions, calculate two
 !           terms and weights based on the coefficients

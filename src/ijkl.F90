@@ -67,7 +67,7 @@
                 cij(ipq+1:ip-nfirst(ii)+1+ipq) = cp(ip,i)*cp(nfirst(ii):ip,j)&
                    + cp(ip,j)*cp(nfirst(ii):ip,i) 
                 ipq = ip - nfirst(ii) + 1 + ipq 
-              endif 
+              end if 
             end do 
           end do 
 !
@@ -93,7 +93,7 @@
                     ckl(ipq+1:ip-nfirst(ii)+1+ipq) = cf(ip,k)*cp(nfirst(ii):ip,&
                       l) + cp(ip,l)*cf(nfirst(ii):ip,k) 
                     ipq = ip - nfirst(ii) + 1 + ipq 
-                  endif 
+                  end if 
                 end do 
               end do 
 !
@@ -147,7 +147,7 @@
             if (ip - nfirst(ii) + 1 > 0) then 
               cij(ipq+1:ip-nfirst(ii)+1+ipq) = cp(ip,i)*cp(nfirst(ii):ip,i) 
               ipq = ip - nfirst(ii) + 1 + ipq 
-            endif 
+            end if 
           end do 
         end do 
         call ciint (cij, wcij) 
@@ -158,7 +158,7 @@
               if (ip - nfirst(ii) + 1 > 0) then 
                 ckl(ipq+1:ip-nfirst(ii)+1+ipq) = cp(ip,l)*cp(nfirst(ii):ip,l) 
                 ipq = ip - nfirst(ii) + 1 + ipq 
-              endif 
+              end if 
             end do 
           end do 
         end do

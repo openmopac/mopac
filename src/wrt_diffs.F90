@@ -72,6 +72,8 @@
            ijbonds(:m) = jbonds(:m,i)
          end if
          sum = 10.d0
+         sum_aa = 0.d0
+         sum_bb = 0.d0
          do j1 = 1, m
            l = ijbonds(j1)
            if (l > i .or. k > i .or. k == 0 .or. l == 0) cycle
@@ -102,6 +104,7 @@
     !
     do i = 1, min(25, npairs)
       sum = 0.d0
+      k = 0
       do j = 1, npairs
         if (sum < dist(1,j)) then
           sum = dist(1,j)
@@ -245,6 +248,7 @@
       end do
       sum_a = 0.d0
       do l = 1, j
+        k = 0
         sum = 10.d0
         do i = 1, j
           if (set_1_H_energy(i) < sum) then
@@ -280,6 +284,7 @@
       end do
       sum_a = 0.d0
       do l = 1, j
+        k = 0
         sum = 10.d0
         do i = 1, j
           if (set_2_H_energy(i) < sum) then

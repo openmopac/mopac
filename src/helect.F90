@@ -42,7 +42,7 @@
         if (jj > 0) then 
           ee = ee + sum(p(k+1:jj+k)*(h(k+1:jj+k)+f(k+1:jj+k))) 
           k = jj + k 
-        endif 
+        end if 
       end do 
       ee = ee + .5D00*ed 
       helect = ee 

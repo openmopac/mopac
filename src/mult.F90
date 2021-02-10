@@ -44,6 +44,6 @@
             vecs(j,i) = sum 
           end do 
         end do                  
-      endif          
+      end if          
       return  
       end subroutine mult  

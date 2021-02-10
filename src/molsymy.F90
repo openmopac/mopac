@@ -39,6 +39,7 @@
       reorie = index(keywrd,' NOREOR') == 0 
       toler = 0.1D0 
       ierror = 0 
+      kndex = 0
       name = '????' 
       do i = 1, 3 
         cub(i,:) = 0.D0 
@@ -118,7 +119,7 @@
             i = j 
           end do 
           r(:,i) = -r(:,i) 
-        endif 
+        end if 
         r(1,3) = r(2,1)*r(3,2) - r(3,1)*r(2,2) 
         r(2,3) = r(3,1)*r(1,2) - r(1,1)*r(3,2) 
         r(3,3) = r(1,1)*r(2,2) - r(2,1)*r(1,2) 
@@ -128,7 +129,7 @@
         linear = ew(2) < 1.D-2 
         sphere = ew(3) < 1.D-2 
         cubic = ew(3) - ew(1) < 5.D-3*max(ew(3),40.D0) 
-      endif 
+      end if 
       if (sphere) then 
 !
 !   Set flags 8 and 12 simultaneously to 1 - impossible for
@@ -154,7 +155,7 @@
         call symopr (numat, coord, 1, r) 
         ielem(20) = 1 
         go to 250 
-      endif 
+      end if 
       if (reorie) then 
         if (.not.cubic .and. ew(3) - ew(2) < 1.D-2*ew(3)) then 
 !
@@ -168,11 +169,11 @@
           rxy = ew(1) 
           ew(1) = ew(3) 
           ew(3) = rxy 
-        endif 
+        end if 
         axis = abs(ew(1) - ew(2)) < 0.01D0*ew(2) 
       else 
         axis = abs(f(1) - f(3)) < 0.01D0*f(6) 
-      endif 
+      end if 
 !
 !   Is there a plane of symmetry perpendicular to the Z axis?
 !
@@ -261,7 +262,7 @@
             tole = toler*9.D0/(i - 5)**2 
           else 
             tole = toler*16.D0/(2*i - 24)**2 
-          endif 
+          end if 
           call chi (tole, coord, i, iqual) 
 !
 !   If Cn, then set ITURN = n  (Remember ELEM(8) is C3, therefore offset
@@ -271,7 +272,7 @@
           if (iturn > 9) then 
             toler = toler*0.5D0 
             go to 130 
-          endif 
+          end if 
           iturn = i 
         end do 
         if (ielem(14) + ielem(15) + ielem(17) > 1 .or. &
@@ -279,12 +280,12 @@
             ielem(16) + ielem(17) + ielem(18) > 1) then 
           toler = toler*0.5D0 
           go to 130 
-        endif 
+        end if 
         iturn = iturn - 5 
         if (debug) then 
           write (iw, '(A)') ' after checking 8-18' 
           write (iw, '(20I3)') ielem 
-        endif 
+        end if 
 !
 !  Now use two adjacent equivalent atoms, not on the
 !  Z axis, to define the X-axis.
@@ -335,7 +336,7 @@
 !
           axis = .FALSE. 
           go to 190 
-        endif 
+        end if 
         help(1) = coord(1,i) + coord(1,kndex) 
         help(2) = coord(2,i) + coord(2,kndex) 
         distxy = sqrt(help(1)**2+help(2)**2) 
@@ -370,15 +371,15 @@
             icheck = 1 
             sina = -sina 
             go to 180 
-          endif 
-        endif 
-      endif 
+          end if 
+        end if 
+      end if 
   190 continue 
       if (cubic) call orient (numat, coord, r) 
       if (debug) then 
         write (iw, '(A)') ' C2 and sigma-v     ' 
         write (iw, '(20I3)') ielem 
-      endif 
+      end if 
       if (.not.axis) then 
         toler = 0.2D0 
 !
@@ -405,7 +406,7 @@
             if (icyc(5) > icyc(4)) iz = 2 
             if (icyc(6) > icyc(7-iz)) iz = 1 
             go to 220 
-          endif 
+          end if 
           iz = 1 
           if (icyc(2) > icyc(1)) iz = 2 
           if (icyc(3) > icyc(iz)) iz = 3 
@@ -427,12 +428,12 @@
           call symopr (numat, coord, -1, r) 
           r = rhelp 
           call symopr (numat, coord, 1, r) 
-        endif 
+        end if 
 !
 !   And re-calculate the first 7 Characters.
 !   (C2(X), C2(Y), C2(Z), Sigma(XY), Sigma(XZ), Sigma(YZ), i)
 !
-      endif 
+      end if 
   250 continue 
       do i = 1, 7 
         call chi (toler, coord, i, iqual) 
@@ -440,7 +441,7 @@
       if (debug) then 
         write (iw, '(A)') ' After re-doing 1-7' 
         write (iw, '(20I3)') ielem 
-      endif 
+      end if 
   270 continue 
       call symopr (numat, coord, -1, r) 
       total = ew(1) + ew(2) + ew(3) 
@@ -456,7 +457,6 @@
       use molkst_C, only : numat
       use common_arrays_C, only : nat
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -520,7 +520,6 @@
 !-----------------------------------------------
       use symmetry_C, only : ielem, jy, nclass
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -584,7 +583,6 @@
 !-----------------------------------------------
       use symmetry_C, only : cub, ielem
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -650,7 +648,7 @@
           if (i == 1) then 
             call chi (toler, coord, 3, iqual) 
             if (ielem(3) == 1) exit  
-          endif 
+          end if 
           wink2 = -wink2 
           sinb = sin(2.D0*wink2) 
           cosb = cos(2.D0*wink2) 
@@ -660,7 +658,7 @@
           if (i == 1) then 
             call chi (toler, coord, 3, iqual) 
             if (ielem(3) == 1) exit  
-          endif 
+          end if 
           call rotmol (numat, coord, sina, cosa, 1, 3, r) 
         end do 
         call chi (toler, coord, 9, iqual) 
@@ -683,9 +681,9 @@
             wink2 = -wink2 
           else 
             call rotmol (numat, coord, 0.707106781186D0, 0.707106781186D0, 1, 2, r) 
-          endif 
-        endif 
-      endif 
+          end if 
+        end if 
+      end if 
       j = sum(ielem(:17)) 
       if (j==2 .and. ielem(1)+ielem(8)==2) return  
       cub(1,1) = cos(wink2) 
@@ -708,7 +706,6 @@
       use molkst_C, only : numat
       use common_arrays_C, only : nat
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -761,7 +758,10 @@
 !**********************************************************************
       call symopr (numat, coord,-1, r)
       rmin = 0.1d0
+      xmin = 0.d0
       ymin = 0.d0
+      store_ligand = 0
+      ligand_type = 0
       k = 100
       do
   !
@@ -1025,7 +1025,6 @@
       use molkst_C, only : numcal, keywrd
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1080,7 +1079,7 @@
         icalcn = numcal 
         debug = index(keywrd,'CARTAB') /= 0 
         large = index(keywrd,'LARGE')/=0 .and. debug 
-      endif 
+      end if 
       large = large .and. prnt==1 
       if (large) prnt = 0 
       if (first) then 
@@ -1113,7 +1112,7 @@
 !#      WRITE(*,*)' Size of Groups:',NOPE(NGPS)+NALLOP(NOPE(NGPS))+3
 !#      WRITE(*,*)' Size of Reps  :',NREP(NGPS)+NALLOP(NOPE(NGPS)+1)
 !#      WRITE(*,*)' Size of TABLES:',J-1
-      endif 
+      end if 
 !
 !  Debug code:  Print all the point groups, in order
 !
@@ -1136,7 +1135,7 @@
             write (iw, '(A,10I10)') '    '//allrep(l+j), (nallg(k),k=kl,ku) 
           end do 
         end do 
-      endif 
+      end if 
 !
 !    Identify the Point Group of the molecule.
 !
@@ -1174,7 +1173,7 @@
             fz = nz 
             fn = nzz - 10*nz 
             buff = 2.D0*cos(6.283185307179D0*fn/fz) 
-          endif 
+          end if 
           group(i,k) = buff 
         end do 
       end do 
@@ -1185,7 +1184,7 @@
         do i = 1, nirred 
           write (iw, '(A4,10F10.4)') jx(i), (group(i,k),k=1,nclass) 
         end do 
-      endif 
+      end if 
       return  
       end subroutine cartab 
       logical function symdec (n1, ielem) 

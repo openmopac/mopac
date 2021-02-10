@@ -409,7 +409,7 @@
 
       use reimers_C, only : matind, natm, nbf, ibf, nbt, nbeta, &
           mis2, mip2, mid2, mic2, mic1, mg1sp, mf2pp, &
-          mg2sd, mg1pd, mf2pd, mg3pd, mf2dd, mf4dd, beta
+          mg2sd, mg1pd, mg3pd, mf2dd, mf4dd, beta
 
       implicit none
       double precision ::  fg(24), f0(2, 2), &
@@ -628,7 +628,7 @@
       data bohrmg       /0.0019308d0/
 
       sqrt3 = sqrt (three)
-      
+      pd = 0.d0
 
 !     **** start by zeroing all elements ****
       ndtype = 1

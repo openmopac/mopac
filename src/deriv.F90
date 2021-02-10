@@ -11,7 +11,6 @@
       use funcon_C, only : pi
       use derivs_C, only : aidref, work2
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -137,7 +136,7 @@
             j = 3*natoms - 6 
           else 
             j = 1 
-          endif 
+          end if 
           read (ir, *, end=50, err=50) (aidref(i),i=1,j) 
           write (iw, '(/,A,/)') &
             ' AB-INITIO DERIVATIVES IN KCAL/MOL/(ANGSTROM OR RADIAN)' 
@@ -149,7 +148,7 @@
               j = loc(2,i) + 1 
             else 
               j = 1 
-            endif 
+            end if 
             aidref(i) = aidref(j) 
           end do 
           write (iw, '(/,A,/)') ' AB-INITIO DERIVATIVES FOR VARIABLES' 
@@ -164,9 +163,9 @@
             write (iw, '(/,A,/)') &
               ' AB-INITIO DERIVATIVES AFTER SYMMETRY WEIGHTING' 
             write (iw, '(5F12.6)') (aidref(j),j=1,nvar) 
-          endif 
+          end if 
           close(ir, status='KEEP') 
-        endif 
+        end if 
         l_redo_bonds = (index(keywrd,' FORCE') + index(keywrd,' IRC=') + &
           index(keywrd,' THERM') + index(keywrd,' DFORCE') == 0)
         grlim = 0.01D0 
@@ -190,12 +189,12 @@
 !    FIRST DERIVATIVES. CHANGE(1) IS FOR CHANGE IN BOND LENGTH,
 !    (2) FOR ANGLE, AND (3) FOR DIHEDRAL.
 !
-      endif 
+      end if 
       if (nvar == 0) return  
       if (debug) then 
         write (iw, '(10X, "GEOMETRY AT THE START OF DERIV")') 
         call geout(-iw)
-      endif 
+      end if 
       gnorm = 0.D0 
       do i = 1, nvar 
         gold(i) = gradnt(i) 
@@ -210,7 +209,7 @@
         slow = (noanci .and. (gnorm<grlim .or. scf1))
       else
         slow = (index(keywrd,'NOANCI') /= 0)
-      endif 
+      end if 
       if (ndep /= 0) call symtry 
       call gmetry (geo, coord) 
 !
@@ -225,14 +224,14 @@
         if (debug) write (iw, '(10x,a)') 'DOING VARIATIONALLY OPTIMIZED DERIVATIVES' 
         if (debug) write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)') 
         call dcart (coord, dxyz)  
-      endif  
+      end if  
       if (l_redo_bonds .and. mod(nscf,10) == 4 .and. nscf /= 0 .and. id == 0) then
 !
 !  There is a possibility that a bond might be made or broken during a geometry optimization
 !  or a gradient minimization.  To allow for this, the bonds array should be updated every
 !  few SCF calculations. The values in the mod test are "intelligent guesses" 
 !
-	      call lewis (.true.)
+        call lewis (.true.)
         if (moperr) then
            write (iw, '(/10x,A,/)') ' Geometry at the point this error was detected' 
           call geout(iw)
@@ -317,7 +316,7 @@
         step = 0.5D0/step 
       else 
         step = 1.0D0/step 
-      endif 
+      end if 
       gradnt(:nvar) = gradnt(:nvar)*step 
 !
 !  NOW TO ENSURE THAT INTERNAL DERIVATIVES ACCURATELY REFLECT CARTESIAN
@@ -346,8 +345,8 @@
        ' INTERNAL COORDINATE DERIVATIVES DO NOT REFLECT CARTESIAN COORDINATE DERIVATIVES') 
             return  
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
 !
 !  THIS CODE IS ONLY USED IF THE KEYWORD NOANCI IS SPECIFIED
       if (slow) then 
@@ -358,7 +357,7 @@
 ! THE ARRAY ERRFN HOLDS THE EXACT DERIVATIVES MINUS THE APPROXIMATE
 ! DERIVATIVES
         errfn(:nvar) = errfn(:nvar) - gradnt(:nvar) 
-      endif 
+      end if 
 !
 !  AT THIS POINT, THE INTERNAL DERIVATIVES ARE KNOWN, AND ARE IN GRADNT.
 !
@@ -369,9 +368,9 @@
         if (aifrst) then 
           aifrst = .FALSE. 
           aicorr(:nvar) = (-aidref(:nvar)) - gradnt(:nvar) 
-        endif 
+        end if 
         gradnt(:nvar) = gradnt(:nvar) + aicorr(:nvar) 
-      endif 
+      end if 
       if (debug) then 
         write (iw, '('' GRADIENTS'')') 
         write (iw, '(8F10.3)') (gradnt(i),i=1,nvar) 
@@ -380,8 +379,8 @@
         if (slow) then 
           write (iw, '('' ERROR FUNCTION'')') 
           write (iw, '(8F10.3)') (errfn(i),i=1,nvar) 
-        endif 
-      endif 
+        end if 
+      end if 
       if (debug) write (iw, '('' COSINE OF SEARCH DIRECTION ='',F30.6)') cosine 
       return  
       end subroutine deriv 

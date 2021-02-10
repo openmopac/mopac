@@ -51,7 +51,10 @@
    else
      rmin_ik = 1.d8
      rmin_jk = 1.d8
-     rmin_lk = 1.d8     
+     rmin_lk = 1.d8
+     Vab_ik = 0.d0
+     Vab_jk = 0.d0
+     Vab_lk = 0.d0
      do ii = -l11, l11 
        do jj = -l21, l21 
          do kk = -l31, l31 

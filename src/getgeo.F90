@@ -17,7 +17,6 @@
       use funcon_C, only : a0
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -118,6 +117,10 @@
       simbol(:natoms*3) = '---------' 
       natoms = 0 
       numat = 0 
+      nvalue = 0
+      label = 0
+      l_gaussian = .false.
+      weight = 0.d0
      ! call dbreak()
       iserr = 0      
       mini = (index(keywrd, " MINI") /= 0)
@@ -268,7 +271,7 @@
         line = string 
       else 
         txtatm(natoms + 1) = ' ' 
-      endif 
+      end if 
 !   CLEAN THE INPUT DATA
       call upcase (line, ltl) 
       if (index(line, " NEXT") /= 0) goto 120
@@ -288,7 +291,7 @@
           istart(nvalue) = i  
           if (i > 2) then
             if (line(i - 1:i - 1) ==  "-" .and. line(i - 2:i - 2) /=  " ") istart(nvalue) = i - 1
-          endif 
+          end if 
           if (line(i:i) == '"') then
 !
 !  Run to other end of quoted text
@@ -369,9 +372,9 @@
         if (label < 0 .or. label > 107) then 
           write (iw, '(''  ILLEGAL ATOMIC NUMBER'')') 
           go to 210 
-        endif 
+        end if 
         go to 70 
-      endif 
+      end if 
 !  ATOMIC SYMBOL USED
       real = abs(reada(string,1)) 
       if (real < 1.D-15) then 
@@ -383,8 +386,8 @@
           ele = string(1:1) 
         else 
           ele = string(1:2) 
-        endif 
-      endif 
+        end if 
+      end if 
 !   CHECK FOR ERROR IN ATOMIC SYMBOL
       if (ele(1:1)=='-' .and. ele(2:2)/='-') ele(2:2) = ' ' 
       do i = 1, 107 
@@ -395,7 +398,7 @@
       if (ele(1:1) == 'X') then 
         label = 99 
         go to 70 
-      endif 
+      end if 
       if (ele == "D ") then
         label = 1 
         weight = 2.014d0
@@ -426,7 +429,7 @@
         atmass(numat) = weight 
       else 
         if (label /= 99) atmass(numat) = ams(label) 
-      endif 
+      end if 
       labels(natoms) = label 
       if (nvalue == 4) then !  Cartesian coordinates without optimization flags
         geo(1,natoms) = reada(line,istart(2)) 
@@ -450,19 +453,19 @@
             end if
           else 
             lopt(1,natoms) = 0 
-          endif 
+          end if 
           turn = line(istart(5):istart(5)) 
           if (turn == 'T') then 
             lopt(2,natoms) = 1 
           else 
             lopt(2,natoms) = 0 
-          endif 
+          end if 
           turn = line(istart(7):istart(7)) 
           if (turn == 'T') then 
             lopt(3,natoms) = 1 
           else 
             lopt(3,natoms) = 0 
-          endif 
+          end if 
         else 
           lopt(1,natoms) = nint(reada(line,istart(3))) 
           lopt(2,natoms) = nint(reada(line,istart(5))) 
@@ -474,7 +477,7 @@
               istart(i):istart(i)))<=icapz .and. natoms>1)) cycle  
             iserr = 1 
           end do 
-        endif 
+        end if 
       end if
       pdb_label = (maxtxt > 25)
       if (line(istart(10):istart(10)) == '"' .or. line(istart(9):istart(9)) == '"' .or. &
@@ -540,8 +543,8 @@
           geo(3,3) = 0.D0 
           geo(2,3) = geo(2,3)*1.7453292519943D-02 
           lopt(3,3) = 0 
-        endif 
-      endif 
+        end if 
+      end if 
       if ( .not. mini .and. .not. l_gaussian) then
         if ((lopt(1,natoms) > 1 .or. lopt(2,natoms) > 1 .or. lopt(3,natoms) > 1) .and. natoms > 1) then
           if (nvalue == 5 .and. lopt(2,natoms) > 1) &
@@ -606,7 +609,7 @@
         end do 
         natoms = -1 
         return  
-      endif 
+      end if 
       go to 20 
 !***********************************************************************
 ! ALL DATA READ IN, CLEAN UP AND RETURN
@@ -615,7 +618,7 @@
       if (natoms == 0) then 
         if (numcal == 1) call mopend (' Error detected while reading geometry') 
         return  
-      endif 
+      end if 
       if ( .not. Angstroms) then
 !
 !  Convert from A0 to Angstroms
@@ -653,7 +656,7 @@
         if ((j /= 0 .or. int .and. index(keywrd,' LET') == 0) .and. index(keywrd,' 0SCF') == 0) then 
           call mopend ('COORDINATES MUST BE CARTESIAN WHEN VELOCITY VECTOR IS USED.') 
           return  
-        endif 
+        end if 
         if (allocated(react)) deallocate(react)
         allocate(react(3*natoms))
         do i = 1, natoms 
@@ -663,7 +666,7 @@
           call mopend ('THERE MUST BE EXACTLY THREE VELOCITY DATA PER LINE.') 
           return  
         end do 
-      endif
+      end if
       if (ircdrc) then
         if (numat /= natoms) then
           call mopend ('Only real atoms are allowed in IRC and DRC calculations.')
@@ -686,10 +689,10 @@
               '    GEOMETRY UP TO, BUT NOT INCLUDING, THE FAULTY ATOM' 
             natoms = i - 1  
             call geout (iw) 
-          endif  
+          end if  
           call mopend ('Error in READMO') 
           return  
-        endif 
+        end if 
         if (labels(i) == 107) solid = .true.
         if (solid .and. labels(i) < 99) then
           call mopend ('TRANSLATION VECTORS MUST BE AT THE END OF THE DATA SET') 
@@ -733,7 +736,7 @@
           call web_message(iw,"geometry_specification.html")
         if (i == 1) then 
           return  
-        endif 
+        end if 
         write (0, '(//10x, a)') trim(line)
         write (iw, '(/,''  GEOMETRY READ IN'',/)')
         nat = 0 
@@ -791,7 +794,7 @@
             txtatm(numat) = txtatm(i)
             lopt(:,numat) = lopt(:,i)
             na(numat) = 0
-          endif 
+          end if 
           geo(:,i) = xyz(:,i) 
         end do 
 !
@@ -824,7 +827,7 @@
         do i = 1, 3 
           lopt(i:3,i) = 0 
         end do 
-      endif 
+      end if 
 !      if (Index (keywrd, " NEWGEO") /= 0) call newflg ()
       return  
 ! ERROR CONDITIONS

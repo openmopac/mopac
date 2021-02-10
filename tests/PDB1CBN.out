@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
+ ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,13 +12,13 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Aug  7 17:15:46 2019  *
+ *  CALCULATION DONE:                                Sun Feb  7 17:51:41 2021  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 66A) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
  *  Keyword:   CHAINS=(AA) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
- *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  PL         - MONITOR CONVERGENCE IN DENSITY MATRIX
  *  HEADER     - DATA SET IS IN PROTEIN DATA BANK FORMAT
  *******************************************************************************
@@ -673,7 +673,7 @@
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
  NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
- http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
 
            Empirical Formula: C202 H311 N55 O66 S6  =   640 atoms
 
@@ -1636,7 +1636,7 @@
 
         0  TTCCPSIVAR SNFNVCRLPG TSEAICATYT GCIIIPGATC PGDYAN
 
-          HYDROGEN ATOMS ADDED
+          ADD-H: SYSTEM HAS BEEN HYDROGENATED
 
 
            GEOMETRY AFTER RE-SEQUENCING
@@ -3379,7 +3379,7 @@ END
  *                                                                            *
  *     Error and normal termination messages reported in this calculation     *
  *                                                                            *
- * HYDROGEN ATOMS ADDED                                                       *
+ * ADD-H: SYSTEM HAS BEEN HYDROGENATED                                        *
  * GEOMETRY RESEQUENCED                                                       *
  * JOB ENDED NORMALLY                                                         *
  *                                                                            *

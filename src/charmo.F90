@@ -39,7 +39,7 @@
           if (icheck == iatom) then 
             ibase = ibase + 1 
             loc(1,ibase) = i 
-          endif 
+          end if 
           if (icheck /= jatom) cycle  
           kj = kj + 1 
           loc(2,kj) = i 
@@ -71,7 +71,7 @@
             d(i-4) = vects(icheck,jorb) 
             id(1,i-4) = loc(1,i) 
             id(2,i-4) = loc(2,i) 
-          endif 
+          end if 
         end do 
         if (ibase /= 1) then 
 !
@@ -90,7 +90,7 @@
             vect1(ii) = h(i) 
             vect2(jj) = p(i) 
           end do 
-        endif 
+        end if 
         if (ibase /= 9) cycle  
 !
 !   'd' transform

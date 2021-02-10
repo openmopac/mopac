@@ -49,6 +49,8 @@
 !             ENUCLR = NUCLEAR ENERGY
 !***********************************************************************
       data icalcn/ 0/  
+      fnuc = 0.d0
+      fldcon = 0.d0
       first = icalcn /= numcal 
       icalcn = numcal 
       if (first) then 
@@ -99,9 +101,9 @@
           do i = 1, numat
             read(85,*)line,line,line,line,vqc(i)
             if (debug) write(iw,'(a, i4, a, f9.3)')"ATOM No.",i," VQC(I)",vqc(i)
-          enddo
+          end do
           close(85)
-        endif
+        end if
         xf = 0.D0 
         yf = 0.D0 
         zf = 0.D0 
@@ -125,16 +127,16 @@
             if (i /= 0) then 
               tmpkey(i:i) = ' ' 
               zf = reada(tmpkey,i) 
-            endif 
-          endif 
+            end if 
+          end if 
           write (iw, '(/10X,''THE ELECTRIC FIELD IS'',3F10.5,'' VOLTS/ANGSTROM'',/)') xf, yf, zf 
-        endif 
+        end if 
         const = a0/ev
 !
         efield(1) = xf*const 
         efield(2) = yf*const 
         efield(3) = zf*const 
-      endif 
+      end if 
       fldon = .FALSE. 
       if (efield(1) /= 0.0D00 .or. efield(2) /= 0.0D00 .or. efield(3) /= 0.0D00) then 
 !
@@ -142,7 +144,7 @@
 !
         fldcon = ev/a0 
         fldon = .TRUE. 
-      endif 
+      end if 
       enuclr = 0.d0
       h(:mpack) = 0.d0
       kr = 1 
@@ -159,14 +161,14 @@
             if (i1 - ia + 1 > 0) then 
               h(i2+1:i1-ia+1+i2) = 0.D0 
               i2 = i1 - ia + 1 + i2 
-            endif 
+            end if 
             h(i2) = uspd(i1)
             if(lmolaris_qmmm) then 
               if (debug) write(iw,'(''OLD 1e MATRIX ELEMENT '',i5,f12.5,'' i'',i5,&
             & '' vqc(i)'',f12.5)')i2,h(i2),i,-vqc(i)/fpc_9
               h(i2) = h(i2) - vqc(i)/fpc_9
               if (debug) write(iw,'(''UPD 1e MATRIX ELEMENT '',i5,f12.5)')i2,h(i2)
-            endif
+            end if
             cycle  
           end do 
         else
@@ -180,11 +182,11 @@
               if (jo1==0 .and. io1==1) then 
                 hterme = -a0*dd(ni)*efield(1)*fldcon 
                 h(i2) = hterme 
-              endif 
+              end if 
               if (jo1==0 .and. io1==2) then 
                 hterme = -a0*dd(ni)*efield(2)*fldcon 
                 h(i2) = hterme 
-              endif 
+              end if 
               if (jo1/=0 .or. io1/=3) cycle  
               hterme = -a0*dd(ni)*efield(3)*fldcon 
               h(i2) = hterme 
@@ -193,7 +195,7 @@
             fnuc = -(efield(1)*coord(1,i) + efield(2)*coord(2,i) + efield(3)*coord(3,i))*fldcon 
             h(i2) = h(i2) + fnuc 
           end do 
-        endif 
+        end if 
         if (fldon) enuclr = enuclr - fnuc*tore(nat(i)) 
         if (lmolaris_qmmm) enuclr = enuclr + vqc(i)/fpc_9*tore(nat(i))
 !
@@ -219,7 +221,7 @@
                 end do 
               end do 
             end do 
-          endif 
+          end if 
           i2 = 0 
           do i1 = ia, ib 
             ii = i1*(i1 - 1)/2 + ja - 1 
@@ -239,7 +241,7 @@
             jj = 0 
             w(kro:kr - 1) = wjd(:kr-kro) 
             wk(kro:kr - 1) = wkd(:kr-kro) 
-          endif 
+          end if 
           enuclr = enuclr + enuc 
 !
 !   ADD ON THE ELECTRON-NUCLEAR ATTRACTION TERM FOR ATOM I.
@@ -250,7 +252,7 @@
             if (i1 - ia + 1 > 0) then 
               h(ii+1:i1-ia+1+ii) = h(ii+1:i1-ia+1+ii) + e1b(i2+1:i1-ia+1+i2)*half 
               i2 = i1 - ia + 1 + i2 
-            endif 
+            end if 
           end do 
 !
 !   ADD ON THE ELECTRON-NUCLEAR ATTRACTION TERM FOR ATOM J.
@@ -261,7 +263,7 @@
             if (i1 - ja + 1 > 0) then 
               h(ii+1:i1-ja+1+ii) = h(ii+1:i1-ja+1+ii) + e2a(i2+1:i1-ja+1+i2)*half 
               i2 = i1 - ja + 1 + i2 
-            endif 
+            end if 
           end do 
         end do 
         ii = ib - ia + 1
@@ -282,7 +284,7 @@
 ! The following routine adds the dielectric correction for the electron-
 ! interaction to the diagonal elements of H
         call addhcr () 
-      endif 
+      end if 
 ! end of COSMO change
       if (debug) then 
         write (iw, '(2/10X,''ONE-ELECTRON MATRIX FROM HCORE'')') 
@@ -297,8 +299,8 @@
           write (iw, 200) (w(i),i=1,j) 
           write (iw, '(2/10X,''TWO-ELECTRON K MATRIX IN HCORE''/)') 
           write (iw, 200) (wk(i),i=1,j) 
-        endif 
+        end if 
   200   format(10f8.4) 
-      endif 
+      end if 
       return  
       end subroutine hcore 

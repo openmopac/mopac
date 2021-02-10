@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
+ ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,16 +12,17 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Aug  7 17:15:46 2019  *
+ *  CALCULATION DONE:                                Sun Feb  7 17:51:41 2021  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(7A 300) 
- *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "BACTERIORHODOPSIN_1AP9.ENT"
- *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "BACTERIORHODOPSIN_2AT9.ENT"
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Bacteriorhodopsin_1AP9.ent"
+ *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "Bacteriorhodopsin_2AT9.ent"
+ *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
  *  Keyword:   CHAINS=(A) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
- *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  OUTPUT     - MINIMIZE OUTPUT
  *******************************************************************************
  START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_2AT9.ent" Compare Output
@@ -33,535 +34,537 @@
 
           Atoms in GEO_DAT only                   Atoms in GEO_REF only
 
-       HETATM 1696  C1  RET   300              ATOM      1  N   GLY A   6
-       HETATM 1697  C2  RET   300              ATOM      2  CA  GLY A   6
-       HETATM 1698  C3  RET   300              ATOM      3  C   GLY A   6
-       HETATM 1699  C4  RET   300              ATOM      4  O   GLY A   6
-       HETATM 1700  C5  RET   300              ATOM     11  CD  ARG A   7
-       HETATM 1701  C6  RET   300              ATOM     12  NE  ARG A   7
-       HETATM 1702  C7  RET   300              ATOM     13  CZ  ARG A   7
-       HETATM 1703  C8  RET   300              ATOM     14  NH1 ARG A   7
-       HETATM 1704  C9  RET   300              ATOM     15  NH2 ARG A   7
-       HETATM 1705  C10 RET   300              ATOM   1697  O   ARG A 225
-       HETATM 1706  C11 RET   300              ATOM   1705  N   SER A 226
-       HETATM 1707  C12 RET   300              ATOM   1706  CA  SER A 226
-       HETATM 1708  C13 RET   300              ATOM   1707  C   SER A 226
-       HETATM 1709  C14 RET   300              ATOM   1708  O   SER A 226
-       HETATM 1710  C15 RET   300              ATOM   1709  CB  SER A 226
-       HETATM 1711  C16 RET   300              ATOM   1710  OG  SER A 226
-       HETATM 1712  C17 RET   300              ATOM   1711  N   ARG A 227
-       HETATM 1713  C18 RET   300              ATOM   1712  CA  ARG A 227
-       HETATM 1714  C19 RET   300              ATOM   1713  C   ARG A 227
-       HETATM 1715  C20 RET   300              ATOM   1714  O   ARG A 227
-       HETATM 1716  O   HOH   400              ATOM   1715  CB  ARG A 227
-       HETATM 1717  O   HOH   401              ATOM   1716  CG  ARG A 227
-       HETATM 1718  O   HOH   402              ATOM   1717  CD  ARG A 227
-       HETATM 1719  O   HOH   403              ATOM   1718  NE  ARG A 227
-       HETATM 1720  O   HOH   404              ATOM   1719  CZ  ARG A 227
-       HETATM 1721  O   HOH   405              ATOM   1720  NH1 ARG A 227
-       HETATM 1722  O   HOH   406              ATOM   1721  NH2 ARG A 227
-       HETATM 1723  O   HOH   407              HETATM 1723  C1  RET   216A
-       HETATM 1724  O   HOH   408              HETATM 1724  C2  RET   216A
-       HETATM 1725  O   HOH   409              HETATM 1725  C3  RET   216A
-       HETATM 1726  O   HOH   410              HETATM 1726  C4  RET   216A
-       HETATM 1727  O   HOH   411              HETATM 1727  C5  RET   216A
-       HETATM 1728  O   HOH   412              HETATM 1728  C6  RET   216A
-       HETATM 1729  O   HOH   413              HETATM 1729  C7  RET   216A
-       HETATM 1730  O   HOH   414              HETATM 1730  C8  RET   216A
-       HETATM 1731  O   HOH   415              HETATM 1731  C9  RET   216A
-       HETATM 1732  O   HOH   416              HETATM 1732  C10 RET   216A
-       HETATM 1733  O   HOH   417              HETATM 1733  C11 RET   216A
-       HETATM 1734  O   HOH   418              HETATM 1734  C12 RET   216A
-       HETATM 1735  O   HOH   419              HETATM 1735  C13 RET   216A
-       HETATM 1736  O   HOH   420              HETATM 1736  C14 RET   216A
-       HETATM 1737  O   HOH   421              HETATM 1737  C15 RET   216A
-       HETATM 1738  O   HOH   422              HETATM 1738  C16 RET   216A
-       HETATM 1739  O   HOH   423              HETATM 1739  C17 RET   216A
-       HETATM 1740  O   HOH   424              HETATM 1740  C18 RET   216A
-       HETATM 1741  O   HOH   425              HETATM 1741  C19 RET   216A
-                                               HETATM 1742  C20 RET   216A
-                                               HETATM 1743  C1  2DP   261
-                                               HETATM 1744  C2  2DP   261
-                                               HETATM 1745  C3  2DP   261
-                                               HETATM 1746  C4  2DP   261
-                                               HETATM 1747  C5  2DP   261
-                                               HETATM 1748  C6  2DP   261
-                                               HETATM 1749  C11 2DP   261
-                                               HETATM 1750  C12 2DP   261
-                                               HETATM 1751  C13 2DP   261
-                                               HETATM 1752  C14 2DP   261
-                                               HETATM 1753  C15 2DP   261
-                                               HETATM 1754  C16 2DP   261
-                                               HETATM 1755  C17 2DP   261
-                                               HETATM 1756  C18 2DP   261
-                                               HETATM 1757  C19 2DP   261
-                                               HETATM 1758  C20 2DP   261
-                                               HETATM 1759  C21 2DP   261
-                                               HETATM 1760  C22 2DP   261
-                                               HETATM 1761  C23 2DP   261
-                                               HETATM 1762  C24 2DP   261
-                                               HETATM 1763  C25 2DP   261
-                                               HETATM 1764  C26 2DP   261
-                                               HETATM 1765  C27 2DP   261
-                                               HETATM 1766  C28 2DP   261
-                                               HETATM 1767  C29 2DP   261
-                                               HETATM 1768  C30 2DP   261
-                                               HETATM 1769  C41 2DP   261
-                                               HETATM 1770  C42 2DP   261
-                                               HETATM 1771  C43 2DP   261
-                                               HETATM 1772  C44 2DP   261
-                                               HETATM 1773  C45 2DP   261
-                                               HETATM 1774  C46 2DP   261
-                                               HETATM 1775  C47 2DP   261
-                                               HETATM 1776  C48 2DP   261
-                                               HETATM 1777  C49 2DP   261
-                                               HETATM 1778  C50 2DP   261
-                                               HETATM 1779  C51 2DP   261
-                                               HETATM 1780  C52 2DP   261
-                                               HETATM 1781  C53 2DP   261
-                                               HETATM 1782  C54 2DP   261
-                                               HETATM 1783  C55 2DP   261
-                                               HETATM 1784  C56 2DP   261
-                                               HETATM 1785  C57 2DP   261
-                                               HETATM 1786  C58 2DP   261
-                                               HETATM 1787  C59 2DP   261
-                                               HETATM 1788  C60 2DP   261
-                                               HETATM 1789  O1  2DP   261
-                                               HETATM 1790  O2  2DP   261
-                                               HETATM 1791  O3  2DP   261
-                                               HETATM 1792  O4  2DP   261
-                                               HETATM 1793  O5  2DP   261
-                                               HETATM 1794  O6  2DP   261
-                                               HETATM 1795  O7  2DP   261
-                                               HETATM 1796  O8  2DP   261
-                                               HETATM 1797  O9  2DP   261
-                                               HETATM 1798  O10 2DP   261
-                                               HETATM 1799  O11 2DP   261
-                                               HETATM 1800  P1  2DP   261
-                                               HETATM 1801  P2  2DP   261
-                                               HETATM 1802  CM  2DP   261
-                                               HETATM 1803  C1  2DP   262
-                                               HETATM 1804  C2  2DP   262
-                                               HETATM 1805  C3  2DP   262
-                                               HETATM 1806  C4  2DP   262
-                                               HETATM 1807  C5  2DP   262
-                                               HETATM 1808  C6  2DP   262
-                                               HETATM 1809  C11 2DP   262
-                                               HETATM 1810  C12 2DP   262
-                                               HETATM 1811  C13 2DP   262
-                                               HETATM 1812  C14 2DP   262
-                                               HETATM 1813  C15 2DP   262
-                                               HETATM 1814  C16 2DP   262
-                                               HETATM 1815  C17 2DP   262
-                                               HETATM 1816  C18 2DP   262
-                                               HETATM 1817  C19 2DP   262
-                                               HETATM 1818  C20 2DP   262
-                                               HETATM 1819  C21 2DP   262
-                                               HETATM 1820  C22 2DP   262
-                                               HETATM 1821  C23 2DP   262
-                                               HETATM 1822  C24 2DP   262
-                                               HETATM 1823  C25 2DP   262
-                                               HETATM 1824  C26 2DP   262
-                                               HETATM 1825  C27 2DP   262
-                                               HETATM 1826  C28 2DP   262
-                                               HETATM 1827  C29 2DP   262
-                                               HETATM 1828  C30 2DP   262
-                                               HETATM 1829  C41 2DP   262
-                                               HETATM 1830  C42 2DP   262
-                                               HETATM 1831  C43 2DP   262
-                                               HETATM 1832  C44 2DP   262
-                                               HETATM 1833  C45 2DP   262
-                                               HETATM 1834  C46 2DP   262
-                                               HETATM 1835  C47 2DP   262
-                                               HETATM 1836  C48 2DP   262
-                                               HETATM 1837  C49 2DP   262
-                                               HETATM 1838  C50 2DP   262
-                                               HETATM 1839  C51 2DP   262
-                                               HETATM 1840  C52 2DP   262
-                                               HETATM 1841  C53 2DP   262
-                                               HETATM 1842  C54 2DP   262
-                                               HETATM 1843  C55 2DP   262
-                                               HETATM 1844  C56 2DP   262
-                                               HETATM 1845  C57 2DP   262
-                                               HETATM 1846  C58 2DP   262
-                                               HETATM 1847  C59 2DP   262
-                                               HETATM 1848  C60 2DP   262
-                                               HETATM 1849  O1  2DP   262
-                                               HETATM 1850  O2  2DP   262
-                                               HETATM 1851  O3  2DP   262
-                                               HETATM 1852  O4  2DP   262
-                                               HETATM 1853  O5  2DP   262
-                                               HETATM 1854  O6  2DP   262
-                                               HETATM 1855  O7  2DP   262
-                                               HETATM 1856  O8  2DP   262
-                                               HETATM 1857  O9  2DP   262
-                                               HETATM 1858  O10 2DP   262
-                                               HETATM 1859  O11 2DP   262
-                                               HETATM 1860  P1  2DP   262
-                                               HETATM 1861  P2  2DP   262
-                                               HETATM 1862  CM  2DP   262
-                                               HETATM 1863  C1  2DP   263
-                                               HETATM 1864  C2  2DP   263
-                                               HETATM 1865  C3  2DP   263
-                                               HETATM 1866  C4  2DP   263
-                                               HETATM 1867  C5  2DP   263
-                                               HETATM 1868  C6  2DP   263
-                                               HETATM 1869  C11 2DP   263
-                                               HETATM 1870  C12 2DP   263
-                                               HETATM 1871  C13 2DP   263
-                                               HETATM 1872  C14 2DP   263
-                                               HETATM 1873  C15 2DP   263
-                                               HETATM 1874  C16 2DP   263
-                                               HETATM 1875  C17 2DP   263
-                                               HETATM 1876  C18 2DP   263
-                                               HETATM 1877  C19 2DP   263
-                                               HETATM 1878  C20 2DP   263
-                                               HETATM 1879  C21 2DP   263
-                                               HETATM 1880  C22 2DP   263
-                                               HETATM 1881  C23 2DP   263
-                                               HETATM 1882  C24 2DP   263
-                                               HETATM 1883  C25 2DP   263
-                                               HETATM 1884  C26 2DP   263
-                                               HETATM 1885  C27 2DP   263
-                                               HETATM 1886  C28 2DP   263
-                                               HETATM 1887  C29 2DP   263
-                                               HETATM 1888  C30 2DP   263
-                                               HETATM 1889  C41 2DP   263
-                                               HETATM 1890  C42 2DP   263
-                                               HETATM 1891  C43 2DP   263
-                                               HETATM 1892  C44 2DP   263
-                                               HETATM 1893  C45 2DP   263
-                                               HETATM 1894  C46 2DP   263
-                                               HETATM 1895  C47 2DP   263
-                                               HETATM 1896  C48 2DP   263
-                                               HETATM 1897  C49 2DP   263
-                                               HETATM 1898  C50 2DP   263
-                                               HETATM 1899  C51 2DP   263
-                                               HETATM 1900  C52 2DP   263
-                                               HETATM 1901  C53 2DP   263
-                                               HETATM 1902  C54 2DP   263
-                                               HETATM 1903  C55 2DP   263
-                                               HETATM 1904  C56 2DP   263
-                                               HETATM 1905  C57 2DP   263
-                                               HETATM 1906  C58 2DP   263
-                                               HETATM 1907  C59 2DP   263
-                                               HETATM 1908  C60 2DP   263
-                                               HETATM 1909  O1  2DP   263
-                                               HETATM 1910  O2  2DP   263
-                                               HETATM 1911  O3  2DP   263
-                                               HETATM 1912  O4  2DP   263
-                                               HETATM 1913  O5  2DP   263
-                                               HETATM 1914  O6  2DP   263
-                                               HETATM 1915  O7  2DP   263
-                                               HETATM 1916  O8  2DP   263
-                                               HETATM 1917  O9  2DP   263
-                                               HETATM 1918  O10 2DP   263
-                                               HETATM 1919  O11 2DP   263
-                                               HETATM 1920  P1  2DP   263
-                                               HETATM 1921  P2  2DP   263
-                                               HETATM 1922  CM  2DP   263
-                                               HETATM 1923  C1  2DP   264
-                                               HETATM 1924  C2  2DP   264
-                                               HETATM 1925  C3  2DP   264
-                                               HETATM 1926  C4  2DP   264
-                                               HETATM 1927  C5  2DP   264
-                                               HETATM 1928  C6  2DP   264
-                                               HETATM 1929  C11 2DP   264
-                                               HETATM 1930  C12 2DP   264
-                                               HETATM 1931  C13 2DP   264
-                                               HETATM 1932  C14 2DP   264
-                                               HETATM 1933  C15 2DP   264
-                                               HETATM 1934  C16 2DP   264
-                                               HETATM 1935  C17 2DP   264
-                                               HETATM 1936  C18 2DP   264
-                                               HETATM 1937  C19 2DP   264
-                                               HETATM 1938  C20 2DP   264
-                                               HETATM 1939  C21 2DP   264
-                                               HETATM 1940  C22 2DP   264
-                                               HETATM 1941  C23 2DP   264
-                                               HETATM 1942  C24 2DP   264
-                                               HETATM 1943  C25 2DP   264
-                                               HETATM 1944  C26 2DP   264
-                                               HETATM 1945  C27 2DP   264
-                                               HETATM 1946  C28 2DP   264
-                                               HETATM 1947  C29 2DP   264
-                                               HETATM 1948  C30 2DP   264
-                                               HETATM 1949  C41 2DP   264
-                                               HETATM 1950  C42 2DP   264
-                                               HETATM 1951  C43 2DP   264
-                                               HETATM 1952  C44 2DP   264
-                                               HETATM 1953  C45 2DP   264
-                                               HETATM 1954  C46 2DP   264
-                                               HETATM 1955  C47 2DP   264
-                                               HETATM 1956  C48 2DP   264
-                                               HETATM 1957  C49 2DP   264
-                                               HETATM 1958  C50 2DP   264
-                                               HETATM 1959  C51 2DP   264
-                                               HETATM 1960  C52 2DP   264
-                                               HETATM 1961  C53 2DP   264
-                                               HETATM 1962  C54 2DP   264
-                                               HETATM 1963  C55 2DP   264
-                                               HETATM 1964  C56 2DP   264
-                                               HETATM 1965  C57 2DP   264
-                                               HETATM 1966  C58 2DP   264
-                                               HETATM 1967  C59 2DP   264
-                                               HETATM 1968  C60 2DP   264
-                                               HETATM 1969  O1  2DP   264
-                                               HETATM 1970  O2  2DP   264
-                                               HETATM 1971  O3  2DP   264
-                                               HETATM 1972  O4  2DP   264
-                                               HETATM 1973  O5  2DP   264
-                                               HETATM 1974  O6  2DP   264
-                                               HETATM 1975  O7  2DP   264
-                                               HETATM 1976  O8  2DP   264
-                                               HETATM 1977  O9  2DP   264
-                                               HETATM 1978  O10 2DP   264
-                                               HETATM 1979  O11 2DP   264
-                                               HETATM 1980  P1  2DP   264
-                                               HETATM 1981  P2  2DP   264
-                                               HETATM 1982  CM  2DP   264
-                                               HETATM 1983  C1  2DP   265
-                                               HETATM 1984  C2  2DP   265
-                                               HETATM 1985  C3  2DP   265
-                                               HETATM 1986  C4  2DP   265
-                                               HETATM 1987  C5  2DP   265
-                                               HETATM 1988  C6  2DP   265
-                                               HETATM 1989  C11 2DP   265
-                                               HETATM 1990  C12 2DP   265
-                                               HETATM 1991  C13 2DP   265
-                                               HETATM 1992  C14 2DP   265
-                                               HETATM 1993  C15 2DP   265
-                                               HETATM 1994  C16 2DP   265
-                                               HETATM 1995  C17 2DP   265
-                                               HETATM 1996  C18 2DP   265
-                                               HETATM 1997  C19 2DP   265
-                                               HETATM 1998  C20 2DP   265
-                                               HETATM 1999  C21 2DP   265
-                                               HETATM 2000  C22 2DP   265
-                                               HETATM 2001  C23 2DP   265
-                                               HETATM 2002  C24 2DP   265
-                                               HETATM 2003  C25 2DP   265
-                                               HETATM 2004  C26 2DP   265
-                                               HETATM 2005  C27 2DP   265
-                                               HETATM 2006  C28 2DP   265
-                                               HETATM 2007  C29 2DP   265
-                                               HETATM 2008  C30 2DP   265
-                                               HETATM 2009  C41 2DP   265
-                                               HETATM 2010  C42 2DP   265
-                                               HETATM 2011  C43 2DP   265
-                                               HETATM 2012  C44 2DP   265
-                                               HETATM 2013  C45 2DP   265
-                                               HETATM 2014  C46 2DP   265
-                                               HETATM 2015  C47 2DP   265
-                                               HETATM 2016  C48 2DP   265
-                                               HETATM 2017  C49 2DP   265
-                                               HETATM 2018  C50 2DP   265
-                                               HETATM 2019  C51 2DP   265
-                                               HETATM 2020  C52 2DP   265
-                                               HETATM 2021  C53 2DP   265
-                                               HETATM 2022  C54 2DP   265
-                                               HETATM 2023  C55 2DP   265
-                                               HETATM 2024  C56 2DP   265
-                                               HETATM 2025  C57 2DP   265
-                                               HETATM 2026  C58 2DP   265
-                                               HETATM 2027  C59 2DP   265
-                                               HETATM 2028  C60 2DP   265
-                                               HETATM 2029  O1  2DP   265
-                                               HETATM 2030  O2  2DP   265
-                                               HETATM 2031  O3  2DP   265
-                                               HETATM 2032  O4  2DP   265
-                                               HETATM 2033  O5  2DP   265
-                                               HETATM 2034  O6  2DP   265
-                                               HETATM 2035  O7  2DP   265
-                                               HETATM 2036  O8  2DP   265
-                                               HETATM 2037  O9  2DP   265
-                                               HETATM 2038  O10 2DP   265
-                                               HETATM 2039  O11 2DP   265
-                                               HETATM 2040  P1  2DP   265
-                                               HETATM 2041  P2  2DP   265
-                                               HETATM 2042  CM  2DP   265
-                                               HETATM 2043  C1  2DP   267
-                                               HETATM 2044  C2  2DP   267
-                                               HETATM 2045  C3  2DP   267
-                                               HETATM 2046  C4  2DP   267
-                                               HETATM 2047  C5  2DP   267
-                                               HETATM 2048  C6  2DP   267
-                                               HETATM 2049  C11 2DP   267
-                                               HETATM 2050  C12 2DP   267
-                                               HETATM 2051  C13 2DP   267
-                                               HETATM 2052  C14 2DP   267
-                                               HETATM 2053  C15 2DP   267
-                                               HETATM 2054  C16 2DP   267
-                                               HETATM 2055  C17 2DP   267
-                                               HETATM 2056  C18 2DP   267
-                                               HETATM 2057  C19 2DP   267
-                                               HETATM 2058  C20 2DP   267
-                                               HETATM 2059  C21 2DP   267
-                                               HETATM 2060  C22 2DP   267
-                                               HETATM 2061  C23 2DP   267
-                                               HETATM 2062  C24 2DP   267
-                                               HETATM 2063  C25 2DP   267
-                                               HETATM 2064  C26 2DP   267
-                                               HETATM 2065  C27 2DP   267
-                                               HETATM 2066  C28 2DP   267
-                                               HETATM 2067  C29 2DP   267
-                                               HETATM 2068  C30 2DP   267
-                                               HETATM 2069  C41 2DP   267
-                                               HETATM 2070  C42 2DP   267
-                                               HETATM 2071  C43 2DP   267
-                                               HETATM 2072  C44 2DP   267
-                                               HETATM 2073  C45 2DP   267
-                                               HETATM 2074  C46 2DP   267
-                                               HETATM 2075  C47 2DP   267
-                                               HETATM 2076  C48 2DP   267
-                                               HETATM 2077  C49 2DP   267
-                                               HETATM 2078  C50 2DP   267
-                                               HETATM 2079  C51 2DP   267
-                                               HETATM 2080  C52 2DP   267
-                                               HETATM 2081  C53 2DP   267
-                                               HETATM 2082  C54 2DP   267
-                                               HETATM 2083  C55 2DP   267
-                                               HETATM 2084  C56 2DP   267
-                                               HETATM 2085  C57 2DP   267
-                                               HETATM 2086  C58 2DP   267
-                                               HETATM 2087  C59 2DP   267
-                                               HETATM 2088  C60 2DP   267
-                                               HETATM 2089  O1  2DP   267
-                                               HETATM 2090  O2  2DP   267
-                                               HETATM 2091  O3  2DP   267
-                                               HETATM 2092  O4  2DP   267
-                                               HETATM 2093  O5  2DP   267
-                                               HETATM 2094  O6  2DP   267
-                                               HETATM 2095  O7  2DP   267
-                                               HETATM 2096  O8  2DP   267
-                                               HETATM 2097  O9  2DP   267
-                                               HETATM 2098  O10 2DP   267
-                                               HETATM 2099  O11 2DP   267
-                                               HETATM 2100  P1  2DP   267
-                                               HETATM 2101  P2  2DP   267
-                                               HETATM 2102  CM  2DP   267
-                                               HETATM 2103  C1  2DP   268
-                                               HETATM 2104  C2  2DP   268
-                                               HETATM 2105  C3  2DP   268
-                                               HETATM 2106  C4  2DP   268
-                                               HETATM 2107  C5  2DP   268
-                                               HETATM 2108  C6  2DP   268
-                                               HETATM 2109  C11 2DP   268
-                                               HETATM 2110  C12 2DP   268
-                                               HETATM 2111  C13 2DP   268
-                                               HETATM 2112  C14 2DP   268
-                                               HETATM 2113  C15 2DP   268
-                                               HETATM 2114  C16 2DP   268
-                                               HETATM 2115  C17 2DP   268
-                                               HETATM 2116  C18 2DP   268
-                                               HETATM 2117  C19 2DP   268
-                                               HETATM 2118  C20 2DP   268
-                                               HETATM 2119  C21 2DP   268
-                                               HETATM 2120  C22 2DP   268
-                                               HETATM 2121  C23 2DP   268
-                                               HETATM 2122  C24 2DP   268
-                                               HETATM 2123  C25 2DP   268
-                                               HETATM 2124  C26 2DP   268
-                                               HETATM 2125  C27 2DP   268
-                                               HETATM 2126  C28 2DP   268
-                                               HETATM 2127  C29 2DP   268
-                                               HETATM 2128  C30 2DP   268
-                                               HETATM 2129  C41 2DP   268
-                                               HETATM 2130  C42 2DP   268
-                                               HETATM 2131  C43 2DP   268
-                                               HETATM 2132  C44 2DP   268
-                                               HETATM 2133  C45 2DP   268
-                                               HETATM 2134  C46 2DP   268
-                                               HETATM 2135  C47 2DP   268
-                                               HETATM 2136  C48 2DP   268
-                                               HETATM 2137  C49 2DP   268
-                                               HETATM 2138  C50 2DP   268
-                                               HETATM 2139  C51 2DP   268
-                                               HETATM 2140  C52 2DP   268
-                                               HETATM 2141  C53 2DP   268
-                                               HETATM 2142  C54 2DP   268
-                                               HETATM 2143  C55 2DP   268
-                                               HETATM 2144  C56 2DP   268
-                                               HETATM 2145  C57 2DP   268
-                                               HETATM 2146  C58 2DP   268
-                                               HETATM 2147  C59 2DP   268
-                                               HETATM 2148  C60 2DP   268
-                                               HETATM 2149  O1  2DP   268
-                                               HETATM 2150  O2  2DP   268
-                                               HETATM 2151  O3  2DP   268
-                                               HETATM 2152  O4  2DP   268
-                                               HETATM 2153  O5  2DP   268
-                                               HETATM 2154  O6  2DP   268
-                                               HETATM 2155  O7  2DP   268
-                                               HETATM 2156  O8  2DP   268
-                                               HETATM 2157  O9  2DP   268
-                                               HETATM 2158  O10 2DP   268
-                                               HETATM 2159  O11 2DP   268
-                                               HETATM 2160  P1  2DP   268
-                                               HETATM 2161  P2  2DP   268
-                                               HETATM 2162  CM  2DP   268
-                                               HETATM 2163  C1  2DP   269
-                                               HETATM 2164  C2  2DP   269
-                                               HETATM 2165  C3  2DP   269
-                                               HETATM 2166  C4  2DP   269
-                                               HETATM 2167  C5  2DP   269
-                                               HETATM 2168  C6  2DP   269
-                                               HETATM 2169  C11 2DP   269
-                                               HETATM 2170  C12 2DP   269
-                                               HETATM 2171  C13 2DP   269
-                                               HETATM 2172  C14 2DP   269
-                                               HETATM 2173  C15 2DP   269
-                                               HETATM 2174  C16 2DP   269
-                                               HETATM 2175  C17 2DP   269
-                                               HETATM 2176  C18 2DP   269
-                                               HETATM 2177  C19 2DP   269
-                                               HETATM 2178  C20 2DP   269
-                                               HETATM 2179  C21 2DP   269
-                                               HETATM 2180  C22 2DP   269
-                                               HETATM 2181  C23 2DP   269
-                                               HETATM 2182  C24 2DP   269
-                                               HETATM 2183  C25 2DP   269
-                                               HETATM 2184  C26 2DP   269
-                                               HETATM 2185  C27 2DP   269
-                                               HETATM 2186  C28 2DP   269
-                                               HETATM 2187  C29 2DP   269
-                                               HETATM 2188  C30 2DP   269
-                                               HETATM 2189  C41 2DP   269
-                                               HETATM 2190  C42 2DP   269
-                                               HETATM 2191  C43 2DP   269
-                                               HETATM 2192  C44 2DP   269
-                                               HETATM 2193  C45 2DP   269
-                                               HETATM 2194  C46 2DP   269
-                                               HETATM 2195  C47 2DP   269
-                                               HETATM 2196  C48 2DP   269
-                                               HETATM 2197  C49 2DP   269
-                                               HETATM 2198  C50 2DP   269
-                                               HETATM 2199  C51 2DP   269
-                                               HETATM 2200  C52 2DP   269
-                                               HETATM 2201  C53 2DP   269
-                                               HETATM 2202  C54 2DP   269
-                                               HETATM 2203  C55 2DP   269
-                                               HETATM 2204  C56 2DP   269
-                                               HETATM 2205  C57 2DP   269
-                                               HETATM 2206  C58 2DP   269
-                                               HETATM 2207  C59 2DP   269
-                                               HETATM 2208  C60 2DP   269
-                                               HETATM 2209  O1  2DP   269
-                                               HETATM 2210  O2  2DP   269
-                                               HETATM 2211  O3  2DP   269
-                                               HETATM 2212  O4  2DP   269
-                                               HETATM 2213  O5  2DP   269
-                                               HETATM 2214  O6  2DP   269
-                                               HETATM 2215  O7  2DP   269
-                                               HETATM 2216  O8  2DP   269
-                                               HETATM 2217  O9  2DP   269
-                                               HETATM 2218  O10 2DP   269
-                                               HETATM 2219  O11 2DP   269
-                                               HETATM 2220  P1  2DP   269
-                                               HETATM 2221  P2  2DP   269
-                                               HETATM 2222  CM  2DP   269
-                                               HETATM 2223  O   HOH     1
-                                               HETATM 2224  O   HOH     2
+   1   HETATM 1696  C1  RET B 300              ATOM      1  N   GLY A   6
+   2   HETATM 1697  C2  RET B 300              ATOM      2  CA  GLY A   6
+   3   HETATM 1698  C3  RET B 300              ATOM      3  C   GLY A   6
+   4   HETATM 1699  C4  RET B 300              ATOM      4  O   GLY A   6
+   5   HETATM 1700  C5  RET B 300              ATOM     11  CD  ARG A   7
+   6   HETATM 1701  C6  RET B 300              ATOM     12  NE  ARG A   7
+   7   HETATM 1702  C7  RET B 300              ATOM     13  CZ  ARG A   7
+   8   HETATM 1703  C8  RET B 300              ATOM     14  NH1 ARG A   7
+   9   HETATM 1704  C9  RET B 300              ATOM     15  NH2 ARG A   7
+  10   HETATM 1705  C10 RET B 300              ATOM   1697  O   ARG A 225
+  11   HETATM 1706  C11 RET B 300              ATOM   1705  N   SER A 226
+  12   HETATM 1707  C12 RET B 300              ATOM   1706  CA  SER A 226
+  13   HETATM 1708  C13 RET B 300              ATOM   1707  C   SER A 226
+  14   HETATM 1709  C14 RET B 300              ATOM   1708  O   SER A 226
+  15   HETATM 1710  C15 RET B 300              ATOM   1709  CB  SER A 226
+  16   HETATM 1711  C16 RET B 300              ATOM   1710  OG  SER A 226
+  17   HETATM 1712  C17 RET B 300              ATOM   1711  N   ARG A 227
+  18   HETATM 1713  C18 RET B 300              ATOM   1712  CA  ARG A 227
+  19   HETATM 1714  C19 RET B 300              ATOM   1713  C   ARG A 227
+  20   HETATM 1715  C20 RET B 300              ATOM   1714  O   ARG A 227
+  21   HETATM 1716  O   HOH B 400              ATOM   1715  CB  ARG A 227
+  22   HETATM 1717  O   HOH B 401              ATOM   1716  CG  ARG A 227
+  23   HETATM 1718  O   HOH B 402              ATOM   1717  CD  ARG A 227
+  24   HETATM 1719  O   HOH B 403              ATOM   1718  NE  ARG A 227
+  25   HETATM 1720  O   HOH B 404              ATOM   1719  CZ  ARG A 227
+  26   HETATM 1721  O   HOH B 405              ATOM   1720  NH1 ARG A 227
+  27   HETATM 1722  O   HOH B 406              ATOM   1721  NH2 ARG A 227
+  28   HETATM 1723  O   HOH B 407              HETATM 1723  C1  RET B 216A
+  29   HETATM 1724  O   HOH B 408              HETATM 1724  C2  RET B 216A
+  30   HETATM 1725  O   HOH B 409              HETATM 1725  C3  RET B 216A
+  31   HETATM 1726  O   HOH B 410              HETATM 1726  C4  RET B 216A
+  32   HETATM 1727  O   HOH B 411              HETATM 1727  C5  RET B 216A
+  33   HETATM 1728  O   HOH B 412              HETATM 1728  C6  RET B 216A
+  34   HETATM 1729  O   HOH B 413              HETATM 1729  C7  RET B 216A
+  35   HETATM 1730  O   HOH B 414              HETATM 1730  C8  RET B 216A
+  36   HETATM 1731  O   HOH B 415              HETATM 1731  C9  RET B 216A
+  37   HETATM 1732  O   HOH B 416              HETATM 1732  C10 RET B 216A
+  38   HETATM 1733  O   HOH B 417              HETATM 1733  C11 RET B 216A
+  39   HETATM 1734  O   HOH B 418              HETATM 1734  C12 RET B 216A
+  40   HETATM 1735  O   HOH B 419              HETATM 1735  C13 RET B 216A
+  41   HETATM 1736  O   HOH B 420              HETATM 1736  C14 RET B 216A
+  42   HETATM 1737  O   HOH B 421              HETATM 1737  C15 RET B 216A
+  43   HETATM 1738  O   HOH B 422              HETATM 1738  C16 RET B 216A
+  44   HETATM 1739  O   HOH B 423              HETATM 1739  C17 RET B 216A
+  45   HETATM 1740  O   HOH B 424              HETATM 1740  C18 RET B 216A
+  46   HETATM 1741  O   HOH B 425              HETATM 1741  C19 RET B 216A
+  47                                           HETATM 1742  C20 RET B 216A
+  48                                           HETATM 1743  C1  2DP B 261
+  49                                           HETATM 1744  C2  2DP B 261
+  50                                           HETATM 1745  C3  2DP B 261
+  51                                           HETATM 1746  C4  2DP B 261
+  52                                           HETATM 1747  C5  2DP B 261
+  53                                           HETATM 1748  C6  2DP B 261
+  54                                           HETATM 1749  C11 2DP B 261
+  55                                           HETATM 1750  C12 2DP B 261
+  56                                           HETATM 1751  C13 2DP B 261
+  57                                           HETATM 1752  C14 2DP B 261
+  58                                           HETATM 1753  C15 2DP B 261
+  59                                           HETATM 1754  C16 2DP B 261
+  60                                           HETATM 1755  C17 2DP B 261
+  61                                           HETATM 1756  C18 2DP B 261
+  62                                           HETATM 1757  C19 2DP B 261
+  63                                           HETATM 1758  C20 2DP B 261
+  64                                           HETATM 1759  C21 2DP B 261
+  65                                           HETATM 1760  C22 2DP B 261
+  66                                           HETATM 1761  C23 2DP B 261
+  67                                           HETATM 1762  C24 2DP B 261
+  68                                           HETATM 1763  C25 2DP B 261
+  69                                           HETATM 1764  C26 2DP B 261
+  70                                           HETATM 1765  C27 2DP B 261
+  71                                           HETATM 1766  C28 2DP B 261
+  72                                           HETATM 1767  C29 2DP B 261
+  73                                           HETATM 1768  C30 2DP B 261
+  74                                           HETATM 1769  C41 2DP B 261
+  75                                           HETATM 1770  C42 2DP B 261
+  76                                           HETATM 1771  C43 2DP B 261
+  77                                           HETATM 1772  C44 2DP B 261
+  78                                           HETATM 1773  C45 2DP B 261
+  79                                           HETATM 1774  C46 2DP B 261
+  80                                           HETATM 1775  C47 2DP B 261
+  81                                           HETATM 1776  C48 2DP B 261
+  82                                           HETATM 1777  C49 2DP B 261
+  83                                           HETATM 1778  C50 2DP B 261
+  84                                           HETATM 1779  C51 2DP B 261
+  85                                           HETATM 1780  C52 2DP B 261
+  86                                           HETATM 1781  C53 2DP B 261
+  87                                           HETATM 1782  C54 2DP B 261
+  88                                           HETATM 1783  C55 2DP B 261
+  89                                           HETATM 1784  C56 2DP B 261
+  90                                           HETATM 1785  C57 2DP B 261
+  91                                           HETATM 1786  C58 2DP B 261
+  92                                           HETATM 1787  C59 2DP B 261
+  93                                           HETATM 1788  C60 2DP B 261
+  94                                           HETATM 1789  O1  2DP B 261
+  95                                           HETATM 1790  O2  2DP B 261
+  96                                           HETATM 1791  O3  2DP B 261
+  97                                           HETATM 1792  O4  2DP B 261
+  98                                           HETATM 1793  O5  2DP B 261
+  99                                           HETATM 1794  O6  2DP B 261
+ 100                                           HETATM 1795  O7  2DP B 261
+ 101                                           HETATM 1796  O8  2DP B 261
+ 102                                           HETATM 1797  O9  2DP B 261
+ 103                                           HETATM 1798  O10 2DP B 261
+ 104                                           HETATM 1799  O11 2DP B 261
+ 105                                           HETATM 1800  P1  2DP B 261
+ 106                                           HETATM 1801  P2  2DP B 261
+ 107                                           HETATM 1802  CM  2DP B 261
+ 108                                           HETATM 1803  C1  2DP B 262
+ 109                                           HETATM 1804  C2  2DP B 262
+ 110                                           HETATM 1805  C3  2DP B 262
+ 111                                           HETATM 1806  C4  2DP B 262
+ 112                                           HETATM 1807  C5  2DP B 262
+ 113                                           HETATM 1808  C6  2DP B 262
+ 114                                           HETATM 1809  C11 2DP B 262
+ 115                                           HETATM 1810  C12 2DP B 262
+ 116                                           HETATM 1811  C13 2DP B 262
+ 117                                           HETATM 1812  C14 2DP B 262
+ 118                                           HETATM 1813  C15 2DP B 262
+ 119                                           HETATM 1814  C16 2DP B 262
+ 120                                           HETATM 1815  C17 2DP B 262
+ 121                                           HETATM 1816  C18 2DP B 262
+ 122                                           HETATM 1817  C19 2DP B 262
+ 123                                           HETATM 1818  C20 2DP B 262
+ 124                                           HETATM 1819  C21 2DP B 262
+ 125                                           HETATM 1820  C22 2DP B 262
+ 126                                           HETATM 1821  C23 2DP B 262
+ 127                                           HETATM 1822  C24 2DP B 262
+ 128                                           HETATM 1823  C25 2DP B 262
+ 129                                           HETATM 1824  C26 2DP B 262
+ 130                                           HETATM 1825  C27 2DP B 262
+ 131                                           HETATM 1826  C28 2DP B 262
+ 132                                           HETATM 1827  C29 2DP B 262
+ 133                                           HETATM 1828  C30 2DP B 262
+ 134                                           HETATM 1829  C41 2DP B 262
+ 135                                           HETATM 1830  C42 2DP B 262
+ 136                                           HETATM 1831  C43 2DP B 262
+ 137                                           HETATM 1832  C44 2DP B 262
+ 138                                           HETATM 1833  C45 2DP B 262
+ 139                                           HETATM 1834  C46 2DP B 262
+ 140                                           HETATM 1835  C47 2DP B 262
+ 141                                           HETATM 1836  C48 2DP B 262
+ 142                                           HETATM 1837  C49 2DP B 262
+ 143                                           HETATM 1838  C50 2DP B 262
+ 144                                           HETATM 1839  C51 2DP B 262
+ 145                                           HETATM 1840  C52 2DP B 262
+ 146                                           HETATM 1841  C53 2DP B 262
+ 147                                           HETATM 1842  C54 2DP B 262
+ 148                                           HETATM 1843  C55 2DP B 262
+ 149                                           HETATM 1844  C56 2DP B 262
+ 150                                           HETATM 1845  C57 2DP B 262
+ 151                                           HETATM 1846  C58 2DP B 262
+ 152                                           HETATM 1847  C59 2DP B 262
+ 153                                           HETATM 1848  C60 2DP B 262
+ 154                                           HETATM 1849  O1  2DP B 262
+ 155                                           HETATM 1850  O2  2DP B 262
+ 156                                           HETATM 1851  O3  2DP B 262
+ 157                                           HETATM 1852  O4  2DP B 262
+ 158                                           HETATM 1853  O5  2DP B 262
+ 159                                           HETATM 1854  O6  2DP B 262
+ 160                                           HETATM 1855  O7  2DP B 262
+ 161                                           HETATM 1856  O8  2DP B 262
+ 162                                           HETATM 1857  O9  2DP B 262
+ 163                                           HETATM 1858  O10 2DP B 262
+ 164                                           HETATM 1859  O11 2DP B 262
+ 165                                           HETATM 1860  P1  2DP B 262
+ 166                                           HETATM 1861  P2  2DP B 262
+ 167                                           HETATM 1862  CM  2DP B 262
+ 168                                           HETATM 1863  C1  2DP B 263
+ 169                                           HETATM 1864  C2  2DP B 263
+ 170                                           HETATM 1865  C3  2DP B 263
+ 171                                           HETATM 1866  C4  2DP B 263
+ 172                                           HETATM 1867  C5  2DP B 263
+ 173                                           HETATM 1868  C6  2DP B 263
+ 174                                           HETATM 1869  C11 2DP B 263
+ 175                                           HETATM 1870  C12 2DP B 263
+ 176                                           HETATM 1871  C13 2DP B 263
+ 177                                           HETATM 1872  C14 2DP B 263
+ 178                                           HETATM 1873  C15 2DP B 263
+ 179                                           HETATM 1874  C16 2DP B 263
+ 180                                           HETATM 1875  C17 2DP B 263
+ 181                                           HETATM 1876  C18 2DP B 263
+ 182                                           HETATM 1877  C19 2DP B 263
+ 183                                           HETATM 1878  C20 2DP B 263
+ 184                                           HETATM 1879  C21 2DP B 263
+ 185                                           HETATM 1880  C22 2DP B 263
+ 186                                           HETATM 1881  C23 2DP B 263
+ 187                                           HETATM 1882  C24 2DP B 263
+ 188                                           HETATM 1883  C25 2DP B 263
+ 189                                           HETATM 1884  C26 2DP B 263
+ 190                                           HETATM 1885  C27 2DP B 263
+ 191                                           HETATM 1886  C28 2DP B 263
+ 192                                           HETATM 1887  C29 2DP B 263
+ 193                                           HETATM 1888  C30 2DP B 263
+ 194                                           HETATM 1889  C41 2DP B 263
+ 195                                           HETATM 1890  C42 2DP B 263
+ 196                                           HETATM 1891  C43 2DP B 263
+ 197                                           HETATM 1892  C44 2DP B 263
+ 198                                           HETATM 1893  C45 2DP B 263
+ 199                                           HETATM 1894  C46 2DP B 263
+ 200                                           HETATM 1895  C47 2DP B 263
+ 201                                           HETATM 1896  C48 2DP B 263
+ 202                                           HETATM 1897  C49 2DP B 263
+ 203                                           HETATM 1898  C50 2DP B 263
+ 204                                           HETATM 1899  C51 2DP B 263
+ 205                                           HETATM 1900  C52 2DP B 263
+ 206                                           HETATM 1901  C53 2DP B 263
+ 207                                           HETATM 1902  C54 2DP B 263
+ 208                                           HETATM 1903  C55 2DP B 263
+ 209                                           HETATM 1904  C56 2DP B 263
+ 210                                           HETATM 1905  C57 2DP B 263
+ 211                                           HETATM 1906  C58 2DP B 263
+ 212                                           HETATM 1907  C59 2DP B 263
+ 213                                           HETATM 1908  C60 2DP B 263
+ 214                                           HETATM 1909  O1  2DP B 263
+ 215                                           HETATM 1910  O2  2DP B 263
+ 216                                           HETATM 1911  O3  2DP B 263
+ 217                                           HETATM 1912  O4  2DP B 263
+ 218                                           HETATM 1913  O5  2DP B 263
+ 219                                           HETATM 1914  O6  2DP B 263
+ 220                                           HETATM 1915  O7  2DP B 263
+ 221                                           HETATM 1916  O8  2DP B 263
+ 222                                           HETATM 1917  O9  2DP B 263
+ 223                                           HETATM 1918  O10 2DP B 263
+ 224                                           HETATM 1919  O11 2DP B 263
+ 225                                           HETATM 1920  P1  2DP B 263
+ 226                                           HETATM 1921  P2  2DP B 263
+ 227                                           HETATM 1922  CM  2DP B 263
+ 228                                           HETATM 1923  C1  2DP B 264
+ 229                                           HETATM 1924  C2  2DP B 264
+ 230                                           HETATM 1925  C3  2DP B 264
+ 231                                           HETATM 1926  C4  2DP B 264
+ 232                                           HETATM 1927  C5  2DP B 264
+ 233                                           HETATM 1928  C6  2DP B 264
+ 234                                           HETATM 1929  C11 2DP B 264
+ 235                                           HETATM 1930  C12 2DP B 264
+ 236                                           HETATM 1931  C13 2DP B 264
+ 237                                           HETATM 1932  C14 2DP B 264
+ 238                                           HETATM 1933  C15 2DP B 264
+ 239                                           HETATM 1934  C16 2DP B 264
+ 240                                           HETATM 1935  C17 2DP B 264
+ 241                                           HETATM 1936  C18 2DP B 264
+ 242                                           HETATM 1937  C19 2DP B 264
+ 243                                           HETATM 1938  C20 2DP B 264
+ 244                                           HETATM 1939  C21 2DP B 264
+ 245                                           HETATM 1940  C22 2DP B 264
+ 246                                           HETATM 1941  C23 2DP B 264
+ 247                                           HETATM 1942  C24 2DP B 264
+ 248                                           HETATM 1943  C25 2DP B 264
+ 249                                           HETATM 1944  C26 2DP B 264
+ 250                                           HETATM 1945  C27 2DP B 264
+ 251                                           HETATM 1946  C28 2DP B 264
+ 252                                           HETATM 1947  C29 2DP B 264
+ 253                                           HETATM 1948  C30 2DP B 264
+ 254                                           HETATM 1949  C41 2DP B 264
+ 255                                           HETATM 1950  C42 2DP B 264
+ 256                                           HETATM 1951  C43 2DP B 264
+ 257                                           HETATM 1952  C44 2DP B 264
+ 258                                           HETATM 1953  C45 2DP B 264
+ 259                                           HETATM 1954  C46 2DP B 264
+ 260                                           HETATM 1955  C47 2DP B 264
+ 261                                           HETATM 1956  C48 2DP B 264
+ 262                                           HETATM 1957  C49 2DP B 264
+ 263                                           HETATM 1958  C50 2DP B 264
+ 264                                           HETATM 1959  C51 2DP B 264
+ 265                                           HETATM 1960  C52 2DP B 264
+ 266                                           HETATM 1961  C53 2DP B 264
+ 267                                           HETATM 1962  C54 2DP B 264
+ 268                                           HETATM 1963  C55 2DP B 264
+ 269                                           HETATM 1964  C56 2DP B 264
+ 270                                           HETATM 1965  C57 2DP B 264
+ 271                                           HETATM 1966  C58 2DP B 264
+ 272                                           HETATM 1967  C59 2DP B 264
+ 273                                           HETATM 1968  C60 2DP B 264
+ 274                                           HETATM 1969  O1  2DP B 264
+ 275                                           HETATM 1970  O2  2DP B 264
+ 276                                           HETATM 1971  O3  2DP B 264
+ 277                                           HETATM 1972  O4  2DP B 264
+ 278                                           HETATM 1973  O5  2DP B 264
+ 279                                           HETATM 1974  O6  2DP B 264
+ 280                                           HETATM 1975  O7  2DP B 264
+ 281                                           HETATM 1976  O8  2DP B 264
+ 282                                           HETATM 1977  O9  2DP B 264
+ 283                                           HETATM 1978  O10 2DP B 264
+ 284                                           HETATM 1979  O11 2DP B 264
+ 285                                           HETATM 1980  P1  2DP B 264
+ 286                                           HETATM 1981  P2  2DP B 264
+ 287                                           HETATM 1982  CM  2DP B 264
+ 288                                           HETATM 1983  C1  2DP B 265
+ 289                                           HETATM 1984  C2  2DP B 265
+ 290                                           HETATM 1985  C3  2DP B 265
+ 291                                           HETATM 1986  C4  2DP B 265
+ 292                                           HETATM 1987  C5  2DP B 265
+ 293                                           HETATM 1988  C6  2DP B 265
+ 294                                           HETATM 1989  C11 2DP B 265
+ 295                                           HETATM 1990  C12 2DP B 265
+ 296                                           HETATM 1991  C13 2DP B 265
+ 297                                           HETATM 1992  C14 2DP B 265
+ 298                                           HETATM 1993  C15 2DP B 265
+ 299                                           HETATM 1994  C16 2DP B 265
+ 300                                           HETATM 1995  C17 2DP B 265
+ 301                                           HETATM 1996  C18 2DP B 265
+ 302                                           HETATM 1997  C19 2DP B 265
+ 303                                           HETATM 1998  C20 2DP B 265
+ 304                                           HETATM 1999  C21 2DP B 265
+ 305                                           HETATM 2000  C22 2DP B 265
+ 306                                           HETATM 2001  C23 2DP B 265
+ 307                                           HETATM 2002  C24 2DP B 265
+ 308                                           HETATM 2003  C25 2DP B 265
+ 309                                           HETATM 2004  C26 2DP B 265
+ 310                                           HETATM 2005  C27 2DP B 265
+ 311                                           HETATM 2006  C28 2DP B 265
+ 312                                           HETATM 2007  C29 2DP B 265
+ 313                                           HETATM 2008  C30 2DP B 265
+ 314                                           HETATM 2009  C41 2DP B 265
+ 315                                           HETATM 2010  C42 2DP B 265
+ 316                                           HETATM 2011  C43 2DP B 265
+ 317                                           HETATM 2012  C44 2DP B 265
+ 318                                           HETATM 2013  C45 2DP B 265
+ 319                                           HETATM 2014  C46 2DP B 265
+ 320                                           HETATM 2015  C47 2DP B 265
+ 321                                           HETATM 2016  C48 2DP B 265
+ 322                                           HETATM 2017  C49 2DP B 265
+ 323                                           HETATM 2018  C50 2DP B 265
+ 324                                           HETATM 2019  C51 2DP B 265
+ 325                                           HETATM 2020  C52 2DP B 265
+ 326                                           HETATM 2021  C53 2DP B 265
+ 327                                           HETATM 2022  C54 2DP B 265
+ 328                                           HETATM 2023  C55 2DP B 265
+ 329                                           HETATM 2024  C56 2DP B 265
+ 330                                           HETATM 2025  C57 2DP B 265
+ 331                                           HETATM 2026  C58 2DP B 265
+ 332                                           HETATM 2027  C59 2DP B 265
+ 333                                           HETATM 2028  C60 2DP B 265
+ 334                                           HETATM 2029  O1  2DP B 265
+ 335                                           HETATM 2030  O2  2DP B 265
+ 336                                           HETATM 2031  O3  2DP B 265
+ 337                                           HETATM 2032  O4  2DP B 265
+ 338                                           HETATM 2033  O5  2DP B 265
+ 339                                           HETATM 2034  O6  2DP B 265
+ 340                                           HETATM 2035  O7  2DP B 265
+ 341                                           HETATM 2036  O8  2DP B 265
+ 342                                           HETATM 2037  O9  2DP B 265
+ 343                                           HETATM 2038  O10 2DP B 265
+ 344                                           HETATM 2039  O11 2DP B 265
+ 345                                           HETATM 2040  P1  2DP B 265
+ 346                                           HETATM 2041  P2  2DP B 265
+ 347                                           HETATM 2042  CM  2DP B 265
+ 348                                           HETATM 2043  C1  2DP B 267
+ 349                                           HETATM 2044  C2  2DP B 267
+ 350                                           HETATM 2045  C3  2DP B 267
+ 351                                           HETATM 2046  C4  2DP B 267
+ 352                                           HETATM 2047  C5  2DP B 267
+ 353                                           HETATM 2048  C6  2DP B 267
+ 354                                           HETATM 2049  C11 2DP B 267
+ 355                                           HETATM 2050  C12 2DP B 267
+ 356                                           HETATM 2051  C13 2DP B 267
+ 357                                           HETATM 2052  C14 2DP B 267
+ 358                                           HETATM 2053  C15 2DP B 267
+ 359                                           HETATM 2054  C16 2DP B 267
+ 360                                           HETATM 2055  C17 2DP B 267
+ 361                                           HETATM 2056  C18 2DP B 267
+ 362                                           HETATM 2057  C19 2DP B 267
+ 363                                           HETATM 2058  C20 2DP B 267
+ 364                                           HETATM 2059  C21 2DP B 267
+ 365                                           HETATM 2060  C22 2DP B 267
+ 366                                           HETATM 2061  C23 2DP B 267
+ 367                                           HETATM 2062  C24 2DP B 267
+ 368                                           HETATM 2063  C25 2DP B 267
+ 369                                           HETATM 2064  C26 2DP B 267
+ 370                                           HETATM 2065  C27 2DP B 267
+ 371                                           HETATM 2066  C28 2DP B 267
+ 372                                           HETATM 2067  C29 2DP B 267
+ 373                                           HETATM 2068  C30 2DP B 267
+ 374                                           HETATM 2069  C41 2DP B 267
+ 375                                           HETATM 2070  C42 2DP B 267
+ 376                                           HETATM 2071  C43 2DP B 267
+ 377                                           HETATM 2072  C44 2DP B 267
+ 378                                           HETATM 2073  C45 2DP B 267
+ 379                                           HETATM 2074  C46 2DP B 267
+ 380                                           HETATM 2075  C47 2DP B 267
+ 381                                           HETATM 2076  C48 2DP B 267
+ 382                                           HETATM 2077  C49 2DP B 267
+ 383                                           HETATM 2078  C50 2DP B 267
+ 384                                           HETATM 2079  C51 2DP B 267
+ 385                                           HETATM 2080  C52 2DP B 267
+ 386                                           HETATM 2081  C53 2DP B 267
+ 387                                           HETATM 2082  C54 2DP B 267
+ 388                                           HETATM 2083  C55 2DP B 267
+ 389                                           HETATM 2084  C56 2DP B 267
+ 390                                           HETATM 2085  C57 2DP B 267
+ 391                                           HETATM 2086  C58 2DP B 267
+ 392                                           HETATM 2087  C59 2DP B 267
+ 393                                           HETATM 2088  C60 2DP B 267
+ 394                                           HETATM 2089  O1  2DP B 267
+ 395                                           HETATM 2090  O2  2DP B 267
+ 396                                           HETATM 2091  O3  2DP B 267
+ 397                                           HETATM 2092  O4  2DP B 267
+ 398                                           HETATM 2093  O5  2DP B 267
+ 399                                           HETATM 2094  O6  2DP B 267
+ 400                                           HETATM 2095  O7  2DP B 267
+ 401                                           HETATM 2096  O8  2DP B 267
+ 402                                           HETATM 2097  O9  2DP B 267
+ 403                                           HETATM 2098  O10 2DP B 267
+ 404                                           HETATM 2099  O11 2DP B 267
+ 405                                           HETATM 2100  P1  2DP B 267
+ 406                                           HETATM 2101  P2  2DP B 267
+ 407                                           HETATM 2102  CM  2DP B 267
+ 408                                           HETATM 2103  C1  2DP B 268
+ 409                                           HETATM 2104  C2  2DP B 268
+ 410                                           HETATM 2105  C3  2DP B 268
+ 411                                           HETATM 2106  C4  2DP B 268
+ 412                                           HETATM 2107  C5  2DP B 268
+ 413                                           HETATM 2108  C6  2DP B 268
+ 414                                           HETATM 2109  C11 2DP B 268
+ 415                                           HETATM 2110  C12 2DP B 268
+ 416                                           HETATM 2111  C13 2DP B 268
+ 417                                           HETATM 2112  C14 2DP B 268
+ 418                                           HETATM 2113  C15 2DP B 268
+ 419                                           HETATM 2114  C16 2DP B 268
+ 420                                           HETATM 2115  C17 2DP B 268
+ 421                                           HETATM 2116  C18 2DP B 268
+ 422                                           HETATM 2117  C19 2DP B 268
+ 423                                           HETATM 2118  C20 2DP B 268
+ 424                                           HETATM 2119  C21 2DP B 268
+ 425                                           HETATM 2120  C22 2DP B 268
+ 426                                           HETATM 2121  C23 2DP B 268
+ 427                                           HETATM 2122  C24 2DP B 268
+ 428                                           HETATM 2123  C25 2DP B 268
+ 429                                           HETATM 2124  C26 2DP B 268
+ 430                                           HETATM 2125  C27 2DP B 268
+ 431                                           HETATM 2126  C28 2DP B 268
+ 432                                           HETATM 2127  C29 2DP B 268
+ 433                                           HETATM 2128  C30 2DP B 268
+ 434                                           HETATM 2129  C41 2DP B 268
+ 435                                           HETATM 2130  C42 2DP B 268
+ 436                                           HETATM 2131  C43 2DP B 268
+ 437                                           HETATM 2132  C44 2DP B 268
+ 438                                           HETATM 2133  C45 2DP B 268
+ 439                                           HETATM 2134  C46 2DP B 268
+ 440                                           HETATM 2135  C47 2DP B 268
+ 441                                           HETATM 2136  C48 2DP B 268
+ 442                                           HETATM 2137  C49 2DP B 268
+ 443                                           HETATM 2138  C50 2DP B 268
+ 444                                           HETATM 2139  C51 2DP B 268
+ 445                                           HETATM 2140  C52 2DP B 268
+ 446                                           HETATM 2141  C53 2DP B 268
+ 447                                           HETATM 2142  C54 2DP B 268
+ 448                                           HETATM 2143  C55 2DP B 268
+ 449                                           HETATM 2144  C56 2DP B 268
+ 450                                           HETATM 2145  C57 2DP B 268
+ 451                                           HETATM 2146  C58 2DP B 268
+ 452                                           HETATM 2147  C59 2DP B 268
+ 453                                           HETATM 2148  C60 2DP B 268
+ 454                                           HETATM 2149  O1  2DP B 268
+ 455                                           HETATM 2150  O2  2DP B 268
+ 456                                           HETATM 2151  O3  2DP B 268
+ 457                                           HETATM 2152  O4  2DP B 268
+ 458                                           HETATM 2153  O5  2DP B 268
+ 459                                           HETATM 2154  O6  2DP B 268
+ 460                                           HETATM 2155  O7  2DP B 268
+ 461                                           HETATM 2156  O8  2DP B 268
+ 462                                           HETATM 2157  O9  2DP B 268
+ 463                                           HETATM 2158  O10 2DP B 268
+ 464                                           HETATM 2159  O11 2DP B 268
+ 465                                           HETATM 2160  P1  2DP B 268
+ 466                                           HETATM 2161  P2  2DP B 268
+ 467                                           HETATM 2162  CM  2DP B 268
+ 468                                           HETATM 2163  C1  2DP B 269
+ 469                                           HETATM 2164  C2  2DP B 269
+ 470                                           HETATM 2165  C3  2DP B 269
+ 471                                           HETATM 2166  C4  2DP B 269
+ 472                                           HETATM 2167  C5  2DP B 269
+ 473                                           HETATM 2168  C6  2DP B 269
+ 474                                           HETATM 2169  C11 2DP B 269
+ 475                                           HETATM 2170  C12 2DP B 269
+ 476                                           HETATM 2171  C13 2DP B 269
+ 477                                           HETATM 2172  C14 2DP B 269
+ 478                                           HETATM 2173  C15 2DP B 269
+ 479                                           HETATM 2174  C16 2DP B 269
+ 480                                           HETATM 2175  C17 2DP B 269
+ 481                                           HETATM 2176  C18 2DP B 269
+ 482                                           HETATM 2177  C19 2DP B 269
+ 483                                           HETATM 2178  C20 2DP B 269
+ 484                                           HETATM 2179  C21 2DP B 269
+ 485                                           HETATM 2180  C22 2DP B 269
+ 486                                           HETATM 2181  C23 2DP B 269
+ 487                                           HETATM 2182  C24 2DP B 269
+ 488                                           HETATM 2183  C25 2DP B 269
+ 489                                           HETATM 2184  C26 2DP B 269
+ 490                                           HETATM 2185  C27 2DP B 269
+ 491                                           HETATM 2186  C28 2DP B 269
+ 492                                           HETATM 2187  C29 2DP B 269
+ 493                                           HETATM 2188  C30 2DP B 269
+ 494                                           HETATM 2189  C41 2DP B 269
+ 495                                           HETATM 2190  C42 2DP B 269
+ 496                                           HETATM 2191  C43 2DP B 269
+ 497                                           HETATM 2192  C44 2DP B 269
+ 498                                           HETATM 2193  C45 2DP B 269
+ 499                                           HETATM 2194  C46 2DP B 269
+ 500                                           HETATM 2195  C47 2DP B 269
+ 501                                           HETATM 2196  C48 2DP B 269
+ 502                                           HETATM 2197  C49 2DP B 269
+ 503                                           HETATM 2198  C50 2DP B 269
+ 504                                           HETATM 2199  C51 2DP B 269
+ 505                                           HETATM 2200  C52 2DP B 269
+ 506                                           HETATM 2201  C53 2DP B 269
+ 507                                           HETATM 2202  C54 2DP B 269
+ 508                                           HETATM 2203  C55 2DP B 269
+ 509                                           HETATM 2204  C56 2DP B 269
+ 510                                           HETATM 2205  C57 2DP B 269
+ 511                                           HETATM 2206  C58 2DP B 269
+ 512                                           HETATM 2207  C59 2DP B 269
+ 513                                           HETATM 2208  C60 2DP B 269
+ 514                                           HETATM 2209  O1  2DP B 269
+ 515                                           HETATM 2210  O2  2DP B 269
+ 516                                           HETATM 2211  O3  2DP B 269
+ 517                                           HETATM 2212  O4  2DP B 269
+ 518                                           HETATM 2213  O5  2DP B 269
+ 519                                           HETATM 2214  O6  2DP B 269
+ 520                                           HETATM 2215  O7  2DP B 269
+ 521                                           HETATM 2216  O8  2DP B 269
+ 522                                           HETATM 2217  O9  2DP B 269
+ 523                                           HETATM 2218  O10 2DP B 269
+ 524                                           HETATM 2219  O11 2DP B 269
+ 525                                           HETATM 2220  P1  2DP B 269
+ 526                                           HETATM 2221  P2  2DP B 269
+ 527                                           HETATM 2222  CM  2DP B 269
+ 528                                           HETATM 2223  O   HOH B   1
+ 529                                           HETATM 2224  O   HOH B   2
+
+     If "LET" is used, then some or all of these differences will be ignored
 
                       Number of atoms in GEO_DAT: 1740
                       Number of atoms in GEO_REF: 2223
@@ -605,7 +608,7 @@
             (ATOM    513  CD  GLU A  74 )  18.148  12.637 -23.590        8.79       320.24
             (ATOM    523  OE1 GLN A  75 )  11.854   4.508 -25.581        8.61       328.85
 
-   Difference between GEO_DAT and GEO_REF:2814.647 = total,  1.6615 = Average,  2.5736 = RMS, in Angstroms
+   Difference between GEO_DAT and GEO_REF: 2814.647 = total,  1.6615 = Average,  2.5736 = RMS, in Angstroms
 
                              Differences between bond-lengths for the two geometries
 
@@ -649,9 +652,9 @@
 
 
     The following files will be written:
-    'Compare_PDB_Bacteriorhodopsin_1AP9_and_2AT9.html'
-    'Bacteriorhodopsin_1AP9.pdb'
-    'Bacteriorhodopsin_2AT9.pdb'
+              'Compare_PDB_Bacteriorhodopsin_1AP9_and_2AT9.html'
+From GEO_REF: 'Compare_PDB_Bacteriorhodopsin_1AP9_and_2AT9_Bacteriorhodopsin_2AT9.pdb'
+From GEO_DAT: 'Compare_PDB_Bacteriorhodopsin_1AP9_and_2AT9_Bacteriorhodopsin_1AP9.pdb'
 
           GEO_REF with 0SCF: Job complete
 

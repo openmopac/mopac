@@ -6,7 +6,6 @@
       use molkst_C, only : numat
       USE parameters_C, only : gpp, gp2, hsp, gss, gsp
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
       implicit none
 !-----------------------------------------------
@@ -77,7 +76,7 @@
                 gp2(ni)) 
             end do 
           end do 
-        endif 
+        end if 
  1002   continue 
       end do 
       return  

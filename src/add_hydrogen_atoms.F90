@@ -93,6 +93,8 @@
     allocate (store_nat(natoms), store_coord(3,natoms))
     allocate (store_labels(natoms), store_atmass(natoms), store_lopt(3,natoms))
     allocate (store_l_atom(natoms), metals(natoms), store_txtatm(natoms), store_txtatm1(natoms))
+    an = 0
+    store_nmetals = 0
 !
 ! Remove any hydrogen atoms present
 !
@@ -147,9 +149,9 @@
     allocate (nfirst(maxatoms), nlast(maxatoms))
     na = 0
     nat(:numat) = store_nat(:numat)
-    txtatm(:numat) = store_txtatm
+    txtatm(:numat) = store_txtatm(:numat)
     txtatm1 = " "
-    txtatm1(:numat) = store_txtatm1
+    txtatm1(:numat) = store_txtatm1(:numat)
     coord(:,:numat) = store_coord(:,:numat)
     labels(:numat) = store_labels(:numat)
     atmass(:numat) = store_atmass(:numat)
@@ -391,10 +393,10 @@
           call add_a_generic_hydrogen_atom(icc, nb_icc, nc_icc, bond_length, angle, pi, metals, nmetals)
           call add_a_generic_hydrogen_atom(icc, nb_icc, numat, bond_length, angle, internal_dihedral, metals, nmetals)
           call add_a_generic_hydrogen_atom(icc, nb_icc, numat, bond_length, angle, internal_dihedral, metals, nmetals)
-        end select
-        if (j < 21 .and. nat(icc) /= 8 .and. nat(icc) /= 16) then
-          nmetals = store_nmetals
-        end if
+      end select
+      if (j < 21 .and. nat(icc) /= 8 .and. nat(icc) /= 16) then
+        nmetals = store_nmetals
+      end if
     end do
 !
 !  Set all new atoms to hydrogen
@@ -483,6 +485,9 @@
     nc_icc = 0
     nd_icc = 0
     nH = 0
+    Rab = 0.d0
+    Rac = 0.d0
+    Rad = 0.d0
     if (nbonds(icc) == 0) then
 !
 !                                         Atom is isolated
@@ -2084,7 +2089,7 @@
         xb = xpb 
         xyb = sqrt(xb*xb + yb*yb) 
         k = 1 
-      endif 
+      end if 
 !
 !     ROTATE ABOUT THE Y-AXIS TO MAKE ZB VANISH
 !
@@ -2108,7 +2113,7 @@
 !
         coskh = 1.D0 
         sinkh = 0.D0 
-      endif 
+      end if 
 !
 !     COORDINATES :-   A=(???,YZA,0),   B=(RBC,0,0),  C=(0,0,0)
 !     NONE ARE NEGATIVE.
@@ -2133,7 +2138,7 @@
         xrd = -zqd 
         zqd = xqd 
         xqd = xrd 
-      endif 
+      end if 
       numat = numat + 1
       coord(1,numat) = xqd + coord(1,na) 
       coord(2,numat) = yqd + coord(2,na) 
@@ -2630,6 +2635,7 @@
   double precision, external :: distance
     n1 = 0
     n2 = 0
+    RO1 = 0.d0
     do i = 1, numat
       if (nat(i) == 8) then
         if (i /= O1) then

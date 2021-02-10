@@ -57,7 +57,7 @@
         icalcn = numcal 
         emin = 0.d0
         npnts = 0
-      endif   
+      end if   
 !
 !         FF=FACTOR FOR CONVERGENCE TEST FOR 1D SEARCH.
 !
@@ -83,7 +83,7 @@
                 dum = dum + fp(ik)*cp(k,j+np) 
                 ik = ik + k 
               end do 
-            endif 
+            end if 
             p_interp(i,j) = dum 
           end do 
           ii = ii + i 
@@ -104,7 +104,7 @@
           xold = 1.0D0 
           mode = 2 
           return  
-        endif 
+        end if 
 !
 !     (MODE=3 ENTRY)
 !     F CORRESPONDS TO CURRENT POINT IN CORRESPONDING REPRESENTATION.
@@ -233,7 +233,7 @@
           if (j == np1) then 
             k1 = np 
             k2 = nq 
-          endif 
+          end if 
           do i = 1, norbs 
             dum = zero 
             dum = dum + sum(cp(i,k1+1:k2+k1)*p_interp(:k2,j)) 
@@ -257,7 +257,7 @@
                 dum = dum + fp(ik)*vec_interp(k,j+np) 
                 ik = ik + k 
               end do 
-            endif 
+            end if 
             p_interp(i,j) = dum 
           end do 
           ii = ii + i 
@@ -280,7 +280,7 @@
 !     1.5708 IS MAXIMUM ROTATION ANGLE (90 DEGREE = 3.14159/2 RADIAN).
 !
         xlow = -0.5D0*xhigh 
-      endif 
+      end if 
 !
 !     CALCULATE (DE/DX) AT CURRENT POINT AND
 !     STORE INFORMATION FOR SPLINE FIT
@@ -313,7 +313,7 @@
         end do 
         mode = 3 
         return  
-      endif 
+      end if 
 !
 !     (MODE=2 EXIT) CURRENT VECTORS GIVE SATISFACTORY ENERGY IMPROVEMENT
 !     CURRENT POINT BECOMES OLD POINT FOR THE NEXT 1-D SEARCH.
@@ -321,7 +321,7 @@
       if (mode /= 2) then 
         vec_interp(:norbs,:norbs) = cp(:norbs,:norbs) 
         mode = 2 
-      endif 
+      end if 
       eold_ref = enow 
       if (npnts <= 200) return  
       write (iw, 600) 
@@ -339,7 +339,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
 !***********************************************************************
-!DECK MOPAC
       implicit none
       integer :: npnts 
       double precision, dimension(12) :: x, f, df 
@@ -395,14 +394,14 @@
         step = dstep 
       else 
         step = ustep 
-      endif 
+      end if 
       xstart = x(1) - step*(x(2)-x(1)) 
       xstart = max(xstart,xlow) 
       if (df(npnts) > 0.0D0) then 
         step = ustep 
       else 
         step = dstep 
-      endif 
+      end if 
       xstop = x(npnts) + step*(x(npnts)-x(n1)) 
       xstop = min(xstop,xhigh) 
 !
@@ -415,7 +414,7 @@
           xmin = x(k) 
           fmin = f(k) 
           dfmin = df(k) 
-        endif 
+        end if 
         dx = x(k+1) - x(k) 
 !
 !     SKIP INTERVAL IF PNTS ARE TOO CLOSE TOGETHER
@@ -443,7 +442,7 @@
           if (abs(b) > huge*abs(a)) go to 90 
         else 
           if (bb > big*abs(ac3)) go to 60 
-        endif 
+        end if 
 !
 !     WELL BEHAVED CUBIC
 !
@@ -466,7 +465,7 @@
 !
 !     EXTRAPOLATE TO END OF INTERVAL IF K=1 AND/OR K=N1
 !
-        endif 
+        end if 
    90   continue 
         if (skip1) go to 100 
         skip1 = .TRUE. 

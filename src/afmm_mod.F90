@@ -880,7 +880,7 @@ contains
            phi = 0.d0
         else
            phi = Atan2 (dy, dx)
-        endif
+        end if
 
 
         call get_legendre (p, cos_t, pmn)

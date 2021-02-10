@@ -177,7 +177,7 @@ module MOZYME_C
   logical :: &
     rapid,       &      !  True if RAPID technique to be used
     odd_h,       &      !  Control print of banner for quentionable number of hydrogen atoms
-    lstart_res(100), &  !
+    lstart_res(101), &  !
     use_three_point_extrap
 !
 !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

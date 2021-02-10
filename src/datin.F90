@@ -7,7 +7,6 @@
       use molkst_C, only : keywrd, lpars, line
       use chanel_C, only : iext
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -331,7 +330,7 @@
                     if(elemnt2(2:2) == " ")elemnt2 = elemnt2(1:1)
                   else
                     elemnt2 = " "
-                  endif
+                  end if
                   write (line, "(12X,A7,7X,A2,F16.6)") partyp (iparam)//elemnt2, elemnt(jelmnt), parsij(i)
                   if (iparam /= 41 .and. iparam < n_partyp) then
                     write (iw, "(a)") trim(line)

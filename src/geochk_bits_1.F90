@@ -711,6 +711,10 @@ end subroutine compare_sequence
     logical, external :: near_a_metal
     integer, allocatable :: cations(:), anions(:), metals(:)
     allocate (cations(numat), anions(numat), metals(numat))
+    het = .false.
+    C = 0
+    ii = 0
+    jj = 0
     nmetals = 0
      do i = 1, numat
       do j = 1, 102

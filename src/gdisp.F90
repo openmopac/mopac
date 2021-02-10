@@ -91,7 +91,7 @@
         dcn =  - k1*rcovij*expterm/(r*r*(expterm + 1.d0)*(expterm + 1.d0))
       else
         dcn = 0.d0
-      endif
+      end if
       x1 = drij(linij) + dcn*(dc6i(i) + dc6i(j))
       dxyz_temp(:,i) = dxyz_temp(:,i) + x1*rij/r
       dxyz_temp(:,j) = dxyz_temp(:,j) - x1*rij/r
@@ -118,7 +118,7 @@
 ! counting function exponential has a better long - range behavior than MHGs inverse damping
           damp = 1.d0/(1.d0 + exp( -16.d0*(rr - 1.0d0)))
           xn = xn + damp
-        endif
+        end if
     end do
     cn(i) = xn
   end do
@@ -153,7 +153,7 @@
           if (r < r_save) then
             r_save = r
             c6mem = c6ref
-          endif
+          end if
           expterm = exp(-4.d0*r)
           zaehler = zaehler + c6ref*expterm
           nenner = nenner + expterm
@@ -176,7 +176,7 @@
       c6check = c6mem
       dc6i = 0.0d0
       dc6j = 0.0d0
-    endif
+    end if
 end subroutine get_dC6_dCNij
 
 

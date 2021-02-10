@@ -89,8 +89,8 @@
             dd2 = vect1**2 + vect2**2 + vect3**2 
             if (dd2 < sr2) go to 30 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
       collid = .FALSE. 
       go to 40 
    30 continue 

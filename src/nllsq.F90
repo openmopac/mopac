@@ -84,8 +84,8 @@
         if (tol2<0.01D0 .and. index(keywrd,' LET')==0) then 
           write (iw, '(/,A)') '  GNORM HAS BEEN SET TOO LOW, RESET TO 0.01' 
           tol2 = 0.01D0 
-        endif 
-      endif 
+        end if 
+      end if 
       last = 0 
       tols1 = 1.D-12 
       tols2 = 1.D-10 
@@ -128,10 +128,10 @@
           iflepo = 13 
           last = 1 
           goto 99  
-        endif 
+        end if 
         jcyc = icyc 
         go to 60 
-      endif 
+      end if 
       call compfg (xparam, .TRUE., escf, .TRUE., grad, .TRUE.) 
       ssq = ddot(nvar,grad,1,grad,1) 
       ncount = 1 
@@ -189,7 +189,7 @@
           efsss = 0.0D0 
           if (i < nvar) then 
             y(i1:nvar) = 0.0D0 
-          endif 
+          end if 
           do j = i, nvar 
             ii = np2 - j 
             jj = np1 - j 
@@ -197,7 +197,7 @@
               temp = y(j)*sqrt(1.0D0 + (r(ii,jj)/y(j))**2) 
             else 
               temp = r(ii,jj)*sqrt(1.0D0 + (y(j)/r(ii,jj))**2) 
-            endif 
+            end if 
             sin = r(ii,jj)/temp 
             cos = y(j)/temp 
             r(ii,jj) = temp 
@@ -244,7 +244,7 @@
         p(1) = temp*(p(1)+sign(pn,p(1))) 
         p(2:nvar) = temp*p(2:nvar) 
         p(jrst) = p(jrst) - work 
-      endif 
+      end if 
 !     **********
 !     COMPUTE NORM AND NORM-SQUARE OF THE P-VECTOR
 !     **********
@@ -263,7 +263,7 @@
         call geout (1) 
         call mopend ('SYSTEM DOES NOT APPEAR TO BE OPTIMIZABLE.') 
         goto 99  
-      endif 
+      end if 
       pn2 = dmax1(1.D-20,pn2) 
       pn = sqrt(pn2) 
       alf = min(1.D20,alf) 
@@ -271,7 +271,7 @@
         alf = alf*1.D-20*pnlast/pn 
         alf = min(1.D10,alf) 
         alf = alf*1.D20 
-      endif 
+      end if 
       ttmp = alf*pn 
       if (ttmp < 0.0001D0) alf = 0.001D0/pn 
 !     **********
@@ -292,7 +292,7 @@
         irst = nrst 
         pn = pnlast 
         go to 590 
-      endif 
+      end if 
 !     **********
 !     PRODUCE THE VECTOR   R*P
 !     **********
@@ -357,7 +357,7 @@
         i = np1 
       else 
         i = m 
-      endif 
+      end if 
   410 continue 
       j = i 
       i = i - 1 
@@ -371,7 +371,7 @@
         temp = abs(y(i))*sqrt(1.0D0 + (y(j)/y(i))**2) 
       else 
         temp = abs(y(j))*sqrt(1.0D0 + (y(i)/y(j))**2) 
-      endif 
+      end if 
       cos = y(i)/temp 
       sin = y(j)/temp 
       y(i) = temp 
@@ -403,7 +403,7 @@
           temp = abs(r(i,i))*sqrt(1.0D0 + (r(j,i)/r(i,i))**2) 
         else 
           temp = abs(r(j,i))*sqrt(1.0D0 + (r(i,i)/r(j,i))**2) 
-        endif 
+        end if 
         cos = r(i,i)/temp 
         sin = r(j,i)/temp 
         r(i,i) = temp 
@@ -414,7 +414,7 @@
             r(i,k) = temp 
             r(j,k) = work 
           end do 
-        endif 
+        end if 
         do k = 1, m 
           temp = cos*q(k,i) + sin*q(k,j) 
           work = (-sin*q(k,i)) + cos*q(k,j) 
@@ -467,13 +467,13 @@
           endfile (ilog) 
           backspace (ilog) 
         end if
-      endif 
+      end if 
       endfile (iw) 
       backspace (iw) 
       if (log) then 
         endfile (ilog) 
         backspace (ilog) 
-      endif 
+      end if 
       if (tlast - tleft > tdump) then 
         tlast = tleft 
         resfil = .TRUE. 
@@ -481,7 +481,7 @@
         iiium(1) = nscf 
         call parsav (2, nvar, m, q, r, grad, xlast, iiium) 
         if (moperr) goto 99  
-      endif 
+      end if 
       if (tleft>tcycle*2 .and. icyc-jcyc<maxcyc) go to 60 
       iiium(5) = ncount 
       xlast(:nvar) = xparam(:nvar) 
@@ -503,8 +503,9 @@
       go to 870 
   760 format(' TEST ON xparam SATISFIED, NUMBER OF FUNCTION CALLS = ',i5) 
   770 format(' TEST ON SSQ SATISFIED, NUMBER OF FUNCTION CALLS = ',i5) 
-  870 continue 
-      last = 1 
+  870 continue
+      last = 1
+      call compfg (xparam, .TRUE., escf, .TRUE., grad, .TRUE.)
   99  if (allocated(q)) deallocate(q, stat = i)
       if (i /= 0) return
       if (allocated(r)) deallocate(r, stat = i)

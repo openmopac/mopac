@@ -9,7 +9,6 @@
       use to_screen_C, only : to_a, to_b
       USE symmetry_C, only :  jndex, namo
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -62,6 +61,7 @@
       data xyz/ ' x', ' y', ' z'/  
       data atorbs/ 'S ', 'Px', 'Py', 'Pz', 'x2', 'xz', 'z2', 'yz', 'xy'/  
 !      -------------------------------------------------
+      nfix = 0
       allprt = index(keywrd,'ALLVEC') /= 0 
       i = index(keywrd," VECTORS")
       nup = 7
@@ -105,7 +105,7 @@
         nfix = max(nalpha,nclose) 
         if (iflag == 2 .and. nc > 16) nc = nfix + nup 
         nc = min0(nsave,nc) 
-      endif 
+      end if 
       if (numat == 0) go to 50 
       if (nlast(numat) /= nr) go to 50 
       do i = 1, numat 
@@ -121,7 +121,7 @@
           itext(1+jhi:3+jhi) = xyz 
           jtext(1+jhi:3+jhi) = elemnt(l) 
           natom(1+jhi:3+jhi) = i 
-        endif 
+        end if 
       end do 
       go to 70 
    50 continue 
@@ -138,7 +138,7 @@
           jtext(i) = '  ' 
           natom(i) = i 
         end do 
-      endif 
+      end if 
    70 continue 
       ka = 1 
       kc = 8 
@@ -146,7 +146,7 @@
         if (iflag == 2 .and. norbs > 16) ka = nfix - ndown
         ka = max0(1,ka) 
         if (iflag == 2 .and. norbs > 16) kc = ka + 7 
-      endif 
+      end if 
    90 continue 
       kb = min0(kc,nc) 
       write (iw, 130) (i,i=ka,kb) 
@@ -156,8 +156,8 @@
           write (iw, 150) (b(i),i=ka,kb) 
         else 
           write (iw, 140) (b(i),i=ka,kb) 
-        endif 
-      endif 
+        end if 
+      end if 
       write (iw, 160) 
       la = 1 
       lc = 40 

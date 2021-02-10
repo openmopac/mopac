@@ -35,6 +35,9 @@
       logical*1 ::         diagon
       double precision ::  j12, k12, jk12
       double precision ::            edefs
+      nu1l = 0
+      nmc = 0
+      nme = 0
 
       if (.not. allocated(wk1)) allocate(wk1(n))
       if (.not. allocated(wk2)) allocate(wk2(n))
@@ -731,6 +734,7 @@
 
 !     **** order in terms of increasing eigenvalue ****
       do nconf1 = 1, nconf
+        k = 0
         emin = 1.d30
         do i = nconf1, nconf
           if (emin > aii(i)) then

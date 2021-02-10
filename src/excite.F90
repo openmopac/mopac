@@ -274,9 +274,9 @@
             do k=1, nex
               aocc(i, j, k) = .False.
               bocc(i, j, k) = .False.
-            enddo
-          enddo
-        enddo
+            end do
+          end do
+        end do
 
 !	**** spin adapt and include in config list ****
 
@@ -332,6 +332,7 @@
 !         **** ensure CAS orbitals are in ascending order for sort speed ***
           do i = 1, nv - 1
             a = n
+            jmin = 0
             do j = i, nv
               if (vv(j) < a) then
                 a = vv(j)
@@ -530,6 +531,7 @@
 !     **** sort states by symmetry ****
 
       do k = 1, nconf
+        jmin = 0
         ismin = 10000
         do j = k, nconf
           if (istsym(j) < ismin) then

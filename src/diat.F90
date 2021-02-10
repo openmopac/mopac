@@ -73,7 +73,7 @@
         end do
         use_diat2(2)  = .false.
         use_diat2(10) = .false.
-      endif 
+      end if 
       x2 = xj(1) 
       y2 = xj(2) 
       z2 = xj(3) 
@@ -117,7 +117,7 @@
             end do 
           end do 
         end do 
-      endif 
+      end if 
       do i = 1, ia ! i goes over  L = s, p, d for atom a
         kmin = 4 - i 
         kmax = 2 + i 
@@ -131,8 +131,8 @@
               bb = -1.D0 
             else 
               bb = 1.D0 
-            endif 
-          endif 
+            end if 
+          end if 
           lmin = 4 - j 
           lmax = 2 + j 
           do k = kmin, kmax   ! k goes over M_L = -del, -pi, sigma, pi, del for atom a
@@ -404,7 +404,7 @@
 !   AFF(2,0,2) CORRESPONDS TO C(2,0,1) IN THE MANUAL
 !
         aff(2,0,2) = -0.5D0 
-      endif 
+      end if 
       p = (ua + ub)*r*0.5D0 
       b = (ua - ub)*r*0.5D0 
       quo = 1/p 

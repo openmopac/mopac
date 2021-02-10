@@ -87,6 +87,7 @@
 !  Angle is zero or 180 degrees.  Search for an atom nearest to 90 degrees
 !
               r = 2.d0
+              l = 0
               do k = 1, im1
                 if (k == na(i) .or. k == nb(i)) cycle
                 call bangle (xyz, na(i), nb(i), k, sum) 

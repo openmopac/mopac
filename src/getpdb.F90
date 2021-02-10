@@ -22,8 +22,8 @@ subroutine getpdb (geo)
  !           NA     = INTEGER ARRAY FILLED WITH '0'S.
  !           NB     = INTEGER ARRAY FILLED WITH '0'S.
  !           NC     = INTEGER ARRAY FILLED WITH '0'S.
- !***********************************************************************\
-    double precision :: geo(3,natoms)
+ !************************************************************************
+    double precision :: geo(3,*)
 !
     integer, parameter :: maxel = 115
     character, save :: comma, space
@@ -189,7 +189,7 @@ subroutine getpdb (geo)
           write(iw,'(a)')trim(line)
         end if
         cycle
-      endif
+      end if
       if (letter /= " " .and. index(letter, line(22:22)) == 0) cycle
       if (line(17:17) /= " ") then
         if (typea == " ") then
@@ -337,17 +337,17 @@ subroutine getpdb (geo)
             else if( scan( " 0123456789", ele(1:1) ) /= 0 ) then
             ele(1:1) = ele(2:2)
             ele(2:2) = " "
-            endif
+            end if
             
             if( scan( " 0123456789", ele(2:2) ) /= 0 ) then
               ele(2:2) = " "
-            endif
-          endif
-        endif
+            end if
+          end if
+        end if
       else
         natoms = natoms -1
         cycle
-      endif
+      end if
 
       do i = defined_elements+1, defined_elements + new_elements
         if (ele == element(i)) go to 1010

@@ -40,7 +40,7 @@
       if (rab > cutofs .or. (rab > 3.24D0 .and. (ni==102 .or. nj==102))) then 
         smat = 0.D0 
         return  
-      endif 
+      end if 
       xjuc = xj - xi 
       call diat (ni, nj, xjuc, smat) 
       bi(1) = betas(ni)*0.5D0 

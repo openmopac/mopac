@@ -130,6 +130,7 @@
     end if
     blank = " "
     do j = 1, n_non_zero
+      m = 0
       sum = 0.d0
       do k = j, n_non_zero
         if (bab(k) > sum) then

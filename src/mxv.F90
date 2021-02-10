@@ -21,7 +21,7 @@
 #endif
       else                  
          call dgemv ('N', nar, nbr, 1.0d0, a, nar, vecx, incx, 0.0d0, vecy, incy)
-      endif 
+      end if 
       return  
       end subroutine mxv 
 

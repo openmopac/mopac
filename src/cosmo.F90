@@ -357,7 +357,7 @@ subroutine coscav
           dist2 = 0.d0
           do ix = 1, 3
               dist2 = dist2 + (xa(ix) - coord(ix, nn(2, i)))**2
-          enddo
+          end do
           dist = 1.0d0/sqrt(dist2)
           xx(1) = (coord(1, nn(2, i)) - xa(1))*dist
           xx(2) = (coord(2, nn(2, i)) - xa(2))*dist
@@ -372,7 +372,7 @@ subroutine coscav
         else
           exit i_loop
         end if
-      enddo i_loop
+      end do i_loop
       sininv = 1.d0 / Sqrt (1.d0 - sp*sp)
       tm(2, 1, i) = (xx(1) - sp*tm(1, 1, i)) * sininv
       tm(2, 2, i) = (xx(2) - sp*tm(1, 2, i)) * sininv
@@ -452,6 +452,7 @@ subroutine coscav
           do j = 1, 1082
             if (din(j)) then
               spm = -1.d0
+              ipm = 0
               x1 = dirtm(1, j)
               x2 = dirtm(2, j)
               x3 = dirtm(3, j)
@@ -1313,6 +1314,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
     double precision, dimension (50) :: phiset
     double precision, dimension (3, 3) :: ee, xta
     double precision, dimension (50) :: tarset
+    htr = 0.d0
     tarset = 0.d0
     nipc = 0
     nrs = 0
@@ -1655,7 +1657,9 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
       nipsrs(i) = 0
     end do
     iat0 = 0
+    ips0 = 0
     ips1 = 0
+    d2max = 0.d0
     do i = 1, nrs
       iat = ipsrs(i)
       if (iat > iat0) then
@@ -1673,6 +1677,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
         end do
         ips1 = ips
       end if
+      ipsmin = 0
       d2min = 1d6
       do ips = ips0, ips1
         d2 = 0.d0

@@ -1,0 +1,156 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only    Version 20.173L 64BITS **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 20.173L, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Mon Jun 29 13:00:49 2020  *
+ *  PM7        - The PM7 Hamiltonian to be used
+ *  CIS        - C.I. USES 1 ELECTRON EXCITATIONS ONLY
+ * C.I.=(N,M)-  5 DOUBLY FILLED LEVELS USED IN A C.I. INVOLVING 8 M.O.'S
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+PM7 CIS C.I.=(8,5)
+ Carbon Monoxide
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000      0.00000000      0.00000000   
+     2       O          1.17300000      0.00000000      0.00000000   
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         O          1.1730      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 5
+
+
+ -------------------------------------------------------------------------------
+ PM7 CIS C.I.=(8,5)
+ Carbon Monoxide
+
+
+
+     NO PARAMETERS MARKED FOR OPTIMIZATION, SO 1SCF WAS USED  
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 20.173L)
+                                                       Mon Jun 29 13:00:49 2020
+
+
+
+
+          FINAL HEAT OF FORMATION =        -16.98523 KCAL/MOL =     -71.06620 KJ/MOL
+
+
+          TOTAL ENERGY            =       -417.35162 EV  STATE:   1 SINGLET Sig 
+          ELECTRONIC ENERGY       =       -648.53774 EV  POINT GROUP:     C*v 
+          CORE-CORE REPULSION     =        231.18612 EV
+          COSMO AREA              =         57.92 SQUARE ANGSTROMS
+          COSMO VOLUME            =         40.40 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         12.457491 EV
+          HOMO LUMO ENERGIES (EV) =        -12.457  1.432
+          NO. OF FILLED LEVELS    =          5
+          MOLECULAR WEIGHT        =         28.0104
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            O     2    C     1     1.17300
+            O     2    C     1     0.00000
+            C     1    O     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.203 SECONDS
+          COMPUTATION TIME        =          0.973 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000      0.00000000      0.00000000   
+     2       O          1.17300000      0.00000000      0.00000000   
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    O        1.173000000     0.000000000     0.000000000
+
+
+           Empirical Formula: C O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+                  EIGENVALUES  
+ -31.98036 -19.71992 -14.72779 -14.72779 -12.45749   1.43238   1.43238   5.37879
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C           0.455911        3.5441     1.79911     1.74497
+    2          O          -0.455911        6.4559     1.85458     4.60133
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -2.569     0.000     0.000     2.569
+ HYBRID         1.591    -0.000     0.000     1.591
+ SUM           -0.978    -0.000     0.000     0.978
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.79911   0.88543   0.42977   0.42977
+    2  O   1.85458   1.46088   1.57023   1.57023
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.28 SECONDS
+
+ == MOPAC DONE ==
+
+
+          MOPAC Job: "co_cis_PM7.mop" ended normally on Jun 29, 2020, at 13:00.
+

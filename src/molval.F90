@@ -6,7 +6,6 @@
       USE chanel_C, only : iw
       use common_arrays_C, only : nfirst, nlast
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s

@@ -49,7 +49,7 @@
           if (i + iadd > l) go to 50 
           n = ichar(string(i+iadd:i+iadd)) 
           if (n>=i0 .and. n<=i9) go to 20 
-        endif 
+        end if 
 !
 !       ACCOUNT FOR CONSECUTIVE DECIMAL POINTS (.)
         if (n /= idot) cycle  
@@ -77,19 +77,19 @@
           if (j + iadd > l) go to 40 
           n = ichar(string(j+iadd:j+iadd)) 
           if (n>=i0 .and. n<=i9) cycle  
-        endif 
+        end if 
         if (n == idot) then 
           iadd = iadd + 1 
           if (j + iadd > l) go to 40 
           n = ichar(string(j+iadd:j+iadd)) 
           if (n>=i0 .and. n<=i9) cycle  
           if (n==icape .or. n==ismle .or. n==icapd .or. n==ismld) cycle  
-        endif 
+        end if 
         if (n==icape .or. n==ismle .or. n==icapd .or. n==ismld) then 
           if (expnnt) go to 40 
           expnnt = .TRUE. 
           cycle  
-        endif 
+        end if 
         go to 40 
       end do 
       j = l + 1 
@@ -107,7 +107,7 @@
         reada = digit(string(i:j-1),1) 
       else 
         reada = digit(string(:i+n-2),i)*1.D1**digit(string(:j-1),i+n) 
-      endif 
+      end if 
       return  
 !
 !     DEFAULT VALUE RETURNED BECAUSE NO NUMERIC FIELD FOUND

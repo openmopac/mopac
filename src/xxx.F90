@@ -47,7 +47,7 @@
           m = m + 1 
           r(m:m) = char(ichar('0') + i2) 
           ii = ii - i2*10 
-        endif 
+        end if 
         m = m + 1 
         r(m:m) = char(ichar('0') + ii) 
       end do 

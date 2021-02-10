@@ -56,7 +56,7 @@
             do i = 1,ndim-1
                call dcopy(ndim-i,xa(i,i+1),ndim,xa(i+1,i),1)
                call dcopy(ndim-i,xb(i,i+1),ndim,xb(i+1,i),1)
-            enddo
+            end do
 
             if (.not.(beta == 0.d0)) then
 !              forall (i=1:ndim,j=1:ndim) 
@@ -67,8 +67,8 @@
               if (i /= 0) stop 'error in dtpttr'
               do i = 1,ndim-1
                  call dcopy(ndim-i,xc(i,i+1),ndim,xc(i+1,i),1)
-              enddo
-            endif
+              end do
+            end if
                                    
             call dgemm ("N", "N", ndim, ndim, ndim, alpha, xa, ndim, xb, ndim, beta, xc, &
                        & ndim)
@@ -94,7 +94,7 @@
             do i = 1,ndim-1
                call dcopy(ndim-i,xa(i,i+1),ndim,xa(i+1,i),1)
                call dcopy(ndim-i,xb(i,i+1),ndim,xb(i+1,i),1)
-            enddo
+            end do
 
             if (beta /= 0.d0) then
 !              forall (i=1:ndim,j=1:ndim) 
@@ -105,8 +105,8 @@
               if (i /= 0) stop 'error in dtpttr'
               do i = 1,ndim-1
                  call dcopy(ndim-i,xc(i,i+1),ndim,xc(i+1,i),1)
-              enddo
-            endif
+              end do
+            end if
 
 !            if (ngpus > 1 .and. ndim > 100) then
 !
@@ -117,7 +117,7 @@
                call gemm_cublas ("N", "N", ndim, ndim, ndim, alpha, xa, ndim, xb, ndim, beta, xc, &
                            & ndim)
             
-!            endif            
+!            end if            
 
             call dtrttp('u', ndim, xc, ndim, c, i )
             

@@ -8,7 +8,6 @@
       use common_arrays_C, only : eigs, dxyz
       use chanel_C, only : iw 
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -82,6 +81,8 @@
         minear = nbo(2)*nbo(1) + nbo(3)*nopen 
         ninear = nmos
         k = 0
+        l = 0
+        n2 = 0
         do i = 1, 3
           l = k + 1
           k = k + nbo(i)
@@ -116,7 +117,7 @@
         large = index(keywrd,'LARGE') /= 0 
         dcar = index(keywrd,'FORC') + index(keywrd,'PREC') /= 0 
         nvax = 3*numat         
-      endif 
+      end if 
       dxyzr(:nvax) = 0.D0 
 !        SCALING ROW FACTORS TO SPEED CV OF RELAXATION PROCEDURE.
       call deri0 (eigs, norbs, scalar, diag, fract, nbo) 
@@ -131,7 +132,7 @@
       if (gnorm<1.D0 .or. dcar) then 
         dxyzr(:nvax) = 0.D0 
         relaxd = .FALSE. 
-      endif 
+      end if 
       do i = 1, nvax 
         sum = sum + abs(dxyzr(i)) 
       end do 
@@ -192,8 +193,8 @@
             write (iw, '(A,5F12.6)') blank(:12*i), (fmoon(j),j=ll,l), fmoon(k+i) 
             ll = l + 1 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
 !        COMPUTE THE ELECTRONIC RELAXATION CONTRIBUTION.
 !
 !   DERNVO PROVIDES THE FOLLOWING SCRATCH AREAS TO DERI2: EIGB, WORK2,
@@ -245,11 +246,11 @@
         write (iw, '(/10X,''RESIDUAL ERROR'')') 
         write (iw, '(4X,3F12.7)') sumx, sumy, sumz 
         write (iw, *) 
-      endif 
+      end if 
       dxyz(:nvax) = dxyz(:nvax) + dxyzr(:nvax) 
       if (relaxd) then 
         dxyzr(:nvax) = 0.D0 
-      endif 
+      end if 
       sumx = 0.D0 
       sumy = 0.D0 
       sumz = 0.D0 
@@ -268,7 +269,7 @@
         write (iw, '(/10X,''RESIDUAL ERROR'')') 
         write (iw, '(4X,3F12.7)') sumx, sumy, sumz 
         write (iw, *) 
-      endif 
+      end if 
   99  continue
       if(allocated(scalar)) deallocate(scalar)
       if(allocated(diag))   deallocate(diag)

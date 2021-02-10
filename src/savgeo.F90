@@ -1,7 +1,7 @@
 subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
 !
     use param_global_C, only : contrl, nas, nbs, ncs, geos, &
-    names, refher, ifiles_8
+    names, refher !, ifiles_8
 !
     use molkst_C, only : natoms, nvar, keywrd, title, refkey, escf, &
       line, ncomments, good_separator
@@ -17,7 +17,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
 !--------------------------------------------------------------------
     character (len=100) :: dirnew
     character (len=100) :: name
-    logical :: opend, lsav, exists
+    logical :: opend, lsav !, exists
     integer :: i, iatm, igeo, j, k, iw
     character :: num*1
     intrinsic Index

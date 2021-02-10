@@ -24,6 +24,8 @@ subroutine hcore_for_MOZYME ()
   double precision, dimension (2025) :: wjd, wkd
   double precision, dimension (9, 9) :: di, dibits
   integer, external :: ijbo
+  fldcon = 0.d0
+  fnuc = 0.d0
   debug = (Index (keywrd, " HCORE") /= 0)
   call add_more_interactions()
   if (moperr) return

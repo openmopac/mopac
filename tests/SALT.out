@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
+ ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,11 +12,11 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Aug  7 17:15:52 2019  *
- *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "NEUTRAL.MOP"
+ *  CALCULATION DONE:                                Sun Feb  7 17:51:47 2021  *
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Neutral.mop"
  *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
- *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  OUTPUT     - MINIMIZE OUTPUT
  *******************************************************************************
 geo_dat="Neutral.mop"  OUTPUT   site=(salt)
@@ -27,13 +27,13 @@ geo_dat="Neutral.mop"  OUTPUT   site=(salt)
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
  NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
- http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
 
            Empirical Formula: C798 H1353 N206 O314 S9 P  =  2681 atoms
 
 
 
-                   Salt Bridges Found (Up to  4.0 Angstroms)
+                   Salt Bridges Found (Up to 4.0 Angstroms)
 
      No.          Cationic site                            Anionic site                Dist. (Angstroms)
 

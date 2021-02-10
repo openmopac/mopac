@@ -47,7 +47,6 @@
 !
 !***********************************************************************
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -140,7 +139,7 @@
             ri(1) = ee 
             ri(3) = ee 
             ri(4) = ee 
-          endif 
+          end if 
           core(1,1) = tore(nj)*ri(1) 
           core(1,2) = tore(ni)*ri(1) 
           core(2,1) = tore(nj)*ri(2) 
@@ -185,7 +184,7 @@
             ri(1) = ee 
             ri(11) = ee 
             ri(12) = ee 
-          endif 
+          end if 
           core(1,1) = tore(nj)*ri(1) 
           core(1,2) = tore(ni)*ri(1) 
           core(2,2) = tore(ni)*ri(5) 
@@ -425,7 +424,7 @@
             ri(18) = ee 
             ri(19) = ee 
             ri(21) = ee 
-          endif 
+          end if 
 !
 !     CALCULATE CORE-ELECTRON ATTRACTIONS.
 !
@@ -438,7 +437,7 @@
           core(3,2) = tore(ni)*ri(11) 
           core(4,2) = tore(ni)*ri(12) 
 !
-        endif 
+        end if 
 !
         return  
       end subroutine repp 

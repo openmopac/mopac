@@ -330,7 +330,8 @@
       integer ::           j
  
       do 100 j = 1, 6
-100     pol(j) = 0.d0
+        pol(j) = 0.d0
+100   continue
 
       return
       end subroutine polzro
@@ -344,7 +345,7 @@
       double precision ::  tmx, tmy, tmz, dele
 
       if (abs(dele) < 1.d1) then
-	return
+        return
       end if
       pol(1) = pol(1) + tmx**2 / dele
       pol(2) = pol(2) + tmx*tmy/ dele

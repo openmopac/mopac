@@ -8,7 +8,6 @@
       USE funcon_C, only : fpc_9  
       USE chanel_C, only : iw 
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -50,6 +49,8 @@
 !
 !***********************************************************************
       data icalcn/ 0/  
+      precise = .false.
+      PM6_H = .false.
       if (icalcn /= numcal) then 
         debug = (index(keywrd,'DERITR') /= 0) 
         precise = (index(keywrd,'PRECISE') /= 0) 
@@ -64,9 +65,9 @@
 !
         const = fpc_9 
 !
-      delta = 0.d0
-      i = index(keywrd,' DELTA') 
-      if (i /= 0) delta = reada(keywrd,i) 
+        delta = 0.d0
+        i = index(keywrd,' DELTA') 
+        if (i /= 0) delta = reada(keywrd,i) 
         if (precise) then
           if (delta < 1.d-10) delta = 0.001D0
           xderiv = 0.5D0/delta           
@@ -74,7 +75,7 @@
           if (delta < 1.d-10) delta = 0.0002D0
           xderiv = 1.d0/delta          
         end if
-      endif       
+      end if       
       do i = 1, nvar 
         xparam(i) = geo(loc(2,i),loc(1,i)) 
       end do 
@@ -103,7 +104,7 @@
         if (PM6_H) then
           call post_scf_corrections(sum, .false.)
           aa = aa + sum/const
-        endif 
+        end if 
         aa = aa + enuclr 
       end if
 !
@@ -170,7 +171,7 @@
       if (debug) then 
         write (iw, '('' ERROR FUNCTION'')') 
         write (iw, '(10F8.3)') (errfn(i),i=1,nvar) 
-      endif 
+      end if 
       geo(loc(2,nvar),loc(1,nvar)) = xparam(nvar) 
       escf = escf_store
       enuclr = enuclr_store

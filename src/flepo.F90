@@ -138,6 +138,11 @@
 !   START OF ONCE-ONLY SECTION
 !
       emin = 0.D0 
+      smval = 0.d0
+      gnormr = 0.d0
+      beta = 0.d0
+      therb = 0.d0
+      icyc = 0
       if (icalcn /= numcal) then 
         if (allocated(hesinv)) deallocate(hesinv)
         allocate (hesinv((nvar*(nvar+1))/2))
@@ -185,10 +190,10 @@
           if (index(keywrd,' LET')==0 .and. tolerg<1.D-2) then 
             write (iw, '(/,A)') '  GNORM HAS BEEN SET TOO LOW, RESET TO 0.01' 
             tolerg = 1.D-2 
-          endif 
+          end if 
         else 
           rootv = sqrt(nvar + 1.D-5) 
-        endif 
+        end if 
         tolerx = 0.0001D0*const 
         delhof = 0.0010D0*const 
         tolerf = 0.002D0*const 
@@ -198,7 +203,7 @@
           delhof = delhof*0.01D0 
           tolerf = tolerf*0.01D0 
           einc = einc*0.01D0 
-        endif 
+        end if 
         therb = 5.D0*tolerg*rootv 
 !
 !  MINOR BOOK-KEEPING
@@ -242,12 +247,12 @@
             iflepo = 13 
             emin = 0.D0 
             return  
-          endif 
-        endif 
+          end if 
+        end if 
 !
 !   END OF ONCE-ONLY SETUP
 !
-      endif 
+      end if 
 !
 !     FIRST, WE INITIALIZE THE VARIABLES.
 !
@@ -278,12 +283,12 @@
         gnorm = min(10.D0,gnorm) 
         if (gnorm > 1.D0) tolerg = tolrg*gnorm 
         write (iw, '('' GRADIENT CRITERION IN FLEPO ='',F10.3)') tolerg 
-      endif 
+      end if 
       if (nvar == 1) then 
         pvect(1) = 0.01D0 
         alpha = 1.D0 
         go to 270 
-      endif 
+      end if 
       totime = 0.D0 
 !
 ! CALCULATE THE VALUE OF THE FUNCTION -> FUNCT1, AND GRADIENTS -> GRAD.
@@ -305,8 +310,8 @@
           call dcopy (nvar, gd, 1, glast, 1) 
         else 
           call dcopy (nvar, grad, 1, glast, 1) 
-        endif 
-      endif 
+        end if 
+      end if 
       if (gnorm<tolerg .or. nvar==0) then 
         iflepo = 2 
         if (restrt) then 
@@ -315,11 +320,11 @@
         else 
           call compfg (xparam, .TRUE., funct1, .TRUE., grad, .FALSE.) 
           if (moperr) return  
-        endif 
+        end if 
         tx2 = seconds(1) 
         emin = 0.D0 
         return  
-      endif 
+      end if 
       tx1 = seconds(2) 
       tleft = tleft - tx1 + tx2 
 !     *
@@ -337,7 +342,7 @@
    10 continue 
       if (cos < rst) then 
         gd(:nvar) = 0.5D0 
-      endif 
+      end if 
    30 continue 
       jcyc = jcyc + 1 
       jnrst = jnrst + 1 
@@ -394,8 +399,8 @@
             call geout (1) 
             call mopend ('CALCULATION ABANDONED IN FLEPO') 
             return  
-          endif 
-        endif 
+          end if 
+        end if 
         ncount = ncount + 1 
         hesinv(:ihdim) = 0.0D00 
         sum = 0.D0 
@@ -425,7 +430,7 @@
             j = j + 1 
             sum = sum + hesinv(ii) 
           end do 
-        endif 
+        end if 
         if (j /= 0) then 
           sum = sum/j 
           ii = 0 
@@ -434,7 +439,7 @@
             if (hesinv(ii) >= 0) cycle  
             hesinv(ii) = sum 
           end do 
-        endif 
+        end if 
         jnrst = 0 
         if (jcyc < 2) cosine = 1.D0 
         if (funct2 >= funct1) then 
@@ -455,7 +460,7 @@
          gnorm = dsqrt(ddot(nvar,grad,1,grad,1))
 !                   
           if (gnormr < 1.D-10) gnormr = gnorm 
-        endif 
+        end if 
       else 
 !
 !     *
@@ -484,7 +489,7 @@
             if (i > 0) then 
               hesinv(k+1:i+k) = hesinv(k+1:i+k) + xvar(:i)*xvari - gg(:i)*ggi 
               k = i + k 
-            endif 
+            end if 
           end do 
 !
 !     UPDATE USING THE BFGS FORMALISM
@@ -498,10 +503,10 @@
               hesinv(k+1:i+k) = hesinv(k+1:i+k) - gg(:i)*xvari - xvar(:i)*ggi&
                  + yhy*xvar(:i)*xvari 
               k = i + k 
-            endif 
+            end if 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
 !
 !     *
 !     ESTABLISH NEW SEARCH DIRECTION
@@ -515,7 +520,7 @@
 !
         pvect(:nvar) = pvect(:nvar)*1.5D0*pnlast/pnorm 
         pnorm = 1.5D0*pnlast 
-      endif 
+      end if 
 ! For Mopac BLAS            
 !     dott = -dot(pvect,grad,nvar)
       dott = -ddot(nvar,pvect,1,grad,1) 
@@ -545,7 +550,7 @@
   220     format(' ',1x,'GRAD  (I)',f10.4,1x,9(f10.4,1x)) 
   230     format(' ',1x,'PVECT (I)',2x,f10.6,1x,9(f10.6,1x)) 
         end do 
-      endif 
+      end if 
       lnstop = 0 
       alpha = alpha*pnlast/pnorm 
       call dcopy (nvar, grad, 1, glast, 1) 
@@ -572,7 +577,7 @@
         emin = 0.D0 
         tx2 = seconds(1) 
         return  
-      endif 
+      end if 
       beta = alpha 
       smval = funct1 
       dropn = -abs(drop/alpha) 
@@ -610,9 +615,9 @@
           mdfp(5) = nscf 
           call dfpsav (totim, xparam, gd, xlast, funct1, mdfp, xdfp) 
           if (moperr) return  
-        endif 
+        end if 
         return  
-      endif 
+      end if 
 !   WE WANT ACCURATE DERIVATIVES AT THIS POINT
 !
 !   LINMIN DOES NOT GENERATE ANY DERIVATIVES, THEREFORE COMPFG MUST BE
@@ -625,7 +630,7 @@
         ireset = 0 
         gnormr = 0.D0 
         grad(:nvar) = 0.D0 
-      endif 
+      end if 
       ireset = ireset + 1 
 !
 !
@@ -636,7 +641,7 @@
       else 
         call compfg (xparam, .TRUE., funct1, .TRUE., grad, .TRUE.) 
         if (moperr) return  
-      endif 
+      end if 
 ! For Mopac BLAS                  
       !gnorm = sqrt(dot(grad,grad,nvar)) 
       gnorm = dsqrt(ddot(nvar,grad,1,grad,1)) 
@@ -667,12 +672,12 @@
           tx2 = seconds(1) 
           emin = 0.D0 
           return  
-        endif 
+        end if 
         if (print) write (iw, 300) 
   300   format(' ',20x,'COS WILL BE RESET AND ANOTHER ','ATTEMPT MADE') 
         cos = 0.0D00 
         go to 430 
-      endif 
+      end if 
 ! For Mopac BLAS                        
 !      xn = sqrt(dot(xparam,xparam,nvar)) 
       xn = dsqrt(ddot(nvar,xparam,1,xparam,1)) 
@@ -686,11 +691,11 @@
           write (iw, &
       '(2/,'' HEAT OF FORMATION IS ESSENTIALLY STATIONARY'')') 
           go to 420 
-        endif 
+        end if 
       else 
         itry1 = 0 
         absmin = smval 
-      endif 
+      end if 
       if (print) write (iw, 310) ncount, cos, tx*xn, alpha, (-drop), (-tf), &
         & gnorm 
   310 format(/,'           NUMBER OF COUNTS =',i6,'         COS    =',f11.4,/,&
@@ -701,17 +706,17 @@
         if (minprt) write (iw, 320) 
   320   format(' TEST ON X SATISFIED') 
         go to 350 
-      endif 
+      end if 
       if (tf <= tolerf) then 
         if (minprt) write (iw, 330) 
   330   format(' HEAT OF FORMATION TEST SATISFIED') 
         go to 350 
-      endif 
+      end if 
       if (gnorm <= tolerg*rootv) then 
         if (minprt) write (iw, 340) 
   340   format(' TEST ON GRADIENT SATISFIED') 
         go to 350 
-      endif 
+      end if 
       go to 430 
   350 continue 
       do i = 1, nvar 
@@ -720,7 +725,7 @@
         if (irepet <= 1) then 
           frepf = funct1 
           cos = 0.0D00 
-        endif 
+        end if 
         if (minprt) write (iw, 370) tolerg 
   370   format(20x,'HOWEVER, A COMPONENT OF GRADIENT IS ','LARGER THAN',f6.2,/) 
         if (abs(funct1 - frepf) > einc) irepet = 0 
@@ -743,7 +748,7 @@
           return  
         else 
           go to 430 
-        endif 
+        end if 
       end do 
       if (minprt) write (iw, 410) 
   410 format('PETERS TEST SATISFIED') 
@@ -784,7 +789,7 @@
         mdfp(5) = nscf 
         call dfpsav (totim, xparam, gd, xlast, funct1, mdfp, xdfp) 
         if (moperr) return  
-      endif 
+      end if 
       call prttim (tleft, tprt, txt) 
       if (resfil) then 
         write (line, '(" RESTART FILE WRITTEN,      TIME LEFT:", f6.2, &
@@ -809,12 +814,12 @@
             write(iw,"(a)")trim(line)
             endfile (iw) 
             backspace (iw) 
-          endif 
+          end if 
           if (log) then
             write (ilog, "(a)")trim(line)   
             endfile (ilog) 
             backspace (ilog) 
-          endif 
+          end if 
           call to_screen(trim(line))
       end if
       if (mod(jcyc,30) == 0) then

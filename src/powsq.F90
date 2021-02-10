@@ -50,6 +50,7 @@
 !        *****  TEXAS.  DECEMBER 1973                           *****
 !
       data icalcn/ 0/  
+      maxcyc = 0
       tleft = tleft - seconds(1) + time0 
       tstep = 0.d0
       if (icalcn /= numcal) then 
@@ -79,8 +80,8 @@
           if (tol2<0.01D0 .and. index(keywrd,' LET')==0) then 
             write (iw, '(/,A)') '  GNORM HAS BEEN SET TOO LOW, RESET TO 0.01' 
             tol2 = 0.01D0 
-          endif 
-        endif 
+          end if 
+        end if 
         debug = index(keywrd,' POWSQ') /= 0 
         if (restrt) then 
 !
@@ -99,24 +100,24 @@
           gnext1(:nvar) = gmin1(:nvar)  
           if (iloop > 0) & 
             write (iw, '(2/10X,'' RESTARTING AT POINT'',I3)') iloop 
-        endif 
+        end if 
 !
 !   DEFINITIONS:   NVAR   = NUMBER OF GEOMETRIC VARIABLES = 3*NUMAT-6
 !
-      endif 
+      end if 
       nvar = abs(nvar) 
       if (debug) then 
         write (iw, '('' XPARAM'')') 
         write (iw, '(5(2I3,F10.4))') (loc(1,i),loc(2,i),xparam(i),i=1,nvar) 
-      endif 
+      end if 
       if (.not.restrt) then 
         grad(:nvar) = 0.D0 
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .TRUE.) 
-      endif 
+      end if 
       if (debug) then 
         write (iw, '('' STARTING GRADIENTS'')') 
         write (iw, '(3X,8F9.4)') (grad(i),i=1,nvar) 
-      endif 
+      end if 
       gmin = dsqrt(ddot(nvar,grad,1,grad,1)) 
       gnext1 = grad 
       gmin1 = gnext1 
@@ -177,7 +178,7 @@
           ipow(3) = icyc 
           ipow(8) = nscf 
           call powsav (hess, gmin1, xparam, pmat, i, bmat, ipow) 
-        endif 
+        end if 
         if (tleft >= tstep*2.D0 .and. iloop-ilpr<=maxcyc) cycle  
 !
 !  STORE RESULTS TO DATE.
@@ -197,7 +198,7 @@
         do i = 1, nvar 
           write (iw, '(8F10.4)') (hess(j,i),j=1,nvar) 
         end do 
-      endif 
+      end if 
       do i = 1, nvar 
         sum = 0.0D0 
         do j = 1, nvar 
@@ -213,7 +214,7 @@
         do i = 1, nvar 
           write (iw, '(8F10.4)') (hess(j,i),j=1,nvar) 
         end do 
-      endif 
+      end if 
 !        *****  INITIALIZE B MATIRX                        *****
       do i = 1, nvar 
         bmat(i,:nvar) = 0.0D0 
@@ -236,7 +237,7 @@
         ipow(8) = nscf 
         ipow(3) = icyc 
         call powsav (hess, gmin1, xparam, pmat, i, bmat, ipow) 
-      endif 
+      end if 
       if (tleft<tstep*2.D0 .or. icyc-jcyc>maxcyc) then 
 !
 !  STORE RESULTS TO DATE.
@@ -248,7 +249,7 @@
         call powsav (hess, gmin1, xparam, pmat, i, bmat, ipow) 
         iflepo = -1 
         return  
-      endif 
+      end if 
   140 continue 
       ij = 0 
       do j = 1, nvar 
@@ -272,7 +273,7 @@
       if (debug) then 
         write (iw, '(/10X,''P MATRIX IN POWSQ'')') 
         call vecprt (pmat, nvar) 
-      endif 
+      end if 
       call rsp (pmat, nvar, eig, pvec) 
 !        *****  CHECK FOR ZERO EIGENVALUE                  *****
 !#      WRITE(IW,'(''  EIGS IN POWSQ:'')')
@@ -310,7 +311,7 @@
         end do 
       else 
         q(:nvar) = pvec(:nvar) 
-      endif 
+      end if 
       do i = 1, nvar 
         sig(i) = 0.0D0 
         do j = 1, nvar 
@@ -321,7 +322,7 @@
       if (debug) then 
         write (iw, '('' SEARCH VECTOR'')') 
         write (iw, '(8F10.5)') (sig(i),i=1,nvar) 
-      endif 
+      end if 
       call search (xparam, alpha, sig, nvar, gmin, escf, amin, anext) 
       if (nvar == 1) go to 390 
 !
@@ -343,6 +344,7 @@
       e2(:nvar) = sk*e2(:nvar) 
 !        *****  FIND INDEX OF REPLACEMENT DIRECTION        *****
       pmax = -1.0D+20 
+      id = 0
       do i = 1, nvar 
         if (abs(p(i)*q(i)) <= pmax) cycle  
         pmax = abs(p(i)*q(i)) 
@@ -373,14 +375,14 @@
         write(iw,"(a)")trim(line)
         if (log) write (ilog, "(a)")trim(line)
   380   format(' CYCLE:',i6,' TIME:',f8.3,' TIME LEFT:',f6.2,a1,'  GRAD.:',f10.3,' HEAT:',g14.7) 
-      endif 
+      end if 
       call to_screen(line)
       endfile (iw) 
       backspace (iw) 
       if (log) then 
         endfile (ilog) 
         backspace (ilog) 
-      endif 
+      end if 
       if (times) write (iw, '('' TIME FOR STEP:'',F8.3,'' LEFT'',F8.3)') tstep, tleft 
       go to 130 
   390 continue 
@@ -443,7 +445,7 @@
         tolerg = 0.02D0 
         g = 100.D0 
         alpha = 0.1D0 
-      endif 
+      end if 
       gref(:nvar) = gmin1(:nvar) 
       gnext1(:nvar) = gmin1(:nvar) 
       xmin1(:nvar) = xparam(:nvar) 
@@ -454,7 +456,7 @@
         write (iw, '(6F12.6)') (sig(i),i=1,nvar) 
         write (iw, '('' INITIAL GRADIENT VECTOR'')') 
         write (iw, '(6F12.6)') (gmin1(i),i=1,nvar) 
-      endif 
+      end if 
       gb = ddot(nvar,gmin1,1,gref,1) 
       if (debug) write (iw, '('' GRADIENT AT START OF SEARCH:'',F16.6)') sqrt(gb) 
       gstore = gb 
@@ -481,7 +483,7 @@
 !
    !   if (itrys == 1) then 
         grad(:nvar) = 0.D0 
-   !   endif 
+   !   end if 
       call compfg (xparam, .TRUE., funct, .TRUE., grad, .TRUE.) 
       looks = looks + 1 
 !
@@ -501,16 +503,16 @@
 !
           anext = amin 
           gnext1(:nvar) = gmin1(:nvar) 
-        endif 
+        end if 
         amin = alpha 
         if (gminn < gmin) then 
           xmin1(:nvar) = xparam(:nvar) 
           gmin1(:nvar) = grad(:nvar) 
         else 
           gmin1(:nvar) = grad(:nvar) 
-        endif 
+        end if 
         gmin = min(gminn,gmin) 
-      endif 
+      end if 
       if (itrys > 8) go to 80 
       if (abs(g/gstore)<tiny .or. abs(g)<tolerg) go to 80 
       if (abs(g)<max(abs(ga),abs(gb)) .or. ga*gb>0.D0 .and. g*ga<0.D0) then 
@@ -525,11 +527,11 @@
           tb = alpha 
           gb = g 
           go to 20 
-        endif 
+        end if 
       else 
 !#         WRITE(IW,'(//10X,'' FAILED IN SEARCH, SEARCH CONTINUING'')')
         go to 80 
-      endif 
+      end if 
    80 continue 
       gminn = dsqrt(ddot(nvar,gmin1,1,gmin1,1)) 
       xparam(:nvar) = xmin1(:nvar) 
@@ -539,10 +541,10 @@
         write (iw, '('' GNEXT1'',6F12.6)') (gnext1(i),i=1,nvar) 
         write (iw, '('' GMIN1 '',6F12.6)') (gmin1(i),i=1,nvar) 
         write (iw, '('' AMIN, ANEXT,GMIN'',4F12.6)') amin, anext, gmin 
-      endif 
+      end if 
       if (gminn > gmin) then 
         xparam(:nvar) = xref(:nvar) 
-      endif 
+      end if 
       return  
 !
       end subroutine search 
@@ -599,7 +601,7 @@
           end do 
           write (iw, '(/10X,''CURRENT VALUE OF GEOMETRY'',/)') 
           call geout (iw) 
-        endif 
+        end if 
         write (ires) numat, norbs, (xparam(i),i=1,nvar) 
         write (ires) ipow, iloop         
         write (ires) (grad(i),i=1,nvar) 
@@ -612,7 +614,7 @@
         if (latom /= 0) then 
           write (ires) ((alparm(j,i),j=1,3),i=1,nvar) 
           write (ires) jloop, x0, x1, x2 
-        endif 
+        end if 
         close(ires) 
         return  
       else 
@@ -634,10 +636,10 @@
           read (ires, end=40, err=40) ((alparm(j,i),j=1,3),i=1,nvar) 
           read (ires, end=40, err=40) jloop, x0, x1, x2 
           iloop = iloop + 1 
-        endif 
+        end if 
         iloop = iloop + 1 
         return  
-      endif 
+      end if 
    20 continue 
       write (iw, '(2/10X,''NO RESTART FILE EXISTS!'')') 
       return  

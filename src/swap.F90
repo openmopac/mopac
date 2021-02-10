@@ -41,7 +41,7 @@
         stdpsi(:n) = c(:n,ifill) 
         psi(:n) = c(:n,ifill) 
         return  
-      endif 
+      end if 
       sum = 0.D0 
       sum = ddot(n,psi(:n),1,c(:n,ifill),1)      
 !      
@@ -74,7 +74,7 @@
    80   format(/,' CAUTION !!! SUM IN SWAP VERY SMALL, SUMMAX =',f10.5,&
           ' JFILL=',i3) 
         ifill = jfill 
-      endif 
+      end if 
    90 continue 
       if (ifill <= nocc) return  
 !

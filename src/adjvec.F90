@@ -19,6 +19,7 @@ subroutine adjvec (cvecb, ncvb, icvecb, nib, nncb, ncb_loc, nnb, ncvecb, lmob, &
 !
     integer :: ii, la, lb, llim, mia, mla, mlb, mlim, mlla, mllb
     double precision :: cutoff, sum
+    mlla = 0
     cutoff = thresh * 1.d1
     if (Abs (beta) < cutoff) return
     sumtot = sumtot + Abs (beta)

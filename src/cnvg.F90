@@ -39,8 +39,8 @@
           rhfuhf = 1.d0 
         else 
           rhfuhf = 2.d0 
-        endif 
-      endif 
+        end if 
+      end if 
       pl = 0.0d0 
       faca = 0.0d0 
       damp = 1.D10 

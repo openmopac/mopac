@@ -64,6 +64,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
     line = " Cannot allocate arrays for PM6-DH+"
     call to_screen(trim(line))
     call mopend(trim(line))
+    PM6_DH_H_bond_corrections = 0.d0
     return
   end if
   hblist(:,:) = 0
@@ -181,6 +182,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   double precision, external :: distance, bonding
   logical :: hbs1_ok, hbs2_ok
   hbs1_ok = .false.
+  hbs2_ok = .false.
 !
 !  Identify atoms associated with the hydrogen bonds
 !
@@ -203,6 +205,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !
           i1 = hblist(i, 1)
           sum = 0.d0
+          l = 0
           do k = 1, 5
             sum1 = distance(i1, bondlist(k,1))
             if (sum < sum1) then
@@ -215,7 +218,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
           end do
           nrbondsa(i) = 4
         end if
-      endif
+      end if
       if (xb_dist < bonding(j, hblist(i, 5), covrad) .and. hblist(i, 5) /= j) then 
 !
 !  Atom j is covalently bonded to atom hblist(i,5) (either the H bond donor or accepter)
@@ -228,6 +231,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !
           i1 = hblist(i, 5)
           sum = 0.d0
+          l = 0
           do k = 1, 5
             sum1 = distance(i1, bondlist(k,2))
             if (sum < sum1) then
@@ -240,7 +244,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
           end do
           nrbondsb(i) = 4
         end if
-      endif
+      end if
     end do 
 ! check for 1-3 and 1-4 case - very seldom needed,  but ... 
 !
@@ -268,7 +272,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist) then
           old_dist = xh_dist
           hblist(i, 2) = bondlist(k, 1)
-        endif
+        end if
       end do 
       old_dist = -1
       do k = 1, nrbondsa(i)
@@ -276,7 +280,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist .and. bondlist(k, 1) /= hblist(i, 2)) then
           old_dist = xh_dist
           hblist(i, 3) = bondlist(k, 1)
-        endif
+        end if
       end do
       old_dist = -1
       do k = 1, nrbondsa(i)
@@ -284,7 +288,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist .and. bondlist(k, 1) /= hblist(i, 2) .and. bondlist(k, 1) /= hblist(i, 3)) then
           old_dist = xh_dist
           hblist(i, 4) = bondlist(k, 1)
-        endif
+        end if
       end do    ! possible forth atom should be h
     else if (nrbondsa(i) == 2) then
       old_dist = -1
@@ -293,18 +297,18 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist) then
           old_dist = xh_dist
           hblist(i, 2) = bondlist(k, 1)
-        endif
+        end if
       end do
       do k = 1, nrbondsa(i)
         if (bondlist(k, 1) /= hblist(i, 2)) then
           hblist(i, 3) = bondlist(k, 1)
-        endif
+        end if
       end do
       if (distance(hblist(i, 1), hblist(i, 9)) < bonding(hblist(i, 1), hblist(i, 9), covrad)) then ! not needed 
           hblist(i, 4) = hblist(i, 9)
       else
           hblist(i, 4) = hblist(i, 1) 
-      endif                  
+      end if                  
     else if (nrbondsa(i) == 1) then
       hblist(i, 2) = bondlist(1, 1)
 ! need bonds on first bonded atom here
@@ -314,7 +318,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xc_dist < bonding(k, hblist(i, 2), covrad) .and. hblist(i, 2) /= k) then
           nrbondsc = nrbondsc + 1
           bondlist(nrbondsc, 3) = k
-        endif
+        end if
       end do
       old_dist = -1
       do k = 1, nrbondsc
@@ -322,13 +326,13 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist) then
           old_dist = xh_dist
           hblist(i, 3) = bondlist(k, 3)
-        endif
+        end if
       end do
       if (distance(hblist(i, 1), hblist(i, 9)) < bonding(hblist(i, 1), hblist(i, 9), covrad)) then ! not needed
           hblist(i, 4) = hblist(i, 9)
       else
           hblist(i, 4) = hblist(i, 1)
-      endif
+      end if
     else if (nrbondsa(i) == 0) then
       if (distance(hblist(i, 1), hblist(i, 9)) < bonding(hblist(i, 1), hblist(i, 9), covrad)) then ! not needed
         hblist(i, 2) = hblist(i, 9) 
@@ -338,10 +342,10 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         hblist(i, 2) = hblist(i, 1) 
         hblist(i, 3) = hblist(i, 1)
         hblist(i, 4) = hblist(i, 1)
-      endif
+      end if
     else
       hbs1_ok = .false.
-    endif 
+    end if 
 ! hbs2 part
     hbs2_ok = .true.
     if (nrbondsb(i) == 3 .or. nrbondsb(i) == 4) then
@@ -351,7 +355,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist) then
           old_dist = xh_dist
           hblist(i, 6) = bondlist(k, 2)
-        endif
+        end if
       end do 
       old_dist = -1
       do k = 1, nrbondsb(i)
@@ -359,7 +363,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist .and. bondlist(k, 2) /= hblist(i, 6)) then
           old_dist = xh_dist
           hblist(i, 7) = bondlist(k, 2)
-        endif
+        end if
       end do
       old_dist = -1
       do k = 1, nrbondsb(i)
@@ -367,7 +371,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist .and. bondlist(k, 2) /= hblist(i, 6) .and. bondlist(k, 2) /= hblist(i, 7)) then
           old_dist = xh_dist
           hblist(i, 8) = bondlist(k, 2)
-        endif
+        end if
       end do      ! possible forth atom should be h
     else if (nrbondsb(i) == 2) then
       old_dist = -1
@@ -376,18 +380,18 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist) then
           old_dist = xh_dist
           hblist(i, 6) = bondlist(k, 2)
-        endif
+        end if
       end do
       do k = 1, nrbondsb(i)
         if (bondlist(k, 2) /= hblist(i, 6)) then
           hblist(i, 7) = bondlist(k, 2)
-        endif
+        end if
       end do
       if (distance(hblist(i, 5), hblist(i, 9)) < bonding(hblist(i, 5), hblist(i, 9), covrad)) then ! not needed
           hblist(i, 8) = hblist(i, 9)
       else
           hblist(i, 8) = hblist(i, 5)
-      endif
+      end if
     else if (nrbondsb(i) == 1) then
       hblist(i, 6) = bondlist(1, 2)
 ! need bonds on first bonded atom here
@@ -402,7 +406,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
           if (xc_dist < bonding(k, hblist(i, 6), covrad) .and. hblist(i, 6) /= k) then
             nrbondsc = nrbondsc + 1
             bondlist(nrbondsc, 3) = k
-          endif
+          end if
       !  end select            
       end do
       old_dist = -1
@@ -411,13 +415,13 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
         if (xh_dist > old_dist) then
           old_dist = xh_dist
           hblist(i, 7) = bondlist(k, 3)
-        endif
+        end if
       end do
       if (distance(hblist(i, 5), hblist(i, 9)) < bonding(hblist(i, 5), hblist(i, 9), covrad)) then ! not needed
           hblist(i, 8) = hblist(i, 9)
       else
           hblist(i, 8) = hblist(i, 5)
-      endif
+      end if
     else if (nrbondsb(i) == 0) then
       if (distance(hblist(i, 5), hblist(i, 9)) < bonding(hblist(i, 5), hblist(i, 9), covrad)) then ! not needed
           hblist(i, 6) = hblist(i, 9) 
@@ -427,10 +431,10 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
           hblist(i, 6) = hblist(i, 5) 
           hblist(i, 7) = hblist(i, 5)
           hblist(i, 8) = hblist(i, 5)
-      endif
+      end if
     else
       hbs2_ok = .false.
-    endif 
+    end if 
   end do
 ! check for problems
   if ( .not. hbs1_ok .or. .not. hbs2_ok ) then
@@ -438,6 +442,6 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !  No hydrogen bonds found
 !
     l_h_bonds = .false.   
-  endif
+  end if
 end subroutine setup_DH_Plus
 

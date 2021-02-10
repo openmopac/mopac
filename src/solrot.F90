@@ -47,7 +47,7 @@
       if (icalcn /= numcal) then 
         icalcn = numcal 
         cutof2 = clower**2
-      endif 
+      end if 
       one = 1.D0 
       if (Abs(xi(1) - xj(1)) <1.d-20 .and. Abs(xi(2) - xj(2)) <1.d-20 .and. &
       Abs(xi(3) - xj(3)) <1.d-20) one = 0.5D0 
@@ -103,7 +103,7 @@
         implicit none
         double precision, dimension(45) :: e1bits, e2bits, e1bits_p = 0.d0, e2bits_p = 0.d0
         double precision, dimension(2025) :: wbits 
-        double precision, intent (in):: r
+        double precision, intent (inout):: r
         double precision, intent (inout):: enubit
         integer, intent (in) :: ni, nj
         integer :: kb

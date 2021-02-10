@@ -7,6 +7,7 @@
     integer :: i, ii, iii, j, jatom, jj, jjofco = 0, jofco = 0, k, kk, l, ihcr, ico, ico1
     ico = 0
     ico1 = 0
+    ihcr = 0
 !
     jatom = nbackb(4)
     do i = 1, nbonds(iatom)

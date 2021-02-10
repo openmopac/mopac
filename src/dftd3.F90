@@ -137,7 +137,7 @@
           write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)') 
           write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i, elemnt(nat(i)), dxyz_temp(:,i)*2.d0*au_to_kcal, i = 1,numat) 
         end if        
-      endif
+      end if
       coord(:,:numat) = store_coord
       tvec = store_tvec
       deallocate(dxyz_temp, store_coord)

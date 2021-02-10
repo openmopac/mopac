@@ -3,7 +3,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -73,7 +72,7 @@
             a(ki) = a(ji) 
             a(ji) = holo 
           end do 
-        endif 
+        end if 
         i = m(k) 
         if (i - k > 0) then 
           jp = n*(i - 1) 
@@ -84,11 +83,11 @@
             a(jk) = a(ji) 
             a(ji) = holo 
           end do 
-        endif 
+        end if 
         if (abs(biga) - tol < 0.D0) then 
           d = 0.D0 
           return  
-        endif 
+        end if 
         do i = 1, n 
           if (i - k == 0) cycle  
           ik = nk + i 
@@ -105,7 +104,7 @@
               kj = ij - i + k 
               a(ij) = a(ik)*a(kj) + a(ij) 
             end do 
-          endif 
+          end if 
         end do 
         kj = k - n 
         do j = 1, n 
@@ -131,7 +130,7 @@
           a(jk) = -a(ji) 
           a(ji) = holo 
         end do 
-      endif 
+      end if 
       j = m(k) 
       if (j - k <= 0) go to 190 
       ki = k - n 

@@ -71,7 +71,7 @@ subroutine getmol (iloop)
     nalpha = 0
     nbeta  = 0
     uhf = .false.
-    endif
+    end if
     if (.not. rhf .and. .not. uhf) then
       if (mod(nelecs,2) == 0) then
         rhf = .true.

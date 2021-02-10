@@ -1097,7 +1097,7 @@ subroutine wrtcon (allkey)
         else
           write (iw, '(" *  P=         - PRESSURE ON SOLID=", g13.6, &
              & " NEWTONS PER SQUARE METER")') pressure
-        endif
+        end if
 !
 !  Multiply by N, Avogadro's Number, to convert from J/M**3 per molecule 
 !  to J/M**3/mol.
@@ -1313,7 +1313,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP       - STEP-SIZE IN PATH =", f8.3)') &
    reada (keywrd, Index (keywrd, " STEP") + 4)
    if (index(keywrd, " POINT") == 0) call mopend ("KEYWORD POINT MISSING")
-	 if (index(keywrd, " 1SCF") /= 0) call mopend ("KEYWORD ""1SCF"" CANNOT BE USED WITH KEYWORD ""STEP""")
+   if (index(keywrd, " 1SCF") /= 0) call mopend ("KEYWORD ""1SCF"" CANNOT BE USED WITH KEYWORD ""STEP""")
    i = 1
  end if
  if (i > 0) then
@@ -1633,9 +1633,9 @@ subroutine wrtout (allkey)
   if (myword(allkey, " HYPERF")) write (iw,'(" *  HYPERFINE- HYPERFINE COUPLING CONSTANTS TO BE", " PRINTED")')
   if (myword(allkey, " THERMO")) write (iw,'(" *  THERMO     - THERMODYNAMIC QUANTITIES TO BE CALCULATED")')
   if (myword(allkey, " Z=")) then
-		write (iw,'(" *  Z=",I2,"     - NUMBER OF FORMULA UNITS IN UNIT CELL")')Nint(Reada(keywrd,Index(keywrd," Z=") + 2))
-	  if (index(keywrd, " MERS") == 0) call mopend(" *  KEYWORD Z REQUIRES KEYWORD MERS TO BE USED")			
-	end if
+    write (iw,'(" *  Z=",I2,"     - NUMBER OF FORMULA UNITS IN UNIT CELL")')Nint(Reada(keywrd,Index(keywrd," Z=") + 2))
+    if (index(keywrd, " MERS") == 0) call mopend(" *  KEYWORD Z REQUIRES KEYWORD MERS TO BE USED")
+  end if
   if (myword(allkey, " K=")) then
     i = Index (keywrd, " K=")
     write (iw,' (" *   K=        - BRILLOUIN ZONE STRUCTURE TO BE CALCULATED")')
@@ -2072,7 +2072,7 @@ subroutine wrtwor (allkey)
   end if
   if (myword(allkey, " CUTOFS=")) then
     write (iw, '(" *  CUTOFS=    - CUTOFF FOR OVERLAP INTEGRALS IN " &
-      //"SOLIDS =", f6.2, " A")') reada (keywrd, Index (keywrd, " CUTOFS=")+8)
+    & //"SOLIDS =", f6.2, " A")') reada (keywrd, Index (keywrd, " CUTOFS=")+8)
   end if
   if (myword(allkey, " NLMO=")) then
 11020 format (" *  NLMO=N     - AVERAGE NUMBER OF ATOMS PER LMO =", i4)
@@ -2091,12 +2091,12 @@ if (myword(allkey,' SETGPU=')) then
         i = index(keywrd,' SETGPU=')
         j = nint(reada(keywrd,i))
         write (iw,'(" *  SETGPU=   - YOUR CALCULATION WILL RUN IN THE GPU NUM. = ",i2)') j           
-  endif
+  end if
   if (myword(allkey,' CPUTHREADS=')) then 
      i = index(keywrd,' CPUTHREADS=')
      j = nint(reada(keywrd,i))
      write (iw,'(" *  CPUTHREADS=   - NUM. OF THREADS FOR CPU = ",i2)') j                               
-  endif
+  end if
   
   if (myword(allkey, ' FULLDIAG ')) write (iw,'(" *  FULLDIAG   - USE ONLY FULL DIAGONALIZATIONS IN SCF ")')
   return

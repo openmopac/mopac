@@ -180,7 +180,7 @@
         call to_screen(trim(line))
         call mopend(trim(line))
         return
-      endif 
+      end if 
 !
 !  CLOSE UNIT IFILES(5) IN CASE IT WAS ALREADY PRE-ASSIGNED.
 !INPUT FILE MISSING 
@@ -382,7 +382,7 @@
         write (0, '(A)') ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY'  
         call mopend ( ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY') 
         return  
-      endif 
+      end if 
       natoms = nlines
       close(from_data_set) 
       return  

@@ -37,18 +37,18 @@
             sa = 0.D0 
             sb = 0.D0 
             go to 50 
-          endif 
+          end if 
           ca = 0.D0 
           cb = 0.D0 
           sa = 0.D0 
           sb = 0.D0 
           go to 50 
-        endif 
+        end if 
         ca = 1.D0 
         cb = 1.D0 
         sa = 0.D0 
         sb = 0.D0 
-      endif 
+      end if 
    50 continue 
       c = 0.D0 
       nij = max(norbi,norbj) 
@@ -91,7 +91,7 @@
           c(33) = rt34*s2a*sb*sb 
           c(18) = c2a*sb 
           c(3) = c2a*cb 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
       end subroutine coe 

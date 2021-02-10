@@ -12,7 +12,6 @@
     integer, dimension (3*natoms), intent (inout) :: locdep
     double precision, dimension (natoms), intent (out) :: depmul
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------

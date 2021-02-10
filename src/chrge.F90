@@ -5,7 +5,6 @@
       use common_arrays_C, only:  nfirst, nlast
       use molkst_C, only: numat, norbs, mozyme
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s

@@ -10,7 +10,6 @@ subroutine paths()
     use chanel_C, only : iw, ires, restart_fn, iw0, ixyz, xyz_fn
     use elemts_C, only : elemnt
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -75,7 +74,7 @@ subroutine paths()
             read (ires, end=120, err=120) ((alparm(j,i),j=1,3),i=1,nvar) 
             read (ires, end=120, err=120) iloop, x0, x1, x2 
             close (ires)
-        endif
+        end if
 
     else 
         write (iw, '(''  ABOUT TO ENTER LBFGS FROM PATH'')') 
@@ -86,14 +85,14 @@ subroutine paths()
           return
         end if
         
-    endif CheckRestart
+    end if CheckRestart
 
 ! Conversion factor for angles
     if (lparam /= 1 .and. na(latom) /= 0) then 
         c1 = 57.29577951308232D0 
     else 
         c1 = 1.D0 
-    endif
+    end if
 
     FirstReactionStep: if (iloop <= 1) then 
         time0 = seconds(1) 
@@ -102,7 +101,7 @@ subroutine paths()
             call ef (xparam, escf) 
         else 
             call lbfgs (xparam, escf) 
-        endif
+        end if
         i = index(keywrd,'RESTAR')
         if (i /= 0) keywrd(i:i+6) = " "
         if (iw00 > -1) then
@@ -120,7 +119,7 @@ subroutine paths()
         end if
         call writmo
         time0 = seconds(1) 
-    endif FirstReactionStep
+    end if FirstReactionStep
 
     NextReactionStep: if (iloop <= 2) then 
         geo(lparam,latom) = react(2) 
@@ -134,14 +133,14 @@ subroutine paths()
             alparm(2,:nvar) = xparam(:nvar) 
             alparm(1,:nvar) = xparam(:nvar) 
             iloop = 2 
-        endif SecondReactionStep
+        end if SecondReactionStep
 
         if (maxcyc == 1) tleft = -100.D0 
         if (lef) then 
             call ef (xparam, escf) 
         else 
             call lbfgs (xparam, escf) 
-        endif
+        end if
         if (iw00 > -1) then
             write (line, '('' :'',F16.5,F16.6)') geo(lparam,latom)*c1, escf 
             call to_screen(line)
@@ -177,7 +176,7 @@ subroutine paths()
         time0 = seconds(1) 
         alparm(3,:nvar) = xparam(:nvar) 
         if (iloop == 2) iloop = 3 
-    endif NextReactionStep
+    end if NextReactionStep
 
 ! Find number of reaction path steps
     lpr = iloop 
@@ -189,7 +188,7 @@ subroutine paths()
         iloop = ii
         if (iloop - lpr > maxcyc - 3) then
             tleft = -100.D0
-        endif
+        end if
         rxn_coord = react(iloop) 
         if (lparam > 1 .and. na(latom) > 0) then
             rxn_coord = rxn_coord*57.29577951308232D0
@@ -213,7 +212,7 @@ subroutine paths()
  ! Quadratic interpolation
             cc1 = (x1 - x2)/c3 
             cc2 = (x0 - x1)/c3 
-        endif
+        end if
         cb1 = 1.D0/(x1 - x2) 
         cb2 = (x1*x1 - x2*x2)*cb1 
 
@@ -238,7 +237,7 @@ subroutine paths()
                       & " - THE LAST GEOMETRY IS BEING USED TO START THE NEXT",'' CALCULATION'')') 
                 xparam(:nvar) = alparm(3,:nvar)
                 exit CheckGeo
-            endif
+            end if
         end do CheckGeo
 
         x0 = x1 
@@ -249,7 +248,7 @@ subroutine paths()
             call ef (xparam, escf) 
         else 
             call lbfgs (xparam, escf) 
-        endif
+        end if
         if (iw00 > -1) then
             i = nint((100.0*iloop)/npts)
             if (i /= percent) then

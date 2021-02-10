@@ -6,7 +6,6 @@
       USE chanel_C, only : ires, iw, restart_fn
       use common_arrays_C, only : aicorr, errfn
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -72,7 +71,7 @@
         end if
         close(ires) 
         return  
-      endif 
+      end if 
       if (mode == 1) then 
         write (iw, &
       '(2/10X,                                              ''- - - - - - - TIM&
@@ -81,7 +80,7 @@
           '   RESTART IT USING THE KEY-WORD "RESTART"' 
         write (iw, '(/10X,''CURRENT VALUE OF GEOMETRY'',/)') 
         call geout (iw) 
-      endif 
+      end if 
       write (ires) numat, norbs, (xlast(i),i=1,n), m, iiium, efslst, n
       write (ires) ((q(j,i),j=1,m),i=1,m) 
       write (ires) ((r(j,i),j=1,n),i=1,n) 

@@ -5,7 +5,6 @@
       use molkst_C, only : numcal, numat, lm61
       use common_arrays_C, only : nfirst, nlast
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -48,7 +47,7 @@
       data icalcn/ 0/  
       if (numcal /= icalcn) then 
         icalcn = numcal 
-      endif 
+      end if 
 !     KK    : POINTER OF SUPPORTING ATOM, SPARKLES SKIPPED OUT.
  !     KK    : POINTER OF SUPPORTING ATOM, SPARKLES SKIPPED OUT.
    !

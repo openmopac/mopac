@@ -5,7 +5,6 @@
       use common_arrays_C, only : ifact, i1fact, ptot2
       use molkst_C, only : numcal, norbs, mpack
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -33,7 +32,8 @@
       integer , dimension(256) :: jindex 
       integer :: icalcn, i, m, j, ij, ji, k, ik, l, kl, lk, kk, ia, ib, jk, kj&
         , ii, jj, ja, jb, i1, j1, ll, kr, ka 
-      double precision, dimension(81) :: pk, pja, pjb 
+      double precision, dimension(81) :: pk
+      double precision, dimension(16) :: pja, pjb 
       double precision :: sumdia, sumoff, sum, elrep
 
       save itype, icalcn, jindex
@@ -62,7 +62,7 @@
         allocate(ifact(norbs), i1fact(norbs), ptot2(numat,81))
         icalcn = numcal 
         itype = 1 
-      endif 
+      end if 
    10 continue 
       select case (itype)  
       case default 
@@ -145,7 +145,7 @@
                 if (jb - ja + 1 > 0) then 
                   pk(l+1:jb-ja+1+l) = p(ifact(i)+ja:jb+ifact(i)) 
                   l = jb - ja + 1 + l 
-                endif 
+                end if 
               end do 
             else 
               l = 0 
@@ -153,9 +153,9 @@
                 if (jb - ja + 1 > 0) then 
                   pk(l+1:jb-ja+1+l) = p(ifact(ja:jb)+i) 
                   l = jb - ja + 1 + l 
-                endif 
+                end if 
               end do 
-            endif 
+            end if 
             i1 = ia 
             j1 = ja 
             call kab (ia, ja, pk, w(kk+1), f) 
@@ -217,7 +217,7 @@
                 end do 
                 f(i1) = f(i1) - sum 
               end do 
-            endif 
+            end if 
             kk = kk + 10 
           else if (jb - ja >= 3) then 
 !
@@ -273,7 +273,7 @@
                 end do 
                 f(i) = f(i) - sum 
               end do 
-            endif 
+            end if 
             kk = kk + 10 
           else 
 !
@@ -289,9 +289,9 @@
             else 
               ij = j1 + ia - ja 
               f(ij) = f(ij) - p(ij)*w(kk+1) 
-            endif 
+            end if 
             kk = kk + 1 
-          endif 
+          end if 
         end do 
         return  
       case (2)  
@@ -329,7 +329,7 @@
                 f(ik) = f(ik) - p(ik)*elrep 
               end do 
             end do 
-          endif 
+          end if 
         end do 
         return  
       end select 

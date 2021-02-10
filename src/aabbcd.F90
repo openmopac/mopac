@@ -5,7 +5,6 @@
 !-----------------------------------------------
       USE meci_C, only : ispqr, is, iiloop, jloop
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -56,17 +55,17 @@
       if (i==k .and. j==l .and. iocca1(i)/=ioccb1(i)) then 
         ispqr(iiloop,is) = jloop 
         is = is + 1 
-      endif 
+      end if 
       if (iocca1(i) < iocca2(i)) then 
         m = i 
         i = j 
         j = m 
-      endif 
+      end if 
       if (ioccb1(k) < ioccb2(k)) then 
         m = k 
         k = l 
         l = m 
-      endif 
+      end if 
       xr = xy(i,j,k,l) 
 !#      WRITE(IW,'(4I5,F12.6)')I,J,K,L,XR
 !
@@ -80,13 +79,13 @@
         m = i 
         i = k 
         k = m 
-      endif 
+      end if 
       ij = ij + sum(ioccb1(i:k)+iocca1(i:k)) 
       if (j > l) then 
         m = j 
         j = l 
         l = m 
-      endif 
+      end if 
       ij = ij + sum(ioccb2(j:l)+iocca2(j:l)) 
 !
 !   IJ IN THE PERMUTATION NUMBER, .EQUIV. -1 IF IJ IS ODD.

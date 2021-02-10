@@ -99,6 +99,8 @@
 !
 !***********************************************************************
       data icalcn/ 0/  
+      time1 = 0.d0
+      time2 = 0.d0
       allocate (bab(70,70), babinv(4900))
       bab = 0.d0
 !
@@ -124,7 +126,7 @@
         allocate(b(minear,i/minear))
         i = max(ninear, i/minear)
         allocate(fb(1,i))
-      endif 
+      end if 
       fail = .FALSE. 
       nbsize = 0 
       if (debug) time1 = seconds(1) 
@@ -174,7 +176,7 @@
         lbab = .TRUE. 
         ilast = ilast - 1 
         go to 50 
-      endif 
+      end if 
 !        UPDATE F * B'
       ! TODO: GBR future modifications
       if (.not.lbab) call mtxm (f, nvar_nvo, b(1,ifirst), minear, fb(1,ifirst), &
@@ -215,12 +217,12 @@
           if (test <= max(0.01D0,throld*2)) then 
             lconv(ivar) = .TRUE. 
             cycle  
-          endif 
+          end if 
         else 
 !        STORE THE FOLLOWING RESIDUE IN AB(CONTINUED).
           nres = nres + 1 
           call dcopy (minear, work, 1, ab(1,ilast+nres), 1) 
-        endif 
+        end if 
       end do 
       if (nres == 0) go to 100 
 !     FIND OPTIMUM FOLLOWING SUBSET, ADD TO B AND LOOP.
@@ -249,11 +251,13 @@
        'ANALYTIC C.I. DERIVATIVES DO NOT WORK FOR THIS SYSTEM.  ADD &
        & KEYWORD "NOANCI" AND RESUBMIT') 
           goto 99  
-        endif 
-        time2 = seconds(1) 
-        write (iw, &
-          '('' ELAPSED TIME IN RELAXATION'',F15.3,'' SECOND'')') time2 - time1 
-      endif 
+        end if 
+        if (debug) then
+          time2 = seconds(1) 
+          write (iw, &
+            '('' ELAPSED TIME IN RELAXATION'',F15.3,'' SECOND'')') time2 - time1 
+        end if
+      end if 
       if (fail) then 
         write (iw, '(A)') ' ANALYTICAL DERIVATIVES TOO INACCURATE FOR THIS' 
         write (iw, '(A)') ' WORK.  JOB STOPPED HERE.  SEE MANUAL FOR IDEAS' 
@@ -271,7 +275,7 @@
 !        FOCK MATRIX DIAGONAL BLOCKS OVER C.I-ACTIVE M.O.
 !        STORED IN FB.
         if (ilast /= 0) call mxm (fci, ninear, bcoef, ilast, fb, nvar_nvo) 
-      endif 
+      end if 
 !
 !     * * * STEP 3 * * *
 !     FINAL LOOP (390) ON THE GEOMETRIC VARIABLES.
@@ -305,7 +309,7 @@
               write (iw, '(8F10.4)') (ab(mod(k-1, minear) + 1, (k-1)/minear + 1),k=l,l + norbs - 1) 
               l = l + norbs 
             end do 
-          endif 
+          end if 
           write (iw, &
       '('' C.I-ACTIVE FOCK EIGENVALUES RELAXATION (eigs.V.)'')') 
           write (iw, '(8F10.4)') (bcoef(i),i=nelec + 1,nelec + nmos) 
@@ -323,7 +327,7 @@
               end do 
             end do 
           end do 
-        endif 
+        end if 
 !
 !     BUILD THE C.I MATRIX DERIVATIVE, STORED IN AB.
         call mecid (bcoef(1+nelec), gse, work(lab+1), work, xy) 

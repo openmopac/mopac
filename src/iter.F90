@@ -86,11 +86,13 @@
       ready = .FALSE.
       diff = 0.D0
       escf0 = 0.D0
+      sellim = 0.d0
+      opendd = .false.
+      glow = .FALSE.
       if (icalcn /= numcal) then
         call delete_iter_arrays
         l_param = .true.
         enrgy = fpc_9
-        glow = .FALSE.
         irrr = 5
         shift = 0.D0
         icalcn = numcal
@@ -155,7 +157,7 @@
             pbold(1:mpack) = pb(1:mpack)
           else
             pold(1:mpack) = pa(1:mpack)*2.d0
-          endif
+          end if
         else
           if (.not. is_PARAM) then
             p(:mpack) = 0.D0
@@ -184,16 +186,16 @@
                 random = 1.D0/random
                 pb((i*(i+1))/2) = p((i*(i+1))/2)*w2*random
               end do
-            endif
+            end if
           end if
           pold(1:mpack) = pa(1:mpack)
           if (uhf) then
             pbold(1:mpack) = pb(1:mpack)
-          endif
+          end if
           do i = 1, norbs
             pold2(i) = pold((i*(i+1))/2)
           end do
-        endif
+        end if
         halfe = (nopen /= nclose .and. Abs(fract - 2.D0) > 1.d-20 .and. Abs(fract) > 1.d-20)
         if (halfe) then
           iopc_calcp = 3            ! DGEMM on CPU
@@ -201,7 +203,7 @@
         else
           iopc_calcp = 5            ! DSYRK on CPU
           if (lgpu) iopc_calcp = 4  ! DSYRK on GPU
-        endif
+        end if
 !
         if (gs) gs = .not. halfe .and. .not.ci
 !
@@ -220,7 +222,7 @@
           scfcrt = scfcrt*0.001D0
         else if (index(keywrd,' PRECISE')/=0 .or. nopen/=nclose) then
           scfcrt = scfcrt*0.01D0
-        endif
+        end if
         if (index(keywrd,' POLAR') /= 0) scfcrt = min(1.d-6, scfcrt)
         scfcrt = max(scfcrt,1.D-12)
 !
@@ -232,7 +234,7 @@
           scfcrt = reada(keywrd,i)
         else if (j /= 0) then
           scfcrt = reada(keywrd,j)*scfcrt
-        endif
+        end if
 !
 !  For solids, reduce the SCF criterion to match a system with ~20 atoms
 !
@@ -257,7 +259,7 @@
 !          pb(:mpack) = pa(:mpack)
 !          p(:mpack) = 2.D0*pa(:mpack)
 !**
-      endif
+      end if
 !
 !   INITIALIZATION OPERATIONS DONE EVERY TIME ITER IS CALLED
 !
@@ -278,8 +280,8 @@
           forall (i=1:norbs)
             pold2(i) = p((i*(i+1))/2)
           endforall
-        endif
-      endif
+        end if
+      end if
       camkin = index(keywrd,' KING') + index(keywrd,' CAMP') /= 0
 !
 !  TURN OFF SHIFT IF NOT A FULL SCF.
@@ -309,7 +311,7 @@
       if (prt1el) then
         write (iw, '(2/10X,''ONE-ELECTRON MATRIX AT ENTRANCE TO ITER'')')
         call vecprt (h, norbs)
-      endif
+      end if
       iredy = 1
   180 continue
       niter = 0
@@ -320,7 +322,7 @@
       else
         modea = 0
         modeb = 0
-      endif
+      end if
       bfrst = .TRUE.
 !*********************************************************************
 !                                                                    *
@@ -339,7 +341,7 @@
         if (niter > 1) write (iw, '(a,f9.2,a,/)') &
           '     TIME FOR ITERATION:', titer - titer0, ' WALL CLOCK SECONDS'
         titer0 = titer
-      endif
+      end if
       if (niter > itrmax - 10 .and. .not.allcon) then
 !***********************************************************************
 !                                                                      *
@@ -361,7 +363,7 @@
           l_param = .false.
         end if
         go to 180
-      endif
+      end if
 !***********************************************************************
 !                                                                      *
 !                        MAKE THE ALPHA FOCK MATRIX                    *
@@ -383,18 +385,18 @@
               if (diff > 1) newdg = .FALSE.
             else
               shift = -0.1D0
-            endif
+            end if
           else
             if (ihomo < norbs) then
               shift = ten + eigs(ihomo+1) - eigs(ihomo) + shift
             else
               shift = 0.D0
-            endif
-          endif
+            end if
+          end if
           if (diff > 0.D0) then
             if (shift > 4.D0) shfmax = 4.5D0
             if (shift > shfmax) shfmax = max(shfmax - 0.5D0,0.D0)
-          endif
+          end if
 !
 !   IF SYSTEM GOES UNSTABLE, LIMIT SHIFT TO THE RANGE -INFINITY - SHFMAX
 !   BUT IF SYSTEM IS STABLE, LIMIT SHIFT TO THE RANGE -INFINITY - +20
@@ -409,22 +411,22 @@
           if (okpuly .or. abs(bshift-4.44D0)<1.D-5) then
             shift = -8.D0
             if (newdg) shift = 0.D0
-          endif
+          end if
           if (uhf) then
             if (newdg .and. .not.(halfe .or. camkin)) then
               shiftb = ten - tenold
             else
               shiftb = ten + eigb(ihomob+1) - eigb(ihomob) + shiftb
-            endif
+            end if
             if (diff > 0.D0) shiftb = min(4.D0,shiftb)
             shiftb = max(-20.D0,min(shfmax,shiftb))
             if (okpuly .or. abs(bshift-4.44D0)<1.D-5) then
               shiftb = -8.D0
               if (newdg) shiftb = 0.D0
-            endif
+            end if
             eigb(ihomob+1:norbs) = eigb(ihomob+1:norbs) + shiftb
-          endif
-        endif
+          end if
+        end if
         tenold = ten
         if (pl > plchek) then
           shftbo = shiftb
@@ -432,7 +434,7 @@
         else
           shiftb = shftbo
           shift = shfto
-        endif
+        end if
         if (id == 0) eigs(ihomo+1:norbs) = eigs(ihomo+1:norbs) + shift
         if (id /= 0) shift = -80.D0
         if (lxfac) shift=0.d0
@@ -442,7 +444,7 @@
 
         do i=1,norbs
            f(i*(i+1)/2) = f(i*(i+1)/2) - shift
-        enddo
+        end do
       else if (last==0 .and. niter<2 .and. fulscf) then
 !
 !  SLIGHTLY PERTURB THE FOCK MATRIX IN CASE THE SYSTEM IS
@@ -457,7 +459,7 @@
         end do
       else
         call dcopy(mpack,h,1,f,1)
-      endif
+      end if
   320 continue
       if (timitr) call timer ('BEFORE FOCKS')
       if (id /= 0) then
@@ -558,7 +560,7 @@
         if (uhf) write (iw, "('   ALPHA FOCK MATRIX ON ITERATION',i3)") niter
         if ( .not. uhf) write (iw, "('   FOCK MATRIX ON ITERATION',i3)") niter
         call vecprt (f, norbs)
-      endif
+      end if
 !***********************************************************************
 !                                                                      *
 !                        MAKE THE BETA FOCK MATRIX                     *
@@ -571,7 +573,7 @@
             if (i > 0) then
               fb(l+1:i+l) = h(l+1:i+l) + shiftb*pb(l+1:i+l)
               l = i + l
-            endif
+            end if
             fb(l) = fb(l) - shiftb
           end do
         else if (rand .and. last==0 .and. niter<2 .and. fulscf) then
@@ -583,7 +585,7 @@
           end do
         else
            call dcopy(mpack,h,1,fb,1)
-        endif
+        end if
         if (id /= 0) then
           call fock2 (fb, p, pb, w, w, wk, numat, nfirst, nlast, 2)
         else
@@ -592,8 +594,8 @@
         if (prtfok) then
           write (iw, "('   BETA FOCK MATRIX ON ITERATION',i3)") niter
           call vecprt (fb, norbs)
-        endif
-      endif
+        end if
+      end if
       if (.not.fulscf) go to 600
 !
 !   CODE THE FOLLOWING LINE IN PROPERLY SOMETIME
@@ -604,7 +606,7 @@
         do i = 1, norbs
           f((i*(i+1))/2) = f((i*(i+1))/2)*0.5D0
         end do
-      endif
+      end if
       irrr = 2
 !***********************************************************************
 !                                                                      *
@@ -619,7 +621,7 @@
           incitr = .TRUE.
           getout = .TRUE.
           go to 410
-        endif
+        end if
         if (minprt) write (iw, 390)
   390   format(/,/,10x,'"""""""""""""UNABLE TO ','ACHIEVE SELF-CONSISTENCE',/)
         write (iw, 400) diff, pl
@@ -629,13 +631,13 @@
         call writmo
         call mopend ('UNABLE TO ACHIEVE SELF-CONSISTENCE')
         return
-      endif
+      end if
       ee = helect(norbs,pa,h,f)
       if (uhf) then
         ee = ee + helect(norbs,pb,h,fb)
       else
         ee = ee*2.D0
-      endif
+      end if
       if (capps) ee = ee + capcor(nat,nfirst,nlast,p,h)
       if (uhf) then
         if (bshift /= 0.D0) then
@@ -658,7 +660,7 @@
           ten = ten - 1.D0
         else
           ten = ten*0.975D0 + 0.05D0
-        endif
+        end if
         sellim = max(selcon,1.d-15*max(abs(ee),1.D0))
 !
 ! SCF TEST:  CHANGE IN HEAT OF FORMATION IN KCAL/MOL SHOULD BE
@@ -712,7 +714,7 @@
               incitr = .TRUE.
               getout = .TRUE.
               go to 410
-            endif
+            end if
           else
 !
 !  THE ENERGY HAS RISEN ABOVE THAT OF THE PREVIOUS MINIMUM.
@@ -740,13 +742,13 @@
               incitr = .TRUE.
               getout = .TRUE.
               go to 410
-            endif
-          endif
-        endif
+            end if
+          end if
+        end if
   540   continue
         ready = iredy>0 .and. (abs(diff)<sellim*10.D0 .or. pl==0.D0)
         iredy = iredy + 1
-      endif
+      end if
       if (prtpl .or. debug .and. niter > itrmax - 20) then
         if (escf > 999999.D0) then
           escf = 999999.D0
@@ -760,8 +762,8 @@
           call to_screen(line)
           endfile (iw)
           backspace (iw)
-        endif
-      endif
+        end if
+      end if
       if (incitr) eold = escf
 !***********************************************************************
 !                                                                      *
@@ -792,7 +794,7 @@
         if (debug) then
           write (iw, *) ' Diagonal of FOCK Matrix'
           write (iw, '(8F10.6)') (f((i*(i + 1))/2),i = 1,norbs)
-        endif
+        end if
         if (nscf == 2) then
           continue
           end if
@@ -812,8 +814,8 @@
 
                  call pulay (f, pa, norbs, pold, pold2, pold3, &
                  & jalp, ialp, npulay*mpack, frst, pl)
-              endif
-          endif
+              end if
+          end if
 
 !***********************************************************************
 !                                                                      *
@@ -838,13 +840,13 @@
 !              if (timitr) call timer ('BEFORE CPU DIAG')
 !               call diag_for_GPU (f, c, na1el, eigs, norbs, mpack)
 !               if (timitr) call timer ('AFTER  CPU DIAG')
-!            endif
-!          endif
+!            end if
+!          end if
         else
           if (timitr) call timer ('BEFORE FULL DIAG')
           call eigenvectors_LAPACK(c, f, eigs, norbs)
           if (timitr) call timer ('AFTER  FULL DIAG')
-        endif
+        end if
         j = 1
         if (prtvec) then
             j = 1
@@ -854,9 +856,9 @@
             call matout (c, eigs, norbs, norbs, norbs)
         else
           if (prteig) write (iw, 550) abprt(j), niter, (eigs(i),i=1,norbs)
-        endif
+        end if
   550   format(10x,a,'  EIGENVALUES ON ITERATION',i3,/,10(6g13.6,/))
-      endif
+      end if
       if (ifill /= 0) call swap (c, norbs, norbs, na2el, ifill)
 !***********************************************************************
 !                                                                      *
@@ -876,11 +878,11 @@
             call densit (c, norbs, norbs, na2el, 2.d0, na1el, fract, p, 1)
           else
             call density_for_GPU (c, fract, na2el, na1el, 2.d0, mpack, norbs, 1, p, iopc_calcp)
-          endif
+          end if
           if (modea/=3 .and. .not.(newdg .and. okpuly)) then
             call cnvg (p, pold, pold2,  niter, pl)
-        endif
-      endif
+        end if
+      end if
       if (timitr) call timer ('AFTER  DENSIT')
 !***********************************************************************
 !                                                                      *
@@ -923,8 +925,8 @@
               else
                 call pulay (fb, pb, norbs, pbold, pbold2, pbold3, &
                  & jbet, ibet, npulay*mpack, bfrst, plb)
-              endif
-          endif
+              end if
+          end if
 
 !***********************************************************************
 !                                                                      *
@@ -949,13 +951,13 @@
 !                if (timitr) call timer ('BEFORE CPU DIAG')
 !                call diag_for_GPU (fb, cb, nb1el, eigb, norbs, mpack)
 !                if (timitr) call timer ('AFTER  CPU DIAG')
-!              endif
-!            endif
+!              end if
+!            end if
           else
             if (timitr) call timer ('BEFORE FULL DIAG')
             call eigenvectors_LAPACK(cb, fb, eigb, norbs)
             if (timitr) call timer ('AFTER  FULL DIAG')
-          endif
+          end if
 
           if (prtvec) then
             write (iw, &
@@ -964,9 +966,9 @@
             call matout (cb, eigb, norbs, norbs, norbs)
           else
             if (prteig) write (iw, 550) abprt(3), niter, (eigb(i),i=1,norbs)
-          endif
+          end if
 
-        endif
+        end if
 !***********************************************************************
 !                                                                      *
 !                CALCULATE THE BETA DENSITY MATRIX                     *
@@ -980,7 +982,7 @@
           call cnvg (pb, pbold, pbold2, i, plb)
         end if
         if (timitr) call timer ('AFTER  B-DENS')
-      endif
+      end if
 !***********************************************************************
 !                                                                      *
 !                   CALCULATE THE TOTAL DENSITY MATRIX                 *
@@ -995,16 +997,16 @@
            pa(i) = p(i)*0.5d0
            pb(i) = pa(i)
         endforall
-      endif
+      end if
       if (debug) then
         call chrge (p, q)
         write (iw, *) ' CHARGES'
         write (iw, '(8F10.7)') (q(i),i=1,numat)
-      endif
+      end if
       if (prtden) then
         write (iw, '('' DENSITY MATRIX ON ITERATION'',I4)') niter
         call vecprt (p, norbs)
-      endif
+      end if
       if (itrmax < 3) return
       oknewd = pl<sellim .or. oknewd
       newdg = pl<trans .and. oknewd .or. newdg
@@ -1026,7 +1028,7 @@
         ee = ee + helect(norbs,pb,h,fb)
       else
         ee = ee*2.D0
-      endif
+      end if
       if (capps) ee = ee + capcor(nat,nfirst,nlast,p,h)
       if (timitr) call timer ('BEFORE FINAL DIAG')
       if (nscf==0 .or. last==1 .or. ci .or. halfe) then
@@ -1044,7 +1046,7 @@
            call dcopy(mpack,pa,1,pold,1)
         else
            call dcopy(mpack,p,1,pold,1)
-        endif
+        end if
         if (ci .or. halfe) then
           if (timitr) call timer ('BEFORE MECI')
           summ = meci()
@@ -1054,9 +1056,9 @@
           if (prtpl) then
             escf = (ee + enuclr)*enrgy + atheat
             write (iw, '(27X,''AFTER MECI, ENERGY  '',F14.7)') escf
-          endif
-        endif
-      endif
+          end if
+        end if
+      end if
       if (timitr) call timer ('AFTER  FINAL DIAG')
       nscf = nscf + 1
       if (debug) write (iw, '('' NO. OF ITERATIONS ='',I6)') niter
@@ -1066,14 +1068,14 @@
         newdg = .FALSE.
         bshift = -10.D0
         okpuly = .FALSE.
-      endif
+      end if
       shift = 1.D0
       escf = (ee + enuclr)*enrgy + atheat
       if (emin == 0.D0) then
         emin = escf
       else
         emin = min(emin,escf)
-      endif
+      end if
       return
       end subroutine iter
       subroutine delete_iter_arrays
@@ -1173,7 +1175,7 @@
             p = pa + pb
           else
             p = pa*2.d0
-          endif
+          end if
         else
           if (formatted)then
             write (iden, *, iostat=io_stat)norbs, numat, pa

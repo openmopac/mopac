@@ -84,7 +84,7 @@
       call mopend (&
            'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM') 
         return  
-      endif
+      end if
 !
 !  Determine the number of atomic orbitals on each element
 !
@@ -128,21 +128,21 @@
               nheavy = nheavy + 1 
             else 
               nnull = nnull + 1 
-            endif 
+            end if 
             if (k1 /= ib) then 
               k = k1 + 1 
               uspd(k:ib) = udd(ni) 
-            endif 
-          endif 
-        endif 
+            end if 
+          end if 
+        end if 
         ia = ib + 1 
       end do 
       if (numat == 1) then 
         if (index(keywrd,'FORCE') /= 0 .and. index(keywrd,' THERMO') == 0) then 
           call mopend ('A SINGLE ATOM HAS NO VIBRATIONAL MODES') 
           return  
-        endif 
-      endif 
+        end if 
+      end if 
       if (mode /= 1) call refer 
       call gmetry (geo, coord) 
       if (mode /= 1)then
@@ -200,8 +200,10 @@
 !
 !   WRITE OUT THE INTERATOMIC DISTANCES
 !
-      rmin = 100.D0 
       l = 0 
+      iminr = 0
+      jminr = 0
+      rmin = 100.D0 
       do i = 1, numat 
         do j = 1, i 
           l = l + 1 
@@ -343,7 +345,7 @@
         write (iw, '(2/10X,''C.I. NOT ALLOWED WITH UHF '')')
         call mopend ('C.I. NOT ALLOWED WITH UHF')  
         return  
-      endif 
+      end if 
 !
 ! NOW TO WORK OUT HOW MANY ELECTRONS ARE IN EACH TYPE OF SHELL
 !
@@ -397,7 +399,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' SINGLET STATE CALCULATION'')') 
           msdel = 0
-        endif 
+        end if 
       else if (doub) then 
         if (.not. odd) then 
          call mopend (&
@@ -406,7 +408,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' DOUBLET STATE CALCULATION'')') 
           msdel = 1
-        endif 
+        end if 
       else if (trip) then 
         if (odd) then 
          call mopend (&
@@ -415,7 +417,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' TRIPLET STATE CALCULATION'')') 
           msdel = 2
-        endif 
+        end if 
       else if (quar) then 
         if (.not. odd) then 
           call mopend (&
@@ -424,7 +426,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' QUARTET STATE CALCULATION'')') 
           msdel = 3
-        endif 
+        end if 
       else if (quin) then 
         if (odd) then 
           call mopend (&
@@ -433,7 +435,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' QUINTET STATE CALCULATION'')') 
           msdel = 4
-        endif 
+        end if 
       else if (sext) then 
         if (.not. odd) then 
           call mopend (&
@@ -442,7 +444,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' SEXTET STATE CALCULATION'')') 
           msdel = 5
-        endif 
+        end if 
       else if (sept) then 
         if (odd) then 
           call mopend (&
@@ -451,7 +453,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' SEPTET STATE CALCULATION'')') 
           msdel = 6
-        endif 
+        end if 
       else if (octe) then 
         if (.not. odd) then 
           call mopend (&
@@ -460,7 +462,7 @@
         else 
           if (mode /= 1) write (iw, '(2/'' OCTET STATE CALCULATION'')') 
           msdel = 7
-        endif 
+        end if 
       else if (NONE) then 
         if (odd) then 
           call mopend (&
@@ -469,8 +471,8 @@
         else 
           if (mode /= 1) write (iw, '(2/'' NONET STATE CALCULATION'')') 
           msdel = 8
-        endif 
-      endif 
+        end if 
+      end if 
 !
 !  Generic declaration of spin state
 !
@@ -500,7 +502,7 @@
             call mopend ("Impossible value of MS")
             return
           end if
-        endif 
+        end if 
       end if
       if (msdel > 99999) msdel = 0 ! Set default value of msdel
       
@@ -532,7 +534,7 @@
         else
           ielec = 0
           nmos = 0
-        endif 
+        end if 
          nalpha = nalpha - ielec
          nalpha_open = nalpha + nmos
          nbeta_open = nbeta
@@ -547,27 +549,27 @@
           if (mode /= 1) then 
             if (birad) write (iw, '(2/'' SYSTEM IS A BIRADICAL'')') 
             if (exci) write (iw, '(2/'' EXCITED STATE CALCULATION'')') 
-          endif 
+          end if 
           if (odd) then 
             write (iw, &
       '(2/10X,''SYSTEM SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT '')') 
             call mopend (&
                'SYSTEM SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT') 
             return  
-          endif          
+          end if          
           ielec = 2 
           nmos = 2 
         else if ((nelecs/2)*2 /= nelecs) then 
           ielec = 1 
           nmos = 1 
-        endif 
+        end if 
        
         i = index(keywrd,'OPEN(') 
         if (i /= 0) then 
           j = index(keywrd(i:i+10),',') + i - 1 
           nmos = nint(reada(keywrd,j)) 
           ielec = nint(reada(keywrd,index(keywrd,'OPEN(') + 5)) 
-        endif 
+        end if 
         nclose = nelecs/2 
         nopen = nelecs - nclose*2 
         if (ielec /= 0 .and. norbs > 0) then 
@@ -578,27 +580,27 @@
             write (iw, '(A,I5)') ' NUMBER OF ELECTRONS IN OPEN SHELL:', ielec 
             call mopend ('IMPOSSIBLE NUMBER OF OPEN SHELL ELECTRONS') 
             return  
-          endif 
+          end if 
           nclose = nclose - ielec/2 
           nopen = nmos 
           if (nclose + nopen > norbs) then 
             call mopend (&
        'NUMBER OF DOUBLY FILLED PLUS PARTLY FILLED LEVELS GREATER THAN TOTAL NUMBER OF ORBITALS') 
             return  
-          endif 
+          end if 
           if (nmos == 0) then 
             write (iw, *) ' NUMBER OF M.O.s IN OPEN(M,N) IS ZERO!'
             call mopend (' NUMBER OF ELECTRONS IN OPEN(M,N) IS ZERO!')   
             return  
-          endif 
+          end if 
           fract = ielec*1.D0/nmos 
           if (nclose < 0   .and. index(keywrd,' 0SCF') == 0) then 
             write (iw, '(A)') ' IMPOSSIBLE NUMBER OF CLOSED SHELLS' 
             call mopend ('IMPOSSIBLE NUMBER OF CLOSED SHELLS') 
             return  
-          endif 
+          end if 
           if (mode /= 1) write (iw, '(/6X,''THERE ARE'',I5,'' DOUBLY FILLED LEVELS'')') nclose 
-        endif 
+        end if 
         if (mode /= 1 .and. .not. mozyme) then
           num1 = char(Int(log10(nclose + 0.5)) + ichar("2")) 
           write (iw, '(2/6X,''RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS ='',I'//num1//',/)') nclose 
@@ -614,7 +616,7 @@
           if (ndoubl > nclose) then 
             write (iw, '(7x,A,I3)') 'NUMBER OF DOUBLY FILLED LEVELS IN C.I. RESET TO', nclose 
             ndoubl = nclose 
-          endif 
+          end if 
           i = nint(reada(keywrd,index(keywrd,'C.I.=(') + 5)) 
           i = i - ndoubl 
           if (nopen > i) then 
@@ -622,17 +624,17 @@
       &''    THAN THAT SPECIFIED BY OTHER KEYWORDS'')') 
             call mopend ('NUMBER OF OPEN-SHELLS ALLOWED IN C.I. IS LESS THAN THAT SPECIFIED BY OTHER KEYWORDS') 
             return  
-          endif 
+          end if 
           if (i + nclose > norbs) then 
             write (iw, '(A,/,A,I3)') &
       ' NUMBER OF M.O.s REQUESTED IN C.I. IS GREATER THAN THE NUMBER OF ORBITALS' 
             call mopend (&
        'NUMBER OF M.O.s REQUESTED IN C.I. IS GREATER THAN THE NUMBER OF ORBITALS') 
             return  
-          endif 
-        endif 
+          end if 
+        end if 
         nopen = nopen + nclose 
-      endif 
+      end if 
       if (index(keywrd, " CIS") /= 0) then
         msdel = 0
         else
@@ -656,12 +658,12 @@
         else 
           nmos = nopen - nclose 
           nmos = min0(norbs,nmos) 
-        endif 
+        end if 
         if (ndoubl == 99) then 
           j = max(min((nclose + nopen + 1)/2 - (nmos - 1)/2, norbs - nmos + 1),1) 
         else 
           j = nclose - ndoubl + 1 
-        endif 
+        end if 
         ne = int(max(0.D0,nclose - j + 1.D0)*2.D0 + &
           max(0.D0,(nopen - nclose)*fract) + 0.5D0) 
         nupp = (ne + msdel)/2
@@ -687,8 +689,8 @@
             end if
             call mopend ('SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE') 
             return  
-          endif 
-        endif 
+          end if 
+        end if 
       end if
       halfe = (nopen > nclose .and. Abs(fract -2.D0) > 1.d-20 .and. Abs(fract) > 1.d-20 &
       & .or. index(keywrd,'C.I.')/=0) 
@@ -701,7 +703,7 @@
         call mopend (&
        '"NOANCI" MUST BE USED FOR RHF OPEN-SHELL SYSTEMS THAT INVOLVE TRANSLATION VECTORS') 
         return  
-      endif 
+      end if 
       yy = dble(kharge)/(norbs + 1.D-10) 
       pdiag(:norbs) = 0.D0 
       do i = 1, numat 
@@ -757,10 +759,10 @@
 !
                 l = l - 8 
                 pdiag(l+1:3+l) = sum/3.D0 
-              endif 
-            endif 
-          endif 
-        endif 
+              end if 
+            end if 
+          end if 
+        end if 
       end do 
       call setup_nhco(ii)
 !
@@ -855,11 +857,11 @@
       !      call mopend("Keyword MMOK or NOMM must be used with "//line(:3)//" for this system")
       !      return
           end if
-      endif            
+      end if            
       if (mode /= 1 .and. index(keywrd,'PRTINT') /= 0) then  
         write (iw, '(2/10X,''  INTERATOMIC DISTANCES'')') 
         call vecprt (rxyz, numat) 
-      endif 
+      end if 
       if (rmin < 0.9D0 .and. index(keywrd,'CHECK') /= 0 .or. &
           rmin < 0.2D0 .and. index(keywrd,'GEO-OK') == 0 .or. &
           rmin < 1.d-4) then 
@@ -906,9 +908,9 @@
               call mopend ("GEOMETRY IN ERROR.  TO CONTINUE CALCULATION SPECIFY 'GEO-OK'.")
             end if
             return  
-          endif 
+          end if 
         end if
-      endif 
+      end if 
       if (.not.debug) return  
       write (iw, 290) numat, norbs, ndorbs, natoms 
   290 format('   NUMBER OF REAL ATOMS:',i4,/,'   NUMBER OF ORBITALS:  ',i4,/,&
@@ -1074,7 +1076,7 @@ end subroutine setcup
 subroutine write_cell(iprt)
   use molkst_C, only: mol_weight, escf, numat, keywrd, gnorm, &
    line, mers, gui, density
-  use funcon_C, only: a0, fpc_10
+  use funcon_C, only: fpc_10
   use common_arrays_C, only: nat, tvec
   use ef_C, only : nstep
   use reada_I
@@ -1368,7 +1370,7 @@ subroutine write_unit_cell_HOF(iprt)
               if (ii /= 0) then 
                 ii = ii + 2 
                 nnhco = nnhco - 2 
-              endif 
+              end if 
               cycle  l230 
             end do l190 
           end do 

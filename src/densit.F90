@@ -66,7 +66,7 @@
         nu2 = nocc 
         nl1 = nocc + 1 
         nu1 = nfract 
-      endif 
+      end if 
       l = 0 
       do i = 1, norbs 
         do j = 1, i 

@@ -24,20 +24,18 @@ import numpy as np
 # This comparison is insensitive to differences in whitespace and number of empty lines.
 # Some input files used for testing contain reference data in comments, which are ignored here.
 
-# Summary of units in MOPAC output files?
+# More fine-grained numerical tests using PyTest are planned after development of a Python interface for MOPAC,
+# which will make it easier to assign different numerical tolerances to different quantities
 
-# TODO:
-# - anything else we can do to guess the context of numbers?
-# - parse "INITIAL EIGENVALUES " blocks
-NUMERIC_THRESHOLD = 0.01
+NUMERIC_THRESHOLD = 0.01 # large because of numerical errors in unoccupied orbital energies, energy gradients, & relaxed geometries
 HEAT_THRESHOLD = 1e-3
 DEGENERACY_THRESHOLD = 1e-2
-EIGVEC_THRESHOLD = 5e-3
+EIGVEC_THRESHOLD = 1e-2
 
 # regular expression pattern for a time stamp or other signifier of timing output, "CLOCK" or "TIME" or "SECONDS", & system-dependent versioning
 skip_criteria = re.compile('([A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9])'
                            '|(CLOCK)|(TIME)|(SECONDS)|(Version)|(THE VIBRATIONAL FREQUENCY)|(ITERATION)|(SCF CALCULATIONS)|(Stewart)'
-                           '|(remaining)|(\*  ISOTOPE)|(\*  DENOUT)|(\*  OLDENS)|(\*  SETUP)')
+                           '|(remaining)|(\*  ISOTOPE)|(\*  DENOUT)|(\*  OLDENS)|(\*  SETUP)|(ITER.)')
 
 # regular expression pattern for an eigenvector block
 eigen_criteria = re.compile('(Root No.)|(ROOT NO.)')
@@ -218,7 +216,7 @@ for file in argv[3:]:
    copyfile(os.path.join(argv[1],file),file)
 
 # run MOPAC in the local directory
-#subprocess.call([argv[2],argv[3]])
+subprocess.run([argv[2],argv[3]], check=True)
 
 # only compare ".out" output files that have the same name as ".mop" or ".ent" input files
 out_name = argv[3][:-3]+'out'

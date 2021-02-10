@@ -86,6 +86,7 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
     eigs_temp(:mmos) = eigs(:mmos)
     do i = 1, mmos
       eig_min = 1.d7
+      ii = 0
       do j = 1, mmos
         if (eigs_temp(j) < eig_min) then
           eig_min = eigs_temp(j)
@@ -143,6 +144,8 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
       kk = Min (20, k)
       do loop = 1, kk
         sum = -1.d0
+        l = 0
+        lj = 0
         do j = loop, k
           if (xbig(j) > sum) then
             sum = xbig(j)
@@ -165,9 +168,11 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
       sum = 1.d8/sum
       if (loop == 1) then
         if (jbig(1)*0.01d0> 99.949d0) then
-          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.1)') k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0 
+          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.1)') &
+                & k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0 
         else
-          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.2)') k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0
+          write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.2)') &
+                & k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0
         end if
       else
         if (loop < 6) then

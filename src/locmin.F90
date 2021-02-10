@@ -43,7 +43,7 @@
         mxcnt2 = 30 
         iprint = 0 
         if (debug) iprint = -1 
-      endif 
+      end if 
       xmaxm = 1.D-11 
       do i = 1, nvar 
         xmaxm = max(xmaxm,abs(p(i))) 
@@ -74,7 +74,7 @@
         left = 1 
         center = 2 
         right = 3 
-      endif 
+      end if 
       tlast = vt(3) 
       t = tlast - t 
       tscale = t*scale 
@@ -91,7 +91,7 @@
       if (iprint < 0) then 
         write (iw, 310) vt(1), sqrt(phi(1)), vt(2), sqrt(phi(2)), vt(3), sqrt(&
           phi(3)) 
-      endif 
+      end if 
       mxct = mxcnt2 
       do ictr = 3, mxct 
         xmaxm = xmaxm*3.D0 
@@ -111,7 +111,7 @@
             t = 3.0D0*vt(right) - 2.0D0*vt(center) 
           else 
             t = 3.0D0*vt(left) - 2.0D0*vt(center) 
-          endif 
+          end if 
           s = t - tlast 
           t = s + tlast 
         else 
@@ -122,14 +122,14 @@
             amdis = vt(left) - tlast - xmaxm 
           else 
             amdis = vt(right) - tlast + xmaxm 
-          endif 
+          end if 
           if (abs(s) > abs(amdis)) s = amdis 
           t = s + tlast 
-        endif 
+        end if 
         if (ictr>3 .and. abs(s*xminm)<xcrit) then 
           if (debug) write (iw, '('' EXIT DUE TO SMALL PROJECTED STEP'')') 
           exit  
-        endif 
+        end if 
         t = s + tlast 
         sscale = s*scale 
         xparam(:nvar) = xparam(:nvar) + p(:nvar)*sscale 
@@ -144,7 +144,7 @@
         if (iprint < 0) then 
           write (iw, 320) vt(left), sqrt(phi(left)), vt(center), sqrt(phi(&
             center)), vt(right), sqrt(phi(right)), t, sqrt(f) 
-        endif 
+        end if 
 !
 !    TEST FOR EXCITED STATES AND POTHOLES
 !
@@ -171,14 +171,14 @@
           if (abs(t - tlast) <= eps*abs(t + tlast) + tee) then 
             if (debug) write (iw, '('' EXIT AS STEP IS ABSOLUTELY SMALL '')') 
             exit  
-          endif 
+          end if 
           sum = min(min(abs(f - phi(1)),abs(f-phi(2))),abs(f-phi(3))) 
           sum2 = (fin - sqstor)*0.05D0 
           if (sum < sum2) then 
             if (debug) write (iw, '('' EXIT DUE TO HAVING REACHED BOTTOM'')') 
             exit  
-          endif 
-        endif 
+          end if 
+        end if 
         tlast = t 
         if (.not.(t>vt(right) .or. t>vt(center) .and. f<phi(center) .or. t>vt(&
           left) .and. t<vt(center) .and. f>phi(center))) then 
@@ -187,17 +187,17 @@
         else 
           vt(left) = t 
           phi(left) = f 
-        endif 
+        end if 
         if (vt(center) >= vt(right)) then 
           i = center 
           center = right 
           right = i 
-        endif 
+        end if 
         if (vt(left) >= vt(center)) then 
           i = left 
           left = center 
           center = i 
-        endif 
+        end if 
         if (vt(center) < vt(right)) cycle  
         i = center 
         center = right 
@@ -210,7 +210,7 @@
       if (t < 0.D0) then 
         t = -t 
         p(:nvar) = -p(:nvar) 
-      endif 
+      end if 
       alf = t 
       return  
   310 format(' ---LOCMIN'/,5x,'LEFT   ...',2f19.6,/,5x,'CENTER ...',2f19.6,/,5x&

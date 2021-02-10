@@ -5,7 +5,6 @@
       use molkst_C, only : norbs, numat, n2elec
       use common_arrays_C, only : nat, nfirst, nlast
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -84,7 +83,7 @@
             h(ij+1:ib-ia+1+ij) = h(ij+1:ib-ia+1+ij) + (di(:ib-ia+1,i2)-ddi(:ib-&
               ia+1,i2)) 
           end do 
-        endif 
+        end if 
 !
 !     CALCULATE THE TWO-ELECTRON INTEGRALS, W; THE ELECTRON NUCLEAR TERM
 !     E1B AND E2A; AND THE NUCLEAR-NUCLEAR TERM ENUC.
@@ -117,7 +116,7 @@
             h(ii+1:i1-ia+1+ii) = h(ii+1:i1-ia+1+ii) + e1b(i2+1:i1-ia+1+i2) - &
               de1b(i2+1:i1-ia+1+i2) 
             i2 = i1 - ia + 1 + i2 
-          endif 
+          end if 
         end do 
 !
 !   ADD ON THE ELECTRON-NUCLEAR ATTRACTION TERM FOR ATOM J.
@@ -129,7 +128,7 @@
             h(ii+1:i1-ja+1+ii) = h(ii+1:i1-ja+1+ii) + e2a(i2+1:i1-ja+1+i2) - &
               de2a(i2+1:i1-ja+1+i2) 
             i2 = i1 - ja + 1 + i2 
-          endif 
+          end if 
         end do 
       end do 
       return  

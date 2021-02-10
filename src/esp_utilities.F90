@@ -593,16 +593,16 @@
             jp = jpvt(pu) 
             jpvt(pu) = jpvt(j) 
             jpvt(j) = jp 
-          endif 
+          end if 
           pu = pu - 1 
         end do 
-      endif 
+      end if 
       if (pu >= pl) then 
         do j = pl, pu 
           qraux(j) = snrm2(n,x(1,j),1) 
           work(j) = qraux(j) 
         end do 
-      endif 
+      end if 
       lup = min0(n,p) 
       do l = 1, lup 
         if (l>=pl .and. l<pu) then 
@@ -624,8 +624,8 @@
             jp = jpvt(maxj) 
             jpvt(maxj) = jpvt(l) 
             jpvt(l) = jp 
-          endif 
-        endif 
+          end if 
+        end if 
         qraux(l) = 0.0E0 
         if (l == n) cycle  
 !
@@ -656,9 +656,9 @@
             else 
               qraux(j) = snrm2(n - l,x(l+1,j),1) 
               work(j) = qraux(j) 
-            endif 
+            end if 
           end do 
-        endif 
+        end if 
 !
 !              SAVE THE TRANSFORMATION.
 !
@@ -705,7 +705,7 @@
         sy(iy:(n-1)*incy+iy:incy) = sy(iy:(n-1)*incy+iy:incy) + sa*sx(ix:(n-1)*&
           incx+ix:incx) 
         return  
-      endif 
+      end if 
 !
 !        CODE FOR BOTH INCREMENTS EQUAL TO 1
 !
@@ -716,7 +716,7 @@
       if (m /= 0) then 
         sy(:m) = sy(:m) + sa*sx(:m) 
         if (n < 4) return  
-      endif 
+      end if 
       mp1 = m + 1 
       sy(mp1:((n-mp1+4)/4)*4-1+mp1) = sy(mp1:((n-mp1+4)/4)*4-1+mp1) + sa*sx(mp1&
         :((n-mp1+4)/4)*4-1+mp1) 
@@ -761,7 +761,7 @@
         temp = dot_product(sx(ix:(n-1)*incx+ix:incx),sy(iy:(n-1)*incy+iy:incy)) 
         sdot = temp 
         return  
-      endif 
+      end if 
 !
 !        CODE FOR BOTH INCREMENTS EQUAL TO 1
 !
@@ -810,7 +810,7 @@
         nincx = n*incx 
         dx(:nincx:incx) = da*dx(:nincx:incx) 
         return  
-      endif 
+      end if 
 !
 !        CODE FOR INCREMENT EQUAL TO 1
 !
@@ -821,7 +821,7 @@
       if (m /= 0) then 
         dx(:m) = da*dx(:m) 
         if (n < 5) return  
-      endif 
+      end if 
       mp1 = m + 1 
       dx(mp1:((n-mp1+5)/5)*5-1+mp1) = da*dx(mp1:((n-mp1+5)/5)*5-1+mp1) 
       return  
@@ -882,6 +882,7 @@
 !     DATA CUTLO, CUTHI / 8.232D-11,  1.304D19 /
 !     DATA CUTLO, CUTHI / 4.441E-16,  1.304E19 /
       data cutlo, cuthi/ 4.441E-16, 1.304E19/  
+      xmax = 0.d0
 !
       if (n <= 0) then 
         snrm2 = zero 
@@ -972,7 +973,7 @@
 !              COMPUTE SQUARE ROOT AND ADJUST FOR SCALING.
 !
         snrm2 = xmax*sqrt(sum) 
-      endif 
+      end if 
   300 continue 
       return  
       end function snrm2 
@@ -1018,7 +1019,7 @@
           iy = iy + incy 
         end do 
         return  
-      endif 
+      end if 
 !
 !       CODE FOR BOTH INCREMENTS EQUAL TO 1
 !
@@ -1033,7 +1034,7 @@
           sy(i) = stemp 
         end do 
         if (n < 3) return  
-      endif 
+      end if 
       mp1 = m + 1 
       do i = mp1, n, 3 
         stemp = sx(i) 
@@ -1270,8 +1271,8 @@
             info = 1 
           else 
             b(1) = y(1)/x(1,1) 
-          endif 
-        endif 
+          end if 
+        end if 
         if (cr) rsd(1) = 0.0E0 
       else 
         if (cqy) call scopy (n, y, 1, qy, 1) 
@@ -1289,7 +1290,7 @@
             call saxpy (n - j + 1, t, x(j,j), 1, qy(j), 1) 
             x(j,j) = temp 
           end do 
-        endif 
+        end if 
         if (cqty) then 
 !
 !           COMPUTE TRANS(Q)*Y.
@@ -1302,17 +1303,17 @@
             call saxpy (n - j + 1, t, x(j,j), 1, qty(j), 1) 
             x(j,j) = temp 
           end do 
-        endif 
+        end if 
         if (cb) call scopy (k, qty, 1, b, 1) 
         kp1 = k + 1 
         if (cxb) call scopy (k, qty, 1, xb, 1) 
         if (cr .and. k<n) call scopy (n - k, qty(kp1), 1, rsd(kp1), 1) 
         if (.not.(.not.cxb .or. kp1>n)) then 
           xb(kp1:n) = 0.0E0 
-        endif 
+        end if 
         if (cr) then 
           rsd(:k) = 0.0E0 
-        endif 
+        end if 
         if (cb) then 
 !
 !           COMPUTE B.
@@ -1323,13 +1324,13 @@
               info = j 
 !           ......EXIT
               exit  
-            endif 
+            end if 
             b(j) = b(j)/x(j,j) 
             if (j == 1) cycle  
             t = -b(j) 
             call saxpy (j - 1, t, x(1,j), 1, b, 1) 
           end do 
-        endif 
+        end if 
         if (.not.(.not.cr .and. .not.cxb)) then 
 !
 !           COMPUTE RSD OR XB AS REQUIRED.
@@ -1342,15 +1343,15 @@
             if (cr) then 
               t = -sdot(n - j + 1,x(j,j),1,rsd(j),1)/x(j,j) 
               call saxpy (n - j + 1, t, x(j,j), 1, rsd(j), 1) 
-            endif 
+            end if 
             if (cxb) then 
               t = -sdot(n - j + 1,x(j,j),1,xb(j),1)/x(j,j) 
               call saxpy (n - j + 1, t, x(j,j), 1, xb(j), 1) 
-            endif 
+            end if 
             x(j,j) = temp 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
       end subroutine sqrsl 
 
@@ -1388,7 +1389,7 @@
         if (incy < 0) iy = ((-n) + 1)*incy + 1 
         sy(iy:(n-1)*incy+iy:incy) = sx(ix:(n-1)*incx+ix:incx) 
         return  
-      endif 
+      end if 
 !
 !        CODE FOR BOTH INCREMENTS EQUAL TO 1
 !
@@ -1399,7 +1400,7 @@
       if (m /= 0) then 
         sy(:m) = sx(:m) 
         if (n < 7) return  
-      endif 
+      end if 
       mp1 = m + 1 
       sy(mp1:((n-mp1+7)/7)*7-1+mp1) = sx(mp1:((n-mp1+7)/7)*7-1+mp1) 
       return  

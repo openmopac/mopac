@@ -58,7 +58,7 @@ subroutine optgeo (xparam, yparam, nvar, refgeo, glim)
       end if
     else
       sum=0.d0
-    endif
+    end if
   !
   !  Store the geometric variables - they might be used if PARTAB is
   !  called.

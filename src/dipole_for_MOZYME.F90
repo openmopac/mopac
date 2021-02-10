@@ -98,7 +98,7 @@ double precision function dipole_for_MOZYME (dipvec, mode)
       dipvec(1) = dip(1,3) 
       dipvec(2) = dip(2,3) 
       dipvec(3) = dip(3,3) 
-    endif    
+    end if    
     dipole_for_MOZYME = dip(4, 3)
     if ( chargd) then
       do i = 1, 3

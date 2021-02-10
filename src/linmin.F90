@@ -7,7 +7,6 @@
       use chanel_C, only : iw
       use funcon_C, only : pi
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -71,7 +70,7 @@
           delta1 = 0.5D0 
         else 
           delta1 = 0.1D0 
-        endif 
+        end if 
         alpha = 1.D0 
         maxlin = 15 
         xnear = 1.D-4 
@@ -84,15 +83,15 @@
           if (index(keywrd,'PREC') /= 0) then 
             delta1 = 0.D0 
             delta2 = delta2*0.01D0 
-          endif 
+          end if 
           maxlin = 50 
-        endif 
+        end if 
         cosine = 99.99D0 
 !
         ymaxst = 0.4D0 
         print = index(keywrd,'LINMIN') /= 0 
         icalcn = numcal 
-      endif 
+      end if 
       nsame = 0 
       xparef(:nvar) = xparam(:nvar) 
       xmaxm = 0.D0 
@@ -118,7 +117,7 @@
       if (nvar > 0) then 
         xparam(:nvar) = xparef(:nvar) + alpha*pvect(:nvar) 
         i = nvar + 1 
-      endif 
+      end if 
       call compfg (xparam, .TRUE., phi(2), .TRUE., grad, .FALSE.) 
       if (moperr) return  
       fmax = dmax1(phi(2),fmax) 
@@ -137,8 +136,8 @@
             alpha = 2*alpha 
           else 
             alpha = -alpha 
-          endif 
-        endif 
+          end if 
+        end if 
 !#      IF(PRINT)WRITE(IW,'(3(A,F12.6))')' ESTIMATED DROP:',DOTT*0.5D0,
 !#     1'  ACTUAL: ',PHI(2)-SSQLST, '  PREDICTED ALPHA',ALPHA
         okf = okf .or. phi(2)<ssqlst 
@@ -147,7 +146,7 @@
 !  THIEL'S TESTS # 18 AND 19
 !
           if (okf .and. alpha<2.D0) go to 190 
-        endif 
+        end if 
         vt(3) = alpha 
         if (vt(3) <= 1.D0) then 
           left = 3 
@@ -157,12 +156,12 @@
           left = 1 
           center = 2 
           right = 3 
-        endif 
+        end if 
         i = 1 
         if (nvar > 0) then 
           xparam(:nvar) = xparef(:nvar) + alpha*pvect(:nvar) 
           i = nvar + 1 
-        endif 
+        end if 
         call compfg (xparam, .TRUE., funct, .TRUE., grad, .FALSE.) 
         if (moperr) return  
         fmax = dmax1(funct,fmax) 
@@ -196,14 +195,14 @@
 !   FINISH BECAUSE TWO POINTS CALCULATED ARE VERY CLOSE TOGETHER
 !
             exit  l180 
-          endif 
+          end if 
           beta = (phi(1)-phi(2))/gamma - alpha*(vt(1)+vt(2)) 
           if (alpha <= 0.D0) then 
             if (phi(right) <= phi(left)) then 
               alpha = 3.0D00*vt(right) - 2.0D00*vt(center) 
             else 
               alpha = 3.0D00*vt(left) - 2.0D00*vt(center) 
-            endif 
+            end if 
             s = alpha - alpold 
             if (abs(s) > xmaxm) s = sign(xmaxm,s)*(1 + 0.01D0*(xmaxm/s)) 
             alpha = s + alpold 
@@ -213,7 +212,7 @@
             xxm = 2.0D00*xmaxm 
             if (abs(s) > xxm) s = sign(xxm,s)*(1 + 0.01D0*(xxm/s)) 
             alpha = s + alpold 
-          endif 
+          end if 
 !
 !   FINISH IF CALCULATED POINT IS NEAR TO POINT ALREADY CALCULATED
 !
@@ -225,7 +224,7 @@
           if (nvar > 0) then 
             xparam(:nvar) = xparef(:nvar) + alpha*pvect(:nvar) 
             i = nvar + 1 
-          endif 
+          end if 
           funold = funct 
           call compfg (xparam, .TRUE., funct, .TRUE., grad, .FALSE.) 
           if (moperr) return  
@@ -289,18 +288,18 @@
             i = center 
             center = right 
             right = i 
-          endif 
+          end if 
           if (vt(left) >= vt(center)) then 
             i = left 
             left = center 
             center = i 
-          endif 
+          end if 
           if (vt(center) < vt(right)) cycle  l180 
           i = center 
           center = right 
           right = i 
         end do l180 
-      endif 
+      end if 
   190 continue 
       ic = 2 
       if (abs(estor - energy) < 1.D-12) ic = 1 
@@ -314,7 +313,7 @@
       if (hlast/=0.D0 .and. hlast>0.5D0*drop) then 
         call compfg (xparam, .TRUE., funct, .TRUE., grad, .FALSE.) 
         if (moperr) return  
-      endif 
+      end if 
       okf = funct<ssqlst .or. diis 
       if (funct >= ssqlst) return  
       if (alpha < 0.D0) then 
@@ -323,8 +322,8 @@
         if (nvar > 0) then 
           pvect(:nvar) = -pvect(:nvar) 
           i = nvar + 1 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
 !
 !

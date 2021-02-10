@@ -5,7 +5,6 @@
       use symmetry_C, only : r
       USE molkst_C, ONLY: numat 
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -115,7 +114,7 @@
           temp(7) = fact*h(iel33-l6+3) 
           temp(4) = fact*h(iel33-l6+2) 
           temp(1) = fact*h(iel33-l6+1) 
-        endif 
+        end if 
 !
         call mat33 (r(1,n), temp, temp2) 
 !

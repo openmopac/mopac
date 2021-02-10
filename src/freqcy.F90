@@ -65,7 +65,7 @@
           if (sumerr >= 1.D-6) cycle  
           exit  
         end do 
-      endif 
+      end if 
       if (index(keywrd,' FREQCY') /= 0) then 
         write (iw, '(A)') ' SYMMETRIZED HESSIAN MATRIX' 
 !
@@ -101,7 +101,7 @@
         end do 
         i = -numat 
         call vecprt (cnorml, i) 
-      endif 
+      end if 
       l = 0 
       do i = 1, numat 
         weight = 1.D0/sqrt(atmass(i)) 
@@ -119,7 +119,7 @@
           fmatrx(linear+1:i+linear) = fmatrx(linear+1:i+linear)* &
             wtmass(i)*wtmass(:i) 
           linear = i + linear 
-        endif 
+        end if 
       end do 
 !
 !    1.D5 IS TO CONVERT FROM MILLIDYNES/ANGSTROM TO DYNES/CM.
@@ -177,7 +177,7 @@
           sum = 1.D0*sum/freq(i) 
         else 
           sum = 0.D0 
-        endif 
+        end if 
       !
       !  Given   E = (h/2pi)freqency, then
       !          Energy = SQRT(FREQ(I)) = sqrt(force constant/reduced mass) and
@@ -257,8 +257,8 @@
             fmatrx(linear+1:i+linear) = oldf(linear+1:i+linear)*1.D-5* &
               wtmass(i)*wtmass(:i) 
             linear = i + linear 
-          endif 
+          end if 
         end do 
-      endif 
+      end if 
       return  
       end subroutine freqcy 

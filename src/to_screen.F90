@@ -463,7 +463,7 @@ module to_screen_I
       write(hook,"(a,i"//num//")")" NUM_ALPHA_ELECTRONS=",nalpha
       num = char(ichar("1") +int(log10(nbeta + 0.05)))
       write(hook,"(a,i"//num//")")" NUM_BETA_ELECTRONS=",nbeta
-    endif
+    end if
       sum = seconds(1) - time0
       i = int(sum*0.000001D0)
       sum = sum - i*1000000
@@ -541,7 +541,7 @@ module to_screen_I
           allocate(overlap2(norbs,9))
         end if
         do i = 1, numat
-          overlap2 = 0.d0
+          if (.not. compressed) overlap2 = 0.d0
           ii = iorbs(i)
           ni = nat(i)
           bi = betas(ni)
@@ -687,6 +687,7 @@ module to_screen_I
 !
       allocate (store_eigs(norbs), eigs_map(norbs))
       store_eigs(:norbs) = eigs(:norbs)
+      ii = 1
       do i = 1, noccupied
         eig_min = 1.d7
         do j = 1, noccupied
@@ -814,7 +815,7 @@ module to_screen_I
         i = min(1000000, max(10000, 50*norbs))
         allocate(comp(i), icomp(i))
         do i = 1, numat
-          overlap2 = 0.d0
+          if(.not. compressed) overlap2 = 0.d0
           ii = iorbs(i)
           do j = 1, i - 1
             jj = iorbs(j)
@@ -1276,6 +1277,7 @@ subroutine write_comp_vect(output, c, size_c, cutoff, norm, text1, text2, fmt9p4
 !
   do ii = 1, n
   sum = 0.d0
+  k = 1
   do j = 1, n
     if (sum < Abs(c_loc(j))) then
       sum = Abs(c_loc(j))

@@ -589,7 +589,7 @@
             xfac(:100,57:71) = 0.d0
             xfac(57:71,:100) = 0.d0 
           end if
-        endif
+        end if
 !
 !    
         f0sd_store = f0sd
@@ -608,7 +608,7 @@
         call mopend (&
           'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM') 
         return  
-      endif 
+      end if 
       return  
       end subroutine switch 
       subroutine fractional_metal_ion

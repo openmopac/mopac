@@ -19,6 +19,8 @@ subroutine vecprt_for_MOZYME(aa, numm)
     integer, external :: ijbo
     data atorbs / " S", "PX", "PY", "PZ", "X2", "XZ", "Z2", "YZ", "XY" /
 !
+    l = 0
+    ll = 0
     numb = Abs (numm)
     if (numb > maxarr) then
       write (iw,'(/10x,a,i5)') "VECPRT CAN ONLY PRINT ARRAYS OF SIZE LESS THAN", maxarr

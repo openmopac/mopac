@@ -36,7 +36,7 @@
          wall_clock_mins, trim(minute), wall_clock_secs 
       else 
         write (nout, "(10x, 'WALL-CLOCK TIME', 9x, '=', f15.3, ' SECONDS')") wall_clock_secs 
-      endif 
+      end if 
       
       days = tim/86400.0 
       CPU_days = idint(days) 
@@ -63,6 +63,6 @@
          CPU_mins, trim(minute), CPU_secs 
       else 
         write (nout, "(10x, 'COMPUTATION TIME', 8x, '=', f15.3, ' SECONDS')") CPU_secs 
-      endif 
+      end if 
       return
       end subroutine timout 

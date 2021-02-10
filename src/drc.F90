@@ -59,6 +59,7 @@
       iw00 = iw0
       iw0 = -1
       iloop = 1 
+      n_escf = 0
       escf_min = 1.d20
       parmax = .FALSE.
       call l_control("LDRC_FIRST", len("LDRC_FIRST"), 1)
@@ -76,11 +77,11 @@
       open(unit=iscr, status='SCRATCH', position='asis') 
       if (index(keywrd,' PREC') /= 0) then 
         accu = 0.25d0 
-				cnvg = 0.000001d0
+        cnvg = 0.000001d0
       else 
         accu = 1.d0 
-				cnvg = 0.00001d0
-      endif 
+        cnvg = 0.00001d0
+      end if 
       l_dipole = (index(keywrd,' DIPOLE') /= 0)
       l_irc = (index(keywrd,' DRC') == 0)
       if (l_irc) then 
@@ -88,7 +89,7 @@
           stepx = reada(keywrd,index(keywrd,'X-PRIO') + 5) 
         else 
           stepx = 0.05D0 
-        endif 
+        end if 
         stepx = stepx*0.2d0  !  Use five steps per point
         stepxx = 0.01d0
       else
@@ -131,7 +132,7 @@
       else 
         addonk = 0.d0 
         if (l_irc) addonk=2.d0  ! Just a guess to get the IRC started
-      endif 
+      end if 
       velred = index(keywrd,'VELO') /= 0 
       if (ddot(3*numat,startv,1,startv,1) > 0.001d0) then
 !
@@ -142,7 +143,7 @@
           write (iw, '(3F16.5)') (startv(i), i = 1, numat*3) 
         end if
         startv(:numat*3) = -startv(:numat*3)
-      endif 
+      end if 
       let = (velred .and. Index (keywrd, " IRC") == 0)
       if (index(keywrd,' SYMM') /= 0) ndep = 0 
    !
@@ -165,10 +166,10 @@
         if (parmax) then 
           mcoprt(:,:nvar) = loc(:,:nvar)
           ncoprt = nvar
-        endif 
+        end if 
       else
         ncoprt = 0
-      endif 
+      end if 
       ncoprt = 0  !  Do NOT print turning points. These just mess up the output.
       l = 0 
       do i = 1, numat 
@@ -209,7 +210,7 @@
 ! undamped DRC
 !
         half = 1.d6 
-      endif 
+      end if 
 !
 !  LETOT IS TRUE IF CORRECTIONS ARE NOT TO BE MADE PART WAY INTO
 !        THE CALCULATION
@@ -276,13 +277,13 @@
             k = nint(reada(keywrd,index(keywrd,'IRC='))) 
           else 
             k = 1 
-          endif 
+          end if 
           if (k < 0) then 
             k = -k 
             one = -1.d0 
           else 
             one = 1.d0 
-          endif 
+          end if 
 !
 !   Modify all velocities to set net momentum to zero
 !
@@ -323,7 +324,7 @@
                 summ = summ + velo0(i)**2*ams 
               end do 
             end do 
-          endif 
+          end if 
         
           if (addonk < 1.d-5 .and. velred) addonk = 0.5d0*summ/4.184D10 
           if (addonk < 1.d-5 .and. .not. velred) then 
@@ -345,8 +346,8 @@
               addonk = 0.3d0 
             else 
               addonk = 0.3d0 
-            endif 
-          endif 
+            end if 
+          end if 
 !
 !   AT THIS POINT ADDONK IS IN KCAL/MOLE
 !   NORMALIZE SO THAT TOTAL K.E. = ONE QUANTUM (DEFAULT) (DRC ONLY)
@@ -356,7 +357,7 @@
           if (summ < 1.d-4) then 
             write (iw, '(A)') ' SYSTEM IS APPARENTLY NOT MOVING!' 
             return  
-          endif 
+          end if 
 !
 !  ADDONK IS EXCESS KINETIC ENERGY.  IF THE CALCULATION IS AN IRC,
 !  THIS ENERGY MUST BE REMOVED AFTER A SHORT 'TIME'.
@@ -381,9 +382,9 @@
 !  FROM THE VELOCITY ONLY.
 !
             if (half > 1.d-3) addonk = 0.d0 
-          endif 
-        endif 
-      endif 
+          end if 
+        end if 
+      end if 
   100 continue 
       if (Index (keywrd, " BIGCYCLES") /= 0) then
         bigcycles = Nint (reada (keywrd, Index (keywrd, " BIGCYCLES")))*4
@@ -437,7 +438,7 @@
           quadr = min(1.3d0,max(0.8d0,quadr)) 
         else 
           quadr = 1.d0 
-        endif 
+        end if 
         if ((let .or. ekin > 0.2d0) .and. addk) then 
 !
 !   DUMP IN EXCESS KINETIC ENERGY
@@ -445,7 +446,7 @@
           etot = etot + addonk 
           addk = .FALSE. 
           addonk = 0.d0 
-        endif 
+        end if 
 !
 !  CALCULATE THE DURATION OF THE NEXT STEP.
 !  STEP SIZE IS THAT REQUIRED TO PRODUCE A CONSTANT CHANGE IN GEOMETRY
@@ -534,7 +535,7 @@
               let = .TRUE. 
               elost = elost + velo0(i)**2*atmass(loc(1,i))*(1 - const**2) 
               velo0(i) = velo0(i)*const*quadr 
-            endif 
+            end if 
 !
 !  CALCULATE KINETIC ENERGY (IN 2*ERGS AT THIS POINT)
 !
@@ -599,13 +600,13 @@
               let = .TRUE. 
               elost = elost + velo0(i)**2*atmass(loc(1,i))*(1 - const**2) 
               velo0(i) = velo0(i)*const*quadr 
-            endif 
+            end if 
 !
 !  CALCULATE KINETIC ENERGY (IN 2*ERGS AT THIS POINT)
 !
             ekin = ekin + velo0(i)**2*atmass(loc(1,i)) 
           end do 
-        endif 
+        end if 
         one = 1.d0 
         if (let .or. gnorm > 3.d0) then 
           if (.not.letot) then 
@@ -623,10 +624,10 @@
 !  IT IS A DRC AND KINETIC NOT USED, SO REMOVE EXTRA KINETIC ENERGY
 !
               etot = etot - addonk 
-            endif 
-          endif 
+            end if 
+          end if 
           letot = .TRUE. 
-        endif
+        end if
 !
 !  CONVERT ENERGY INTO KCAL/MOLE
 !
@@ -695,7 +696,7 @@
           end do
           gnorm = dsqrt(ddot(nvar,gerror,1,gerror,1))
           gtot = gnorm
-        endif
+        end if
         gnorm = dsqrt(ddot(nvar,grad,1,grad,1))
 !
 !   CONVERT GRADIENTS INTO ERGS/CM
@@ -707,7 +708,7 @@
 !
         if (iloop == 1) then 
           grold(:nvar) = grad(:nvar) 
-        endif 
+        end if 
         dlold2 = delold 
         delold = deltat 
         sum = 0.d0 
@@ -721,15 +722,15 @@
           & abs(old_hof - new_hof) < cnvg .or. iloop > 10000) then
 !
 !  Deciding when to terminate the IRC is tricky. 
-						i_constant = i_constant + 1
-						if (i_constant > 3 .or. iloop > 10000) then						
-							iw0 = iw00 
-							write (iw, '(2/,'' IRC CALCULATION COMPLETE '')') 
-							return  
-						end if
-					else
-						i_constant = 1
-          endif 
+            i_constant = i_constant + 1
+            if (i_constant > 3 .or. iloop > 10000) then
+              iw0 = iw00 
+              write (iw, '(2/,'' IRC CALCULATION COMPLETE '')') 
+              return  
+            end if
+          else
+            i_constant = 1
+          end if 
           if (escf < escf_min .or. iloop < 10) then
             escf_min = escf
             n_escf = 0
@@ -757,7 +758,7 @@
             write (iw, '(A)') ' TO CONTINUE, USE KEYWORD ''GNORM=0'''
             iw0 = iw00 
             return  
-          endif 
+          end if 
           deltat = min(deltat,2.d-15) 
 !***********************************************************************
 !
@@ -765,7 +766,7 @@
 !#          (ILOOP/400)*400.EQ.ILOOP)DELTAT=-DELTAT
 !
 !***********************************************************************
-        endif 
+        end if 
         deltat = max(minstep,deltat)
         if (l_dipole) then
           call chrge (p, q) 
@@ -805,7 +806,7 @@
           end if
           escf_diff = escf - escf_old
           escf_old = escf
-        endif 
+        end if 
         tnow = seconds(2) 
         tcycle = tnow - oldtim 
         oldtim = tnow 

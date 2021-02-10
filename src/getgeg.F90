@@ -8,7 +8,6 @@
       use common_arrays_C, only : atmass, loc, xparam, simbol, txtatm
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -59,6 +58,7 @@
         'AC', 'TH', 'PA', 'U', 'NP', 'PU', 'AM', 'CM', 'BK', 'CF', 'XX', 'FM', &
         'MD', 'CB', '++', ' +', '--', ' -', 'TV'/  
       allocate(tgeo(3,10000), lgeo(3,10000))
+      k = 0
       nerr = 0 
       numat = 0 
       na(1) = 0 
@@ -87,7 +87,7 @@
           line = string 
         else 
           txtatm(natoms) = ' ' 
-        endif 
+        end if 
 !***********************************************************************
         do i = 1, 80 
           iline = ichar(line(i:i)) 
@@ -101,7 +101,7 @@
           if (leadsp .and. line(i:i)/=' ') then 
             nvalue = nvalue + 1 
             istart(nvalue) = i 
-          endif 
+          end if 
           leadsp = line(i:i) == ' ' 
         end do 
         do j = 1, 107 
@@ -111,7 +111,7 @@
         if (index(' '//line(istart(1):istart(1)+2),' X') /= 0) then 
           j = 99 
           go to 40 
-        endif 
+        end if 
         write (iw, '(2A)') ' ELEMENT NOT RECOGNIZED: ', line(istart(1):istart(1)+2) 
         nerr = nerr + 1 
    40   continue 
@@ -119,7 +119,7 @@
         if (j /= 99 .and. j < 107) then 
           numat = numat + 1 
           atmass(numat) = ams(j)
-        endif 
+        end if 
         tgeo(1,natoms) = ' ' 
         tgeo(2,natoms) = ' ' 
         tgeo(3,natoms) = ' ' 
@@ -157,8 +157,8 @@
           go to 90 
         else 
           go to 180 
-        endif 
-      endif 
+        end if 
+      end if 
 !***********************************************************************
       do i = 1, 80 
         iline = ichar(line(i:i)) 
@@ -198,8 +198,8 @@
               call mopend (&
       'NEGATIVE SYMBOLICS MUST BE PRECEEDED BY THE POSITIVE EQUIVALENT') 
               return  
-            endif 
-          endif 
+            end if 
+          end if 
           if (n <= 1) cycle  
           ndep = ndep + 1 
           locpar(ndep) = loc(1,nvar) 
@@ -210,8 +210,8 @@
               kerr = kerr + 1 
               write (iw, '(2A)') ' ONLY DIHEDRAL SYMBOLICS ', &
                 ' CAN BE PRECEEDED BY A "-" SIGN' 
-            endif 
-          endif 
+            end if 
+          end if 
           locdep(ndep) = j 
         end do 
       end do 
@@ -220,11 +220,11 @@
         write (iw, '(2A)') &
           ' THE FOLLOWING SYMBOL HAS BEEN DEFINED MORE THAN ONCE:', line(i:l) 
         nerr = nerr + 1 
-      endif 
+      end if 
       if (n == 0) then 
         write (iw, '(2A)') ' THE FOLLOWING SYMBOLIC WAS NOT USED:', line(i:l) 
         nerr = nerr + 1 
-      endif 
+      end if 
       go to 90 
   180 continue 
       merr = 0 
@@ -238,7 +238,7 @@
            + nerr, ' ERRORS' 
         call mopend ('THE GEOMETRY DATA-SET CONTAINED ERRORS') 
         return  
-      endif 
+      end if 
 !
 !  SORT PARAMETERS TO BE OPTIMIZED INTO INCREASING ORDER OF ATOMS
 !

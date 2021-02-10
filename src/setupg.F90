@@ -7,7 +7,6 @@
       USE overlaps_C, only : ccc, zzz, allc, allz 
       use parameters_C, only : zs, zp
 !***********************************************************************
-!DECK MOPAC
       implicit none
 
 !-----------------------------------------------
@@ -184,7 +183,7 @@
           nqn = 5 
         else 
           nqn = 6 
-        endif         
+        end if         
         ccc(ia,:) = allc(:,nqn,1) 
         zzz(ia,:) = allz(:,nqn,1)*xi**2 
         if (nlast(i) > nfirst(i)) then

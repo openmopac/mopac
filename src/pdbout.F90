@@ -107,7 +107,7 @@ subroutine pdbout (mode1)
       write (iprt, "(A)") trim(line)
       line = "REMARK  Heat of Formation ="  
       sum = escf - stress
-      i = int(log10(abs(sum)) + 0.001d0) 
+      i = int(log10(abs(sum) + 0.001d0)) 
       if ( sum < 0.d0) i = i + 1
       if (i < 4) then
         num = char(ichar("6") + i)
@@ -169,12 +169,14 @@ subroutine pdbout (mode1)
     use common_arrays_C, only : txtatm, p
     use mozyme_C, only : tyres, tyr
     implicit none
-    integer :: nres, i, j, k, nprt, ncol, biggest_res, iprt=27, icalcn = -1, it
+    integer :: nres, i, j, k, nprt, ncol, biggest_res, iprt, icalcn = -1, it
     character :: res_txt(4000)*10, l_res*14, n_res*14, wrt_res*14, num*1, line_1*400
     integer, parameter :: limres = 260
     logical :: exists, l_prt_res, l_geo_ref, l_compare
     double precision, external :: reada
     save :: icalcn
+    it = 0
+    iprt = 27
     if (icalcn == numcal) return
     icalcn = numcal
     l_compare = (index(keywrd, " COMPARE") /= 0)
@@ -396,7 +398,7 @@ subroutine pdbout (mode1)
 !   Element(2,2)
 !
     write(iprt,"(a)")"<TD><a href=""javascript:Jmol.script(jmolApplet0,'"
-    write(iprt,"(a)")"if (lcenter);  lcenter = FALSE; else lcenter = TRUE; center {visible}; end if;"
+    write(iprt,"(a)")"if (lcenter);  lcenter = FALSE; else lcenter = TRUE; center {visible}; endif;"
     write(iprt,"(a)")"')"">Toggle center picture</a> </TD>","</TR> <TR>" 
 !
 !   Element(1,3)
@@ -426,20 +428,20 @@ subroutine pdbout (mode1)
         write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_x); " 
         write(iprt,"(a)")"var use = {visible}; var sel = {selected};"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
-        write(iprt,"(a)")"if (z = 3); use = sel; end if;"
+        write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"for (var x IN @use){select @x; var txt =  (x.temperature > 0 ? \'+\':\'\')"// &
           "+format(\'%1.2f\',x.temperature ); label @txt; color label black;"
         write(iprt,"(a)")"set labelOffset 0 0;}  select @sel; lcharge_x= TRUE;"
         write(iprt,"(a)")"else lcharge_x= FALSE; var use = {visible}; var sel = {selected};"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
-        write(iprt,"(a)")"if (z = 3); use = sel; end if;"
+        write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"select @use; label OFF; select @sel; end if ')"">Charges as Nos.</a>"
 
         write(iprt,"(a)")"</TD><TD>"
         write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_s); "
          write(iprt,"(a)")"var use = {visible}; var sel = {selected};"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
-        write(iprt,"(a)")"if (z = 3); use = sel; end if;"
+        write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"for (var x IN @use)"
         write(iprt,"(a)")"{select @x; var txt =  @x.temperature*0.5;"
         write(iprt,"(a)")"if (@txt > 0){spacefill @txt; color atom deepskyblue;}"
@@ -447,7 +449,7 @@ subroutine pdbout (mode1)
         write(iprt,"(a)")"select @sel; lcharge_s= TRUE;"
         write(iprt,"(a)")"else lcharge_s= FALSE; var use = {visible}; var sel = {selected};"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
-        write(iprt,"(a)")"if (z = 3); use = sel; end if;"
+        write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"select @use; spacefill 15%; color cpk; select @sel; end if ')"">Charges as Sizes</a>"
         write(iprt,"(a)")"</TD></TR>"
       end if
@@ -550,7 +552,7 @@ subroutine pdbout (mode1)
         write(iprt,"(2a)") "<TD> <a href=""javascript:Jmol.script(jmolApplet0,'if (!"//l_res, &
         ");   display ADD "//trim(n_res)//";  "//l_res//" = TRUE; else "
         write(iprt,"(2a)") " hide ADD "//trim(n_res)//";  "//l_res//" = FALSE; end if; ", &
-        "if (lcenter); center {visible}; end if; if (lzoom); zoom 0; end if;')"" class=""auto-style5"">  "
+        "if (lcenter); center {visible}; endif; if (lzoom); zoom 0; endif;')"" class=""auto-style5"">  "
         j = index(wrt_res, "^")
         if (j > 0) wrt_res = wrt_res(:j - 1)//wrt_res(j + 1:)
         if (index(wrt_res,":") /= 0) then

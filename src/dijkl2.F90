@@ -37,7 +37,7 @@
               ll = j 
             else 
               ll = k 
-            endif 
+            end if 
             do l = 1, ll 
               kl = kl + 1 
               lkl = k == l 
@@ -49,14 +49,14 @@
                   val = val*2.D0 
                 else 
                   val = val + ddot(norbs,dc(1,j),1,dijkl(1,i,kl),1) 
-                endif 
+                end if 
                 val2 = ddot(norbs,dc(1,k),1,dijkl(1,l,ij),1) 
                 if (lkl) then 
                   val = val + val2*2.D0 
                 else 
                   val = val + val2 + ddot(norbs,dc(1,l),1,dijkl(1,k,ij),1) 
-                endif 
-              endif 
+                end if 
+              end if 
               xy(i,j,k,l) = val 
               xy(i,j,l,k) = val 
               xy(j,i,k,l) = val 

@@ -63,11 +63,11 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
 !  Write out "xyz" file
 !
   write(ixyz,"(i6,a)") nl_atoms," "
-	if (index(keywrd, " REVERSE") /= 0) then
-		npt = npt - 1
+  if (index(keywrd, " REVERSE") /= 0) then
+    npt = npt - 1
     imodel = imodel -1
-		call l_control("REVERSE", len("REVERSE"), -1)
-	end if
+    call l_control("REVERSE", len("REVERSE"), -1)
+  end if
   num1 = char(ichar("1") + int(log10(jloop*1.01)))
   factor = abs(escf)
   num2 = char(max(ichar("0"), ichar("0") + min(9, int(log10(factor)) - 1)))
@@ -99,7 +99,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
     & "  Potential energy:", escf, " Diff.:", ekin, "  Move:", xtot
     end if
     call to_screen(line)
-  endif
+  end if
   if (index(keywrd, " PDBOUT") /= 0) then
     imodel = imodel + 1
     write(ipdb,'(a,i7)')"MODEL",imodel 
@@ -120,6 +120,7 @@ subroutine reverse_trajectory(mode)
   character :: dummy_char*1, xyz_fnn*200
   character, allocatable :: store_path(:,:)*200, store_hofs(:)*200  
   save :: icalcn, ipdb, imodel, npt
+  ixyzn = 0
   if (icalcn /= step_num) then
     do i = len_trim(xyz_fn), 1, -1
       if (xyz_fn(i:i) == "/" .or. xyz_fn(i:i) == "\") exit

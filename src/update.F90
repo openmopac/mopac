@@ -34,6 +34,7 @@
     integer :: i, kfn, ni, nj, jparam
     intrinsic Nint
 !------------------------------------------------------------
+    kfn = 0
     jparam = iparam
     if (jparam > n_partyp_fn - 1 .and. jparam < n_partyp_alpb) then
       kfn = (jparam - n_partyp_fn) / 3

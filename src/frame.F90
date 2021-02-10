@@ -101,7 +101,7 @@
         vib(4,j+3:numat*3+j:3) = -coord1(2,:numat)*wtmass 
         vib(5,j+3:numat*3+j:3) = -coord1(1,:numat)*wtmass 
         vib(6,j+3:numat*3+j:3) = 0.D0 
-      endif 
+      end if 
       j = 1 
       do i = 1, numat 
         do k = 4, 6 

@@ -4,7 +4,6 @@
 !-----------------------------------------------
       USE symmetry_C, only : elem, cub
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -74,10 +73,10 @@
           elem(2,2,iplace) = elem(1,1,iplace) 
           elem(2,1,iplace) = sin(angle) 
           elem(1,2,iplace) = -elem(2,1,iplace) 
-        endif 
+        end if 
         if (ioper==8 .or. ioper==15) call mult33 (cub, iplace) 
         return  
-      endif 
+      end if 
       elem(1,2,iplace) = 1.D0 
       elem(2,1,iplace) = 1.D0 
       return  

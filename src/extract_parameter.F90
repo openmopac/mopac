@@ -2,8 +2,8 @@
 !
     use parameters_C, only : guess1, guess2, guess3, zs, zp, zd, &
     betas, betap, betad, alp, zsn, zpn, zdn, uss, upp, udd, gss, gpp, &
-    gsp, gp2, hsp, pocord, xfac, alpb, f0sd_store, g2sd_store, par1, par2, v_par, &
-    n_partyp_fn, n_partyp_alpb, par3, par7, par8, par9 ! Gallo par7, par8 and par9 have been added
+    gsp, gp2, hsp, pocord, xfac, alpb, f0sd_store, g2sd_store, v_par, &
+    n_partyp_fn, n_partyp_alpb
     implicit none
     integer, intent (in) :: iparam
     integer, intent (in) :: ielmnt
@@ -12,6 +12,7 @@
     integer :: kfn, ni, nj, jparam
 !------------------------------------------------------------
     jparam = iparam
+    kfn = 0
     if (jparam > n_partyp_fn - 1 .and. jparam < n_partyp_alpb) then
       kfn = (jparam - n_partyp_fn) / 3
       jparam = jparam - kfn * 3

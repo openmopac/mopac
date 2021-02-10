@@ -48,7 +48,7 @@
           exit  
         else 
           go to 40 
-        endif 
+        end if 
       end do 
 !
 !     DETERMINE THE CONTRIBUTION TO THE NUMBER LESS THAN THAN ONE
@@ -60,7 +60,7 @@
           c2 = c2 + (n - i0)*deciml 
         else if (n /= ispc) then 
           exit  
-        endif 
+        end if 
       end do 
 !
 !     PUT THE PIECES TOGETHER

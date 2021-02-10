@@ -52,7 +52,7 @@
         if (leadsp .and. line(i:i)/=space) then 
           nvalue = nvalue + 1 
           istart(nvalue) = i 
-        endif 
+        end if 
         leadsp = line(i:i) == space 
       end do 
 !

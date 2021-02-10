@@ -31,6 +31,7 @@ subroutine lewis (use_cvs)
     double precision, allocatable :: store_coord(:,:)
     integer, dimension (:), allocatable :: iz
     save :: store_coord
+    l = 0
 !
 ! Most of the time, LET should be false, the commonest exceptions being 0SCF and RESEQ
 !
@@ -190,6 +191,7 @@ subroutine remove_bond(i)
   double precision :: rmax, sum
   integer :: j, k, l
   rmax = 0.d0
+  l = 0
   do j = 1, nbonds(i)
     k = ibonds(j,i)
     sum = (coord(1, i)-coord(1, k)) ** 2 + &
@@ -242,6 +244,7 @@ subroutine remove_bond(i)
     inquire(unit=ilog, opened=opend) 
     if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis') 
     j = 0
+    k = 0
     do i = 1, natoms
       if (labels(i) /= 99) then
         j = j + 1
@@ -412,7 +415,8 @@ subroutine remove_bond(i)
   double precision, external :: distance
   character :: num*1, store*2000
   save :: store_coord, OO_first, first
-    error = .false.
+  error = .false.
+  PDB_input = .false.
 !
 ! Most of the time, LET should be false, the commonest exceptions being 0SCF and RESEQ
 !

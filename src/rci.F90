@@ -83,11 +83,11 @@
           nmos = nint(reada(keywrd, index(keywrd, 'C.I.=') + 5))
         else
           nmos = nopen - nclose
-        endif
+        end if
         nmos = min(nmos, norbs)
         if (ndoubl == 99) then
           ndoubl = nmos/2
-        endif
+        end if
         occ = min(occ, ndoubl)
         vir = min(vir, nmos - ndoubl)
       end if
@@ -108,11 +108,11 @@
           ndoubl = min(ndoubl, nclose)
         else 
           nmos = nint(reada(keywrd, index(keywrd, 'C.I.D.=') + 7))
-        endif
+        end if
         nmos = min(nmos, norbs)
         if (ndoubl == 99) then
           ndoubl = nmos/2
-        endif
+        end if
         occd = min(max(occd, ndoubl), noh)
         vird = min(max(vird, nmos - ndoubl), norbs - nvl + 1)
       end if
@@ -133,11 +133,11 @@
           ndoubl = min(ndoubl, nclose)
         else 
           nmos = nint(reada(keywrd, index(keywrd, 'C.A.S.=') + 7))
-        endif
+        end if
         nmos = min(nmos, norbs)
         if (ndoubl == 99) then
           ndoubl = nmos/2
-        endif
+        end if
         occc = min(max(occc, ndoubl), noh)
         virc = min(max(virc, nmos - ndoubl), norbs - nvl + 1)
       end if

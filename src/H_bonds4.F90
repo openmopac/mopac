@@ -37,6 +37,7 @@
     multiplier_wh_o = 0.42d0, multiplier_nh4 = 3.61d0, multiplier_coo = 1.41d0
   double precision, external :: distance, cvalence_contribution
   save :: icalcn
+    cv_cc = 0.d0
     if (icalcn /= numcal) then  
 !
 !   Variables that change depending on the method
@@ -143,6 +144,7 @@
 !
 ! Energy coefficient
 !
+    e_para = 0.d0
     if (nat(d_i) == 8 .and. nat(a_i) == 8) e_para = para_oh_o
     if (nat(d_i) == 8 .and. nat(a_i) == 7) e_para = para_oh_n
     if (nat(d_i) == 7 .and. nat(a_i) == 8) e_para = para_nh_o

@@ -5,7 +5,6 @@
       use symmetry_C, only : elem, jelem
       use molkst_C, only : numat
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m elem t elem r s

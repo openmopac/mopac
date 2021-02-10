@@ -6,7 +6,6 @@
       use common_arrays_C, only : nat, nfirst, nlast, p, pa, pb
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -95,7 +94,7 @@
             psi1(:norbs) = c(:norbs,i) 
             psi2(:norbs) = c(:norbs,j) 
             k = norbs + 1 
-          endif 
+          end if 
 ! NOW FOLLOWS THE RATE-DETERMINING STEP FOR THE CALCULATION
           do k1 = 1, numat 
             kl = nfirst(k1) 
@@ -111,7 +110,7 @@
                 djj = djj + psi2(k-1+kl)*psi2(k-1+kl) 
               end do 
               k = ku + 1 
-            endif 
+            end if 
             xijjj = xijjj + dij*djj 
             xjiii = xjiii + dij*dii 
             xiiii = xiiii + dii*dii 
@@ -135,7 +134,7 @@
             c(:norbs,i) = ca*psi1(:norbs) + sa*psi2(:norbs) 
             c(:norbs,j) = (-sa*psi1(:norbs)) + ca*psi2(:norbs) 
             k = norbs + 1 
-          endif 
+          end if 
         end do 
       end do 
       sum1 = 0.D0 
@@ -179,7 +178,8 @@
 !  Sort into increasing energy order
 !
      do i = 1, nocc 
-        x = 100.D0 
+        x = 100.D0
+        i1 = 0
         do j = i, nocc 
           if (x < eig1(j)) cycle  
           x = eig1(j) 
@@ -217,6 +217,7 @@
           x = 1.D0/x 
           do ii = 1, numat 
             sum = 0.D0 
+            k = 0
             do j = 1, numat 
               if (psi1(j) < sum) cycle  
               sum = psi1(j) 
@@ -272,7 +273,7 @@
         write (iw, '(/10X,''BONDING CONTRIBUTION OF EACH BETA  M.O.'',/)') 
         call molval (c, pb, 2.D0) 
         call to_screen("To_file: Localized beta M.O.s")
-      endif  
+      end if  
       if (index(keywrd,' GRAPH') == 0) then
         eig(:nocc) = refeig(:nocc) 
         c(:norbs,:nocc) = cold(:norbs,:nocc) 

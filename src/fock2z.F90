@@ -58,6 +58,19 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
     double precision, dimension (2025) :: wjloc = 0.d0
     integer, external :: ijbo
    !
+    dx = 0.d0
+    dy = 0.d0
+    dz = 0.d0
+    r2 = 0.d0
+    w2 = 0.d0
+    w3 = 0.d0
+    w4 = 0.d0
+    w5 = 0.d0
+    w6 = 0.d0
+    w7 = 0.d0
+    ni = 0
+    nj = 0
+   !
    !
     if (icalcn /= numcal) then
       icalcn = numcal
@@ -683,7 +696,19 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
     double precision, dimension (45) :: e1b, e2a
     double precision, dimension (171) :: fdummy = 0.d0
     double precision, dimension (2025) :: wjloc = 0.d0
-
+   !
+    dx = 0.d0
+    dy = 0.d0
+    dz = 0.d0
+    r2 = 0.d0
+    w2 = 0.d0
+    w3 = 0.d0
+    w4 = 0.d0
+    w5 = 0.d0
+    w6 = 0.d0
+    w7 = 0.d0
+    ni = 0
+    nj = 0
    !
     if (icalcn /= numcal) then
       icalcn = numcal

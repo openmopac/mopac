@@ -30,7 +30,7 @@
       if (ndim == 1) then 
         volume = a 
         return  
-      endif 
+      end if 
       b = sqrt(vecs(1,2)**2+vecs(2,2)**2+vecs(3,2)**2) 
       gamma = sqrt((vecs(1,1)-vecs(1,2))**2+(vecs(2,1)-vecs(2,2))**2+(vecs(3,1)&
         -vecs(3,2))**2) 
@@ -48,7 +48,7 @@
 !
         volume = a*b*sing 
         return  
-      endif 
+      end if 
 !
 !    CASE 3: SYSTEM IS A SOLID
 !

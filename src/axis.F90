@@ -30,7 +30,7 @@
       if (icalcn /= numcal) then 
         icalcn = numcal 
         first = .TRUE. 
-      endif 
+      end if 
 !***********************************************************************
 !     CONST1 =  10**40/(N*A*A)
 !               N = AVERGADRO'S NUMBER
@@ -69,7 +69,7 @@
           sumwy = sumwy + coord(2,i) 
           sumwz = sumwz + coord(3,i) 
         end do 
-      endif 
+      end if 
 !
       if (mol_weight>0 .and. first) &
       write (iw, '(/10X,''MOLECULAR WEIGHT ='',F8.2,/)') min(99999.99D0,mol_weight) 
@@ -108,7 +108,7 @@
           t(5) = t(5) - y(i)*z(i) 
           t(6) = t(6) + (x(i)**2+y(i)**2) 
         end do 
-      endif 
+      end if 
 !
       call rsp (t, 3, eig, evec) 
       if (mol_weight>0 .and. first .and. index(keywrd,'RC=')==0) then 
@@ -129,7 +129,7 @@
         c = rot(1) 
         b = rot(2) 
         a = rot(3) 
-      endif 
+      end if 
 !
 !     MAKE DIAGONAL TERMS OBLIGATE POSITIVE
 !
@@ -152,12 +152,12 @@
           i = j 
         end do 
         evec(:,i) = -evec(:,i) 
-      endif 
+      end if 
       if (index(keywrd,' NOREOR') + index(keywrd,' FORCETS') == 0) then 
         coord(1,:numat) = x(:numat) 
         coord(2,:numat) = y(:numat) 
         coord(3,:numat) = z(:numat) 
-      endif 
+      end if 
       if (mol_weight > 0) first = .FALSE. 
       return  
       end subroutine axis 

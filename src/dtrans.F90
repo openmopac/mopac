@@ -29,7 +29,7 @@
           s = elem(:,:,k) 
           call dtran2 (s, t1, k) 
         end do 
-      endif 
+      end if 
 !
 !  Matrix multiply d*t1*d(trans)
 !

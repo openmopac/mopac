@@ -15,7 +15,6 @@
 !
 !----------------------------------------------------------*
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -435,7 +434,7 @@
          e(ij,2), ex(ij,3), ex(ij,2) + ex(ij,3) 
               else 
                 write (iw, *) 
-              endif 
+              end if 
             end do 
           else 
             do j = 1, i 
@@ -448,9 +447,9 @@
                 write (iw, &
         '(/,''   ATOM          J        K       E-E       E-N      N-N      C        EE'')') 
                 write (iw, '(''   PAIR'')') 
-              endif 
+              end if 
             end do 
-          endif 
+          end if 
         end do 
       else
         write(iw,'(/12x,a)')"For more detail of energy partitioning, add keyword 'LARGE'"

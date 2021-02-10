@@ -72,7 +72,7 @@
           write (iw, '(I6,8X,A2,4X,3F10.4)') l, elemnt(nat(i)), (coord(j,l),j=1,&
             3) 
         end do 
-      endif 
+      end if 
 ! 
 !
 !  SET UP THE VARIABLES IN XPARAM AND LOC, THESE ARE IN CARTESIAN
@@ -195,7 +195,7 @@
         if (debug) then 
           write (iw, 40) axis(id) 
    40     format(/,/,' ****** ',a1,' DIRECTION *****',/) 
-        endif 
+        end if 
 !
 ! ZERO THE FIELD
 !
@@ -231,7 +231,7 @@
    70     format(' ENERGIES AT: ',5x,'F',21x,'2F',/) 
           write (iw, 80) heat1p, heat2p, heat1m, heat2m
    80     format('   + ',2(f20.10,3x),/,'   - ',2(f20.10,3x)) 
-        endif 
+        end if 
 !
 ! DIPOLE
 !
@@ -260,7 +260,7 @@
             aki = (2.0D00/3.0D00)*(dip1p(kd)-dip1m(kd)) - &
               (1.0D00/12.0D00)*(dip2p(kd)-dip2m(kd)) 
             apoldp(kvl) = aki*sfe/autodb 
-          endif 
+          end if 
           if (kd == id) cycle  
           nbdip = nbdip + 1 
         end do 
@@ -307,7 +307,7 @@
   120       format(/,'  ',12x,'+,+',15x,'+,-',15x,'-,+',15x,'-,-') 
             write (iw, 130) hpp, hpm, hmp, hmm 
   130       format('  E ',4f18.6) 
-          endif 
+          end if 
 !
 !  DIAGONAL FIELDS WITH COMPONENTS EQUAL TO 2*EFVAL
 !
@@ -335,7 +335,7 @@
           if (debug) then 
             write (iw, 140) h2pp, h2pm, h2mp, h2mm 
   140       format(' 2E ',4f18.6) 
-          endif 
+          end if 
 !
           aterm = (1.0D00/48.0D00)*(h2pp - h2pm - h2mp + h2mm) - &
             (1.0D00/3.0D00)*(hpp - hpm - hmp + hmm) 
@@ -490,7 +490,7 @@
         end do 
         chargd = abs(sum) > 0.5D0 
         first = .FALSE. 
-      endif 
+      end if 
       if (chargd) then 
 !
 !   NEED TO RESET ION'S POSITION SO THAT THE CENTER OF MASS IS AT THE
@@ -506,7 +506,7 @@
         do i = 1, 3 
           coord(i,:numat) = coord(i,:numat) - center(i) 
         end do 
-      endif 
+      end if 
       dip = 0.0D00 
       do i = 1, numat 
         ni = nat(i) 

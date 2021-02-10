@@ -67,6 +67,7 @@ subroutine ef (xparam, funct)
 !      
     
     intrinsic Abs, Index, Int, Max, Min, Mod, Sqrt
+    i = 0
    !
    !   Create temporary arrays
    !
@@ -177,6 +178,7 @@ subroutine ef (xparam, funct)
     olde = funct
     nflush = 1
     absmin = 1.d9
+    itry1 = 0
     lts = .false.
     if (negreq == 1) then
       lts = .true.
@@ -800,7 +802,7 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
       end if
       write (iw, '(/10X,''CURRENT VALUE OF GEOMETRY'',/)') 
       call geout (iw) 
-    endif 
+    end if 
 !
 !  IPOW(1) AND IPOW(9) ARE USED ALREADY, THE REST ARE FREE FOR USE
 !
@@ -814,8 +816,8 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
       else 
         write (ires) ((alparm(j,i),j=1,3),i=1,nvar) 
        write (ires) iloop, x0, x1, x2 
-      endif 
-    endif 
+      end if 
+    end if 
     write (ires) ipow, il, nstep, funct, tt0 
     write (ires) (grad(i),i=1,nvar) 
     write (ires) ((hess(j,i),j=1,nvar),i=1,nvar) 
@@ -842,8 +844,8 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
       else 
         read (ires, iostat = io_stat) ((alparm(j,i),j=1,3),i=1,nvar) 
         read (ires, iostat = io_stat) iloop, x0, x1, x2 
-      endif 
-    endif 
+      end if 
+    end if 
     read (ires, iostat = io_stat) ipow, il, nstep, funct, tt0 
     nscf = ipow(8) 
     i = int(tt0/1000000) 
@@ -863,7 +865,7 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
       call mopend ("Restart file is currupt")
     end if
     return  
-  endif 
+  end if 
   return  
   end subroutine efsav 
 subroutine efstr (xparam, funct, ihess, ntime, iloop, igthes, mxstep, ireclc, &
@@ -2119,7 +2121,7 @@ subroutine prjfc (f, xparam, nvar, cof, p, atmass, x, rm, dx, coord)
    !
          call dgemm ("N", "N", nc1, nc1, nc1, 1.0d0, p, nvar, cof, nvar, &
               & 0.0d0, f, nvar)
-    endif
+    end if
     
     continue    
     return

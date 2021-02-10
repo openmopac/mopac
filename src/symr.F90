@@ -7,7 +7,6 @@
       use chanel_C, only : iw
       use symmetry_C, only : nclass, r, ipo, elem, nsym, nent
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -101,7 +100,7 @@
               exit  l80 
    50         format('  ONE ATOM MAPS ONTO TWO DIFFERENT ATOMIC C','ENTERS',/,&
                 '  ADD KEYWORD '' NOSYM'' AND RE-RUN') 
-            endif 
+            end if 
           end do 
           if (ipo(i,n) /= 0) cycle  l80 
           write (iw, 70) 
@@ -112,7 +111,7 @@
         end do l80 
 !
 !
-      endif 
+      end if 
       if (nvalue/=0 .and. nsym<maxent) go to 30 
 !
 !  If a problem exists.  Stop the program.
@@ -121,7 +120,7 @@
         write (iw, *) ' PROBLEM IN SYMR' 
         call mopend ('PROBLEM IN SYMR') 
         return  
-      endif 
+      end if 
       nsym = nent 
 !
 !  NEXT, EXPAND THE EXISTING OPERATORS TO THE FULL SET
@@ -138,7 +137,6 @@
       USE molkst_C, ONLY: numat 
       USE chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -199,7 +197,7 @@
         j = 2 
         i = i + 1 
         if (i > nsym) go to 50 
-      endif 
+      end if 
       if (nsym == maxfun) go to 50 
 !
 !  NOW TO START THE MULTIPLICATION

@@ -36,11 +36,11 @@
       integer , dimension(60) :: irot 
       integer , dimension(2,3*natoms) :: locold 
       integer , dimension(natoms) :: nar, nbr, ncr 
-      integer :: j, i, l, nvaold = 0, ndeold, iu, il, nvib, ij, &
+      integer :: j, i, l, nvaold, ndeold, iu, il, nvib, ij, &
         im1, ju, jl, ii, jj, ni, k, nto6, nrem6, iinc1, iinc2, store_natoms
       double precision, dimension(3,3*numat) :: deldip, trdip  
-      double precision, dimension(3,3) :: rot = 0.d0
-      double precision :: time2, tscf, tder, time1, time3, a = 0.d0, b = 0.d0, c = 0.d0, &
+      double precision, dimension(3,3) :: rot
+      double precision :: time2, tscf, tder, time1, time3, a, b, c, &
         sum, const, summ, sum1, sym 
       double precision, dimension(:), allocatable :: store, ff, oldf, &
         velocity
@@ -64,6 +64,14 @@
       data irot/ 1, 1, 1, 2, 4, 2, 2, 4, 3, 4, 2, 6, 3, 3, 5, 6, 3, 7, 8, 4, 4&
         , 8, 4, 5, 6, 12, 4, 6, 6, 7, 7, 8, 16, 8, 8, 5, 10, 10, 10, 6, 12, 12&
         , 14, 14, 14, 8, 16, 12, 12, 24, 12, 24, 24, 24, 1, 2, 4*1/  
+!
+      k = 0
+      nvaold = 0
+      ndeold = 0
+      rot = 0.d0
+      a = 0.d0
+      b = 0.d0
+      c = 0.d0
 !
 !
 ! TEST GEOMETRY TO SEE IF IT IS OPTIMIZED
@@ -99,7 +107,7 @@
         nvaold = nvar 
         locold(1,:nvar) = loc(1,:nvar) 
         locold(2,:nvar) = loc(2,:nvar) 
-      endif 
+      end if 
 !
 !   Unconditionally convert structure into Cartesian coordinates
 !   because FORCE works in Cartesian coordinates.
@@ -205,7 +213,7 @@
             end do 
             write(iw,*)
           end if
-        endif 
+        end if 
         gnorm = dsqrt(ddot(nvar,grad,1,grad,1)) 
         if (.not. mozyme .and. index(keywrd, " AUX") /= 0) then
           call chrge (p, q) 
@@ -246,12 +254,12 @@
         write (iw, &
       '(10X," GRADIENT NORM SHOULD BE LESS THAN ABOUT",f4.1," FOR THERMO",&
       &/10X,'' TO GIVE ACCURATE RESULTS'')') sum
-      endif 
+      end if 
       if ( .not. mozyme .and. .not. restrt) call mullik()
       if (tscf > 0.D0) then 
         write (iw, '(2/10X,''TIME FOR SCF CALCULATION ='',F8.2)') tscf 
         write (iw, '( /10X,''TIME FOR DERIVATIVES     ='',F8.2)') tder 
-      endif 
+      end if 
       if (ndeold > 0) write (iw, &
       '(2/10X,''SYMMETRY WAS SPECIFIED, BUT CANNOT BE USED HERE'')')
       c = 1.d0
@@ -272,7 +280,7 @@
       '(/10X,''ORIENTATION OF MOLECULE IN FORCE CALCULATION'')') 
         write (iw, &
       '(/,4X,''NO.'',7X,''ATOM'',9X,''X'',9X,''Y'',9X,''Z'',/)') 
-      endif 
+      end if 
       l = 0 
       if (.not. (prnt .and. prt_orientation)) then 
         l = l + count(labels(:natoms)/=99) 
@@ -283,7 +291,7 @@
           write (iw, '(I6,9X,A2,3X,3F10.4)') l, elemnt(labels(i)), (coord(j,l),&
             j=1,3) 
         end do 
-      endif 
+      end if 
       call symtrz (cnorml, cnorml, 2, .FALSE.) 
       call fmat (fmatrx, nvib, tscf, tder, deldip, escf, ff, ts) 
       if (moperr) goto 99
@@ -297,7 +305,7 @@
         nvar = 0 
         iflepo = -1 
         goto 99  
-      endif 
+      end if 
 !
 !   THE FORCE MATRIX IS PRINTED AS AN ATOM-ATOM MATRIX RATHER THAN
 !   AS A 3N*3N MATRIX, AS THE 3N MATRIX IS VERY CONFUSING!
@@ -334,7 +342,7 @@
         end if
         i = -nvar 
         call vecprt (fmatrx, i) 
-      endif 
+      end if 
       if (prnt .and. prt_force) then         
         sum = 1.d-21*fpc_10*a0**2/(4.184*ev*fpc_9)
         write(iw,'(/,a,f7.4,a)')"(To convert to Hartree/Bohr^2, multiply by (10^(-21) x N x a0^2)/(4.184 x 627.51) = ", &
@@ -346,7 +354,7 @@
           i = numat
         end if
         call vecprt (store, i) 
-      endif 
+      end if 
       l = (nvar*(nvar + 1))/2 
       store(:l) = fmatrx(:l) 
       if (prnt) call axis (a, b, c, rot) 
@@ -382,8 +390,8 @@
           write (iw, '(2/10X,'' ASSOCIATED EIGENVECTORS'')') 
           i = -nvar 
           call matout (cnorml, freq, nvib, i, nvar) 
-        endif 
-      endif 
+        end if 
+      end if 
       n_trivial = nvar - nvib
       call freqcy (fmatrx, freq, travel, force_const, .TRUE., deldip, ff, oldf, ts) 
 !
@@ -402,7 +410,7 @@
           sum = sum + freq(i) 
         else 
           ni = ni + 1 
-        endif 
+        end if 
       end do 
       zpe = sum*const 
       if (prnt) then 
@@ -413,8 +421,8 @@
             'ENERGY IS NOT MEANINGFULL. ZERO POINT ENERGY PRINTED' 
           write (iw, '(9X,A,I3,A)') 'DOES NOT INCLUDE THE', ni, &
             ' IMAGINARY FREQUENCIES' 
-        endif 
-      endif 
+        end if 
+      end if 
       summ = 0.D0 
       do i = 1, nvar 
         sum1 = 1.D-20 
@@ -452,7 +460,7 @@
             write (iw, '('' DIPZ(I)'',6F10.5,/)') (trdip(3,j),j=iinc1,iinc2) 
             write (iw, '('' DIPT(I)'',6F10.5)') (dipt(j),j=iinc1,iinc2) 
           end do 
-        endif 
+        end if 
         if (nrem6 >= 1) then 
           write (iw, '(/)') 
           iinc1 = iinc1 + 6 
@@ -464,8 +472,8 @@
           write (iw, '('' DIPY(I)'',6F10.5)') (trdip(2,j),j=iinc1,iinc2) 
           write (iw, '('' DIPZ(I)'',6F10.5)') (trdip(3,j),j=iinc1,iinc2) 
           write (iw, '(/,'' DIPT(I)'',6F10.5)') (dipt(j),j=iinc1,iinc2) 
-        endif 
-      endif 
+        end if 
+      end if 
       if (ts) then
         write(iw,'(//25x,a,/)')"Atoms used in the FORCETS calculation"
         do i = 1, nvar, 3
@@ -478,7 +486,7 @@
         j = nvar 
         i = -nvar 
         call matou1 (cnorml, freq, nvib, j, nvib, 5) 
-      endif 
+      end if 
 !
 !   CARRY OUT IRC IF REQUESTED.
 !
@@ -539,7 +547,7 @@
             If (index(keywrd,' DIPOLE') /= 0) call reverse_trajectory(2)
             call reverse_trajectory(1)
             call reverse_aux
-						call l_control("REVERSE", len("REVERSE"), 1)
+            call l_control("REVERSE", len("REVERSE"), 1)
             last = 1             
             geo(:,:numat) = store_coord
             na = 0
@@ -575,7 +583,7 @@
           geo(:,:natoms) = geoa(:,:natoms) 
         end if
         goto 99  
-      endif 
+      end if 
       call freqcy (fmatrx, freq, deldip, force_const, .FALSE., deldip, ff, oldf, ts) 
       if (prt_normal_coords) then
       write (iw, '(2/10X,'' MASS-WEIGHTED COORDINATE ANALYSIS (NORMAL COORDINATES)'')')  
@@ -606,12 +614,12 @@
             write (iw, '(2/10X,''SYSTEM IS A TRANSITION STATE'')') 
             i = 2 
             j = nvib - 1 
-          endif 
+          end if 
         else 
           if (numat > 1) write (iw, '(2/10X,''SYSTEM IS A GROUND STATE'')') 
           i = 1 
           j = nvib 
-        endif 
+        end if 
         if (.not. allocated(freq)) then
           allocate (freq(1))
           freq = 0.d0
@@ -619,7 +627,7 @@
         if (.not. allocated(store)) allocate(store(1))
         store(:nvib) = freq(:nvib)
         call thermo (a, b, c, linear, sym, store(i), j, escf) 
-      endif 
+      end if 
       if (allocated(store_coord)) coord(:,:numat) = store_coord(:,:numat)
       call to_screen("To_file: Force output")
       fmatrx = oldf*1.d-5      
@@ -651,6 +659,7 @@
 !
       do i = 1, n
         asum = 0.d0
+        ssum = 0.d0
         do j = 1, n
           if (Abs(vecs(j,i)) > asum) then
             asum = Abs(vecs(j,i))

@@ -46,27 +46,27 @@
             diag(l:nopen-nbo(1)-1+l) = (e(nbo(1)+1:nopen)-e(j))/(2.D0 - fract&
                + const) 
             l = nopen - nbo(1) + l 
-          endif 
+          end if 
         end do 
-      endif 
+      end if 
       if (nbo(3)>0 .and. nbo(1)>0) then 
 !        VIRTUAL-CLOSED
         do j = 1, nbo(1) 
           if (n - nopen > 0) then 
             diag(l:n-nopen-1+l) = (e(nopen+1:n)-e(j))/2.D0 
             l = n - nopen + l 
-          endif 
+          end if 
         end do 
-      endif 
+      end if 
       if (nbo(3)/=0 .and. nbo(2)/=0) then 
 !        VIRTUAL-OPEN
         do j = nbo(1) + 1, nopen 
           if (n - nopen > 0) then 
             diag(l:n-nopen-1+l) = (e(nopen+1:n)-e(j))/(fract + const) 
             l = n - nopen + l 
-          endif 
+          end if 
         end do 
-      endif 
+      end if 
 !
 !     TAKE SCALE FACTORS AS (SHIFT-DIAG)**(-0.5) .
 !     ------------------------------------------

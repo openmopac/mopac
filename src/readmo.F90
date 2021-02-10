@@ -12,7 +12,7 @@
       USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar 
 !
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
-      & verson, method_mndo, is_PARAM, line, nl_atoms, l_feather, &
+      & verson, is_PARAM, line, nl_atoms, l_feather, &
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
       isok, ijulian, gui, Academic, site_no, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
@@ -37,7 +37,6 @@
       use conref_C, only : fpcref 
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -124,6 +123,7 @@
       data idepco/ 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 1, 2, 2, 0, 1, 1, 2, &
         3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 0/  
       aigeo = .FALSE. 
+      k = 0
       nvar = 0 
       ndep = 0 
       latom = 0
@@ -133,6 +133,7 @@
       lpara2 = 0 
       latom2 = 0
       breaks(1) = -300
+      convrt = 0.d0
       if (index(keywrd, " ADD-H PDBOUT") /= 0 .and. index(koment, " From PDB file") /= 0) then
         i = index(keywrd, " ADD-H")
         keywrd(i:i + 5) = " 0SCF "
@@ -377,7 +378,7 @@
               txtatm(numat) = txtatm(i)
               lopt(:,numat) = lopt(:,i)
               na(numat) = 0
-            endif 
+            end if 
             geo(:,i) = coord(:,i) 
           end do 
 !
@@ -399,7 +400,7 @@
           write (iw, '(A)', iostat=l_iw) ' ECHO is not allowed at this point'  
           call mopend ('ECHO is not allowed at this point') 
           return  
-        endif 
+        end if 
         isok = .FALSE. 
         do i = 1, 1000 
           read (ir, '(A)', end=60) keywrd 
@@ -419,7 +420,7 @@
         rewind ir 
         call gettxt 
         if (moperr) return  
-      endif 
+      end if 
       if (keywrd(1:1) /= space) keywrd = " "//trim(keywrd) 
       if (koment(1:1) /= space) koment = " "//trim(koment)
       if (title(1:1) /= space)  title  = " "//trim(title)
@@ -438,7 +439,7 @@
 ! Use CODATA fundamental physical constants
 !
         fpc(:) = fpcref(1,:)
-      endif  
+      end if  
       latom  = 0 
       lparam = 0 
       xyz    = index(keywrd,' XYZ') + index(keywrd,' IRC') + index(keywrd,' DRC') /= 0 
@@ -465,10 +466,10 @@
               call mopend (&
                'CARTESIAN CALCULATION NOT ALLOWED WITH GAUSSIAN INPUT')  
             return  
-          endif 
+          end if 
           if (nvar == 0) then 
             lopt(:,:natoms) = 0 
-          endif 
+          end if 
         else 
           line = trim(keywrd)
           j = 0
@@ -590,7 +591,7 @@
 !   This is a deadly error - to prevent an infinite loop, kill the job.
 !
               stop  
-            endif 
+            end if 
             isok = .FALSE. 
             if (numcal > 2) then 
               naigin = naigin + 1 
@@ -600,15 +601,15 @@
               call mopend (&
                  'GAUSSIAN INPUT REQUIRES STAND-ALONE JOB OR KEYWORD "AIGIN"')               
               return  
-            endif 
+            end if 
             aigeo = .TRUE. 
             go to 10 
-          endif 
-        endif 
+          end if 
+        end if 
         if (natoms == 0 .and. numcal == 1) then 
           call mopend ('NO ATOMS IN SYSTEM')  
           return  
-        endif 
+        end if 
       else 
 !
 !   Use the old geometry, if one exists
@@ -620,7 +621,7 @@
           call mopend(trim(line))
           return
         end if
-      endif 
+      end if 
       if (natoms == 0) return
       if (index(keywrd,' FORCE')/=0 .and. labels(natoms)==107) then 
         do i = 1, na(natoms) 
@@ -631,7 +632,7 @@
        'NO DUMMY ATOMS ALLOWED BEFORE TRANSLATION ATOM IN A FORCE CALCULATION')  
           return  
         end do 
-      endif 
+      end if 
 !
 !
 ! OUTPUT FILE TO UNIT 6
@@ -653,20 +654,20 @@
       maxci = 10000
       if (Academic) then
         if (site_no > 9999) then
-          write (iw, '(A,i6,a,i3,a)') ' ** Site#:',site_no, &
+          write (iw, '(A,i6,a,a)') ' ** Site#:',site_no, &
           & '        For non-commercial use only           Version '//verson, ' **' 
         else
-          write (iw, '(A,i5,a,i3,a)') ' ** Site#:',site_no, &
+          write (iw, '(A,i5,a,a)') ' ** Site#:',site_no, &
           & '         For non-commercial use only           Version '//verson, ' **' 
         end if
       else
         if (site_no == -1) then
           write (iw, '(A)') ' **  Evaluation copy      E-mail support: MrMOPAC@ATT.net     Version '//verson//' **'
         else if (site_no > 9999) then
-          write (iw, '(A,i6,a,i3,a)') ' ** Site#:',site_no, &
+          write (iw, '(A,i6,a,a)') ' ** Site#:',site_no, &
           & '  E-mail support:    MrMOPAC@ATT.net           Version '//verson, ' **' 
         else
-          write (iw, '(A,i5,a,i3,a)') ' ** Site#:',site_no, &
+          write (iw, '(A,i5,a,a)') ' ** Site#:',site_no, &
           & '  E-mail support:    MrMOPAC@ATT.net           Version '//verson, ' **' 
         end if
       end if
@@ -767,7 +768,7 @@
           dh = "H   "
         end if
         keywrd = trim(keywrd_txt)
-      endif      
+      end if      
       write (iw, &
       '(/24X,A,'' CALCULATION RESULTS'',2/1X,15(''*****''),''****'' )') "     "//trim(caltyp) 
       write (iw,'(" *  CALCULATION DONE: ",31x,2a)') idate,"  *"
@@ -943,8 +944,8 @@
               moperr = .false.
             end if
           end if         
-        endif 
-      endif 
+        end if 
+      end if 
       
       if (index(keywrd, " NOOPT") /= 0)   then
         k = 0
@@ -1289,8 +1290,8 @@
               else 
                call mopend ('ONLY ONE REACTION COORDINATE PERMITTED') 
                 return  
-              endif 
-            endif 
+              end if 
+            end if 
             latom = i 
             lparam = j 
             convrt = 1.d0 
@@ -1313,7 +1314,7 @@
           call mopend ('NO REAL ATOMS, ONLY DUMMY ATOMS AND/OR TRANSLATION VECTORS PRESENT') 
           return
         end if
-      endif 
+      end if 
       if (index(keywrd, " MINI ") /= 0) then 
         nl_atoms = 0
         if (index(keywrd, " FORCETS") /= 0) then
@@ -1381,10 +1382,10 @@
           call mopend (&
              'SIGMA USED WITH REACTION PATH; THIS OPTION IS NOT ALLOWED')  
           return  
-        endif 
+        end if 
         if (index(keywrd,' STEP=') + index(keywrd,' POINT=') + index(keywrd,' 0SCF') /= 0) then 
           go to 250 
-        endif 
+        end if 
   220   continue 
         read (ir, '(A)', end=240) line 
         call nuchar (line, len_trim(line), value, nreact) 
@@ -1417,7 +1418,7 @@
           else 
             write (iw, '(2/10X,'' POINTS ON REACTION COORDINATE'')') 
             write (iw, '(10X,8F8.2)') (react(i)*degree,i=1,ireact) 
-          endif 
+          end if 
           iend = ireact + 1 
           react(iend) = -1.D12 
           if (na(latom) > 0 .and. labels(1) < 99 .and. labels(latom) < 99 ) then
@@ -1452,8 +1453,8 @@
       & '' SO THE CALCULATION IS TERMINATED AT THIS POINT'')') 
               call mopend ('INCONSISTENT USE OF OPTIMIZATION FLAGS') 
               return  
-            endif 
-          endif 
+            end if 
+          end if 
         else 
           if (index(keywrd,' FORCE') + index(keywrd,' DFORCE') + index(keywrd,' 1SCF') == 0 .or. &
             index(keywrd,' GRAD') /= 0) then 
@@ -1470,17 +1471,17 @@
       & ''ABSURD CHOICE SO THE CALCULATION IS TERMINATED AT THIS POINT'')') 
               call mopend ('INCONSISTENT USE OF OPTIMIZATION FLAGS') 
               return  
-            endif 
-          endif 
-        endif 
-      endif 
+            end if 
+          end if 
+        end if 
+      end if 
       if (index(keywrd,' LOG') + index(keywrd," ADD-H") /= 0 .or. &
       (index(keywrd," 0SCF") /= 0 .and. index(keywrd," OLDGEO") /= 0 .and. &
        index(keywrd," PDBOUT") /= 0)) then 
         inquire(unit=ilog, opened=opend) 
         if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis') 
         call wrttxt (ilog) 
-       endif 
+       end if 
       if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1)
       if (index(keywrd, " NOTXT") /= 0) then
         maxtxt = 0
@@ -1717,13 +1718,13 @@
             if (line(i:i) /= " ") then 
               ii = nint(reada(line,i))
               exit
-            endif 
+            end if 
           end do 
           do i = i + 1, len_trim(line) 
             if (line(i:i) == " ") then 
               jj = nint(reada(line,i))
               exit
-            endif 
+            end if 
           end do 
           l = l + 1
           if (ii > numat .or. jj > numat) then
@@ -1766,7 +1767,7 @@
         inquire(unit=iarc, opened=opend) 
         if (opend) close (iarc)
         if (index(keywrd, "PDBOUT") /= 0) archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"pdb" 
-      endif 
+      end if 
       if (prt_cart .and. (maxtxt < 26 .and. (index(keywrd,' NOXYZ') == 0 .or. gui))) then 
          write (iw, '(2/10X,''CARTESIAN COORDINATES '',/)') 
         write (iw, &
@@ -1777,7 +1778,7 @@
           l = l + 1 
           if (l_atom(i)) write (iw, '(I6,8X,A2,4X,3F12.4)') l, elemnt(labels(i)), (coord(j,l),j=1,3) 
           end do 
-      endif 
+      end if 
       return  
 1900  if (exists) then
         call mopend("RESTART file is corrupt")
@@ -1930,6 +1931,7 @@
       do
         k = k + 1
         sum1 = 0.d0
+        j = 0
         do i = ires_l, ires_u
           if (residue_motion(i) > sum1) then
             sum1 = residue_motion(i)
@@ -1970,6 +1972,7 @@
     integer :: i, j, n
     character :: path*241
     logical :: need_path, windows
+    i = 0
     if (file(1:1) == '"') then
       i = len_trim(file)
       path = file(2:i-1)

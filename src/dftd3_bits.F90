@@ -16,7 +16,7 @@
       else
         dterm2 = dcn3(:,kat,iat)
         dterm3 = dcn3(:,kat,jat)
-      endif
+      end if
       zaehler = 0.0d0
       nenner = 0.0d0
       dzaehler = 0.0d0
@@ -32,17 +32,17 @@
           do k = 1, 3
             dzaehler(k) = dzaehler(k) + c6ab(nat(iat), nat(jat), i, j, 1)*term4*(term2*dterm2(k) + term3*dterm3(k))
              dnenner(k) = dnenner(k) + term4*(term2*dterm2(k) + term3*dterm3(k))
-          enddo
-        enddo
-      enddo
+          end do
+        end do
+      end do
       if (nenner.gt.0) then
         term4 = 1.0d0/(nenner*nenner)
         do k = 1, 3
            anag(k) = (dzaehler(k)*nenner-dnenner(k)*zaehler)*term4
-        enddo
+        end do
       else
         anag = 0.0d0
-      endif
+      end if
       end subroutine anagrdc6
 !
 ! compute energy
@@ -144,14 +144,14 @@
             tmp1 = exp(-4.d0*r)
             rsum = rsum + tmp1     
             csum = csum + tmp1*c6
-          endif
-        enddo
-      enddo
+          end if
+        end do
+      end do
       if (rsum > 0)then
          c6 = csum/rsum
       else
          c6 = c6mem
-      endif
+      end if
     end subroutine getc6
 ! hydrogen bond correction a la DH  +   (M. Korth)
       subroutine hbsimple(n, at, coord, hbscale, energy, l_grad, g)
@@ -201,8 +201,8 @@
       do i  =  1, 6
          do j  =  1, i
             r0ab(j, i)  =  r0ab(i, j)
-         enddo
-      enddo
+         end do
+      end do
       r0ab  =  r0ab*shortcutscale
 
 ! count HBs for allocate
@@ -215,12 +215,12 @@
                 if (rab < thr) then
                   do k  =  1, n
                    if (at(k) == 1)nhb  =  nhb  +  1
-                  enddo
-                endif
-              endif
-           enddo
-         endif
-      enddo
+                  end do
+                end if
+              end if
+           end do
+         end if
+      end do
       allocate(hbs(3, nhb))
 
 ! assign HBs: 1  =  A, 2  =  B, 3  =  H
@@ -237,13 +237,13 @@
                        hbs(1, nhb)  =  i
                        hbs(2, nhb)  =  j
                        hbs(3, nhb)  =  k
-                    endif
-                  enddo
-                endif
-              endif
-           enddo
-         endif
-      enddo
+                    end if
+                  end do
+                end if
+              end if
+           end do
+         end if
+      end do
 
 ! compute energy
 
@@ -261,7 +261,7 @@
          if (e < -1.d0/627.51d0) N_Hbonds  =  N_Hbonds  +  1
          if (prt) call prt_hbonds(B, H, A, e*627.51d0)
          energy  =  energy  +  e
-      enddo
+      end do
 
       if (l_grad)then
 ! compute gradient (seems to be faster numerically than with
@@ -283,7 +283,7 @@
          call eabh(n, A, B, H, coord, shortcut, cab, el)
          coord(j, A)  =  coord(j, A)  +  step
          g(j, A)  =  g(j, A)  +  (er-el)/(2.0d0*step)
-         enddo
+         end do
          do j  =  1, 3
          coord(j, B)  =  coord(j, B)  +  step
          call eabh(n, A, B, H, coord, shortcut, cab, er)
@@ -291,7 +291,7 @@
          call eabh(n, A, B, H, coord, shortcut, cab, el)
          coord(j, B)  =  coord(j, B)  +  step
          g(j, B)  =  g(j, B)  +  (er-el)/(2.0d0*step)
-         enddo
+         end do
          do j  =  1, 3
          coord(j, H)  =  coord(j, H)  +  step
          call eabh(n, A, B, H, coord, shortcut, cab, er)
@@ -299,9 +299,9 @@
          call eabh(n, A, B, H, coord, shortcut, cab, el)
          coord(j, H)  =  coord(j, H)  +  step
          g(j, H)  =  g(j, H)  +  (er-el)/(2.0d0*step)
-         enddo
-      enddo
-      endif
+         end do
+      end do
+      end if
 
       deallocate(hbs)
       end
@@ -365,12 +365,12 @@
          iat  =  iat - 100
          iadr  =  iadr  +  1
          goto 10
-      endif
+      end if
  20   if (jat.gt.100) then
          jat  =  jat - 100
          jadr  =  jadr  +  1
          goto 20
-      endif
+      end if
     end
     integer function lin(i1,i2)
       integer :: i1,i2,idum1,idum2
@@ -1159,8 +1159,8 @@
             k = k + 1
             r(i,j) = r0ab(k)/autoang
             r(j,i) = r0ab(k)/autoang
-         enddo
-      enddo
+         end do
+      end do
 
       end
 

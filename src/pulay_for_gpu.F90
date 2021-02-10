@@ -60,7 +60,7 @@
         icalcn = numcal 
         maxlim = 6
         debug = index(keywrd,'DEBUGPULAY') /= 0 
-      endif 
+      end if 
       if (start) then 
         linear = (n*(n + 1))/2 
         mfock = msize/linear 
@@ -75,8 +75,8 @@
           lfock = lfock + 1 
         else 
           lfock = 1 
-        endif 
-      endif 
+        end if 
+      end if 
       lbase = (lfock - 1)*linear 
 !
 !   FIRST, STORE FOCK MATRIX FOR FUTURE REFERENCE.
@@ -92,7 +92,7 @@
         iopc = 4
       else
         iopc = 3
-      endif
+      end if
 
       call mult_symm_AB(p, f, 1.d0, n, linear, fppf(lbase+1:idim), 0.d0, iopc)
       call mult_symm_AB(f, p, 1.d0, n, linear, fppf(lbase+1:idim), -1.d0, iopc)
@@ -125,7 +125,7 @@
         do i = 1, nfock1 
           write (iw, '(6E13.6)') (emat(j,i),j=1,nfock1) 
         end do 
-      endif 
+      end if 
       l = 0 
       do i = 1, nfock1 
         evec(l+1:nfock1+l) = emat(i,:nfock1) 
@@ -153,7 +153,7 @@
       if (abs(d) < 1.D-6) then 
         start = .TRUE. 
         return  
-      endif 
+      end if 
       if (nfock < 2) return  
       il = nfock*nfock1 
       coeffs(:nfock) = -evec(1+il:nfock+il) 
@@ -161,7 +161,7 @@
         write (iw, '('' EVEC'')') 
         write (iw, '(6F12.6)') (coeffs(i),i=1,nfock) 
         write (iw, '("    LAGRANGIAN MULTIPLIER (ERROR) =", F13.6)') evec(nfock1*nfock1) 
-      endif 
+      end if 
      
      ! TODO: make it parallel
       do i = 1, linear 

@@ -10,7 +10,6 @@
       betas, betap 
       use chanel_C, only : irot
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -55,7 +54,7 @@
       if (icalcn /= numcal) then 
         icalcn = numcal 
         am1 = index(keywrd,'AM1') + index(keywrd,'PM3') /= 0 
-      endif 
+      end if 
       jd = jjd - jja + 1 
       ja = 1 
       id = iid - iia + 1 + jd 
@@ -128,8 +127,8 @@
 !    P/P' OR P'/P
                 del2 = coord(ka+la-ix,i) - coord(ka+la-ix,j) 
                 is = 6 
-              endif 
-            endif 
+              end if 
+            end if 
 !
 !        CALCULATE OVERLAP DERIVATIVES, STORE RESULTS IN DS
 !
@@ -151,7 +150,7 @@
           if (rij<1.D0 .and. natorb(ni)*natorb(nj)==0) then 
             termnc = 0.D0 
             go to 50 
-          endif 
+          end if 
           c1 = tore(ni)*tore(nj) 
           if (ni==1 .and. (nj==7 .or. nj==8)) then 
             f3 = 1.0D0 + exp((-alp(1)*rij)) + rij*exp((-alp(nj)*rij)) 
@@ -173,7 +172,7 @@
 !
 !   THE GENERAL CASE
 !
-          endif 
+          end if 
           termnc = dd 
 !
 !   ****   START OF THE AM1 SPECIFIC DERIVATIVE CODE   ***
@@ -195,7 +194,7 @@
           end do 
           anam1 = anam1*tore(ni)*tore(nj) 
           termnc = termnc - anam1*del1/rij 
-        endif 
+        end if 
 !
 !   ****   END OF THE AM1 SPECIFIC DERIVATIVE CODE   ***
 !
@@ -218,7 +217,7 @@
             termab = termab + sum((termk + bj(:jd-ja+1))*psum(ja+k*(k-1)/2:jd+k&
               *(k-1)/2)*ds(iol+1:jd-ja+1+iol)) 
             iol = jd - ja + 1 + iol 
-          endif 
+          end if 
         end do 
 !
 !        FIRST, CORE-ELECTRON ATTRACTION DERIVATIVES (MNDO AND AM1)
@@ -489,9 +488,12 @@
 !                                                                      *
 !***********************************************************************
       data icalcn/ 0/  
+      dze = 0.d0
+      qxxe = 0.d0
+      qzze = 0.d0
       if (icalcn /= numcal) then 
         icalcn = numcal  
-      endif 
+      end if 
       term = (ev*del1)/(rr*a0*a0) 
       da = dd(ni) 
       db = dd(nj) 
@@ -517,7 +519,7 @@
         dg(3) = term*(ee + qzze/4.0D0) 
         dg(4) = term*(ee + qxxe/4.0D0) 
         if (natorb(nj) <= 2) return  
-      endif 
+      end if 
 !   HYDROGEN-HEAVY ATOM
       aed = 0.25D0*(1.0D0/am(ni)+1.0D0/ad(nj))**2 
       aeq = 0.25D0*(1.0D0/am(ni)+1.0D0/aq(nj))**2 
@@ -724,7 +726,7 @@
         tdy(3) = 0.0D0 
         tdz(1) = tx(1)*tx(3)*tmp - (tx(3)*tdx(1)+tx(1)*tdx(3))/tz(3) 
         tdz(2) = tx(2)*tx(3)*tmp - (tx(3)*tdx(2)+tx(2)*tdx(3))/tz(3) 
-      endif 
+      end if 
       return  
       end subroutine rotat 
 

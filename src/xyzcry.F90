@@ -60,7 +60,7 @@
         end do 
 !      WRITE(IW,*)' TVEC'
 !      WRITE(IW,'(3f12.4)')TVEC
-      endif 
+      end if 
 !
 !    Rotate to eliminate TVEC(3,2)
 !
@@ -80,7 +80,7 @@
           dxyz(3,i) = (-dxyz(2,i)*sa) + dxyz(3,i)*ca 
           dxyz(2,i) = sum1 
         end do 
-      endif 
+      end if 
 !
 !  Convert unit cell into it's reciprocal
 !

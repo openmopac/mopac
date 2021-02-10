@@ -9,7 +9,6 @@
       use chanel_C, only : iscr
       use elemts_C, only : elemnt
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -75,7 +74,7 @@
           if (w > 180.D0) then 
             x = x + 180.D0 
             w = 360.D0 - w 
-          endif 
+          end if 
 !
 !  CONSTRAIN DIHEDRAL TO DOMAIN -180 - 180 DEGREES
 !
@@ -83,7 +82,7 @@
           geo(2,i) = w/degree 
           geo(3,i) = x/degree 
         end do 
-      endif 
+      end if 
       igeo(:,:natoms) = -1 
       do i = 1, nvar 
         igeo(loc(2,i),loc(1,i)) = -2 
@@ -94,7 +93,7 @@
         else 
           if (idepfn(i) > 3) cycle  
           igeo(idepfn(i),locdep(i)) = locpar(i) 
-        endif 
+        end if 
       end do 
       open(unit=iscr, status='SCRATCH', position='asis') 
       nopt = 0 
@@ -107,7 +106,7 @@
               write (iscr, '(F12.6)') geo(j,i)*degree 
             else 
               write (iscr, '(F12.6)') geo(j,i) 
-            endif 
+            end if 
             rewind iscr 
             read (iscr, '(A)') line(j,i) 
           else if (igeo(j,i) == (-2)) then 
@@ -117,21 +116,21 @@
                 line(j,i)(4:) = simbol(nopt)(2:) 
               else 
                 line(j,i)(4:) = simbol(nopt) 
-              endif 
+              end if 
             else 
               nbi = nb(i) 
               nci = nc(i) 
               if (j /= 3) nci = 0 
               if (j == 1) nbi = 0 
               call xxx (type(j), i, na(i), nbi, nci, line(j,i)(4:)) 
-            endif 
+            end if 
             optdat(nopt) = line(j,i) 
           else if (igeo(j,i) < 0) then 
             line(3,i) = line(3,(-igeo(j,i))) 
             line(3,i)(3:3) = '-' 
           else 
             line(j,i) = line(j,igeo(j,i)) 
-          endif 
+          end if 
         end do 
         if (maxtxt /= 0 .and. maxtxt /= 27) then
           blank = elemnt(labels(i))//txtatm(i)//'  ' 
@@ -162,7 +161,7 @@
             write (iprt, '(A,F12.6)') optdat(i), geo(loc(2,i),loc(1,i))*degree 
           else 
             write (iprt, '(A,F12.6)') optdat(i), geo(loc(2,i),loc(1,i)) 
-          endif 
+          end if 
         end do 
       end do 
       return  

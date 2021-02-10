@@ -144,6 +144,7 @@ subroutine reseq (iopt, lused, n1, new, io)
 !
 !  Pick the lowest numbered atom
 !
+          i3 = 0
           i2 = 1000000
           do i = 1, nlive
             if (i2 > live(i)) then

@@ -324,7 +324,7 @@
                     cycle mpar_loop
                   end if
                 end if
-              endif
+              end if
             end do
           call extract_parameter(locvar(1, numvar), locvar(2, numvar), valvar(numvar))
 !
@@ -351,7 +351,7 @@
             if(elemnt2(2:2) == " ")elemnt2 = elemnt2(1:1)
           else
             elemnt2 = " "
-          endif
+          end if
 !    call lockit(valvar(numvar), numvar)
 !
 !   Crude way to lock various parameters
@@ -511,7 +511,7 @@ subroutine lockit(value, numvar)
       if(elemnt2(2:2) == " ")elemnt2 = elemnt2(1:1)
     else
       elemnt2 = " "
-    endif
+    end if
     typtxt = " "
     penalty_fn = penalty*((Max(0.d0, valvar(numvar)-toplim(numvar))+ &
     & Min(0.d0, valvar(numvar)-botlim(numvar))))**2

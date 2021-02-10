@@ -101,6 +101,6 @@
             f(j3) = f(j3) - sum(m) 
           end do 
         end do 
-      endif 
+      end if 
       return  
       end subroutine kab 

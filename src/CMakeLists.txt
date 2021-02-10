@@ -2,7 +2,7 @@
 target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
 target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
 
-target_sources(mopac-lib PRIVATE
+target_sources(mopac-all PRIVATE
 # GPU-related files
 #        ${CMAKE_CURRENT_SOURCE_DIR}/mod_gpu_info.F90
 #        ${CMAKE_CURRENT_SOURCE_DIR}/pulay_for_gpu_I.F90

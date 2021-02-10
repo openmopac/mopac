@@ -65,10 +65,10 @@
         if (posita) then 
           nalmat(:nstate) = nmos - nalmat(:nstate) 
           microa(:nmos,:nstate) = 1 - microa(:nmos,:nstate) 
-        endif 
+        end if 
         if (positb) then 
           microb(:nmos,:nstate) = 1 - microb(:nmos,:nstate)   
-        endif 
+        end if 
         charst = 0.D0 
         if (allocated(vect1))  deallocate(vect1)
         if (allocated(vect2))  deallocate(vect2)
@@ -79,7 +79,7 @@
         if (allocated(work))   deallocate(work)
         if (allocated(iphase)) deallocate(iphase)
         return  
-      endif 
+      end if 
       debug = index(keywrd,'CHARST')/=0 .and. index(keywrd,'DEBUG')/=0 
 !
 !  Trivial case:  Operation is 'elem', the identity.
@@ -110,7 +110,7 @@
               if (icheck == iatom) then 
                 ibase = ibase + 1 
                 loc(1,ibase) = i 
-              endif 
+              end if 
               if (icheck /= jatom) cycle  
               kj = kj + 1 
               loc(2,kj) = i 
@@ -141,7 +141,7 @@
                 d(i-4) = vects(icheck,iloop) 
                 id(1,i-4) = loc(1,i) 
                 id(2,i-4) = loc(2,i) 
-              endif 
+              end if 
             end do 
             if (ibase /= 1) then 
 !
@@ -160,7 +160,7 @@
                 vect1(ii,iloop) = h(i) 
                 vect2(jj,iloop) = p(i) 
               end do 
-            endif 
+            end if 
             if (ibase /= 9) cycle  
 !
 !   'd' transform
@@ -201,7 +201,7 @@
           do i = 1, nmos 
             write (iw, '(8F12.6)') (t2(j,i),j=1,nmos) 
           end do 
-        endif 
+        end if 
 !***********************************************************************
 !
 !   For the microstates, take the positron equivalent if more than
@@ -233,12 +233,12 @@
                   do k = i + 1, nmos 
                     l = l + microa(k,j) 
                   end do 
-                endif 
+                end if 
                 microa(i,j) = 1 - microa(i,j) 
               end do 
               iphase(j) = 1 - 2*mod(l,2) 
             end do 
-          endif 
+          end if 
           k = 0 
           do i = 1, nmos 
             k = k + microb(i,1) 
@@ -252,13 +252,13 @@
                   do k = i + 1, nmos 
                     l = l + microb(k,j) 
                   end do 
-                endif 
+                end if 
                 microb(i,j) = 1 - microb(i,j) 
               end do 
               iphase(j) = 1 - 2*mod(l,2) 
             end do 
-          endif 
-        endif 
+          end if 
+        end if 
         ne = 0 
         do i = 1, nmos 
           ne = ne + microb(i,1) + microa(i,1) 
@@ -301,7 +301,7 @@
           call minv (work, nmos, det) 
         else 
           det = 1.D0 
-        endif 
+        end if 
 !
 !   The big loop to fill T4
 !
@@ -375,8 +375,8 @@
           write (iw, *) ' State Transform for State', istate, &
             ' under Operation', ioper 
           call matout (t4, t4, nstate, nstate, lab) 
-        endif 
-      endif 
+        end if 
+      end if 
 !
 !    Now to perform <State(ISTATE) | Transform(IOPER) | State(ISTATE)>
 !

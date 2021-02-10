@@ -20,6 +20,10 @@
     double precision :: covcut   = 1.2d0    !  1.2 Angstrom (hb mid point)
     logical :: torsion_check_set, torsion_check_set2
     double precision, external :: torsion, distance
+    torsion_value = 0.d0
+    torsion_shift = 0.d0
+    angle2_shift = 0.d0
+    angle2_shift_2 = 0.d0
     if (method_PM7) then
        scale_nsp3 = -0.171271D0*a0**2
        scale_osp3 = -0.098822D0*a0**2 
@@ -58,7 +62,7 @@
           angle2_shift = pi/(180.d0/109.48) 
           angle2_shift_2 = angle2_shift 
           torsion_shift = pi/(180.d0/54.74) 
-        endif
+        end if
       else if (nat(hblist(i, 1)) == 7) then 
         if (nrbondsa(i) == 2) then
 !
@@ -75,8 +79,8 @@
           angle2_shift_2 = angle2_shift 
           torsion_shift = pi/(180.d0/54.74) 
           torsion_check_set = .true.! NR3 group 
-        endif
-      endif
+        end if
+      end if
 !
 ! extrapolation between tetragonal and planar NR3 group
 !
@@ -88,7 +92,7 @@
           torsion_check = -pi -torsion_check 
         else 
           torsion_check = pi -torsion_check 
-        endif
+        end if
         torsion_check_bac = torsion_check ! save sign 
         if (torsion_check < 0) torsion_check = -1.d0 * torsion_check
         torsion_check = torsion_check*180.d0/pi
@@ -96,7 +100,7 @@
         angle2_shift = angle2_shift - pi/(180.d0/((54.74d0 - torsion_check)/54.74d0*19.48d0)) 
         angle2_shift_2 = angle2_shift 
         torsion_check = torsion_check_bac ! restore sign 
-      endif
+      end if
 ! second angle
       angle2 = angle(hblist(i, 2), hblist(i, 1), hblist(i, 9))  !angle2   
       angle2_cos = cos(angle2_shift - angle2) 
@@ -112,8 +116,8 @@
           torsion_correct = -pi - torsion_correct
         else
           torsion_correct =  pi - torsion_correct
-        endif
-      endif
+        end if
+      end if
 !
 ! correction of NR3 torsion angle for through-bond case
 !
@@ -137,7 +141,7 @@
         torsion_cos = cos(torsion_value)
         torsion_cos_2 = cos(torsion_value_2)
         if (torsion_cos_2 > torsion_cos) torsion_cos = torsion_cos_2 
-      endif
+      end if
       if (distance(hblist(i, 9), hblist(i, 1)) > distance(hblist(i, 9), hblist(i, 2)) .and. torsion_check_set2) &
         torsion_cos = 0.d0 
       if (hblist(i, 3) == hblist(i, 4) .or. hblist(i, 9) == hblist(i, 4)) torsion_cos = 1.d0
@@ -158,7 +162,7 @@
           angle2_shift = pi/(180.d0/109.48d0) 
           angle2_shift_2 = angle2_shift 
           torsion_shift = pi/(180.d0/54.74d0) 
-        endif
+        end if
       else if (nat(hblist(i, 5)) == 7) then
         if (nrbondsb(i) == 2) then
           angle2_shift = pi/(180.d0/120.d0)  
@@ -169,8 +173,8 @@
           angle2_shift_2 = angle2_shift 
           torsion_shift = pi/(180.d0/54.74d0) 
           torsion_check_set = .true.! NR3 group 
-        endif
-      endif
+        end if
+      end if
 ! extrapolation between tetragonal and planar NR3 group
       if (torsion_check_set) then 
         torsion_check = torsion(hblist(i, 7), hblist(i, 6), hblist(i, 5), hblist(i, 8))  !torsion2_new 
@@ -180,7 +184,7 @@
           torsion_check = -pi -torsion_check 
         else 
           torsion_check = pi -torsion_check 
-        endif 
+        end if 
         torsion_check_bac = torsion_check ! save sign 
         if (torsion_check < 0) torsion_check = -1.d0 * torsion_check
         torsion_check = torsion_check*180.d0/pi
@@ -188,7 +192,7 @@
         angle2_shift = angle2_shift -pi/(180.d0/((54.74d0 -torsion_check)/54.74d0*19.48d0)) 
         angle2_shift_2 = angle2_shift 
         torsion_check = torsion_check_bac ! restore sign 
-      endif
+      end if
 ! second angle
       angle2 = angle(hblist(i, 6), hblist(i, 5), hblist(i, 9))   ! angle2_new 
       angle2_cos_new = cos(angle2_shift -angle2) 
@@ -204,8 +208,8 @@
           torsion_correct = -pi -torsion_correct
         else
           torsion_correct = pi - torsion_correct
-        endif
-      endif
+        end if
+      end if
 ! correction of NR3 torsion angle for through-bond case
       if (torsion_check < 0.d0) then ! negative torsion angle occupied by -NR3 r3 
         torsion_value = torsion_shift - torsion_correct 
@@ -227,7 +231,7 @@
         torsion_cos_new   = cos(torsion_value)
         torsion_cos_2_new = cos(torsion_value_2)
         if (torsion_cos_2_new > torsion_cos_new)torsion_cos_new = torsion_cos_2_new 
-      endif
+      end if
       if (distance(hblist(i, 9), hblist(i, 5)) > distance(hblist(i, 9), hblist(i, 6)) .and. torsion_check_set2) &
         torsion_cos_new = 0.d0 
       if (hblist(i, 7) == hblist(i, 8) .or. hblist(i, 9) == hblist(i, 8)) torsion_cos_new = 1.d0
@@ -239,27 +243,27 @@
           scale_a = scale_nsp3
         else
           scale_a = scale_nsp2
-        endif
+        end if
       else ! oxygen
         if (nrbondsa(i) >= 2) then
           scale_a = scale_osp3
         else
           scale_a = scale_osp2
-        endif
-      endif ! sulphur?
+        end if
+      end if ! sulphur?
       if (nat(hblist(i, 5)) == 7) then ! nitrogen
         if (nrbondsb(i) >= 3) then
           scale_b = scale_nsp3
         else
           scale_b = scale_nsp2
-        endif
+        end if
       else ! oxygen
         if (nrbondsb(i) >= 2) then
           scale_b = scale_osp3
         else
           scale_b = scale_osp2
-        endif
-      endif ! sulphur?
+        end if
+      end if ! sulphur?
       scale_c = (scale_a + scale_b)/2.d0
 !
 ! damping 1.d0/(1.d0 + exp( -60.d0*(x/2.65d0 - 1.d0)))
@@ -329,7 +333,7 @@
         EH_plus = scale_c/distance(hblist(i, 1), hblist(i, 5))**2.d0* &
         angle_cos**2*angle2_cos**2*torsion_cos**2*angle2_cos_new**2*torsion_cos_new**2*hartree2kcal*damping 
       end if
-    endif  
+    end if  
     return
   end function EH_plus
 

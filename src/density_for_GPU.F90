@@ -37,7 +37,7 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
         nu2 = ndubl
         nl1 = ndubl + 1
         nu1 = nsingl
-      endif
+      end if
       Select case (iopc)
         case(2)   ! Option to use dgemm from CUBLAS
 #if GPU

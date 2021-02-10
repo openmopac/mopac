@@ -44,7 +44,7 @@
 #ifdef MKL
         call mkl_dimatcopy('C', 'T' , ndim, ndim, 1.0d0, eigenvecs, ndim, ndim)
 #endif
-      endif
+      end if
       if (i /= 0) stop 'error in dtpttr'  
       
       j = i ! Dummy - to make FORCHECK not complain about "j"
@@ -63,11 +63,11 @@
           else
              call magma_dsyevd_Driver1(ngpus,'v','u',ndim,eigenvecs,ndim,eigvals,&
                     & work_tmp,lwork,iwork_tmp,liwork,info) 
-          endif
+          end if
       else
          call dsyevd('v','u',ndim,eigenvecs,ndim,eigvals,work_tmp,&
                     & lwork,iwork_tmp,liwork,info)
-      endif
+      end if
 #else
       call dsyevd('v','u',ndim,eigenvecs,ndim,eigvals,work_tmp, &
                     & lwork,iwork_tmp,liwork,info)              
@@ -85,11 +85,11 @@
           else
              call magma_dsyevd_Driver2(ngpus,'v','u',ndim,eigenvecs,ndim,eigvals,&
                     & work,lwork,iwork,liwork,info) 
-          endif
+          end if
       else
          call dsyevd('v','u',ndim,eigenvecs,ndim,eigvals,work,& 
                                 & lwork,iwork,liwork,info)
-      endif
+      end if
 #else
                     
       call dsyevd('v','u',ndim,eigenvecs,ndim,eigvals,work, &

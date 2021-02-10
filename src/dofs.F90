@@ -43,7 +43,7 @@
             x = b 
             b = a 
             a = x 
-          endif 
+          end if 
           j = int(b) 
           k = int(a) 
 !
@@ -67,8 +67,8 @@
               j = j + 1 
               k = k - 1 
               dd(j:k) = dd(j:k) + spread 
-            endif 
-          endif 
+            end if 
+          end if 
         end do 
       end do 
       x = m/((n - 1)*(top - bottom)) 

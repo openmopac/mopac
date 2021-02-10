@@ -32407,5 +32407,5 @@ double precision :: pars(161925)
     c6ab(jat,iat,jadr,iadr,2)=pars(kk+4)
     c6ab(jat,iat,jadr,iadr,3)=pars(kk+3)
     kk=(nn*5)+1
-  enddo
+  end do
 end

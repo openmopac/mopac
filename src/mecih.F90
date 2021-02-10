@@ -4,7 +4,6 @@
 !-----------------------------------------------
       use meci_C, only : microa, microb, nalmat, ispqr, is, iiloop, jloop 
 !***********************************************************************
-!DECK MOPAC
       use babbcd_I 
       use aabbcd_I 
       use aabacd_I 
@@ -61,14 +60,14 @@
             else 
               cimat(ik) = aabacd(microa(1,iiloop),microb(1,iiloop),microa(1,jloop),microb(1,jloop&
                 ),nmos,xy) 
-            endif 
+            end if 
           else if (ix == 2) then 
             cimat(ik) = aababc(microa(1,iiloop),microb(1,iiloop),microa(1,jloop),nmos,xy) 
           else if (iy == 2) then 
             cimat(ik) = babbbc(microa(1,iiloop),microb(1,iiloop),microb(1,jloop),nmos,xy) 
           else 
             cimat(ik) = diag(iiloop) 
-          endif 
+          end if 
         end do 
         ispqr(iiloop,1) = is - 1 
       end do 

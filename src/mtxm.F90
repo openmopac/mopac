@@ -20,6 +20,6 @@
 #endif        
       else
         call dgemm ('T', 'N', nar, ncc, nbr, 1.0D0, a, nbr, b, nbr, 0.0D0, c, nar)
-      endif 
+      end if 
       return  
       end subroutine mtxm   

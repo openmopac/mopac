@@ -6,7 +6,6 @@
       natoms
       use common_arrays_C, only : geo, coord, loc, tvec
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -106,7 +105,7 @@
               end do
             end do
           end do
-        endif 
+        end if 
       else 
 !
 !        SOLID STATE
@@ -175,7 +174,7 @@
             jvar = jvar + 1 
             b(jvar,:ncol) = b(jvar,:ncol) - coold(:ncol)
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
       end subroutine jcarin 

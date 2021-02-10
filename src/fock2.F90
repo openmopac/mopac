@@ -6,7 +6,6 @@
       use cosmo_C, only : useps
       
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -40,7 +39,8 @@
       integer , dimension(256) :: jindex 
       integer :: i, m, j, ij, ji, k, ik, l, kl, lk, jl, i1, ia, ib, jk, kj, kk&
         , ii, iminus, jj, ja, jb, ll, j1, ka, kb, kc, il 
-      double precision, dimension(81) :: pk, pja, pjb 
+      double precision, dimension(81) :: pk
+      double precision, dimension(16) :: pja, pjb 
       double precision :: sumdia, sumoff, sum, aa, bb, aj, ak, a 
       logical :: lid, deriv
 
@@ -106,7 +106,7 @@
           i1 = (i - 1)*4 
           if (i > 0) then 
             l = i + l 
-          endif 
+          end if 
         end do 
         lid = id == 0 
         ione = 1 
@@ -114,7 +114,7 @@
 !
 !      END OF INITIALIZATION
 !
-      endif 
+      end if 
 !
 !     START OF MNDO, AM1, OR PM3 OPTION
 !
@@ -144,7 +144,7 @@
           iminus = ii - 1 
         else 
           iminus = ii - ione 
-        endif 
+        end if 
         do jj = 1, iminus 
           ja = nfirst(jj) 
           jb = nlast(jj) 
@@ -204,7 +204,7 @@
                   end do 
                   k = i + k 
                   j1 = i + j1 
-                endif 
+                end if 
                 j1 = j1 + 1 
                 k = k + 1 
                 f(j1) = f(j1) + ptot(ll)*w(kk+k) 
@@ -248,7 +248,7 @@
                   end do 
                   k = i + k 
                   j1 = i + j1 
-                endif 
+                end if 
                 j1 = j1 + 1 
                 k = k + 1 
                 f(j1) = f(j1) + ptot(ll)*w(kk+k) 
@@ -283,7 +283,7 @@
               f(j1) = f(j1) + ptot(i1)*w(kk+1) 
               f(ij) = f(ij) - p(ij)*w(kk+1) 
               kk = kk + 1 
-            endif 
+            end if 
           else 
             do i = ia, ib 
               ka = ifact(i) 
@@ -298,23 +298,23 @@
                     ik = ka + k 
                   else 
                     ik = 0 
-                  endif 
+                  end if 
                   if (j >= k) then 
                     jk = kb + k 
                   else 
                     jk = 0 
-                  endif 
+                  end if 
                   do l = ja, k 
                     if (i >= l) then 
                       il = ka + l 
                     else 
                       il = 0 
-                    endif 
+                    end if 
                     if (j >= l) then 
                       jl = kb + l 
                     else 
                       jl = 0 
-                    endif 
+                    end if 
                     kl = kc + l 
                     bb = 2.0D00 
                     if (k == l) bb = 1.0D00 
@@ -343,12 +343,12 @@
                       if (jk > 0) f(il) = f(il) - a*p(jk) 
                       if (jk > 0) f(jk) = f(jk) - a*p(il) 
                       if (jl > 0) f(jl) = f(jl) - a*p(ik) 
-                    endif 
+                    end if 
                   end do 
                 end do 
               end do 
             end do 
-          endif 
+          end if 
         end do 
         if (mode == 2) then
           i = ((ib - ia + 1)*(ib - ia + 2))/2

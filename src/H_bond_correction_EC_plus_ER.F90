@@ -31,6 +31,10 @@
   EC_plus_ER = 0.d0
   EC = 0.d0
   ER = 0.d0
+  torsion_shift = 0.d0
+  multiplier_a = 0.d0
+  angle2_shift = 0.d0
+  angle2_shift_2 = 0.d0
 !
 !  D is the atom that hydrogen atom H is attached to, and A is the distant acceptor
 !

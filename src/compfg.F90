@@ -31,7 +31,6 @@
       & nprin, vnn, dm, ef, dd, ff, cc0, aa, dtmp, nb2, ppg, pg, nsym
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -146,7 +145,7 @@
               method_PM7 .or. method_pm8)
         emin = 0.D0 
         xparef(:nvar) = xparam(:nvar) 
-      endif 
+      end if 
 !
 ! SET UP COORDINATES FOR CURRENT CALCULATION
 !
@@ -165,7 +164,7 @@
           k = natoms 
         else 
           k = min(5,natoms) 
-        endif 
+        end if 
         write(iw,"(a)")" COORDINATES IN ARRAY 'GEO'"
         degree(1) = 1.d0
         do i = 1, k
@@ -177,7 +176,7 @@
           write (iw, "(i4,3x,a2,3x,3F14.5,3i5)") i,elemnt(labels(i)), &
           (geo(j, i)*degree(j), j=1, 3), na(i), nb(i), nc(i) 
         end do
-      endif 
+      end if 
       call gmetry (geo, coord) 
       if (moperr) return
       if (debug) then 
@@ -185,10 +184,10 @@
           k = numat 
         else 
           k = min(5,numat) 
-        endif 
+        end if 
         write (iw, '('' CARTESIAN COORDINATES'',/10000(/,i4,3x,a2,3x,3F16.9))') &
           (i,elemnt(nat(i)),(coord(j,i),j=1,3),i=1,k) 
-      endif 
+      end if 
       if (iseps) then
       ! The following routine constructs the dielectric screening surface      
       if (mozyme) then      
@@ -311,8 +310,8 @@
             if (i /= 0) then
               tmpkey(i:i) = ' '
               ef(3) = reada(tmpkey,i)
-            endif
-          endif
+            end if
+          end if
           write (iw,'(/10X,''THE ELECTRIC FIELD IS'',3F10.5,&
              &''VOLTS/ANGSTROM'',/)') ef
 ! Reimers code uses E field in V/A
@@ -427,11 +426,11 @@
         if (times) call timer ('AFTER  ITER') 
       else 
         elect = 0.D0 
-      endif 
+      end if 
       escf = (elect + enuclr)*fpc_9 + atheat 
       if (useps .and. mozyme) then
             escf = escf + solv_energy * fpc_9
-      endif 
+      end if 
       if (.not. dh) then
         call post_scf_corrections(sum, .false.)
         if (moperr) return
@@ -450,13 +449,13 @@
         if (nelecs > 0) call deriv (geo, grad) 
         if (moperr) return  
         if (times) call timer ('AFTER  DERIV')  
-      endif 
+      end if 
       if (aider) then 
 !
 !  ADD IN AB INITIO CORRECTION
 !
         escf = escf + ddot(nvar,xparam(:nvar)-xparef(:nvar),1,aicorr(:nvar),1)
-      endif 
+      end if 
       if (int .and. print) write (iw, '(/1X,'' HEAT OF FORMATION'',G30.17)') &
         escf 
       if (print .and. lgrad) then

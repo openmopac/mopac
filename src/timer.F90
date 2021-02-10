@@ -23,7 +23,7 @@
         wall_clock_last = wall_clock_1
         wall_clock_0 = wall_clock_last
         first = .FALSE. 
-      endif 
+      end if 
 !
 ! "dummy" call: wall_clock_1 is set in seconds(1), but call needed to set CPU_1
 !

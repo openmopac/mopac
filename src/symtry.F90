@@ -6,7 +6,6 @@
       USE symmetry_C, ONLY: locpar, idepfn, locdep, depmul
       use common_arrays_C, only : geo
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -77,7 +76,7 @@
       data icalcn/ 0/  
       if (numcal /= icalcn) then 
         icalcn = numcal 
-      endif 
+      end if 
      !**********************************************************************
     if (m > 19 .or. m < 1) then
       write (iw, "(///10X,'UNDEFINED SYMMETRY FUNCTION',I3, ' USED')") m

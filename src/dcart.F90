@@ -24,7 +24,6 @@
       USE cosmo_C, only : useps 
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -86,7 +85,7 @@
         large = index(keywrd,'LARGE') /= 0 
         debug = index(keywrd,'DERIV') + index(keywrd,'DCART') /= 0 
         force = index(keywrd,'PREC') + index(keywrd,'FORCE') /= 0 
-      endif 
+      end if 
       icuc = (l123 + 1)/2 
       numtot = numat*l123       
       refeps = useps
@@ -215,7 +214,7 @@
                 pbdi(ij+1:i-jf+1+ij) = pb(k+1:i-jf+1+k) 
                 pdi(ij+1:i-jf+1+ij) = p(k+1:i-jf+1+k) 
                 ij = i - jf + 1 + ij 
-              endif 
+              end if 
             end do 
 ! GET SECOND ATOM FIRST ATOM INTERSECTION
             do i = if, il 
@@ -226,14 +225,14 @@
                 pbdi(ij+1:jl-jf+1+ij) = pb(k+1:jl-jf+1+k) 
                 pdi(ij+1:jl-jf+1+ij) = p(k+1:jl-jf+1+k) 
                 ij = jl - jf + 1 + ij 
-              endif 
+              end if 
               k = l + if - 1 
               if (i - if + 1 > 0) then 
                 padi(ij+1:i-if+1+ij) = pa(k+1:i-if+1+k) 
                 pbdi(ij+1:i-if+1+ij) = pb(k+1:i-if+1+k) 
                 pdi(ij+1:i-if+1+ij) = p(k+1:i-if+1+k) 
                 ij = i - if + 1 + ij 
-              endif 
+              end if 
             end do 
           end if
           kkkk = 0 
@@ -275,12 +274,12 @@
                    cdi(2,1) = cdi(2,1) + chnge2 
                    cdi(3,1) = cdi(3,1) + chnge2 
                    call dhc (pdi, padi, pbdi, cdi, ndi, jf, jl, if, il, aa, 1) 
-                  endif 
+                  end if 
                   do k = 1, 3 
                     if (force) then 
                       cdi(k,2) = cdi(k,2) - chnge2 
                       call dhc (pdi, padi, pbdi, cdi, ndi, jf, jl, if, il, aa, 1) 
-                    endif 
+                    end if 
                     cdi(k,2) = cdi(k,2) + chnge 
                     call dhc (pdi, padi, pbdi, cdi, ndi, jf, jl, if, il, ee, 2) 
                     cdi(k,2) = cdi(k,2) - chnge2 
@@ -317,7 +316,7 @@
             end do 
           end do 
         end do 
-      endif 
+      end if 
       if (method_pm6 .and. N_3_present) then
 !
 !   Add in the nitrogen sp2 correction
@@ -410,7 +409,7 @@
         write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i,elemnt(nat(i)),(dxyz(j,i),j=1,3),i=1,numtot) 
       else if (large) then 
       call print_dxyz("(Does NOT include post-SCF corrections)")
-      endif 
+      end if 
       if (id == 0) return  
       write (iw, &
       '(2/10X,"CARTESIAN COORDINATE DERIVATIVES FOR THE CENTRAL UNIT CELL",/,"  NO. AT.     X            Y            Z",/)') 
@@ -442,7 +441,7 @@
       else 
         write (iw, '(I6,A2,F13.6,2F13.6)') (i,elemnt(nat((i-1)/l123+1)), &
         (dxyz(j,i) + dxyz(j,i+1) + dxyz(j,i+2),j=1,3),i = 1, numtot - 2, 3) 
-      endif
+      end if
       return  
       end subroutine dcart 
 !
@@ -534,6 +533,6 @@
           end do
         end do
       end do
-    endif 
+    end if 
     end subroutine print_dxyz
 

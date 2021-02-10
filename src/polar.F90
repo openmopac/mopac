@@ -12,7 +12,6 @@
       USE polar_C, only : omega 
       USE chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -140,8 +139,8 @@
           tvec(:,:id) = tempv(:,:id) 
           write (iw, 160) ((tvec(j,i),j=1,3),i=1,id) 
   160     format(/,' NEW TRANSLATION VECTOR:'/,' ',3(3f15.5)) 
-        endif 
-      endif 
+        end if 
+      end if 
 !
       last = 1 
       na = 0
@@ -229,7 +228,7 @@
         polkey(i:) = ' ' 
       else 
         polkey = ' ' 
-      endif 
+      end if 
       i = index(polkey,'E=(') 
       if (i /= 0) then 
         j = index(polkey(i:),')') 
@@ -243,14 +242,14 @@
           else 
             nfreq = i 
             go to 230 
-          endif 
+          end if 
         end do 
       else 
         do i = 1, 3 
           dataev(i) = (i - 1)*0.25D0 
         end do 
         nfreq = 3 
-      endif 
+      end if 
   230 continue 
       if (igam /= 0) ibet = 1 
       write (iw, 240) nfreq, iwflb, ibet, igam 
@@ -274,12 +273,12 @@
         call alphaf (iwfla, atol, maxita, x1, x2, x3, x4, x5, x6, x7, x8, c, w) 
         if (moperr) return
 !
-      endif 
+      end if 
       if (igam == 4) then 
         iwflb = 0 
         call betaf (iwflb, maxitu, btol, x1, x2, x3, x4, x5, x6, x7, x8, x19, &
           x10, x11, x12, x13, c, w) 
-      endif 
+      end if 
 !
 ! CALCULATE FREQUENCY DEPENDENT VALUES
 !
@@ -300,7 +299,7 @@
   270     format(/,/,' ',70('*'),/,' CALCULATION FOR A FREQUENCY OF ',f10.5,&
             ' EV  =',f14.5,' A.U. '/,18x,'WAVELENGTH OF ',f10.2,' NM  =',f14.5,&
             ' CM(-1)',/,' ',70('*')) 
-        endif 
+        end if 
 !
 !  CALCULATE ALPHA(W)
 !
@@ -325,7 +324,7 @@
 !
           omega = omega/2.0D00 
           call nonbet (x1, x2, x3, x4, x5, x6, x7, x8, x19, x10, x11, x12) 
-        endif 
+        end if 
 !
 !  PERFORM ITERATIVE BETA (SHG AND STATIC)CALCULATIONS
 !
@@ -339,7 +338,7 @@
         else if (ibet==1 .and. iwflb>1 .and. igam==0) then 
           call beopor (iwflb, maxitu, btol, x1, x2, x3, x4, x5, x6, x7, x8, x19&
             , x10, x11, x12, x13, c, w) 
-        endif 
+        end if 
 !.......................................................................
 ! CALCULATE GAMMA VALUES
 !.......................................................................
@@ -347,7 +346,7 @@
           iwflb = 1 
           call betaf (iwflb, maxitu, btol, x1, x2, x3, x4, x5, x6, x7, x8, x19&
             , x10, x11, x12, x13, c, w) 
-        endif 
+        end if 
 ! THIRD HARMONIC GENERATION
         if (igam == 1) then 
           iwfla = 3 
@@ -357,7 +356,7 @@
 !
           omega = omega/3.0D00 
           call ngamtg (x1, x2, x3, x4, x5, x6, x7, x8, x19) 
-        endif 
+        end if 
 ! DC-EFISHG
         if (igam == 2) then 
           iwfla = 2 
@@ -370,14 +369,14 @@
           call beopor (iwflb, maxitu, btol, x1, x2, x3, x4, x5, x6, x7, x8, x19&
             , x10, x11, x12, x13, c, w) 
           call ngefis (x1, x2, x3, x4, x5, x6, x7, x8, x19) 
-        endif 
+        end if 
 ! IDRI
         if (igam == 3) then 
           iwflb = 3 
           call beopor (iwflb, maxitu, btol, x1, x2, x3, x4, x5, x6, x7, x8, x19&
             , x10, x11, x12, x13, c, w) 
           call ngidri (x1, x2, x3, x4, x5, x6, x7, x8, x19) 
-        endif 
+        end if 
 ! OKE
         if (igam /= 4) cycle  
         iwflb = 2 
@@ -453,7 +452,6 @@
 !-----------------------------------------------
       use molkst_C, only : norbs
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -684,10 +682,10 @@
           wrdkey = reada(keywrd,i + k) 
         else 
           wrdkey = def 
-        endif 
+        end if 
       else 
         wrdkey = def 
-      endif 
+      end if 
       return  
       end function wrdkey 
 
@@ -779,6 +777,7 @@
 !
       data alab/ 'X', 'Y', 'Z'/  
 !
+      iexp = 0
       debug = index(keywrd,' DEBUG') /= 0 
       nsqr = norbs*norbs 
       alpavg = 0.0D00 
@@ -970,7 +969,6 @@
 !-----------------------------------------------
 !
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1045,7 +1043,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1193,7 +1190,7 @@
         iposu = 73 
       else 
         iposu = 109 
-      endif 
+      end if 
       iposg = iposu + 9 
       ipose = iposg + 9 
       iposum = ipose + 9 
@@ -1207,7 +1204,7 @@
       else 
         write (iw, 30) omega 
    30   format(/,' +++++ BETA',' (OPTICAL RECTIFICATION) AT ',1f15.5,' EV.'/) 
-      endif 
+      end if 
 !
 !  LOOP OVER COMPONENTS
 !
@@ -1246,7 +1243,7 @@
 !  GA CONTAINS GA(W)
           jpg = 10 + ia 
           call daread (ga, maxsq, jpg) 
-        endif 
+        end if 
 !
 ! READ VALUES FOR (W,-W) CALCULATION  :  OR
 !
@@ -1276,7 +1273,7 @@
 !  GB CONTAINS GB(W)
           jpg = 10 + ib 
           call daread (gb, maxsq, jpg) 
-        endif 
+        end if 
 !
 !  CONSTRUCT T-MATRIX ONE TIME
 !
@@ -1391,7 +1388,7 @@
             bavx = bavx + betaw 
           else if ((id==3 .or. id==7) .and. ic==3) then 
             bavx = bavx + betaw 
-          endif 
+          end if 
 ! CALCULATES AVERAGE BETA IN Y-DIRECTION
 !
           if (id==5 .and. ic==2) then 
@@ -1402,7 +1399,7 @@
             bavy = bavy + betaw 
           else if ((id==6 .or. id==8) .and. ic==3) then 
             bavy = bavy + betaw 
-          endif 
+          end if 
 ! CALCULATES AVERAGE BETA IN THE Z-DIRECTION
 !
           if (id==9 .and. ic==3) then 
@@ -1413,7 +1410,7 @@
             bavz = bavz + betaw 
           else if ((id==1 .or. id==5) .and. ic==3) then 
             bavz = bavz + betaw 
-          endif 
+          end if 
         end do 
 !
 ! CALL SUBROUTINE TO CALCULATE EPSILON AND UMINUS OMEGA,OMEGA
@@ -1540,7 +1537,7 @@
         write (iw, 20) omega 
    20   format(/,' +++++ BETA',' (SECOND HARMONIC GENERATION) AT ',1f13.5,&
           ' EV.'/) 
-      endif 
+      end if 
 !
 !  CHOOSE A  COMPONENT
 !  X: ID=1   Y: ID=2   Z: ID=3
@@ -1576,7 +1573,7 @@
           call daread (ua, maxsq, jpu) 
           jpg = 10 + ia 
           call daread (ga, maxsq, jpg) 
-        endif 
+        end if 
 ! READ VALUES FOR (W,-W)
         if (iwflb == 3) then 
           jpu = 7 + ib 
@@ -1597,7 +1594,7 @@
           call daread (ub, maxsq, jpu) 
           jpg = 10 + ib 
           call daread (gb, maxsq, jpg) 
-        endif 
+        end if 
 !
 !  CONSTRUCT T-MATRIX ONE TIME
 !
@@ -1719,7 +1716,7 @@
             bavx = bavx + 2.0D0*betaw 
           else if ((id==4 .or. id==6) .and. ic==1) then 
             bavx = bavx + betaw 
-          endif 
+          end if 
 ! CALCULATES AVERAGE BETA IN THE Y-DIRECTION
           if (id==4 .and. ic==2) then 
             bavy = bavy + 3.0D0*betaw 
@@ -1729,7 +1726,7 @@
             bavy = bavy + 2.0D0*betaw 
           else if ((id==1 .or. id==6) .and. ic==2) then 
             bavy = bavy + betaw 
-          endif 
+          end if 
 ! CALCULATES AVERAGE BETA IN THE Z-DIRECTION
           if (id==6 .and. ic==3) then 
             bavz = bavz + 3.0D0*betaw 
@@ -1739,7 +1736,7 @@
             bavz = bavz + 2.0D0*betaw 
           else if ((id==4 .or. id==1) .and. ic==3) then 
             bavz = bavz + betaw 
-          endif 
+          end if 
         end do 
 !
 !
@@ -1970,6 +1967,8 @@
 !
 !  CREATE DIAGONAL BLOCKS (OCC,OCC) AND (UNOCC,UNOCC)
 !
+      kll = 0
+      kul = 0
       do i = 1, norbs 
         do j = 1, i 
           sum = 0.0D00 
@@ -1979,7 +1978,7 @@
           else if (i>nclose .and. j>nclose) then 
             kll = 1 
             kul = nclose 
-          endif 
+          end if 
           do k = kll, kul 
             sum = sum + ua(i,k)*ub(k,j) + ub(i,k)*ua(k,j) 
           end do 
@@ -2138,7 +2137,7 @@
           n = ns 
         end do 
         return  
-      endif 
+      end if 
 !
       write (iw, 30) nrec, len 
       call mopend (&
@@ -2182,7 +2181,7 @@
           newrec = .TRUE. 
           irecst = irecst + (len - 1)/irecln + 1 
           n = ioda(nrec) 
-        endif 
+        end if 
         ist = (-irecln) + 1 
         ns = n 
         lent = len 
@@ -2208,7 +2207,7 @@
         end do 
         if (newrec) write (unit=idaf, rec=1) irecst, ioda, ifilen 
         return  
-      endif 
+      end if 
 !
       write (iw, 40) nrec, len, ifilen(nrec) 
       call mopend (&
@@ -2253,7 +2252,6 @@
 !-----------------------------------------------
 !
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2350,6 +2348,7 @@
 !  THIS SUBROUTINE CREATES THE NEW EPSILON MATRIX AND UDMS MATRIX
 !
       hartr = ev 
+      omval = 0.d0
 !
 !  ZERO EPSILON OMEGA OMEGA MATRIX INITIALLY
 !
@@ -2365,7 +2364,7 @@
         omval = 0.0D00 
       else if (iwflb == 2) then 
         omval = omega 
-      endif 
+      end if 
       do i = 1, nclose 
         do j = 1, nclose 
           s1 = 0.0D00 
@@ -2402,7 +2401,6 @@
       use common_arrays_C, only : nat, nfirst, nlast
       use molkst_C, only : numat
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -2474,7 +2472,7 @@
             f(icc:ib,j) = f(icc:ib,j) + ptot(icc:ib,j)*(gpp(ni)-gp2(ni)) - &
               0.5D0*pa(icc:ib,j)*(gpp(ni)+gp2(ni)) 
           end do 
-        endif 
+        end if 
  1002   continue 
       end do 
       return  
@@ -2488,7 +2486,6 @@
       USE molkst_C, only : numat, norbs
       use common_arrays_C, only : nfirst, nlast
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -2643,11 +2640,11 @@
             if (id==1 .and. jo1==0 .and. io1==1) then 
               h1(i1,j1) = dd(ni) 
               h1(j1,i1) = dd(ni) 
-            endif 
+            end if 
             if (id==2 .and. jo1==0 .and. io1==2) then 
               h1(i1,j1) = dd(ni) 
               h1(j1,i1) = dd(ni) 
-            endif 
+            end if 
             if (.not.(id==3 .and. jo1==0 .and. io1==3)) cycle  
             h1(i1,j1) = dd(ni) 
             h1(j1,i1) = dd(ni) 
@@ -2761,7 +2758,6 @@
       use chanel_C, only : iw
        USE polar_C, only : omega 
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2930,7 +2926,6 @@
       use chanel_C, only : iw
        USE polar_C, only : omega 
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -2981,6 +2976,10 @@
       data idd/ 1, 2, 3, 2, 3, 1, 3, 1, 2, 2, 3, 1, 3, 1, 2/  
       data ip/ 1, 2, 3, 2, 4, 5, 3, 5, 6/  
       data ipair/ 1, 4, 7, 2, 5, 8, 3, 6, 9/  
+      j3e = 0
+      j3g = 0
+      j3u = 0
+      j3um = 0
       one = 1.D0 
       msq = norbs*norbs 
       write (iw, 10) omega 
@@ -3130,7 +3129,7 @@
           call daread (usmd, msq, ju2mrc + j3um) 
 !  CALL EPCD
           call daread (eps, msq, jeprec + j3e) 
-        endif 
+        end if 
 !
 ! FIRST KIND
 !
@@ -3164,7 +3163,7 @@
           gav = gav + yy 
         else 
           gav = gav + 2*yy 
-        endif 
+        end if 
 !
 ! WRITE GAMMA(ABCD)
 !
@@ -3187,7 +3186,6 @@
        USE polar_C, only : omega 
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3315,14 +3313,14 @@
           call fhpatn (u1, x, norbs, 2, (-one)) 
         else 
           call daread (u1, msq, jurec + j2) 
-        endif 
+        end if 
 !  CALL GB
         if (imove == 3) then 
           call daread (x, msq, jgrec + j2) 
           call fhpatn (g1, x, norbs, 2, one) 
         else 
           call daread (g1, msq, jgrec + j2) 
-        endif 
+        end if 
 !  CALL GCD
         call daread (gs, msq, jg2rec + j34) 
 !  CALL UCD
@@ -3366,7 +3364,7 @@
           gav = gav + yy 
         else 
           gav = gav + 2.0D0*yy 
-        endif 
+        end if 
 !
 ! WRITE GAMMA(ABCD)
 !
@@ -3389,7 +3387,6 @@
       use chanel_C, only : iw
        USE polar_C, only : omega 
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3446,7 +3443,7 @@
       else 
         write (iw, 20) omega 
    20   format(/,/,' GAMMA (OKE) AT ',f10.5,' EV.'/,/) 
-      endif 
+      end if 
 !
 ! DATA INCLUDING YX, ZY, ZX DIRECTIONS
 ! GET DATA FROM ALPHA  AND ITERATIVE BETA CALCULATIONS
@@ -3577,13 +3574,13 @@
           call daread (u1, msq, juarc + j2) 
         else 
           call daread (u1, msq, jurec + j2) 
-        endif 
+        end if 
 !  CALL GB
         if (imove == 3) then 
           call daread (g1, msq, jgarc + j2) 
         else 
           call daread (g1, msq, jgrec + j2) 
-        endif 
+        end if 
 !  CALL GCD
         call daread (gs, msq, jg2rec + j34) 
 !  CALL UCD
@@ -3627,7 +3624,7 @@
           gav = gav + yy 
         else 
           gav = gav + 2.0D0*yy 
-        endif 
+        end if 
 !
 ! WRITE GAMMA(ABCD)
 !
@@ -3654,7 +3651,6 @@
 ! NONITERATIVE WAY.
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -3835,7 +3831,6 @@
 ! IN A NONITERATIVE WAY.
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -4016,7 +4011,6 @@
 ! NONITERATIVE WAY
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -4218,7 +4212,7 @@
         irecst = irecst + 1 
         write (unit=idaf, rec=1) irecst, ioda, ifilen 
         return  
-      endif 
+      end if 
 !
 !     ----- LOAD THE OLD DAF DIRECTORY -----
 !

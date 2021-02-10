@@ -5,7 +5,6 @@
   use molkst_C, only : id, method_pm7
   use parameters_C, only: natorb
 !***********************************************************************
-!DECK MOPAC
 !
   implicit none
 !-----------------------------------------------

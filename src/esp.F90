@@ -6,7 +6,6 @@
       use chanel_C, only : iw
       use esp_C, only : scale, den, nesp
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -34,25 +33,25 @@
         scale = reada(keywrd,index(keywrd,'SCALE=')) 
       else 
         scale = 1.4D0 
-      endif 
+      end if 
 !
       if (index(keywrd,'DEN=') /= 0) then 
         den = reada(keywrd,index(keywrd,'DEN=')) 
       else 
         den = 1.0D0 
-      endif 
+      end if 
 !
       if (index(keywrd,'SCINCR=') /= 0) then 
         scincr = reada(keywrd,index(keywrd,'SCINCR=')) 
       else 
         scincr = 0.20D0 
-      endif 
+      end if 
 !
       if (index(keywrd,'NSURF=') /= 0) then 
         n = nint(reada(keywrd,index(keywrd,'NSURF='))) 
       else 
         n = 4 
-      endif 
+      end if 
 !
       time1 = seconds(1) 
 !
@@ -69,7 +68,7 @@
           if (moperr) return  
           scale = scale + scincr 
         end do 
-      endif 
+      end if 
 !
 !     NEXT CALCULATE THE ESP AT THE POINTS CALCULATED BY SURFAC
 !
@@ -94,7 +93,6 @@
 !     ROUTINE TO CALCULATE WILLIAMS SURFACE
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -234,7 +232,6 @@
       use esp_C, only : nesp, rad, dens, scale, potpt, co, den
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -362,7 +359,7 @@
             write (iw, '(''ERROR'',2X,''TOO MANY NEIGHBORS:'',I5)') nnbr 
             call mopend ('ERROR.  TOO MANY NEIGHBORS') 
             return  
-          endif 
+          end if 
 !#            INBR(NNBR) = JATOM
           cnbr(:,nnbr) = co(:,jatom) 
           rnbr(nnbr) = rad(jatom) 
@@ -380,7 +377,7 @@
           write (iw, '(T2,''VECTOR LENGTH OF ZERO IN SURFAC'')') 
           call mopend ('VECTOR LENGTH OF ZERO IN SURFAC') 
           return  
-        endif 
+        end if 
         call genun (con, ncon) 
 !#         AREA = (4 * PI * RI ** 2) / NCON
 !
@@ -417,7 +414,6 @@
       & rms, rrms, dx, dy, dz, iz, idip
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -448,6 +444,7 @@
       call elesn () 
       rms = 0.D0 
       rrms = 0.D0 
+      slope = 0.d0
 !
 !     NOW FIT THE ELECTROSTATIC POTENTIAL
 !
@@ -464,10 +461,10 @@
           idip = 0 
           write (iw, '(/12X,''  DIPOLE CONSTRAINTS NOT USED'')') 
           write (iw, '(12X,''        CHARGED MOLECULE'',/)') 
-        endif 
+        end if 
       else 
         idip = 0 
-      endif 
+      end if 
       if (idip == 1) write (iw, '(/12X,''DIPOLE CONSTRAINTS WILL BE USED'',/)') 
 !
 !     GET X,Y,Z DIPOLE COMPONENTS IF DESIRED
@@ -476,17 +473,17 @@
         dx = reada(keywrd,index(keywrd,'DIPX=')) 
       else 
         dx = ux 
-      endif 
+      end if 
       if (index(keywrd,'DIPY=') /= 0) then 
         dy = reada(keywrd,index(keywrd,'DIPY=')) 
       else 
         dy = uy 
-      endif 
+      end if 
       if (index(keywrd,'DIPZ=') /= 0) then 
         dz = reada(keywrd,index(keywrd,'DIPZ=')) 
       else 
         dz = uz 
-      endif 
+      end if 
       call espfit () 
 !
 !     WRITE OUT OUR RESULTS TO CHANNEL 6
@@ -509,13 +506,13 @@
           slope = reada(keywrd,index(keywrd,'SLOPE=')) 
         else 
           slope = 1.422D0 
-        endif 
+        end if 
         qsc(:numat) = slope*q(:numat) 
         write (iw, '(7X,''ATOM NO.    TYPE    CHARGE   SCALED CHARGE'')') 
         do i = 1, numat 
           write (iw, '(9X,I4,9X,A2,1X,F10.4,2X,F10.4)') i, elemnt(nat(i)), q(i), qsc(i) 
         end do 
-      endif 
+      end if 
       write (iw, '(/12X,A,4X,I6)') 'THE NUMBER OF POINTS IS:', nesp 
       write (iw, '(12X,A,4X,F9.4)') 'THE RMS DEVIATION IS:', rms 
       write (iw, '(12X,A,3X,F9.4)') 'THE RRMS DEVIATION IS:', rrms 
@@ -536,7 +533,7 @@
         dip = sqrt(dipx**2 + dipy**2 + dipz**2) 
         write (iw, '(12X,'' X        Y        Z       TOTAL'')') 
         write (iw, '(8X,4F9.4)') dipx*cf, dipy*cf, dipz*cf, dip*cf 
-      endif 
+      end if 
    60 continue 
       if (index(keywrd,'SYMAVG') /= 0) then 
         allocate (cequiv(numat,numat))
@@ -572,8 +569,8 @@
           do i = 1, numat 
             write (iw, '(9X,I4,9X,A2,1X,F10.4,2X,F10.4)') i, elemnt(nat(i)), q(i), q(i)*slope 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
       end subroutine potcal 
 
@@ -614,7 +611,7 @@
       end do 
       if (fac(4) > 1.D0) then 
         fac(:7) = 1.D0/fac(:7) 
-      endif 
+      end if 
       do m = 0, 8 
         k = 1 
         fv(m,1) = 1.D0/(2.D0*m + 1.D0) 
@@ -637,7 +634,7 @@
       else 
         icd = 6 
         call setupg 
-      endif 
+      end if 
       ncc = 0 
       npr = 0 
       do i = 1, numat 
@@ -681,7 +678,7 @@
             ncc = ncc + 1 
             npr = npr + icd 
           end do 
-        endif 
+        end if 
       end do 
 !
 !     CALCULATE NORMALIZATION CONSTANTS AND INCLUDE
@@ -775,7 +772,7 @@
         if (i > 0) then 
           cesp(l+1:i+l) = ovl(i,:i) 
           l = i + l 
-        endif 
+        end if 
       end do 
 !
 !     DEORTHOGONALIZE THE COEFFICIENTS AND REFORM THE DENSITY MATRIX
@@ -837,7 +834,7 @@
           write (iesp, 420) esp_array(i), potpt(1,i)/a0, potpt(2,i)/a0, potpt(3,i)/a0 
         end do 
         close(unit=iesp, status='KEEP') 
-      endif 
+      end if 
   420 format(1x,4e16.7) 
       return  
       end subroutine elesn 
@@ -851,7 +848,6 @@
       use molkst_C, only : numat
       use funcon_C, only : a0, fpc_1, fpc_8
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -959,7 +955,6 @@
       & u_esp, expn, rnai, ewcx, ewcy, ewcz, f0, rnai1, ipx, is_esp, isc, &
       & icd, exs, ce, indc, nesp
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -982,7 +977,7 @@
         if (jstart == isc*2) then 
           close(iesr) 
           return  
-        endif 
+        end if 
         do i = 1, nesp 
           read (iesr) es(i) 
         end do 
@@ -991,7 +986,7 @@
         jstart = jstart + 1 
       else 
         jstart = 1 
-      endif 
+      end if 
       np = is_esp + 1 
       do ic = jstart, isc 
         ipr = ic*icd - icd + 1 
@@ -1059,7 +1054,7 @@
                 end do 
               else 
                 f0(i,j) = rnai(i,j)*0.5D0 
-              endif 
+              end if 
             end do 
             do i = np, ipe 
               if (u_esp(i,j) <= tf(1)) then 
@@ -1076,7 +1071,7 @@
                 end do 
               else 
                 f1(i,j) = rnai(i,j)*0.25D0/u_esp(i,j) 
-              endif 
+              end if 
             end do 
             u_esp(istart:is_esp,j) = 2.D0*pi*exs(istart:is_esp,j)*expn(istart:is_esp,j)* &
             f0(istart:is_esp,j) 
@@ -1130,7 +1125,6 @@
       use esp_C, only : cen, ex, iam, cc, is_esp, ip, npr, ncc, icd, ovl, &
       &  dx_array, dy_array, dz_array, td, ce, exs, expn, rnai, ewcx, ewcy, ewcz
 !***********************************************************************
-!DECK MOPAC
       implicit none
       integer :: ic
 !-----------------------------------------------
@@ -1189,7 +1183,7 @@
             end select 
           end do 
         end do 
-      endif 
+      end if 
 !
 !     CALCULATE (P||S) ESP INTEGRALS
 !
@@ -1225,7 +1219,7 @@
             end select 
           end do 
         end do 
-      endif 
+      end if 
       ips = ic*icd - icd + 1 
       do i = ic, ncc 
         jps = i*icd - icd + 1 
@@ -1243,7 +1237,6 @@
 !-----------------------------------------------
       USE overlaps_C, only : allc, allz
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
@@ -1352,7 +1345,7 @@
         do i = 1, m, 2 
           dex2 = dex2*i 
         end do 
-      endif 
+      end if 
       return  
       end function dex2 
 
@@ -1412,7 +1405,7 @@
           term0 = term0*x/fact 
           sum = sum + term0 
         end do 
-      endif 
+      end if 
       i = 1 
       fact = fact + a1 
       term(1) = term0*x/fact 
@@ -1442,7 +1435,7 @@
           fact = fact + a1 
           sum = sum*fact/x 
         end do 
-      endif 
+      end if 
       i = 1 
       term(1) = -e/x 
       suma = sum + term(1) 
@@ -1477,7 +1470,7 @@
           fac0 = fac0 - a1 
           ff(n+1-k) = (e + x*ff(n+2-k))/fac0 
         end do 
-      endif 
+      end if 
       fval = ff(n+1) 
       return  
       end subroutine fsub 
@@ -1494,7 +1487,6 @@
       & pexs, pce, pexpn, ptd, pewcx, pewcy, pewcz, ird, indc, nesp
       use molkst_C, only : keywrd
 !***********************************************************************
-!DECK MOPAC
       implicit none
 
 !   L o c a l   V a r i a b l e s
@@ -1557,7 +1549,7 @@
           iesps = 0 
           close(iesr) 
           go to 50 
-        endif 
+        end if 
         do i = 1, nesp 
           read (iesr) es(i) 
         end do 
@@ -1565,7 +1557,7 @@
         idc = int((iesps/float(nesp))*10) 
       else 
         iesps = 0 
-      endif 
+      end if 
    50 continue 
       do iesp = iesps + 1, nesp 
         potp1 = potpt(1,iesp)/a0 
@@ -1602,7 +1594,7 @@
             end do 
           else 
             pf0(i) = pce(i)*0.5D0 
-          endif 
+          end if 
           if (ptd(i) <= tf(1)) then 
             iref = nint(ptd(i)*20.D0) 
             ref = 0.05D0*iref 
@@ -1617,7 +1609,7 @@
             end do 
           else 
             pf1(i) = pce(i)*0.25D0/ptd(i) 
-          endif 
+          end if 
           if (ptd(i) <= tf(2)) then 
             iref = nint(ptd(i)*20.D0) 
             ref = 0.05D0*iref 
@@ -1632,7 +1624,7 @@
             end do 
           else 
             pf2(i) = pce(i)*0.375D0/(ptd(i)*ptd(i)) 
-          endif 
+          end if 
         end do 
 !
 !     CALCULATE (S||S) TYPE INTEGRALS
@@ -1667,7 +1659,7 @@
                   rnai(i,j) = (pewcz(ir)-cen(in,3))*pf0(ir) - pf1(ir)*(pewcz(ir)-potp3) 
                 end select 
               end do 
-            endif 
+            end if 
 !
 !     CALCULATE (P||P) ESP INTEGRALS
 !
@@ -1818,7 +1810,6 @@
     !     ROUTINE TO CALCULATE WILLIAMS SURFACE
     !
     !***********************************************************************
-    !DECK MOPAC
     !-----------------------------------------------
     !   I n t e r f a c e   B l o c k s
     !-----------------------------------------------

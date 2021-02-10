@@ -735,7 +735,7 @@ subroutine geochk ()
           inquire(unit=iarc, opened=opend) 
           if (opend) close(iarc, status = "DELETE")          
           go to 1100
-        endif
+        end if
 !
         call names (ioptl, ib, n1, ires, nfrag, io, uni_res, mres)
         if (moperr) return

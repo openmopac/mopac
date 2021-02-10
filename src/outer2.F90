@@ -140,7 +140,7 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
       if (icalcn /= numcal) then 
         icalcn = numcal 
         cutof2 = clower**2
-      endif 
+      end if 
       do i = 1, 10
         e1b(i) = 0.d0
         e2a(i) = 0.d0

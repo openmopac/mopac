@@ -4,7 +4,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -55,7 +54,7 @@
         one = 1.D0 
       else 
         one = -1.D0 
-      endif 
+      end if 
       babbcd = (xy(i,k,j,l)-xy(i,l,j,k))*one 
       return  
       end function babbcd 

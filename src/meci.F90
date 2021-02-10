@@ -41,7 +41,7 @@
       double precision, dimension(:,:), allocatable :: oscil
       double precision, dimension(3) :: work 
       double precision :: xx, x, gse, y, sum, summ 
-      double precision, allocatable :: overlap(:)
+!      double precision, allocatable :: overlap(:)
       logical :: debug, large, prnt, lspin, lspin1, peci, first1, bigprt, sing, &
         doub, trip, quar, quin, sext, prnt2, geook, getmic, sept, octe, none, &
         cis, cisd, cisdt
@@ -82,6 +82,7 @@
       data icalcn/ 0/  
       data tspin/ 'SINGLET ', 'DOUBLET ', 'TRIPLET ', 'QUARTET ', 'QUINTET ', &
       'SEXTET  ', 'SEPTET  ', 'OCTET   ', 'NONET   ', '??????? '/  
+      meci = 0.d0
       if (numat == 0) then
         if (allocated(spin))   deallocate(spin)
         if (allocated(nalmat)) deallocate(nalmat)
@@ -128,7 +129,7 @@
           nmos = nint(reada(keywrd,index(keywrd,'C.I.=') + 5)) 
         else 
           nmos = nopen - nclose 
-        endif 
+        end if 
         nmos = min(nmos,norbs) 
         if (allocated(occa))    deallocate(occa)        
         if (allocated(deltap))  deallocate(deltap)
@@ -160,17 +161,17 @@
         else 
           j = nclose - ndoubl + 1 
           if (fract > 1.99D0) j = j + 1 
-        endif 
+        end if 
         l = 0 
         if (nclose - j + 1 > 0) then 
           occa(:nclose-j+1) = 1 
           l = nclose - j + 1 
-        endif 
+        end if 
         j = max(j,nclose + 1) 
         if (nopen - j + 1 > 0) then 
           occa(l+1:nopen-j+1+l) = fract*0.5D0 
           l = nopen - j + 1 + l 
-        endif 
+        end if 
         do i = 1, nmeci 
           l = l + 1 
           if (l > nmos) exit  
@@ -202,7 +203,7 @@
         ne = nint(xx) 
         i = (nelecs - ne + 1)/2 
         nelec = (nelecs - ne + 1)/2 
-      endif 
+      end if 
       root_requested = 0
       prnt = debug .or. last==3 .and. prnt2 
       bigprt = prnt .and. large 
@@ -218,13 +219,13 @@
         call mopend (&
            ' NUMBER OF ELECTRONS IN M.O.S BELOW ACTIVE SPACE IS LESS THAN ZERO') 
         return  
-      endif 
+      end if 
       if (nelec + nmos > norbs) then 
         meci = 0.D0 
         call mopend (&
        ' UPPER BOUND OF ACTIVE SPACE IS GREATER THAN THE NUMBER OF ORBITALS!') 
         return  
-      endif 
+      end if 
       if (allocated(eiga)) then
         deallocate(eiga, rjkaa, xy, rjkab, dijkl, delta)
       end if
@@ -237,7 +238,7 @@
         write (iw, '(''  INITIAL EIGENVALUES'')') 
         write (iw, '(5F12.6)') (eiga(i),i=1,nmos) 
         write (iw, '(2/10X,''NUMBER OF ELECTRONS IN C.I. ='',F5.1)') xx 
-      endif 
+      end if 
       i = nmos + nelec + 1 
       if (.not.geook .and. nelec>0) then 
         if (abs(eigs(nelec+1)-eigs(nelec))<2.D-2 .or. nelec+1+nmos .lt. norbs &
@@ -258,16 +259,16 @@
           meci = 0.D0 
           call mopend ('JOB STOPPED. TO CONTINUE, SPECIFY "GEO-OK".') 
           return  
-        endif 
-      endif 
-      allocate(overlap((norbs*(norbs + 1))/2))
-      call fill_overlap_matrix(overlap)
+        end if 
+      end if 
+!      allocate(overlap((norbs*(norbs + 1))/2))
+!      call fill_overlap_matrix(overlap)
       if (bigprt) then 
         write (iw, '(2/10X,''EIGENVECTORS'',/)') 
         do i = 1, norbs 
           write (iw, '(6F12.6)') (c(i,j+nelec),j=1,nmos) 
         end do 
-      endif 
+      end if 
       call ijkl (c(1,nelec+1), c, nelec, nmos, dijkl, cij, ckl, wcij, xy) 
       do i = 1, nmos 
         do j = 1, nmos 
@@ -323,14 +324,14 @@
           write (iw, '(10F8.4)') (rjkab(i1,j1) - rjkaa(i1,j1),j1=1,min(nmos,10)&
             ) 
         end do 
-      endif 
+      end if 
       i = 1 
       if (nmos > 0) then 
         j = 1 
         rjkaa(:nmos,:nmos) = rjkaa(:nmos,:nmos)*0.5D0 
         j = nmos + 1 
         i = nmos + 1 
-      endif 
+      end if 
       if (first1) then 
         getmic = index(keywrd,'MICROS') /= 0 
         if (getmic) then 
@@ -382,7 +383,7 @@
           end do 
           if (getmic) go to 240 
           limci = 0 
-        endif 
+        end if 
         if (msdel == 0 .and. mod(ne,2) == 1) msdel = 1
         nupp = (ne + msdel)/2
         ndown = ne - nupp 
@@ -391,7 +392,7 @@
           meci = 0.D0 
           call mopend ('IMPOSSIBLE VALUE OF DELTA S') 
           return  
-        endif 
+        end if 
         if (limci == 0) then 
           lima = nint(fx(nmos + 1)/(fx(nupp + 1)*fx(nmos - nupp + 1)))
           limb = nint(fx(nmos + 1)/(fx(ndown + 1)*fx(nmos - ndown + 1))) 
@@ -399,10 +400,11 @@
           if (allocated(npermb)) deallocate(npermb)
           allocate(nperma(nmos, lima), npermb(nmos, limb), stat = i) 
           if (i /= 0) then
+            meci = 0.d0
             call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
             return
           end if
-        endif 
+        end if 
         lab = lima*limb 
          
         if (peci) limci = 4 
@@ -410,7 +412,7 @@
           if (cis)   limci = 2 
           if (cisd)  limci = 4 
           if (cisdt) limci = 6 
-        endif 
+        end if 
         call perm (nperma, nupp, nmos, lima, limci) 
         call perm (npermb, ndown, nmos, limb, limci) 
         lab = lima*limb 
@@ -418,12 +420,13 @@
         if (allocated(microb)) deallocate(microb)
         allocate(microa(nmos, lab), microb(nmos,lab), stat = i) 
         if (i /= 0) then
+          meci = 0.d0
           call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
           return   
         end if  
       else 
         if (.not.getmic) lab = lima*limb 
-      endif 
+      end if 
   240 continue 
       if (allocated(spin))   deallocate(spin)
       if (allocated(nalmat)) deallocate(nalmat)
@@ -436,6 +439,7 @@
       allocate(spin(lab), nalmat(lab), eig(lab + 1), vectci(30*lab), &
       & ispin(lab), oscil(3,lab + 4), ispqr(lab,nmeci + 1), stat = i)
       if (i /= 0) then
+          meci = 0.d0
           call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
           return   
         end if  
@@ -471,8 +475,8 @@
                   if (.not.k<=2 .and. .not.nperma(l,i)==npermb(l,j)) k = 1000 
                 end do 
                 l = nmos + 1 
-              endif 
-            endif 
+              end if 
+            end if 
 !
 !        COPY DET AND INCREMENT LOC
 !
@@ -484,21 +488,23 @@
               microa(:nmos,loc) = nperma(:nmos,i) 
               microb(:nmos,loc) = npermb(:nmos,j) 
               l = nmos + 1 
-            endif 
+            end if 
           end do 
         end do 
         lab = loc 
-      endif 
+      end if 
       num1 = char(ichar("2") + int(log10(lab*1.0001)))
       if (prnt) write (iw, "(/,/,10x,' NO OF CONFIGURATIONS CONSIDERED =',i"//num1//")") lab 
       if (allocated(cdiag))  deallocate(cdiag)
       if (lab > maxci) then
+        meci = 0.d0
         call mopend("Too many configurations requested")
         write(iw,"(a,i7)")"  Number requested:", lab
         return
       end if
       allocate(conf(lab**2), cimat((lab*(lab + 1))/2 + 9), diag(lab), cdiag(lab), stat = i)
       if (i /= 0) then
+        meci = 0.d0
         call mopend("A problem occurred during memory assignment. The number of configurations is too large. ")
         return   
       end if  
@@ -508,7 +514,7 @@
           cdiag(i) = cdiagi 
         end do 
         go to 400 
-      endif       
+      end if       
       j = 0 
       i = 0 
       do i1 = 1, lima 
@@ -528,7 +534,7 @@
               microa(:nmos,k) = nperma(:nmos,i) 
               microb(:nmos,k) = npermb(:nmos,j) 
               l = nmos + 1 
-            endif 
+            end if 
           end do 
         end do 
       else 
@@ -538,6 +544,8 @@
         do lab = 1, mdim 
           x = 1000.D0 
           i = 0 
+          j1 = 0
+          j2 = 0
           do i1 = 1, lima 
             do i2 = 1, limb 
               i = i + 1 
@@ -556,14 +564,15 @@
             microa(:nmos,lab) = nperma(:nmos,j1) 
             microb(:nmos,lab) = npermb(:nmos,j2) 
             k = nmos + 1 
-          endif 
+          end if 
           diag(lab) = cimat(j) 
           cimat(j) = 1.D8 
         end do 
         lab = mdim 
-      endif 
+      end if 
   400 continue 
       if (lab > maxci) then
+        meci = 0.d0
         call mopend("Too many configurations requested")
         write(iw,"(a,i7)")"  Number requested:", lab
         write(iw,"(a,i7)")"  Max. no. allowed:", maxci
@@ -588,7 +597,7 @@
         write (iw, '(10X,''MODIFY SIZE OF C.I. OR ROOT NUMBER'')') 
         meci = 0.D0 
         return  
-      endif 
+      end if 
       if (prnt) then 
         write (iw, &
       '(/,'' CONFIGURATIONS CONSIDERED IN C.I.      '',/,'' M.O. NUMBER :      '',20I4)') &
@@ -603,7 +612,7 @@
           write (iw, '(6X,F10.4,4X,20I4)') diag(i), (microb(k,i),k=1,min(20,nmos))
           if (nmos > 20) write (iw, '(20X,20I4)') (microb(k,i),k=21,min(40,nmos)) 
         end do 
-      endif 
+      end if 
       call mecih (diag, cimat, nmos, lab, xy) 
       if (bigprt) then 
         write (iw, '(2/,'' C.I. MATRIX'')')  
@@ -612,8 +621,8 @@
         if (prnt) then 
           write (iw, '(2/,'' DIAGONAL OF C.I. MATRIX'')') 
           write (iw, '(5F13.6)') (cimat((i*(i+1))/2),i=1,lab) 
-        endif 
-      endif 
+        end if 
+      end if 
 !
 !  Sometimes exact degeneracies cause problems with RSP, so perturb the C.I. matrix
 !  to destroy exact degeneracy.
@@ -633,14 +642,14 @@
           call matou1 (conf, eig, lab, lab, lab, 4) 
         else 
           call matout (conf, eig, lab, lab, lab) 
-        endif 
-      endif 
+        end if 
+      end if 
       if (prnt) then 
         write (iw, &
       '(/,''  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION'')') 
         write (iw, &
       '(''         ABSOLUTE     RELATIVE'',28X,''    X           Y           Z'',/)') 
-      endif 
+      end if 
       iroot = 0 
       jroot = 1
       cimat = 0.1D0 
@@ -649,7 +658,7 @@
         if (last == 0 .and. root_ir == "XXXX") then 
           namo(i) = ' ' 
           jndex(i) = i 
-        endif 
+        end if 
         x = 0.5D0*xx 
         ii = (i - 1)*lab 
         do j = 1, lab 
@@ -663,7 +672,7 @@
               x = x + conf(ji)*conf(ispqr(j,l+1)+ii)*2.D0 
             end do 
             l = k + 1 
-          endif 
+          end if 
         end do 
         y = (-1.D0 + sqrt(1.D0 + 4.D0*x))*0.5D0 
         ispin(i) = nint(y*2.D0 + 1) 
@@ -749,14 +758,14 @@
             if (lab > 0) then 
               vectci(m+1:lab+m) = conf(1+lab*(k-1):lab*k)  
               m = lab + m 
-            endif 
+            end if 
           end do 
           k = min(lab,i + 4) + 1 
   510     continue 
           nstate = k - i 
-        endif 
+        end if 
         jroot = iroot
-      endif 
+      end if 
     end do
       if (root_requested < 1) then 
         call mopend ("ROOT REQUESTED DOES NOT EXIST IN C.I.")
@@ -784,11 +793,11 @@
             write (iw, "(i6,2x,a8,1x,a4)")jndex(i), tspin(ispin(i)), namo(i)
           else 
             write (iw, "(i6,2x,a8,1x,a4)") jndex(i), tspin(ispin(i)), namo(i)
-          endif 
+          end if 
         end do 
         meci = 0.d0
         return
-      endif 
+      end if 
       state_Irred_Rep = namo(root_requested) 
       state_spin = tspin(ispin(root_requested))
       state_QN = jndex(root_requested)
@@ -818,7 +827,7 @@
             k = 3 
           else 
             k = 0 
-          endif           
+          end if           
           if (i > 1) then 
             if (eig(i) - eig(i-1)>1.D-4 .or. jndex(i)/=jndex(i-1) .or. namo(i)&
               /=namo(i-1)) write (iw, 580) i, tex_root, eig(i), eig(i) - eig(1), &
@@ -826,9 +835,9 @@
           else 
             write (iw, 580) i, tex_root, eig(i), eig(i) - eig(1), jndex(i), &
             tex_root, tspin(ispin(i)), namo(i), (sqrt(work(j)),j=1,k) 
-          endif 
+          end if 
         end do 
-      endif 
+      end if 
       if (prnt .and. msdel/=0) write (iw, '(A)') &
         ' ''RELATIVE ENERGY'' Is relative to the lowest state calculated.', &
         ' This may or may not be the ground state.'
@@ -845,7 +854,7 @@
         end do 
         meci = 0.D0 
         return  
-      endif 
+      end if 
       maxvec = 0 
       if (lspin) maxvec = root_requested + min(3,lab - root_requested) 
       if (lspin .and. (ne/2)*2==ne) write (iw, &
@@ -902,7 +911,7 @@
             write (iw, '(i4,4f10.6,50x,f10.6)') i, (eigs(k),k=1,4), summ 
           else if (l == 1) then 
             write (iw,'(i4,f10.6,80X,f10.6)') i, eigs(1), summ 
-          endif 
+          end if 
         end do 
       end do 
       first1 = .FALSE. 

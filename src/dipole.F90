@@ -69,7 +69,7 @@
         end do 
         chargd = abs(sum) > 0.5D0 
         force = index(keywrd,'FORCE') + index(keywrd," THERMO") + index(keywrd,'IRC') /= 0 
-      endif 
+      end if 
       if (.not.force .and. chargd) then 
 !
 !   NEED TO RESET ION'S POSITION SO THAT THE CENTER OF MASS IS AT THE
@@ -85,7 +85,7 @@
         do i = 1, 3 
           coord(i,:numat) = coord(i,:numat) - center(i) 
         end do 
-      endif 
+      end if 
       dip = 0.0D00 
       do i = 1, numat 
         ni = nat(i) 
@@ -130,8 +130,8 @@
             dip(1,2) = dip(1,2) - dx*hyfpd 
             dip(2,2) = dip(2,2) - dy*hyfpd 
             dip(3,2) = dip(3,2) - dz*hyfpd 
-          endif 
-        endif 
+          end if 
+        end if 
 !
 !  FPC(8)=SPEED OF LIGHT,  FPC(1)=CHARGE ON ELECTRON.
 !
@@ -146,7 +146,7 @@
         dipvec(1) = dip(1,3) 
         dipvec(2) = dip(2,3) 
         dipvec(3) = dip(3,3) 
-      endif 
+      end if 
       if (mode == 1) write (iw, 140) ((dip(i,j),i=1,4),j=1,3)
 !     STORE DIPOLE MOMENT COMPONENTS IN UX,UY,UZ FOR USE IN
 !     ASSIGNING CHARGES DETERMINED FROM THE ESP. BHB
@@ -161,7 +161,7 @@
         do i = 1, 3 
           coord(i,:numat) = coord(i,:numat) + center(i) 
         end do 
-      endif 
+      end if 
       return  
 !
   140 format(' DIPOLE',11x,'X         Y         Z       TOTAL',/,' POINT-CHG.',&

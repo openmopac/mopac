@@ -42,6 +42,8 @@
       double precision :: eltot
       double precision :: dd1(mpack, 2)
 
+      avec10 = 0.d0
+      hg = 0.d0
       v = 0.d0
 
 !     **** diagonal term, sum Coulomb integrals from all other atoms ****
@@ -380,7 +382,7 @@
         ll(1) = '1'
         ll(2) = '2'
         ll(3) = 'v'
-      endif
+      end if
 
       if (.not. allocated(nsym)) allocate(nsym(n))
       do i = 1, n

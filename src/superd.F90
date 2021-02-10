@@ -61,7 +61,7 @@
           i = i + 4 
           totnuc = totnuc + 2.D0*denuc 
           totloc = totloc + 2.D0*deloc 
-        endif 
+        end if 
       end do 
       write (iw, '(/,A,2F13.6)') ' Total:', totnuc, totloc 
       write (iw, '(/,A,/)') '  a   n        piS(r)' 
@@ -83,7 +83,7 @@
           write (iw, '(1X,A2,1X,I3,F13.6)') elemnt(nat(ii)), ii, selpol 
           seltot = seltot + selpol 
           i = i + natorb(nat(ii))
-        endif 
+        end if 
       end do 
       write (iw, '(/,A,F13.6,/)') ' Total:', seltot 
       write (iw, '(A,/)') &
@@ -104,7 +104,7 @@
           end do 
           write (iw, '(1X,A2,1X,I3,4F13.6)') elemnt(nat(ii)), ii, orb 
           i = i + 4 
-        endif 
+        end if 
       end do 
       return  
       end subroutine superd 

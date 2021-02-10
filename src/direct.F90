@@ -58,6 +58,9 @@ subroutine direct(cycle_no)
     lim_gnorm = 3.d0
     i = Index (contrl, "GNORM") 
     if( i /= 0) lim_gnorm = Reada(contrl, i)
+    used = .false.
+    j = 0
+    k = 0
     sumher = 0.d0
     sumder = 0.d0
     sumier = 0.d0
@@ -416,7 +419,7 @@ subroutine direct(cycle_no)
           if(koment(i:i+1) /= "  ") exit
           koment(i:i+1) = ". "
         end do
-      endif
+      end if
        i = Int (seconds (1))
       if(is_a_ref(loop)) then
       write (ifiles_8, "(A49,I4)") koment, i - itime

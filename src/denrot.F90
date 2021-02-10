@@ -9,7 +9,6 @@
       use elemts_C, only : elemnt
       use common_arrays_C, only : nat, geo, nfirst, nlast, coord, p, tvec
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -66,6 +65,7 @@
       allocate(b(mpack))
       call gmetry (geo, coord) 
       iprt = 0 
+      j1 = 0
       do i = 1, numat 
         if = nfirst(i) 
         il = nlast(i) 
@@ -86,6 +86,9 @@
           delz = coord(3,j) - coord(3,i) 
           if (id /= 0) then 
             rmin = 100.D0 
+            delxm = 0.d0
+            delym = 0.d0
+            delzm = 0.d0
             do mm = -l1u, l1u 
               do nn = -l2u, l2u 
                 do kk = -l3u, l3u 
@@ -103,7 +106,7 @@
             delx = delxm 
             dely = delym 
             delz = delzm 
-          endif 
+          end if 
           jf = nfirst(j) 
           jl = nlast(j) 
           jpq = jl - jf - 1 
@@ -130,7 +133,7 @@
           if (l2 > 0) then 
             vect(:l1,:l2) = 0.D0 
             j1 = l2 + 1 
-          endif 
+          end if 
           if (i /= j) then 
             ij = max(ii,jj) 
             do i1 = 1, ii 
@@ -144,7 +147,7 @@
                 vect(isp(i1),isp(j1)) = vect(isp(i1),isp(j1)) + sum**2 
               end do 
             end do 
-          endif 
+          end if 
           k = 0 
           do i1 = if, il 
             k = k + 1 
@@ -203,7 +206,7 @@
           write (iw, '(20A6)') (line(n),n=1,ma) 
           kk = 4 
           ll = 0 
-        endif 
+        end if 
         write (iw, '(1X,A7,1X,A2,I3,10F11.6)') itext(i), jtext(i), natom(i), (b&
           (n),n=k,l) 
       end do 

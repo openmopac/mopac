@@ -50,7 +50,7 @@
         if (abs(arg) > one) arg = sign(one,arg) 
         g = asin(arg) 
         a = 0.D0 
-      endif 
+      end if 
       f(1,1) = a 
       f(1,2) = a 
       f(1,3) = pi - a 

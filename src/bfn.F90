@@ -27,19 +27,19 @@
         if (absx > 2.D00) then 
           last = 15 
           go to 60 
-        endif 
+        end if 
         if (absx > 1.D00) then 
           last = 12 
           go to 60 
-        endif 
+        end if 
         if (absx > 0.5D00) then 
           last = 7 
           go to 60 
-        endif 
+        end if 
         if (absx <= 1.D-6) go to 90 
         last = 6 
         go to 60 
-      endif 
+      end if 
       expx = exp(x) 
       expmx = 1.D00/expx 
       bf(1) = (expx - expmx)/x 

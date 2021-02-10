@@ -13,9 +13,9 @@
       USE chanel_C, only: iw
 
       implicit none
-      logical		op(7), isinc(na), isrep
-      character*20	lam(2)
-      character*15	mtype(0:1)
+      logical  op(7), isinc(na), isrep
+      character*20  lam(2)
+      character*15  mtype(0:1)
       character*3       rep
       integer           ictbl(8, 7), nrep(8), jsymt(0:8, 7), ioploc(7, 8), &
                         irs(8), isign(8), jrels(na, 7)
@@ -26,29 +26,29 @@
                         pmom(3), ef(3)
 
       data lam /'     principal      ', ' centroid of charge '/
-      data mtype	/' GAMMA TRANSF  ', ' SYMM ORBITALS '/
+      data mtype  /' GAMMA TRANSF  ', ' SYMM ORBITALS '/
 
 !     **** effect on s, p, d_eg, and d_t2g orbitals of the 7 symm operators ****
 !     **** 1 = symmetric, 2 = asymmetric ****
 !     **** line for 7 sym ops: C2z, C2y, C2x, i, SIGxy, SIGxz, SIGyz ****
       data jsymt   / 1, -1, -1, 1,  1, 1,  1, -1, -1, &
-     &		     1, -1, 1, -1,  1, 1, -1, 1, -1, &
-     &		     1,  1, -1, -1, 1, 1, -1, -1, 1, &
-     &		     1, -1, -1, -1, 1, 1,  1, 1, 1, &
-     &		     1,  1, 1, -1,  1, 1,  1, -1, -1, &
-     &		     1,  1, -1, 1,  1, 1, -1, 1, -1, &
-     &		     1, -1, 1, 1,   1, 1, -1, -1, 1  /
+     &         1, -1, 1, -1,  1, 1, -1, 1, -1, &
+     &         1,  1, -1, -1, 1, 1, -1, -1, 1, &
+     &         1, -1, -1, -1, 1, 1,  1, 1, 1, &
+     &         1,  1, 1, -1,  1, 1,  1, -1, -1, &
+     &         1,  1, -1, 1,  1, 1, -1, 1, -1, &
+     &         1, -1, 1, 1,   1, 1, -1, -1, 1  /
 
 !     **** ictbl is the character table: the E op is not included ****
 !     **** it is actually D2h, others are eq spaced rows with first cols ****
       data ictbl / 1, 1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, 1, -1, -1, &
-     &		   1, 1, -1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, -1, 1, -1, &
-     &		   1, -1, 1, -1, -1, 1, -1, 1, 1, -1, -1, 1, 1, -1, -1, 1, &
-     &		   1, -1, -1, 1, -1, 1, 1, -1 /
+     &       1, 1, -1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, -1, 1, -1, &
+     &       1, -1, 1, -1, -1, 1, -1, 1, 1, -1, -1, 1, 1, -1, -1, 1, &
+     &       1, -1, -1, 1, -1, 1, 1, -1 /
 
 !     **** ioploc is allowed operators for the point groups ****
       data ioploc / 7*0, 5, 6*0, 1, 6*0, 1, 6, 7, 4*0, 1, 2, 3, 4, 5, 6, 7, &
-     &		    4, 6*0, 1, 4, 5, 4*0, 1, 2, 3, 4*0 /
+     &        4, 6*0, 1, 4, 5, 4*0, 1, 2, 3, 4*0 /
 
 !     **** number of irreducible reps in each point group ****
       data nrep /1, 2, 2, 4, 8, 2, 4, 4/
@@ -57,6 +57,7 @@
 
 !  correct coordinates to center of gravity
 
+      ef = 0.d0
       summ = 0.D0
       sumx = 0.D0
       sumy = 0.D0
@@ -150,14 +151,16 @@
       summ = summ + zcore(i)
       sumx = sumx + zcore(i)*x(i)
       sumy = sumy + zcore(i)*y(i)
-    8 sumz = sumz + zcore(i)*z(i)
+      sumz = sumz + zcore(i)*z(i)
+    8 continue
       xo = sumx / summ
       yo = sumy / summ
       zo = sumz / summ
       do 9 i = 1, na
       x(i) = x(i) - xo
       y(i) = y(i) - yo
-    9 z(i) = z(i) - zo
+      z(i) = z(i) - zo
+    9 continue
 
 7     continue
 

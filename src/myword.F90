@@ -60,6 +60,6 @@
           end if
           keywrd(k:k) = ' ' 
         end do 
-      endif 
+      end if 
       return  
       end function myword 

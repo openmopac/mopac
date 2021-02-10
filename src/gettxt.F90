@@ -48,7 +48,7 @@
         filen = trim(path)//'SETUP' 
       else
         filen = 'SETUP' 
-      endif
+      end if
       inquire (file=filen, exist = exists)
        i = len_trim(keywrd) 
        allkey = keywrd(:i)
@@ -238,7 +238,7 @@
             filen = 'SETUP' 
             i = index(keywrd,'SETUP') 
             keywrd(i: i + 5) = " "
-          endif 
+          end if 
           keywrd(i:i+6) = " "
           call add_path(filen)
           open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED', &
@@ -275,7 +275,7 @@
           i = len_trim(keywrd)
           keywrd(i + 2:) = refkey(3)(:1001 - i)
           call upcase (keywrd, len_trim(keywrd)) 
-        endif 
+        end if 
 !
 !  READ TITLE LINE
 !
@@ -299,7 +299,7 @@
             filen = 'SETUP' 
             i = index(keywrd,'SETUP') 
             keywrd(i:i + 6) = " "
-          endif 
+          end if 
           call add_path(filen)
           open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED', &
             position='REWIND') 
@@ -317,10 +317,10 @@
           call upcase (keywrd, len_trim(keywrd)) 
         else 
           read (ir, '(A)', end=100, err=100) title 
-        endif 
+        end if 
       else        
         read (ir, '(A)', end=100, err=100) koment, title 
-      endif 
+      end if 
       go to 60 
 50    continue 
       if (zero_scf) go to 60

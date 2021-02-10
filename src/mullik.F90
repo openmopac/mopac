@@ -234,7 +234,7 @@
         end if
         h = store_h
         if (index(keywrd,'MULLIK') == 0) return         
-      endif 
+      end if 
       call mult (c, work, vecs, norbs) 
       i = -1     
       nlower = (norbs*(norbs + 1))/2
@@ -242,7 +242,7 @@
            call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 3)
       else
            call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 2)
-      endif
+      end if
 !            
       pb = pb*store
       summ = 0.D0 

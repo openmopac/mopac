@@ -16,7 +16,6 @@
 !                               WRITTEN BY BINGZE WANG, AUGUST 1993
 !***********************************************************************
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -55,7 +54,7 @@
           call mepmap (coord) 
           if (moperr) return  
           go to 20 
-        endif 
+        end if 
          mxmep = 50*numat + 1000
 !                         ***** CHOOSE SURFACE WHERE POINTS ARE SAMPLED
 !
@@ -67,7 +66,7 @@
 !                                                  THE CONNOLLY SURFACE
           call surfa (coord, potpt, nmep) 
           if (moperr) return  
-        endif 
+        end if 
 !                                           ***** CALCULATE MEP CHARGES
         call mepchg (coord, potpt, nmep) 
 !
@@ -75,7 +74,7 @@
         t1 = seconds(1) - t1 
         write (iw, '(/1X,A,F9.2,A)') 'TIME TO CALCULATE MEP', t1, ' SECONDS' 
         return  
-      endif 
+      end if 
    30 continue 
       write (iw, *) ' AM1 PARAMETERS FOR H,C,N,F AND CL ARE AVAILABLE.', &
         '  PMEP WAS NOT EXECUTED' 
@@ -99,7 +98,6 @@
 !                                      WRITTEN BY BINGZE WANG FEB 1993
 !**********************************************************************
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -147,7 +145,7 @@
           yy = w(2) - co(2,i) 
           zz = w(3) - co(3,i) 
           rr = sqrt(xx*xx + yy*yy + zz*zz) 
-        endif 
+        end if 
         fnear = 1.0D0 + exp((-alpw(ni)*(rr-aw(ni)))) 
 !
         call drotat (ni, co(1,i), w, e1b, enuc, rr) 
@@ -158,7 +156,7 @@
             vp(mn+1:i1-ia+1+mn) = e1b(i2+1:i1-ia+1+i2) 
             i2 = i1 - ia + 1 + i2 
             mn = i1 - ia + 1 + mn 
-          endif 
+          end if 
         end do 
       end do 
       mn = 0 
@@ -173,7 +171,7 @@
               ui = ui + pp(mn)*vp(mn) 
             else 
               ui = ui + 2.0D0*pp(mn)*vp(mn) 
-            endif 
+            end if 
           end do 
         end do 
       end do 
@@ -198,7 +196,6 @@
 !                                     BY BINGZE WANG ON 19 AUGUST 1993
 !***********************************************************************
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -301,7 +298,7 @@
               write (iw, '(''ERROR'',2X,''TOO MANY NEIGHBORS:'',I5)') nnbr 
               call mopend ('TOO MANY NEIGHBORS') 
               return  
-            endif 
+            end if 
             cnbr(:,nnbr) = co(:,jatom) 
             rnbr(nnbr) = rad(jatom) 
           end do 
@@ -318,7 +315,7 @@
             write (iw, '(T2,''VECTOR LENGTH OF ZERO IN SURFAC'')') 
             call mopend ('VECTOR LENGTH OF ZERO IN SURFAC') 
             return  
-          endif 
+          end if 
           call genvec (con, ncon) 
 !
 !     CONTACT PROBE PLACEMENT LOOP
@@ -394,7 +391,7 @@
           dd2 = vect1**2 + vect2**2 + vect3**2 
           if (dd2 < sr2) go to 20 
         end do 
-      endif 
+      end if 
       return  
    20 continue 
       collis = .TRUE. 
@@ -476,7 +473,7 @@
         core(3,1) = ri(3) 
         core(4,1) = ri(4) 
         core(1,2) = tore(ni)*ri(1) 
-      endif 
+      end if 
       return  
       end subroutine drepp2 
 
@@ -515,6 +512,19 @@
       double precision :: rijx, gam, a, xx11, xx21, xx22, xx31, xx32, xx33, yy11, &
         yy21, yy22, zz11, zz21, zz22, zz31, zz32, zz33, yyzz11, yyzz21, yyzz22 
 !-----------------------------------------------
+      xx11 = 0.d0
+      xx21 = 0.d0
+      xx22 = 0.d0
+      xx31 = 0.d0
+      xx32 = 0.d0
+      xx33 = 0.d0
+      yyzz11 = 0.d0
+      yyzz21 = 0.d0
+      yyzz22 = 0.d0
+      zz31 = 0.d0
+      zz32 = 0.d0
+      zz33 = 0.d0
+
       x(1) = xi(1) - xj(1) 
       x(2) = xi(2) - xj(2) 
       x(3) = xi(3) - xj(3) 
@@ -543,7 +553,7 @@
         y(3) = 0.D0 
         z(1) = -a*x(1)*x(3) 
         z(2) = -a*x(2)*x(3) 
-      endif 
+      end if 
       if (natorb(ni) > 1) then 
         xx11 = x(1)*x(1) 
         xx21 = x(2)*x(1) 
@@ -563,7 +573,7 @@
         yyzz11 = yy11 + zz11 
         yyzz21 = yy21 + zz21 
         yyzz22 = yy22 + zz22 
-      endif 
+      end if 
 !                               ROTATE THE NUCLEAR ATTRACTION INTEGRALS
       e1b(1) = -css1 
       if (natorb(ni) == 4) then 
@@ -576,7 +586,7 @@
         e1b(8) = (-cpps1*xx31) - cppp1*zz31 
         e1b(9) = (-cpps1*xx32) - cppp1*zz32 
         e1b(10) = (-cpps1*xx33) - cppp1*zz33 
-      endif 
+      end if 
       enuc = tore(ni)*gam 
       return  
       end subroutine drotat 
@@ -641,7 +651,6 @@
 !   LIFTED FROM <ESP> BY B.H.BESLER AND K.M.MERZ.
 !********************************************************************
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -822,13 +831,16 @@
 !
       
 !-----------------------------------------------
-      data iz/ 0/  
-      data rms/ 0.0D0/  
-      data rrms/ 0.0D0/  
-      data dipx/ 0.0D0/  
-      data dipy/ 0.0D0/  
-      data dipz/ 0.0D0/  
-      data idip/ .FALSE./  
+      iz = 0
+      rms = 0.0D0
+      rrms = 0.0D0
+      dipx = 0.0D0
+      dipy = 0.0D0
+      dipz = 0.0D0
+      dx = 0.d0
+      dy = 0.d0
+      dz = 0.d0
+      idip = .FALSE.
       au = ev*fpc_9 
 !     cf = 5.2917715D0*1.601917D0/3.33564D0 
       cf = fpc_1*a0*fpc_8*1.D-10 
@@ -843,7 +855,7 @@
         write (iw, '(8X,''(WILLIAMS SURFACES)''/)') 
       else 
         write (iw, '(8X,''(CONNOLLY SURFACES)''/)') 
-      endif 
+      end if 
 !
       if (index(keywrd,' CHARGE=') /= 0) iz = nint(reada(keywrd,index(keywrd,&
         ' CHARGE='))) 
@@ -864,8 +876,8 @@
             'DIPZ=')) 
         else 
           write (iw, *) ' DIPOLE CONSTRAINTS NOT USED FOR CHARGED MOLECULE' 
-        endif 
-      endif 
+        end if 
+      end if 
       do k = 1, numat 
         xk = co(1,k) 
         yk = co(2,k) 
@@ -894,7 +906,7 @@
         b(numat+2) = dx/cf 
         b(numat+3) = dy/cf 
         b(numat+4) = dz/cf 
-      endif 
+      end if 
 !                                                      THE A(J,K) ARRAY
       do k = 1, numat 
         do j = 1, k 
@@ -918,7 +930,7 @@
         a(numat+2,numat+2) = 0.D0 
         a(numat+3,numat+3) = 0.D0 
         a(numat+4,numat+4) = 0.D0 
-      endif 
+      end if 
 !                                                            SOLVE AQ=B
       l = 0 
       do i = 1, numat0 
@@ -932,7 +944,7 @@
         if (numat0 > 0) then 
           qi = sum(al(l+1:numat0+l)*b(:numat0)) 
           l = numat0 + l 
-        endif 
+        end if 
         q(i) = qi 
       end do 
       qi = det ! dummy use of det
@@ -956,7 +968,7 @@
           qq(i) = q(i)/abs(q(i))*qsc(i)/ieq 
         end do 
         q(:numat) = qq(:numat) 
-      endif 
+      end if 
 !                              ROOT MEAN SQUARE (RMS) AND RELATIVE RMS
       do i = 1, nmep 
         epi = ep(i) 
@@ -1011,7 +1023,6 @@
 !                                    WRITTEN BY BINGZE WANG, DEC 1992
 !*********************************************************************
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1075,7 +1086,7 @@
         npy = int(ym/step) + 1 
       else 
         npy = int(ym/step)*2 + 1 
-      endif 
+      end if 
       if (prtmep) then 
         write (imep, 30) numat, npx, npy, (-xm), (-ym), step 
    30   format(1x,3i5,3f8.2,/) 
@@ -1083,7 +1094,7 @@
         write (imep, 140) 
         write (imep, 150) (i,nat(i),(cmep(k,i),k=1,2),i=1,numat) 
         write (imep, *) 
-      endif 
+      end if 
 !                                   CREATE THE POINTS AND CALCULATE MEP
       ip = 0 
       t11 = t(1,1) 
@@ -1120,7 +1131,8 @@
           w(3) = zz2 + stepn*t23 
           if (need1 == 0) then 
 !                                          CHECK IF TOO CLOSE TO NUCLEI
-            rmin = 81.0D0 
+            rmin = 81.0D0
+            imin = 0
             do i = 1, numat 
               rr = (w(1)-c1(1,i))**2 + (w(2)-c1(2,i))**2 + (w(3)-c1(3,i))**2 
               if (rr < 0.25D0) cycle  l60 
@@ -1139,7 +1151,7 @@
               cw(3,imin) = w(3) 
               mx(imin) = m 
               my(imin) = n 
-            endif 
+            end if 
           else 
             call pmepco (pp, ria, w, ui, c1, nonzo, 0) 
             if (ui < vmin(natm)) then 
@@ -1147,8 +1159,8 @@
               cw(1,natm) = w(1) 
               cw(2,natm) = w(2) 
               cw(3,natm) = w(3) 
-            endif 
-          endif 
+            end if 
+          end if 
           ip = ip + 1 
         end do l60 
         if (.not.(need1==0 .and. prtmep)) cycle  
@@ -1185,13 +1197,13 @@
         if (minima == 0) then 
           write (iw, *) ' NO MEP MINIMUM FOUND IN THIS PLANE' 
           return  
-        endif 
+        end if 
         if (.not.minmep) go to 110 
         need1 = 1 
         step1 = step*0.2D0 
         npx = 11 
         npy = 11 
-      endif 
+      end if 
       natm = natm + 1 
       if (natm > numat) go to 110 
       do while(vmin(natm) > 0.0D0) 
@@ -1244,7 +1256,6 @@
 !                                     BY BINGZE WANG  28 OCT 1992
 !*********************************************************************
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1306,20 +1317,20 @@
           write (iw, 20) 
           iback = 1 
           return  
-        endif 
+        end if 
         if (n1==n2 .or. n1==n3 .or. n2==n3 .or. n1>numat .or. n2>numat .or. n3>&
           numat) then 
           write (iw, 30) 
           iback = 1 
           return  
-        endif 
+        end if 
         if (icase == 1) then 
           if (abs(z0) < 0.0001D0) then 
             write (iw, 40) n1, n2, n3 
           else 
             write (iw, 50) z0, n1, n2, n3 
-          endif 
-        endif 
+          end if 
+        end if 
    40   format(1x,'MEPS ARE IN THE PLANE DEFINED BY ATOMS',3i4) 
    50   format(1x,'MEPS ARE IN THE PLANE',f6.2,' ABOVE THAT DEFINED BY ATOMS',&
           3i4) 
@@ -1328,8 +1339,8 @@
             write (iw, 60) n1, n2, n3, n1, n2 
           else 
             write (iw, 70) n1, n2, n3, n1, n2, z0 
-          endif 
-        endif 
+          end if 
+        end if 
    60   format('line buggy') 
    70   format(1x,'Line buggy') 
         if (icase == 3) then 
@@ -1337,18 +1348,18 @@
             write (iw, 80) n2, n1, n3 
           else 
             write (iw, 90) n2, n1, n3, z0 
-          endif 
-        endif 
+          end if 
+        end if 
    80   format(1x,'MEPS ARE IN THE PLANE BISECTING THE ANGLE (',3i3,')') 
    90   format(1x,'MEPS ARE IN THE PLANE BISECTING THE ANGLE (',3i3,')',/,5x,&
           'BUT NON-ZERO VALUE Z0=',f6.2,' MAKES NO SENSE',' AND IS IGNORED') 
-      endif 
+      end if 
       if (icase <= 1) then 
         c1(1,:numat) = c(1,:numat) 
         c1(2,:numat) = c(2,:numat) 
         c1(3,:numat) = c(3,:numat) 
         go to 150 
-      endif 
+      end if 
 !                                            MOVE THE ORIGIN TO ATOM N1
       c1(1,:numat) = c(1,:numat) - c(1,n1) 
       c1(2,:numat) = c(2,:numat) - c(2,n1) 
@@ -1372,7 +1383,7 @@
         write (6, 190) dacos(cos1) 
         call mopend ('Error in PMEP') 
         return  
-      endif 
+      end if 
 !
       if (icase==1 .or. icase==2) then 
 !                                            CHOOSE X-AXIS FOR CASE 1,2
@@ -1393,8 +1404,8 @@
           t(3,1) = -x34*r341 
           t(3,2) = -y34*r341 
           t(3,3) = -z34*r341 
-        endif 
-      endif 
+        end if 
+      end if 
 !                                           CHOOSE X, Z-AXES FOR CASE 3
       if (icase == 3) then 
         if (r3 > r2) then 
@@ -1427,29 +1438,29 @@
           x4 = (x3 + x6)*0.5D0 
           y4 = (y3 + y6)*0.5D0 
           z4 = (z3 + z6)*0.5D0 
-        endif 
+        end if 
         r41 = 1.0D0/dsqrt(x4*x4 + y4*y4 + z4*z4) 
         t(1,1) = x4*r41 
         t(1,2) = y4*r41 
         t(1,3) = z4*r41 
-      endif 
+      end if 
 !                                      Z FOR ICASE=1, Y FOR ICASE=2 & 3
       z5 = 1.0D0 
       if (dabs(x2) > 0.1D0) then 
         y5 = -(x2*z3 - x3*z2)/(x2*y3 - x3*y2) 
         x5 = -(y5*y2 + z2)/x2 
         go to 130 
-      endif 
+      end if 
       if (dabs(x3) > 0.1D0) then 
         y5 = -(x3*z2 - x2*z3)/(x3*y2 - x2*y3) 
         x5 = -(y3*y5 + z3)/x3 
         go to 130 
-      endif 
+      end if 
       if (dabs(y3) > 0.1D0) then 
         x5 = -(y3*z2 - y2*z3)/(x2*y3 - x3*y2) 
         y5 = -(x5*x3 + z3)/y3 
         go to 130 
-      endif 
+      end if 
       if (dabs(y2) > 0.1D0) then 
         x5 = -(y2*z3 - y3*z2)/(x3*y2 - x2*y3) 
         y5 = -(x5*x2 + z2)/y2 
@@ -1458,7 +1469,7 @@
         write (iw, 200) x2, y2, x3, y3 
         call mopend ('Error in PMEP') 
         return  
-      endif 
+      end if 
   130 continue 
       r51 = 1.0D0/dsqrt(x5*x5 + y5*y5 + 1.0D0) 
       k = 3 
@@ -1479,11 +1490,13 @@
       do j = 1, 2 
         cs = 1.D6 
         cl = -1.D6 
+        is = 0
+        il = 0
         do i = 1, numat 
           if (c1(j,i) < cs) then 
             cs = c1(j,i) 
             is = i 
-          endif 
+          end if 
           if (c1(j,i) <= cl) cycle  
           cl = c1(j,i) 
           il = i 
@@ -1511,8 +1524,8 @@
           r0(1) = ((-xm) + c0(1))*t(1,1) + c0(2)*t(2,1) + c(1,n1) 
           r0(2) = ((-xm) + c0(1))*t(1,2) + c0(2)*t(2,2) + c(2,n1) 
           r0(3) = ((-xm) + c0(1))*t(1,3) + c0(2)*t(2,3) + c(3,n1) 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
   190 format(1x,'N2-N1-N3=',f9.3,' DEGREES, ALMOST LINEAR!') 
   200 format('X21,Y21,X31,Y31=',4f8.4,' WHY THEY ARE SO SMALL?')  
@@ -1531,7 +1544,6 @@
 !  WRITTEN BY BINGZE WANG, 20 OCTOBER 1991.
 !*********************************************************************
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   G l o b a l   P a r a m e t e r s
@@ -1556,7 +1568,7 @@
           if (j - ia + 1 > 0) then 
             pp(mn+1:j-ia+1+mn) = p(j1st+ia:j+j1st) 
             mn = j - ia + 1 + mn 
-          endif 
+          end if 
         end do 
       end do 
       return  

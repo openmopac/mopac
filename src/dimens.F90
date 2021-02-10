@@ -27,6 +27,8 @@
     if (numat == 1) return
     store_coords(:,:numat) = coord(:,:numat)
     rmax = 0.d0
+    kmax = 0
+    lmax = 0
     do k = 1, numat
       x1 = coord(1, k)
       y1 = coord(2, k)
@@ -100,6 +102,8 @@
       y1 = coord(2, l)
       z1 = coord(3, l)
       rabmax = 0.d0
+      kk = 0
+      ll = 0
       loop = 0
       do
         loop = loop + 1

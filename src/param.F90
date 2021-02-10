@@ -4,9 +4,9 @@
     save_parameters
 !
     use molkst_C, only : tdump, maxatoms, is_PARAM, numat, jobnam, &
-     moperr, method_mndo, method_am1, method_pm3, method_mndod, &
+     moperr, &
      norbs, mpack, nvar, n2elec, keywrd, uhf, l123, run, method_pm6_d3, &
-     method_pm6, lm61, program_name, gui, method_rm1, tleft, num_threads, &
+     method_pm6, lm61, program_name, gui, tleft, num_threads, &
      method_pm6_dh_plus, method_pm6_dh2, method_pm7, trunc_1, method_pm8, &
      trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, verson, n_methods, methods, &
      methods_keys, method_pm7_hh, method_pm7_minus, method_pm7_ts, method_pm6_dh2x, &
@@ -21,13 +21,13 @@
     use conref_C, only : fpcref 
     use meci_C, only : nmos
     use parameters_C, only: f0sd, g2sd, tore, ios, iop, iod, f0sd_store, g2sd_store, &
-      uss, upp, zs, t_par
+      zs, t_par
     USE journal_references_C, only : allref
     implicit none
     logical :: opend, exists, quotation_mark
     integer :: i, j, l, k, loop, maxcyc, n9, n4, n1
     double precision :: sum
-    character :: text*2000, idate*24, num*2
+    character :: text*2000, idate*24
   !
   !
   !.. External Calls ..
@@ -297,7 +297,7 @@
       fpc_8 = fpcref(2, 8)
       fpc_9 = fpcref(2, 9)
       fpc_10 = fpcref(2, 10)
-    endif
+    end if
     i = Index(contrl," POWER")
     if (i /= 0) power = Reada(contrl, i)
     do i = 1, n_methods

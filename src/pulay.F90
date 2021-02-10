@@ -54,7 +54,7 @@
         icalcn = numcal 
         maxlim = npulay
         debug = index(keywrd,'DEBUGPULAY') /= 0 
-      endif 
+      end if 
       if (start) then 
         linear = (n*(n + 1))/2 
         mfock = msize/linear 
@@ -69,8 +69,8 @@
           lfock = lfock + 1 
         else 
           lfock = 1 
-        endif 
-      endif 
+        end if 
+      end if 
       lbase = (lfock - 1)*linear 
 !
 !   FIRST, STORE FOCK MATRIX FOR FUTURE REFERENCE.
@@ -105,7 +105,7 @@
         do i = 1, nfock1 
           write (iw, '(6E13.6)') (emat(j,i),j=1,nfock1) 
         end do 
-      endif 
+      end if 
       l = 0 
       do i = 1, nfock1 
         evec(l+1:nfock1+l) = emat(i,:nfock1) 
@@ -131,7 +131,7 @@
       if (abs(d) < 1.D-6) then 
         start = .TRUE. 
         return  
-      endif 
+      end if 
       if (nfock < 2) return  
       il = nfock*nfock1 
       coeffs(:nfock) = -evec(1+il:nfock+il) 
@@ -139,7 +139,7 @@
         write (iw, '('' EVEC'')') 
         write (iw, '(6F12.6)') (coeffs(i),i=1,nfock) 
         write (iw, '(''    LAGRANGIAN MULTIPLIER (ERROR) =''                          ,F13.6)') evec(nfock1*nfock1) 
-      endif 
+      end if 
       do i = 1, linear 
         sum = 0.D0 
         l = 0 
@@ -198,8 +198,8 @@
           do i = 1, size
             do j = i+1, size
               unpacked(j,i) = unpacked(i,j)
-            enddo
-          enddo
+            end do
+          end do
           return
           end subroutine unpack_matrix
 
@@ -228,7 +228,7 @@
               do j = i, size
                 mat3(i,j) = mat3(i,j) - mat3(j,i)
                 mat3(j,i) = -mat3(i,j)
-              enddo
-            enddo  
+              end do
+            end do  
             return
             end subroutine sym_commute

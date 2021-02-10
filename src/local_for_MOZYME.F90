@@ -85,6 +85,7 @@ subroutine localize_for_MOZYME (c, n289, ic, n267, nc, ncstrt, nmos_loc, iorbs, 
    !   Build all the DII
    !
     l = 0
+    xiiii = 0.d0
     do k = 1, nmos_loc
       l = nnc_loc(k)
       m = ncstrt(k)

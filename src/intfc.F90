@@ -9,7 +9,6 @@
       use to_screen_C, only : fcint
       use to_screen_I
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -104,7 +103,7 @@
               sum = sum + dumy(j)*fmatrx((j*(j-1))/2+k)*dumy(k) 
             else 
               sum = sum + dumy(j)*fmatrx((k*(k-1))/2+j)*dumy(k) 
-            endif 
+            end if 
           end do 
         end do 
 !

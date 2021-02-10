@@ -15,7 +15,6 @@
       lpara1, latom1, lpara2, latom2
 !
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -187,7 +186,7 @@
               read(ires, iostat = io_stat)txt
             end do 
           end if
-        endif 
+        end if 
         read(ires, iostat = io_stat) max_count, ijlp, ilp, jlp, jlp1, ione 
         read(ires, iostat = io_stat) rxn_coord1, rxn_coord2 
         read(ires, iostat = io_stat)all_geo(:max_count,:,:natoms)
@@ -195,7 +194,7 @@
         read(ires, iostat = io_stat)surf(:max_count), all_points1(:max_count), all_points2(:max_count)
       else
         ijlp = 1
-      endif 
+      end if 
       if ( minimize_energy_in_grid )  then
         big_loop = 4*npts1*npts2
       else

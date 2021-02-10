@@ -129,6 +129,8 @@ contains
     double precision :: dx, dy, dz, r, t, dip, quad
     double precision :: w(45)
     v(1:nps) = 0.d0
+    dip = 0.d0
+    quad = 0.d0
 
     do j=1, numat
       nao = nlast(j)-nfirst(j)
@@ -138,7 +140,7 @@ contains
         ni = nat(j)
         dip = dd(ni) * a0
         quad = (a0 *qq(ni))** 2
-      endif
+      end if
 
       do i=1, nps
 
@@ -354,7 +356,7 @@ contains
 
       if (allocated (a_part)) then
         deallocate (a_part) 
-      endif
+      end if
       if (nps > na2max .or. nps > na1max) then
 
         call set_tesselation (surface_handle, i)
@@ -372,7 +374,7 @@ contains
        & nsetf, nset, rsc, nipsrs, iatsp, tm, ioldcv, maxrs, lenabc, &
        & .false., ndim)
 
-      endif
+      end if
 
   !    write(iw,*) ' Number of close-range interactions: ', ndim
 
@@ -381,26 +383,26 @@ contains
          write(iw,*) ' Allocation failed for a_part'
          call mopend (' Allocation failed for a_part')
          return
-      endif
+      end if
 
-    endif
+    end if
 
     if (allocated (m_vec)) then
       deallocate (m_vec) 
-    endif
+    end if
 
     if (use_a_blocks) then
       if (allocated (iblock_pos)) then
         deallocate (iblock_pos) 
         deallocate (a_block) 
-      endif
+      end if
 
       allocate (iblock_pos(numat) , stat=i) 
       if (i /= 0) then
          write(iw, *) ' Allocation failed for iblock_pos'
          call mopend (' Allocation failed for iblock_pos')
          return
-      endif
+      end if
 
       ndim = 0
       max_block_size = 0
@@ -409,9 +411,9 @@ contains
         j = npoints(i+1) - npoints(i)
         if (j > max_block_size) then
           max_block_size = j
-        endif
+        end if
         ndim = ndim + (j*(j+1)) / 2
-      enddo
+      end do
 
   !    write(iw, *) ' Size of the preconditioner = ', ndim
   !    write(iw, *) ' Size of max_block = ', max_block_size
@@ -421,13 +423,13 @@ contains
          write(iw, *) ' Allocation failed for m_vec'
          call mopend (' Allocation failed for m_vec')
          return
-      endif
+      end if
       allocate (a_block(max_block_size, max_block_size) , stat=i) 
       if (i /= 0) then
          write(iw, *) ' Allocation failed for a_block'
          call mopend (' Allocation failed for a_block')
          return
-      endif
+      end if
 
       a_block = 0
 
@@ -440,9 +442,9 @@ contains
          write(iw, *) ' Allocation failed for m_vec'
          call mopend (' Allocation failed for m_vec')
          return
-      endif
+      end if
 
-    endif
+    end if
 
   end subroutine coscavz
 
@@ -988,6 +990,7 @@ contains
 
           do j = 1, 1082
             if (din(j)) then
+              ipm = nps0
               spm = -1.d0
               x1 = dirtm(1, j)
               x2 = dirtm(2, j)
@@ -1078,17 +1081,17 @@ contains
     do i=1, nps
       j = iatsp(i) -1
       s_box(j) = s_box(j) + Int(cosurf(4, i))
-    enddo
+    end do
 
     do i=1, numat
       s_box(i-1) = Int(s_box(i-1) / (srad(i))**2 * (srad(i) + rsolv)**2)
-    enddo
+    end do
 
  !   write(iw, *) ' Cosmo atomic radii and accessible surface area '
 
  !   do i=1, numat
   !    write(iw, '(I10, F12.4, I10)') i, srad(i), s_box(i-1) 
-  !  enddo
+  !  end do
     !
     !     NOW THE SEGMENT FORMATION ON ALL ATOMS IS FINISHED
     !     NOW THE CLOSURE OF THE CONCAVE REGIONS OF THE SURFACE WILL BE DONE
@@ -1205,7 +1208,7 @@ contains
         call mfinel (ii, 1, finel, nar_csm, nsetf, nset, rsc, &
            & nipsrs, dirvec, tm(1, 1, i), xi, ri, &
            & nfl1, ioldcv, maxrs, lenabc, numat)
-      endif
+      end if
 
       do jj = 1, ii-1
         j = iatsp(jj)
@@ -1244,7 +1247,7 @@ contains
             end do
 
             aa = aa / (cosurf(4, ii) * cosurf(4, jj))
-          endif
+          end if
         end if
         v(ii) = v(ii) + aa * q(jj)
         v(jj) = v(jj) + aa * q(ii)
@@ -1295,7 +1298,7 @@ contains
         call mfinel (ii, 1, finel, nar_csm, nsetf, nset, rsc, &
            & nipsrs, dirvec, tm(1, 1, i), xi, ri, &
            & nfl1, ioldcv, maxrs, lenabc, numat)
-      endif
+      end if
 
       do jj = 1, ii -1
         j = iatsp(jj)
@@ -1333,7 +1336,7 @@ contains
             aa = aa / (cosurf(4, ii) * cosurf(4, jj))
 
             a_part(npos) = aa
-          endif
+          end if
         end if
       end do
     end do
@@ -1367,7 +1370,7 @@ contains
     if (new_iteration) then
       ijpos = 0
       new_iteration = .false.
-    endif
+    end if
 
     maxrs = 60*numat
 
@@ -1383,7 +1386,7 @@ contains
           call mfinel (ii, 1, finel, nar_csm, nsetf, nset, rsc, &
              & nipsrs, dirvec, tm(1, 1, i), xi, ri, &
              & nfl1, ioldcv, maxrs, lenabc, numat)
-        endif
+        end if
 
         do j3 = 1, i3 - 1
           jj = ind1(j3)
@@ -1422,7 +1425,7 @@ contains
               end do
 
               aa = aa / (cosurf(4, ii) * cosurf(4, jj))
-            endif
+            end if
           end if
 
           r(ii) = r(ii) + aa * q(jj)
@@ -1441,7 +1444,7 @@ contains
           call mfinel (ii, 1, finel, nar_csm, nsetf, nset, rsc, &
              & nipsrs, dirvec, tm(1, 1, i), xi, ri, &
              & nfl1, ioldcv, maxrs, lenabc, numat)
-        endif
+        end if
 
         do j3 = 1, n2
           jj = ind2(j3)
@@ -1480,7 +1483,7 @@ contains
               end do
 
               aa = aa / (cosurf(4, ii) * cosurf(4, jj))
-            endif
+            end if
           end if
 
           r(ii) = r(ii) + aa * q(jj)
@@ -1530,7 +1533,7 @@ contains
           call mfinel (ii, 1, finel, nar_csm, nsetf, nset, rsc, &
              & nipsrs, dirvec, tm(1, 1, i), xi, ri, &
              & nfl1, ioldcv, maxrs, lenabc, numat)
-        endif
+        end if
 
         do j3 = 1, i3 -1
           jj = ind1(j3)
@@ -1567,7 +1570,7 @@ contains
               aa = aa / (cosurf(4, ii) * cosurf(4, jj))
 
               a_part(npos) = aa
-            endif
+            end if
           end if
         end do
       end do
@@ -1582,7 +1585,7 @@ contains
           call mfinel (ii, 1, finel, nar_csm, nsetf, nset, rsc, &
              & nipsrs, dirvec, tm(1, 1, i), xi, ri, &
              & nfl1, ioldcv, maxrs, lenabc, numat)
-        endif
+        end if
         do j3 = 1, n2
           jj = ind2(j3)
           j = iatsp(jj)
@@ -1619,7 +1622,7 @@ contains
               aa = aa / (cosurf(4, ii) * cosurf(4, jj))
 
               a_part(npos) = aa
-            endif
+            end if
           end if
         end do
       end do
@@ -1665,7 +1668,7 @@ contains
           else
             npos = npos +1
             aa = a_part(npos) 
-          endif
+          end if
           if (i == j) then ! same atom
             ips = ii - npoints(i) +1
             jps = jj - npoints(i) +1
@@ -1674,9 +1677,9 @@ contains
               m_vec(iblock_pos(i) -1 + (ips*(ips-1))/2 + jps) = aa
             else
               m_vec(iblock_pos(i) -1 + (jps*(jps-1))/2 + ips) = aa
-            endif
+            end if
 
-          endif
+          end if
 
         end do
       end do
@@ -1701,7 +1704,7 @@ contains
           else
             npos = npos +1
             aa = a_part(npos) 
-          endif
+          end if
 
           if (i == j) then ! same atom
 
@@ -1711,9 +1714,9 @@ contains
               m_vec(iblock_pos(i) -1 + (ips*(ips-1))/2 + jps) = aa
             else
               m_vec(iblock_pos(i) -1 + (jps*(jps-1))/2 + ips) = aa
-            endif
+            end if
 
-          endif
+          end if
 
         end do
       end do
@@ -2099,6 +2102,7 @@ contains
     double precision :: t, tt, rho, rho_old, alpha, beta
     double precision, save :: current_tol
     double precision, external :: ddot
+    rho_old = 0.d0
     new_iteration = .true.
 
     maxrs = 60*numat
@@ -2108,7 +2112,7 @@ contains
 !
       call amat_diag (coord, srad, numat, cosurf, n, nar_csm, nsetf, &
          & nset, rsc, nipsrs, iatsp, tm, ioldcv, maxrs, lenabc, a_diag)
-    endif
+    end if
 
     if (n > na1max .or. n > na2max) then
       call set_tesselation (surface_handle, ierr)
@@ -2119,7 +2123,7 @@ contains
 
       if (compute_a_part .and. new_points) then
         i = count_short_ints  (cosurf, 4, simulate_aq_dir_int, .true.) 
-      endif
+      end if
 
     else
 
@@ -2127,13 +2131,13 @@ contains
         call simulate_aq_vec (coord, srad, numat, cosurf, n, nar_csm, &
        & nsetf, nset, rsc, nipsrs, iatsp, tm, ioldcv, maxrs, lenabc, &
        & .true., i)
-      endif
+      end if
 
 
     end if
     if (new_points) then
       call precondition  (cosurf, n, iatsp, numat, a_diag, m)
-    endif
+    end if
 
     if(new_x) then        ! initial guess
       call precondition_solve (m, x, b, n)
@@ -2168,7 +2172,7 @@ contains
       t = start_tol * 0.001d0
     else
       t = stop_tol
-    endif
+    end if
 
     t = Min (t, current_tol) 
     current_tol = t
@@ -2285,7 +2289,7 @@ contains
     if (.not. use_a_blocks) then
       m(1:nps) = 1.d0 / a_diag(1:nps)
       return
-    endif
+    end if
 
     !
     ! Build block-preconditioner
@@ -2298,7 +2302,7 @@ contains
         ii = iblock_pos(j) -1
         jj = i - npoints(j) +1
         m(ii + (jj*(jj+1))/2) = a_diag(i) 
-      enddo
+      end do
 
     else
 
@@ -2317,7 +2321,7 @@ contains
 
           if (d2 <= disex2 .and. ii /= jj) then
             ijpos = ijpos +1
-          endif
+          end if
 
           if (i == j) then ! same atom
 
@@ -2327,7 +2331,7 @@ contains
                aa = 1.d0 / Sqrt (d2) 
             else
                aa = a_part(ijpos) 
-            endif
+            end if
 
             ips = ii - npoints(i) +1
             jps = jj - npoints(i) +1
@@ -2335,12 +2339,12 @@ contains
 
             m(iblock_pos(i) -1 + (ips*(ips-1))/2 + jps) = aa
 
-          endif
+          end if
 
-        enddo
-      enddo
+        end do
+      end do
 
-    endif
+    end if
 
     !
     ! Invert blocks
@@ -2354,22 +2358,22 @@ contains
            do jj=1,j
              a_block(jj, j) = m(ijpos) 
              ijpos = ijpos +1
-           enddo
-         enddo
+           end do
+         end do
 
          call dpotrf ('U', ii, a_block, max_block_size, ierr) 
       !   if (ierr /= 0) then
       !     write(iw,*) ' Error in decomposition of atom ', i, ' = ', ierr
       !     call mopend(' Internal error') 
       !     return
-      !  endif
+      !  end if
 
          call dpotri ('U', ii, a_block, max_block_size, ierr) 
          if (ierr /= 0) then
            write(iw,*) ' Error in Matrix invert ', i, ' = ', ierr
            call mopend(' Internal error') 
            return
-         endif
+         end if
 
        ! !
        ! ! === Test ===
@@ -2378,8 +2382,8 @@ contains
        ! do j=1,ii
        !   do jj=1,j
        !     a_block( j, jj ) = a_block( jj, j )
-       !   enddo
-       ! enddo
+       !   end do
+       ! end do
        !
        ! do j=1,ii
        !   call mult_triangle_vec( m( iblock_pos(i)), a_block(1,j), ii, &
@@ -2389,14 +2393,14 @@ contains
        !     if( jj == j ) then
        !        if( abs( q_vec( jj ) -1.d0 ) > 1.d-6 ) then
        !           write(26,*) ' Error diag', i, j, jj
-       !        endif
+       !        end if
        !     else
        !        if( abs( q_vec( jj )) > 1.d-6 ) then
        !           write(26,*) ' Error off-diag', i, j, jj
-       !        endif
-       !     endif
-       !   enddo
-       ! enddo
+       !        end if
+       !     end if
+       !   end do
+       ! end do
        !
        ! !
        ! ! === end Test ===
@@ -2407,11 +2411,11 @@ contains
            do jj=1,j
              m(ijpos) = a_block(jj, j) 
              ijpos = ijpos +1
-           enddo
-         enddo
+           end do
+         end do
 
-       endif
-     enddo
+       end if
+     end do
 
   end subroutine precondition
 
@@ -2494,11 +2498,11 @@ contains
           call mult_triangle_vec (m(iblock_pos(i)) , r(ipos) , ndim, &
             & z(ipos)) 
           ipos = ipos + ndim
-        endif
-      enddo
+        end if
+      end do
     else
       z(1:n) = r(1:n) * m(1:n)
-    endif
+    end if
 
   end subroutine precondition_solve
 
@@ -2527,14 +2531,14 @@ contains
           do j=1, i
             ij = ij +1
             s = s + t(ij) * x(j)
-          enddo
+          end do
           ii = ij
           do j=i+1, n
             ij = ij + j -1
             s = s + t(ij) * x(j)
-          enddo
+          end do
           y(i) = s
-        enddo
+        end do
 
   end subroutine mult_triangle_vec
 
@@ -2699,7 +2703,7 @@ contains
                          &  +( cosurf(2,j) - coord(2,i) )**2 &
                          &  +( cosurf(3,j) - coord(3,i) )**2) 
             v(1) = v(1) + qscnet(j, 2) * t
-          enddo
+          end do
 
           v(1) = -v(1) * fcon
 
@@ -2727,9 +2731,9 @@ contains
             s1 = s1 + v(j) * p(ii+j) * gden(im)
           end do
 
-        endif
+        end if
       end do
-    endif
+    end if
 
     solv_energy = s1 * 0.5d0 + ediel
 

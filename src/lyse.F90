@@ -96,7 +96,7 @@
             if (r < r_min .and. r > 0.95d0) then
               r_min = r
               k = ibonds(j,i)
-            endif            
+            end if            
           end do
           if ( k > 0) then
 !
@@ -121,7 +121,7 @@
             nbonds(k) = nbonds(k) + 1
             ibonds(nbonds(k),k) = i
           end if
-        endif
+        end if
       end if
     end do
   end subroutine lyse

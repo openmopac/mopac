@@ -40,9 +40,9 @@
             if (sinth > 0.D0) rcos = 6.28318530717959D0 - rcos 
             rcos = -rcos 
             return  
-          endif 
-        endif 
-      endif 
+          end if 
+        end if 
+      end if 
       rcos = 0.0D0 
       return  
       end subroutine dang 

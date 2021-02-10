@@ -128,7 +128,8 @@
           line = line(len_trim(line) - 3:)
           if (line == ".PDB") then
             call mopend("GEO_DAT file should not be a PDB file (It would be over-written)")
-            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_DAT file name's suffix "".pdb"" with "".ent"")"
+            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_DAT&
+                                & file name's suffix "".pdb"" with "".ent"")"
           end if
         else
           do i = len_trim(geo_dat_name), 1, -1
@@ -150,7 +151,8 @@
           line = line(len_trim(line) - 3:)
           if (line == ".PDB") then
             call mopend("GEO_REF file should not be a PDB file (It would be over-written)")
-            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_REF file name's suffix "".pdb"" with "".ent"")"
+            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_REF&
+                                & file name's suffix "".pdb"" with "".ent"")"
           end if
         else
           do i = len_trim(geo_ref_name), 1, -1

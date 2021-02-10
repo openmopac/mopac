@@ -60,7 +60,7 @@
           if (nvar_nvo > 0) then 
             work(l:nvar_nvo-1+l) = vnert(l:nvar_nvo-1+l)/pnert(i) 
             l = nvar_nvo + l 
-          endif 
+          end if 
           if (sum2 < cutoff) cycle  
           ncut = i 
           go to 50 
@@ -68,7 +68,7 @@
         ncut = ifirst 
 !     ORTHONORMALIZED BASIS
 !     B(MINEAR,NCUT) = A(MINEAR,nvar_nvo)*WORK(nvar_nvo,NCUT)
-      endif 
+      end if 
    50 continue 
       call mxm (a, minear, work, nvar_nvo, b, ncut) 
       return  

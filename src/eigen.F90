@@ -158,7 +158,7 @@ subroutine eigen (write_gpt, write_out)
             do j = 1, print_ncolumns
               write (iw, "(i6,'  ')", advance="no") print_first_orbital + &
                   & (i - 1) * print_columns_per_panel + j
-            enddo
+            end do
             write (iw, "(/)")
             !
             ! Print eigenvalues
@@ -166,7 +166,7 @@ subroutine eigen (write_gpt, write_out)
             do j = 1, print_ncolumns
               write (iw, "(f8.3)", advance="no") eigs(print_shift + &
                   & (i - 1) * print_columns_per_panel + j)
-            enddo
+            end do
             write (iw, "(/)")
             !
             ! Print Eigenvectors
@@ -178,13 +178,13 @@ subroutine eigen (write_gpt, write_out)
                 do j = 1, print_ncolumns
                   write (iw, "(f8.4)", advance="no") c &
                  & (k, print_shift + (i - 1) * print_columns_per_panel + j)
-                enddo
+                end do
                 write (iw, "(' ')")
                 k = k + 1
-              enddo
-            enddo
-          enddo
-        enddo
+              end do
+            end do
+          end do
+        end do
       end if
     end if
 1100 continue

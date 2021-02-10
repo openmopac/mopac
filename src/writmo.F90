@@ -143,7 +143,7 @@
         call geout (1) 
         call mopend ('THE SCF CALCULATION FAILED.') 
         return  
-      endif 
+      end if 
       if ( Abs (pressure) > 1.d-4) then
       !
       ! Remove energy term arising from the external pressure,
@@ -240,7 +240,7 @@
       else 
         write (iw, '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' )') &
           elect + enuclr + solv_energy
-      endif 
+      end if 
 !
 !  There is a bug in the call to symtrz.  This appears to be a compiler bug!
 !
@@ -251,7 +251,7 @@
       &   '',A4)') elect, name 
       else 
         write (iw, '(    10X,''ELECTRONIC ENERGY       ='',F17.5,'' EV'' )') elect 
-      endif 
+      end if 
       write (iw, '(    10X,''CORE-CORE REPULSION     ='',F17.5,'' EV''    )') enuclr 
       if (iseps) then 
         if (abs(solv_energy) > 1.d-1) &
@@ -389,10 +389,10 @@
           if (na(latom) /= 0) grtype = ' KCAL/RADIAN  ' 
           write (iw, &
       '(10X,''FOR REACTION COORDINATE ='',F17.5,'' DEGREES'')') xreact*degree 
-        endif 
+        end if 
         write (iw, '(10X,''REACTION GRADIENT       ='',F17.5,A14)') &
         gcoord(1,1), grtype 
-      endif 
+      end if 
       eionis = 0.D0
       if (nalpha > 0 .and. nbeta > 0) then 
         eionis = -max(eigs(nalpha),eigb(nbeta)) 
@@ -401,7 +401,7 @@
       else if (nelecs > 1) then 
         if (nopen > 0) eionis = -eigs(nopen)
         if (nclose > 0) eionis = min(eionis,-eigs(nclose))
-      endif 
+      end if 
       i = nclose 
       if (fract > 1.99D0) i = nopen 
       nopn = nopen - i 
@@ -431,16 +431,16 @@
             write (iw, &
       '(  10X,''     (SOMO) LUMO (EV)   ='',         ''      ('',F6.3,'')'',F7.3)') &
       eigs(nclose+1), (eigs(i),i=nclose + 2,norbs,10000) 
-          endif 
+          end if 
         end if 
-      endif
+      end if
       if (uhf) then 
         write (iw, '(      10X,''NO. OF ALPHA ELECTRONS  ='',I11)') nalpha + nint((nalpha_open - nalpha)*fract)
         write (iw, '(      10X,''NO. OF BETA  ELECTRONS  ='',I11)') nbeta + nint((nbeta_open - nbeta)*fract)
       else 
         write (iw, '(      10X,''NO. OF FILLED LEVELS    ='',I11)') nopen - nopn 
         if (nopn /= 0) write (iw, '(   10X,''AND NO. OF OPEN LEVELS  ='',I11)') nopn 
-      endif     
+      end if     
       if (mol_weight > 0.1D0) write (iw, &
         '(    10X,''MOLECULAR WEIGHT        ='',F16.4)') mol_weight 
       call gmetry (geo, coord) 
@@ -490,7 +490,7 @@
               gtype = 'KCAL/ANGSTROM' 
             else 
               gtype = 'KCAL/RADIAN  ' 
-            endif 
+            end if 
           if (na(k) == 0) then 
             type(1) = 'CARTESIAN X' 
             type(2) = 'CARTESIAN Y' 
@@ -499,12 +499,12 @@
             type(1) = 'BOND       ' 
             type(2) = 'ANGLE      ' 
             type(3) = 'DIHEDRAL   ' 
-          endif 
+          end if 
             write (iw, '(I7,I11,1X,A2,4X,A11,F13.6,F14.6,2X,A13)') &
             i, k, elemnt(l), type(j), xi, grad(i), gtype 
           end do 
         end if
-      endif 
+      end if 
 !
 !     WRITE OUT THE GEOMETRY
 !
@@ -540,7 +540,7 @@
         end do 
         write (iw, '(2/10X,''  INTERATOMIC DISTANCES'')') 
         call vecprt (rxyz, numat) 
-      endif 
+      end if 
       if (.not. mozyme) then
         where (.not.eigs(:norbs)>=(-999.D0) .or. .not.eigs(:norbs)<=1000.D0)  
           eigs(:norbs) = 1.D-12 
@@ -588,7 +588,7 @@
               write (iw, '(2/10X,'' BETA EIGENVECTORS  '')') 
               call symtrz (cb, eigb, 1, .TRUE.) 
               call matou1 (cb, eigb, norbs, norbs, norbs, 2) 
-            endif 
+            end if 
           else 
             if (uhf) then
               write (iw, '(2/10X,''ALPHA EIGENVALUES  '')')
@@ -599,14 +599,14 @@
             if (uhf) then 
               write (iw, '(2/10X,'' BETA EIGENVALUES '')') 
              write (iw, '(8F10.5)') (eigb(i),i=1,norbs) 
-            endif 
-          endif 
+            end if 
+          end if 
           if (index(keywrd,' SUPER') /= 0) then 
             write (iw, '(/,10X,A,/)') ' SUPERDELOCALIZABILITIES' 
             call superd (c, eigs, norbs, nelecs, numat, nat) 
-          endif 
+          end if 
         end if
-      endif 
+      end if 
       if (nelecs /= 0) then 
 !
 !   Correct density matrix, if necessary
@@ -648,9 +648,9 @@
                   rxyz(2) = p(k+3) + p(k+6) + p(k+10)
                   if(j > 2) then
                     rxyz(3) = p(k+15) + p(k+21) + p(k+28) + p(k+36) + p(k+45)
-                  endif
-                endif
-              endif
+                  end if
+                end if
+              end if
             else
               rxyz(1) = p((k*(k+1))/2)
               if(j > 1) then
@@ -661,9 +661,9 @@
                      & + p(((k+6)*(k+7))/2) + p(((k+7)*(k+8))/2) &
                      & + p(((k+8)*(k+9))/2)
                 end if
-              endif
-            endif
-          endif
+              end if
+            end if
+          end if
           if (prt_charges) then
             if (pdb_label) then
               m = m + 1
@@ -683,15 +683,15 @@
             dip = dipole_for_mozyme(dumy, 1)
           else
             dip = dipole(p,coord,dumy,1) 
-          endif          
+          end if          
           sum = dumy(1) ! Dummy operation - to use dumy
         end if
-      endif 
+      end if 
       if (norbs > 0) then 
         if (index(keywrd,' FOCK') /= 0) then 
           write (iw, '('' FOCK MATRIX '')') 
           call vecprt (f, norbs) 
-        endif 
+        end if 
         if (mers(1) /= 0 .and. .not. mozyme .and. index(keywrd, " BRZ") /= 0) then           
           bcc = index(keywrd,' BCC') /= 0 
           open(unit=ibrz, file=brillouin_fn, status='UNKNOWN') 
@@ -699,7 +699,7 @@
           write (ibrz,*) (f(i),i=1,(norbs*(norbs + 1))/2) 
           write (ibrz,*) tvec, id, numat, ((coord(j,i),j=1,3),i=1,numat) 
           write (ibrz,*) (nfirst(i),nlast(i),i=1,numat) 
-        endif 
+        end if 
         if (nelecs /= 0) then 
           if (index(keywrd,' DENS') /= 0) then 
             write (iw, '(2/,20X,'' DENSITY MATRIX IS '')') 
@@ -772,8 +772,8 @@
           if (index(keywrd,' PI') /= 0) then 
             write (iw, '(2/10X,''SIGMA-PI BOND-ORDER MATRIX'')') 
             call denrot () 
-          endif 
-        endif 
+          end if 
+        end if 
         if (uhf) then 
           sz = (nalpha + (nalpha_open - nalpha)*fract - (nbeta + (nbeta_open - nbeta)*fract))*0.5D0 
           ss2 = sz*sz 
@@ -791,7 +791,7 @@
             write (iw, '(  20X,''(S**2)  ='',F12.6)') ss2 
           else
             write(iw,'(10x,a)')" Average over configurations used, so (S**2) is not meaningful"
-          endif
+          end if
           if (index(keywrd,' SPIN') /= 0) then 
             write (iw, '(2/10X,''SPIN DENSITY MATRIX'')') 
             call vecprt (pa, norbs) 
@@ -827,9 +827,9 @@
              c(nfirst(:numat), j)**2*0.66666666D0 
             write (iw, '(5(2X,A2,I2,F9.5,1X))') (elemnt(nat(i)),i,q(i),i=1,&
               numat) 
-          endif 
+          end if 
           pa = p - pb
-        endif 
+        end if 
         if (gui .or. index(keywrd,' BONDS') + index(keywrd,' ALLBO') /= 0) then 
           if ( .not. mozyme) then
             if (nbeta == 0) then 
@@ -840,10 +840,10 @@
               call molval (c, pa, 2.D0) 
               write (iw, '(/10X,''BONDING CONTRIBUTION OF EACH BETA  M.O.'',/)') 
               call molval (cb, pb, 2.D0) 
-            endif 
+            end if 
           end if
           call bonds () 
-        endif 
+        end if 
         call to_screen("To_file: Normal output")
         i = nclose + nalpha 
         if (index(keywrd,' LOCAL') + index(keywrd,' RABBIT') + index(keywrd,' BANANA') /= 0) then 
@@ -851,14 +851,14 @@
           if (nbeta /= 0) then 
             write (iw, '(2/10X,'' LOCALIZED BETA MOLECULAR ORBITALS'')') 
             call local (cb, nbeta, eigb, 1, "cb") 
-          endif 
-        endif 
+          end if 
+        end if 
         if (index(keywrd,' 1ELE') /= 0) then 
           write (iw, '('' FINAL ONE-ELECTRON MATRIX '')') 
           call vecprt (h, norbs) 
-        endif 
+        end if 
         if (index(keywrd,' ENPART') /= 0) call enpart () 
-      endif 
+      end if 
       if (seconds(2) - time0 > 1.d7 .or. index(keywrd,' DENOUT') /= 0) call den_in_out(1)
       if ((ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20 .or. &
         index(keywrd,' SIZE') /= 0) .and. index(keywrd,' MECI') + index(keywrd,' ESR')/=0) then 
@@ -867,7 +867,7 @@
         last = 3 
         sum = meci() 
         if (moperr) return  
-      endif 
+      end if 
       if (index(keywrd,' MULLIK') + index(keywrd,' GRAPH') /= 0 .and. .not. gui) then 
         if (index(keywrd,' MULLIK') /= 0) write (iw, &
           '(/10X,'' MULLIKEN POPULATION ANALYSIS'')') 
@@ -898,7 +898,7 @@
         call mullik () 
         if (index(keywrd,' GRAPH') /= 0) &
           write (iw,'(/10X,'' DATA FOR GRAPH WRITTEN TO DISK'')') 
-      endif 
+      end if 
 !
 !  NOTE: ON EXIT FROM MULLIK, PB HOLDS THE MULLIKEN ANALYSIS.
 !
@@ -952,7 +952,7 @@
           end if
         end if
         icalcn = numcal 
-      endif 
+      end if 
       if (moperr) return  
       iwrite = iarc 
       if (site_no > 9999) then
@@ -1027,7 +1027,7 @@
       else 
         write (iwrite, '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' )') &
           elect + enuclr + solv_energy 
-      endif 
+      end if 
       write (iwrite, '(  10X,''ELECTRONIC ENERGY       ='',F17.5,'' EV'')')  elect 
       write (iwrite, &
         '(  10X,''CORE-CORE REPULSION     ='',F17.5,'' EV'')') &
@@ -1078,10 +1078,10 @@
           if (na(latom) /= 0) grtype = ' KCAL/RADIAN  ' 
           write (iwrite, '(    10X,''FOR REACTION COORDINATE ='',F16.4,'' DEGREES'')') &
             xreact*degree 
-        endif 
+        end if 
         write (iwrite, '(    10X,''REACTION GRADIENT       ='',F18.6,A14     )'&
           ) gcoord(1,1), grtype 
-      endif 
+      end if 
       if(id == 0) then
         if(.not. mozyme) write (iwrite, '(  10X,''DIPOLE                  ='',F17.5, &
         & '' DEBYE    POINT GROUP:       '',A)') dip, name 
@@ -1094,14 +1094,14 @@
             write (iwrite, '(  10X,''(S**2)                  =  '',F16.6)') ss2 
           else
             write(iwrite,'(10x,a)')" Average over configurations used, so (S**2) is not meaningful"
-          endif
+          end if
         write (iwrite, '(  10X,''NO. OF ALPHA ELECTRONS  =  '',I9)') nalpha + nint((nalpha_open - nalpha)*fract)
         write (iwrite, '(  10X,''NO. OF BETA  ELECTRONS  =  '',I9)') nbeta + nint((nbeta_open - nbeta)*fract)
       else 
         write (iwrite, '(      10X,''NO. OF FILLED LEVELS    =  '',I9)') nopen - nopn 
         if (nopn /= 0) write (iwrite, &
           '(  10X,''AND NO. OF OPEN LEVELS  =  '',I9)') nopn 
-      endif 
+      end if 
       if (ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20) &
          write (iwrite, '(  10X,''CONFIGURATION INTERACTION WAS USED'')') 
       if (kchrge /= 0) write (iwrite, &
@@ -1130,9 +1130,9 @@
             write (iwrite, &
       '(  10X,''     (SOMO) LUMO (EV)   ='',         ''      ('',F6.3,'')'',F7.3)') &
       eigs(nclose+1), (eigs(i),i=nclose + 2,norbs,10000) 
-          endif 
+          end if 
         end if
-      endif 
+      end if 
       if (index(keywrd," PKA") /= 0 .and. no_pKa > 0 ) then
         write(iwrite,'(/24x,a,/)')"    pKa for hydroxyl hydrogens" 
         j = index(txtatm(ipKa_sorted(1)), "(") 
@@ -1183,7 +1183,7 @@
         write (iwrite, '(2/,A)') '  GEOMETRY IN GAUSSIAN Z-MATRIX STYLE' 
         call wrttxt (iwrite) 
         call geoutg (iwrite) 
-      endif 
+      end if 
    !   if (in_house_only) call write_paras_used(iwrite)
       nscf = 0 
       return  

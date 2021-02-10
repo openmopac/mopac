@@ -58,7 +58,7 @@
         isec  = itim1(7)
         imsec = itim1(8)
         wall_clock_0 = float(3600*ihour + 60*imin + isec) + (float(imsec)/1.e3 )   
-      endif
+      end if
 
 !**********************************************************************
 !

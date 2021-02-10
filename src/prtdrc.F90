@@ -145,7 +145,7 @@
             stept = reada(keywrd,index(keywrd,'T-PRIO') + 5) 
           else 
             stept = 0.1D0 
-          endif 
+          end if 
           tref = -1.D-6 
           write (iw, &
       '(/,'' TIME PRIORITY, INTERVAL ='',F5.2,'' FEMTOSECONDS'',/)')stept 
@@ -164,7 +164,7 @@
             steph = reada(keywrd,index(keywrd,'H-PRI') + 5) 
           else 
             steph = 0.1D0 
-          endif 
+          end if 
           write (iw, &
       '(/,'' KINETIC ENERGY PRIORITY, STEP ='',F5.2,'' KCAL/MOLE'',/)') steph 
         else if (index(keywrd,' X-PRI') /= 0) then 
@@ -182,10 +182,10 @@
             stepx = reada(keywrd,index(keywrd,'X-PRIO') + 5) 
           else 
             stepx = 0.05D0 
-          endif 
+          end if 
           write (iw, &
       '(/,'' GEOMETRY PRIORITY, STEP ='',F7.4,'' ANGSTROMS'',/)') stepx 
-        endif 
+        end if 
         if (stepx < 1.d-6 .and. steph < 1.d-6 .and. stept < 1.d-6) then
        !
        !  Set default: if a DRC, then time-slice, 
@@ -214,8 +214,8 @@
             read (ires) iloop, ldrc, ione, etot1, etot0, escf1, escf0, ekin1, &
               ekin0, told2, told1, gtot1, gtot0, xold2, xold1, xold0, totime, &
               jloop, etot, refx, xtot1, xtot0  
-        endif 
-      endif
+        end if 
+      end if
       if (iloop > 1000 .and. jloop < 3) then
         call mopend("Step size is too large for a path to be generated")
         return
@@ -240,7 +240,7 @@
             jloop, etot, refx, xtot1, xtot0 
         close(ires, status='KEEP') 
         return  
-      endif 
+      end if 
       call chrge (p, charge) 
       charge(:numat) = tore(nat(:numat)) - charge(:numat) 
       deltat = deltt*1.D15 
@@ -272,7 +272,7 @@
         allvel(3,:nvar) = allvel(2,:nvar) 
         allvel(2,:nvar) = allvel(1,:nvar) 
         allvel(1,:nvar) = velo0(:nvar) 
-      endif 
+      end if 
 !
 !  FORM QUADRATIC EXPRESSION FOR POSITION AND VELOCITY W.R.T. TIME.
 !
@@ -364,7 +364,7 @@
           if (refscf == 0.D0) then 
             i = int(escf2/steph) 
             refscf = i*steph 
-          endif 
+          end if 
           if (iloop == 3) refscf = escf1
           dh = abs(escf1 - refscf) 
           if (dh > steph) then 
@@ -395,10 +395,10 @@
                 tsteps(i) = ((-bb) + sign(sqrt(bb*bb - 4.D0*(aa*c1)),bb))/(2.D0&
                   *aa) 
               end do 
-            endif 
+            end if 
             fract = -.1D0 
             refscf = refscf + nfract*steph 
-          endif 
+          end if 
         else if (stept /= 0.D0) then 
 !
 !   CRITERION FOR PRINTING RESULTS IS A CHANGE IN TIME.
@@ -414,7 +414,7 @@
               tsteps(i) = fract + i*stept 
             end do 
             tref = tref + nfract*stept 
-          endif 
+          end if 
         else if (stepx /= 0.D0) then 
 !
 !   CRITERION FOR PRINTING RESULTS IS A CHANGE IN GEOMETRY.
@@ -442,16 +442,16 @@
                 c1 = cc - (refx + i*stepx) 
                 tsteps(i) = ((-bb) + sign(sqrt(sum),bb))/(2.D0*aa) 
               end do 
-            endif 
+            end if 
             refx = refx + nfract*stepx 
             fract = -0.1D0 
-          endif 
+          end if 
         else 
 !
 !   PRINT EVERY POINT.
 !
           fract = 0.0D0 
-        endif 
+        end if 
         if (fract >= -9.D0 ) then 
 !
 !  LOOP OVER ALL POINTS IN CURRENT DOMAIN
@@ -475,7 +475,7 @@
               if (n == 0) then 
                 n = n + 1 
                 write (iw, '(/,20(''****''))') 
-              endif 
+              end if 
               time = totime + fract 
               call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
                 xtot3, iloop, charge, fract, text1, text2, k, jloop, l_dipole) 
@@ -497,19 +497,19 @@
                     ' COEF. OF V(0)            =', sum1, '   LAST V(0)', sum, &
                     '   HALF-LIFE =', (-0.6931472D0*time/log(sum1)), &
                     ' FEMTOSECS' 
-                endif 
+                end if 
                 write (iw, '(2/,A,F11.3,A)') ' HALF-CYCLE TIME =', time - tlast&
                   , ' FEMTOSECONDS' 
                 tlast = time 
                 vref(:nvar) = velo0(:nvar) 
-              endif 
+              end if 
               if (escf3(3) < 0.D0) text1 = 'MAX' 
               text2 = ' ' 
               call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
                 xtot3, iloop, charge, fract, text1, text2, 0, jloop, l_dipole) 
             else 
               goturn = .FALSE. 
-            endif 
+            end if 
           else 
             do i = 1, nfract 
               time = totime + tsteps(i) 
@@ -540,7 +540,7 @@
             end if
             old_sum = 0.d0
             now(:) = allxyz(1,:)
-          endif 
+          end if 
           n = 0 
           do i = 1, ncoprt 
             k = mcoprt(1,i) 
@@ -554,20 +554,20 @@
             if (n == 0) then 
               n = n + 1 
               write (iw, '(/,20(''****''))') 
-            endif 
+            end if 
             time = totime + fract 
             call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
               xtot3, iloop, charge, fract, text1, text2, k, jloop, l_dipole) 
           end do 
           if (n /= 0) write (iw, '(/,20(''****''))') 
-        endif 
+        end if 
       else if (iloop == 1) then
         text1 = " "
         text2 = " "
         time = 0.d0
         call drcout (xyz3, geo3, vel3, nvar, time, escf3, ekin3, etot3, dip3, &
                 xtot3, iloop, charge, fract, text1, text2, 0, jloop, l_dipole)         
-      endif 
+      end if 
       totime = totime + told2 
       told2 = told1 
       told1 = deltat 

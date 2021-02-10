@@ -54,7 +54,7 @@
           write (iw, &
       '(2/10X,''TEMPERATURE RANGE STARTS TOO LOW, LOWER BOUND IS RESET TO 100K'')') 
           it1 = 100 
-        endif 
+        end if 
         istep = 0
         do i = 1, len_trim(tmpkey)
           if (tmpkey(i:i) == ",") istep = istep + 1
@@ -99,7 +99,7 @@
           i = index(tmpkey,',')
           istep = nint(reada(tmpkey,i)) 
         end select        
-      endif 
+      end if 
       if (nvibs > 0) then
         write (iw, '(2/,A)') trim(title)
         write (iw, '(A)') trim(koment)
@@ -107,7 +107,7 @@
           write (iw, '(2/10X,''MOLECULE IS LINEAR'')') 
         else 
           write (iw, '(2/10X,''MOLECULE IS NOT LINEAR'')') 
-        endif 
+        end if 
         if (nvibs > 99) then
           write (iw, &
           '(/10X,''THERE ARE'',I5,'' GENUINE VIBRATIONS IN THIS '',''SYSTEM'')') &
@@ -116,7 +116,7 @@
           write (iw, &
           '(/10X,''THERE ARE'',I3,'' GENUINE VIBRATIONS IN THIS '',''SYSTEM'')') &
           nvibs
-        endif
+        end if
         write (iw, 20) 
   20    format(10x,'THIS THERMODYNAMICS CALCULATION IS LIMITED TO',/,10x,&
           'MOLECULES WHICH HAVE NO INTERNAL ROTATIONS'/,/) 
@@ -192,7 +192,7 @@
           cpr = R 
           hr = cpr*T 
           sr = R*dlog(qr) + R 
-        endif 
+        end if 
 !   ***   CALCULATE INTERNAL CONTRIBUTIONS   ***
         qint = qv*qr 
         hint = hv + hr 

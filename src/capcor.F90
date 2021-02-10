@@ -47,7 +47,7 @@
               sum = sum + p(kk)*h(kk) 
             end do 
           end do 
-        endif 
+        end if 
       end do 
 !
 !   DOUBLE SUM SINCE WE ONLY CALCULATED LOWER HALF, AND CAPCOR

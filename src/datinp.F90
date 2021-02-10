@@ -22,7 +22,7 @@
     nalpha, nelecs, nopen, ndep, fract, nbeta, numat, lm61, n2elec, &
     jobnam, errtxt, msdel, id, l1u, l2u, l3u, method_pm3, line, method_pm6_dh2, &
     method_pm7, method_PM6_DH_plus, nalpha_open, nbeta_open, method_pm6_d3h4, &
-    method_pm6_d3_not_h4, method_pm6_d3h4x, bad_separator, good_separator
+    method_pm6_d3_not_h4, method_pm6_d3h4x, good_separator
 !
     use meci_C, only : nmos
 !
@@ -40,7 +40,7 @@
     character (len=80), dimension (maxmol) :: safety
     logical :: case, exists, let, opend, refok, precise, large, all, survey, &
     & clean, hof_type, deadly = .false., l_only, method_pm5 = .false., &
-    &  cp, solid, nocore, quotation_mark
+    &  cp, solid, nocore
     integer :: i, iatm, icapa, igeo, ilin, iline, iloc, ilowa, ilowz, isym, &
    & itime, j, k, l, loop, misd, misg, mish, misi, &
    & mmmols, mol, ndips, nel, nions, nmolmx, nnmols, notok, icapz, &
@@ -104,6 +104,7 @@
       deallocate (pas, pbs, stat = i) 
     end do
     refnam = " "
+    refok = .false.
 !
 !  JFILES(1) = Normal MOPAC output - this will be deleted.
 !  JFILES(2) = Faulty MOPAC output - to be saved.
@@ -121,6 +122,7 @@
     iatm = 0
     ilin = 0
     is   = 0
+    itype = 0
     ilowa = Ichar ("a")
     ilowz = Ichar ("z")
     icapa = Ichar ("A")
@@ -202,6 +204,7 @@
     contrl = trim(keywrd)
     i = 0
     m = 0
+    n = 0
     loop = Index(contrl, " SET=")
     if (loop /= 0) then
       n = loop
@@ -771,7 +774,7 @@
                   end if
                   l = j - i
                   name = title (i+1:j)
-                endif
+                end if
                 do k = 1, len_trim(name)
                   iline = Ichar (name(k:k))
                   if (iline >= icapa .and. iline <= Ichar ("Z")) then

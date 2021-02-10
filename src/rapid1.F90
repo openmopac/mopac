@@ -28,6 +28,7 @@ subroutine rapid1 (loop, xparam, numvar_loc, funct1)
     data xlast / maxpms * 0.d0 /
     data glast / maxpms * 0.d0 /
 !--------------------------------------------------------------------------
+    ggd = 0.d0
     if (first) then
       do i = 1, numvar_loc
         xold(i) = 1.d0

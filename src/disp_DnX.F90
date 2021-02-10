@@ -112,6 +112,7 @@ double precision function disp_DnX(l_grad)
       k = 0
       do 
         sum = 0.d0
+        j = 0
         do i = 1, P_hbonds
           if (sum > H_energy(i)) then
             sum = H_energy(i)

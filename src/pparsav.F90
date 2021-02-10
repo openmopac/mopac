@@ -43,7 +43,7 @@
         else
           elemnt2 = " "
           j = locvar(2,i)
-        endif
+        end if
         k = i
         call lockit(valvar(i), k)
         penalty_fn = penalty*((Max(0.d0, valvar(i)-toplim(i))+Min(0.d0, valvar(i)-botlim(i))))**2
@@ -58,7 +58,7 @@
           write (line, "(4X,A7,5X,A2,2X,2F15.8,F12.2,F8.2,f12.2,f14.2)") partyp(locvar(1, i))//elemnt2, &
           & elemnt(j), valvar(i), valvar(i) - valold(i), botlim(i), toplim(i), &
           & penalty_fn,fnsnew(i)
-        endif
+        end if
         if (valvar(i)-toplim(i) < 0.d0 .and. valvar(i)-botlim(i) > 0.d0) line(52:82) = " "
         write (iext, "(a)") " "//trim(line)
       end do
@@ -93,7 +93,7 @@
       else
          elemnt2 = " "
          j = locvar(2,i)
-      endif
+      end if
       k = i
       call lockit(valvar(i), k)
       penalty_fn = penalty*((Max(0.d0, valvar(i)-toplim(i))+Min(0.d0, valvar(i)-botlim(i))))**2
@@ -108,7 +108,7 @@
         write (line, "(4X,A7,5X,A2,2X,2F15.8,F12.2,F8.2,f12.2,f14.2)") partyp(locvar(1, i))//elemnt2, &
         & elemnt(j), valvar(i), valvar(i) - valold(i), botlim(i), toplim(i), &
         & penalty_fn,fnsnew(i)
-      endif
+      end if
       if (valvar(i)-toplim(i) < 0.d0 .and. valvar(i)-botlim(i) > 0.d0) line(52:82) = " "
       write (ifiles_8, "(a)") " "//trim(line)
     end do

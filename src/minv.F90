@@ -3,7 +3,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -64,7 +63,7 @@
             a(ki) = a(ji) 
             a(ji) = hold 
           end do 
-        endif 
+        end if 
 !
 !     INTERCHANGE COLUMNS
 !
@@ -78,7 +77,7 @@
             a(jk) = a(ji) 
             a(ji) = hold 
           end do 
-        endif 
+        end if 
 !
 !     DIVIDE COLUMN BY MINUS PIVOT (VALUE OF PIVOT ELEMENT IS
 !     CONTAINED IN BIGA)
@@ -86,7 +85,7 @@
         if (biga == 0.D0) then 
           d = 0.D0 
           return  
-        endif 
+        end if 
         do i = 1, n 
           if (i - k == 0) cycle  
           ik = nk + i 
@@ -105,7 +104,7 @@
               kj = ij - i + k 
               a(ij) = hold*a(kj) + a(ij) 
             end do 
-          endif 
+          end if 
         end do 
 !
 !     DIVIDE ROW BY PIVOT
@@ -144,7 +143,7 @@
           a(jk) = -a(ji) 
           a(ji) = hold 
         end do 
-      endif 
+      end if 
       j = m(k) 
       if (j - k <= 0) go to 190 
       ki = k - n 

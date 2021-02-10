@@ -9,7 +9,6 @@
         prt_gradients
       USE chanel_C, only : iw, ires, restart_fn
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -80,7 +79,7 @@
             write (iw, '(3/10X,''CALCULATION TERMINATED HERE'')') 
             call mopend ('NO RESTART EXISTS FOR SADDLE. ') 
             return  
-          endif 
+          end if 
           write (iw, &
       '(2/10X,'' - THE CALCULATION IS BEING DUMPED TO DISK'',/10X, &
       & ''   RESTART IT USING THE KEYWORD "RESTART"'')') 
@@ -93,7 +92,7 @@
             end if
             if (mdfp(9) == 1) call geout (iw) 
           end if
-        endif 
+        end if 
         write (ires) norbs, numat, (xparam(i),i=1,nvar), (gd(i),i=1,nvar) 
         write (ires) mdfp, xdfp, totime, funct1         
         write (ires) (xlast(i),i=1,nvar), (grad(i),i=1,nvar) 
@@ -108,8 +107,8 @@
           else 
             write (ires) ((alparm(j,i),j=1,3),i=1,nvar) 
             write (ires) iloop, x0, x1, x2 
-          endif 
-        endif 
+          end if 
+        end if 
         if (index(keywrd,'STEP1') /= 0) then
           return
         end if
@@ -136,8 +135,8 @@
           else 
             read (ires, end=50, err=50) ((alparm(j,i),j=1,3),i=1,nvar) 
             read (ires, end=50, err=50) iloop, x0, x1, x2 
-          endif 
-        endif 
+          end if 
+        end if 
         first = .FALSE. 
         return  
    40   continue 
@@ -146,6 +145,6 @@
    50   continue 
         call mopend ('RESTART FILE EXISTS, BUT IS CORRUPT') 
         return  
-      endif 
+      end if 
       return  
       end subroutine dfpsav 

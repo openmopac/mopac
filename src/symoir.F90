@@ -7,7 +7,6 @@
       use molkst_C, only : keywrd, numat
       use chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -76,7 +75,7 @@
         nfind = nvecs 
       else 
         nfind = lab 
-      endif 
+      end if 
       icount(:nirred) = 0 
       names = '????' 
       if (nclass == 1) names = jx(1) 
@@ -102,7 +101,7 @@
             carmat(i,j) = charvi(vects, i, j, r, nvecs) 
           else 
             carmat(i,j) = charst(vects, ntype, i, j, r, nvecs, first) 
-          endif 
+          end if 
         end do 
       end do 
 !
@@ -115,7 +114,7 @@
         do i = 1, nfind 
           write (iw, '(I5,6F12.6)') i, (carmat(i,j),j=1,nclass) 
         end do 
-      endif 
+      end if 
       i = 0 
    70 continue 
       ik = i + 1 
@@ -133,14 +132,14 @@
               'A') 
             namo(i)(1:1) = char(j) 
           end do 
-        endif 
+        end if 
         if (debug) then 
           write (iw, '(/,A,/)') &
             ' Number of Irreducible Representations of each Class' 
           write (iw, '(7(I5,1X,A4))') (icount(i),jx(i),i=1,nirred) 
-        endif 
+        end if 
         return  
-      endif 
+      end if 
       tchar(:nclass) = tchar(:nclass) + carmat(i,:nclass) 
       if (tchar(1)>5.1D0 .and. .not.r3) go to 70 
       l140: do k = 1, nirred 
@@ -160,7 +159,7 @@
           jndex(ik:i) = icount(k) 
           namo(ik:i) = jx(k) 
           ifound = i - ik + 1 + ifound 
-        endif 
+        end if 
         go to 70 
       end do l140 
 !
@@ -169,6 +168,6 @@
 !
       if (i < nfind) then 
         if (eigs(i+1) - eigs(i) > 0.1D0) go to 70 
-      endif 
+      end if 
       go to 90 
       end subroutine symoir 

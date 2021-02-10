@@ -32,6 +32,6 @@
         i = index(line,' ') 
         t = line(:i) 
         x = -999.D0 
-      endif 
+      end if 
       return  
       end subroutine getval 

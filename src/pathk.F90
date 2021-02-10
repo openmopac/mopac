@@ -13,7 +13,6 @@
       use elemts_C, only : elemnt
       USE parameters_C, only : tore
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -33,14 +32,18 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer , dimension(20) :: mdfp 
-      integer :: npts, maxcyc, i, lloop, iloop, l, m, k, iw00, percent = 0, ipdb = 14, &
-        imodel = 0, ixyz1
+      integer :: npts, maxcyc, i, lloop, iloop, l, m, k, iw00, percent, ipdb, &
+        imodel, ixyz1
       double precision :: step, degree, c1, cputot, cpu1, cpu2, cpu3, stepc1, factor, dip, &
         dipvec(3), xdfp(20),  gd(3*numat), xlast(3*numat) 
       logical :: use_lbfgs, opend, scale, debug, l_dipole
       character :: num1*1, num2*1, num3*1
       double precision, external :: dipole
 !-----------------------------------------------
+      imodel = 0
+      ipdb = 14
+      ixyz1 = 0
+      percent = 0
       use_lbfgs = (index(keywrd,' LBFGS') /=0 .or. nvar > 100 .and. index(keywrd,' EF') == 0)
       step = reada(keywrd,index(keywrd,'STEP') + 5) 
       debug = (index(keywrd, " DEBUG") /= 0)
@@ -56,7 +59,7 @@
         c1 = degree 
       else 
         c1 = 1.D0 
-      endif 
+      end if 
       if (index(keywrd, " PDBOUT") /= 0) &
       open(unit = ipdb, file = xyz_fn(:len_trim(xyz_fn) - 3)//"pdb")
       if (index(keywrd, " MINI") /= 0) then
@@ -101,7 +104,7 @@
           xdfp = 0.d0
           call dfpsav (cputot, xparam, gd, xlast, escf, mdfp, xdfp) 
           write (iw, '(2/10X,'' RESTARTING AT POINT'',I3)') kloop 
-        endif 
+        end if 
       else
         write (iw, '(''  ABOUT TO ENTER EF FROM PATHK'')') 
         if (index(keywrd,'RESTAR') /= 0) then 
@@ -118,8 +121,8 @@
           read (ires, err=60) (profil(i),i=1,kloop) 
           close (ires)
           write (iw, '(2/10X,'' RESTARTING AT POINT'',I3)') kloop 
-        endif 
-      endif 
+        end if 
+      end if 
 !
       geo(lparam,latom) = rxn_coord 
       lloop = kloop 
@@ -164,7 +167,7 @@
             if (.not. debug) iw0 = -1
           end if         
           call ef (xparam, escf) 
-        endif 
+        end if 
         i = index(keywrd,'RESTAR')
         if (i /= 0) keywrd(i:i+6) = " "
         i = index(keywrd,'OLDENS')
@@ -251,11 +254,11 @@
           write (iw, '(9F17.8)') (react(i),i=k*8 + 1,k*8 + 8) 
           write (iw, '(9F17.8,/)') (profil(i),i=k*8 + 1,k*8 + 8) 
         end do 
-      endif 
+      end if 
       if (m > 0) then 
         write (iw, '(9F17.8)') (react(i),i=l*8 + 1,l*8 + m)  
         write (iw, '(9F17.8,/)') (profil(i),i=l*8 + 1,l*8 + m) 
-      endif 
+      end if 
       do i = 1, npts
         write(iarc,'(2f17.8)')react(i), profil(i)
       end do

@@ -105,14 +105,14 @@
         totime = 0.D0 
         if (tscf > 0.D0) tleft = tleft - tscf - tder 
         istart = 1 
-      endif 
+      end if 
 ! CALCULATE FMATRX
       if (istart > 1) then 
         estime = (nvar - istart + 1)*totime/(istart - 1.D0) 
       else 
         estime = nvar*(tscf + tder)*2.D0 
         if (precis) estime = estime*2.D0 
-      endif 
+      end if 
 ! 20190807 removed conditional output to stabilize output file
 !      if (tscf > 0)
       write (iw, &
@@ -121,7 +121,7 @@
         if (istart <= nvar) write (iw, &
           '(/10X,''STARTING AGAIN AT LINE'',18X,I4)') istart 
         write (iw, '(/10X,''TIME USED UP TO RESTART ='',F22.2)') totime 
-      endif 
+      end if 
       lu = kountf 
       eigs(:nvar) = 0.D0 
       if (.not. ts) call symr 
@@ -134,7 +134,7 @@
 !
           j = (i + 2)/3 
           call sympop (fmatrx, j, iskip, deldip) 
-        endif 
+        end if 
         if (iskip > 0) then 
           write (line, '(" STEP:",I4,23X,"INTEGRAL =",F10.2," TIME LEFT:",F10.2)') i, totime, tleft 
           write(iw,"(a)")line(:len_trim(line))
@@ -144,7 +144,7 @@
           iskip = iskip - 1 
           lu = lu + i 
           cycle  
-        endif 
+        end if 
         time2 = seconds(1) 
         delta = 1.D0/120.D0 
         if (precis) then 
@@ -180,7 +180,7 @@
             dsqrt(ddot(nvar,g2rad,1,g2rad,1)) 
         else 
           if (debug) write (iw, '(A,I3,A,F15.8)') ' STEP:', i, ' DELTA :', delta 
-        endif 
+        end if 
         xparam(i) = xparam(i) + 0.5D0*delta 
         grold = 100.D0 
         emin = 0.d0
@@ -242,7 +242,7 @@
 !
             fmatrx(ll:lu) = fmatrx(ll:lu) + dumy(:lu-ll+1) 
             l = lu - ll + 1 
-          endif 
+          end if 
           l = l - 1 
           do k = i, nvar 
             l = l + 1 
@@ -259,7 +259,7 @@
             dumy(l+1:lu-ll+1+l) = (grold(l+1:lu-ll+1+l)-grad(l+1:lu-ll+1+l))*0.5D0/delta*fact 
             fmatrx(ll:lu) = fmatrx(ll:lu) + dumy(l+1:lu-ll+1+l) 
             l = lu - ll + 1 + l 
-          endif 
+          end if 
           l = l - 1 
           do k = i, nvar 
             l = l + 1 
@@ -267,13 +267,13 @@
             dumy(l) = (grold(l)-grad(l))*0.5D0/delta*fact 
             fmatrx(kk) = fmatrx(kk) + dumy(l) 
           end do 
-        endif 
+        end if 
         if (big) then 
           write (iw, '(A)') ' CONTRIBUTIONS TO F-MATRIX' 
           write (iw, '(A)') &
       ' ELEMENT  +1.0*DELTA  +0.5*DELTA  -0.5*DELTA  -1.0*DELTA   2''ND ORDER 4TH ORDER' 
           write (iw, '(I7,6F12.6)') (l,g2old(l),grold(l),grad(l),g2rad(l),dumy(l),eigs(l),l=1,nvar) 
-        endif 
+        end if 
         time3 = seconds(2) 
         tstep = time3 - time2 
         tleft = max(0.1D0,tleft - tstep) 
@@ -296,7 +296,7 @@
           endfile (iw) 
           backspace (iw) 
           if (log) write (ilog, '(a)')trim(line) 
-        endif 
+        end if 
         call to_screen(line)
         estim = totime/i 
         if (tlast - tleft > tdump) then 
@@ -307,7 +307,7 @@
           call forsav (totime, deldip, ii, fmatrx, coord, nvar, heat, evecs, &
             jstart, fconst) 
           if (moperr) return  
-        endif 
+        end if 
         if (.not.(i /= nvar .and. tleft - 10.D0 < estim .or. i - istart >= maxcyc - 1)) &
           cycle  
         write (iw, &

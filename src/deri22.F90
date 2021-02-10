@@ -67,6 +67,7 @@
 !     DP = C * B * C' .
 !
 !     STEP 0 : UNSCALE VECTOR B.
+      n2 = 0
       allocate (dp(norbs**2), dpa(norbs**2), stat=i)
       if (i /= 0) then
         call memory_error ("deri22")
@@ -82,7 +83,7 @@
 !       CLOSED-OPEN
         call mxmt (c, norbs, b(l), nbo(1), work(1,nbo(1)+1), nbo(2)) 
         l = l + nbo(2)*nbo(1) 
-      endif 
+      end if 
       if (nbo(3)/=0 .and. nbo(1)/=0) then 
 !       VIRTUAL-CLOSED
         if (l > 1) then 
@@ -96,11 +97,11 @@
         end do
         else 
           call mxm (c(1,nopen+1), norbs, b(l), nbo(3), work, nbo(1)) 
-        endif 
+        end if 
 !       CLOSED-VIRTUAL
         call mxmt (c, norbs, b(l), nbo(1), work(1,nopen+1), nbo(3)) 
         l = l + nbo(3)*nbo(1) 
-      endif 
+      end if 
       if (nbo(3)/=0 .and. nbo(2)/=0) then 
 !       VIRTUAL-OPEN
         call mxm (c(1,nopen+1), norbs, b(l), nbo(3), dp, nbo(2)) 
@@ -120,7 +121,7 @@
           work(i, j) = work(i, j) + dp(icount)
         end do
       end do
-      endif 
+      end if 
 !
 !     STEP 2 : DP= WORK * C'   WITH DP PACKED,CANONICAL.
       l = 0 
@@ -184,11 +185,11 @@
         ! TODO: GBR future modifications 
         call mtxm (c(1,nbo(1)+1), nbo(2), dp, norbs, ab(l), nbo(1)) 
         l = l + nbo(2)*nbo(1) 
-      endif 
+      end if 
       if (nbo(3)/=0 .and. nbo(1)/=0) then 
         call mtxm (c(1,nopen+1), nbo(3), dp, norbs, ab(l), nbo(1)) 
         l = l + nbo(3)*nbo(1) 
-      endif 
+      end if 
       if (nbo(3)/=0 .and. nbo(2)/=0) call mtxm (c(1,nopen+1), nbo(3), &
         dp(norbs*nbo(1)+1), norbs, ab(l), nbo(2)) 
 !

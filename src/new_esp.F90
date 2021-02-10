@@ -46,7 +46,10 @@
     itype, jtype
     real, dimension (:), allocatable :: planexy,  Scr2
     double precision, dimension (:,:), allocatable :: s, vecs
+    mini = 0
+    minj = 0
     allocate (s(norbs, norbs), vecs(norbs, norbs), istart(norbs), istop(norbs))
+    nFit = 0
     call get_minus_point_five_overlap(s)
     call mult (c, s, vecs, norbs)
      
@@ -72,7 +75,7 @@
     do i = 1,norbs
        j = i*(i+1)/2
        p(j) = p(j)/2.d0
-    enddo    
+    end do    
 !!!    
     
     tosp = 2.d0/sqrt(pi)
@@ -227,7 +230,7 @@
             jgmax = ig 
           else
             jgmax = 6
-          endif
+          end if
           do jg = 1, jgmax
             dubl = (sames .and. ig /= jg)
             jexp = zzz(j,jg)
@@ -258,7 +261,7 @@
                       contractionDensity(idx) = dtemp1
                     end do
                   end do
-                endif
+                end if
               else
                 do k = 1, isize
                   do l = 1, jsize

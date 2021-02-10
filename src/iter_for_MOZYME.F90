@@ -304,7 +304,7 @@ subroutine iter_for_MOZYME (ee)
           escf = (ee+enuclr) * fpc_9 + atheat
           if (useps) then
                 escf = escf + solv_energy * fpc_9
-          endif
+          end if
           if (prtpls)  write (iw, "(/,A,F16.6,A,/)") " PLS ESCF USING THE OLD LMOs:", escf, " KCAL/MOL"
           endfile (iw) 
           backspace (iw) 
@@ -405,7 +405,7 @@ subroutine iter_for_MOZYME (ee)
       if (times) call timer (" After HELEC")
       if (useps) then
             escf = escf + solv_energy * fpc_9
-      endif
+      end if
       energy_diff = escf - eold
       eold = escf
       if (Abs(ovmax) < 5.d0*selcon) then
@@ -517,7 +517,7 @@ subroutine iter_for_MOZYME (ee)
       escf = (ee+enuclr) * fpc_9 + atheat
       if (useps) then
             escf = escf + solv_energy * fpc_9
-      endif
+      end if
     end if
     nmol = numcal
     return

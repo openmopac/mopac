@@ -6,7 +6,6 @@
       use common_arrays_C, only : nfirst, nlast
       use meci_C, only : nmos
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -59,7 +58,7 @@
                 cij(ipq+1:ip-nfirst(ii)+1+ipq) = c(ip,i)*c(nfirst(ii):ip,j) + c&
                   (ip,j)*c(nfirst(ii):ip,i) 
                 ipq = ip - nfirst(ii) + 1 + ipq 
-              endif 
+              end if 
             end do 
           end do 
           i77 = ipq + 1 
@@ -68,7 +67,7 @@
               cij(ipq+1:ip-nfirst(nati)+1+ipq) = c(ip,i)*c(nfirst(nati):ip,j)&
                  + c(ip,j)*c(nfirst(nati):ip,i) 
               ipq = ip - nfirst(nati) + 1 + ipq 
-            endif 
+            end if 
           end do 
           wcij(:ipq) = 0.D0 
           kr = 1 
@@ -83,13 +82,13 @@
                 js), nb(nbi)) 
               js = js + nb(nbi)
             end do 
-          endif 
+          end if 
           do k = 1, i 
             if (k == i) then 
               ll = j 
             else 
               ll = k 
-            endif 
+            end if 
             do l = 1, ll 
               ipq = 0 
               do ii = 1, numat 
@@ -99,7 +98,7 @@
                     ckl(ipq+1:ip-nfirst(ii)+1+ipq) = c(ip,k)*c(nfirst(ii):ip,l)&
                        + c(ip,l)*c(nfirst(ii):ip,k) 
                     ipq = ip - nfirst(ii) + 1 + ipq 
-                  endif 
+                  end if 
                 end do 
               end do 
               do ip = nfirst(nati), nlast(nati) 
@@ -107,7 +106,7 @@
                   ckl(ipq+1:ip-nfirst(nati)+1+ipq) = c(ip,k)*c(nfirst(nati):ip,&
                     l) + c(ip,l)*c(nfirst(nati):ip,k) 
                   ipq = ip - nfirst(nati) + 1 + ipq 
-                endif 
+                end if 
               end do 
               sum = 0.D0 
               do ii = 1, ipq 

@@ -148,6 +148,7 @@ integer   :: i,  ibrnch,  iflag,  ifull,  iptem,  iptemp,  j,  jdrop,  k,  l,  m
   rhobeg = 0.5d0
   rhoend = 1.d-3
   iprint = 0
+  iflag = 0
   maxfun = 3500
   iptem = min(n, 5)
   iptemp = iptem + 1
@@ -161,6 +162,7 @@ integer   :: i,  ibrnch,  iflag,  ifull,  iptem,  iptemp,  j,  jdrop,  k,  l,  m
   delta = 1.1d0
   rho = rhobeg
   parmu = 0.0d0
+  parsig = 0.d0
   if (iprint >= 2) write(iw,  10) rho
   10 format (/'   The initial value of RHO is',  G13.6,    &
              '  and PARMU is set to zero.')
@@ -582,8 +584,11 @@ integer   :: i,  iact(m + 1),  icon,  icount,  isave,  k,  kk,  kl,  kp,  kw,  m
              nact,  nactx
 
 ifull = 1
+icon = 0
 mcon = m
 nact = 0
+nactx = 0
+resold = 0.d0
 resmax = 0.0d0
 do i=1, n
   z(i, 1:n) = 0.0d0

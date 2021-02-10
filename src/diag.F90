@@ -78,7 +78,7 @@
               k2 = k2 + k - 1 
               sum = sum + fao(k2)*vector(k,i) 
             end do 
-          endif 
+          end if 
           ws(j) = sum 
         end do 
         do j = 1, nocc 

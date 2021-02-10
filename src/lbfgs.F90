@@ -1326,6 +1326,8 @@
      & tj, tj0, tl, tsum, tu, wmc, wmp, wmw, zibp
       external daxpy, dcopy, dscal
       double precision, external :: ddot
+      tl = 0.d0
+      tu = 0.d0
     !
     !     Check the status of the variables, reset iwhere(i) if necessary;
     !       compute the Cauchy direction d and the breakpoints t; initialize
@@ -2551,6 +2553,7 @@
       integer :: col2, i, ibd, j, js, jy, k, m2, pointr
       double precision :: alpha, dk, temp1, temp2
     !
+      ibd = 0
       if (nsub <= 0) return
       if (iprint >= 99) then
        !

@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
+ ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,16 +12,17 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Aug  7 17:15:47 2019  *
+ *  CALCULATION DONE:                                Sun Feb  7 17:51:42 2021  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(7A 300) 
- *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "BACTERIORHODOPSIN_1AP9.ENT"
- *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "BACTERIORHODOPSIN_1BRR.ENT"
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Bacteriorhodopsin_1AP9.ent"
+ *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "Bacteriorhodopsin_1BRR.ent"
+ *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
  *  Keyword:   CHAINS=(A) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
- *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  OUTPUT     - MINIMIZE OUTPUT
  *******************************************************************************
  START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_1BRR.ent" Compare output
@@ -33,331 +34,333 @@
 
           Atoms in GEO_DAT only                   Atoms in GEO_REF only
 
-       ATOM   1689  CG  ARG A 225              ATOM      1  N   GLN A   3
-       ATOM   1690  CD  ARG A 225              ATOM      2  CA  GLN A   3
-       ATOM   1691  NE  ARG A 225              ATOM      3  C   GLN A   3
-       ATOM   1692  CZ  ARG A 225              ATOM      4  O   GLN A   3
-       ATOM   1693  NH1 ARG A 225              ATOM      5  CB  GLN A   3
-       ATOM   1694  NH2 ARG A 225              ATOM      6  N   ILE A   4
-       HETATM 1696  C1  RET   300              ATOM      7  CA  ILE A   4
-       HETATM 1697  C2  RET   300              ATOM      8  C   ILE A   4
-       HETATM 1698  C3  RET   300              ATOM      9  O   ILE A   4
-       HETATM 1699  C4  RET   300              ATOM     10  CB  ILE A   4
-       HETATM 1700  C5  RET   300              ATOM     11  CG1 ILE A   4
-       HETATM 1701  C6  RET   300              ATOM     12  CG2 ILE A   4
-       HETATM 1702  C7  RET   300              ATOM     13  CD1 ILE A   4
-       HETATM 1703  C8  RET   300              ATOM     14  N   THR A   5
-       HETATM 1704  C9  RET   300              ATOM     15  CA  THR A   5
-       HETATM 1705  C10 RET   300              ATOM     16  C   THR A   5
-       HETATM 1706  C11 RET   300              ATOM     17  O   THR A   5
-       HETATM 1707  C12 RET   300              ATOM     18  CB  THR A   5
-       HETATM 1708  C13 RET   300              ATOM     19  OG1 THR A   5
-       HETATM 1709  C14 RET   300              ATOM     20  CG2 THR A   5
-       HETATM 1710  C15 RET   300              ATOM     21  N   GLY A   6
-       HETATM 1711  C16 RET   300              ATOM     22  CA  GLY A   6
-       HETATM 1712  C17 RET   300              ATOM     23  C   GLY A   6
-       HETATM 1713  C18 RET   300              ATOM     24  O   GLY A   6
-       HETATM 1714  C19 RET   300              ATOM     31  CD  ARG A   7
-       HETATM 1715  C20 RET   300              ATOM     32  NE  ARG A   7
-       HETATM 1716  O   HOH   400              ATOM     33  CZ  ARG A   7
-       HETATM 1717  O   HOH   401              ATOM     34  NH1 ARG A   7
-       HETATM 1718  O   HOH   402              ATOM     35  NH2 ARG A   7
-       HETATM 1719  O   HOH   403              ATOM   1717  O   ARG A 225
-       HETATM 1720  O   HOH   404              ATOM   1719  N   SER A 226
-       HETATM 1721  O   HOH   405              ATOM   1720  CA  SER A 226
-       HETATM 1722  O   HOH   406              ATOM   1721  C   SER A 226
-       HETATM 1723  O   HOH   407              ATOM   1722  O   SER A 226
-       HETATM 1724  O   HOH   408              ATOM   1723  CB  SER A 226
-       HETATM 1725  O   HOH   409              ATOM   1724  OG  SER A 226
-       HETATM 1726  O   HOH   410              ATOM   1725  N   ARG A 227
-       HETATM 1727  O   HOH   411              ATOM   1726  CA  ARG A 227
-       HETATM 1728  O   HOH   412              ATOM   1727  C   ARG A 227
-       HETATM 1729  O   HOH   413              ATOM   1728  O   ARG A 227
-       HETATM 1730  O   HOH   414              ATOM   1729  CB  ARG A 227
-       HETATM 1731  O   HOH   415              ATOM   1730  N   ALA A 228
-       HETATM 1732  O   HOH   416              ATOM   1731  CA  ALA A 228
-       HETATM 1733  O   HOH   417              ATOM   1732  C   ALA A 228
-       HETATM 1734  O   HOH   418              ATOM   1733  O   ALA A 228
-       HETATM 1735  O   HOH   419              ATOM   1734  CB  ALA A 228
-       HETATM 1736  O   HOH   420              ATOM   1735  N   ILE A 229
-       HETATM 1737  O   HOH   421              ATOM   1736  CA  ILE A 229
-       HETATM 1738  O   HOH   422              ATOM   1737  C   ILE A 229
-       HETATM 1739  O   HOH   423              ATOM   1738  O   ILE A 229
-       HETATM 1740  O   HOH   424              ATOM   1739  CB  ILE A 229
-       HETATM 1741  O   HOH   425              ATOM   1740  N   PHE A 230
-                                               ATOM   1741  CA  PHE A 230
-                                               ATOM   1742  C   PHE A 230
-                                               ATOM   1743  O   PHE A 230
-                                               ATOM   1744  CB  PHE A 230
-                                               ATOM   1745  N   GLY A 231
-                                               ATOM   1746  CA  GLY A 231
-                                               ATOM   1747  C   GLY A 231
-                                               ATOM   1748  O   GLY A 231
-                                               ATOM   1749  N   GLU A 232
-                                               ATOM   1750  CA  GLU A 232
-                                               ATOM   1751  C   GLU A 232
-                                               ATOM   1752  O   GLU A 232
-                                               ATOM   1753  CB  GLU A 232
-                                               HETATM 5376  C1  RET A 999
-                                               HETATM 5377  C2  RET A 999
-                                               HETATM 5378  C3  RET A 999
-                                               HETATM 5379  C4  RET A 999
-                                               HETATM 5380  C5  RET A 999
-                                               HETATM 5381  C6  RET A 999
-                                               HETATM 5382  C7  RET A 999
-                                               HETATM 5383  C8  RET A 999
-                                               HETATM 5384  C9  RET A 999
-                                               HETATM 5385  C10 RET A 999
-                                               HETATM 5386  C11 RET A 999
-                                               HETATM 5387  C12 RET A 999
-                                               HETATM 5388  C13 RET A 999
-                                               HETATM 5389  C14 RET A 999
-                                               HETATM 5390  C15 RET A 999
-                                               HETATM 5391  C16 RET A 999
-                                               HETATM 5392  C17 RET A 999
-                                               HETATM 5393  C18 RET A 999
-                                               HETATM 5394  C19 RET A 999
-                                               HETATM 5395  C20 RET A 999
-                                               HETATM 5436  C1  GLC     4
-                                               HETATM 5437  C2  GLC     4
-                                               HETATM 5438  C3  GLC     4
-                                               HETATM 5439  C4  GLC     4
-                                               HETATM 5440  C5  GLC     4
-                                               HETATM 5441  C6  GLC     4
-                                               HETATM 5442  O1  GLC     4
-                                               HETATM 5443  O2  GLC     4
-                                               HETATM 5444  O3  GLC     4
-                                               HETATM 5445  O4  GLC     4
-                                               HETATM 5446  O5  GLC     4
-                                               HETATM 5447  O6  GLC     4
-                                               HETATM 5448  O1  ARC     6
-                                               HETATM 5449  C1  ARC     6
-                                               HETATM 5450  C2  ARC     6
-                                               HETATM 5451  C3  ARC     6
-                                               HETATM 5452  C4  ARC     6
-                                               HETATM 5453  C5  ARC     6
-                                               HETATM 5454  C6  ARC     6
-                                               HETATM 5455  C7  ARC     6
-                                               HETATM 5456  C8  ARC     6
-                                               HETATM 5457  C9  ARC     6
-                                               HETATM 5458  C10 ARC     6
-                                               HETATM 5459  C11 ARC     6
-                                               HETATM 5460  C12 ARC     6
-                                               HETATM 5461  C13 ARC     6
-                                               HETATM 5462  C14 ARC     6
-                                               HETATM 5463  C15 ARC     6
-                                               HETATM 5464  C16 ARC     6
-                                               HETATM 5465  C17 ARC     6
-                                               HETATM 5466  C18 ARC     6
-                                               HETATM 5467  C19 ARC     6
-                                               HETATM 5468  C20 ARC     6
-                                               HETATM 5469  O1  ARC     7
-                                               HETATM 5470  C1  ARC     7
-                                               HETATM 5471  C2  ARC     7
-                                               HETATM 5472  C3  ARC     7
-                                               HETATM 5473  C4  ARC     7
-                                               HETATM 5474  C5  ARC     7
-                                               HETATM 5475  C6  ARC     7
-                                               HETATM 5476  C7  ARC     7
-                                               HETATM 5477  C8  ARC     7
-                                               HETATM 5478  C9  ARC     7
-                                               HETATM 5479  C10 ARC     7
-                                               HETATM 5480  C11 ARC     7
-                                               HETATM 5481  C12 ARC     7
-                                               HETATM 5482  C13 ARC     7
-                                               HETATM 5483  C14 ARC     7
-                                               HETATM 5484  C15 ARC     7
-                                               HETATM 5485  C16 ARC     7
-                                               HETATM 5486  C17 ARC     7
-                                               HETATM 5487  C18 ARC     7
-                                               HETATM 5488  C19 ARC     7
-                                               HETATM 5489  C20 ARC     7
-                                               HETATM 5490  O1  ARC     8
-                                               HETATM 5491  C1  ARC     8
-                                               HETATM 5492  C2  ARC     8
-                                               HETATM 5493  C3  ARC     8
-                                               HETATM 5494  C4  ARC     8
-                                               HETATM 5495  C5  ARC     8
-                                               HETATM 5496  C6  ARC     8
-                                               HETATM 5497  C7  ARC     8
-                                               HETATM 5498  C8  ARC     8
-                                               HETATM 5499  C9  ARC     8
-                                               HETATM 5500  C10 ARC     8
-                                               HETATM 5501  C11 ARC     8
-                                               HETATM 5502  C12 ARC     8
-                                               HETATM 5503  C13 ARC     8
-                                               HETATM 5504  C14 ARC     8
-                                               HETATM 5505  C15 ARC     8
-                                               HETATM 5506  C16 ARC     8
-                                               HETATM 5507  C17 ARC     8
-                                               HETATM 5508  C18 ARC     8
-                                               HETATM 5509  C19 ARC     8
-                                               HETATM 5510  C20 ARC     8
-                                               HETATM 5511  O1  ARC     9
-                                               HETATM 5512  C1  ARC     9
-                                               HETATM 5513  C2  ARC     9
-                                               HETATM 5514  C3  ARC     9
-                                               HETATM 5515  C4  ARC     9
-                                               HETATM 5516  C5  ARC     9
-                                               HETATM 5517  C6  ARC     9
-                                               HETATM 5518  C7  ARC     9
-                                               HETATM 5519  C8  ARC     9
-                                               HETATM 5520  C9  ARC     9
-                                               HETATM 5521  C10 ARC     9
-                                               HETATM 5522  C11 ARC     9
-                                               HETATM 5523  C12 ARC     9
-                                               HETATM 5524  C13 ARC     9
-                                               HETATM 5525  C14 ARC     9
-                                               HETATM 5526  C15 ARC     9
-                                               HETATM 5527  C16 ARC     9
-                                               HETATM 5528  C17 ARC     9
-                                               HETATM 5529  C18 ARC     9
-                                               HETATM 5530  C19 ARC     9
-                                               HETATM 5531  C20 ARC     9
-                                               HETATM 5532  O1  ARC    11
-                                               HETATM 5533  C1  ARC    11
-                                               HETATM 5534  C2  ARC    11
-                                               HETATM 5535  C3  ARC    11
-                                               HETATM 5536  C4  ARC    11
-                                               HETATM 5537  C5  ARC    11
-                                               HETATM 5538  C6  ARC    11
-                                               HETATM 5539  C7  ARC    11
-                                               HETATM 5540  C8  ARC    11
-                                               HETATM 5541  C9  ARC    11
-                                               HETATM 5542  C10 ARC    11
-                                               HETATM 5543  C11 ARC    11
-                                               HETATM 5544  C12 ARC    11
-                                               HETATM 5545  C13 ARC    11
-                                               HETATM 5546  C14 ARC    11
-                                               HETATM 5547  C15 ARC    11
-                                               HETATM 5548  C16 ARC    11
-                                               HETATM 5549  C17 ARC    11
-                                               HETATM 5550  C18 ARC    11
-                                               HETATM 5551  C19 ARC    11
-                                               HETATM 5552  C20 ARC    11
-                                               HETATM 5553  O1  ARC    12
-                                               HETATM 5554  C1  ARC    12
-                                               HETATM 5555  C2  ARC    12
-                                               HETATM 5556  C3  ARC    12
-                                               HETATM 5557  C4  ARC    12
-                                               HETATM 5558  C5  ARC    12
-                                               HETATM 5559  C6  ARC    12
-                                               HETATM 5560  C7  ARC    12
-                                               HETATM 5561  C8  ARC    12
-                                               HETATM 5562  C9  ARC    12
-                                               HETATM 5563  C10 ARC    12
-                                               HETATM 5564  C11 ARC    12
-                                               HETATM 5565  C12 ARC    12
-                                               HETATM 5566  C13 ARC    12
-                                               HETATM 5567  C14 ARC    12
-                                               HETATM 5568  C15 ARC    12
-                                               HETATM 5569  C16 ARC    12
-                                               HETATM 5570  C17 ARC    12
-                                               HETATM 5571  C18 ARC    12
-                                               HETATM 5572  C19 ARC    12
-                                               HETATM 5573  C20 ARC    12
-                                               HETATM 5574  O1  ARC    21
-                                               HETATM 5575  C1  ARC    21
-                                               HETATM 5576  C2  ARC    21
-                                               HETATM 5577  C3  ARC    21
-                                               HETATM 5578  C4  ARC    21
-                                               HETATM 5579  C5  ARC    21
-                                               HETATM 5580  C6  ARC    21
-                                               HETATM 5581  C7  ARC    21
-                                               HETATM 5582  C8  ARC    21
-                                               HETATM 5583  C9  ARC    21
-                                               HETATM 5584  C10 ARC    21
-                                               HETATM 5585  C11 ARC    21
-                                               HETATM 5586  C12 ARC    21
-                                               HETATM 5587  C13 ARC    21
-                                               HETATM 5588  C14 ARC    21
-                                               HETATM 5589  C15 ARC    21
-                                               HETATM 5590  C16 ARC    21
-                                               HETATM 5591  C17 ARC    21
-                                               HETATM 5592  C18 ARC    21
-                                               HETATM 5593  C19 ARC    21
-                                               HETATM 5594  C20 ARC    21
-                                               HETATM 5595  O1  ARC    22
-                                               HETATM 5596  C1  ARC    22
-                                               HETATM 5597  C2  ARC    22
-                                               HETATM 5598  C3  ARC    22
-                                               HETATM 5599  C4  ARC    22
-                                               HETATM 5600  C5  ARC    22
-                                               HETATM 5601  C6  ARC    22
-                                               HETATM 5602  C7  ARC    22
-                                               HETATM 5603  C8  ARC    22
-                                               HETATM 5604  C9  ARC    22
-                                               HETATM 5605  C10 ARC    22
-                                               HETATM 5606  C11 ARC    22
-                                               HETATM 5607  C12 ARC    22
-                                               HETATM 5608  C13 ARC    22
-                                               HETATM 5609  C14 ARC    22
-                                               HETATM 5610  C15 ARC    22
-                                               HETATM 5611  C16 ARC    22
-                                               HETATM 5612  C17 ARC    22
-                                               HETATM 5613  C18 ARC    22
-                                               HETATM 5614  C19 ARC    22
-                                               HETATM 5615  C20 ARC    22
-                                               HETATM 5616  O1  ARC    31
-                                               HETATM 5617  C1  ARC    31
-                                               HETATM 5618  C2  ARC    31
-                                               HETATM 5619  C3  ARC    31
-                                               HETATM 5620  C4  ARC    31
-                                               HETATM 5621  C5  ARC    31
-                                               HETATM 5622  C6  ARC    31
-                                               HETATM 5623  C7  ARC    31
-                                               HETATM 5624  C8  ARC    31
-                                               HETATM 5625  C9  ARC    31
-                                               HETATM 5626  C10 ARC    31
-                                               HETATM 5627  C11 ARC    31
-                                               HETATM 5628  C12 ARC    31
-                                               HETATM 5629  C13 ARC    31
-                                               HETATM 5630  C14 ARC    31
-                                               HETATM 5631  C15 ARC    31
-                                               HETATM 5632  C16 ARC    31
-                                               HETATM 5633  C17 ARC    31
-                                               HETATM 5634  C18 ARC    31
-                                               HETATM 5635  C19 ARC    31
-                                               HETATM 5636  C20 ARC    31
-                                               HETATM 5637  O1  ARC    32
-                                               HETATM 5638  C1  ARC    32
-                                               HETATM 5639  C2  ARC    32
-                                               HETATM 5640  C3  ARC    32
-                                               HETATM 5641  C4  ARC    32
-                                               HETATM 5642  C5  ARC    32
-                                               HETATM 5643  C6  ARC    32
-                                               HETATM 5644  C7  ARC    32
-                                               HETATM 5645  C8  ARC    32
-                                               HETATM 5646  C9  ARC    32
-                                               HETATM 5647  C10 ARC    32
-                                               HETATM 5648  C11 ARC    32
-                                               HETATM 5649  C12 ARC    32
-                                               HETATM 5650  C13 ARC    32
-                                               HETATM 5651  C14 ARC    32
-                                               HETATM 5652  C15 ARC    32
-                                               HETATM 5653  C16 ARC    32
-                                               HETATM 5654  C17 ARC    32
-                                               HETATM 5655  C18 ARC    32
-                                               HETATM 5656  C19 ARC    32
-                                               HETATM 5657  C20 ARC    32
-                                               HETATM 5658  C1  OCT     5
-                                               HETATM 5659  C2  OCT     5
-                                               HETATM 5660  C3  OCT     5
-                                               HETATM 5661  C4  OCT     5
-                                               HETATM 5662  C5  OCT     5
-                                               HETATM 5663  C6  OCT     5
-                                               HETATM 5664  C7  OCT     5
-                                               HETATM 5665  C8  OCT     5
-                                               HETATM 5666  C1  GOL    13
-                                               HETATM 5667  C2  GOL    13
-                                               HETATM 5668  C3  GOL    13
-                                               HETATM 5669  O3  GOL    13
-                                               HETATM 5670  C1  GOL    23
-                                               HETATM 5671  C2  GOL    23
-                                               HETATM 5672  C3  GOL    23
-                                               HETATM 5673  C1  GOL    33
-                                               HETATM 5674  C2  GOL    33
-                                               HETATM 5675  C3  GOL    33
+   1   ATOM   1689  CG  ARG A 225              ATOM      1  N   GLN A   3
+   2   ATOM   1690  CD  ARG A 225              ATOM      2  CA  GLN A   3
+   3   ATOM   1691  NE  ARG A 225              ATOM      3  C   GLN A   3
+   4   ATOM   1692  CZ  ARG A 225              ATOM      4  O   GLN A   3
+   5   ATOM   1693  NH1 ARG A 225              ATOM      5  CB  GLN A   3
+   6   ATOM   1694  NH2 ARG A 225              ATOM      6  N   ILE A   4
+   7   HETATM 1696  C1  RET B 300              ATOM      7  CA  ILE A   4
+   8   HETATM 1697  C2  RET B 300              ATOM      8  C   ILE A   4
+   9   HETATM 1698  C3  RET B 300              ATOM      9  O   ILE A   4
+  10   HETATM 1699  C4  RET B 300              ATOM     10  CB  ILE A   4
+  11   HETATM 1700  C5  RET B 300              ATOM     11  CG1 ILE A   4
+  12   HETATM 1701  C6  RET B 300              ATOM     12  CG2 ILE A   4
+  13   HETATM 1702  C7  RET B 300              ATOM     13  CD1 ILE A   4
+  14   HETATM 1703  C8  RET B 300              ATOM     14  N   THR A   5
+  15   HETATM 1704  C9  RET B 300              ATOM     15  CA  THR A   5
+  16   HETATM 1705  C10 RET B 300              ATOM     16  C   THR A   5
+  17   HETATM 1706  C11 RET B 300              ATOM     17  O   THR A   5
+  18   HETATM 1707  C12 RET B 300              ATOM     18  CB  THR A   5
+  19   HETATM 1708  C13 RET B 300              ATOM     19  OG1 THR A   5
+  20   HETATM 1709  C14 RET B 300              ATOM     20  CG2 THR A   5
+  21   HETATM 1710  C15 RET B 300              ATOM     21  N   GLY A   6
+  22   HETATM 1711  C16 RET B 300              ATOM     22  CA  GLY A   6
+  23   HETATM 1712  C17 RET B 300              ATOM     23  C   GLY A   6
+  24   HETATM 1713  C18 RET B 300              ATOM     24  O   GLY A   6
+  25   HETATM 1714  C19 RET B 300              ATOM     31  CD  ARG A   7
+  26   HETATM 1715  C20 RET B 300              ATOM     32  NE  ARG A   7
+  27   HETATM 1716  O   HOH B 400              ATOM     33  CZ  ARG A   7
+  28   HETATM 1717  O   HOH B 401              ATOM     34  NH1 ARG A   7
+  29   HETATM 1718  O   HOH B 402              ATOM     35  NH2 ARG A   7
+  30   HETATM 1719  O   HOH B 403              ATOM   1717  O   ARG A 225
+  31   HETATM 1720  O   HOH B 404              ATOM   1719  N   SER A 226
+  32   HETATM 1721  O   HOH B 405              ATOM   1720  CA  SER A 226
+  33   HETATM 1722  O   HOH B 406              ATOM   1721  C   SER A 226
+  34   HETATM 1723  O   HOH B 407              ATOM   1722  O   SER A 226
+  35   HETATM 1724  O   HOH B 408              ATOM   1723  CB  SER A 226
+  36   HETATM 1725  O   HOH B 409              ATOM   1724  OG  SER A 226
+  37   HETATM 1726  O   HOH B 410              ATOM   1725  N   ARG A 227
+  38   HETATM 1727  O   HOH B 411              ATOM   1726  CA  ARG A 227
+  39   HETATM 1728  O   HOH B 412              ATOM   1727  C   ARG A 227
+  40   HETATM 1729  O   HOH B 413              ATOM   1728  O   ARG A 227
+  41   HETATM 1730  O   HOH B 414              ATOM   1729  CB  ARG A 227
+  42   HETATM 1731  O   HOH B 415              ATOM   1730  N   ALA A 228
+  43   HETATM 1732  O   HOH B 416              ATOM   1731  CA  ALA A 228
+  44   HETATM 1733  O   HOH B 417              ATOM   1732  C   ALA A 228
+  45   HETATM 1734  O   HOH B 418              ATOM   1733  O   ALA A 228
+  46   HETATM 1735  O   HOH B 419              ATOM   1734  CB  ALA A 228
+  47   HETATM 1736  O   HOH B 420              ATOM   1735  N   ILE A 229
+  48   HETATM 1737  O   HOH B 421              ATOM   1736  CA  ILE A 229
+  49   HETATM 1738  O   HOH B 422              ATOM   1737  C   ILE A 229
+  50   HETATM 1739  O   HOH B 423              ATOM   1738  O   ILE A 229
+  51   HETATM 1740  O   HOH B 424              ATOM   1739  CB  ILE A 229
+  52   HETATM 1741  O   HOH B 425              ATOM   1740  N   PHE A 230
+  53                                           ATOM   1741  CA  PHE A 230
+  54                                           ATOM   1742  C   PHE A 230
+  55                                           ATOM   1743  O   PHE A 230
+  56                                           ATOM   1744  CB  PHE A 230
+  57                                           ATOM   1745  N   GLY A 231
+  58                                           ATOM   1746  CA  GLY A 231
+  59                                           ATOM   1747  C   GLY A 231
+  60                                           ATOM   1748  O   GLY A 231
+  61                                           ATOM   1749  N   GLU A 232
+  62                                           ATOM   1750  CA  GLU A 232
+  63                                           ATOM   1751  C   GLU A 232
+  64                                           ATOM   1752  O   GLU A 232
+  65                                           ATOM   1753  CB  GLU A 232
+  66                                           HETATM 5376  C1  RET A 999
+  67                                           HETATM 5377  C2  RET A 999
+  68                                           HETATM 5378  C3  RET A 999
+  69                                           HETATM 5379  C4  RET A 999
+  70                                           HETATM 5380  C5  RET A 999
+  71                                           HETATM 5381  C6  RET A 999
+  72                                           HETATM 5382  C7  RET A 999
+  73                                           HETATM 5383  C8  RET A 999
+  74                                           HETATM 5384  C9  RET A 999
+  75                                           HETATM 5385  C10 RET A 999
+  76                                           HETATM 5386  C11 RET A 999
+  77                                           HETATM 5387  C12 RET A 999
+  78                                           HETATM 5388  C13 RET A 999
+  79                                           HETATM 5389  C14 RET A 999
+  80                                           HETATM 5390  C15 RET A 999
+  81                                           HETATM 5391  C16 RET A 999
+  82                                           HETATM 5392  C17 RET A 999
+  83                                           HETATM 5393  C18 RET A 999
+  84                                           HETATM 5394  C19 RET A 999
+  85                                           HETATM 5395  C20 RET A 999
+  86                                           HETATM 5436  C1  GLC B   4
+  87                                           HETATM 5437  C2  GLC B   4
+  88                                           HETATM 5438  C3  GLC B   4
+  89                                           HETATM 5439  C4  GLC B   4
+  90                                           HETATM 5440  C5  GLC B   4
+  91                                           HETATM 5441  C6  GLC B   4
+  92                                           HETATM 5442  O1  GLC B   4
+  93                                           HETATM 5443  O2  GLC B   4
+  94                                           HETATM 5444  O3  GLC B   4
+  95                                           HETATM 5445  O4  GLC B   4
+  96                                           HETATM 5446  O5  GLC B   4
+  97                                           HETATM 5447  O6  GLC B   4
+  98                                           HETATM 5448  O1  ARC B   6
+  99                                           HETATM 5449  C1  ARC B   6
+ 100                                           HETATM 5450  C2  ARC B   6
+ 101                                           HETATM 5451  C3  ARC B   6
+ 102                                           HETATM 5452  C4  ARC B   6
+ 103                                           HETATM 5453  C5  ARC B   6
+ 104                                           HETATM 5454  C6  ARC B   6
+ 105                                           HETATM 5455  C7  ARC B   6
+ 106                                           HETATM 5456  C8  ARC B   6
+ 107                                           HETATM 5457  C9  ARC B   6
+ 108                                           HETATM 5458  C10 ARC B   6
+ 109                                           HETATM 5459  C11 ARC B   6
+ 110                                           HETATM 5460  C12 ARC B   6
+ 111                                           HETATM 5461  C13 ARC B   6
+ 112                                           HETATM 5462  C14 ARC B   6
+ 113                                           HETATM 5463  C15 ARC B   6
+ 114                                           HETATM 5464  C16 ARC B   6
+ 115                                           HETATM 5465  C17 ARC B   6
+ 116                                           HETATM 5466  C18 ARC B   6
+ 117                                           HETATM 5467  C19 ARC B   6
+ 118                                           HETATM 5468  C20 ARC B   6
+ 119                                           HETATM 5469  O1  ARC B   7
+ 120                                           HETATM 5470  C1  ARC B   7
+ 121                                           HETATM 5471  C2  ARC B   7
+ 122                                           HETATM 5472  C3  ARC B   7
+ 123                                           HETATM 5473  C4  ARC B   7
+ 124                                           HETATM 5474  C5  ARC B   7
+ 125                                           HETATM 5475  C6  ARC B   7
+ 126                                           HETATM 5476  C7  ARC B   7
+ 127                                           HETATM 5477  C8  ARC B   7
+ 128                                           HETATM 5478  C9  ARC B   7
+ 129                                           HETATM 5479  C10 ARC B   7
+ 130                                           HETATM 5480  C11 ARC B   7
+ 131                                           HETATM 5481  C12 ARC B   7
+ 132                                           HETATM 5482  C13 ARC B   7
+ 133                                           HETATM 5483  C14 ARC B   7
+ 134                                           HETATM 5484  C15 ARC B   7
+ 135                                           HETATM 5485  C16 ARC B   7
+ 136                                           HETATM 5486  C17 ARC B   7
+ 137                                           HETATM 5487  C18 ARC B   7
+ 138                                           HETATM 5488  C19 ARC B   7
+ 139                                           HETATM 5489  C20 ARC B   7
+ 140                                           HETATM 5490  O1  ARC B   8
+ 141                                           HETATM 5491  C1  ARC B   8
+ 142                                           HETATM 5492  C2  ARC B   8
+ 143                                           HETATM 5493  C3  ARC B   8
+ 144                                           HETATM 5494  C4  ARC B   8
+ 145                                           HETATM 5495  C5  ARC B   8
+ 146                                           HETATM 5496  C6  ARC B   8
+ 147                                           HETATM 5497  C7  ARC B   8
+ 148                                           HETATM 5498  C8  ARC B   8
+ 149                                           HETATM 5499  C9  ARC B   8
+ 150                                           HETATM 5500  C10 ARC B   8
+ 151                                           HETATM 5501  C11 ARC B   8
+ 152                                           HETATM 5502  C12 ARC B   8
+ 153                                           HETATM 5503  C13 ARC B   8
+ 154                                           HETATM 5504  C14 ARC B   8
+ 155                                           HETATM 5505  C15 ARC B   8
+ 156                                           HETATM 5506  C16 ARC B   8
+ 157                                           HETATM 5507  C17 ARC B   8
+ 158                                           HETATM 5508  C18 ARC B   8
+ 159                                           HETATM 5509  C19 ARC B   8
+ 160                                           HETATM 5510  C20 ARC B   8
+ 161                                           HETATM 5511  O1  ARC B   9
+ 162                                           HETATM 5512  C1  ARC B   9
+ 163                                           HETATM 5513  C2  ARC B   9
+ 164                                           HETATM 5514  C3  ARC B   9
+ 165                                           HETATM 5515  C4  ARC B   9
+ 166                                           HETATM 5516  C5  ARC B   9
+ 167                                           HETATM 5517  C6  ARC B   9
+ 168                                           HETATM 5518  C7  ARC B   9
+ 169                                           HETATM 5519  C8  ARC B   9
+ 170                                           HETATM 5520  C9  ARC B   9
+ 171                                           HETATM 5521  C10 ARC B   9
+ 172                                           HETATM 5522  C11 ARC B   9
+ 173                                           HETATM 5523  C12 ARC B   9
+ 174                                           HETATM 5524  C13 ARC B   9
+ 175                                           HETATM 5525  C14 ARC B   9
+ 176                                           HETATM 5526  C15 ARC B   9
+ 177                                           HETATM 5527  C16 ARC B   9
+ 178                                           HETATM 5528  C17 ARC B   9
+ 179                                           HETATM 5529  C18 ARC B   9
+ 180                                           HETATM 5530  C19 ARC B   9
+ 181                                           HETATM 5531  C20 ARC B   9
+ 182                                           HETATM 5532  O1  ARC B  11
+ 183                                           HETATM 5533  C1  ARC B  11
+ 184                                           HETATM 5534  C2  ARC B  11
+ 185                                           HETATM 5535  C3  ARC B  11
+ 186                                           HETATM 5536  C4  ARC B  11
+ 187                                           HETATM 5537  C5  ARC B  11
+ 188                                           HETATM 5538  C6  ARC B  11
+ 189                                           HETATM 5539  C7  ARC B  11
+ 190                                           HETATM 5540  C8  ARC B  11
+ 191                                           HETATM 5541  C9  ARC B  11
+ 192                                           HETATM 5542  C10 ARC B  11
+ 193                                           HETATM 5543  C11 ARC B  11
+ 194                                           HETATM 5544  C12 ARC B  11
+ 195                                           HETATM 5545  C13 ARC B  11
+ 196                                           HETATM 5546  C14 ARC B  11
+ 197                                           HETATM 5547  C15 ARC B  11
+ 198                                           HETATM 5548  C16 ARC B  11
+ 199                                           HETATM 5549  C17 ARC B  11
+ 200                                           HETATM 5550  C18 ARC B  11
+ 201                                           HETATM 5551  C19 ARC B  11
+ 202                                           HETATM 5552  C20 ARC B  11
+ 203                                           HETATM 5553  O1  ARC B  12
+ 204                                           HETATM 5554  C1  ARC B  12
+ 205                                           HETATM 5555  C2  ARC B  12
+ 206                                           HETATM 5556  C3  ARC B  12
+ 207                                           HETATM 5557  C4  ARC B  12
+ 208                                           HETATM 5558  C5  ARC B  12
+ 209                                           HETATM 5559  C6  ARC B  12
+ 210                                           HETATM 5560  C7  ARC B  12
+ 211                                           HETATM 5561  C8  ARC B  12
+ 212                                           HETATM 5562  C9  ARC B  12
+ 213                                           HETATM 5563  C10 ARC B  12
+ 214                                           HETATM 5564  C11 ARC B  12
+ 215                                           HETATM 5565  C12 ARC B  12
+ 216                                           HETATM 5566  C13 ARC B  12
+ 217                                           HETATM 5567  C14 ARC B  12
+ 218                                           HETATM 5568  C15 ARC B  12
+ 219                                           HETATM 5569  C16 ARC B  12
+ 220                                           HETATM 5570  C17 ARC B  12
+ 221                                           HETATM 5571  C18 ARC B  12
+ 222                                           HETATM 5572  C19 ARC B  12
+ 223                                           HETATM 5573  C20 ARC B  12
+ 224                                           HETATM 5574  O1  ARC B  21
+ 225                                           HETATM 5575  C1  ARC B  21
+ 226                                           HETATM 5576  C2  ARC B  21
+ 227                                           HETATM 5577  C3  ARC B  21
+ 228                                           HETATM 5578  C4  ARC B  21
+ 229                                           HETATM 5579  C5  ARC B  21
+ 230                                           HETATM 5580  C6  ARC B  21
+ 231                                           HETATM 5581  C7  ARC B  21
+ 232                                           HETATM 5582  C8  ARC B  21
+ 233                                           HETATM 5583  C9  ARC B  21
+ 234                                           HETATM 5584  C10 ARC B  21
+ 235                                           HETATM 5585  C11 ARC B  21
+ 236                                           HETATM 5586  C12 ARC B  21
+ 237                                           HETATM 5587  C13 ARC B  21
+ 238                                           HETATM 5588  C14 ARC B  21
+ 239                                           HETATM 5589  C15 ARC B  21
+ 240                                           HETATM 5590  C16 ARC B  21
+ 241                                           HETATM 5591  C17 ARC B  21
+ 242                                           HETATM 5592  C18 ARC B  21
+ 243                                           HETATM 5593  C19 ARC B  21
+ 244                                           HETATM 5594  C20 ARC B  21
+ 245                                           HETATM 5595  O1  ARC B  22
+ 246                                           HETATM 5596  C1  ARC B  22
+ 247                                           HETATM 5597  C2  ARC B  22
+ 248                                           HETATM 5598  C3  ARC B  22
+ 249                                           HETATM 5599  C4  ARC B  22
+ 250                                           HETATM 5600  C5  ARC B  22
+ 251                                           HETATM 5601  C6  ARC B  22
+ 252                                           HETATM 5602  C7  ARC B  22
+ 253                                           HETATM 5603  C8  ARC B  22
+ 254                                           HETATM 5604  C9  ARC B  22
+ 255                                           HETATM 5605  C10 ARC B  22
+ 256                                           HETATM 5606  C11 ARC B  22
+ 257                                           HETATM 5607  C12 ARC B  22
+ 258                                           HETATM 5608  C13 ARC B  22
+ 259                                           HETATM 5609  C14 ARC B  22
+ 260                                           HETATM 5610  C15 ARC B  22
+ 261                                           HETATM 5611  C16 ARC B  22
+ 262                                           HETATM 5612  C17 ARC B  22
+ 263                                           HETATM 5613  C18 ARC B  22
+ 264                                           HETATM 5614  C19 ARC B  22
+ 265                                           HETATM 5615  C20 ARC B  22
+ 266                                           HETATM 5616  O1  ARC B  31
+ 267                                           HETATM 5617  C1  ARC B  31
+ 268                                           HETATM 5618  C2  ARC B  31
+ 269                                           HETATM 5619  C3  ARC B  31
+ 270                                           HETATM 5620  C4  ARC B  31
+ 271                                           HETATM 5621  C5  ARC B  31
+ 272                                           HETATM 5622  C6  ARC B  31
+ 273                                           HETATM 5623  C7  ARC B  31
+ 274                                           HETATM 5624  C8  ARC B  31
+ 275                                           HETATM 5625  C9  ARC B  31
+ 276                                           HETATM 5626  C10 ARC B  31
+ 277                                           HETATM 5627  C11 ARC B  31
+ 278                                           HETATM 5628  C12 ARC B  31
+ 279                                           HETATM 5629  C13 ARC B  31
+ 280                                           HETATM 5630  C14 ARC B  31
+ 281                                           HETATM 5631  C15 ARC B  31
+ 282                                           HETATM 5632  C16 ARC B  31
+ 283                                           HETATM 5633  C17 ARC B  31
+ 284                                           HETATM 5634  C18 ARC B  31
+ 285                                           HETATM 5635  C19 ARC B  31
+ 286                                           HETATM 5636  C20 ARC B  31
+ 287                                           HETATM 5637  O1  ARC B  32
+ 288                                           HETATM 5638  C1  ARC B  32
+ 289                                           HETATM 5639  C2  ARC B  32
+ 290                                           HETATM 5640  C3  ARC B  32
+ 291                                           HETATM 5641  C4  ARC B  32
+ 292                                           HETATM 5642  C5  ARC B  32
+ 293                                           HETATM 5643  C6  ARC B  32
+ 294                                           HETATM 5644  C7  ARC B  32
+ 295                                           HETATM 5645  C8  ARC B  32
+ 296                                           HETATM 5646  C9  ARC B  32
+ 297                                           HETATM 5647  C10 ARC B  32
+ 298                                           HETATM 5648  C11 ARC B  32
+ 299                                           HETATM 5649  C12 ARC B  32
+ 300                                           HETATM 5650  C13 ARC B  32
+ 301                                           HETATM 5651  C14 ARC B  32
+ 302                                           HETATM 5652  C15 ARC B  32
+ 303                                           HETATM 5653  C16 ARC B  32
+ 304                                           HETATM 5654  C17 ARC B  32
+ 305                                           HETATM 5655  C18 ARC B  32
+ 306                                           HETATM 5656  C19 ARC B  32
+ 307                                           HETATM 5657  C20 ARC B  32
+ 308                                           HETATM 5658  C1  OCT B   5
+ 309                                           HETATM 5659  C2  OCT B   5
+ 310                                           HETATM 5660  C3  OCT B   5
+ 311                                           HETATM 5661  C4  OCT B   5
+ 312                                           HETATM 5662  C5  OCT B   5
+ 313                                           HETATM 5663  C6  OCT B   5
+ 314                                           HETATM 5664  C7  OCT B   5
+ 315                                           HETATM 5665  C8  OCT B   5
+ 316                                           HETATM 5666  C1  GOL B  13
+ 317                                           HETATM 5667  C2  GOL B  13
+ 318                                           HETATM 5668  C3  GOL B  13
+ 319                                           HETATM 5669  O3  GOL B  13
+ 320                                           HETATM 5670  C1  GOL B  23
+ 321                                           HETATM 5671  C2  GOL B  23
+ 322                                           HETATM 5672  C3  GOL B  23
+ 323                                           HETATM 5673  C1  GOL B  33
+ 324                                           HETATM 5674  C2  GOL B  33
+ 325                                           HETATM 5675  C3  GOL B  33
+
+     If "LET" is used, then some or all of these differences will be ignored
 
                       Number of atoms in GEO_DAT: 1740
                       Number of atoms in GEO_REF: 2013
@@ -401,7 +404,53 @@
             (ATOM     36  CH2 TRP A  10)  -3.647  11.683  25.164        8.54       310.31
             (ATOM    495  CD2 PHE A  71)   0.750 -10.456  10.432        8.31       318.62
 
-   Difference between GEO_DAT and GEO_REF:2469.063 = total,  1.4627 = Average,  2.3806 = RMS, in Angstroms
+     Residues that move a lot and their (Movement in Angstroms per atom)
+
+    Tyr 131(9.99)    Gly  73(8.80)    Gly  72(8.32)    Phe  71(6.22)    Met 163(6.11)
+    Glu  74(5.90)    Ser 132(5.71)    Gln  75(5.67)    Met  32(5.64)    Met  68(5.41)
+    Pro  70(5.30)    Lys 129(5.09)    Glu 161(5.00)    Val 130(4.82)    Val  34(4.67)
+    Ser 162(4.28)    Leu  66(4.16)    Trp  10(3.92)    Tyr 133(3.66)    Val  69(3.58)
+    Thr 128(3.49)    Thr  67(3.34)    Leu 224(2.95)    Gly  33(2.84)    Ser 193(2.80)
+    Tyr  64(2.79)    Ser  35(2.77)    Tyr  26(2.61)    Phe 153(2.47)    Phe 154(2.39)
+    Gly  65(2.35)    Lys  30(2.34)    Ser 158(2.22)    Thr 157(2.03)    Gly  21(1.96)
+    Glu 204(1.92)    Val  29(1.90)    Leu  22(1.83)    Ile 198(1.78)    Asn  76(1.78)
+    Asp 104(1.74)    Gly 192(1.65)    Lys 172(1.62)    Pro   8(1.58)    Asp 102(1.53)
+    Arg   7(1.52)    Pro 200(1.50)    Gly  31(1.50)    Thr 170(1.50)    Tyr  57(1.49)
+    Arg 175(1.48)    Lys  40(1.47)    Leu 190(1.45)    Leu 149(1.44)    Asp  36(1.43)
+    Lys 159(1.42)    Ile  78(1.41)    Arg 164(1.39)    Arg 134(1.38)    Leu 146(1.36)
+    Tyr  43(1.36)    Gly 155(1.32)    Leu 111(1.31)    Ala 160(1.29)    Val 167(1.28)
+    Ala 196(1.27)    Arg 225(1.25)    Ser 183(1.24)    Glu 166(1.24)    Tyr 150(1.23)
+    Leu  97(1.19)    Gly  23(1.18)    Trp 189(1.17)    Phe  88(1.16)    Asp  85(1.15)
+    Leu  92(1.15)    Leu  25(1.15)    Met  20(1.13)    Glu 194(1.12)    Leu 223(1.11)
+    Arg  82(1.11)    Thr  55(1.11)    Val 199(1.10)    Pro  77(1.09)    Ile  45(1.08)
+    Phe 156(1.07)    Thr 178(1.05)    Ile 148(1.03)    Ile 222(1.02)    Leu 181(1.02)
+    Phe 171(1.02)    Leu  48(0.99)    Thr  24(0.98)    Leu 152(0.97)    Phe  27(0.97)
+    Thr  90(0.97)    Leu 221(0.96)    Leu  13(0.95)    Leu 201(0.95)    Leu  87(0.94)
+    Ile 191(0.93)    Gly 195(0.92)    Leu  99(0.92)    Asp  96(0.91)    Thr  17(0.91)
+    Leu  93(0.91)    Ser 169(0.91)    Thr 107(0.91)    Ile  11(0.90)    Asp  38(0.90)
+    Gly 113(0.87)    Leu 206(0.87)    Leu 174(0.86)    Val 180(0.86)    Trp 182(0.86)
+    Leu 207(0.86)    Leu  58(0.86)    Val 213(0.85)    Lys  41(0.85)    Asn 202(0.84)
+    Thr  46(0.84)    Asp 115(0.84)    Met 209(0.83)    Phe  42(0.83)    Ala 168(0.82)
+    Ile 117(0.82)    Leu  62(0.81)    Val 179(0.80)    Tyr  83(0.80)    Val 112(0.79)
+    Gln 105(0.79)    Phe  54(0.79)    Pro  37(0.79)    Thr  47(0.78)    Val 151(0.78)
+    Trp  86(0.77)    Gly 197(0.76)    Asn 176(0.76)    Ala  18(0.75)    Val 173(0.75)
+    Val 187(0.75)    Asp 212(0.74)    Leu  19(0.74)    Pro 186(0.73)    Thr 205(0.73)
+    Gly  63(0.73)    Ser 214(0.72)    Ile 119(0.71)    Met  56(0.71)    Ala  84(0.69)
+    Leu  15(0.68)    Trp 137(0.68)    Phe 135(0.67)    Glu   9(0.66)    Trp  80(0.64)
+    Tyr 147(0.64)    Ser 141(0.62)    Leu  94(0.62)    Ile 203(0.62)    Met 118(0.61)
+    Tyr  79(0.61)    Leu 109(0.61)    Ser  59(0.61)    Leu 127(0.61)    Ala  14(0.60)
+    Leu 211(0.60)    Trp  12(0.58)    Val 217(0.58)    Leu  61(0.58)    Thr  89(0.57)
+    Ala 110(0.57)    Phe 219(0.57)    Phe 208(0.57)    Leu  95(0.56)    Ala  81(0.55)
+    Val 177(0.55)    Trp 138(0.55)    Ala 103(0.55)    Gly 120(0.54)    Ala 215(0.54)
+    Val  49(0.53)    Gly  16(0.53)    Leu 100(0.53)    Gly 220(0.52)    Pro 165(0.52)
+    Ala  44(0.51)    Ala  39(0.51)    Ala 184(0.51)    Val 124(0.50)    Met  60(0.50)
+    Val 136(0.49)    Thr 121(0.49)    Val 188(0.48)    Ala 126(0.47)    Lys 216(0.47)
+    Ala 114(0.45)    Ala  98(0.45)    Ile  52(0.43)    Pro  50(0.42)    Val 101(0.41)
+    Pro  91(0.40)    Leu 123(0.40)    Ala 144(0.39)    Met 145(0.39)    Gly 125(0.38)
+    Leu  28(0.38)    Tyr 185(0.37)    Ala  53(0.35)    Ala 143(0.35)    Gly 122(0.34)
+    Gly 116(0.34)    Thr 142(0.33)    Val 210(0.33)    Gly 218(0.30)    Ile 108(0.28)
+
+   Difference between GEO_DAT and GEO_REF: 2469.063 = total,  1.4627 = Average,  2.3806 = RMS, in Angstroms
 
                              Differences between bond-lengths for the two geometries
 
@@ -445,9 +494,9 @@
 
 
     The following files will be written:
-    'Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRR.html'
-    'Bacteriorhodopsin_1AP9.pdb'
-    'Bacteriorhodopsin_1BRR.pdb'
+              'Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRR.html'
+From GEO_REF: 'Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRR_Bacteriorhodopsin_1BRR.pdb'
+From GEO_DAT: 'Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRR_Bacteriorhodopsin_1AP9.pdb'
 
           GEO_REF with 0SCF: Job complete
 

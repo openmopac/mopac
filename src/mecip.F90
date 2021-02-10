@@ -8,7 +8,6 @@
       use molkst_C, only : norbs
     
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -99,7 +98,7 @@
             do i = 1, nmos 
               deltap(i,i) = deltap(i,i) + (microa(i,id)+microb(i,id))*sum/nstate 
             end do 
-          endif 
+          end if 
         end do 
       end do 
 !

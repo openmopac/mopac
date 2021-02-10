@@ -12,27 +12,38 @@
       implicit none
       double precision ::  x(na), y(na), z(na), s(mpack), &
                         one, two, zero, &
-                        g, r, abc, acu, amu, bcu, bmu, bin, &
+                        g, abc, acu, amu, bcu, bmu, bin, &
                         edel, ephi, epi, esig, ggg, &
                         pig, delg, phig, &
                         reada, rij, sigg, ss, sp, sd, sf, &
                         sss, ssp, ssd, ssf, &
                         u1, u2, u3
-      integer ::           langl(16), i, j, k, &
+      integer ::        langl(16), i, j, k, &
                         i1, ind, iss, issmax, &
                         ja, jb, jj, jl, jlp1, jm, jnat, jnp, jss, jssmax, &
                         ka, kb, kl, klp1, knat, knp, la, lh, minkm, nm
       character*9       atomk, atomkx, atomj, atomjx
       logical           agovlp
-      double precision      agfact
+      double precision  agfact
 
       data one/1.d0/, two/2.d0/, zero/0.0d0/
       data langl/0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3/
 
-      r(i, j) = sqrt ((x(j) - x(i))**2 + (y(j) - y(i))**2 + (z(j) - z(i))**2 )
+      edel = 0.d0
+      epi = 0.d0
+      pig = 0.d0
+      phig = 0.d0
+      delg = 0.d0
+      ss = 0.d0
+      sp = 0.d0
+      sd = 0.d0
+      sf = 0.d0
+      sigg = 0.d0
+      jm = 0
 
 ! RMG - add scaling factor
       agovlp = .False.
+      agfact = 0.d0
       if (index(keywrd, ' AGOVLP = ') /= 0) then
           agovlp = .True.
           agfact = reada(keywrd, index(keywrd, ' AGOVLP = '))
@@ -69,24 +80,28 @@
 !
       bincoe(1) = 1.d0
       ind = 2
-      do 60 i = 1, 29
+      do 601 i = 1, 29
       i1 = i + 1
-      do 60 j = 1, i1
+      do 602 j = 1, i1
       jj = i1 - j + 1
       if (j < 26)go to 66
       bin = 1.d0
       if (j >= jj)then
       do 62 k = j, i
-62    bin = bin*dfloat(k)
+      bin = bin*dfloat(k)
+62    continue
       bincoe(ind) = bin/fact(jj)
       else
       do 64 k = jj, i
-64    bin = bin*dfloat(k)
+      bin = bin*dfloat(k)
+64    continue
       bincoe(ind) = bin/fact(j)
       end if
       go to 60
 66    bincoe(ind) = fact(i1)/fact(j)/fact(jj)
 60    ind = ind + 1
+602   continue
+601   continue
 
 !  introduce atomk and atomj to test if treating the same shell
 !
@@ -105,8 +120,10 @@
 !     i = angular quantum number + 1, 
 !     j = 1, 2, 3, 4 for sigma, pi, delta, phi.
       do 1 i = 1, 4
-      do 1 j = 1, 4
-    1 fspdf(i, j) = one
+      do 11 j = 1, 4
+      fspdf(i, j) = one
+   11 continue
+    1 continue
       fspdf(1, 1) = fssig
       fspdf(2, 1) = fpsig
       fspdf(2, 2) = fppi
@@ -185,8 +202,8 @@
               g = one/dsqrt(g)
               u2 = (x(ja) - x(ka))*g/rij
               u3 = (y(ja) - y(ka))*g/rij
-            endif
-          endif
+            end if
+          end if
 
       call geome (u1, u2, u3, lh, d)
       call geome (u1, u2, u3, la, e)
@@ -323,6 +340,14 @@
   100 continue
 
       return
+
+      contains
+            double precision function r(i, j)
+                  implicit none
+                  integer :: i, j
+                  r = sqrt((x(j) - x(i))**2 + (y(j) - y(i))**2 + (z(j) - z(i))**2 )
+            end function r
+
       end subroutine ovlap
 
 !     *************************************************************************
@@ -435,13 +460,14 @@
 !     summing the infinite series rather than by addition of two
 !     exponentials
 !
-        if (dabs(r) - 1.d-1) 26, 28, 28
-26         ra = zero
+        if (dabs(r) - 1.d-1 >= 0.d0) go to 28
+           ra = zero
            t = rho2
               do 27 i = 2, 25
               if (dabs(t) < 1.d-18) go to 127
               t = t*rho2*rho2/dfloat((i + i - 1)*(i + i - 2))
-27            ra = ra + t
+              ra = ra + t
+27            continue
 127     continue
         r = (ra + rho2)*two
 28      b(1) = r/rho2
@@ -451,40 +477,44 @@
 !
         ixs = ix
             do 51 i = 2, ixs, is
-            if (ir) 32, 40, 32
-32          il = is - 1
+            if (ir == 0) go to 40
+
+            il = is - 1
             if ((i + il) > ix) il = ix - i + 1
               do 31 j = 1, il
               k = i + j - 1
-                 if (mod(k, 2)) 30, 30, 29
-29               b(k) = (r + dfloat(k - 1)*b(k - 1))/rho2
+                 if (mod(k, 2) <= 0) go to 30
+                 b(k) = (r + dfloat(k - 1)*b(k - 1))/rho2
                  go to 31
 30               b(k) = -(d + h - dfloat(k - 1)*b(k - 1))/rho2
 31               continue
 40               in = i + is - 1
-                 if (in - ix) 39, 39, 38
+                 if (in - ix <= 0) go to 39
+                 if (in - ix > 0) go to 38
 !
 !     after the recurrence formula has been applied an appropriate no.
 !     of times the next b function is obtained by summing the infinite
 !     series.
 !
-39      if (mod(in, 2)) 42, 42, 44
-42      tr = rho2
+39      if (mod(in, 2) > 0) go to 44
+        tr = rho2
         b(in) = -(tr + tr)/dfloat(in + 1)
           do 43 j = 1, 500
           tr = tr*rho2*rho2/dfloat((j + j)*(j + j + 1))
 !      note accuracy criterion
 !      if (dabs(tr/b(in)) - 0.000011 ) 51, 51, 43
-          if (dabs(tr) - 1.d-7*dabs(b(in)))51, 51, 43
-43        b(in) = b(in) - (tr + tr)/dfloat(in + 1 + j + j)
+          if (dabs(tr) - 1.d-7*dabs(b(in)) <= 0.d0) go to 51
+          b(in) = b(in) - (tr + tr)/dfloat(in + 1 + j + j)
+43        continue
 44        tr = one
           b(in) = (tr + tr)/dfloat(in)
           do 46 j = 1, 500
           tr = tr*rho2*rho2/dfloat((j + j)*(j + j - 1))
 !      note accuracy criterion
 !      if (dabs(tr/b(in)) - 0.00001  ) 51, 51, 46
-          if (dabs(tr) - 1.d-7*dabs(b(in))) 51, 51, 46
-46          b(in) = b(in) + (tr + tr)/dfloat(in + j + j)
+          if (dabs(tr) - 1.d-7*dabs(b(in)) <= 0.d0) go to 51
+            b(in) = b(in) + (tr + tr)/dfloat(in + j + j)
+46        continue
 51        continue
         go to 38
 !
@@ -494,7 +524,8 @@
         jy = ix/2
            do 36 i = 1, jy
               b(i + i) = zero
-36         b(i + i - 1) = two/dfloat(i + i - 1)
+           b(i + i - 1) = two/dfloat(i + i - 1)
+36      continue
 38      continue
 !
 !     now the a - functions
@@ -513,7 +544,8 @@
 100     continue
           do 120 i = 1, ix
              a(i) = 0.0d0
-120       b(i) = 0.0d0
+             b(i) = 0.0d0
+120       continue
 500       return
           end subroutine aux
 
@@ -556,7 +588,7 @@
       term = q1*term*q2
       jend = 1 + ((l1 - m1)/2)
       kend = 1 + ((l2 - m2)/2)
-      do 50 j = 1, jend
+      do 501 j = 1, jend
       ju = j - 1
       iff = 2*l1 - 2*ju + 1
       f11 = fact(iff)
@@ -565,7 +597,7 @@
       f15 = fact(ju + 1)
       iff = l1 - ju + 1
       f17 = fact(iff)
-      do 50 k = 1, kend
+      do 502 k = 1, kend
       ku = k - 1
       iff = 2*l2 - 2*ku + 1
       f12 = fact(iff)
@@ -577,7 +609,9 @@
       call cfunct (n1 - l1 + 2*ju, n2 - l2 + 2*ku, l1 - m1 - 2*ju, l2 - m2 - 2*ku, m1, value)
       strad1 = value * (f11/f13/f15/f17) * (f12/f14/f16/f18)
       if (mod(ju + ku, 2) == 1) strad1 = -strad1
-   50 strad = strad + strad1
+      strad = strad + strad1
+  502 continue
+  501 continue
       vest = term*strad
   500 return
       end subroutine molpab
@@ -608,23 +642,29 @@
       indc = nin(icb)
       indb = nin(ibb)
       inda = nin(iab)
-      do 90 i6 = 1, ieb
+      do 901 i6 = 1, ieb
       b6 = bincoe(inde + i6)
-      do 90 i5 = 1, ieb
+      do 902 i5 = 1, ieb
       b5 = bincoe(inde + i5)
-      do 90 i4 = 1, idb
+      do 903 i4 = 1, idb
       b4 = bincoe(indd + i4)
-      do 90 i3 = 1, icb
+      do 904 i3 = 1, icb
       b3 = bincoe(indc + i3)
-      do 90 i2 = 1, ibb
+      do 905 i2 = 1, ibb
       b2 = bincoe(indb + i2)
-      do 90 i1 = 1, iab
+      do 906 i1 = 1, iab
       b1 = bincoe(inda + i1)
       term = b1*b2*b3*b4*b5*b6
       if (mod(i2 + i5 + i6 + i4 + ie + id, 2) == 1) term = -term
       ir = i1 + i2 - i3 - i4 + ie + ie - i6 - i6 + ic + id + 3
       ip = ia - i1 + ib - i2 + ie + ie - i5 - i5 + ic - i3 + id-i4 + 7
-   90 count = count + a(ip)*b(ir)*term
+      count = count + a(ip)*b(ir)*term
+  906 continue
+  905 continue
+  904 continue
+  903 continue
+  902 continue
+  901 continue
       snag = count
       end subroutine cfunct
 
@@ -666,12 +706,12 @@
       h(6) = zero
       h(7) = zero
       h(8) = zero
-      if (m) 21, 50, 21
-   21 continue
+      if (m == 0) go to 50
+      continue
       r = two*sp*cp
       st = dabs (one - ct**2)
-      if (1.D-7 - st)22, 22, 23
-   23 st = zero
+      if (1.D-7 - st <= 0.d0) go to 22
+      st = zero
       go to 24
    22 continue
       st = dsqrt(st)

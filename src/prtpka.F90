@@ -55,6 +55,7 @@
     do i = 1, numat     
       if (nat(i) /= 1) cycle
       sum_min = 2.d0
+      i_min = 0
       do j = 1, numat
         if (nat(j) /= 8) cycle
         sum = (coord(1,i) - coord(1,j))**2 + &

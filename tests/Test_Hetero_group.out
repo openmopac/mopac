@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 19.136  64BITS **
+ ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 19.136 , James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,13 +12,13 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Aug  7 17:15:46 2019  *
+ *  CALCULATION DONE:                                Sun Feb  7 17:51:40 2021  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 1B 1) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
  *  Keyword:   CHAINS=(AB) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
- *  DUMP=N     - RESTART FILE WRITTEN EVERY  7200.000 SECONDS
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  HEADER     - DATA SET IS IN PROTEIN DATA BANK FORMAT
  *******************************************************************************
  ADD-H PDBOUT   CHAINS=(AB)  START_RES=(1A 1B 1)
@@ -291,25 +291,25 @@
    262       N(HETATM  271  N   NH2 B  10)   10.10300000  *   3.09200000  *  20.00700000  *
    263       H(HETATM  272 1H   NH2 B  10)    9.10500000  *   2.95100000  *  20.22500000  *
    264       H(HETATM  273 2H   NH2 B  10)   10.69200000  *   2.24600000  *  20.30500000  *
-   265       O(HETATM  275  O   HOH     1)   16.74400000  *   4.05800000  *  20.32600000  *
-   266       O(HETATM  276  O   HOH     2)   14.03500000  *   2.40800000  *  18.23100000  *
-   267       O(HETATM  277  O   HOH     3)   12.38400000  *   2.60500000  *  21.89800000  *
-   268       O(HETATM  278  O   HOH     4)   17.93800000  *   2.87400000  *  11.49300000  *
-   269       O(HETATM  279  O   HOH     5)   16.53000000  *   1.11800000  *  13.39200000  *
-   270       O(HETATM  280  O   HOH     6)   14.10800000  *   1.04700000  *  20.52800000  *
-   271       O(HETATM  281  O   HOH     7)   15.74000000  *   2.25100000  *  22.34100000  *
-   272       O(HETATM  282  O   HOH     8)   23.66600000  *   2.27500000  *   1.19100000  *
-   273       O(HETATM  283  O   HOH     9)   21.49100000  *   0.59600000  *   2.28500000  *
-   274       O(HETATM  284  O   HOH    10)   19.52800000  *   1.36100000  *   9.15300000  *
-   275       O(HETATM  285  O   HOH    11)   19.02300000  *   3.84700000  *   1.88700000  *
-   276       O(HETATM  286  O   HOH    12)   19.96900000  *   3.53500000  *   4.39400000  *
-   277       O(HETATM  287  O   HOH    13)   22.47500000  *   2.48500000  *   4.18000000  *
+   265       O(HETATM  275  O   HOH C   1)   16.74400000  *   4.05800000  *  20.32600000  *
+   266       O(HETATM  276  O   HOH C   2)   14.03500000  *   2.40800000  *  18.23100000  *
+   267       O(HETATM  277  O   HOH C   3)   12.38400000  *   2.60500000  *  21.89800000  *
+   268       O(HETATM  278  O   HOH C   4)   17.93800000  *   2.87400000  *  11.49300000  *
+   269       O(HETATM  279  O   HOH C   5)   16.53000000  *   1.11800000  *  13.39200000  *
+   270       O(HETATM  280  O   HOH C   6)   14.10800000  *   1.04700000  *  20.52800000  *
+   271       O(HETATM  281  O   HOH C   7)   15.74000000  *   2.25100000  *  22.34100000  *
+   272       O(HETATM  282  O   HOH C   8)   23.66600000  *   2.27500000  *   1.19100000  *
+   273       O(HETATM  283  O   HOH C   9)   21.49100000  *   0.59600000  *   2.28500000  *
+   274       O(HETATM  284  O   HOH C  10)   19.52800000  *   1.36100000  *   9.15300000  *
+   275       O(HETATM  285  O   HOH C  11)   19.02300000  *   3.84700000  *   1.88700000  *
+   276       O(HETATM  286  O   HOH C  12)   19.96900000  *   3.53500000  *   4.39400000  *
+   277       O(HETATM  287  O   HOH C  13)   22.47500000  *   2.48500000  *   4.18000000  *
  
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
  NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
- http://www.springerlink.com/openurl.asp?genre=article&id=doi:10.1007/s00894-012-1667-x
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
 
            Empirical Formula: C86 H128 N22 O37 S4  =   277 atoms
 
@@ -740,19 +740,19 @@
   N(HETATM  271  N   NH2 B  10)  10.10300000 +1   3.09200000 +1  20.00700000 +1
   H(HETATM  272 1H   NH2 B  10)   9.10500000 +1   2.95100000 +1  20.22500000 +1
   H(HETATM  273 2H   NH2 B  10)  10.69200000 +1   2.24600000 +1  20.30500000 +1
-  O(HETATM  275  O   HOH     1)  16.74400000 +1   4.05800000 +1  20.32600000 +1
-  O(HETATM  276  O   HOH     2)  14.03500000 +1   2.40800000 +1  18.23100000 +1
-  O(HETATM  277  O   HOH     3)  12.38400000 +1   2.60500000 +1  21.89800000 +1
-  O(HETATM  278  O   HOH     4)  17.93800000 +1   2.87400000 +1  11.49300000 +1
-  O(HETATM  279  O   HOH     5)  16.53000000 +1   1.11800000 +1  13.39200000 +1
-  O(HETATM  280  O   HOH     6)  14.10800000 +1   1.04700000 +1  20.52800000 +1
-  O(HETATM  281  O   HOH     7)  15.74000000 +1   2.25100000 +1  22.34100000 +1
-  O(HETATM  282  O   HOH     8)  23.66600000 +1   2.27500000 +1   1.19100000 +1
-  O(HETATM  283  O   HOH     9)  21.49100000 +1   0.59600000 +1   2.28500000 +1
-  O(HETATM  284  O   HOH    10)  19.52800000 +1   1.36100000 +1   9.15300000 +1
-  O(HETATM  285  O   HOH    11)  19.02300000 +1   3.84700000 +1   1.88700000 +1
-  O(HETATM  286  O   HOH    12)  19.96900000 +1   3.53500000 +1   4.39400000 +1
-  O(HETATM  287  O   HOH    13)  22.47500000 +1   2.48500000 +1   4.18000000 +1
+  O(HETATM  275  O   HOH C   1)  16.74400000 +1   4.05800000 +1  20.32600000 +1
+  O(HETATM  276  O   HOH C   2)  14.03500000 +1   2.40800000 +1  18.23100000 +1
+  O(HETATM  277  O   HOH C   3)  12.38400000 +1   2.60500000 +1  21.89800000 +1
+  O(HETATM  278  O   HOH C   4)  17.93800000 +1   2.87400000 +1  11.49300000 +1
+  O(HETATM  279  O   HOH C   5)  16.53000000 +1   1.11800000 +1  13.39200000 +1
+  O(HETATM  280  O   HOH C   6)  14.10800000 +1   1.04700000 +1  20.52800000 +1
+  O(HETATM  281  O   HOH C   7)  15.74000000 +1   2.25100000 +1  22.34100000 +1
+  O(HETATM  282  O   HOH C   8)  23.66600000 +1   2.27500000 +1   1.19100000 +1
+  O(HETATM  283  O   HOH C   9)  21.49100000 +1   0.59600000 +1   2.28500000 +1
+  O(HETATM  284  O   HOH C  10)  19.52800000 +1   1.36100000 +1   9.15300000 +1
+  O(HETATM  285  O   HOH C  11)  19.02300000 +1   3.84700000 +1   1.88700000 +1
+  O(HETATM  286  O   HOH C  12)  19.96900000 +1   3.53500000 +1   4.39400000 +1
+  O(HETATM  287  O   HOH C  13)  22.47500000 +1   2.48500000 +1   4.18000000 +1
  
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
@@ -773,7 +773,7 @@
 
         0  XYIQNCPLGG
 
-          HYDROGEN ATOMS ADDED
+          ADD-H: SYSTEM HAS BEEN HYDROGENATED
 
 
            GEOMETRY AFTER RE-SEQUENCING
@@ -1695,7 +1695,7 @@ END
  *                                                                            *
  *     Error and normal termination messages reported in this calculation     *
  *                                                                            *
- * HYDROGEN ATOMS ADDED                                                       *
+ * ADD-H: SYSTEM HAS BEEN HYDROGENATED                                        *
  * GEOMETRY RESEQUENCED                                                       *
  * JOB ENDED NORMALLY                                                         *
  *                                                                            *

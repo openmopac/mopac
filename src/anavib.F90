@@ -121,6 +121,7 @@
 !  NOW TO SORT F INTO DECENDING ORDER
 !
           do i = 1, 10 
+            jj = 0
             sum = -100.D0 
             do j = 1, l 
               if (abs(f(j)) <= sum) cycle  
@@ -164,8 +165,8 @@
             ans = min(999.d0, max(-99.9d0, 100.D0*sqrt(fij(ij)*1.D5*fpc_10)/(fpc_8*pi*2.D0)/eigs(k)))
             j1 = 1
             if (elemnt(nat(j))(1:1) == " ") j1 = 2
-						i1 = 1
-						if (elemnt(nat(i))(1:1) == " ") i1 = 2
+            i1 = 1
+            if (elemnt(nat(i))(1:1) == " ") i1 = 2
             write(line,'(a, i'//num//', a, i'//num//',a, sp,F9.1,ss,''% ('',F5.1,''%)'',F9.1,''%'')') &
              pad(:npad)//elemnt(nat(i))(i1:2)//pad(: i1 - 1), i, " -- "//elemnt(nat(j))(j1:2)//pad(: j1 - 1), &
               j, pad(:npad - 4), e, ans, radial 
@@ -195,13 +196,13 @@
               write (iw, & 
               & '(''                   '',a)') &
                trim(line)
-            endif 
+            end if 
           end do 
-        endif 
+        end if 
         if (vib1) then 
           write (iw, '(/,'' VIBRATION'',I4)') k 
           write (iw, '(  '' FREQ.    '',F8.2)') eigs(k) 
-        endif 
+        end if 
         if (vib2) write (iw, '(  '' TRANSITION DIPOLE'',F9.4)') dipt(k) 
         if (vib3) write (iw, '(  '' TRAVEL (Ang.)    '',F9.4)') travel(k) 
         if (vib4) write (iw, '(  '' REDUCED MASS     '',F9.4)') redmas(k, 1) 

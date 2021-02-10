@@ -7,6 +7,7 @@ double precision function invfn (x, qn, mode)
     ans0 = 2.0d0
     x0 = fn(ans0, qn, mode) - x
     ans1 = ans0 * 1.1d0
+    new = 0.d0
     do
       x1 = fn(ans1, qn, mode) - x
       if (Abs (x0-x1) < 1.d-10) exit
@@ -29,6 +30,7 @@ contains
    !
    !.. External Calls ..
       double precision, external :: rsc
+      fn = 0.d0
       select case (mode)
       case (0)
     !

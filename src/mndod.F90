@@ -182,10 +182,12 @@
       integer :: i 
       double precision :: dsq, ev4, ev8, a1, a2, delta, y1, y2, f1, f2 
 !-----------------------------------------------
+      f1 = 0.d0
+      f2 = 0.d0
       if (l == 0) then 
         poij = 0.5d0*ev/fg 
         return  
-      endif 
+      end if 
 ! *** HIGHER TERMS.
       dsq = d*d 
       ev4 = ev*0.25d0 
@@ -204,7 +206,7 @@
             a2 = y2 
           else 
             a1 = y1 
-          endif 
+          end if 
         end do 
       else 
         if (l == 2) then 
@@ -221,16 +223,16 @@
               a2 = y2 
             else 
               a1 = y1 
-            endif 
+            end if 
           end do 
-        endif 
-      endif 
+        end if 
+      end if 
 !     DEFINE ADDITIVE TERM AFTER CONVERGENCE OF ITERATIONS.
       if (f1 >= f2) then 
         poij = a2 
       else 
         poij = a1 
-      endif 
+      end if 
       return  
       end function poij 
 
@@ -274,7 +276,6 @@
       po, ddp, f0dd, f2dd, f4dd, f0sd, g2sd, f0pd, f2pd, alpb, xfac, &
       & g1pd, g3pd, guess1, guess2, guess3
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -436,7 +437,6 @@
 !
 !***********************************************************************
 !***********************************************************************
-!DECK MOPAC
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -772,7 +772,7 @@
           ri(21) = ee + eqxx + qxxe + qxxqyy 
           ri(22) = pp*(qxxqxx - qxxqyy) 
 !
-        endif 
+        end if 
 !
         if (l_feather) then
           call to_point(rij, point, const)
@@ -867,7 +867,7 @@
           lasti = 1 
         else 
           lasti = 4 
-        endif 
+        end if 
 !
         if (dorbs(nj)) then 
           lastk = 9 
@@ -875,7 +875,7 @@
           lastk = 1 
         else 
           lastk = 4 
-        endif 
+        end if 
 !
         do i = 1, lasti 
           li = lorb(i) 
@@ -945,7 +945,7 @@
 ! --- <S S | D#D#>
           kl = indexd(8,8) 
           core(10,2) = -rijkl(ni,nj,ij,kl,0,0,2,2,1,r)*ev*tore(ni) 
-        endif 
+        end if 
 !*
         if (dorbs(ni)) then 
 ! --- <D S | S S>
@@ -967,8 +967,8 @@
           kl = indexd(8,8) 
           core(10,1) = -rijkl(ni,nj,kl,ij,2,2,0,0,2,r)*ev*tore(nj) 
 !
-        endif 
-      endif 
+        end if 
+      end if 
 !*    WRITE(6,'('' DCORE:'',/(2X,6F12.4))') CORE
       return  
       end subroutine reppd2 
@@ -1006,6 +1006,8 @@
 !-----------------------------------------------
 !     *
 !
+      pij = 0.d0
+      pkl = 0.d0
       l1min = iabs(li - lj) 
       l1max = li + lj 
       lij = indx(li+1,lj+1) 
@@ -1032,7 +1034,7 @@
         else 
           dij = ddp(lij,ni) 
           pij = po(lij,ni) 
-        endif 
+        end if 
 !
         do l2 = l2min, l2max  
           if (l2 == 0) then 
@@ -1048,7 +1050,7 @@
           else 
             dkl = ddp(lkl,nj) 
             pkl = po(lkl,nj) 
-          endif 
+          end if 
 !
           add = (pij + pkl)**2 
           lmin = min(l1,l2) 
@@ -1081,7 +1083,6 @@
 !     IN THE MOLECULAR COODINATE SYSTEM BY 2.d0-STEP PROCEDURE
 !     *
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -1421,8 +1422,8 @@
         else 
           ca = 0.d0 
           cb = 0.d0 
-        endif 
-      endif 
+        end if 
+      end if 
 !     CONVERT DISTANCE TO ATOMIC UNITS.
 !#      R      = R/A0
 ! *** CALCULATE ROTATION MATRIX ELEMENTS.
@@ -1465,7 +1466,7 @@
         d(3,5) = c2a*sb 
         d(4,5) = s2a*(cb*cb + 0.5d0*sb*sb) 
         d(5,5) = c2a*cb 
-      endif 
+      end if 
 !     *
 !
 !  S-P
@@ -1544,7 +1545,7 @@
           d_d(14,k,:k-1) = d(k,3)*d(:k-1,5) + d(k,5)*d(:k-1,3) 
           d_d(15,k,:k-1) = d(k,4)*d(:k-1,5) + d(k,5)*d(:k-1,4) 
         end do 
-      endif 
+      end if 
       return  
       end subroutine rotmat 
 
@@ -1725,7 +1726,7 @@
           core(2,1) = -tore(nj)*aj(2) 
           core(3,1) = -tore(nj)*aj(3) 
           core(4,1) = -tore(nj)*aj(4) 
-        endif 
+        end if 
 ! *** NJ- HEAVY ATOM
         if (nj >= 3) then 
           ppi = (aci + po(7,nj))**2 
@@ -1750,8 +1751,8 @@
           core(2,2) = -tore(ni)*ai(2) 
           core(3,2) = -tore(ni)*ai(3) 
           core(4,2) = -tore(ni)*ai(4) 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
       end subroutine spcore 
 
@@ -2120,7 +2121,7 @@ end subroutine wstore
         aij(4,ni) = aijl(z1,z3,nsp,nd,2) 
         aij(5,ni) = aijl(z2,z3,nsp,nd,1) 
         aij(6,ni) = aijl(z3,z3,nd,nd,2) 
-      endif 
+      end if 
       return  
       contains 
 
@@ -2261,7 +2262,7 @@ end subroutine wstore
         xyxy = 4.D00/sqrt(r**2 + (da - db)**2 + add) + 4.D00/sqrt(r**2 + (da + &
           db)**2 + add) - 8.D00/sqrt(r**2 + da**2 + db**2 + add) 
         charg = xyxy/16.D00 
-      endif 
+      end if 
       return  
       end function charg 
 
@@ -2339,8 +2340,8 @@ end subroutine wstore
           fg = repd(44,ni) - (20.0D0/35.0D0)*repd(52,ni) 
           ddp(6,ni) = d 
           po(6,ni) = poij(2,d,fg) 
-        endif 
-      endif 
+        end if 
+      end if 
       return  
       end subroutine ddpo 
 
@@ -2403,8 +2404,8 @@ end subroutine wstore
                 idd = inddd(ind1-3,ind2-3) 
                 h(m) = h(m) + cored(7,n)*d_d(idd,1,1) + cored(9,n)*(d_d(idd,2,2)+d_d&
                   (idd,3,3)) + cored(10,n)*(d_d(idd,4,4)+d_d(idd,5,5)) 
-              endif 
-            endif 
+              end if 
+            end if 
 !
           end do 
         else 
@@ -2428,8 +2429,8 @@ end subroutine wstore
                   idd = inddd(ind1-3,ind2-3) 
                   h(m) = h(m) + cored(7,n)*d_d(idd,1,1) + cored(9,n)*(d_d(idd,2,2)+&
                     d_d(idd,3,3)) + cored(10,n)*(d_d(idd,4,4)+d_d(idd,5,5)) 
-                endif 
-              endif 
+                end if 
+              end if 
 !
             end do 
           else 
@@ -2450,12 +2451,12 @@ end subroutine wstore
                   idd = inddd(ind1-3,ind2-3) 
                   h(m) = h(m) + cored(7,n)*d_d(idd,1,1) + cored(9,n)*(d_d(idd,2,2)+&
                     d_d(idd,3,3)) + cored(10,n)*(d_d(idd,4,4)+d_d(idd,5,5)) 
-                endif 
-              endif 
+                end if 
+              end if 
 !
             end do 
-          endif 
-        endif 
+          end if 
+        end if 
       end do 
 !
       if (n == 2) go to 30 

@@ -29,6 +29,8 @@
 !   integral <psi(1)|F|psi(2)> is zero.
 !
 !***********************************************************************
+      atom_a = 0
+      atom_b = 0
       thresh = 0.05d0
       lone_pair = .false.
       l_banana = (index(keywrd, "BANANA") /= 0)
@@ -198,7 +200,7 @@
               continue
             end if            
           end select 
-        endif 
+        end if 
       end do l160 
       return  
       end subroutine resolv 

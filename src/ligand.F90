@@ -389,7 +389,7 @@ subroutine ligand (ires, start_res, nfrag)
                         txtatm(i) = txtatm(k)(:12)//" "//cap_elemnt(nat(i))(1:1)//trim(line)
                       else
                         txtatm(i) = txtatm(k)(:12)//cap_elemnt(nat(i))//txtatm(k)(15:)
-                      endif
+                      end if
                     end if
                     cycle
                   end if
@@ -1054,7 +1054,10 @@ subroutine identify_hexose(ninres, inres, nam, name)
   logical :: aldose
   data hexose_aldose /"Allose   ", "Altrose  ", "Glucose  ", "Mannose  ", &
     "Gulose   ", "Idose    ", "Galactose", "Talose   "/
-   data hexose_ketose /"Psicose  ", "Fructose ", "Sorbose ", "Tagatose "/
+  data hexose_ketose /"Psicose  ", "Fructose ", "Sorbose ", "Tagatose "/
+  C1 = 0
+  l = 0
+  m = 0
 !
 ! First, check that all carbon atoms have four ligands
 !
@@ -1113,7 +1116,7 @@ subroutine identify_hexose(ninres, inres, nam, name)
       end do
       backbone(i) = l
       Cm = backbone(i - 1)
-      Cn = l      
+      Cn = l
     end do
     chiral = 0
 !
@@ -1129,8 +1132,8 @@ subroutine identify_hexose(ninres, inres, nam, name)
 !
         do l = 1, nbonds(j)
           m = ibonds(l,j)
-           if (m == 0) return
-           if (nat(m) > 1 .and. m /= C1) exit
+          if (m == 0) return
+          if (nat(m) > 1 .and. m /= C1) exit
         end do
         do l = 1, ninres
           if (inres(l) == m) exit

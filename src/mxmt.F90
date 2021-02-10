@@ -21,7 +21,7 @@
 #endif           
       else
          call dgemm ('N', 'T', nar, ncc, nbr, 1.0D0, a, nar, b, ncc, 0.0D0, c, nar)
-      endif 
+      end if 
 
       return  
       end subroutine mxmt 

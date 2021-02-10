@@ -9,7 +9,6 @@
       use chanel_C, only : iw
       use funcon_C, only : pi
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -71,7 +70,7 @@
       else 
         error = 0.D0 
         geovec = 0.d0
-      endif 
+      end if 
       geo = geo - error*geovec(:,:natoms) 
 !                                     OPTION (B)
       coord(:,1) = geo(:,1)
@@ -91,7 +90,7 @@
             coord(1,3) = coord(1,1) + geo(1,3)*ccos 
           else 
             coord(1,3) = coord(1,2) - geo(1,3)*ccos 
-          endif 
+          end if 
           coord(2,3) = coord(2,2) + geo(1,3)*sin(geo(2,3)) 
           coord(3,3) = coord(3,2) 
         end if
@@ -125,7 +124,7 @@
               return  
             else 
               rbc = 1.0D00/sqrt(rbc) 
-            endif 
+            end if 
             ma = nc(i) 
             xa = coord(1,ma) - coord(1,mc) 
             ya = coord(2,ma) - coord(2,mc) 
@@ -156,7 +155,7 @@
                 return   
               end if
               k = 1 
-            endif 
+            end if 
   !
   !     ROTATE ABOUT THE Y-AXIS TO MAKE ZB VANISH
   !
@@ -180,7 +179,7 @@
   !
               coskh = 1.D0 
               sinkh = 0.D0 
-            endif 
+            end if 
   !
   !     COORDINATES :-   A=(???,YZA,0),   B=(RBC,0,0),  C=(0,0,0)
   !     NONE ARE NEGATIVE.
@@ -205,7 +204,7 @@
               xrd = -zqd 
               zqd = xqd 
               xqd = xrd 
-            endif 
+            end if 
             coord(1,i) = xqd + coord(1,mc) 
             coord(2,i) = yqd + coord(2,mc) 
             coord(3,i) = zqd + coord(3,mc) 
@@ -249,7 +248,7 @@
 !
 ! *** NOW REMOVE THE TRANSLATION VECTORS, IF ANY, FROM THE ARRAY COORD
 !
-      endif 
+      end if 
       k = natoms 
       do while(labels(k) == 107) 
         k = k - 1 
@@ -291,8 +290,8 @@
             '              X                Y              Z') 
 160         format('    T',i1,' =',f14.7,' ',f14.7,' ',f14.7) 
           end if
-        endif 
-      endif 
+        end if 
+      end if 
   170 continue 
       j = 0 
       do i = 1, natoms 

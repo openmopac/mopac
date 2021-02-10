@@ -135,7 +135,7 @@
         
         if (icok > -1) write (isyb, "(2f12.6)", err=40) pop(:numat), chrg(:numat) 
         call to_screen("To_file: Mulliken")
-      endif 
+      end if 
       return  
    40 continue 
       write (iw, '(A)') 'Error writing SYBYL Mulliken population output' 

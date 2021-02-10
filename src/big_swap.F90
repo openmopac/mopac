@@ -946,8 +946,8 @@
 ! Extract system
 !
       if (system == 1) then
-        nbonds(:numat) = nbonds_1
-        ibonds(:,:numat) = ibonds_1   
+        nbonds(:numat) = nbonds_1(:numat)
+        ibonds(:,:numat) = ibonds_1(:,:numat)
         if (icocc_dim_1 > 0) icocc_dim = icocc_dim_1
         if (icvir_dim_1 > 0) icvir_dim = icvir_dim_1
         if (cvir_dim_1 > 0)  cvir_dim  = cvir_dim_1
@@ -984,8 +984,8 @@
         if (allocated(pa)) pa = p*0.5d0
         if (allocated(pb)) pb = pa
       else
-        nbonds(:numat) = nbonds_2
-        ibonds(:,:numat) = ibonds_2 
+        nbonds(:numat) = nbonds_2(:numat)
+        ibonds(:,:numat) = ibonds_2(:,:numat)
         if (icocc_dim_2 > 0) icocc_dim = icocc_dim_2
         if (icvir_dim_2 > 0) icvir_dim = icvir_dim_2
         if (cvir_dim_2 > 0)  cvir_dim  = cvir_dim_2
@@ -1216,6 +1216,7 @@
   tmp = active_site(:shell)
   do i = 1, shell
     k = 100000
+    l = 0
     do j = 1, shell
       if (tmp(j) < k) then
         k = tmp(j)
@@ -1384,7 +1385,8 @@
 !
     integer :: i
     double precision, external :: seconds
-    logical :: opend    
+    logical :: opend
+    character :: num*1
     if (l_ts) then
       line = "TS"
     else if (l_nllsq) then
@@ -1394,14 +1396,12 @@
     end if
     write(iw,'(a, i4 ,a)')"  Loop:", loop, &
     "  Gradient minimization of atoms in the active site using "//trim(line)
+    i = int(log10(loop + 0.05)) 
+    num = char(ichar("1") + i)
+    write(line,'("(Loop", i'//num//',")", a)')loop, trim(title)
+    title = trim(line)
     line = input_fn(:len_trim(input_fn) - 5)
-    if (loop < 10) then
-        write(line(len_trim(line) + 1:),'(a,i1,a)')" Loop",loop, ".mop"
-        write(title,'("(Loop",i1,")",a)')loop, trim(title)
-    else
-        write(line(len_trim(line) + 1:),'(a,i2,a)')" Loop",loop, ".mop"
-        write(title,'("(Loop",i2,")",a)')loop, trim(title)
-    end if
+    write(line(len_trim(line) + 1:),'(a, i'//num//', a)')" Loop",loop, ".mop"
     if (extra_print) then
       call add_path(line)
       inquire(unit=iarc, opened=opend) 
@@ -1411,11 +1411,7 @@
       &"'"//trim(line)//"'"
       call geout (iarc)
       close(iarc)
-      if (loop < 10) then
-        title = trim(title(8:))
-      else
-        title = trim(title(9:))
-      end if
+      title = trim(title(8 + i:))
     end if
     call l_control("GNORM=3", len("GNORM=3"), 1)
     geoa(:,:numat) = geo(:,:numat)

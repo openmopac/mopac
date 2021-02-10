@@ -91,12 +91,12 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
           in = ((j*(j-1))/2) + i  ! location in upper triangle
         else
           in = ((i*(i-1))/2) + j  ! location in lower triangle
-        endif
+        end if
 
         ij = j + n*(i-1)
         fmo(ij) = fao(in)
-      enddo
-    enddo
+      end do
+    end do
 ! here, performs matrix multiplications to form FMO
     if (lgpu) then
 #if GPU
@@ -140,7 +140,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
       kk = 2
     else
       kk = 1
-    endif
+    end if
 
     Select case (kk)
 
@@ -201,7 +201,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
             call rot_cuda_2gpu(fmo,eig,vector,ci0,ca0,nocc,lumo,n,bigeps,tiny)
          else
             call rot_cuda(fmo,eig,vector,ci0,ca0,nocc,lumo,n,bigeps,tiny)
-         endif
+         end if
          deallocate (ci0,ca0,stat=i)
 #endif
     End select

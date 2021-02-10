@@ -37,6 +37,6 @@
       if (i /= 0) then 
         j = index(keywrd(i+1:),' ') + i 
         keywrd(i+9:j) = keybuf(i+9:j) 
-      endif 
+      end if 
       return  
       end subroutine upcase 

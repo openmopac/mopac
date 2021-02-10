@@ -77,3 +77,78 @@ add_test(NAME salt2 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py
 
 add_test(NAME residues COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
          SITE_Individual_residues.mop IONIZE.arc)
+
+add_test(NAME ag20 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         ag20.mop)
+
+add_test(NAME ag20_cis_active COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         ag20_cis_active.mop)
+
+add_test(NAME benzene COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         benzene.mop)
+
+add_test(NAME co_cas COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cas.mop)
+
+add_test(NAME co_cis COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cis.mop)
+
+add_test(NAME co_cis_2 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cis_2.mop)
+
+add_test(NAME co_cis_PM7 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cis_PM7.mop)
+
+add_test(NAME co_cis_active COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cis_active.mop)
+
+add_test(NAME co_cis_solv COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cis_solv.mop)
+
+add_test(NAME co_cis_tdip COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cis_tdip.mop)
+
+add_test(NAME co_cis_trip COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_cis_trip.mop)
+
+add_test(NAME co_extern COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_extern.mop param.txt)
+
+add_test(NAME co_fail COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_fail.mop)
+
+add_test(NAME co_field COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_field.mop)
+
+add_test(NAME co_mrci COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_mrci.mop)
+
+add_test(NAME co_mrci_maxci COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_mrci_maxci.mop)
+
+add_test(NAME co_mrci_solv COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_mrci_solv.mop)
+
+add_test(NAME co_pm7 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_pm7.mop)
+
+add_test(NAME co_pm7_solv COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_pm7_solv.mop)
+
+add_test(NAME co_print COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         co_print.mop)
+
+add_test(NAME no_cis_quar COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         no_cis_quar.mop)
+
+add_test(NAME no_mrci COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         no_mrci.mop)
+
+add_test(NAME noparam COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         noparam.mop)
+
+add_test(NAME poly_c8 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         poly_c8.mop)
+
+add_test(NAME poly_c8_mr COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
+         poly_c8_mr.mop)

@@ -54,16 +54,16 @@
           i = i + 5 
           large = keywrd(i:i) == ' ' .or. keywrd(i+1:i+1) == '-' 
           if (keywrd(i:i) == '=') iprint = nint(abs(reada(keywrd,i))) 
-        endif 
-      endif 
+        end if 
+      end if 
       if (jloop==0 .or. (jloop/iprint)*iprint==jloop) then               
         if (drc) then 
           write (line, '('' FEMTOSECONDS  POINT  POTENTIAL + KINETIC  =   TOTAL     ERROR    REF%   MOVEMENT'')') 
         else 
           write (line, '(''     POINT   POTENTIAL  +  ENERGY LOST   =   TOTAL      ERROR    REF%   MOVEMENT'')') 
-        endif 
+        end if 
         write(iw,'(2/,a)')trim(line)
-      endif 
+      end if 
       if (drc) then
 !
 ! Sanity check - don't print two points that are the same.
@@ -108,7 +108,7 @@
           write (line, &
       '(I8,F14.'//frmat//',F13.5,F17.5,F10.5,I6,''   %'',A,A,I3)') &
       iloop - 2, rc_escf, ekin, rc_escf + ekin, errr, jloop, text1, text2, ii 
-        endif 
+        end if 
       else 
         if (drc) then 
           if (text1 == ' ' .and. text2 == ' ') then             
@@ -119,7 +119,7 @@
             write (line, &
       '(F10.3,I8,F12.'//frmat//',F11.5,F12.'//frmat//',F10.5,'' '',I5,3X,''%'',A,A,I3)') &
       time, iloop - 2, rc_escf, ekin, rc_escf + ekin, errr, jloop, text1, text2 
-          endif 
+          end if 
         else 
           if (text1 == ' ' .and. text2 == ' ') then 
             write (line, &
@@ -131,7 +131,7 @@
       iloop - 2, rc_escf, ekin, rc_escf + ekin, errr, jloop, text1, text2 
           end if
         end if        
-      endif 
+      end if 
       if (index(keywrd," LDRC_FIRST") /= 0) then
 !
 !   This is very poor code, and will become buggy if the formats are changed.
@@ -169,7 +169,7 @@
           write (iw, '(I4,3X,A2,3F11.5,2X,3F11.1)') i, elemnt(nat(i)), &
           (xyz(j,i),j=1,3), (-vel(j,i),j=1,3) 
         end do 
-      endif 
+      end if 
 !
 !   Write out trajectory for graphics
 !
@@ -195,14 +195,14 @@
             iel1(loc(2,ivar)) = 1 
             ivar = ivar + 1 
             go to 110 
-          endif 
+          end if 
           if (i < 4) then 
             iel1(3) = 0 
             if (i < 3) then 
               iel1(2) = 0 
               if (i < 2) iel1(1) = 0 
-            endif 
-          endif 
+            end if 
+          end if 
           if (labels(i) < 99 .or. labels(i) > 102 .and. labels(i) < 107) then 
             l = l + 1 
             gg(1) = geo3(1,i*3-2) + geo3(2,i*3-2)*fract + geo3(3,i*3-2)*fract**2 
@@ -213,8 +213,8 @@
           else 
             write (iw, '(2X,A2,3(F12.6,I3),I4,2I3,10X,I8,A)') elemnt(labels(i)), &
             (gg(k),iel1(k),k=1,3), na(i), nb(i), nc(i), jloop, alpha//'%' 
-          endif 
+          end if 
         end do 
-      endif 
+      end if 
       return  
       end subroutine drcout 

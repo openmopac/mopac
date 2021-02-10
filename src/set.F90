@@ -40,7 +40,7 @@
         ips = 1 
         sa = s2 
         sb = s1 
-      endif 
+      end if 
       j = ii + 2 
       if (ii > 3) j = j - 1 
       alpha = 0.5D00*rab*(sa + sb) 
@@ -110,17 +110,17 @@
         if (k <= 10) go to 40 
         last = 15 
         go to 60 
-      endif 
+      end if 
       if (absx > 1.D00) then 
         if (k <= 7) go to 40 
         last = 12 
         go to 60 
-      endif 
+      end if 
       if (absx > 0.5D00) then 
         if (k <= 5) go to 40 
         last = 7 
         go to 60 
-      endif 
+      end if 
       if (absx <= 1.D-6) go to 90 
       last = 6 
       go to 60 

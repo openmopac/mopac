@@ -61,6 +61,7 @@
 !
 !***********************************************************************
       data icalcn/ 0/  
+      n2 = 0
 !
       if (icalcn /= numcal) then 
         if(allocated(wmat)) deallocate(wmat)
@@ -75,7 +76,7 @@
         const = fpc_9 
         debug = index(keywrd,'DERI1') /= 0 
         icalcn = numcal 
-      endif 
+      end if 
       if (debug) call timer ('BEFORE DERI1') 
       step = 1.D-3 
 !
@@ -139,13 +140,13 @@
         ! TODO: GBR future modifications
         call mtxm (c(1,nbo(1)+1), nbo(2), work, norbs, f(l), nbo(1)) 
         l = l + nbo(2)*nbo(1) 
-      endif 
+      end if 
       if (nbo(3)/=0 .and. nbo(1)/=0) then 
 !        VIRTUAL-CLOSED
         ! TODO: GBR future modifications
         call mtxm (c(1,nopen+1), nbo(3), work, norbs, f(l), nbo(1)) 
         l = l + nbo(3)*nbo(1) 
-      endif 
+      end if 
 !        VIRTUAL-OPEN
       ! TODO: GBR future modifications
       if (nbo(3)/=0 .and. nbo(2)/=0) &
@@ -156,7 +157,7 @@
         write (iw, *) ' F IN DERI1' 
         j = min(20,minear) 
         write (iw, '(5F12.6)') (f(i),i=1,j) 
-      endif 
+      end if 
 !
 !     PART 3 : SUPER-VECTOR FD, C.I-ACTIVE DIAGONAL BLOCKS, UNSCALED.
       l = 1 
@@ -202,7 +203,7 @@
         write (iw, *) ' GSE:', gse 
         write (iw, *) ' EIGB:', (eigb(i),i=1,10) 
         write (iw, *) ' WORK:', (work(i,1),i=1,10) 
-      endif 
+      end if 
       call mecih (work, wmat, nmos, lab, xy) 
 !
 !     NON-RELAXED C.I CONTRIBUTION TO THE ENERGY DERIVATIVE.
@@ -233,6 +234,6 @@
         end do 
         write (iw, '('' NON-RELAXED GRADIENT COMPONENT'',F10.4,'' KCAL/MOLE'')') grad 
         call timer ('AFTER DERI1') 
-      endif 
+      end if 
       return  
       end subroutine deri1 

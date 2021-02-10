@@ -139,6 +139,7 @@ subroutine valuen (fao, nfao, nocc, nncf, ncf, nnn, icocc, nico, ncocc, iorbs, &
       fdiat(i) = eigf(i)
     end do
     do i = 1, nocc
+      k = 0
       sum = 1.d9
       do j = 1, nocc
         if (fdiat(j) < sum) then

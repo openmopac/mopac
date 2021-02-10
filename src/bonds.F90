@@ -8,7 +8,6 @@
       USE parameters_C, only : tore
       USE chanel_C, only : iw
 !***********************************************************************
-!DECK MOPAC
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -99,8 +98,8 @@
         else 
 !****** ROHF CASE
           zkappa = 1.D0/(1.D0 - (dble(nopn)/dble(nelecs))/2.D0) 
-        endif 
-      endif 
+        end if 
+      end if 
       ij = 0 
       do i = 1, numat 
         a = 0.0D00 
@@ -207,8 +206,8 @@
 !       WRITE(IW,'(1X,''SDM'',10E12.3)')(SDM(J),J=1,LINEAR)
           write (iw, '(1X,''ROHF'',2/)') 
           go to 160 
-        endif 
-      endif 
+        end if 
+      end if 
       write (iw, '(1X,''UHF '',2/)') 
       pspin = pa - pb 
       sum = 0.D0 
@@ -243,7 +242,7 @@
                 ilih = (il*(il - 1))/2 + ih 
               else 
                 ilih = (ih*(ih - 1))/2 + il 
-              endif 
+              end if 
               x = x + b(il,ih)*pspin(ilih) 
             end do 
           end do 

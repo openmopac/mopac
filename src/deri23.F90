@@ -57,12 +57,12 @@
                 com = (fd(l)-fci(l))/diffe 
               else 
                 com = 0.D0 
-              endif 
+              end if 
               cmo(i,j) = -com 
               cmo(j,i) = com 
               l = l + 1 
             end do 
-          endif 
+          end if 
           cmo(i,i) = 0.D0 
         end do 
       end do 
@@ -102,7 +102,7 @@
             l = l + 1 
           end do 
         end do 
-      endif 
+      end if 
       if (nbo(3)>0 .and. nbo(1)>0) then 
 !       VIRTUAL-CLOSED
         scal = 0.5D0 
@@ -114,7 +114,7 @@
             l = l + 1 
           end do 
         end do 
-      endif 
+      end if 
       if (nbo(3)/=0 .and. nbo(2)/=0) then 
 !        VIRTUAL-OPEN
         scal = 1.D0/(fract + const) 
@@ -126,6 +126,6 @@
             l = l + 1 
           end do 
         end do 
-      endif 
+      end if 
       return  
       end subroutine deri23 

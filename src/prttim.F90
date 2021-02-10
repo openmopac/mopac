@@ -27,6 +27,6 @@
       else if (tprt >= 60.D0) then 
         tprt = tprt/60.D0 
         txt = 'M' 
-      endif 
+      end if 
       return  
       end subroutine prttim 
