@@ -6,7 +6,6 @@ target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
 
 # source subdirectories
 add_subdirectory(COSMO)
-add_subdirectory(D3)
 add_subdirectory(INDO)
 add_subdirectory(MOZYME)
 add_subdirectory(PARAM)
