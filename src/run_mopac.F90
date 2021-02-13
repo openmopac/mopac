@@ -36,46 +36,19 @@
 !
       use elemts_C, only : elemnt, atom_names
 !
-      use reada_I
-      use to_screen_I
-
-      Use mod_vars_cuda, only: lgpu   
-!
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
 #if GPU
       Use iso_c_binding 
-      Use mod_vars_cuda, only: ngpus, gpu_id
+      Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
       Use gpu_info
       Use settingGPUcard
 #endif
-      use seconds_I
-      use geout_I
-      use wrttxt_I
-      use geoutg_I
-      use datin_I
-      use fbx_I
-      use fordd_I
-      use calpar_I
-      use compfg_I
-      use react1_I
-      use grid_I
-      use paths_I
-      use pathk_I
-      use force_I
-      use drc_I
-      use nllsq_I
-      use powsq_I
-      use ef_I
-      use flepo_I
-      use writmo_I
-      use polar_I
-      use pmep_I
       implicit none
       integer ::  i, j, k, l
       double precision :: eat,  tim, store_fepsi
       logical :: exists, opend, sparkles_available, l_OLDDEN
-      double precision, external :: C_triple_bond_C
+      double precision, external :: C_triple_bond_C, reada, seconds
       character :: nokey(20)*10
 #ifdef MKL
       integer, external :: mkl_get_max_threads
@@ -108,7 +81,6 @@
         good_separator = "/"
 !        if (verson(7:7) == " ") verson(7:7) = "L"
 !      end if
-      lgpu = .false.
       trunc_1 = 7.0d0    ! Beyond 7.0 Angstroms, use exact point-charge
       trunc_2 = 0.22d0   ! Multiplier in Gaussian: exp(-trunc_2*(trunc_1 - Rab)^2)
 !
@@ -254,6 +226,7 @@
         clockRate(1:6) = 0 ; major(1:6) = 0 ; minor(1:6) = 0; on_off(1:6) = 'OFF'
         call gpuInfo(hasGpu, hasDouble, nDevices, gpuName,name_size, totalMem, &
                   & clockRate, major, minor)
+        lgpu = .false.
         lgpu_ref = hasGPU
         if (lgpu_ref) lgpu_ref = (index(keywrd, " NOGPU") == 0)
         if (lgpu_ref) then         
@@ -990,7 +963,6 @@ subroutine special
 !  for example, to print a MOPAC data-set.
 !
   use molkst_C, only : jobnam, refkey, line
-  use upcase_I
   implicit none
   integer :: iprt = 33, i, j, k, len_key
   open(unit=iprt, file=jobnam(:len_trim(jobnam) - 0)//"_(PM6).arc", status='UNKNOWN', position='asis', iostat = i)

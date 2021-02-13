@@ -127,8 +127,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -547,9 +545,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-   !   use dgetrf_I 
-      use dgetrs_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -760,10 +755,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use dgetf2_I 
-      use dlaswp_I 
-      use dtrsm_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -940,10 +931,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use dlaswp_I 
-      use dtrsm_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1175,7 +1162,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      use dot_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1318,7 +1304,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use ieeeck_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1796,7 +1781,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      use lsame_I 
 !...Translated by Pacific-Sierra Research 77to90  4.4G  20:49:17  01/01/08  
 !...Switches: -rl INDDO=2 INDIF=2 
       implicit none
@@ -2040,10 +2024,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use idamax_I 
-      use dger_I 
-      use dscal_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2462,8 +2442,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -2967,7 +2945,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      use lsame_I 
 !...Translated by Pacific-Sierra Research 77to90  4.4G  20:49:17  01/01/08  
 !...Switches: -rl INDDO=2 INDIF=2 
       implicit none
@@ -3165,7 +3142,6 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE vast_kind_param, ONLY:  double 
-      use lsame_I 
 !...Translated by Pacific-Sierra Research 77to90  4.4G  20:49:17  01/01/08  
 !...Switches: -rl INDDO=2 INDIF=2 
       implicit none
@@ -3342,11 +3318,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use ddot_I 
-   !   use dgemv_I 
-      use dscal_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -3505,8 +3476,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -3800,11 +3769,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use ddot_I 
-   !   use dgemv_I 
-      use dscal_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -3994,8 +3958,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -4261,7 +4223,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -4443,8 +4404,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -4780,10 +4739,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use dscal_I 
-      use dtrmv_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -4954,8 +4909,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use lsame_I 
-      use xerbla_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s

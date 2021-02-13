@@ -34,17 +34,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use symtry_I 
-      use gmetry_I 
-      use dot_I
-      use volume_I
-      use timer_I 
-      use prtpar_I 
-      use hcore_I
-      use iter_I 
-      use dihed_I 
-      use deriv_I 
-      use mecip_I 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -66,7 +55,7 @@
       logical :: debug, print, large, usedci, force, times, aider, &
         dh, l_locate_ts
       double precision, external :: xfac_value, reada
-      double precision, external :: ddot
+      double precision, external :: ddot, dot, volume
       character :: tmpkey*241
 
       save debug, print, large, usedci, force, times, aider, degree, &
@@ -510,7 +499,7 @@
           h(36) = h(15)
           h(45) = h(15)
           f = h
-          call fock1dorbs(f, p, pa, 45, w, i, 1, 9, 45)
+          call fock1(f, p, pa, 45, w, i, 1, 9, 45)
           xfac_value = 0.0d0 ! dummy return value for unaccessed branch
           return
         end if

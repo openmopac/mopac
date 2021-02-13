@@ -1,4 +1,4 @@
-      subroutine moldat(mode) 
+subroutine moldat(mode) 
 !-----------------------------------------------
 !
 !   If mode == 1 run silently
@@ -41,13 +41,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      use reada_I 
-      use mopend_I 
-      use refer_I 
-      use gmetry_I 
-      use symtrz_I 
-      use vecprt_I 
-      use to_screen_I
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -66,6 +59,7 @@
         octe, none, birad, halfe, odd, opend
       character :: num1*1
       double precision, dimension (:), allocatable :: rxyz
+      double precision, external :: reada
 !-----------------------------------------------
       debug = index(keywrd,'MOLDAT') /= 0 
 !
@@ -920,7 +914,7 @@
       write (iw, 310) (pdiag(i),i=1,norbs) 
   310 format('   INITIAL P FOR ALL ATOMIC ORBITALS',/,10(/,10f8.3)) 
       return  
-      end subroutine moldat 
+end subroutine moldat 
       
 subroutine setcup 
    !***********************************************************************
@@ -934,12 +928,11 @@ subroutine setcup
       clower
     use common_arrays_C, only : tvec
     use chanel_C, only: iw
-    use reada_I
-    use volume_I
     implicit none
     integer :: i
     double precision :: area12, area13, area23, r1, r12, r13, r2, &
          & r23, r3, tv1, tv2, tv3, vol, sum
+    double precision, external :: reada, volume
     cutofp = 1.d10
     l1u = 0
     l2u = 0
@@ -1079,13 +1072,12 @@ subroutine write_cell(iprt)
   use funcon_C, only: fpc_10
   use common_arrays_C, only: nat, tvec
   use ef_C, only : nstep
-  use reada_I
-  use volume_I
   implicit none
   integer, intent(in) :: iprt
   integer :: i, j, k, l, z, m, old_nstep = -1
   double precision :: ta, tb, tc, tab, tbc, tac, talpha, tbeta, tgamma, vol
   integer, dimension (100) :: nel
+  double precision, external :: reada, volume
   save :: old_nstep
   if (iprt < 0 .or. gui) return
   if (iprt == 0) then
@@ -1174,11 +1166,11 @@ end subroutine write_cell
 subroutine write_unit_cell_HOF(iprt)
   use molkst_C, only : keywrd, escf, numat, line, mers
   use common_arrays_C, only : nat
-  use reada_I
-  use to_screen_I
   implicit none
   integer, intent(in) :: iprt
   integer :: i, j, k, l, z, nel(107), m
+  double precision, external :: reada
+
     if (iprt < 0) return
 !
 !  Work out the empirical formula
@@ -1233,14 +1225,12 @@ subroutine write_unit_cell_HOF(iprt)
       use molkst_C, only: nvar, pressure, line, press
       use funcon_C, only: fpc_10
       use common_arrays_C, only : grad, xparam, labels
-      use volume_I
-      use to_screen_I
       implicit none
       integer, intent(in) :: iprt
       integer :: m, i1,i2, k, l, i, ndim
       double precision :: xi
       double precision, dimension (nvar) :: dsum, dsum1
-      double precision, external :: ddot
+      double precision, external :: ddot, volume
       if (iprt < 0) return  
         m = 0
         i1 = 0

@@ -1,0 +1,23 @@
+target_sources(mopac-all PRIVATE
+# modules
+# source
+        ${CMAKE_CURRENT_SOURCE_DIR}/anavib.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dcart.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/delsta.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deri0.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deri1.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deri2.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deri21.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deri22.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deri23.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deritr.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/deriv.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dernvo.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dfield.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dfock2.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dhc.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dijkl1.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/jcarin.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/xyzcry.F90
+)
