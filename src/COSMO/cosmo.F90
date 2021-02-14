@@ -1759,7 +1759,6 @@ subroutine cosini(l_print)
     use common_arrays_C, only : nat, nfirst, nlast
     use molkst_C, only : numat, keywrd, moperr, lm61, mozyme, line, jobnam
     use chanel_C, only : iw
-    use reada_I
     implicit none
     logical, intent (in) :: l_print
     integer :: i, i0, iat, idel, iden, incif, indise, inrsol, j, k, n1, &
@@ -1767,6 +1766,7 @@ subroutine cosini(l_print)
     double precision :: disex, ri1, x
     double precision, dimension (107) :: rvdw, usevdw
     integer, external :: ijbo
+    double precision, external :: reada
     data rvdw / &
    1.30d0,  1.64d0,  2.13d0,  2.19d0,  2.05d0,  2.00d0,  1.83d0,  1.72d0, &
    1.72d0,  1.80d0,  2.66d0,  2.02d0,  2.41d0,  2.46d0,  2.11d0,  2.16d0, &
