@@ -33,7 +33,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
 !END
 !ENDMDL
 !                                 
-  use molkst_C, only : step_num, numat, jloop => itemp_1, line, nl_atoms, keywrd
+  use molkst_C, only : step_num, numat, jloop => itemp_1, line, nl_atoms, keywrd, backslash
   use chanel_C, only : ixyz, xyz_fn
   USE elemts_C, only : elemnt 
   use common_arrays_C, only : nat, l_atom
@@ -47,7 +47,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
   save :: icalcn, ipdb, imodel, npt, ixyz1
   if (icalcn /= step_num) then
     do i = len_trim(xyz_fn), 1, -1
-      if (xyz_fn(i:i) == "/" .or. xyz_fn(i:i) == "\") exit
+      if (xyz_fn(i:i) == "/" .or. xyz_fn(i:i) == backslash) exit
     end do
     open(unit=ixyz, file=xyz_fn)
     if (l_dipole) then
@@ -111,7 +111,7 @@ subroutine reverse_trajectory(mode)
 ! Read in a trajectory that was created earlier in this run, and
 ! write it back out, in reverse order of points.
 !                                 
-  use molkst_C, only : step_num, jloop => itemp_1, line, nl_atoms, keywrd
+  use molkst_C, only : step_num, jloop => itemp_1, line, nl_atoms, keywrd, backslash
   use chanel_C, only : ixyz, xyz_fn
   implicit none
   integer, intent (in) :: mode
@@ -122,7 +122,7 @@ subroutine reverse_trajectory(mode)
   ixyzn = 0
   if (icalcn /= step_num) then
     do i = len_trim(xyz_fn), 1, -1
-      if (xyz_fn(i:i) == "/" .or. xyz_fn(i:i) == "\") exit
+      if (xyz_fn(i:i) == "/" .or. xyz_fn(i:i) == backslash) exit
     end do
     if (mode == 1) then
       ixyzn = ixyz

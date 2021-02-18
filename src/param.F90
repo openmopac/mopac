@@ -6,11 +6,11 @@
     use molkst_C, only : tdump, maxatoms, is_PARAM, numat, jobnam, &
      moperr, &
      norbs, mpack, nvar, n2elec, keywrd, uhf, l123, run, method_pm6_d3, &
-     method_pm6, lm61, program_name, gui, tleft, num_threads, &
+     method_pm6, lm61, program_name, gui, tleft, &
      method_pm6_dh_plus, method_pm6_dh2, method_pm7, trunc_1, method_pm8, &
      trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, verson, n_methods, methods, &
      methods_keys, method_pm7_hh, method_pm7_minus, method_pm7_ts, method_pm6_dh2x, &
-     method_pm6_d3h4x, bad_separator, good_separator
+     method_pm6_d3h4x, backslash
     use cosmo_C, only : iseps, nspa
 !
     use common_arrays_C, only:  atmass, na, nb, nc, geoa, p, nw
@@ -38,24 +38,10 @@
   !
   !.. Intrinsic Functions ..
     intrinsic Index
-    integer, external :: mkl_get_max_threads
   !
   ! ... Executable Statements ...
   !
   !
-! this will be replaced by an OS-dependent preprocessor variable set by CMake
-!    inquire (directory = "C:/", exist = exists)
-!    if (exists) then
-!      bad_separator = "/"
-!      good_separator = "\"
-!    else
-      bad_separator = "\"
-      good_separator = "/"
-!    end if
-#ifdef MKL
-    num_threads = mkl_get_max_threads()
-    call mkl_set_num_threads(num_threads)
-#endif
     program_name = "Standalone MOPAC "
     verson = "18.000W"
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
@@ -224,9 +210,9 @@
 ! Convert all bad slashes into good slashes
 !
     do
-      i = index(contrl, bad_separator)
+      i = index(contrl, backslash)
       if (i == 0) exit
-      contrl(i:i) = good_separator
+      contrl(i:i) = "/"
     end do
     trunc_1 = 7.0d0
     trunc_2 = 0.22d0

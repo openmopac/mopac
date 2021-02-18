@@ -4,7 +4,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
     names, refher !, ifiles_8
 !
     use molkst_C, only : natoms, nvar, keywrd, title, refkey, escf, &
-      line, ncomments, good_separator
+      line, ncomments
 !
     use common_arrays_C, only : all_comments
 
@@ -34,12 +34,12 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
       if (k /= 0) then
         dirnew = get_a_name(contrl(k + 9:), len_trim(contrl(k + 9:)))
         k = len_trim(dirnew)
-        if (dirnew(k:k) /= good_separator)then
+        if (dirnew(k:k) /= "/")then
 !
 ! The directory name for the new reference data needs a "/"
 !
           k = k + 1
-          dirnew(k:k) = good_separator
+          dirnew(k:k) = "/"
         end if
         do i = 80, 2, -1
           if (names(loop)(i:i) /= " ") exit

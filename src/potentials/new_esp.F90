@@ -374,15 +374,6 @@
     jpvt = 0
     aMatrix = 0.e0
     bVector = 0.e0
-  !  open(unit=55, name="W:\bits.txt")
- !   write(55,*)" EUPPER:",EUpperRange
- !   do i = 1, 10
- !     do j = 1, 10
- !       write(55,'(10f12.4)')(planexy((i-1)*100 + (j-1)*10 + k), k = 1,10)
- !     end do
- !     write(55,*)" "
- !   end do
- !   close(55)
     i = 0
     l = 0
     do iiz = 1, nnz

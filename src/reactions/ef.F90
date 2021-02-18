@@ -6,9 +6,6 @@ subroutine ef (xparam, funct)
     use ef_C, only: nstep, negreq, iprnt, ef_mode, ddx, xlamd, &
        & xlamd0, skal, rmin, rmax
     use maps_C, only : latom
-#if GPU      
-    Use mod_vars_cuda, only: real_cuda
-#endif
     implicit none
     double precision, dimension (nvar), intent (inout) :: xparam
     double precision, intent (inout) :: funct
@@ -1874,10 +1871,6 @@ end subroutine overlp
 subroutine prjfc (f, xparam, nvar, cof, p, atmass, x, rm, dx, coord)
     use molkst_C, only: numat
     use chanel_C, only: iw
-#if GPU
-      Use call_gemm_cublas
-      Use mod_vars_cuda, only: lgpu, prec
-#endif
     implicit none
     integer, intent (in) :: nvar
     double precision, dimension (nvar), intent (in) :: xparam
@@ -2097,25 +2090,14 @@ subroutine prjfc (f, xparam, nvar, cof, p, atmass, x, rm, dx, coord)
 
 ! For GPU MOPAC      
 ! GBR_new_addition
-#if GPU
-    if (lgpu .and. nc1 > 100) then 
-      call gemm_cublas ('N', 'N', nc1, nc1, nc1, 1.0_prec, f, nvar, p, & 
-                          & nvar, 0.0_prec, cof, nvar)
-      call gemm_cublas ('N', 'N', nc1, nc1, nc1, 1.0_prec, p, nvar, cof, & 
-                          & nvar, 0.0_prec, f, nvar)
-    else  
-#endif
    !     USE COF FOR SCRATCH.     
-         call dgemm ("N", "N", nc1, nc1, nc1, 1.0d0, f, nvar, p, nvar, &
-              & 0.0d0, cof, nvar)
+    call dgemm ("N", "N", nc1, nc1, nc1, 1.0d0, f, nvar, p, nvar, &
+         & 0.0d0, cof, nvar)
    !
    ! 11. COMPUTE P*F*P.
    !
-         call dgemm ("N", "N", nc1, nc1, nc1, 1.0d0, p, nvar, cof, nvar, &
-              & 0.0d0, f, nvar)
-#if GPU
-    end if
-#endif
+    call dgemm ("N", "N", nc1, nc1, nc1, 1.0d0, p, nvar, cof, nvar, &
+         & 0.0d0, f, nvar)
     continue    
     return
 !

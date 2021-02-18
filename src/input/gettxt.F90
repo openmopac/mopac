@@ -1,7 +1,7 @@
       subroutine gettxt 
       use chanel_C, only: ir, iw, isetup, input_fn
       use molkst_C, only: keywrd, koment, title, refkey,  gui, numcal, line, &
-        moperr, allkey, bad_separator, good_separator
+        moperr, allkey, backslash
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -38,7 +38,7 @@
       call upcase (keywrd, len_trim(keywrd))
       zero_scf = (index(keywrd, "0SCF") /= 0) 
       do i = len_trim(input_fn), 2, -1
-        if (input_fn(i:i) == "\" .or. input_fn(i:i) == "/") exit 
+        if (input_fn(i:i) == backslash .or. input_fn(i:i) == "/") exit 
       end do
       ipath = i 
       if  (ipath > 2) then
@@ -485,9 +485,9 @@
 ! Convert all bad slashes into good slashes
 !
       do
-        i = index(keywrd, bad_separator)
+        i = index(keywrd, backslash)
         if (i == 0) exit
-        keywrd(i:i) = good_separator
+        keywrd(i:i) = "/"
       end do 
       return  
   end subroutine gettxt

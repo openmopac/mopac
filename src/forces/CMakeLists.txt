@@ -16,6 +16,7 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/dfield.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dfock2.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dhc.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/dhcore.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl1.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/jcarin.F90

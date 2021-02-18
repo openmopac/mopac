@@ -1,6 +1,6 @@
 subroutine pdbout (mode1)
     use molkst_C, only: numat, natoms, ncomments, verson, line, nbreaks, id, &
-      maxtxt, keywrd, nelecs, escf, stress
+      maxtxt, keywrd, nelecs, escf, stress, backslash
     use chanel_C, only: iw, input_fn
     use elemts_C, only: elemnt
     use common_arrays_C, only: txtatm, nat, all_comments, p, labels, &
@@ -67,7 +67,7 @@ subroutine pdbout (mode1)
         line = "HEADER  data-set: "//input_fn(:i - 5)
         if(len_trim(line) > 80) then
           do
-            k = index(line, "\")
+            k = index(line, backslash)
             if (k == 0) exit
             i2 = index(line,"data-set:") + 9
             line = line(:i2)//line(k + 1:)
@@ -93,7 +93,7 @@ subroutine pdbout (mode1)
       line = "HEADER  data-set: "//input_fn(:i - 5)
       if(len_trim(line) > 80) then
         do
-          k = index(line, "\")
+          k = index(line, backslash)
           if (k == 0) exit
           i2 = index(line,"data-set:") + 9
           line = line(:i2)//line(k + 1:)
@@ -165,7 +165,7 @@ subroutine pdbout (mode1)
   subroutine write_html
     use chanel_C, only: input_fn
     use molkst_C, only : line, koment, title, numat, keywrd, numcal, geo_ref_name, geo_dat_name, &
-      keywrd_txt, maxtxt
+      keywrd_txt, maxtxt, backslash
     use common_arrays_C, only : txtatm, p
     use mozyme_C, only : tyres, tyr
     implicit none
@@ -263,9 +263,9 @@ subroutine pdbout (mode1)
       line = input_fn(:len_trim(input_fn) - 4)//"pdb"
     end if
     do i = len_trim(line), 1, -1
-      if (line(i:i) == "/" .or. line(i:i) == "\") exit
+      if (line(i:i) == "/" .or. line(i:i) == backslash) exit
     end do
-    write(iprt,"(a)") """load \"
+    write(iprt,"(a)") """load "//backslash
     l_geo_ref = (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0)
     if (l_geo_ref) then
       if (l_compare) then
@@ -275,30 +275,30 @@ subroutine pdbout (mode1)
       end if     
       if (geo_dat_name(:len_trim(geo_dat_name) -3) == geo_ref_name(:len_trim(geo_ref_name) -3)) then
         line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) - 4)//"_a.pdb"//"' '"// &
-        trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; \"
+        trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; "//backslash
       else
         line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) -3)//"pdb"//"' '"// &
-        trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; \"
+        trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; "//backslash
       end if
       write(iprt,"(10x,a)")"FILES '"//trim(line)
     else      
-      write(iprt,"(10x,a)")"'"//trim(line(i + 1:))//"'; \"
+      write(iprt,"(10x,a)")"'"//trim(line(i + 1:))//"'; "//backslash
     end if
-    write(iprt,"(10x,a)")"set measurementUnits ANGSTROMS; \"
+    write(iprt,"(10x,a)")"set measurementUnits ANGSTROMS; "//backslash
     if (l_geo_ref) then
-      write(iprt,"(10x,a)")"set bondRadiusMilliAngstroms (25); \", "spacefill 10%; \"
+      write(iprt,"(10x,a)")"set bondRadiusMilliAngstroms (25); "//backslash, "spacefill 10%; "//backslash
     else
-      write(iprt,"(10x,a)")"set bondRadiusMilliAngstroms (50); \", "spacefill 15%; \"
+      write(iprt,"(10x,a)")"set bondRadiusMilliAngstroms (50); "//backslash, "spacefill 15%; "//backslash
     end if
-    write(iprt,"(10x,a)")"set display selected; \", "hBonds calculate; \"
-    write(iprt,"(10x,a)")"set defaultDistanceLabel '%0.3VALUE %UNITS'; \"
+    write(iprt,"(10x,a)")"set display selected; "//backslash, "hBonds calculate; "//backslash
+    write(iprt,"(10x,a)")"set defaultDistanceLabel '%0.3VALUE %UNITS'; "//backslash
     if (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0) then
-      write(iprt,"(10x,a)")"select */2.1; color bonds green;  select none;\"
+      write(iprt,"(10x,a)")"select */2.1; color bonds green;  select none;"//backslash
     else
-      write(iprt,"(10x,a)")"select none; \"
+      write(iprt,"(10x,a)")"select none; "//backslash
     end if
-    write(iprt,"(10x,a)")"set perspectivedepth off; \", &
-    "connect 0.8  1.5 (hydrogen) (phosphorus) create; \"
+    write(iprt,"(10x,a)")"set perspectivedepth off; "//backslash, &
+    "connect 0.8  1.5 (hydrogen) (phosphorus) create; "//backslash
     if (l_geo_ref) then
       write(iprt,"(10x,a)")"set zoomLarge false; frame 0;"" "
     else      
@@ -429,8 +429,9 @@ subroutine pdbout (mode1)
         write(iprt,"(a)")"var use = {visible}; var sel = {selected};"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
         write(iprt,"(a)")"if (z = 3); use = sel; endif;"
-        write(iprt,"(a)")"for (var x IN @use){select @x; var txt =  (x.temperature > 0 ? \'+\':\'\')"// &
-          "+format(\'%1.2f\',x.temperature ); label @txt; color label black;"
+        write(iprt,"(a)")"for (var x IN @use){select @x; var txt =  (x.temperature > 0 ? "//backslash// & 
+          "'+"//backslash//"':"//backslash//"'"//backslash//"')"// &
+          "+format("//backslash//"'%1.2f"//backslash//"',x.temperature ); label @txt; color label black;"
         write(iprt,"(a)")"set labelOffset 0 0;}  select @sel; lcharge_x= TRUE;"
         write(iprt,"(a)")"else lcharge_x= FALSE; var use = {visible}; var sel = {selected};"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
@@ -480,7 +481,7 @@ subroutine pdbout (mode1)
     call upcase(line_1, len_trim(line_1))
     i = 0
     do j = 1, len_trim(line) - 4
-      if (line(j:j) == "/" .or. line(j:j) == "\") then
+      if (line(j:j) == "/" .or. line(j:j) == backslash) then
         i = j
       end if        
     end do
@@ -489,8 +490,8 @@ subroutine pdbout (mode1)
     "<strong style=""font-size:20px"">Common Script</strong>"
     write(iprt,"(a)")"</a>&nbsp; (Read file from:<br> ""<a href=""common.txt""  target=""_blank"">common.txt</a>"")</TD>"
     write(iprt,"(a)")"</TR> <TR>" 
-    write(iprt,"(a)")"<TD colspan=""2""><a href=""javascript:Jmol.script(jmolApplet0,'script \'"//trim(line)//"\';')"">"// &
-    "<strong style=""font-size:20px"">Specific Script</strong>"
+    write(iprt,"(a)")"<TD colspan=""2""><a href=""javascript:Jmol.script(jmolApplet0,'script "//backslash// &
+    "'"//trim(line)//backslash//"';')"">"//"<strong style=""font-size:20px"">Specific Script</strong>"
     write(iprt,"(a)")"</a>&nbsp; (Read file from:<br> ""<a href="""//trim(line)// &
     """  target=""_blank"">"//trim(line)//"</a>"")</TD>"
     write(iprt,"(a)")"</TR></TABLE>"
@@ -597,7 +598,7 @@ subroutine pdbout (mode1)
       open(unit=iprt, file=trim(line)//"txt") 
       i = 0
       do j = 1, len_trim(line)
-        if (line(j:j) == "/" .or. line(j:j) == "\") i = j
+        if (line(j:j) == "/" .or. line(j:j) == backslash) i = j
       end do
       if (i /= 0) line = line(i + 1:)
       write(iprt,"(a)")"#","# Script for use with the HTML file """//trim(line)//"html""","#"

@@ -20,7 +20,7 @@
 !
       use molkst_C, only : numat, keywrd, nvar, id, natoms, moperr, line, refkey, density, &
         maxtxt, numat_old, koment, title, geo_ref_name, geo_dat_name, arc_hof_2, arc_hof_1, &
-        keywrd_txt, pdb_label, ncomments, refkey_ref
+        keywrd_txt, pdb_label, ncomments, refkey_ref, backslash
 !
       use parameters_C, only : ams
 !
@@ -122,7 +122,7 @@
         return
       end if
       if (l_0SCF_HTML) then
-        if (index(geo_dat_name, "/") + index(geo_dat_name, "\") == 0) then
+        if (index(geo_dat_name, "/") + index(geo_dat_name, backslash) == 0) then
           line = trim(geo_dat_name)
           call upcase(line, len_trim(line))
           line = line(len_trim(line) - 3:)
@@ -133,7 +133,7 @@
           end if
         else
           do i = len_trim(geo_dat_name), 1, -1
-            if (geo_dat_name(i:i) == "/" .or. geo_dat_name(i:i) == "\") exit
+            if (geo_dat_name(i:i) == "/" .or. geo_dat_name(i:i) == backslash) exit
           end do
           geo_dat_name = geo_dat_name(i + 1:)         
         end if
@@ -145,7 +145,7 @@
            write(iw,'(10x,a)')"GEO_DAT FILE: """//trim(line)//""""
            write(iw,'(/10x,a)')"To continue, over-writing this file, add keyword ""LET"""
         end if
-        if (index(geo_ref_name, "/") + index(geo_ref_name, "\") == 0) then
+        if (index(geo_ref_name, "/") + index(geo_ref_name, backslash) == 0) then
           line = trim(geo_ref_name)
           call upcase(line, len_trim(line))
           line = line(len_trim(line) - 3:)
@@ -156,7 +156,7 @@
           end if
         else
           do i = len_trim(geo_ref_name), 1, -1
-            if (geo_ref_name(i:i) == "/" .or. geo_ref_name(i:i) == "\") exit
+            if (geo_ref_name(i:i) == "/" .or. geo_ref_name(i:i) == backslash) exit
           end do
           geo_ref_name = geo_ref_name(i + 1:)         
         end if
@@ -953,7 +953,7 @@
             return
           end if        
           do i = len_trim(job_fn), 1, -1
-            if (job_fn(i:i) == "/" .or. job_fn(i:i) == "\") exit
+            if (job_fn(i:i) == "/" .or. job_fn(i:i) == backslash) exit
           end do
           line_1 =  job_fn(i + 1:len_trim(job_fn)-4)//"_"
         else
@@ -1014,7 +1014,7 @@
       else 
         if (l_0SCF_HTML) then
           do i = len_trim(output_fn), 1, -1
-            if (output_fn(i:i) == "/" .or. output_fn(i:i) == "\") exit
+            if (output_fn(i:i) == "/" .or. output_fn(i:i) == backslash) exit
           end do
           if (i > 0) then
             write(iw,'(//,a)')"    The following files will be written to """//output_fn(:i)//""":"
@@ -1070,7 +1070,7 @@
             call l_control(trim(line), len_trim(line), 1) 
             if (index(keywrd, " COMPARE") /= 0) then
               do i = len_trim(job_fn), 1, -1
-                if (job_fn(i:i) == "/" .or. job_fn(i:i) == "\") exit
+                if (job_fn(i:i) == "/" .or. job_fn(i:i) == backslash) exit
               end do
               line_1 =  job_fn(i + 1:len_trim(job_fn)-4)//"_"
             else

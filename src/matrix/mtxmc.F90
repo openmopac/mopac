@@ -24,9 +24,6 @@
 !     C LOWER LEFT TRIANGLE ONLY, PACKED IN CANONICAL ORDER.
 !  NOTE ... THIS IS THE BEST VERSION ON CRAY 1.
       l = 1
-
-! TODO: GBR future modifications       
-
       do i = 1, nar 
         call mxm (a(1,i), 1, b, nbr, c(l), i) 
         l = l + i 

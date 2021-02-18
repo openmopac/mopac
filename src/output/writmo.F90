@@ -9,7 +9,7 @@
       site_no, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
       hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
-      prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label
+      prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash
 !
       use MOZYME_C, only : icocc, icvir, ncocc, ncvir, nvirtual, noccupied, &
       & nnce, nncf, cocc, cvir, ncf, nce,  cocc_dim, &
@@ -916,7 +916,7 @@
           line = archive_fn(:len_trim(archive_fn) - 3)
           line = archive_fn(:len_trim(archive_fn) - 3)
           do i = len_trim(line), 1, -1
-            if (line(i:i) == "/" .or. line(i:i) == "\") exit
+            if (line(i:i) == "/" .or. line(i:i) == backslash) exit
           end do
           line = trim(line)//"pdb"
           open(unit=31, file=trim(line), status='UNKNOWN', position='asis') 

@@ -11,10 +11,10 @@
         escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
         time0, atheat, errtxt, isok, mpack, gui, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
-        MM_corrections, lxfac, trunc_1, trunc_2, bad_separator, good_separator, &
+        MM_corrections, lxfac, trunc_1, trunc_2, &
         sparkle, itemp_1, maxtxt, koment, &
         num_threads, nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax, step, &
-        density, norbs, method_indo, nclose, nopen
+        density, norbs, method_indo, nclose, nopen, backslash
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
@@ -69,18 +69,6 @@
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
       call fordd                          ! More constants, for use by MNDO-d
-! MOPAC ideally should be OS agnostic, and I'll gradually be deprecating OS-dependent parts of the code
-! Windows should be able to handle a '/' directory separator, although I need to verify this ...
-!      inquire (directory = "C:/", exist = exists)
-!      if (exists) then
-!        bad_separator = "/"
-!        good_separator = "\"
-!        if (verson(7:7) == " ") verson(7:7) = "W"
-!      else
-        bad_separator = "\"
-        good_separator = "/"
-!        if (verson(7:7) == " ") verson(7:7) = "L"
-!      end if
       trunc_1 = 7.0d0    ! Beyond 7.0 Angstroms, use exact point-charge
       trunc_2 = 0.22d0   ! Multiplier in Gaussian: exp(-trunc_2*(trunc_1 - Rab)^2)
 !
@@ -419,7 +407,7 @@
         end if
         if (index(keywrd, " HTML") /= 0) then
           do i = len_trim(line), 1, -1
-            if (line(i:i) == "/" .or. line(i:i) == "\") exit
+            if (line(i:i) == "/" .or. line(i:i) == backslash) exit
           end do
         end if
         open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
@@ -579,7 +567,7 @@
               line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
               if (index(keywrd, " HTML") /= 0) then
                 do i = len_trim(line), 1, -1
-                  if (line(i:i) == "/" .or. line(i:i) == "\") exit
+                  if (line(i:i) == "/" .or. line(i:i) == backslash) exit
                 end do
               end if
             open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')

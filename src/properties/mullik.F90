@@ -17,10 +17,7 @@
       use parameters_C, only : zs, zp, zd, betas, betap, tore
 !
       use chanel_C, only : igpt, gpt_fn, iw
-!
-#if GPU     
-      Use mod_vars_cuda, only: lgpu, prec
-#endif               
+!            
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -236,15 +233,7 @@
       call mult (c, work, vecs, norbs) 
       i = -1     
       nlower = (norbs*(norbs + 1))/2
-#if GPU
-      if (.not. lgpu) then
-           call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 3)
-      else
-#endif
-           call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 2)
-#if GPU
-      end if
-#endif
+      call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 3)
 !            
       pb = pb*store
       summ = 0.D0 

@@ -4,7 +4,7 @@
 !-----------------------------------------------
       USE parameters_C, only : partyp, n_partyp, n_partyp_alpb, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
-      use molkst_C, only : keywrd, lpars, line
+      use molkst_C, only : keywrd, lpars, line, backslash
       use chanel_C, only : iext
 !***********************************************************************
 !-----------------------------------------------
@@ -91,7 +91,7 @@
         if (index(keywrd,' 0SCF') == 0) call mopend("EXTERNAL file: '"//trim(file(loop))//"' does not exist!")
         line = trim(file(loop))
         do i = len_trim(line), 1, -1
-          if (line(i:i) == "\" .or. line(i:i) == "/") then
+          if (line(i:i) == backslash .or. line(i:i) == "/") then
 !  using inquire to check for the existence of a directory is a non-standard Intel extension to Fortran 90
 !  there is no standard, system-independent way to do this as directories do not exist in Fortran language specifications
 !  I'm just commenting this out for now, since it is just some extra error messages [JEM 2019.05.24]

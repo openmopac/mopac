@@ -1420,7 +1420,7 @@ subroutine wrtcon (allkey)
 end subroutine wrtcon
 subroutine wrtout (allkey)
   use molkst_C, only : keywrd, mozyme, maxtxt, line, prt_coords, prt_gradients, prt_cart, prt_charges, prt_pops, &
-    prt_topo, prt_force, prt_normal_coords, prt_orientation, prt_velocity
+    prt_topo, prt_force, prt_normal_coords, prt_orientation, prt_velocity, backslash
   use chanel_C, only: iw, iw0, log, input_fn
   implicit none
   character (len=1000), intent (inout) :: allkey
@@ -1588,7 +1588,7 @@ subroutine wrtout (allkey)
 !  Check that file-name is okay
 !
     do j = len_trim(input_fn) - 5, 2, -1
-      if (input_fn(j:j) == "/" .or. input_fn(j:j) == "\") exit
+      if (input_fn(j:j) == "/" .or. input_fn(j:j) == backslash) exit
     end do
     do i = j, len_trim(input_fn) - 5
       if (input_fn(i:i) == "'") exit

@@ -24,6 +24,5 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/alpb_and_xfac_pm3.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/calpar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/refer.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/sp_two_electron.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/switch.F90
 )

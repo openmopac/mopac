@@ -7,7 +7,6 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/bfn.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ccrep.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/coe.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dhcore.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/diat.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/h1elec.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/hcore.F90
@@ -19,4 +18,5 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/rotate.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/set.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/solrot.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/sp_two_electron.F90
 )

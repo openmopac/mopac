@@ -18,7 +18,7 @@ subroutine moldat(mode)
       & uhf, id, msdel, mol_weight, method_PM6, method_PM7, &
       is_PARAM, formula, ispd, mozyme, nvar, rhf, old_chrge, jobnam, &
       N_3_present, Si_O_H_present, nalpha_open, nbeta_open, pdb_label, &
-      method_rm1, use_ref_geo, method_indo
+      method_rm1, use_ref_geo, method_indo, backslash
 !
       USE parameters_C, only : natorb, uss, upp, udd, tore, &
       dorbs, zd, zs, zp
@@ -232,7 +232,7 @@ subroutine moldat(mode)
                 line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
                 if (index(keywrd, " HTML") /= 0) then
                   do i = len_trim(line), 1, -1
-                    if (line(i:i) == "/" .or. line(i:i) == "\") exit
+                    if (line(i:i) == "/" .or. line(i:i) == backslash) exit
                   end do
                 end if
               open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')

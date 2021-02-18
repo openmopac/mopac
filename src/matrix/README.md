@@ -2,6 +2,12 @@ dense matrix operations
 
 NOTE: remove diag_for_GPU & re-introduce diag, either as a historical method w/ a special keyword, or a new form of pseudo-diagonalization
 
+NOTE: MKL-specific routines have been removed from the code, but it may be worth considering the
+reintroduction of commands to set the number of threads:
+
+    num_threads = mkl_get_max_threads()
+    call mkl_set_num_threads(num_threads)
+
 NOTE: some files in this folder should be migrated back to other components once their matrix operations have been isolated
 and implemented in a separate subroutine.
 

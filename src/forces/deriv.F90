@@ -14,8 +14,6 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-#if GPU
-#endif
 !              
       implicit none
 !-----------------------------------------------
@@ -291,13 +289,8 @@
       nstep = nw2/(3*numat*l123)  
       do i = 1, nvar, nstep 
         j = min(i + nstep - 1,nvar) 
-        call jcarin (xparam, step, precis, work2, ncol, i, j) 
-#if GPU
-        call mxv (work2, j - i + 1, dxyz, ncol, gradnt(i))         
-#else       
+        call jcarin (xparam, step, precis, work2, ncol, i, j)    
         call mxm (work2, j - i + 1, dxyz, ncol, gradnt(i), 1)   
-#endif       
-               
 !        
       end do 
       if (precis) then 

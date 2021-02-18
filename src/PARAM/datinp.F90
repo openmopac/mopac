@@ -22,7 +22,7 @@
     nalpha, nelecs, nopen, ndep, fract, nbeta, numat, lm61, n2elec, &
     jobnam, errtxt, msdel, id, l1u, l2u, l3u, method_pm3, line, method_pm6_dh2, &
     method_pm7, method_PM6_DH_plus, nalpha_open, nbeta_open, method_pm6_d3h4, &
-    method_pm6_d3_not_h4, method_pm6_d3h4x, good_separator
+    method_pm6_d3_not_h4, method_pm6_d3h4x, backslash
 !
     use meci_C, only : nmos
 !
@@ -319,9 +319,9 @@
         i = Index(contrl(k:j),";")
         if (i /= 0) then
           nref = nref + 1
-          refdir(nref) = trim(get_a_name(contrl(k:j), len_trim(contrl(k:j))))//good_separator
+          refdir(nref) = trim(get_a_name(contrl(k:j), len_trim(contrl(k:j))))//"/"
           n = len_trim(refdir(nref))
-          if (refdir(nref)(n:n) /= good_separator) refdir(nref)(n + 1:n + 1) = good_separator
+          if (refdir(nref)(n:n) /= "/") refdir(nref)(n + 1:n + 1) = "/"
           k = k + i 
         end if
         if (i == 0) exit
@@ -329,19 +329,19 @@
       nref = nref + 1
       refdir(nref) = trim(get_a_name(contrl(k:j), j - k + 1))
       n = len_trim(refdir(nref))
-      if (refdir(nref)(n:n) /= good_separator) refdir(nref)(n + 1:n + 1) = good_separator
+      if (refdir(nref)(n:n) /= "/") refdir(nref)(n + 1:n + 1) = "/"
     else
       nref = nref + 1
-      refdir(nref) = "."//good_separator
+      refdir(nref) = "."//"/"
     end if
     m = 0
     do i = 1, nref
       n = len_trim(refdir(i))
       if (n /= 2) then
-        if (refdir(i)(n:n) /= good_separator) refdir(i)(n + 1:n + 1) = good_separator
+        if (refdir(i)(n:n) /= "/") refdir(i)(n + 1:n + 1) = "/"
         call add_path(refdir(i))
       else
-        if (index(job_fn, good_separator) > 0) then
+        if (index(job_fn, "/") > 0) then
           refdir(i) = " "
           call add_path(refdir(i))
         end if
@@ -607,7 +607,7 @@
                 if ( .not. elemok(2, labels(i))) go to 1400
               end do
               do i = len_trim(refnam), 2, -1
-                if (refnam(i:i) == "\") exit
+                if (refnam(i:i) == backslash) exit
               end do  
               j = 0
               do i = 1, natoms
@@ -618,7 +618,7 @@
               end do
               if (.not.(let .or. core_core_OK(geo, nat, numat, k, l, ccp) .or. .not. method_pm6)) then 
                 do i = len_trim(refnam), 1, -1
-                  if (refnam(i:i) == "\" .or. refnam(i:i) == "/") exit
+                  if (refnam(i:i) == backslash .or. refnam(i:i) == "/") exit
                 end do
                 write(ifiles_8,"(//,a, /, a,//)")"++++ FAULT DETECTED IN ++++ "//trim(koment)//", in file: """ &
                 & //refnam(i + 1:len_trim(refnam)-4)//"""","     File is missing the "//trim(elemnt(k))//" - "//trim(elemnt(l))// &

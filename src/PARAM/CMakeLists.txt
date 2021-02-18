@@ -5,7 +5,6 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/chkpar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/datinp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/depfn.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dfpsav.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/direct.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/empire.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/extract_parameter.F90

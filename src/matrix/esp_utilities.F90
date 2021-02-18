@@ -280,9 +280,6 @@
   use common_arrays_C, only: nfirst, nlast, nat, h, &
                            & i1fact
   use parameters_C, only : betas, betap, betad  
-#if GPU
-  Use mod_vars_cuda, only: real_cuda,prec,lgpu 
-#endif  
   implicit none
   double precision, dimension(norbs**2) :: s
   !

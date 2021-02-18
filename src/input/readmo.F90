@@ -12,7 +12,7 @@
       USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar 
 !
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
-      & verson, is_PARAM, line, nl_atoms, l_feather, &
+      & verson, is_PARAM, line, nl_atoms, l_feather, backslash, &
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
       isok, ijulian, gui, Academic, site_no, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
@@ -158,7 +158,7 @@
 ! If "SELF" without a suffix, use the name of the job.
 !
         do k = len_trim(job_fn), 1, -1
-            if (job_fn(k:k) == "/" .or. job_fn(k:k) == "\") exit
+            if (job_fn(k:k) == "/" .or. job_fn(k:k) == backslash) exit
         end do
         if (keywrd(i + 4:i + 4) == '"') then
 !
@@ -210,11 +210,11 @@
         line_2 = job_fn
         if (index(keywrd, "GEO-OK") == 0) then
           do i = len_trim(line_1), 1, -1
-            if (line_1(i:i) == "\") exit
+            if (line_1(i:i) == backslash) exit
           end do
           if (i > 0) line_1 = line_1(i + 1:)
           do i = len_trim(line_2), 1, -1
-            if (line_2(i:i) == "\") exit
+            if (line_2(i:i) == backslash) exit
           end do
           if (i > 0) line_2 = line_2(i + 1:)  
           if (line_1(:len_trim(line_1) - 3) == line_2(:len_trim(line_2) - 3)) then
@@ -1952,12 +1952,11 @@
   end subroutine geo_diff
   subroutine add_path(file)
     use chanel_C, only : job_fn
-    use molkst_C, only : verson, good_separator
     implicit none
     character, intent (inout) :: file*(*)
     integer :: i, j, n
     character :: path*241
-    logical :: need_path, windows
+    logical :: need_path
     i = 0
     if (file(1:1) == '"') then
       i = len_trim(file)
@@ -1967,21 +1966,12 @@
 !
 !  Test to see if the file "file" already has an absolute path.
 !
-    windows = (verson(7:7) == "W")
-    if (windows) then      
-      need_path =  (file(2:2) /= ":" .and. file(1:1) /= good_separator) 
-    else
-      need_path =  (file(1:1) /= good_separator .and. file(1:1) /= "~")
-    end if
+    need_path = (file(2:2) /= ":" .and. file(1:1) /= "/" .and. file(1:1) /= "~")
     if (.not. need_path) return
 !
 !  Test to see if the job has an absolute path.
 !    
-    if (windows) then
-      need_path = (job_fn(2:2) == ":")
-    else
-      need_path = (job_fn(1:1) == good_separator)
-    end if
+    need_path = (job_fn(2:2) == ":" .or. job_fn(1:1) == "/")
     if (.not. need_path) return      
 !
 !  file "file" does not include the path and the path is present in job_fn
@@ -1991,7 +1981,7 @@
 !
     n = 1
     do 
-      if (file(1:3) /= ".."//good_separator .and. file(1:3) /= ".."//good_separator) exit
+      if (file(1:3) /= ".."//"/" .and. file(1:3) /= ".."//"/") exit
       n = n + 1
       file = trim(file(4:))
     end do
@@ -1999,14 +1989,14 @@
 !  Is the file defined relative to the current folder?
 !  If so, delete the definition.
 !
-    if (file(1:2) == "."//good_separator .or. file(1:2) == "."//good_separator) file = trim(file(3:))
+    if (file(1:2) == "."//"/" .or. file(1:2) == "."//"/") file = trim(file(3:))
 !
 !  Delete the data-set-name from the path, and delete the folders up to the relative folder.
 !
     path = trim(job_fn)
     do j = 1, n
       do i = len_trim(path) - 1, 1, -1
-        if (path(i:i) == good_separator) exit
+        if (path(i:i) == "/") exit
       end do
       path = path(:i)
     end do

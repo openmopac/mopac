@@ -266,7 +266,7 @@
   end subroutine pathk 
   subroutine write_path_html(mode)
     use chanel_C, only: input_fn
-    use molkst_C, only : line, koment, escf, title
+    use molkst_C, only : line, koment, escf, title, backslash
     implicit none
     integer, intent (in) :: mode
     logical :: exists
@@ -323,10 +323,10 @@
       line = input_fn(:len_trim(input_fn) - 5)//" for dipole.xyz"
     end if
     do i = len_trim(line), 1, -1
-      if (line(i:i) == "/" .or. line(i:i) == "\") exit
+      if (line(i:i) == "/" .or. line(i:i) == backslash) exit
     end do
     line = line(i+1:)
-    write(iprt,"(a)")"modelFile = ""\'"//trim(line)//"\'; center {visible}; zoom 0;"""
+    write(iprt,"(a)")"modelFile = """//backslash//"'"//trim(line)//backslash//"'; center {visible}; zoom 0;"""
     write(iprt,"(a)")"var appletPrintable = (navigator.appName != ""Netscape"")"
     write(iprt,"(a)")""
     write(iprt,"(a)")"// The following code is black magic - don't mess with it!"
@@ -528,11 +528,13 @@
     write(iprt,"(a)")" <a href='javascript:jmolScript(""animation off"")'>off</a> &nbsp;&nbsp; " 
     line = input_fn(:len_trim(input_fn) - 4)//"txt"
     do i = len_trim(line), 1, -1
-      if (line(i:i) == "/" .or. line(i:i) == "\") exit
+      if (line(i:i) == "/" .or. line(i:i) == backslash) exit
     end do
     line = line(i+1:)
-    write(iprt,"(a)")" <a href='javascript:jmolScript(""script \""common.txt\"";"")'>Common</a>&nbsp;&nbsp;" 
-    write(iprt,"(a)")" <a href='javascript:jmolScript(""script \"""//trim(line)//"\"";"")'> Script</a>" 
+    write(iprt,"(a)")" <a href='javascript:jmolScript(""script "//backslash//"""common.txt" &
+      //backslash//""";"")'>Common</a>&nbsp;&nbsp;" 
+    write(iprt,"(a)")" <a href='javascript:jmolScript(""script "//backslash//""""//trim(line) & 
+      //backslash//""";"")'> Script</a>" 
     write(iprt,"(a)")"<br>"
     write(iprt,"(a)")"</td>"
     write(iprt,"(a)")"<td bgcolor=lightblue align=center>"
@@ -572,7 +574,7 @@
       open(unit=iprt, file=trim(line)//"txt") 
       i = 0
       do j = 1, len_trim(line)
-        if (line(j:j) == "/" .or. line(j:j) == "\") i = j
+        if (line(j:j) == "/" .or. line(j:j) == backslash) i = j
       end do
       if (i /= 0) line = line(i + 1:)
       write(iprt,"(a)")"#","# Script for use with the HTML file """//trim(line)//"html""","#"
