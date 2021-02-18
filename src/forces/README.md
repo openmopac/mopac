@@ -1,1 +1,1 @@
-atomic force calculations & derivative routines that support them
+atomic force & vibrational calculations & derivative routines that support them
