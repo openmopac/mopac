@@ -7,7 +7,7 @@ target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
 # source subdirectories
 add_subdirectory(INDO)
 add_subdirectory(MOZYME)
-#add_subdirectory(PARAM)
+add_subdirectory(PARAM)
 add_subdirectory(SCF)
 add_subdirectory(chemistry)
 add_subdirectory(corrections)
@@ -26,7 +26,6 @@ add_subdirectory(reactions)
 add_subdirectory(solvation)
 add_subdirectory(symmetry)
 add_subdirectory(utilities)
-add_subdirectory(vibrations)
 
 # source files for the library
 target_sources(mopac-all PRIVATE
