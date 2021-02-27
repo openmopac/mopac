@@ -157,7 +157,8 @@
               line = refkey(2)(i:j) 
               do k = 1,100
                 if ((line(k:k) < "A" .or. line(k:k) > "Z") .and. &
-                    (line(k:k) < "0" .or. line(k:k) > "9")) exit
+                    (line(k:k) < "0" .or. line(k:k) > "9") .and. &
+                    (line(k:k) /= "_")) exit
               end do 
               k = k - 1
               if (index(allkey, " "//line(:k)) > 0 .and. line(:5) /= "SETUP") then

@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:40 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:14 2021  *
  *  XENO       - FRAGMENTS ARE ATTACHED TO RESIDUES
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(10B 20B 30B 31B 32B 33B) 
@@ -29,7 +29,7 @@
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N          0.00000000  *   0.00000000  *   0.00000000  *
      2       C          1.46300000  *   0.00000000  *   0.00000000  *
      3       C          2.06000000  *   1.42400000  *   0.00000000  *
@@ -252,7 +252,7 @@
    220       H         -4.98400000  *  23.67400000  *   8.66900000  *
    221       H         -5.49500000  *  25.34000000  *   4.63600000  *
    222       H         -5.52400000  *  25.59000000  *   7.25400000  *
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -757,7 +757,7 @@
   H(HETATM  225  H5  BEN B  33)  -4.98400000 +1  23.67400000 +1   8.66900000 +1
   H(HETATM  226  H1  BEN B  33)  -5.49500000 +1  25.34000000 +1   4.63600000 +1
   H(HETATM  227  H6  BEN B  33)  -5.52400000 +1  25.59000000 +1   7.25400000 +1
- 
+
 
       Ligand names that have been changed by XENO keyword
 

@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:41 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:14 2021  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(12B 20C 30B) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -26,7 +26,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       C(ATOM     36  CG  MET B  12)   -0.89500000  *   7.21700000  *   2.20300000  *
      2       S(ATOM     37  SD  MET B  12)   -0.26000000  *   8.31500000  *   3.52700000  *
      3       C(ATOM     38  CE  MET B  12)   -1.47800000  *   9.65100000  *   3.56500000  *
@@ -162,7 +162,7 @@
    133       C(ATOM     33  C   MET B  12)   -0.68200000  *   3.98000000  *   4.16700000  *
    134       O(ATOM     34  O   MET B  12)   -1.40500000  *   3.03200000  *   3.92800000  *
    135       C(ATOM     35  CB  MET B  12)   -1.37000000  *   5.89100000  *   2.77400000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -323,7 +323,7 @@
   C(ATOM     33  C   MET B  12)  -0.68200000 +1   3.98000000 +1   4.16700000 +1
   O(ATOM     34  O   MET B  12)  -1.40500000 +1   3.03200000 +1   3.92800000 +1
   C(ATOM     35  CB  MET B  12)  -1.37000000 +1   5.89100000 +1   2.77400000 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: B
 
@@ -579,7 +579,7 @@
   O(HETATM  210  O   HOH B  32)   7.27100000 +1  17.15300000 +1  31.38800000 +1
   H(HETATM  211 1H   HOH B  32)   8.25100000 +1  17.15300000 +1  31.38800000 +1
   H(HETATM  212 2H   HOH B  32)   7.02728391 +1  17.67952780 +1  32.17779171 +1
- 
+
 HEADER
 REMARK  Read in a PDB file and:
 REMARK

@@ -1105,9 +1105,11 @@
       integer, intent (in) :: mode
       integer :: io_stat, icount, old_norbs, old_numat
       logical :: formatted, opend
+      if (Index (keywrd, " DENOUT") == 0 .and. mode == 1) return
+      if (Index (keywrd, " OLDENS") == 0 .and. mode == 0) return
       call l_control("NEWDEN", len("NEWDEN"), 1)
       if (mozyme) then
-         if (Index (keywrd, " DENOUT") /= 0) call pinout(mode, .true.)
+        call pinout(mode, .true.)
         return
       end if
       formatted = (Index(keywrd," DENOUTF") /= 0)

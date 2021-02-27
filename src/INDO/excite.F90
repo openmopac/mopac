@@ -47,6 +47,7 @@
       logical*1, external :: permca
       param = " "
       if (param == "xxxxxxxx") return
+      ecore = 0.d0
 
 !     **** determine n! ****
       n = norbs

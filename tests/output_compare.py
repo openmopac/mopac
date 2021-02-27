@@ -27,10 +27,10 @@ import numpy as np
 # More fine-grained numerical tests using PyTest are planned after development of a Python interface for MOPAC,
 # which will make it easier to assign different numerical tolerances to different quantities
 
-NUMERIC_THRESHOLD = 0.01 # large because of numerical errors in unoccupied orbital energies, energy gradients, & relaxed geometries
-HEAT_THRESHOLD = 1e-3
-DEGENERACY_THRESHOLD = 1e-2
-EIGVEC_THRESHOLD = 1e-2
+NUMERIC_THRESHOLD = 1e-4 # large because of numerical errors in unoccupied orbital energies, energy gradients, & relaxed geometries
+HEAT_THRESHOLD = 1e-4
+DEGENERACY_THRESHOLD = 1e-3
+EIGVEC_THRESHOLD = 1e-3
 
 # regular expression pattern for a time stamp or other signifier of timing output, "CLOCK" or "TIME" or "SECONDS", & system-dependent versioning
 skip_criteria = re.compile('([A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9])'

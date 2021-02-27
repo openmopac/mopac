@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 20.173L 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 20.173L, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,10 +12,10 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Jun 29 13:00:49 2020  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:39 2021  *
  *  PM7        - The PM7 Hamiltonian to be used
  *  CIS        - C.I. USES 1 ELECTRON EXCITATIONS ONLY
- * C.I.=(N,M)-  5 DOUBLY FILLED LEVELS USED IN A C.I. INVOLVING 8 M.O.'S
+ *  C.I.=(N,M) - 5 DOUBLY FILLED LEVELS USED IN A C.I. INVOLVING 8 M.O.'S
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *******************************************************************************
@@ -24,10 +24,10 @@ PM7 CIS C.I.=(8,5)
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       C          0.00000000      0.00000000      0.00000000   
      2       O          1.17300000      0.00000000      0.00000000   
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -63,13 +63,13 @@ PM7 CIS C.I.=(8,5)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 20.173L)
-                                                       Mon Jun 29 13:00:49 2020
+                                                       MOPAC2016 (Version: 21.055M)
+                                                       Fri Feb 26 19:06:39 2021
 
 
 
 
-          FINAL HEAT OF FORMATION =        -16.98523 KCAL/MOL =     -71.06620 KJ/MOL
+          FINAL HEAT OF FORMATION =        -16.98521 KCAL/MOL =     -71.06612 KJ/MOL
 
 
           TOTAL ENERGY            =       -417.35162 EV  STATE:   1 SINGLET Sig 
@@ -78,8 +78,8 @@ PM7 CIS C.I.=(8,5)
           COSMO AREA              =         57.92 SQUARE ANGSTROMS
           COSMO VOLUME            =         40.40 CUBIC ANGSTROMS
 
-          IONIZATION POTENTIAL    =         12.457491 EV
-          HOMO LUMO ENERGIES (EV) =        -12.457  1.432
+          IONIZATION POTENTIAL    =         12.457580 EV
+          HOMO LUMO ENERGIES (EV) =        -12.458  1.433
           NO. OF FILLED LEVELS    =          5
           MOLECULAR WEIGHT        =         28.0104
 
@@ -92,16 +92,16 @@ PM7 CIS C.I.=(8,5)
 
 
           SCF CALCULATIONS        =          1
- 
-          WALL-CLOCK TIME         =          0.203 SECONDS
-          COMPUTATION TIME        =          0.973 SECONDS
+
+          WALL-CLOCK TIME         =          0.016 SECONDS
+          COMPUTATION TIME        =          0.010 SECONDS
 
 
 
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       C          0.00000000      0.00000000      0.00000000   
      2       O          1.17300000      0.00000000      0.00000000   
 
@@ -119,25 +119,25 @@ PM7 CIS C.I.=(8,5)
 
 
                   EIGENVALUES  
- -31.98036 -19.71992 -14.72779 -14.72779 -12.45749   1.43238   1.43238   5.37879
+ -31.97962 -19.71970 -14.72757 -14.72757 -12.45758   1.43257   1.43257   5.37900
 
 
               NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
 
   ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
-    1          C           0.455911        3.5441     1.79911     1.74497
-    2          O          -0.455911        6.4559     1.85458     4.60133
+    1          C           0.456121        3.5439     1.79923     1.74465
+    2          O          -0.456121        6.4561     1.85452     4.60160
  DIPOLE           X         Y         Z       TOTAL
- POINT-CHG.    -2.569     0.000     0.000     2.569
- HYBRID         1.591    -0.000     0.000     1.591
- SUM           -0.978    -0.000     0.000     0.978
+ POINT-CHG.    -2.570     0.000     0.000     2.570
+ HYBRID         1.590     0.000     0.000     1.590
+ SUM           -0.980     0.000     0.000     0.980
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
 
      Atom    s        px        py        pz   
-    1  C   1.79911   0.88543   0.42977   0.42977
-    2  O   1.85458   1.46088   1.57023   1.57023
+    1  C   1.79923   0.88513   0.42976   0.42976
+    2  O   1.85452   1.46112   1.57024   1.57024
 
  **********************
  *                    *
@@ -147,10 +147,6 @@ PM7 CIS C.I.=(8,5)
 
 
 
- TOTAL JOB TIME:             0.28 SECONDS
+ TOTAL JOB TIME:             0.02 SECONDS
 
  == MOPAC DONE ==
-
-
-          MOPAC Job: "co_cis_PM7.mop" ended normally on Jun 29, 2020, at 13:00.
-

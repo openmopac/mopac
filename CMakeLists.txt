@@ -14,13 +14,21 @@ target_link_libraries(param PUBLIC mopac-all)
 message("compiler = " ${CMAKE_Fortran_COMPILER})
 message("build type = " ${CMAKE_BUILD_TYPE})
 
-
+# OS-detection
+if(APPLE)
+  add_definitions(-DMOPAC_OS='M')
+elseif(UNIX)
+  add_definitions(-DMOPAC_OS='L')
+elseif(WIN32 OR MINGW OR MSYS OR CYGWIN)
+  add_definitions(-DMOPAC_OS='W')
+else()
+  add_definitions(-DMOPAC_OS='X')
+endif()
 
 # Link w/ MKL if it is available
 if(DEFINED ENV{MKLROOT})
   set(CMAKE_BUILD_TYPE Release)
   message("environment variable MKLROOT is defined, assuming that Intel MKL is available")
-  add_definitions(-DMKL)
   if(DEFINED ENV{OMPROOT})
     message("environment variable OMPROOT is defined, building threaded MKL w/ OMPROOT as the path to libiomp5")
     target_link_libraries(mopac PUBLIC -Wl,-rpath,$ENV{OMPROOT}

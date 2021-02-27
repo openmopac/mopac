@@ -107,15 +107,17 @@ subroutine pdbout (mode1)
       write (iprt, "(A)") trim(line)
       line = "REMARK  Heat of Formation ="  
       sum = escf - stress
-      i = int(log10(abs(sum) + 0.001d0)) 
-      if ( sum < 0.d0) i = i + 1
-      if (i < 4) then
-        num = char(ichar("6") + i)
-        write (iprt, "(A, f"//num//".3, a)") trim(line), sum, " Kcal/mol"
-      else
-        num = char(ichar("6") + i - 10)
-        write (iprt, "(A, f1"//num//".3, a)") trim(line), sum, " Kcal/mol"
-      end if        
+      if (abs(sum) > 4.99999d-4) then
+        i = max(int(log10(abs(sum))), 0)
+        if ( sum < 0.d0) i = i + 1
+        if (i < 4) then
+          num = char(ichar("6") + i)
+          write (iprt, "(A, f"//num//".3, a)") trim(line), sum, " Kcal/mol"
+        else
+          num = char(ichar("6") + i - 10)
+          write (iprt, "(A, f1"//num//".3, a)") trim(line), sum, " Kcal/mol"
+        end if
+      end if
     end if
     if (maxtxt == 0 .and. txtatm(1) /= " ") then
       txtatm1(:natoms) = txtatm(:natoms)
@@ -266,7 +268,7 @@ subroutine pdbout (mode1)
       if (line(i:i) == "/" .or. line(i:i) == backslash) exit
     end do
     write(iprt,"(a)") """load "//backslash
-    l_geo_ref = (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0)
+    l_geo_ref = (index(keywrd, " COMPARE") /= 0)
     if (l_geo_ref) then
       if (l_compare) then
         line_1 = line(i + 1:len_trim(line)-4)//"_"
@@ -292,7 +294,7 @@ subroutine pdbout (mode1)
     end if
     write(iprt,"(10x,a)")"set display selected; "//backslash, "hBonds calculate; "//backslash
     write(iprt,"(10x,a)")"set defaultDistanceLabel '%0.3VALUE %UNITS'; "//backslash
-    if (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0) then
+    if (index(keywrd, " COMPARE") /= 0) then
       write(iprt,"(10x,a)")"select */2.1; color bonds green;  select none;"//backslash
     else
       write(iprt,"(10x,a)")"select none; "//backslash
@@ -325,7 +327,7 @@ subroutine pdbout (mode1)
     end if
     if (len_trim(title) /= 0 .and. (index(title(:8), " NULL") == 0) ) &
       write(iprt,"(a)") '<h2 align="center">'//trim(title)//'</h2>'
-    if (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0) then
+    if (index(keywrd, " COMPARE") /= 0) then
       write(iprt,"(a)")"<h2 align=""center"">Compare """//trim(geo_dat_name)// &
       & """ and ""<span style=""color:green"">"//trim(geo_ref_name)//"</span>""</h2>"
     end if
@@ -346,7 +348,7 @@ subroutine pdbout (mode1)
 !
 !   Element(1,2)
 !
-    if (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0) then
+    if (index(keywrd, " COMPARE") /= 0) then
       write(iprt,"(a)") "<TD>Toggle display<br><a href=""javascript:Jmol.script(jmolApplet0,'"
     else
       write(iprt,"(a)") "<TD><a href=""javascript:Jmol.script(jmolApplet0,'"
@@ -383,7 +385,7 @@ subroutine pdbout (mode1)
     end do
     write(iprt,"(a)")trim(line)    
     write(iprt,"(a)") "isOK1 = TRUE; isOK2 = FALSE; lzoom = TRUE; lcenter = TRUE;"
-    if (index(keywrd, " 0SCF") /= 0 .and. index(keywrd_txt, " GEO_REF") /= 0) then
+    if (index(keywrd, " COMPARE") /= 0) then
       write(iprt,"(a)") "endif;')""> 1&<span style=""color:green"">2</span></a>"
       write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (isOKone);  Display add */1.1; zoom 0; isOKone = FALSE;", &
         "else hide add */1.1; zoom 0; isOKone = TRUE;  lzoom = TRUE; lcenter = TRUE; endif;')""> 1</a>"

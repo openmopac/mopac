@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,14 +12,13 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:41 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:14 2021  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 66A) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
  *  Keyword:   CHAINS=(AA) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
- *  PL         - MONITOR CONVERGENCE IN DENSITY MATRIX
  *  HEADER     - DATA SET IS IN PROTEIN DATA BANK FORMAT
  *******************************************************************************
  ADD-H PDBOUT   CHAINS=(AA)  START_RES=(1A 66A)
@@ -27,7 +26,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      3  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      5  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -668,7 +667,7 @@
    638       C(HETATM  774  C1  EOH A  66)   15.70200000  *   0.90400000  *  12.77100000  *
    639       C(HETATM  775  C2  EOH A  66)   14.82300000  *  -0.15900000  *  13.27100000  *
    640       O(HETATM  777  O   EOH A  66)   15.02900000  *   2.13400000  *  12.50100000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -1621,7 +1620,7 @@
   C(HETATM  774  C1  EOH A  66)  15.70200000 +1   0.90400000 +1  12.77100000 +1
   C(HETATM  775  C2  EOH A  66)  14.82300000 +1  -0.15900000 +1  13.27100000 +1
   O(HETATM  777  O   EOH A  66)  15.02900000 +1   2.13400000 +1  12.50100000 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
 
@@ -2507,7 +2506,7 @@
   H(HETATM  647 1H2  EOH A  66)  14.05095916 +1  -0.37011167 +1  12.53107783 +1
   H(HETATM  648 2H2  EOH A  66)  14.35593330 +1   0.16345127 +1  14.20157717 +1
   H(HETATM  649 3H2  EOH A  66)  15.40907820 +1  -1.06006679 +1  13.45180651 +1
- 
+
 HEADER    PLANT SEED PROTEIN                      11-OCT-91   1CBN
 TITLE     ATOMIC RESOLUTION (0.83 ANGSTROMS) CRYSTAL STRUCTURE OF THE
 TITLE    2 HYDROPHOBIC PROTEIN CRAMBIN AT 130 K

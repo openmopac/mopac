@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:14 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:05:19 2021  *
  *  PDBOUT     - PRINT GEOMETY IN PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 66) 
@@ -31,7 +31,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -682,7 +682,7 @@
    648       H(HETATM  649 1H2  EOH B  66)   16.47100000  *   1.10900000  *  13.51600000  *
    649       H(HETATM  650 2H2  EOH B  66)   16.16500000  *   0.57400000  *  11.84100000  *
    650       H(HETATM  651  H   EOH B  66)   14.08500000  *   2.06100000  *  12.73200000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -1359,9 +1359,12 @@
     649          H (HETATM  650 2H2  EOH A  66)     329
     650          H (HETATM  651  H   EOH A  66)     330
 
-   Ion Atom No.           Label               Charge (Distances are between charged sites predicted by Lewis structure theory)
- 
-    1   O  301   (ATOM    301  OD2 ASP A  43)   -1
+   Ion                PDB Label        Charge     Distance        PDB label for Salt Bridge   Charge
+
+
+                 All other ions
+
+    1     (ATOM    301  OD2 ASP A  43)   -1
 
           COMPUTED CHARGE ON SYSTEM: -1
   
@@ -1369,9 +1372,9 @@
 
  PLS ESCF USING THE OLD LMOs:    -2991.990525 KCAL/MOL
 
- ITER.      1 PLS= 0.430E-02           ENERGY   -2991.99095 DELTAE-2991.9909506
- ITER.      2 PLS= 0.336E-02           ENERGY   -2991.99112 DELTAE   -0.0001734
- ITER.      3 PLS= 0.219E-02           ENERGY   -2991.99109 DELTAE    0.0000299
+ ITER.      1 PLS= 0.430E-02           ENERGY   -2991.99095 DELTAE-2991.9909509
+ ITER.      2 PLS= 0.336E-02           ENERGY   -2991.99112 DELTAE   -0.0001733
+ ITER.      3 PLS= 0.219E-02           ENERGY   -2991.99109 DELTAE    0.0000300
  ITER.      4 PLS= 0.160E-02           ENERGY   -2991.99121 DELTAE   -0.0001203
 
  -------------------------------------------------------------------------------
@@ -1385,9 +1388,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.013M)
-                                                       Sun Feb  7 17:51:21 2021
-                                                       No. of days remaining = 340
+                                                       MOPAC2016 (Version: 21.055M)
+                                                       Fri Feb 26 19:05:34 2021
 
 
 
@@ -1411,16 +1413,16 @@
 
 
           SCF CALCULATIONS        =          1
- 
-          WALL-CLOCK TIME         =          7.199 SECONDS
-          COMPUTATION TIME        =          7.119 SECONDS
+
+          WALL-CLOCK TIME         =         14.758 SECONDS
+          COMPUTATION TIME        =         14.731 SECONDS
 
 
 
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -3435,12 +3437,12 @@
       ALA A  45       +0.051
       ASN A  46       -0.089
       EOH A  66       -0.001
- 
+
 
 
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.   -20.316    -7.726    -8.043    23.176
- HYBRID        -0.910    -0.747    -1.730     2.092
+ HYBRID        -0.910    -0.746    -1.730     2.092
  SUM          -21.226    -8.472    -9.773    24.856
 
 
@@ -4106,6 +4108,6 @@
 
 
 
- TOTAL JOB TIME:             7.25 SECONDS
+ TOTAL JOB TIME:            14.80 SECONDS
 
  == MOPAC DONE ==

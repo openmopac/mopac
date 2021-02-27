@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:40 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:14 2021  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 1B 1) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -26,7 +26,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       C(HETATM    1  CA  MPR A   1)   19.39200000  *   5.71400000  *   9.14700000  *
      2       C(HETATM    2  C   MPR A   1)   18.13100000  *   5.09100000  *   8.58700000  *
      3       O(HETATM    3  O   MPR A   1)   17.48800000  *   4.19100000  *   9.06000000  *
@@ -304,7 +304,7 @@
    275       O(HETATM  285  O   HOH C  11)   19.02300000  *   3.84700000  *   1.88700000  *
    276       O(HETATM  286  O   HOH C  12)   19.96900000  *   3.53500000  *   4.39400000  *
    277       O(HETATM  287  O   HOH C  13)   22.47500000  *   2.48500000  *   4.18000000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -753,7 +753,7 @@
   O(HETATM  285  O   HOH C  11)  19.02300000 +1   3.84700000 +1   1.88700000 +1
   O(HETATM  286  O   HOH C  12)  19.96900000 +1   3.53500000 +1   4.39400000 +1
   O(HETATM  287  O   HOH C  13)  22.47500000 +1   2.48500000 +1   4.18000000 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
 
@@ -1194,45 +1194,45 @@
   H(HETATM  267 1HB  MPR B   1)  14.55281232 +1   5.56155020 +1  12.73630894 +1
   H(HETATM  268 2HB  MPR B   1)  15.83951873 +1   4.42098281 +1  12.27613579 +1
   O(HETATM  269  O   HOH     1)  16.74400000 +1   4.05800000 +1  20.32600000 +1
-  H(HETATM  270 1H   HOH     1)  16.40281924 +1   3.44500045 +1  21.01027132 +1
-  H(HETATM  271 2H   HOH     1)  16.37394115 +1   4.84441403 +1  20.77877966 +1
+  H(HETATM  270 1H   HOH     1)  16.40369082 +1   3.44337224 +1  21.00924401 +1
+  H(HETATM  271 2H   HOH     1)  16.37503156 +1   4.84561133 +1  20.77758685 +1
   O(HETATM  273  O   HOH     2)  14.03500000 +1   2.40800000 +1  18.23100000 +1
   H(HETATM  274 1H   HOH     2)  14.06099108 +1   1.90831271 +1  19.07363698 +1
   H(HETATM  275 2H   HOH     2)  13.08683633 +1   2.65226028 +1  18.27250388 +1
   O(HETATM  277  O   HOH     3)  12.38400000 +1   2.60500000 +1  21.89800000 +1
-  H(HETATM  278 1H   HOH     3)  13.34917957 +1   2.44685706 +1  21.95979973 +1
-  H(HETATM  279 2H   HOH     3)  12.22784397 +1   3.21852092 +1  22.64606910 +1
+  H(HETATM  278 1H   HOH     3)  13.35070777 +1   2.47132045 +1  21.98747547 +1
+  H(HETATM  279 2H   HOH     3)  12.19024341 +1   3.20613889 +1  22.64732665 +1
   O(HETATM  281  O   HOH     4)  17.93800000 +1   2.87400000 +1  11.49300000 +1
-  H(HETATM  282 1H   HOH     4)  18.42317420 +1   2.41231033 +1  10.77756401 +1
-  H(HETATM  283 2H   HOH     4)  17.98771734 +1   3.16265127 +1  12.42820513 +1
+  H(HETATM  282 1H   HOH     4)  18.42379369 +1   2.41164906 +1  10.77841194 +1
+  H(HETATM  283 2H   HOH     4)  17.99679230 +1   3.15855259 +1  12.42893445 +1
   O(HETATM  284  O   HOH     5)  16.53000000 +1   1.11800000 +1  13.39200000 +1
-  H(HETATM  285 1H   HOH     5)  16.99804990 +1   1.70268947 +1  12.75996557 +1
-  H(HETATM  286 2H   HOH     5)  16.21560879 +1   1.67741925 +1  14.13268095 +1
+  H(HETATM  285 1H   HOH     5)  16.99912548 +1   1.70239375 +1  12.76048972 +1
+  H(HETATM  286 2H   HOH     5)  16.21432716 +1   1.67676549 +1  14.13262932 +1
   O(HETATM  288  O   HOH     6)  14.10800000 +1   1.04700000 +1  20.52800000 +1
-  H(HETATM  289 1H   HOH     6)  14.44266049 +1   1.79452753 +1  21.06614956 +1
-  H(HETATM  290 2H   HOH     6)  13.13560574 +1   1.16885801 +1  20.52785283 +1
+  H(HETATM  289 1H   HOH     6)  14.41352432 +1   1.81836756 +1  21.04958122 +1
+  H(HETATM  290 2H   HOH     6)  13.13601615 +1   1.05479371 +1  20.65284653 +1
   O(HETATM  291  O   HOH     7)  15.74000000 +1   2.25100000 +1  22.34100000 +1
-  H(HETATM  292 1H   HOH     7)  14.77378979 +1   2.35388753 +1  22.21351670 +1
-  H(HETATM  293 2H   HOH     7)  15.79903895 +1   1.27930758 +1  22.22818049 +1
+  H(HETATM  292 1H   HOH     7)  14.77364971 +1   2.35342118 +1  22.21420482 +1
+  H(HETATM  293 2H   HOH     7)  15.80343091 +1   1.27505949 +1  22.27841695 +1
   O(HETATM  294  O   HOH     8)  23.66600000 +1   2.27500000 +1   1.19100000 +1
-  H(HETATM  295 1H   HOH     8)  23.30360651 +1   2.33712387 +1   2.09941157 +1
-  H(HETATM  296 2H   HOH     8)  23.01892315 +1   2.80044731 +1   0.67563927 +1
+  H(HETATM  295 1H   HOH     8)  23.30196678 +1   2.33610039 +1   2.09882518 +1
+  H(HETATM  296 2H   HOH     8)  23.02250740 +1   2.80492215 +1   0.67573328 +1
   O(HETATM  297  O   HOH     9)  21.49100000 +1   0.59600000 +1   2.28500000 +1
-  H(HETATM  298 1H   HOH     9)  22.21134522 +1   1.15317908 +1   1.92298586 +1
-  H(HETATM  299 2H   HOH     9)  21.28576189 +1   0.99232634 +1   3.15746934 +1
+  H(HETATM  298 1H   HOH     9)  22.21119090 +1   1.15362008 +1   1.92335802 +1
+  H(HETATM  299 2H   HOH     9)  21.18784817 +1   1.07663277 +1   3.08343040 +1
   O(HETATM  300  O   HOH    10)  19.52800000 +1   1.36100000 +1   9.15300000 +1
-  H(HETATM  301 1H   HOH    10)  18.95492133 +1   2.15558434 +1   9.12816919 +1
-  H(HETATM  302 2H   HOH    10)  19.19388091 +1   0.96816693 +1   9.98633463 +1
+  H(HETATM  301 1H   HOH    10)  18.95468151 +1   2.15538831 +1   9.12744378 +1
+  H(HETATM  302 2H   HOH    10)  19.25817457 +1   0.96725987 +1  10.00889891 +1
   O(HETATM  303  O   HOH    11)  19.02300000 +1   3.84700000 +1   1.88700000 +1
-  H(HETATM  304 1H   HOH    11)  19.36727506 +1   3.73368383 +1   2.79751311 +1
-  H(HETATM  305 2H   HOH    11)  18.09739727 +1   3.98118594 +1   2.17966658 +1
+  H(HETATM  304 1H   HOH    11)  19.36727490 +1   3.73368400 +1   2.79751319 +1
+  H(HETATM  305 2H   HOH    11)  18.09739732 +1   3.98118641 +1   2.17966651 +1
   O(HETATM  306  O   HOH    12)  19.96900000 +1   3.53500000 +1   4.39400000 +1
-  H(HETATM  307 1H   HOH    12)  20.53023559 +1   3.75157219 +1   3.62036501 +1
-  H(HETATM  308 2H   HOH    12)  19.26789852 +1   4.21929309 +1   4.41848844 +1
+  H(HETATM  307 1H   HOH    12)  20.52713187 +1   3.76277526 +1   3.62133756 +1
+  H(HETATM  308 2H   HOH    12)  19.25677387 +1   4.20767853 +1   4.41924950 +1
   O(HETATM  309  O   HOH    13)  22.47500000 +1   2.48500000 +1   4.18000000 +1
-  H(HETATM  310 1H   HOH    13)  22.83739628 +1   2.42157588 +1   3.27167940 +1
-  H(HETATM  311 2H   HOH    13)  21.92593463 +1   3.18071847 +1   4.59821409 +1
- 
+  H(HETATM  310 1H   HOH    13)  22.83607967 +1   2.42146969 +1   3.27116263 +1
+  H(HETATM  311 2H   HOH    13)  21.88380813 +1   3.18112106 +1   4.53539786 +1
+
 HEADER    HORMONE                                 05-JUN-87   1XY1      1XY1   3
 COMPND    1 BETA-MERCAPTOPROPIONATE-OXYTOCIN (WET FORM)                 1XY1   4
 SOURCE    SYNTHETIC                                                     1XY1   5
@@ -1645,48 +1645,48 @@ HETATM  266 2HA  MPR B   1      16.753   6.670  12.601  1.00  0.00      PROT H
 HETATM  267 1HB  MPR B   1      14.553   5.562  12.736  1.00  0.00      PROT H 
 HETATM  268 2HB  MPR B   1      15.840   4.421  12.276  1.00  0.00      PROT H 
 HETATM  269  O   HOH     1      16.744   4.058  20.326  1.00  0.00      PROT O 
-HETATM  270 1H   HOH     1      16.403   3.445  21.010  1.00  0.00      PROT H 
-HETATM  271 2H   HOH     1      16.374   4.844  20.779  1.00  0.00      PROT H 
+HETATM  270 1H   HOH     1      16.404   3.443  21.009  1.00  0.00      PROT H 
+HETATM  271 2H   HOH     1      16.375   4.846  20.778  1.00  0.00      PROT H 
 TER     272      HOH     1
 HETATM  273  O   HOH     2      14.035   2.408  18.231  1.00  0.00      PROT O 
 HETATM  274 1H   HOH     2      14.061   1.908  19.074  1.00  0.00      PROT H 
 HETATM  275 2H   HOH     2      13.087   2.652  18.273  1.00  0.00      PROT H 
 TER     276      HOH     2
 HETATM  277  O   HOH     3      12.384   2.605  21.898  1.00  0.00      PROT O 
-HETATM  278 1H   HOH     3      13.349   2.447  21.960  1.00  0.00      PROT H 
-HETATM  279 2H   HOH     3      12.228   3.219  22.646  1.00  0.00      PROT H 
+HETATM  278 1H   HOH     3      13.351   2.471  21.987  1.00  0.00      PROT H 
+HETATM  279 2H   HOH     3      12.190   3.206  22.647  1.00  0.00      PROT H 
 TER     280      HOH     3
 HETATM  281  O   HOH     4      17.938   2.874  11.493  1.00  0.00      PROT O 
-HETATM  282 1H   HOH     4      18.423   2.412  10.778  1.00  0.00      PROT H 
-HETATM  283 2H   HOH     4      17.988   3.163  12.428  1.00  0.00      PROT H 
+HETATM  282 1H   HOH     4      18.424   2.412  10.778  1.00  0.00      PROT H 
+HETATM  283 2H   HOH     4      17.997   3.159  12.429  1.00  0.00      PROT H 
 HETATM  284  O   HOH     5      16.530   1.118  13.392  1.00  0.00      PROT O 
-HETATM  285 1H   HOH     5      16.998   1.703  12.760  1.00  0.00      PROT H 
-HETATM  286 2H   HOH     5      16.216   1.677  14.133  1.00  0.00      PROT H 
+HETATM  285 1H   HOH     5      16.999   1.702  12.760  1.00  0.00      PROT H 
+HETATM  286 2H   HOH     5      16.214   1.677  14.133  1.00  0.00      PROT H 
 TER     287      HOH     5
 HETATM  288  O   HOH     6      14.108   1.047  20.528  1.00  0.00      PROT O 
-HETATM  289 1H   HOH     6      14.443   1.795  21.066  1.00  0.00      PROT H 
-HETATM  290 2H   HOH     6      13.136   1.169  20.528  1.00  0.00      PROT H 
+HETATM  289 1H   HOH     6      14.414   1.818  21.050  1.00  0.00      PROT H 
+HETATM  290 2H   HOH     6      13.136   1.055  20.653  1.00  0.00      PROT H 
 HETATM  291  O   HOH     7      15.740   2.251  22.341  1.00  0.00      PROT O 
-HETATM  292 1H   HOH     7      14.774   2.354  22.214  1.00  0.00      PROT H 
-HETATM  293 2H   HOH     7      15.799   1.279  22.228  1.00  0.00      PROT H 
+HETATM  292 1H   HOH     7      14.774   2.353  22.214  1.00  0.00      PROT H 
+HETATM  293 2H   HOH     7      15.803   1.275  22.278  1.00  0.00      PROT H 
 HETATM  294  O   HOH     8      23.666   2.275   1.191  1.00  0.00      PROT O 
-HETATM  295 1H   HOH     8      23.304   2.337   2.099  1.00  0.00      PROT H 
-HETATM  296 2H   HOH     8      23.019   2.800   0.676  1.00  0.00      PROT H 
+HETATM  295 1H   HOH     8      23.302   2.336   2.099  1.00  0.00      PROT H 
+HETATM  296 2H   HOH     8      23.023   2.805   0.676  1.00  0.00      PROT H 
 HETATM  297  O   HOH     9      21.491   0.596   2.285  1.00  0.00      PROT O 
-HETATM  298 1H   HOH     9      22.211   1.153   1.923  1.00  0.00      PROT H 
-HETATM  299 2H   HOH     9      21.286   0.992   3.157  1.00  0.00      PROT H 
+HETATM  298 1H   HOH     9      22.211   1.154   1.923  1.00  0.00      PROT H 
+HETATM  299 2H   HOH     9      21.188   1.077   3.083  1.00  0.00      PROT H 
 HETATM  300  O   HOH    10      19.528   1.361   9.153  1.00  0.00      PROT O 
-HETATM  301 1H   HOH    10      18.955   2.156   9.128  1.00  0.00      PROT H 
-HETATM  302 2H   HOH    10      19.194   0.968   9.986  1.00  0.00      PROT H 
+HETATM  301 1H   HOH    10      18.955   2.155   9.127  1.00  0.00      PROT H 
+HETATM  302 2H   HOH    10      19.258   0.967  10.009  1.00  0.00      PROT H 
 HETATM  303  O   HOH    11      19.023   3.847   1.887  1.00  0.00      PROT O 
 HETATM  304 1H   HOH    11      19.367   3.734   2.798  1.00  0.00      PROT H 
 HETATM  305 2H   HOH    11      18.097   3.981   2.180  1.00  0.00      PROT H 
 HETATM  306  O   HOH    12      19.969   3.535   4.394  1.00  0.00      PROT O 
-HETATM  307 1H   HOH    12      20.530   3.752   3.620  1.00  0.00      PROT H 
-HETATM  308 2H   HOH    12      19.268   4.219   4.418  1.00  0.00      PROT H 
+HETATM  307 1H   HOH    12      20.527   3.763   3.621  1.00  0.00      PROT H 
+HETATM  308 2H   HOH    12      19.257   4.208   4.419  1.00  0.00      PROT H 
 HETATM  309  O   HOH    13      22.475   2.485   4.180  1.00  0.00      PROT O 
-HETATM  310 1H   HOH    13      22.837   2.422   3.272  1.00  0.00      PROT H 
-HETATM  311 2H   HOH    13      21.926   3.181   4.598  1.00  0.00      PROT H 
+HETATM  310 1H   HOH    13      22.836   2.421   3.271  1.00  0.00      PROT H 
+HETATM  311 2H   HOH    13      21.884   3.181   4.535  1.00  0.00      PROT H 
 END
 
           GEOMETRY RESEQUENCED
@@ -1703,6 +1703,6 @@ END
 
 
 
- TOTAL JOB TIME:             0.00 SECONDS
+ TOTAL JOB TIME:             0.01 SECONDS
 
  == MOPAC DONE ==

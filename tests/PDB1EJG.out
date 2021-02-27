@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,14 +12,13 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:41 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:14 2021  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
  *  Keyword:   CHAINS=(A) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
- *  PL         - MONITOR CONVERGENCE IN DENSITY MATRIX
  *  HEADER     - DATA SET IS IN PROTEIN DATA BANK FORMAT
  *******************************************************************************
  ADD-H PDBOUT   CHAINS=(A)  START_RES=(1A)
@@ -27,7 +26,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.88500000  *  14.07800000  *   3.42700000  *
      2       C(ATOM      3  CA  THR A   1)   16.93800000  *  12.83400000  *   4.23400000  *
      3       C(ATOM      5  C   THR A   1)   15.64200000  *  12.76000000  *   4.98500000  *
@@ -665,7 +664,7 @@
    635       H(ATOM    839  HB3 ASN A  46)   11.92300000  *   3.91500000  *  12.68400000  *
    636       H(ATOM    840 HD21 ASN A  46)   13.76400000  *   2.76200000  *  15.69500000  *
    637       H(ATOM    842 HD22 ASN A  46)   14.03200000  *   2.88000000  *  13.97200000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -1589,7 +1588,7 @@
   H(ATOM    839  HB3 ASN A  46)  11.92300000 +1   3.91500000 +1  12.68400000 +1
   H(ATOM    840 HD21 ASN A  46)  13.76400000 +1   2.76200000 +1  15.69500000 +1
   H(ATOM    842 HD22 ASN A  46)  14.03200000 +1   2.88000000 +1  13.97200000 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
 
@@ -2435,7 +2434,7 @@
   H(ATOM    640  HXT ASN A  46)  12.62301392 +1   5.36282022 +1   9.67045138 +1
   H(ATOM    641 1HD2 ASN A  46)  14.21717386 +1   3.48178512 +1  15.46345280 +1
   H(ATOM    642 2HD2 ASN A  46)  13.14543696 +1   2.27948509 +1  15.10831713 +1
- 
+
 HEADER    PLANT PROTEIN                           02-MAR-00   1EJG
 TITLE     CRAMBIN AT ULTRA-HIGH RESOLUTION: VALENCE ELECTRON DENSITY.
 COMPND    MOL_ID: 1;

@@ -656,7 +656,7 @@ subroutine wrtchk (allkey)
        !
        !    DUMMY IF STATEMENT TO REMOVE AMPERSAND, PLUS SIGNS AND OBSOLETE KEYWORDS, IF PRESENT
        !
-      if (myword(allkey(160:), " SETUP")) i = 1
+      if (myword(allkey, " SETUP"))       i = 1
       if (myword(allkey, "&"))            i = 2
       if (myword(allkey, " +"))           i = 3
       if (myword(allkey, " CONTROL"))     i = 3
@@ -1182,7 +1182,10 @@ subroutine wrtcon (allkey)
      if (.not. myword(allkey, " C.I.=(")) return ! Impossible option used to delete keyword
     else if (myword(allkey, " C.I.=")) then
       nmos = Int (reada (keywrd, Index (keywrd, "C.I.")+5))
-      write (iw,' (" *  C.I.=N   -", i2, " M.O.S TO BE USED IN C.I.")') nmos  
+      i = Index (keywrd, "C.I.=")
+      j = Index(keywrd(i + 1:), " ") + i 
+      line = " *  "//keywrd(i:j)
+      write (iw, "(a, i2, a)")line(1:15)//"- ", nmos, " M.O.S TO BE USED IN C.I."
     else    
       write (iw, "(' *',/,a)") " *      C.I. keyword must be of form 'C.I.=n' or 'C.I.=(n1,n2)' (See manual)"
       call mopend("C.I. keyword must be of form 'C.I.=n' or 'C.I.=(n1,n2)'")
@@ -1249,10 +1252,14 @@ subroutine wrtcon (allkey)
     else
       if (index(keywrd," PKA") .ne. 0) then
         epsi = 78.4d0
+        line = "EPS=78.4 "
       else
-        epsi = reada (keywrd, Index (keywrd, "EPS="))
+        i = Index (keywrd, "EPS=")
+        j = Index(keywrd(i + 1:), " ") + i 
+        line = " *  "//keywrd(i:j)
+        epsi = reada (keywrd, i)
       end if
-      write (iw, "(a, f6.2, a)")" *  EPS=", epsi," - USE ANDREAS KLAMT'S COSMO IMPLICIT SOLVATION MODEL"
+      write (iw, "(a, a)")line(1:15),"- USE ANDREAS KLAMT'S COSMO IMPLICIT SOLVATION MODEL"
       fepsi = (epsi-1.d0) / (epsi+0.5d0)
     end if
     if (epsi < -100.d0) then
@@ -1275,7 +1282,13 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " RSOLV")) write (iw,'(" *  RSOLV=", f7.3)') reada (keywrd, Index (keywrd, " RSOLV"))
   if (myword(allkey, " DELSC")) write (iw,'(" *  DELSC=", f7.3)') reada (keywrd, Index (keywrd, " DELSC"))
   if (myword(allkey, " DISEX")) write (iw,'(" *  DISEX=", f7.3)') reada (keywrd, Index (keywrd, " DISEX"))
-  if (myword(allkey, "N**2"))   write (iw,'(" *  n**2 =", f7.3, " for COSMO-CI")') reada (keywrd, 4+Index (keywrd, "N**2"))
+  i = Index(keywrd, "N**2") 
+  if (i /= 0) then
+    j = Index(keywrd(i + 1:), " ") + i 
+    line = " *  "//keywrd(i:j)
+    write (iw, "(a, a)")line(1:14), " - USED IN COSMO-CI"
+    if (.not. myword(allkey, "N**2")) return
+  end if
   if (myword(allkey, " NSPA")) then
     i = Nint (reada (keywrd, Index (keywrd, " NSPA")))
     write (iw,'(" *  NSPA=", i5)') i
@@ -1868,7 +1881,6 @@ subroutine wrtwor (allkey)
   end if
   i = index(allkey, " CVB")
   if (i > 0) then
-    if (index(keywrd, " RESEQ") /= 0) write(iw,*)
 !
 ! Replace spaces by "_"
 !
@@ -1896,15 +1908,19 @@ subroutine wrtwor (allkey)
     end if
   end if
   if (myword(allkey, " CVB")) then
-      i = Index (keywrd, " CVB")
-      j = Index (keywrd(i:), ")") + i
-      if (j - i < 24) then
-        write (iw, '(" *  ", a, "  USER-DEFINED EXPLICIT COVALENT BONDS")') keywrd(i + 1:j)
-      else        
-         write (iw, '(" *  USER-DEFINED EXPLICIT COVALENT BONDS:")')
-         write (iw, '(" *    ",a)') keywrd(i + 1:j)
-      end if        
+    i = Index (keywrd, " CVB")
+    j = Index (keywrd(i:), ")") + i
+    if (j - i < 24) then
+      write (iw, '(" *  ", a, "  USER-DEFINED EXPLICIT COVALENT BONDS")') keywrd(i + 1:j)
+    else        
+        write (iw, '(" *  USER-DEFINED EXPLICIT COVALENT BONDS:")')
+        write (iw, '(" *    ",a)') keywrd(i + 1:j)
+    end if  
+    if (index(keywrd, " RESEQ") /= 0) then
+      call mopend("CVB must not be present when RESEQ is used")
+      write(iw,*)
     end if
+  end if
   if (myword(allkey, " TRANS=")) then
     write (iw, '(" *  TRANS=     - ", i4, " VIBRATIONS ARE TO BE DELETED FROM THE THERMO CALCULATION")') &
      Nint (reada (keywrd, Index (keywrd, " TRANS=")))

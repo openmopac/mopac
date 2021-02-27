@@ -27,5 +27,4 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/rapid3.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/resetp.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/savgeo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/update.F90
 )

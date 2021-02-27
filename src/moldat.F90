@@ -141,7 +141,7 @@ subroutine moldat(mode)
       call gmetry (geo, coord) 
       if (mode /= 1)then
         call empiri()
-        write(iw,"(/,a,/)")formula(:len_trim(formula))  
+        write(iw,"(/,a,/)") trim(formula)
         if (moperr) return      
       end if
       allocate(rxyz((numat*(numat + 1))/2), stat = i)
@@ -1164,11 +1164,13 @@ subroutine write_cell(iprt)
   return
 end subroutine write_cell
 subroutine write_unit_cell_HOF(iprt)
-  use molkst_C, only : keywrd, escf, numat, line, mers
+  use molkst_C, only : keywrd, escf, numat, line, mers, formula
   use common_arrays_C, only : nat
   implicit none
   integer, intent(in) :: iprt
   integer :: i, j, k, l, z, nel(107), m
+  character :: num*1
+  logical :: one_letter
   double precision, external :: reada
 
     if (iprt < 0) return
@@ -1211,14 +1213,42 @@ subroutine write_unit_cell_HOF(iprt)
 !
          z = k/i
        end if
-        
-       write (line, "(10x,'H.o.F. per unit cell    =',f17.5,' KCAL, for',i4,' unit cells')") &
+       num = char(ichar("2") + int(log10(z + 0.05))) 
+       write (line, "(10x,'H.o.F. per unit cell    =',f17.5,' KCAL, for',i"//num//",' unit cells')") &
          & escf/z, z 
+       i = index(formula, ":") + 1
+       write(line(len_trim(line) + 1:), '(a)')", unit cell ="
+       one_letter = .true.
+       do
+         if (formula(i:i) == "=") exit
+         if (formula(i:i) == " ") then
+           i = i + 1
+           cycle
+         end if
+         if (formula(i:i) < "0" .or. formula(i:i) > "9") then
+           j = j + 1
+           if (one_letter) then
+             line(len_trim(line) + 2:) = formula(i:i)
+           else
+             line(len_trim(line) + 1:) = formula(i:i)
+           end if
+           i = i + 1
+           one_letter = .false.
+         else
+           l = index(formula(i:), " ") + i
+           k = reada(formula, i)/z
+           num = char(ichar("1") + int(log10(k + 0.05))) 
+           write(line(len_trim(line) + 1:),'(i'//num//')') k
+           i = l
+           one_letter = .true.
+         end if
+       end do
        if (iprt == 0) then
          call to_screen(line)
        else
          write(iprt,"(a)")line(:len_trim(line))
        end if
+       return
       end subroutine write_unit_cell_HOF
       subroutine write_pressure(iprt)
       use common_arrays_C, only: loc, tvec, na

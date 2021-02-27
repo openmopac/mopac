@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:48 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:25 2021  *
  *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -22,7 +22,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   ASP A   1)   40.95810273  *  14.94276982  *  25.00194341  *
      2       C(ATOM      2  CA  ASP A   1)   41.62661392  *  14.88389701  *  23.69539119  *
      3       C(ATOM      3  C   ASP A   1)   40.75538668  *  14.22661571  *  22.61261850  *
@@ -62,7 +62,7 @@
     37       H(ATOM     38 1HD  ARG A   5)   30.84746223  *  15.54440208  *  22.86693570  *
     38       H(ATOM     39 2HD  ARG A   5)   31.72082263  *  17.10256325  *  22.99151446  *
     39       H(ATOM     40  H   HIS A   6)   36.38511104  *  19.07036871  *  26.13784376  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -117,7 +117,7 @@
   H(ATOM     38 1HD  ARG A   5)  30.84746223 +1  15.54440208 +1  22.86693570 +1
   H(ATOM     39 2HD  ARG A   5)  31.72082263 +1  17.10256325 +1  22.99151446 +1
   H(ATOM     40  H   HIS A   6)  36.38511104 +1  19.07036871 +1  26.13784376 +1
- 
+
 
 
                    Salt Bridges Found (Up to 4.0 Angstroms)

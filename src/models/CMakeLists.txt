@@ -25,4 +25,5 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/calpar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/refer.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/switch.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/update.F90
 )

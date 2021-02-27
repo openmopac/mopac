@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:42 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:15 2021  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(7A 300) 
@@ -28,7 +28,7 @@
  START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_1C3W.ent" COMPARE OUTPUT
  Compare 1AP9 and 1C3W Bacteriorhodopsin
 
- 
+
 
                             Differences in atoms sets
 

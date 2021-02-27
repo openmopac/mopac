@@ -162,14 +162,12 @@
           end if   
           ii = 0
           if (index(line, "FINAL GEOMETRY OBTAINED") > 0) then
-            do
-              read (iread, '(A)', end=120, err=210) line 
-              if (index(line, " &") + index(line, " +") == 0 .and. line(1:1) /="*") ii = ii + 1
-              if (ii == 3) then
-                read (iread, '(A)', end=120, err=210) line 
-                exit
-              end if
-            end do
+!
+! Read in keywords, title and comment
+!
+            call gettxt 
+            read (iread, '(A)', end=120, err=210) line 
+            ii = 3
           else
             natoms = -3
             return

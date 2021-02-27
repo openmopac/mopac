@@ -1,8 +1,8 @@
  *******************************************************************************
- ** Site#: 26757        For non-commercial use only    Version 21.013M 64BITS **
+ ** Site#:    0         For non-commercial use only           Version 21.055M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.013M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 340**
+ ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Feb  7 17:51:46 2021  *
+ *  CALCULATION DONE:                                Fri Feb 26 19:06:22 2021  *
  *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
  *  ADD-H      - ADD HYDROGEN ATOMS TO SATISFY VALENCE
  *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 
@@ -25,7 +25,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   GLY A   1)  -25.75799354  *   6.90300325  *  -6.72399890  *
      2       C(ATOM      2  CA  GLY A   1)  -25.53099882  *   6.07500205  *  -7.93800250  *
      3       C(ATOM      3  C   GLY A   1)  -24.12100310  *   5.54399112  *  -7.94501019  *
@@ -964,7 +964,7 @@
    936      Cl(ATOM    936 CL   LIG X  59)  -20.04698562  *  18.84199427  * -10.33699979  *
    937      Cl(ATOM    937 CL   LIG X  59)  -18.80401000  *  16.47199153  *  -8.51198546  *
    938      Na(ATOM    938 NA   LIG X  60)  -17.81699913  *  20.32599813  *  -7.02600119  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -1915,7 +1915,7 @@
  Cl(ATOM    936 CL   LIG X  59) -20.04698562 +1  18.84199427 +1 -10.33699979 +1
  Cl(ATOM    937 CL   LIG X  59) -18.80401000 +1  16.47199153 +1  -8.51198546 +1
  Na(ATOM    938 NA   LIG X  60) -17.81699913 +1  20.32599813 +1  -7.02600119 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
 

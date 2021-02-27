@@ -139,48 +139,6 @@
       refkey_ref(2) = title
       call gettxt 
       if (moperr) return
-!
-!  Convert any "SELF" into file-names
-!
-      do
-        line = trim(keywrd)
-        call upcase(line, len_trim(line))
-        i = index(line, "SELF")
-        if (i == 0) exit
-!
-! Isolate the path
-!
-        do l = i, 1, -1
-          if (keywrd(l:l) == '"') exit
-        end do
-        line_2 = keywrd(l + 1:i - 1)
-!
-! If "SELF" without a suffix, use the name of the job.
-!
-        do k = len_trim(job_fn), 1, -1
-            if (job_fn(k:k) == "/" .or. job_fn(k:k) == backslash) exit
-        end do
-        if (keywrd(i + 4:i + 4) == '"') then
-!
-!  "SELF" without a suffix, so use the name of the job.
-!
-          line_1 = trim(line_2)//trim(job_fn(k + 1:))
-          i = i + 4
-        else
-!
-!  "SELF" with a suffix, so use the name of the job but using the suffix from "SELF".
-!
-          j = index(job_fn(k + 1:), ".") + k 
-          line_1 = keywrd(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd(i + 4:i + 7)
-          i = i + index(keywrd(i:), '"') - 1
-        end if
-        call add_path(line_1)
-!
-! Replace "SELF"
-!
-        line = keywrd(1:l)//trim(line_1)//trim(keywrd(i:))
-        keywrd = trim(line)
-      end do
       if (index(keywrd, "GEO_DAT")  > 0) then
         if (moperr) then
           title = " "
@@ -274,6 +232,7 @@
               call l_control("GEO_REF", len_trim("GEO_REF"), -1)  
               line = trim(keywrd)
               if (i == 0 .and. index(line, " +") /= 0) i = i - 1
+              if (i == 0 .and. index(line, "++") /= 0) i = i - 1
               line = line(:6)
               if (index(line,"ATOM") + index(line,"HETATM") + index(line,"TITLE") + &
                 index(line,"HEADER") + index(line,"ANISOU") + index(line,"COMPND") + &
@@ -406,7 +365,8 @@
         rewind ir 
         call gettxt 
         if (moperr) return  
-      end if 
+      end if
+      if (keywrd(1:6) == "HEADER") keywrd(7:) = " "
       if (keywrd(1:1) /= space) keywrd = " "//trim(keywrd) 
       if (koment(1:1) /= space) koment = " "//trim(koment)
       if (title(1:1) /= space)  title  = " "//trim(title)
@@ -520,6 +480,48 @@
               numat_old = numat
             end if
           end if
+!
+!  Convert any "SELF" into file-names
+!
+      do
+        line = trim(keywrd)
+        call upcase(line, len_trim(line))
+        i = index(line, "SELF")
+        if (i == 0) exit
+!
+! Isolate the path
+!
+        do l = i, 1, -1
+          if (keywrd(l:l) == '"') exit
+        end do
+        line_2 = keywrd(l + 1:i - 1)
+!
+! If "SELF" without a suffix, use the name of the job.
+!
+        do k = len_trim(job_fn), 1, -1
+            if (job_fn(k:k) == "/" .or. job_fn(k:k) == "\") exit
+        end do
+        if (keywrd(i + 4:i + 4) == '"') then
+!
+!  "SELF" without a suffix, so use the name of the job.
+!
+          line_1 = trim(line_2)//trim(job_fn(k + 1:))
+          i = i + 4
+        else
+!
+!  "SELF" with a suffix, so use the name of the job but using the suffix from "SELF".
+!
+          j = index(job_fn(k + 1:), ".") + k 
+          line_1 = keywrd(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd(i + 4:i + 7)
+          i = i + index(keywrd(i:), '"') - 1
+        end if
+        call add_path(line_1)
+!
+! Replace "SELF"
+!
+        line = keywrd(1:l)//trim(line_1)//trim(keywrd(i:))
+        keywrd = trim(line)
+      end do
           if (index(keywrd, " HTML") + index(keywrd, " PDBOUT") /= 0 .and. maxtxt == 0) then
               call l_control("RESIDUES", len_trim("RESIDUES"), 1) 
               if (index(keywrd," MOZ") + index(keywrd," LOCATE-TS") + index(keywrd," RAPID") &
@@ -1512,7 +1514,7 @@
                 & (coord(3,i) - coord(3,j))**2 
             if (sum < 1.69d0) then
               k = 1
-              exit         
+              exit
             end if
           end do
         end do
@@ -1548,6 +1550,7 @@
           return
         end if
         call geo_ref
+        if (moperr) return
         lopt = 1
       end if
       if (index(keywrd," NOCOM") /= 0) then
@@ -1561,7 +1564,7 @@
               if (refkey(j)(i:i) == " ") exit
               refkey(j)(i:i) = " "
             end do
-          end if            
+          end if
         end do
       end if
       if (index(keywrd, " SETPI") /= 0) then
@@ -1585,7 +1588,7 @@
           if (keywrd(l:l) == '"') then
             do j = l + 1, len_trim(keywrd)
               if (keywrd(j:j) == '"') exit
-            end do              
+            end do
             l = l + 1
             j = j - 1
           end if
@@ -1874,7 +1877,7 @@
     first = .true.
     l_first = .true.
     sum1 = 0.d0
-    lim = numat
+    lim = min(60, numat)
     if (.not. precise) lim = min(30, lim)
     do i = 1, lim
       dum1 = -1.d0

@@ -38,14 +38,14 @@ subroutine geochk ()
     character :: padding*40, txtatm_1*27, txtatm_2*27, tmp*130
     character (len=20), allocatable :: Lewis_formatted(:,:)
     character (len=1), dimension (:), allocatable :: atom_charge
-    character :: ion_names(-6:6)*12, charge(max_sites,3)*1, num, num2*2
+    character :: ion_names(-6:6)*12, charge(max_sites,3)*1, num
     double precision, dimension(:), allocatable :: radius
     logical, save :: debug, let, lres, lreseq, times, opend, charges, l_protein, &
       done, neutral(100), lsite, ter, residues, lbreaks, l_use_old_labels, &
-    l_names(max_sites), first, first_prt
+    l_names(max_sites), first, first_prt, header
     logical, dimension (:), allocatable :: ioptl
-    integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, &
-   & j, jbad, k, l, large, n1, new, alloc_stat, uni_res, mres, near_ions(100), &
+    integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, kkk, near_ions_store(2), &
+   & j, jbad, k, l, large, n1, new, alloc_stat, uni_res, mres, near_ions(2, 100), atomic_charges(8), &
      maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10, nnumat
     integer, dimension(:), allocatable ::  mb    
     integer, save :: numbon(3), num_ions(-6:6)
@@ -56,6 +56,7 @@ subroutine geochk ()
       new_alt(max_sites)*1
     double precision, external :: reada
     data numbon / 3 * 0 /
+    data atomic_charges /1, 4, 3, 2, -1, -2, -3, -4/
     data ion_names / &
       "Less than -5", &
       "Penta-anion ", &
@@ -1227,9 +1228,9 @@ subroutine geochk ()
       if (maxtxt < 0) maxtxt = 14
       if (first_prt) then
         if (i <= numat) then
-          if (maxtxt > 1) then        
-             write(line,"(a)")"   Ion Atom No.           Label               Charge "// &
-             "(Distances are between charged sites predicted by Lewis structure theory)"
+          if (maxtxt > 1) then
+            write(line,"(a)")"   Ion                PDB Label        Charge     "// &
+            &"Distance        PDB label for Salt Bridge   Charge"
              write(iw,'(/,a)') trim(line)
              if (log) write(ilog,"(/,a)") trim(line)
              l = max(1,(17 - maxtxt/2))
@@ -1241,39 +1242,41 @@ subroutine geochk ()
         else
           write(iw,'(/18x,a)') "NO CHARGED ATOMS FOUND."        
         end if
-        do j = 6, -6, -1
-          if (j == 0) cycle
+        ioptl = .true.
+        m = 0
+        header = .true.
+        do n1 = 1, 8
+          j = atomic_charges(n1)
+          first = .true.
           k = 0
+          kkk = 0
           do i = 1, numat
             if (ions(i) == j) then
-              if (k == 0) write(iw,*)
-              k = k + 1
+              if (first) then
+                write(iw,*)
+                first = .false.
+              end if
               line = " "
               jj = 0
               if (j == 1) then
+                line = " "
                 do ii = 1, numat
-                  if (ions(ii) < 0) then
-                    sum = (coord(1,i) - coord(1,ii))**2 + (coord(2,i) - coord(2,ii))**2 + (coord(3,i) - coord(3,ii))**2 
-                    if (sum < 99.d0) then
-                      jj = jj + 1
-                      if (jj > 100) exit
-                      near_ions(jj) = ii
-                      r_ions(jj) = sqrt(sum)
-                      line = " Angstroms from anion"
-                    end if                  
+                  if (ions(ii) < 0 .and. ioptl(ii)) then
+                    call identify_nearby_counterions(i, ii, jj, near_ions, r_ions, line)   
+                    if (line == "Salt bridge!") then
+                      ioptl(i) = .false.
+                      ioptl(ii) = .false.
+                      exit
+                    end if
                   end if
                 end do
               else if (j == -1) then
+                if (.not. ioptl(i)) cycle
+                line = " "
                 do ii = 1, numat
-                  if (ions(ii) > 0) then
-                    sum = (coord(1,i) - coord(1,ii))**2 + (coord(2,i) - coord(2,ii))**2 + (coord(3,i) - coord(3,ii))**2 
-                    if (sum < 99.d0) then
-                      jj = jj + 1
-                      if (jj > 100) exit
-                      near_ions(jj) = ii
-                      r_ions(jj) = sqrt(sum)
-                      line = " Angstroms from cation"
-                    end if                  
+                  if (ions(ii) > 0 .and. ioptl(ii)) then
+                    call identify_nearby_counterions(i, ii, jj, near_ions, r_ions, line)   
+                    if (line == "Salt bridge!") exit
                   end if
                 end do
               end if
@@ -1288,9 +1291,9 @@ subroutine geochk ()
                       sum = r_ions(kk)
                       r_ions(kk) = r_ions(ii)
                       r_ions(ii) = sum
-                      m = near_ions(kk)
-                      near_ions(kk) = near_ions(ii)
-                      near_ions(ii) = m
+                      near_ions_store = near_ions(:,kk)
+                      near_ions(:,kk) = near_ions(:,ii)
+                      near_ions(:,ii) = near_ions_store
                     end if
                   end do 
                 end do
@@ -1302,52 +1305,39 @@ subroutine geochk ()
                 end do
               end if
               if (maxtxt > 1) then
-                if (jj > 0) then
-                  if (residues) then
-                    txtatm_1 = txtatm(i)
-                    txtatm_2 = txtatm(near_ions(1))
-                  else
-                    txtatm_1 = txtatm1(i)
-                    txtatm_2 = txtatm1(near_ions(1))
-                  end if
-                  num = "5"
-                  if (elemnt(nat(near_ions(1)))(1:1) /= " ") num = "5"
-                    m = len_trim(line) + 1
-                    if (txtatm_2(maxtxt:maxtxt) == ")") then
-                      ii = maxtxt + 1
-                      txtatm_2 = "("//trim(txtatm_2)
-                      kk = maxtxt - 1
-                    else
-                      ii = maxtxt
-                      kk = maxtxt
-                    end if
-                    write(tmp,"(i5, 2x, a2, i5,3x, a, SP,i5,S,a,f3.1,a,i"//num//",a)") &
-                    & k, elemnt(nat(i)), i, padding(:l-5)//"("//txtatm_1(1:kk)//")"//padding(:l-15), ions(i), &
-                    & "  (",r_ions(1),line(:m)//elemnt(nat(near_ions(1))),near_ions(1),  &
-                    &", Label: "//txtatm_2(:ii)//")"
-                    write(iw,'(a)')trim(tmp)
-  !
-                    if (log) write(ilog,'(a)')trim(tmp)
-                  do ii = 2, jj
+                if (line == "Salt bridge!") then
+                  if (j == 1) then
+!
+! There is a counterion, therefore this is a salt-bridge
+!
                     if (residues) then
-                      txtatm_2 = txtatm(near_ions(ii))
+                      txtatm_1 = txtatm(near_ions(1,1))  
+                      txtatm_2 = txtatm(near_ions(2,1))
                     else
-                      txtatm_2 = txtatm1(near_ions(ii))
+                      txtatm_1 = txtatm1(near_ions(1,1))
+                      txtatm_2 = txtatm1(near_ions(2,1))
                     end if
                     num = "5"
-                    if (maxtxt > 25) then
-                      num2 = "49"
-                    else
-                      num2 = "50"
-                    end if
-                    if (elemnt(nat(near_ions(ii)))(1:1) /= " ") num = "5"
-                      write(tmp,"("//num2//"x, a, f3.1,a,i"//num//",a)")  "   (",r_ions(ii), &
-                        line(:m)//elemnt(nat(near_ions(ii))), near_ions(ii), &
-                        &", Label: "//txtatm_2(:maxtxt)//")"
-                      write(iw,'(a)')trim(tmp)
-                      if (log) write(ilog,"(a)") trim(tmp)
-                  end do
+                    if (elemnt(nat(near_ions(2,1)))(1:1) /= " ") num = "5"
+                      if (txtatm_2(maxtxt:maxtxt) == ")") then
+                        ii = maxtxt + 1
+                        txtatm_2 = "("//trim(txtatm_2)
+                        kk = maxtxt - 1
+                      else
+                        ii = maxtxt
+                        kk = maxtxt
+                      end if
+                      k = k + 1
+                      write(tmp,"(i5, 2x, 3x, a, SP,i5,S, f13.2, 9x, a, a, a)") &
+                      & k, padding(:l-5)//"("//txtatm_1(1:kk)//")"//padding(:l-15), ions(i), &
+                      & r_ions(1), "("//txtatm_2(:ii)//")", "   -1"
+                      write(iw,'(a)') trim(tmp)
+                      if (log) write(ilog,"(a)") trim(line)
+                  end if
                 else
+!
+! No nearby counterions, therefore this is not a salt-bridge
+!
                    if (residues) then
                     txtatm_1 = txtatm(i)
                   else
@@ -1363,26 +1353,84 @@ subroutine geochk ()
                     ii = l - 5
                     j2 = l - 5
                   end if
-                  write(line,"(i5, 2x, a2, i5,3x, a,SP,i5,S,a)") &
-                    k, elemnt(nat(i)), i, padding(:ii)//"("//txtatm_1(1:kk)//")"//padding(:j2), ions(i)
-                  write(iw,'(a)') trim(line)
-                  if (log) write(ilog,"(a)") trim(line)
+                  kkk = kkk + 1
+                  write(line,"(i5, 2x, 3x, a,SP,i5,S,a)") &
+                    kkk, padding(:ii)//"("//txtatm_1(1:kk)//")"//padding(:j2), ions(i)
+                  k = k + 1
+                  if (m == 0) then
+!
+! Find the first free unit, and use that number for the scratch file
+!
+                    do m = 10, 100
+                      inquire(unit=m, opened = opend) 
+                      if (.not. opend) then
+                      open(unit=m, status='SCRATCH') 
+                      exit
+                      end if
+                    end do
+                  end if
+                  if (j /= 1) then
+                    if (header) then
+                      write(iw,'(/17x, a, /)') "All other ions"
+                      header = .false.
+                    end if
+                    write(iw,'(a)')trim(line)
+                    else
+!
+! Store text of ions with a charge of +1
+!
+                  write(m,'(a)')trim(line)
+                  end if
+                  if (log) write(ilog,'(a)')trim(line)
                 end if
               else
+                k = k + 1
                 write(line,"(i5,3x,i5,5x,a2,SP,i9,S)")k, i, elemnt(nat(i)),ions(i)
+                if (header) then
+                  write(iw,'(/17x, a, /)') "All other ions"
+                  header = .false.
+                end if
                 write(iw,'(a)') trim(line)
                 if (log) write(ilog,"(a)")trim(line)
               end if            
             end if
           end do
+          if (j == 2 .and. m /= 0) then
+!
+!  Write out ions that have a charge of -1
+!
+            rewind (m)
+            if (header) then
+              write(iw,'(/17x, a, /)') "All other ions"
+              header = .false.
+            end if
+            do k = 1, 10000
+              read(m,'(a)', iostat = ii)line
+              if (ii /= 0) exit
+              if (k == 1) write(iw,*)
+              write(iw, '(a)')trim(line)
+            end do
+            close (m)
+          end if
         end do
       end if
       maxtxt = maxtxt_store
     end if
-    if ((first_prt .and. .not. charges) .and. noccupied /= 0 .and. (index(keywrd, " LEWIS") /= 0 .or. &
-      .not. lreseq .and. (ichrge /= 0 .or. irefq /= 0))) then
+    if (first_prt .and. noccupied /= 0) then
       num = char(ichar("3") + max(int(log10(abs(ichrge) + 0.05)),0))
-      write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
+      if (index(keywrd," CHARGE=") /= 0) then
+        if (ichrge == irefq) then
+          write (iw, "(SP/10x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM:", ichrge, &
+         ", THIS IS THE SAME AS THE CHARGE DEFINED IN THE DATA-SET."
+        else
+          i = index(keywrd," CHARGE=") + 1
+          j = i -2 + index(keywrd(i:), " ")
+          write (iw, "(SP/2x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM:", ichrge, &
+         ", THIS IS NOT THE SAME AS THE CHARGE DEFINED IN THE DATA-SET: """//keywrd(i:j)//"""."
+        end if
+      else
+        write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
+      end if      
       if (log) write (ilog, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
       end if
       first_prt = .false.      
@@ -1455,7 +1503,13 @@ subroutine geochk ()
         end if
         call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
       end if    
-      if (lreseq) call mopend(line(:i)//"GEOMETRY RESEQUENCED")
+      if (lreseq) then
+        if (index(keywrd, " 0SCF") == 0) then
+          call mopend("JOB STOPPED BECAUSE GEOMETRY RESEQUENCED")
+        else
+          call mopend("GEOMETRY RESEQUENCED")
+        end if
+      end if
       if (charges .or. lreseq) return
       if (index(keywrd, " LEWIS") /= 0) then
         if (index(keywrd, " 0SCF") == 0) then
@@ -1578,6 +1632,165 @@ subroutine geochk ()
     if (Allocated (atom_charge))  deallocate (atom_charge)
     if (Allocated (ioptl))        deallocate (ioptl)
     return
-end subroutine geochk
-
-
+  end subroutine geochk
+  subroutine identify_nearby_counterions(i_in, j_in, n_jj, near_ions, r_ions, line)
+!
+! Identify charged atoms 
+! If the charge is +1 or -1, then test for salt bridge
+!
+  use MOZYME_C, only : ions
+  use common_arrays_C, only : txtatm, nbonds, ibonds, nat
+  implicit none
+  integer, intent(in) :: i_in, j_in
+  integer, intent (inout) :: n_jj, near_ions(2, 100)
+  double precision, intent (inout) :: r_ions(100)
+  character, intent (out) :: line*100
+!
+  double precision :: sum, sum_min
+  integer :: i, j, k, l, m, atom_i, atom_j, i_set(3), ni, j_set(3), nj
+  character :: atm*3
+  logical :: l_salt_i, l_salt_j
+  double precision, external :: distance
+  if (ions(i_in) == 1) then
+    atom_i = i_in
+    atom_j = j_in 
+  else
+    atom_j = i_in
+    atom_i = j_in
+  end if
+  ni = 1
+  i_set(1) = atom_i
+  nj = 1
+  j_set(1) = atom_j
+  if (ions(atom_i)*ions(atom_j) == -1) then
+!
+!  This might be a salt-bridge.  Search for the shortest contact distance
+!
+! Look for cations
+!
+    if (txtatm(atom_i)(18:20) == "HIS") then
+!
+! Search for ND1 and NE2 in the imidazolium ring
+!
+      if (txtatm(atom_i)(14:16) == "CE1" .or. txtatm(atom_i)(14:16) == "ND1" .or. txtatm(atom_i)(14:16) == "NE2") then
+        if (txtatm(atom_i)(14:16) == "CE1") then
+!
+!  Use the nitrogen atoms on each side of the current atom
+!
+          ni = 0
+          do i = 1, nbonds(atom_i)
+            j = ibonds(i,atom_i)
+            if (nat(j) == 7) then
+              ni = ni + 1
+              i_set(ni) = j
+            end if
+          end do     
+        else                                                  ! The following block has not been tested.
+          if (txtatm(i_in)(14:16) == "ND1") then
+            atm = "NE2"
+          else
+            atm = "ND1"
+          end if          
+!
+!  Use the current nitrogen atom and the nitrogen atom on the other side of "CE1"
+!
+          do i = 1, nbonds(atom_i)
+            j = ibonds(i,atom_i)
+            if (txtatm(j)(14:16) == "CE1") then
+              do k = 1, nbonds(j)
+                l = ibonds(k,j)
+                if (txtatm(l)(14:16) == atm) then    
+                  ni = ni + 1
+                  i_set(ni) = l
+                end if          
+              end do
+            end if
+          end do     
+        end if
+      end if
+    else if (txtatm(atom_i)(18:20) == "ARG") then 
+      if (txtatm(atom_i)(14:15) == "CZ" .or. txtatm(atom_i)(14:16) == "NH1" .or. txtatm(atom_i)(14:16) == "NH2") then
+        if (txtatm(atom_i)(14:15) == "CZ") then
+!
+!  Use the terminal nitrogen atoms on each side of the current atom
+!
+          ni = 0
+          do i = 1, nbonds(atom_i)
+            j = ibonds(i,atom_i)
+            ni = ni + 1
+            i_set(ni) = j
+          end do     
+        end if
+      end if
+    end if
+!
+! Look for anionic oxygen atoms
+!
+   if (txtatm(atom_i)(24:26) == "107" .and. txtatm(atom_j)(24:26) == "245") then
+    continue
+   end if
+    if (txtatm(atom_j)(14:14) == "O") then
+      do i = 1, nbonds(atom_j)
+        j = ibonds(i, atom_j)
+        if (txtatm(j)(14:14) == "C" .and. nbonds(j) == 3) then
+!
+! Search for both oxygen atoms of a -COO 
+!
+          nj = 0
+          do l = 1, nbonds(j)
+            m = ibonds(l,j)
+            if (txtatm(m)(14:14) == "O") then    
+              nj = nj + 1
+              j_set(nj) = m
+            end if          
+          end do
+        end if
+      end do
+    end if  
+  end if
+!
+! Now find the shortest distance between the two ions
+!
+  sum_min = 1.d10
+  k = 0
+  l = 0
+  do i = 1, ni
+    atom_i = i_set(i)
+    do j = 1, nj
+      atom_j = j_set(j)
+      sum = distance(atom_i, atom_j)
+      if (sum < sum_min) then
+        sum_min = sum
+        k = atom_i
+        l = atom_j
+      end if
+    end do
+  end do
+  atom_i = k
+  atom_j = l
+  if (sum_min < 99.d0) then
+    n_jj = n_jj + 1
+    if (n_jj > 100) return
+    if(ions(i_in) == 1) then
+      near_ions(1,n_jj) = atom_i
+      near_ions(2,n_jj) = atom_j
+    else
+      near_ions(1,n_jj) = atom_j
+      near_ions(2,n_jj) = atom_i
+    end if      
+    r_ions(n_jj) = sum_min
+    l_salt_i = .false.
+    l_salt_j = .false.        
+    if (txtatm(atom_i)(18:20) == "HIS") then
+      if (txtatm(atom_i)(14:16) == "ND1" .or. txtatm(atom_i)(14:16) == "NE2") l_salt_i = .true.
+    else if (txtatm(atom_i)(18:20) == "ARG") then
+       if (txtatm(atom_i)(14:16) == "NH1" .or. txtatm(atom_i)(14:16) == "NH2" &
+         .or. txtatm(atom_i)(14:15) == "NE") l_salt_i = .true.
+    else if (txtatm(atom_i)(14:14) == "N") then
+       if (nbonds(atom_i) == 4) l_salt_i = .true.
+    end if
+    if (txtatm(atom_j)(14:14) == "O") l_salt_j = .true.
+    if (l_salt_i .and. l_salt_j .and. sum_min < 4.d0) line = "Salt bridge!"
+  end if 
+  return
+  end subroutine identify_nearby_counterions

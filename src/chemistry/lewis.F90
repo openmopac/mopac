@@ -625,7 +625,8 @@ subroutine remove_bond(i)
           if (r > 3.d0*(radius(j) + radius(l)) .and. .not. let .and. index(keywrd, " GEO-OK") == 0 .and. &
               index(keywrd, " 0SCF") == 0) then
             if (.not. is_metal(nat(j)) .and. .not. is_metal(nat(l))) then
-              write(iw,'(/,a,i5,a,i5,a,f5.1,a)')" The bond defined by CVB between atoms", j, &
+              num = char(ichar("5") + int(log10(r)))
+              write(iw,'(/,a,i5,a,i5,a,f'//num//'.2,a)')" The bond defined by CVB between atoms", j, &
               " and", l, " would be", r, " Angstroms long.  This is unrealistic."
               write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
               write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)

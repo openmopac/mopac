@@ -39,7 +39,7 @@
       double precision, external :: reada
       logical :: intern = .true., exists, bug, any_bug, swap, first, let, l_0SCF_HTML, opend
       logical, allocatable :: same(:), ok(:)
-      character :: line_1*1000, line_2*1000, num, geo_dat*7
+      character :: line_1*1000, line_2*1000, num*2, geo_dat*7
 !
 !   For Geo-Ref to work, some very specific conditions must be satisfied.  
 !   So before attempting a GEO_REF calculation, check that the data are okay
@@ -144,6 +144,7 @@
            call mopend("A PDB FILE WITH THE SAME NAME AS THE GEO_DAT FILE ALREADY EXISTS")
            write(iw,'(10x,a)')"GEO_DAT FILE: """//trim(line)//""""
            write(iw,'(/10x,a)')"To continue, over-writing this file, add keyword ""LET"""
+           return
         end if
         if (index(geo_ref_name, "/") + index(geo_ref_name, backslash) == 0) then
           line = trim(geo_ref_name)
@@ -231,6 +232,7 @@
           call l_control("GEO_REF", len_trim("GEO_REF"), -1)  
           line = trim(keywrd)
           if (index(line, " +") /= 0) i = i - 1
+          if (index(line, "++") /= 0) i = i - 1
         end if
         if (i == 3) exit
       end do
@@ -264,6 +266,10 @@
       ii = numat
       j = maxtxt   
       call getgeo (99, labels, geoa, c, lopt, na, nb, nc, intern)  
+      if (natoms == 0) then
+        call mopend("NO ATOMS DETECTED IN GEO_REF FILE")
+        return
+      end if
       if (index(keywrd, " OPT ") /= 0) lopt = 1
       deallocate(c)
       maxtxt = j
@@ -916,8 +922,15 @@
       else
         line = "GEO_DAT"
       end if
-      num = char(ichar("5") + max(0, int(log10(sum1*numat + 1.d-20))))
-      write(iw,'(/3x,a,f'//num//'.3,a,f8.4,a,f8.4,a)') &
+      i = ichar("5") + max(0, int(log10(sum1*numat + 1.d-20)))
+      if (i > 57) then
+        num(1:1) = "1"
+        num(2:2) = char(i - 10)
+      else
+        num(1:1) = char(i)
+        num(2:2) = " "
+      end if
+      write(iw,'(/3x,a,f'//trim(num)//'.3,a,f8.4,a,f8.4,a)') &
         "Difference between "//trim(line)//" and GEO_REF: ", sum1*numat, &
         " = total,", sum1, " = Average,", sum2," = RMS, in Angstroms"    
       if (index(keywrd," 0SCF") /= 0 .and. sum1 < 1.d-6) then
@@ -926,7 +939,7 @@
       end if
       close(99)
       if (index(keywrd," NOCOM") /= 0) ncomments = 0
-      if (l_0SCF_HTML) then
+      if (index(keywrd, " COMPARE") /= 0) then
 !
 ! Write out the reference geometry file needed for comparing the two geometries using JSmol.
 !
@@ -984,7 +997,7 @@
       do i = 1, nvar
         xparam(i) = geo(loc(2,i), loc(1,i))
       end do
-      if (index(keywrd," 0SCF") /= 0) then
+      if (index(keywrd, " COMPARE") /= 0) then
         call wrt_diffs()
         if (abs(arc_hof_1) + abs(arc_hof_2) > 1.d-4) write(iw,*)
         if (trim(job_fn) == trim(geo_dat_name)) then
@@ -1012,7 +1025,7 @@
         geo(:,:natoms) = 0.5d0*(geoa(:,:natoms) + geo(:,:natoms))
         call geout(99)
       else 
-        if (l_0SCF_HTML) then
+        if (index(keywrd, " COMPARE") /= 0) then
           do i = len_trim(output_fn), 1, -1
             if (output_fn(i:i) == "/" .or. output_fn(i:i) == backslash) exit
           end do
@@ -1076,7 +1089,8 @@
             else
               line_1 = " "
             end if
-            if (geo_dat_name(:len_trim(geo_dat_name) -3) == geo_ref_name(:len_trim(geo_ref_name) -3)) then
+            if (index(keywrd, " COMPARE") /= 0 .and. &
+              geo_dat_name(:len_trim(geo_dat_name) -3) == geo_ref_name(:len_trim(geo_ref_name) -3)) then
               line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) - 4)//"_a.pdb"
             else
               line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) - 4)//".pdb"
