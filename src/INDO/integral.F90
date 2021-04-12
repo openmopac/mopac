@@ -23,6 +23,7 @@
       data zero /0.d0/
       data mte  /8/
 
+      k = 0
       na = numat
 
 !     **** this evaluates the electron repulsion integrals and also ****
