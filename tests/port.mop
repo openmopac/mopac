@@ -5213,7 +5213,7 @@ oldgeo reseq
 *
 *  
 *
-   BONDS PI  gradients OPT-B RESIDUES & 1SCF MOZYME   PM3  POPS  newgeo
+   BONDS PI  gradients OPT-B RESIDUES & 1SCF MOZYME   PM3  POPS
 
 
   N     0.00000000 +0    0.0000000 +0    0.0000000 +0                         0.0000

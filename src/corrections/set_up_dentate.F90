@@ -1,4 +1,4 @@
-  Subroutine set_up_dentate() 
+  subroutine set_up_dentate() 
 !
 !   Work out which atoms are connected to which other atoms.
 !   Atoms are assumed to be connected if they are within a certain distance of each other.
@@ -8,7 +8,7 @@
     use molkst_C, only : numat, l11, l21, l31, id, pdb_label
     use mozyme_C, only : nijbo, tyres
     use common_arrays_C, only : nat, coord, tvec, nbonds, ibonds, txtatm
-    use mod_atomradii, only: atom_radius_covalent, radius
+    use atomradii_C, only: atom_radius_covalent, radius
     implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s

@@ -148,21 +148,20 @@
 !
 !     Use geometry in file defined by GEO_DAT
 !
-        i = index(keywrd,"GEO_DAT")
-        j = index(keywrd(i + 10:),' ') + i + 8
-        if (index(keywrd(i:j), '"') + index(line(i:j), "'") == 0) then
+        j = index(keywrd,"GEO_DAT")
+        i = index(keywrd(j:j + 10), '"') + j 
+        if (i == j) then
           write(line,'(a)')" File name after GEO_DAT must be in quotation marks."
           call mopend(trim(line))
           return
         end if
-        j = index(keywrd(i + 10:),'"')  + index(keywrd(i + 10:), "'")
-        if (j == 0) then
+        j = index(keywrd(i + 2:),'" ') + i 
+        if (j == i) then
           write(line,'(a)')" File name after GEO_DAT must end with a quotation mark."
           call mopend(trim(line))
           return
         end if
-        j = index(keywrd(i + 10:), '"') + i + 8
-        line = keywrd(i + 9:j)
+        line = keywrd(i:j)
         line_1 = trim(line)
         call upcase(line_1, len_trim(line_1))
         line_2 = job_fn
@@ -816,7 +815,7 @@
         i = i + 10
         if (keywrd(i:i) == "=") i = i + 1
         k = 1000
-        do j = 1, 100
+        do j = 1, 500
           start_res(j) = nint(reada(keywrd, i)) - 1
             k = i 
           do
@@ -1017,7 +1016,7 @@
           l_use = .false.
           lopt(:,:natoms) = 0
           i = i + 5
-          k = index(line(i:j + i), "=")
+          k = index(line(i:j + i - 5), "=")
           if (k /= 0) then
             i_loop = i
             line_2 = trim(line)

@@ -1,4 +1,4 @@
-subroutine geochk () 
+subroutine geochk ()
 !***********************************************************************
 !                                                                      *
 !  GEOCHK DOES SEVERAL VERY DIFFERENT THINGS:
@@ -23,13 +23,13 @@ subroutine geochk ()
          txtatm1, chains, all_comments, coorda, loc, lopt, l_atom, break_coords
     use MOZYME_C, only : ions, icharges, angles, allres, iz, ib, tyr, allr, &
     iopt, nres, at_res, res_start, Lewis_tot, Lewis_elem, noccupied, nvirtual, &
-    odd_h, tyres, start_res
+    odd_h, tyres, start_res, lstart_res
 !    
     use molkst_C, only: natoms, numat, nelecs, keywrd, moperr, maxtxt, &
       maxatoms, line, nalpha, nbeta, uhf, nclose, nopen, norbs, numcal, id, &
       ncomments, numat_old, nvar, prt_coords, prt_topo, allkey, txtmax, pdb_label
     use chanel_C, only: iw, iarc, archive_fn, log, ilog
-    use mod_atomradii, only: atom_radius_covalent
+    use atomradii_C, only: atom_radius_covalent
     use parameters_C, only : ams, natorb, tore, main_group
     use elemts_C, only : elemnt
     implicit none
@@ -46,7 +46,7 @@ subroutine geochk ()
     logical, dimension (:), allocatable :: ioptl
     integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, kkk, near_ions_store(2), &
    & j, jbad, k, l, large, n1, new, alloc_stat, uni_res, mres, near_ions(2, 100), atomic_charges(8), &
-     maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10, nnumat
+     maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10, nnumat, delta_res, max_frag
     integer, dimension(:), allocatable ::  mb    
     integer, save :: numbon(3), num_ions(-6:6)
     integer, dimension(:), allocatable :: nnbonds
@@ -54,7 +54,7 @@ subroutine geochk ()
     double precision :: sum, r_ions(100)
     character :: new_name(max_sites)*3, old_name(max_sites)*3, new_chain(max_sites)*1, &
       new_alt(max_sites)*1
-    double precision, external :: reada
+double precision, external :: reada
     data numbon / 3 * 0 /
     data atomic_charges /1, 4, 3, 2, -1, -2, -3, -4/
     data ion_names / &
@@ -405,16 +405,10 @@ subroutine geochk ()
 !
 !    ASSIGN LOGICALS USING KEYWRD
 !
-    lres = (Index (keywrd, " RESI") + Index (keywrd, " NEWGEO") + Index (keywrd, " RESEQ") /= 0)
+    lres = (Index (keywrd, " RESI") + Index (keywrd, " RESEQ") /= 0)
     if (.not. lres) lres = (Index (keywrd, " PDBOUT") /= 0 .and. maxtxt /= txtmax)
     if (.not. lres) lres = (Index (keywrd, " ADD-H") /= 0 .and. Index (keywrd, " NORESEQ") == 0)
     lreseq = (Index (keywrd, " NORESEQ") == 0 .and. Index (keywrd, " RESEQ") /= 0)
-    if (lreseq .and. maxtxt /= txtmax .and. index(keywrd, "RESID") == 0) then
-      write(line,'(a)')"RESEQ only works when the atom labels are in PDB format"
-      call mopend(trim(line))
-      write(iw,'(a,/)')"(Before using RESEQ, run a job using keyword RESIDUES to add PDB atom labels.)"      
-      return
-    end if
     let = (Index (keywrd, " 0SCF")+Index (keywrd, " LET")+ &
    & Index (keywrd, " RESEQ")+Index (keywrd, " GEO-OK") /= 0)
     times = (Index (keywrd, " TIMES") /= 0)
@@ -471,7 +465,7 @@ subroutine geochk ()
     do i = 1, numat
       ioptl(i) = .false.
     end do
-    call findn1 (n1, ioptl, io)
+    call findn1 (n1, ioptl, io, delta_res)
     if (lreseq) then
 !
 !   RESEQUENCE THE ATOMS.  WHEN RESEQ IS CALLED, THE SEQUENCE OF
@@ -502,7 +496,7 @@ subroutine geochk ()
       do
         if (n1 /= 0) call reseq (ioptl, iz, n1, new, io)
         if (moperr) go to 1100
-        call findn1 (n1, ioptl, io)
+        call findn1 (n1, ioptl, io, delta_res)
         if (n1 == 0) exit
       end do
       if (new /= numat) then
@@ -711,7 +705,7 @@ subroutine geochk ()
 !   SO FIND N1 AGAIN.
 !
         ioptl(:numat) = .false.
-        call findn1 (n1, ioptl, io)
+        call findn1 (n1, ioptl, io, delta_res)
       end if
       l_protein = (n1 /= 0)
       ib(:numat) = -100000
@@ -725,24 +719,44 @@ subroutine geochk ()
 !
       call lyse !
       allr = " "
-      do
-        nfrag = nfrag + 1
-        if (start_res(nfrag) /= -200) ires = start_res(nfrag)
-
+      do max_frag = 1, 10000
+        if (start_res(max_frag) == -200) exit
+      end do
+      max_frag = max_frag - 1  
+      lstart_res = .false.
+      nfrag = 0
+      do      
+        if (max_frag > 0) then
+          do nfrag = 1, max_frag
+            if (.not. lstart_res(start_res(nfrag) + 1)) exit
+          end do
+        else
+          nfrag = nfrag + 1
+        end if
+        if (max_frag > 0) then
+          if (nfrag > max_frag) exit
+          ires = start_res(nfrag) - delta_res
+        end if
+!
 ! General bug-trap: if the number of fragments is unreasonably large,
 ! assume the system is unrecognizable and exit
-        if (nfrag > 99) then
+!
+        if (nfrag > 999) then
           call mopend("STRUCTURE UNRECOGNIZABLE")
           inquire(unit=iarc, opened=opend) 
           if (opend) close(iarc, status = "DELETE")          
           go to 1100
-        end if
+        endif
 !
         call names (ioptl, ib, n1, ires, nfrag, io, uni_res, mres)
         if (moperr) return
 !    
         nn1 = n1
-        call findn1 (n1, ioptl, io)
+        call findn1 (n1, ioptl, io, delta_res)
+!
+! n1 is the start of the next fragment
+! delta_res is the distance back along the chain to the start of the next fragment.
+! 
         if (.not. l_protein) nfrag = 0
         if (n1 == 0) exit  
         if (n1 == nn1) ioptl(n1) = .true.   
@@ -775,8 +789,8 @@ subroutine geochk ()
 !
 !   LABEL THE ATOMS IN ANY NON-PROTEIN MOLECULES IN THE SYSTEM
 !
-      nfrag = nfrag + 1
-      if (start_res(nfrag) == -200) then
+      nfrag = nfrag + 1  
+      if (start_res(max(1,nfrag)) == -200) then
         if (.not. l_protein) ires = 0       
       else
         ires = start_res(nfrag)         
@@ -947,7 +961,16 @@ subroutine geochk ()
     numat = nnumat
     natoms = max(natoms, numat)
     if (index(keywrd, " ADD-H") /= 0) return
-    if (index(keywrd, "CHARGES") == 0 .and. index(keywrd, "CONTROL_no_MOZYME") /= 0) return
+    if (index(keywrd, "CHARGES") == 0 .and. index(keywrd, "CONTROL_no_MOZYME") /= 0 .or. index(keywrd, " RESEQ") /= 0) then
+      if ( index(keywrd," PDBOUT") /= 0) call pdbout(iarc)
+      archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
+      inquire(unit=iarc, opened=opend) 
+      if (opend) close(iarc, status = 'keep', iostat=i)  
+      open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
+      rewind iarc 
+      call geout (iarc)
+      if (index(keywrd, " RESEQ") == 0) return
+    end if
 !
 !  MODIFY IONS SO THAT IT REFERS TO ALL ATOMS (REAL AND DUMMY)
 !
@@ -1228,9 +1251,9 @@ subroutine geochk ()
       if (maxtxt < 0) maxtxt = 14
       if (first_prt) then
         if (i <= numat) then
-          if (maxtxt > 1) then
-            write(line,"(a)")"   Ion                PDB Label        Charge     "// &
-            &"Distance        PDB label for Salt Bridge   Charge"
+          if (maxtxt > 1) then        
+             write(line,"(a)")"   Ion                PDB Label        Charge     "// &
+               &"Distance        PDB label for Salt Bridge   Charge"
              write(iw,'(/,a)') trim(line)
              if (log) write(ilog,"(/,a)") trim(line)
              l = max(1,(17 - maxtxt/2))
@@ -1748,6 +1771,7 @@ subroutine geochk ()
       end do
     end if  
   end if
+  
 !
 ! Now find the shortest distance between the two ions
 !
@@ -1794,3 +1818,5 @@ subroutine geochk ()
   end if 
   return
   end subroutine identify_nearby_counterions
+
+

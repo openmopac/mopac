@@ -858,7 +858,7 @@
 !     DATA CUTLO, CUTHI / 8.232D-11,  1.304D19 /
 !     DATA CUTLO, CUTHI / 4.441E-16,  1.304E19 /
       data cutlo, cuthi/ 4.441E-16, 1.304E19/  
-      xmax = 0.d0
+      xmax = 0.0
 !
       if (n <= 0) then 
         snrm2 = zero 

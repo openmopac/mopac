@@ -167,7 +167,7 @@ subroutine pdbout (mode1)
   subroutine write_html
     use chanel_C, only: input_fn
     use molkst_C, only : line, koment, title, numat, keywrd, numcal, geo_ref_name, geo_dat_name, &
-      keywrd_txt, maxtxt, backslash
+      maxtxt, backslash
     use common_arrays_C, only : txtatm, p
     use mozyme_C, only : tyres, tyr
     implicit none

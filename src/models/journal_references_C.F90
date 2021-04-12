@@ -1,6 +1,16 @@
       module journal_references_C 
-      character, dimension(107,9) :: allref*100 
-      
+      character, dimension(107,9) :: allref*100
+! 2nd index denotes the model:
+! 1 = MNDO
+! 2 = PM6
+! 3 = AM1
+! 4 = PM3
+! 5 = MNDO/d
+! 6 = RM1
+! 7 = PM7
+! 8 = RM1 sparkles
+! 9 = PM8
+
  data  allref( 1,6)/ '  H: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
  data  allref( 6,6)/ '  C: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
  data  allref( 7,6)/ '  N: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/

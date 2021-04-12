@@ -704,7 +704,7 @@ end subroutine wrtchk
 
 
 subroutine wrtcon (allkey)
-  use molkst_C, only: keywrd, numat, pressure, id, mozyme, mers, natoms, &
+  use molkst_C, only: keywrd, numat, pressure, id, mozyme, mers, natoms, maxtxt, txtmax, &
     line, old_chrge
   use cosmo_C, only : fepsi, nspa
   use chanel_C, only: iw, job_fn
@@ -842,12 +842,25 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " SLOPE"))  write (iw, '(" *  SLOPE      - SLOPE   - USED TO SCALE MNDO ESP CHARGES")')
   if (myword(allkey, " PDBOUT")) write (iw, '(" *  PDBOUT     - PRINT GEOMETY IN PDB FORMAT")')
   if (myword(allkey, " NOTER"))  write (iw, '(" *  NOTER      - DO NOT PUT ""TER""S IN PDB FILE")')
-  if (myword(allkey, " XENO"))   write (iw, '(" *  XENO       - FRAGMENTS ARE ATTACHED TO RESIDUES")')
   if (myword(allkey, " CHARGES"))write (iw, '(" *  CHARGES    - IDENTIFY AND PRINT CHARGED ATOMS")')
   if ( .not. l_add_H) l_add_H = (index(keywrd, " ADD-H") /= 0)
-  if (myword(allkey, " RESEQ"))  write (iw, '(" *  RESEQ      - RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT")')
   if (myword(allkey, " NORES"))  write (iw, '(" *  NORESEQ    - DO NOT RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT")')
   if (myword(allkey, " MACRO"))  write (iw, '(" *  MACRO      - MODIFY METHODS TO SMOOTH NDDO - POINT-CHARGE TRANSITION")')
+  if (myword(allkey, " XENO"))   then
+                                 write (iw, '(" *  XENO       - RENAME PROTEIN FRAGMENTS AND SMALL MOLECULES")')
+    if ( .not. (Index (keywrd, " RESI") /= 0 )) then
+      call mopend("XENO requires keyword RESIDUES to also be used")
+      return
+    end if   
+  end if
+  if (myword(allkey, " RESEQ"))  then
+                                 write (iw, '(" *  RESEQ      - RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT")')
+    if (index(keywrd, "RESID") == 0 .and. maxtxt /= txtmax) then
+      call mopend("RESEQ only works when the atom labels are in PDB format")
+      write(iw,'(a,/)')"(Before using RESEQ, run a job using keyword RESIDUES to add PDB atom labels.)"      
+      return
+    end if
+  end if
   i = index(keywrd," START_RES") + 1
   if (i > 1) then
     j = index(keywrd(i:),")") 
@@ -860,7 +873,7 @@ subroutine wrtcon (allkey)
     j = j + i
     allkey(i:j) = " "
     write (iw, '(" *  START_RES  - STARTING RESIDUE NUMBERS DEFINED")')
-    write (iw, '(" *  Keyword:   ",a)')keywrd(i:j)
+    write (iw, '(" *  Keyword:     ",a)')keywrd(i:j)
     if(myword(allkey, "START_RES")) then
       call mopend("Only one keyword START_RES allowed")
       return
@@ -907,7 +920,7 @@ subroutine wrtcon (allkey)
     end if
     if (.not. myword(allkey, " CHAIN")) return
                                  write (iw, '(" *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED")')
-                                 write (iw, '(" *  Keyword:   ",a)')keywrd(i:j)
+                                 write (iw, '(" *  Keyword:     ",a)')keywrd(i:j)
   end if     
   if (myword(allkey, " GEOCHK")) write (iw, '(" *  GEOCHK     - PRINT WORKING IN SUBROUTINE GEOCHK")') 
   if (myword(allkey, " LEWIS"))  write (iw, '(" *  LEWIS      - PRINT OUT LEWIS STRUCTURE, THEN STOP")')
@@ -1034,7 +1047,7 @@ subroutine wrtcon (allkey)
         j = index(line(i + 1:), ") ")
         if (j /= 0) then
           i = i + 5
-          k = index(line(i:j + i), "=")
+          k = index(line(i:j + i - 5), "=")
           if (k /= 0) then
             write(iw,'(" *  OPT        - OPTIMIZE COORDINATES OF ALL ATOMS WITHIN ")')
             j = i + j
@@ -1703,7 +1716,6 @@ subroutine wrtwor (allkey)
   if (myword(allkey, " SADDLE"))     write (iw,'(" *  SADDLE     - TRANSITION STATE TO BE OPTIMIZED")')
   if (myword(allkey, " 0SCF"))       write (iw,'(" *  0SCF       - AFTER READING AND PRINTING DATA, STOP")')
   if (myword(allkey, " QPMEP "))     write (iw,'(" *  QPMEP      - CHARGES DERIVED FROM WANG-FORD TYPE AM1", " MEP")')
-  if (myword(allkey, " NEWGEO"))     write (iw,'(" *  NEWGEO     - USE BOTH INT AND CARTESIAN COORDINATES")')
   if (myword(allkey, " BIGSCF"))     write (iw,'(" *  BIGSCF     - DO INITIAL FULL SCF WHEN RESTARTING JOB")')
   if (myword(allkey, " WILLIA"))     write (iw,'(" *  WILLIAMS   - USE WILLIAMS SURFACE")')
   if (myword(allkey, " INT "))       write (iw,'(" *  INT        - INTERNAL COORDINATE SYSTEM TO BE USED")')

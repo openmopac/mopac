@@ -35,7 +35,7 @@
       data icalcn/ 0/  
       if (icalcn /= numcal) then 
         icalcn = numcal 
-        if (index(keywrd,'UHF') /= 0) then 
+        if (index(keywrd,' UHF') /= 0) then 
           rhfuhf = 1.d0 
         else 
           rhfuhf = 2.d0 

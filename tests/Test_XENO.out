@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.055M **
+ ** Site#:    0         For non-commercial use only           Version 21.101M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.101M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,12 +12,12 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Feb 26 19:06:14 2021  *
- *  XENO       - FRAGMENTS ARE ATTACHED TO RESIDUES
+ *  CALCULATION DONE:                                Mon Apr 12 14:21:29 2021  *
+ *  XENO       - RENAME PROTEIN FRAGMENTS AND SMALL MOLECULES
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
- *  Keyword:   START_RES=(10B 20B 30B 31B 32B 33B) 
+ *  Keyword:     START_RES=(10B 20B 30B 31B 32B 33B) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
- *  Keyword:   CHAINS=(BBBBBB) 
+ *  Keyword:     CHAINS=(BBBBBB) 
  *  RESIDUES   - DETERMINE THE SEQUENCE OF RESIDUES
  *  0SCF       - AFTER READING AND PRINTING DATA, STOP
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -531,7 +531,8 @@
  GEOMETRY OF SYSTEM SUPPLIED
 *HEADER  data-set: G:\tm\Check on TERs
 *REMARK  MOPAC 2012, Version: 15.339W Date: Dec 05 2015 10:16
-*REMARK   3 HET = Defined using keyword XENO; C 6 H 6               res:   33
+*REMARK   3 PO4 = Phosphate res:   31
+*REMARK   3 HET = Not identified; C 6 H 6            =    12 atoms res:   33
  START_RES=(10B 20B 30B 31B 32B 33B)  CHAINS=(BBBBBB)          0scf HTML XENO=(B11=H2S;B33=BEN)
 
 
@@ -739,9 +740,9 @@
   O(HETATM  205  O2  PO4 B  31)   1.27000000 +1  14.95000000 +1  20.03300000 +1
   O(HETATM  206  O3  PO4 B  31)   1.21200000 +1  13.75600000 +1  17.55900000 +1
   O(HETATM  207  O4  PO4 B  31)  -1.22300000 +1  14.53800000 +1  18.56300000 +1
-  H(HETATM  209  H1  PO4 B  31)   0.41300000 +1  11.56200000 +1  20.46800000 +1
-  H(HETATM  210  H3  PO4 B  31)   2.07800000 +1  14.02400000 +1  16.95400000 +1
-  H(HETATM  211  H4  PO4 B  31)  -1.97500000 +1  15.31300000 +1  18.71400000 +1
+  H(HETATM  208  H1  PO4 B  31)   0.41300000 +1  11.56200000 +1  20.46800000 +1
+  H(HETATM  209  H3  PO4 B  31)   2.07800000 +1  14.02400000 +1  16.95400000 +1
+  H(HETATM  210  H4  PO4 B  31)  -1.97500000 +1  15.31300000 +1  18.71400000 +1
   O(HETATM  212  O   HOH B  32)   7.27100000 +1  17.15300000 +1  31.38800000 +1
   H(HETATM  213 1H   HOH B  32)   8.22800000 +1  17.15300000 +1  31.38800000 +1
   H(HETATM  214 2H   HOH B  32)   7.03300000 +1  17.66700000 +1  32.15900000 +1

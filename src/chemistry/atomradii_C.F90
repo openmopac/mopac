@@ -1,4 +1,4 @@
-module mod_atomradii
+module atomradii_C
     implicit none
     !
     ! Tables of atomic radii
@@ -282,4 +282,4 @@ module mod_atomradii
     !      Lr      Rf      Db      Sg       Tv
          & 999.d0, 999.d0, 999.d0, 999.d0, 999.d0 /
     save
-end module mod_atomradii
+end module atomradii_C

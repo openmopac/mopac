@@ -1,4 +1,4 @@
-subroutine findn1 (n1, ioptl, io)
+subroutine findn1 (n1, ioptl, io, delta_res)
 !**********************************************************************
 !
 !  Locate the nitrogen atom of a peptide linkage.
@@ -13,12 +13,15 @@ subroutine findn1 (n1, ioptl, io)
 ! 
 !  io is the oxygen of the "C=O" of the peptide linkage.
 !
+!  delta_res is the change in residue number caused by moving along
+!  the chain to the N end.  This is normally zero.
+!
 !**********************************************************************
 
     use molkst_C, only: numat, isok
     use common_arrays_C, only : nat, nbonds, ibonds
     implicit none
-    integer, intent (out) :: n1, io
+    integer, intent (out) :: n1, io, delta_res
     logical, dimension (numat), intent (in) :: ioptl
     logical :: peptide, is_ring, ok = .true.
 !
@@ -28,6 +31,7 @@ subroutine findn1 (n1, ioptl, io)
     save :: ok
 !
     n1 = 0
+    delta_res = 0
     last_n1 = 0
 !
 !   FIND A N-C-C=O SYSTEM
@@ -122,7 +126,7 @@ subroutine findn1 (n1, ioptl, io)
 !  AT THIS POINT, THE SEQUENCE O-C-C-N HAS BEEN IDENTIFIED.
 !  NOW TO MOVE ALONG BACKBONE TO THE START OF THE PROTEIN
 !
-   peptide = .false.
+    peptide = .false.
     do ires_loc = 1, 1000000
       do i = 1, nbonds(n1)
         j = ibonds(i, n1)
@@ -162,7 +166,10 @@ subroutine findn1 (n1, ioptl, io)
       end if
       exit
 1020  if (n1 == ibonds(k, j)) exit
-      if (.not. ioptl(ibonds(k, j))) n1 = ibonds(k, j)
+      if (.not. ioptl(ibonds(k, j))) then
+        n1 = ibonds(k, j)
+        delta_res = delta_res + 1
+      end if
       j = 0
       do ii = 1, nbonds(n1)
         if (nat(ibonds(ii, n1)) /= 1) then

@@ -9,10 +9,9 @@
     lopt, na, l_atom, loc, xparam, nfirst, nlast, txtatm1, coorda, tvec
   use parameters_C, only : ams
   use MOZYME_C, only : atomname, afn, n_add
-  use mod_atomradii, only: atom_radius_covalent
+  use atomradii_C, only: atom_radius_covalent, is_metal
   use funcon_C,  only : pi
   use elemts_C, only: elemnt
-  use mod_atomradii, only: is_metal
   implicit none
   integer :: i,  j,  k, l, ii, nH, icc, store_numat, nb_icc, nc_icc, nd_icc, nmetals,  i_add(20,14), b_add(20,14), &
     an, store_nmetals

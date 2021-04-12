@@ -1236,7 +1236,7 @@ subroutine write_unit_cell_HOF(iprt)
            one_letter = .false.
          else
            l = index(formula(i:), " ") + i
-           k = reada(formula, i)/z
+           k = nint(reada(formula, i))/z
            num = char(ichar("1") + int(log10(k + 0.05))) 
            write(line(len_trim(line) + 1:),'(i'//num//')') k
            i = l

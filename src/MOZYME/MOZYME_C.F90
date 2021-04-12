@@ -75,7 +75,7 @@ module MOZYME_C
     res_start(maxres),& ! number of the first atom in the residue. It is
                         ! only used inside MOPAC - it is never printed out
                         !
-    start_res(100), &   !
+    start_res(500), &   !
                         !
     bbone(3,-20:maxres)! Atom numbers of the backbone atoms in a polypeptide
 
@@ -90,7 +90,7 @@ module MOZYME_C
 
    integer, parameter :: size_mres = 23
    character :: &
-     tyres(size_mres)*3, tyr(size_mres), start_letter(100), allr(-999:maxres), ch*2
+     tyres(size_mres)*3, tyr(size_mres), start_letter(500), allr(-999:maxres), ch*2
 
    character (len=40), dimension (11) :: &
      txeno         ! Names of xeno groups
@@ -177,7 +177,7 @@ module MOZYME_C
   logical :: &
     rapid,       &      !  True if RAPID technique to be used
     odd_h,       &      !  Control print of banner for quentionable number of hydrogen atoms
-    lstart_res(101), &  !
+    lstart_res(501), &  !
     use_three_point_extrap
 !
 !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

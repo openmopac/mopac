@@ -223,7 +223,7 @@ subroutine remove_bond(i)
     use molkst_C, only: natoms, numat, line, mozyme, keywrd, numcal, maxtxt, pdb_label
     use chanel_C, only: iw, ilog, log, log_fn
     use elemts_C, only: elemnt
-    use mod_atomradii, only: radius
+    use atomradii_C, only: radius
     use common_arrays_C, only: nat, labels, nbonds, ibonds, txtatm
     implicit none
     integer, intent (out) :: ibad
@@ -403,7 +403,7 @@ subroutine remove_bond(i)
   use common_arrays_C, only: txtatm, nat, coord, &
       nbonds, ibonds
   use elemts_C, only: elemnt
-  use mod_atomradii, only: radius, is_metal
+  use atomradii_C, only: radius, is_metal
   use chanel_C, only: iw
   implicit none
   logical, intent (in) :: let

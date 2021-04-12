@@ -76,7 +76,7 @@
 !
 ! *******  CALCULATE KAPPA FACTOR FOR UHF OR ROHF  ******************
 !
-      if (index(keywrd,'UHF') /= 0) then 
+      if (index(keywrd,' UHF') /= 0) then 
 !****** UHF CASE
         zkappa = 0.D0 
         do n = 1, nalpha 
@@ -193,7 +193,7 @@
       write (iw, '(I4,7F10.5/)') (i,sq(i),aq(i),tq(i),v(i),fv(i),sp(i),pm(i)&
         ,i=1,numat) 
 !****** PERFORM SPIN POPULATION STATISTICAL ANALYSIS
-      if (index(keywrd,'UHF') == 0) then 
+      if (index(keywrd,' UHF') == 0) then 
         if (.not.ci .and. nopn==0 .and. nci .and. kci) then 
           write (iw, '(1X,''CLOSED SHELL'',2/)') 
           return  

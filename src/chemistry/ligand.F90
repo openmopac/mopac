@@ -1,4 +1,4 @@
-subroutine ligand (ires, start_res, nfrag)  
+subroutine ligand (ires, start_res, nfrag)
     use elemts_C, only: cap_elemnt
     use common_arrays_C, only : txtatm, txtatm1, nat, labels, nbonds, ibonds, &
       all_comments
@@ -18,7 +18,7 @@ subroutine ligand (ires, start_res, nfrag)
     logical :: attached, l_chain, first, l_write = .false.
     integer, external :: nheavy
     double precision, external :: distance, reada
-    character :: het*3, het_group*80, num, num1, el*2, het2*3
+    character :: het*3, het_group*120, num, num1, el*2, het2*3, line1*120
     save :: l_write
     allocate (l_used(natoms), inres(natoms), live(maxlive))   
     ele_order(1) = 6
@@ -56,9 +56,12 @@ subroutine ligand (ires, start_res, nfrag)
 !
         if (labels(i) == 15) then
           if (nbonds(i) == 4) then
+            k = 0
             do j = 1, 4
               if (labels(ibonds(j, i)) /= 8) go to 1000
+              if (nbonds(ibonds(j,i)) > 1) k = k + 1
             end do
+            if (k > 1) go to 1000
 !
 !                                 Phosphate
 !
@@ -389,7 +392,7 @@ subroutine ligand (ires, start_res, nfrag)
                         txtatm(i) = txtatm(k)(:12)//" "//cap_elemnt(nat(i))(1:1)//trim(line)
                       else
                         txtatm(i) = txtatm(k)(:12)//cap_elemnt(nat(i))//txtatm(k)(15:)
-                      end if
+                      endif
                     end if
                     cycle
                   end if
@@ -792,11 +795,10 @@ subroutine ligand (ires, start_res, nfrag)
                   do l = 1, 10
                     if (line(1:1) == "=") exit
                     line = trim(line(2:))
-                  end do  
-                  if (len_trim(het_group) > 50) then
-                    write(het_group,'(a)')"Defined using keyword XENO"//trim(het_group(62:))
-                  else
-                    write(het_group,'(a)')"Defined using keyword XENO"//trim(het_group(15:))
+                  end do 
+                  if (het_group(1:3) /= "Not") then
+                    line1 = "Defined using keyword XENO as "//trim(het_group)
+                    het_group = trim(line1)
                   end if
                   if (l_write) then
                     if (first) then
@@ -807,7 +809,7 @@ subroutine ligand (ires, start_res, nfrag)
                       change_no = change_no + 1
                       write(iw,'(i3,i9,3x,a1,8x,a3,13x,a3)')change_no, ires, num, het, line(2:4)
                       het = line(2:4)
-                    exit
+                      exit
                     end if
                   end if
               end do
@@ -817,11 +819,19 @@ subroutine ligand (ires, start_res, nfrag)
             if (ncomments < max_comments .and. index(keywrd, " RESID") /= 0) then
               ncomments = ncomments + 1
               if (index(het_group, "XENO") == 0 ) then
-                write(line,'(a,i4)') "*REMARK   3 "//het//" = "//het_group(:50)//"res: ", ires
+                write(line,'(a,i4)') "*REMARK   3 "//het//" = "//trim(het_group)//" res: ", ires
               else
-                write(line,'(a,i4)') "*REMARK   3 "//het//" = "//het_group(:47)//"   res: ", ires
+                write(line,'(a,i4)') "*REMARK   3 "//het//" = "//trim(het_group)//"   res: ", ires
               end if
-              write(all_comments(ncomments),'(a)') trim(line)
+              j = len_trim(line)
+              if (j > 80) then
+                j = index(line, "XENO")
+                write(all_comments(ncomments),'(a)') line(1:j +7)
+                ncomments = ncomments + 1
+                write(all_comments(ncomments),'(a)') "*REMARK   3"//trim(line(j + 7:))
+              else
+                write(all_comments(ncomments),'(a)') trim(line)
+              end if             
               if (log) then
                  write(ilog,'(a)')  trim(line)
                  if (het == "HET")  write(ilog,'(20x,a,i5,a)')" (Includes atom number:", inres(1),")"
@@ -1054,10 +1064,10 @@ subroutine identify_hexose(ninres, inres, nam, name)
   logical :: aldose
   data hexose_aldose /"Allose   ", "Altrose  ", "Glucose  ", "Mannose  ", &
     "Gulose   ", "Idose    ", "Galactose", "Talose   "/
-  data hexose_ketose /"Psicose  ", "Fructose ", "Sorbose ", "Tagatose "/
-  C1 = 0
-  l = 0
-  m = 0
+   data hexose_ketose /"Psicose  ", "Fructose ", "Sorbose ", "Tagatose "/
+   C1 = 0
+   l = 0
+   m = 0
 !
 ! First, check that all carbon atoms have four ligands
 !
@@ -1116,7 +1126,7 @@ subroutine identify_hexose(ninres, inres, nam, name)
       end do
       backbone(i) = l
       Cm = backbone(i - 1)
-      Cn = l
+      Cn = l      
     end do
     chiral = 0
 !
@@ -1132,8 +1142,8 @@ subroutine identify_hexose(ninres, inres, nam, name)
 !
         do l = 1, nbonds(j)
           m = ibonds(l,j)
-          if (m == 0) return
-          if (nat(m) > 1 .and. m /= C1) exit
+           if (m == 0) return
+           if (nat(m) > 1 .and. m /= C1) exit
         end do
         do l = 1, ninres
           if (inres(l) == m) exit
@@ -1248,7 +1258,7 @@ subroutine identify_hexose(ninres, inres, nam, name)
     integer, intent (inout) :: ires, nfrag
     integer, intent (in) :: start_res(*)
 !
-    if (start_res(nfrag) /= -200) then
+    if (start_res(max(1,nfrag)) /= -200) then
       ires = start_res(nfrag)
       nfrag = nfrag + 1
     end if

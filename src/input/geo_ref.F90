@@ -66,29 +66,27 @@
       id = 0
       if (moperr) return
       allocate(geoa(3,natoms + 300), c(3,natoms + 300)) ! Generous safety factor for second geometry
-      i = index(keywrd," GEO_REF")
-      j = index(keywrd(i + 10:),' ') + i + 8
-      if (index(keywrd(i:j), '"')  + index(keywrd(i:j), "'") == 0) then
+      j = index(keywrd," GEO_REF")
+      i = index(keywrd(j:j + 10), '"') + j 
+      if (i == j) then
         write(line,'(a)')" File name after GEO_REF must be in quotation marks."
         call mopend(trim(line))
         return
       end if
-      j = index(keywrd(i + 10:),'"') 
-      if (j == 0) then
+      j = index(keywrd(i + 2:),'" ') + i 
+      if (j == i) then
         write(line,'(a)')" File name after GEO_REF must end with a quotation mark."
         call mopend(trim(line))
         return
       end if
-      do j = i + 10, i + 200
-        if (keywrd(j:j) == '"') exit
-      end do
-      line = keywrd(i + 10:j - 1)
+      line = keywrd(i:j)
       line_1 = trim(line)
       call upcase(line_1, len_trim(line_1))
       geo_ref_name = trim(line) 
-      i = index(keywrd," GEO_DAT") + 10
-      if (i > 10) then
-        j = index(keywrd(i + 9:),'" ') + i + 7
+      i = index(keywrd," GEO_DAT") 
+      if (i > 0) then
+        i = index(keywrd(i:), '"') + i 
+        j = index(keywrd(i + 2:),'" ') + i 
         geo_dat_name = keywrd(i:j)
       else
         geo_dat_name = trim(job_fn)

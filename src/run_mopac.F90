@@ -13,7 +13,7 @@
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, &
         sparkle, itemp_1, maxtxt, koment, &
-        num_threads, nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax, step, &
+        nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax, step, &
         density, norbs, method_indo, nclose, nopen, backslash
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
@@ -51,6 +51,7 @@
       double precision, external :: C_triple_bond_C, reada, seconds
       character :: nokey(20)*10
 #ifdef MKL
+      integer :: num_threads
       integer, external :: mkl_get_max_threads
 #endif
 #if GPU

@@ -24,7 +24,7 @@
     integer, dimension(:), allocatable :: iblock_pos
   end module cosmo_mini
   module linear_cosmo
-  use afmm_mod
+  use afmm_C
   use cosmo_mini, only : new_surface, new_iteration, a_block, tm, &
   r_vec, p_vec, q_vec, z_vec, a_diag, m_vec, a_part, iblock_pos
   implicit none

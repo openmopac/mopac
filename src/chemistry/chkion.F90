@@ -21,7 +21,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
     use common_arrays_C, only : nat, nbonds, ibonds, txtatm
     use molkst_C, only : numat, nelecs, line, keywrd
     use elemts_C, only : elemnt
-    use mod_atomradii, only: is_metal
+    use atomradii_C, only: is_metal
     use elemts_C, only : cap_elemnt
     use MOZYME_C, only: ions, Lewis_tot, Lewis_elem, &
       iz, ib

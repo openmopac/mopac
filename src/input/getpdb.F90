@@ -34,8 +34,7 @@ subroutine getpdb (geo)
       old_natoms = 0, numerr
     integer :: new_elements, defined_elements, previous_res, current_res
     double precision :: degree
-    character :: commas(20), new_key_1*200, new_key_2*200 = " ", &
-      line1*400
+    character :: commas(20), new_key_1*1000, new_key_2*1000 = " ", line1*1000
     character (len=2), dimension (maxel), save :: element
     character (len=4), dimension (20) :: txtpdb
     integer, dimension (20) :: ntxt_loc
@@ -220,15 +219,16 @@ subroutine getpdb (geo)
         if (line(:6) == "HETATM" .and. line(22:22) == "0") line(22:22) = "A"
         current_res = nint(reada(line,23))
         if (line(27:27) /= " ") txtmax = 27
-        if (lchain .and. (line(:6) /= "HETATM" .or. line(22:22) /= " " .or. ch /= " " &
-          .or. natoms < 100 .or. last_atom)) then
+        if (lchain .and. (line(:6) /= "HETATM" .or. line(22:22) /= " " .or. ch /= " " .or. last_atom)) then
           lchain = .false.
           if (new_key_1 /= " ") then
-             do i = 23, 25
-                if (line(i:i) /= " ") exit
-              end do
-            new_key_1 = trim(new_key_1)//" "//line(i:26)//line(22:22)
-            new_key_2 = trim(new_key_2)//line(22:22)
+            do i = 23, 25
+              if (line(i:i) /= " ") exit
+            end do
+            line1 = trim(new_key_1)//" "//line(i:26)//line(22:22)
+            new_key_1 = trim(line1)
+            line1 = trim(new_key_2)//line(22:22)
+            new_key_2 = trim(line1)
             previous_res = 2000
           else
              do i = 23, 25
@@ -238,21 +238,28 @@ subroutine getpdb (geo)
             new_key_2 = " CHAINS=("//line(22:22)
           end if
         else         
-          if (current_res - previous_res > 1 .or. (natoms > 2 .and. line(22:22) /= ch)) then
+          if (abs(current_res - previous_res) > 1 .or. (natoms > 2 .and. line(22:22) /= ch)) then
             if (line(:6) /= "HETATM" .or. line(22:22) /= " ") then
               do i = 23, 25
                 if (line(i:i) /= " ") exit
               end do
-              if (line(22:22) /= ch) then
+              if (line(22:22) /= ch .or. (current_res - previous_res) < 0) then
 !
 !  Letter changed, so make a break.  There was a fault(?) in the original PDB file
 !
-                if (n_water /= natoms - old_natoms) new_key_1 = trim(new_key_1)//" "//line(i:26)//line(22:22)
+                if (n_water /= natoms - old_natoms) then
+                  line1 = trim(new_key_1)//" "//line(i:26)//line(22:22)
+                  new_key_1 = trim(line1)
+                end if
                 n_water = 0
                 old_natoms = natoms 
-                new_key_2 = trim(new_key_2)//line(22:22)
+                line1 = trim(new_key_2)//line(22:22)
+                new_key_2 = trim(line1)
               else
-                if (n_water /= natoms - old_natoms) new_key_1 = trim(new_key_1)//"-"//line(i:26)
+                if (n_water /= natoms - old_natoms)then
+                  line1 = trim(new_key_1)//"-"//line(i:26)
+                  new_key_1 = trim(line1)
+                end if
                 n_water = 0
                 old_natoms = natoms 
               end if
@@ -432,17 +439,24 @@ subroutine getpdb (geo)
       j = 0
       line1 = new_key_1
       new_key_1 = " "
-      ii = min(399, len_trim(line1))
+      ii = min(999, len_trim(line1))
       do i = 2, ii 
         if (line1(i:i + 1) == "  ") cycle
         if (line1(i - 1:i) == "- ") cycle
         j = j + 1
         new_key_1(j:j) = line1(i:i)
       end do
-      if (new_key_1(12:12) == " ") new_key_1 = new_key_1(:11)//new_key_1(13:j)
-      keywrd = " "//trim(new_key_1)//") "//trim(keywrd)
+      if (new_key_1(12:12) == " ") then
+        line1 = new_key_1(:11)//new_key_1(13:j)
+        new_key_1 = trim(line1)
+      end if
+      line1  = " "//trim(new_key_1)//") "//trim(keywrd)
+      keywrd = trim(line1)
     end if
-    if (index(keywrd,"CHAINS") == 0 .and. new_key_2(9:) /= "(") keywrd = " "//trim(new_key_2)//") "//trim(keywrd)
+    if (index(keywrd,"CHAINS") == 0 .and. new_key_2(9:) /= "(") then
+      line1 = " "//trim(new_key_2)//") "//trim(keywrd)
+      keywrd = trim(line1)   
+    end if
     if (line /= " ") then
 !
 ! Dummy read to end of PDB file

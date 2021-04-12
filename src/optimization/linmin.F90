@@ -17,7 +17,7 @@
       integer  :: nvar 
       integer , intent(inout) :: ic 
       double precision  :: alpha 
-      double precision  :: funct 
+      double precision, intent (out)  :: funct 
       double precision , intent(in) :: dott 
       logical , intent(inout) :: okf 
       double precision  :: xparam(nvar) 
@@ -115,7 +115,8 @@
         xparam(:nvar) = xparef(:nvar) + alpha*pvect(:nvar) 
         i = nvar + 1 
       end if 
-      call compfg (xparam, .TRUE., phi(2), .TRUE., grad, .FALSE.) 
+      call compfg (xparam, .TRUE., funct, .TRUE., grad, .FALSE.) 
+      phi(2) = funct
       if (moperr) return  
       fmax = dmax1(phi(2),fmax) 
       fmin = min(phi(2),fmin) 
@@ -307,11 +308,11 @@
 !
 !  Check that the density matrix is O.K., or almost O.K.
 !
-      if (hlast/=0.D0 .and. hlast>0.5D0*drop) then 
+      if (hlast /= 0.D0 .and. hlast > 0.5D0*drop) then 
         call compfg (xparam, .TRUE., funct, .TRUE., grad, .FALSE.) 
         if (moperr) return  
       end if 
-      okf = funct<ssqlst .or. diis 
+      okf = funct < ssqlst .or. diis 
       if (funct >= ssqlst) return  
       if (alpha < 0.D0) then 
         alpha = -alpha 

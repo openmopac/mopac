@@ -19,16 +19,25 @@
       read (ir, '(A1000)', end=100, err=100) refkey(1)
       keywrd = refkey(1)
       do
-        i = index(keywrd, "++")
-        if (i /= 0) then
+        j = index(keywrd, "++")
+        if (j /= 0) then
           do
-            i = index(keywrd, "++")
-            if (i == 0) exit
-            line = keywrd(:i - 1)//trim(keywrd(i + 2:))
+            j = index(keywrd, "++")
+            if (j== 0) exit
+            i = j
+            if (keywrd(i - 1:i - 1) == " ")then
+              line = keywrd(:i - 1)//" "//trim(keywrd(i + 2:))
+            else
+              line = keywrd(:i - 1)//" "//trim(keywrd(i + 2:))
+            end if              
             keywrd = trim(line)
           end do
           read (ir, '(A1000)', end=100, err=100) line
-          keywrd = trim(keywrd)//trim(line)
+          if (keywrd(i - 1:i - 1) == " ")then
+              keywrd = trim(keywrd)//" "//trim(line)
+            else
+              keywrd = trim(keywrd)//trim(line)
+            end if 
         else
           refkey(1) = trim(keywrd)
           exit
@@ -101,23 +110,35 @@
           end if
           rewind isetup 
           refkey(2) = " "
+          i = -1
           do
             read (isetup, '(A)', end=61, err=50) line1
 61          if (line1(1:1) == "*") cycle
-            refkey(2) = trim(refkey(2))//trim(line1)
-            i = index(refkey(2), "++")
-            if (i /= 0) then
+            if (i == -1) then
+              refkey(2) = trim(refkey(2))//trim(line1)
+            else              
+              if (refkey(2)(i - 1:i - 1) == " ")then
+                refkey(2) = trim(refkey(2))//" "//trim(line1)
+              else
+                refkey(2) = trim(refkey(2))//trim(line1)
+              end if
+            end if 
+            j = index(refkey(2), "++")
+            if (j /= 0) then
               do
-                i = index(refkey(2), "++")
-                if (i == 0) exit
-                line = refkey(2)(:i - 1)//trim(refkey(2)(i + 2:))
+                j = index(refkey(2), "++")
+                if (j == 0) exit
+                i = j
+                if (refkey(2)(i - 1:i - 1) == " ")then
+                  line = refkey(2)(:i - 1)//" "//trim(refkey(2)(i + 2:))
+                else
+                  line = refkey(2)(:i - 1)//" "//trim(refkey(2)(i + 2:))
+                end if              
                 refkey(2) = trim(line)
+                line = refkey(2)(:i - 1)//trim(refkey(2)(i + 2:))
               end do
             else
               oldkey = trim(oldkey)//" "//trim(refkey(2))
-  !            line = trim(refkey(2))
-  !            call upcase(line, len_trim(line))
-  !            keywrd = trim(keywrd)//" "//trim(line)
               exit
             end if
           end do

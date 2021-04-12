@@ -2,7 +2,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      use molkst_C, only : natoms, jobnam, run, ijulian, verson, &
+      use molkst_C, only : natoms, jobnam, run, ijulian, verson, backslash, &
       gui, line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2
       use chanel_C, only : iw0, job_fn, input_fn, iw
       use common_arrays_C, only : all_comments
@@ -45,6 +45,12 @@
               if (ichar(jobnam(i:i)) > 39 .and. ichar(jobnam(i:i)) < 126 .or. jobnam(i:i) =="'") exit
             end do
             jobnam(i + 1:) = " "
+!
+!  Replace backslash with forward-slash 
+!
+            do i = 1, len_trim(jobnam)
+              if (jobnam(i:i) == backslash) jobnam(i:i) = "/"
+            end do
           else if (i == 0) then
             if (is_PARAM) then
               write(line,'(2a)')" PARAM is the parameter optimization program for use with MOPAC"

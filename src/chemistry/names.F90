@@ -1,7 +1,7 @@
-subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
+subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres) 
     use molkst_C, only: natoms, numat, keywrd, id
     use MOZYME_C, only : nres, allres, maxres, nbackb, nxeno, mxeno, k, iatom, jatom, &
-       & loop, bbone, angles, txeno, afn, allr
+       & loop, bbone, angles, txeno, afn, allr, lstart_res
     use common_arrays_C, only : nat, labels, txtatm, ibonds, coord, breaks, nbonds
     use funcon_C, only : pi
     use chanel_C, only: iw
@@ -59,6 +59,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
         end do
       end if
       call atomrs (lused, ioptl, ires, n1, i, uni_res, first_res)
+      lstart_res(ires) = .true.
       first_res = .false.
       bbone(1,ires + 1) = jatom!  N of residue
       bbone(2,ires) = nbackb(1)!  C(alpha) of residue
@@ -219,5 +220,6 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
         j = j - 1
       end if
     end do
- 1020 continue
+1020 continue
+     return
 end subroutine names

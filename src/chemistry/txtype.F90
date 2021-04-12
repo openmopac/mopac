@@ -16,6 +16,7 @@
    !   Remove any duplicates from JTYPE
    !
     j = 1
+    k = 1
     outer_loop: do i = 2, jj
       do k = 1, j
         if (jtype(k) == jtype(i)) cycle outer_loop

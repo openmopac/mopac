@@ -1,6 +1,6 @@
 target_sources(mopac-all PRIVATE
 # modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/mod_atomradii.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/atomradii_C.F90
 # source
         ${CMAKE_CURRENT_SOURCE_DIR}/add_hydrogen_atoms.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/atomrs.F90

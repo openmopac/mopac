@@ -158,8 +158,10 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
             else
               sum1 = EC_plus_ER(D, H, A, q(H), q(A), EC, ER, d_l, l)
             end if           
-            sum1 = (sum1 - sum)/delta             
-            dxyz(i_cell*3 + i) = dxyz(i_cell*3 + i) + sum1
+            if (abs(sum1) > 1.d-5) then
+              sum1 = (sum1 - sum)/delta    
+              dxyz(i_cell*3 + i) = dxyz(i_cell*3 + i) + sum1
+            end if
             coord(i,k) = coord(i,k) - delta
           end do
         end if

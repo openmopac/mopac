@@ -134,7 +134,6 @@ module molkst_C
   &  old_chrge,& !  Net charge from the previous calculation, if it exists.
   &  N_Hbonds, & !  Number of hydrogen bonds, with energy < -1 kcal/mol, found in system
   &  P_Hbonds, & !  Number of hydrogen bonds found in system
-  &  num_threads, & !  Number of threads to be used (in parallel work)
   &  dummy
   real ::          &
     CPU_0,         & !  Start of CPU time (in seconds)
@@ -244,7 +243,7 @@ module molkst_C
                      !  Units         Text
  &verson*7= "00.000X"!  Term         Version number
                      !  Definition   Version number for this copy of MOPAC
-                     !  Pattern      "\d\.\d\d\d[X|W|L]"
+                     !  Pattern      "\d\.\d\d\d[X|W|L|M]"
                      !  Description  Year.Julian date. Operating System [X = placeholder]
   character ::     &
   & jobnam*240 = ' ', &!

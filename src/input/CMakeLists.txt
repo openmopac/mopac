@@ -12,7 +12,6 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/getval.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/init_filenames.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/myword.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/newflg.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/nuchar.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/readmo.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/wrt_diffs.F90

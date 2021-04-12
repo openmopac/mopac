@@ -46,7 +46,7 @@
   use molkst_C, only : numat, norbs, escf, nelecs, nclose, nopen, elect, enuclr, verson, &
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
   method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, &
-  uhf, nalpha, nbeta,  nclose, gnorm, mozyme, mol_weight, ilim, &
+  uhf, nalpha, nbeta,  gnorm, mozyme, mol_weight, ilim, &
   line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no, fract
 !
   use MOZYME_C, only : ncf, ncocc, noccupied, icocc_dim, cocc_dim, nvirtual, icvir_dim, &

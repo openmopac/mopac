@@ -1,4 +1,4 @@
-module afmm_mod
+module afmm_C
   !
   !
   !       Adaptive multipole algorithm
@@ -1386,4 +1386,4 @@ contains
 
   end subroutine afmm_ini
 
-end module afmm_mod
+end module afmm_C

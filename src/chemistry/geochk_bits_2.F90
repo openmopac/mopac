@@ -934,7 +934,7 @@
             end if
           else
             write(iw,'(/1x,a)')"  A nitrogen atom defined by keyword SITE cannot have a negative charge."
-            write(iw,'(x,a,/)')" (If a hydrogen atom is to be deleted from a nitrogen, use ""(0)"" instead of ""(-)"")"
+            write(iw,'(a,/)')"  (If a hydrogen atom is to be deleted from a nitrogen, use ""(0)"" instead of ""(-)"")"
             write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), &
             "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
             call mopend(trim(line_1))

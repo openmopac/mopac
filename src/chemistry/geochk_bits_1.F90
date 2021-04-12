@@ -2,7 +2,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
     use molkst_C, only: numat, keywrd, line
     use chanel_C, only: iw
     use common_arrays_C, only: nat
-    use mod_atomradii, only: is_metal
+    use atomradii_C, only: is_metal
     use elemts_C, only : cap_elemnt
     implicit none
     double precision, dimension (numat), intent (out) :: radius
@@ -699,7 +699,7 @@ end subroutine compare_sequence
     use molkst_C, only : numat, line, keywrd, moperr, maxtxt
     use chanel_C, only: iw
     use MOZYME_C, only : tyres
-    use mod_atomradii, only: is_metal
+    use atomradii_C, only: is_metal
     implicit none
     integer, intent(in) :: n_cat, n_ani, in_cat(n_cat), in_ani(n_ani)    
     integer :: i, j, k, kk, l, m, n, n_cations, n_anions, n_C, n_H, n_O, C, pairs(2,200), n_pairs, &
