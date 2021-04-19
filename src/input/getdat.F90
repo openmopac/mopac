@@ -291,17 +291,19 @@
 30    continue 
       call upcase(keywrd, len_trim(keywrd))
       if (keywrd(1:1) /= " ") keywrd = " "//trim(keywrd)
-      i = index(keywrd, "GEO-DAT")
-      if (i /= 0) keywrd(i:i+6) = "GEO_DAT"
-      i = index(keywrd, "GEO-REF")
-      if (i /= 0) keywrd(i:i+6) = "GEO_REF"
-      if (index(keywrd, " GEO_DAT") + index(keywrd, " SETUP")/= 0) then
-        nlines = nlines + 3
-      else if (.not. is_PARAM .and. nlines < 4) then
-        inquire(unit=iw, opened=exists) 
-        if (.not. exists) open(unit=iw, file=trim(jobnam)//'.out') 
-        if (keywrd /= " ") write(iw,'(3/10x,a,/)')" Data set does not contain "//&
-           "any atoms and neither GEO_DAT or SETUP is  present on the keyword line"
+      if (index(keywrd, "++") == 0) then
+        i = index(keywrd, "GEO-DAT")
+        if (i /= 0) keywrd(i:i+6) = "GEO_DAT"
+        i = index(keywrd, "GEO-REF")
+        if (i /= 0) keywrd(i:i+6) = "GEO_REF"
+        if (index(keywrd, " GEO_DAT") + index(keywrd, " SETUP")/= 0) then
+          nlines = nlines + 3
+        else if (.not. is_PARAM .and. nlines < 4) then
+          inquire(unit=iw, opened=exists) 
+          if (.not. exists) open(unit=iw, file=trim(jobnam)//'.out') 
+          if (keywrd /= " ") write(iw,'(3/10x,a,/)')" Data set does not contain "//&
+             "any atoms and neither GEO_DAT or SETUP is present on the keyword line"
+        end if
       end if
       keywrd = "  "
       if (nlines == 1 .and. Len_trim(line1) > 0 .and. .not. is_PARAM) then  

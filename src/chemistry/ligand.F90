@@ -15,7 +15,7 @@ subroutine ligand (ires, start_res, nfrag)
     logical, allocatable :: l_used(:)
     integer, allocatable :: inres(:)
     integer, allocatable :: live(:)
-    logical :: attached, l_chain, first, l_write = .false.
+    logical :: attached, l_chain, first, l_write = .true.
     integer, external :: nheavy
     double precision, external :: distance, reada
     character :: het*3, het_group*120, num, num1, el*2, het2*3, line1*120
@@ -874,7 +874,7 @@ subroutine ligand (ires, start_res, nfrag)
         end if
       end if
     end do
-    l_write = .true.
+    l_write = .false.
     return
 end subroutine ligand
 subroutine moiety (iopt, lused, istart, new)

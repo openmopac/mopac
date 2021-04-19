@@ -612,12 +612,13 @@ subroutine remove_bond(i)
           do ii = 1, nbonds(j)
             if (ibonds(ii, j) == l .and. .not. let .and. index(keywrd, " GEO-OK") == 0 .and. &
               index(keywrd, " 0SCF") == 0) then
-              write(iw,"(/,a,i5,a,i5,a)")" The bond defined by CVB between atoms",j," and", &
-              l, " already exists.  Correct error and re-submit"
+              r = distance(j,l)
+              write(iw,"(/,a,i5,a,i5,a, f6.3, a)")" The bond defined by CVB between atoms",j," and", &
+              l, " already exists, bond length =", r," Angstrom."
               write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
               write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
               write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", l, ": "//elemnt(nat(l)), "("//txtatm(l)//")", coord(:,l)
-              write(iw,"(a,/)") " (If an extra bond needs to be added, use keyword 'SETPI')"
+              write(iw,"(/10x,a,/)") "(If an extra bond needs to be added, use keyword 'SETPI')"
               error = .true.
             end if
           end do

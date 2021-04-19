@@ -423,6 +423,7 @@
         end if
       end if
       call delete_ref_key("RESIDUES", len_trim("RESIDUES"), ' ', 1)
+      call delete_ref_key("XENO", len_trim("XENO"), ' ', 1)
       if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) call geochk()
       if ( index(keywrd," PDBOUT") /= 0 .and. maxtxt < 26 .and. index(keywrd," RESID") == 0) then
         if (maxtxt == 0) then

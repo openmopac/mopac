@@ -836,6 +836,17 @@ double precision, external :: reada
           mbreaks = mbreaks + 1
         else  
           if (txtatm(i)(23:txtmax) == "    ") cycle          
+          if (mbreaks > 1) then
+!
+!  This is a workaround to avoid having a break that already has been used.
+!  (This can occur when a heterogroup that contains a peptide bond is positioned
+!   after other heterogroups that do not contain a peptide bond.)
+!
+            if (i - 1 == breaks(mbreaks - 1)) then
+              line = txtatm(i)(23:txtmax)
+              cycle
+            end if
+          end if
           if (txtatm(i)(:6) == "HETATM") then
             if (txtatm(i)(23:26) /= line(1:4)) then
               if (txtatm(i - 1)(:4) /= "ATOM") then
@@ -962,7 +973,14 @@ double precision, external :: reada
     natoms = max(natoms, numat)
     if (index(keywrd, " ADD-H") /= 0) return
     if (index(keywrd, "CHARGES") == 0 .and. index(keywrd, "CONTROL_no_MOZYME") /= 0 .or. index(keywrd, " RESEQ") /= 0) then
-      if ( index(keywrd," PDBOUT") /= 0) call pdbout(iarc)
+      if ( index(keywrd," PDBOUT") /= 0) then
+        archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
+        inquire(unit=iarc, opened=opend) 
+        if (opend) close(iarc, status = 'keep', iostat=i)  
+        open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
+        rewind iarc 
+        call pdbout(iarc)
+      end if
       archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
       inquire(unit=iarc, opened=opend) 
       if (opend) close(iarc, status = 'keep', iostat=i)  

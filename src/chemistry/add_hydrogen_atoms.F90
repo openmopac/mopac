@@ -192,8 +192,8 @@
        if (k > ii - 3) &
        call l_control(line, ii, 1)
      end if
-     call lewis(.false.)                                ! Needed again, because geochk breaks S-S bonds
-                                                 ! and changes to bonding might be made by CVB
+     call lewis(.false.)                         ! Needed again, because geochk breaks S-S bonds
+     call check_CVS(.false.)                     ! and changes to bonding might be made by CVB
 !
 !   "hybrid" is intended for a two-pass method for assigning hydrogen atoms.
 !   In the first pass, all atoms are assigned a hybridization value
