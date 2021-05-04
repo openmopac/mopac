@@ -1,9 +1,0 @@
-      MODULE minv_I   
-      INTERFACE
-      SUBROUTINE minv (A, N, D) 
-      DOUBLE PRECISION, DIMENSION(*), INTENT(INOUT) :: A 
-      INTEGER, INTENT(IN) :: N 
-      DOUBLE PRECISION, INTENT(OUT) :: D 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

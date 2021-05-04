@@ -1,9 +1,0 @@
-      MODULE schmib_I   
-      INTERFACE
-      SUBROUTINE schmib (U, N, NDIM) 
-      INTEGER, INTENT(IN) :: N 
-      INTEGER, INTENT(IN) :: NDIM 
-      DOUBLE PRECISION, DIMENSION(NDIM,NDIM), INTENT(INOUT) :: U 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

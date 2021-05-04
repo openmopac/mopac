@@ -1,8 +1,0 @@
-      MODULE vecprt_I   
-      INTERFACE
-      SUBROUTINE vecprt (A, NUMM) 
-      DOUBLE PRECISION, DIMENSION(*), INTENT(INOUT) :: A 
-      INTEGER, INTENT(IN) :: NUMM 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

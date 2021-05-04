@@ -1,8 +1,0 @@
-      MODULE suma2_I   
-      INTERFACE
-      SUBROUTINE suma2 (P, EP) 
-      DOUBLE PRECISION, DIMENSION(*), INTENT(IN) :: P 
-      DOUBLE PRECISION, INTENT(IN) :: EP 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

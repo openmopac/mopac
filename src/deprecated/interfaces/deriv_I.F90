@@ -1,8 +1,0 @@
-      MODULE deriv_I   
-      INTERFACE
-      SUBROUTINE deriv (GEO, GRAD) 
-      DOUBLE PRECISION, DIMENSION(*), INTENT(IN) :: GEO
-      DOUBLE PRECISION, DIMENSION(*), INTENT(inOUT) :: grad
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

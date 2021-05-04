@@ -1,8 +1,0 @@
-      MODULE epseta_I   
-      INTERFACE
-      SUBROUTINE epseta (EPS, ETA) 
-      DOUBLE PRECISION, INTENT(OUT) :: EPS 
-      DOUBLE PRECISION, INTENT(OUT) :: ETA 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

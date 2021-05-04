@@ -1,8 +1,0 @@
-      MODULE csum_I   
-      INTERFACE
-      SUBROUTINE csum (P, EP) 
-      DOUBLE PRECISION, DIMENSION(*), INTENT(IN) :: P 
-      DOUBLE PRECISION, INTENT(IN) :: EP 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

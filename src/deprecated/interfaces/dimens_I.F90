@@ -1,8 +1,0 @@
-      MODULE dimens_I   
-      INTERFACE
-      SUBROUTINE dimens (COORD, IW) 
-      DOUBLE PRECISION, DIMENSION(3,*), INTENT(INOUT) :: COORD 
-      INTEGER, INTENT(IN) :: IW 
-      END SUBROUTINE  
-      END INTERFACE 
-      END MODULE 

@@ -1,8 +1,0 @@
-      MODULE myword_I   
-      INTERFACE
-      LOGICAL FUNCTION myword (KEYWRD, TESTWD) 
-      CHARACTER (LEN = *), INTENT(INOUT) :: KEYWRD 
-      CHARACTER (LEN = *), INTENT(IN) :: TESTWD 
-      END FUNCTION  
-      END INTERFACE 
-      END MODULE 
