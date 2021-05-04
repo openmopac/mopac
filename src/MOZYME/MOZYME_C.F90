@@ -15,6 +15,7 @@ module MOZYME_C
     morb,        & ! Maximum number of orbitals on any atom, usually 4 or 9
     ipad2,       & ! Estimate of the average number of atoms in a LMO
     ipad4,       & ! Estimate of the average number of atomic orbital coefficients in a LMO
+    uni_res,     & ! Number of unique residues in a protein
     Lewis_tot      ! Total number of Lewis elements (occupied plus virtual)
 !
 !                              Data on atoms
@@ -72,15 +73,15 @@ module MOZYME_C
                    ! 2 = # of C of C=O, 3 = # of O of C=O, 4 = # of N
                         !
                         ! For each entry in in_res, res_start contains the atom
-    res_start(maxres),& ! number of the first atom in the residue. It is
+    res_start(-20:maxres),& ! number of the first atom in the residue. It is
                         ! only used inside MOPAC - it is never printed out
                         !
-    start_res(maxres), &   !
+    start_res(-20:maxres), &   !
                         !
     bbone(3,-20:maxres)! Atom numbers of the backbone atoms in a polypeptide
 
    double precision :: &
-    angles(3, maxres) !  Phi, Psi, and Omega for backbone angles (Ramachandran)
+    angles(3, -20:maxres) !  Phi, Psi, and Omega for backbone angles (Ramachandran)
 
 
    character (len=4), dimension (-999:maxres) :: &
@@ -177,7 +178,7 @@ module MOZYME_C
   logical :: &
     rapid,       &      !  True if RAPID technique to be used
     odd_h,       &      !  Control print of banner for quentionable number of hydrogen atoms
-    lstart_res(maxres), &  !
+    lstart_res(-20:maxres), &  !
     use_three_point_extrap
 !
 !++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

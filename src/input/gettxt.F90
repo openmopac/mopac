@@ -7,7 +7,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, k, l, ipath
-      character :: filen*300, oldkey*1000, line1*1000, path*240, ch*1, geo_xxx(2)*3
+      character :: filen*300, oldkey*2000, line1*2000, path*240, ch*1, geo_xxx(2)*3
       logical :: aux, exists, setup_present, zero_scf, l_quote
       character (len = 300), external :: get_text
       data geo_xxx /"DAT", "REF"/
@@ -16,7 +16,7 @@
       title = " "
       refkey = '    NULL  '
       aux = (index(keywrd, "AUX") /= 0) 
-      read (ir, '(A1000)', end=100, err=100) refkey(1)
+      read (ir, '(A2000)', end=100, err=100) refkey(1)
       keywrd = refkey(1)
       do
         j = index(keywrd, "++")
@@ -32,7 +32,7 @@
             end if              
             keywrd = trim(line)
           end do
-          read (ir, '(A1000)', end=100, err=100) line
+          read (ir, '(A2000)', end=100, err=100) line
           if (keywrd(i - 1:i - 1) == " ")then
               keywrd = trim(keywrd)//" "//trim(line)
             else

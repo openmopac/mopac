@@ -13,7 +13,7 @@
 
  *******************************************************************************
  *  CALCULATION DONE:                                Fri Feb 26 19:05:19 2021  *
- *  PDBOUT     - PRINT GEOMETY IN PDB FORMAT
+ *  PDBOUT     - PRINT GEOMETRY IN PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:   START_RES=(1A 66) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED

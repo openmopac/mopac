@@ -249,8 +249,8 @@ module molkst_C
   & jobnam*240 = ' ', &!
   & line*2000         !
   character :: backslash = achar(92) ! portable way of representing the backslash character
-  character :: keywrd*2000, koment*200, title*200, refkey(6)*1000, geo_ref_name*241, geo_dat_name*241, &
-    allkey*2000, keywrd_txt*1000, refkey_ref(6)*1000 
+  character :: keywrd*2000, koment*200, title*200, refkey(6)*2000, geo_ref_name*241, geo_dat_name*241, &
+    allkey*2000, keywrd_txt*2000, refkey_ref(6)*2000 
   character :: errtxt*200, program_name*17="GUI             ", dh*20
 !
   logical ::            &

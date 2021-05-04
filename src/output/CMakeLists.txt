@@ -11,6 +11,7 @@ target_sources(mopac-all PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/matout.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/modchg.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/modgra.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/output_rama.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pdbout.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/pinout.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/prtpka.F90

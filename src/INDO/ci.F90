@@ -963,8 +963,8 @@
 !     RMG add-print major state contributions for all states
 
       wrtconf = 0.04d0
-      if (index(keywrd, ' WRTCONF') /= 0) then
-        wrtconf = reada(keywrd, index(keywrd, ' WRTCONF = '))
+      if (index(keywrd, ' WRTCONF=') /= 0) then
+        wrtconf = reada(keywrd, index(keywrd, ' WRTCONF='))
       end if
 
       write (iw, *)

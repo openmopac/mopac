@@ -22,8 +22,8 @@ subroutine geochk ()
        & labels, nat, na, nb, nc, nbonds, ibonds, txtatm, atmass, pdiag, &
          txtatm1, chains, all_comments, coorda, loc, lopt, l_atom, break_coords
     use MOZYME_C, only : ions, icharges, angles, allres, iz, ib, tyr, allr, &
-    iopt, nres, at_res, res_start, Lewis_tot, Lewis_elem, noccupied, nvirtual, &
-    odd_h, tyres, start_res, lstart_res
+    iopt, nres, at_res, Lewis_tot, Lewis_elem, noccupied, nvirtual, &
+    odd_h, tyres, start_res, lstart_res, uni_res
 !    
     use molkst_C, only: natoms, numat, nelecs, keywrd, moperr, maxtxt, &
       maxatoms, line, nalpha, nbeta, uhf, nclose, nopen, norbs, numcal, id, &
@@ -42,10 +42,10 @@ subroutine geochk ()
     double precision, dimension(:), allocatable :: radius
     logical, save :: debug, let, lres, lreseq, times, opend, charges, l_protein, &
       done, neutral(100), lsite, ter, residues, lbreaks, l_use_old_labels, &
-    l_names(max_sites), first, first_prt, header
+    l_names(max_sites), first, first_prt, header, l_rama
     logical, dimension (:), allocatable :: ioptl
     integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, kkk, near_ions_store(2), &
-   & j, jbad, k, l, large, n1, new, alloc_stat, uni_res, mres, near_ions(2, 100), atomic_charges(8), &
+   & j, jbad, k, l, large, n1, new, alloc_stat, mres, near_ions(2, 100), atomic_charges(8), &
      maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10, nnumat, delta_res, max_frag
     integer, dimension(:), allocatable ::  mb    
     integer, save :: numbon(3), num_ions(-6:6)
@@ -54,7 +54,7 @@ subroutine geochk ()
     double precision :: sum, r_ions(100)
     character :: new_name(max_sites)*3, old_name(max_sites)*3, new_chain(max_sites)*1, &
       new_alt(max_sites)*1
-double precision, external :: reada
+    double precision, external :: reada
     data numbon / 3 * 0 /
     data atomic_charges /1, 4, 3, 2, -1, -2, -3, -4/
     data ion_names / &
@@ -77,6 +77,7 @@ double precision, external :: reada
       first_prt = .true.
       icalcn = numcal
     end if
+    l_rama = (index(keywrd, " writemo_rama") /= 0)
 !
     if (allocated(ions))    deallocate (ions)
     if (allocated(iopt))    deallocate(iopt)
@@ -937,17 +938,6 @@ double precision, external :: reada
       l_use_old_labels = .true.
       call update_txtatm(l_use_old_labels, .true.)
       call write_sequence
-      if (index(keywrd, " RAMA") /= 0) then
-        if (index(keywrd, " ADD-H") == 0 .and. uni_res > 1) then
-          write(iw,"(/10x,a)")"        Ramachandran Angles"
-          write(iw,"(10x,a,/)")"    Residue    phi    psi  omega"
-        end if
-        do i = 1, uni_res
-          if (Abs(angles(1,i)) + Abs(angles(3,i))> 1.d-20 .and. res_start(i) > 0) &
-          write(iw,"(14x,a,3f7.1)")txtatm(res_start(i))(18:20)//txtatm(res_start(i))(23:txtmax), (angles(j,i),j = 1,3)
-        end do
-        write(iw,*)" "
-      end if
     end if
     if (index(keywrd, " PDBOUT") /= 0) then
       do i = 1, natoms
@@ -974,19 +964,23 @@ double precision, external :: reada
     if (index(keywrd, " ADD-H") /= 0) return
     if (index(keywrd, "CHARGES") == 0 .and. index(keywrd, "CONTROL_no_MOZYME") /= 0 .or. index(keywrd, " RESEQ") /= 0) then
       if ( index(keywrd," PDBOUT") /= 0) then
-        archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
+        line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
+        i = iarc
+        inquire(unit=i, opened=opend) 
+        if (opend) close(i, status = 'keep', iostat=j)  
+        open(unit=i, file=line, status='UNKNOWN', position='asis') 
+        rewind i 
+        call pdbout(i)
+        close (i)
+      end if
+      if (index(keywrd, " RESEQ") /= 0) then
+        line = archive_fn(:len_trim(archive_fn) - 3)//"arc"
         inquire(unit=iarc, opened=opend) 
         if (opend) close(iarc, status = 'keep', iostat=i)  
-        open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
+        open(unit=iarc, file=line, status='UNKNOWN', position='asis') 
         rewind iarc 
-        call pdbout(iarc)
+        call geout (iarc)
       end if
-      archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
-      inquire(unit=iarc, opened=opend) 
-      if (opend) close(iarc, status = 'keep', iostat=i)  
-      open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
-      rewind iarc 
-      call geout (iarc)
       if (index(keywrd, " RESEQ") == 0) return
     end if
 !
@@ -1267,7 +1261,7 @@ double precision, external :: reada
       end do
       maxtxt_store = maxtxt
       if (maxtxt < 0) maxtxt = 14
-      if (first_prt) then
+      if (first_prt .and. .not. l_rama) then
         if (i <= numat) then
           if (maxtxt > 1) then        
              write(line,"(a)")"   Ion                PDB Label        Charge     "// &
@@ -1457,7 +1451,7 @@ double precision, external :: reada
       end if
       maxtxt = maxtxt_store
     end if
-    if (first_prt .and. noccupied /= 0) then
+    if (first_prt .and. noccupied /= 0 .and. .not. l_rama) then
       num = char(ichar("3") + max(int(log10(abs(ichrge) + 0.05)),0))
       if (index(keywrd," CHARGE=") /= 0) then
         if (ichrge == irefq) then
@@ -1495,20 +1489,22 @@ double precision, external :: reada
       if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
       call geout (iarc)
       if (index(keywrd, " PDBOUT") /= 0) then        
-        archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"pdb" 
-        inquire(unit=iarc, opened=opend) 
-        if (opend) close(iarc)
-        open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
-        rewind iarc 
+        line = archive_fn(:len_trim(archive_fn) - 3)//"pdb" 
+        i = iarc
+        inquire(unit=i, opened=opend) 
+        if (opend) close(i)
+        open(unit=i, file=line, status='UNKNOWN', position='asis') 
+        rewind i 
         coord(:,:numat) = geo(:,:numat)
         call update_txtatm(.true., .true.) 
         if (index(keywrd, " NORES") == 0) call rectify_sequence()
         call reset_breaks()
-        call pdbout(iarc)
+        call pdbout(i)
         if (allocated(coorda)) deallocate (coorda)
         allocate(coorda(3,numat))
         txtatm1(:numat) = txtatm(:numat)
         coorda(:,:numat) = coord(:,:numat)
+        close (i)
       end if
     end if
     if (irefq /= ichrge .and. .not. lreseq .or. charges) then
@@ -1836,5 +1832,4 @@ double precision, external :: reada
   end if 
   return
   end subroutine identify_nearby_counterions
-
-
+ 

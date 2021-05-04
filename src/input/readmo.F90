@@ -54,7 +54,7 @@
       double precision, external :: distance, reada, snapth
       logical :: intern = .true., aigeo, xyz, opend, exists, l_rewind = .true., l_int
       logical, allocatable :: l_use(:)
-      character :: space, ch, idate*24, line_1*1000, line_2*1000, txt*15
+      character :: space, ch, idate*24, line_1*2000, line_2*2000, txt*15
       save  space, intern, ireact
 !-----------------------------------------------
 !
@@ -776,7 +776,6 @@
         if (keywrd(i:i) == ch) then
           j = -j + 1
         end if
-        if (j == 1) keywrd(i:i) = " "
       end do     
       if (j == 1) then
         call mopend("NUMBER OF QUOTATION MARKS, '""', IN KEYWORDS IS ODD. THIS NUMBER MUST BE EVEN.")

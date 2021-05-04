@@ -1,4 +1,4 @@
-  subroutine Locate_TS_for_Proteins 
+  subroutine Locate_TS 
 !
 ! Multi-step procedure for locating a transition state involving two stationary points in a
 ! protein mechanism
@@ -95,6 +95,15 @@
         write(iw,'(/10x, a)')"(This is greater than 2, so re-set to 2)"
         nset = 2
       end if
+      if (active_site(1) == 0) then
+        if (index(keywrd, " LET") == 0) then
+          write(line,'(a,i1,a)') """SET=""",nset,""" used in LOCATE-TS, but no atoms involved in bond-making or bond-breaking!"
+          call mopend( trim(line))
+          write(iw,'(/10x,a,i1,a)') "(Either remove "";SET=""",nset,""" from keyword ""LOCATE-TS"""// &
+            "or add keyword ""LET"" to allow job to continue)"
+          return
+        end if        
+      end if
     else
       if (index(keywrd(i:j), "C:") == 0) then
         write(iw,'(/10x, a)')"By default, set 1 will be used.  To change default, see keyword 'LOCATE-TS'"
@@ -176,7 +185,7 @@
         else
           num = "4"
         end if  
-        write(iw,'(/10x,a,f0.2,a,/)')"Constraining constant: ",density, " Kcal/mol/Angstrom^2"
+  !      write(iw,'(/10x,a,f0.2,a,/)')"Constraining constant: ",density, " Kcal/mol/Angstrom^2"
         write(line1,'(a,f'//num//'.2)')"C: ",density
         write(line,'(a,S,f0.5)')"GNORM=",gradients(loop)
         write(line1(len_trim(line1) + 4:),'(a)')trim(line)
@@ -189,14 +198,7 @@
 !           The approximate location of the transition state has now been found.
 !           Now switch off the two geometry option, and prepare to refine the transition state.
 !
-    if (shell == 0) then
-      if (nset == 0) then
-        call mopend("Gradient minimization not requested")
-      else
-        call mopend("No bonds made or broken in active site")
-      end if      
-      return
-    end if
+    if (shell == 0 .and. ninsite(1) == 0) return
 99  continue  
     if (.not. l_refine) goto 98
     use_ref_geo = .false.
@@ -221,7 +223,7 @@
     do i = 1, shell
       lopt(:,active_site(i)) = 0
     end do
-    call Refine_TS_for_Proteins
+    call Refine_TS
     close(iarc)
     if (index(keywrd, " PDBOUT") /= 0) then
       line = input_fn(:len_trim(input_fn) - 5)//".pdb"
@@ -238,7 +240,8 @@
       open(unit=iden, file=trim(line))
       close(unit=iden, status='DELETE') 
     end if
-  end subroutine Locate_TS_for_Proteins  
+    return
+  end subroutine Locate_TS  
   
   subroutine lbfgs_TS (big_xparam, big_nvar, escf_tot, extra_print) 
 !
@@ -264,7 +267,7 @@
   double precision, intent (out) :: escf_tot
   double precision, dimension (big_nvar), intent (inout) ::  big_xparam
 !
-  character :: txt, csave*60, task*60, bias*7
+  character :: txt, csave*60, task*60, bias*7, fmt*3
   logical :: times, lsave(4), first = .true., opend
   integer :: i, k, l, itry1, jcyc, niwa, nwa, alloc_stat, m, isave(44), &
     nflush = 1
@@ -379,7 +382,11 @@
       end do
       if (first) then
         call  geo_diff(sum, rms, .false.)  
-        write(iw,'(/10x,a,f20.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
+        if (density < 0.01d0) then
+          write(iw,'(/10x,a,f21.3,a)')"Current value of GEO_REF constraint:", density, " Kcal/mol/Angstrom^2"
+        else
+          write(iw,'(/10x,a,f20.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
+        end if
         write(iw,'(10x,a,f24.2,a)') "Distance between the geometries:", sum,"  Angstroms"  
       end if        
       call compfg_TS (big_xparam, (mod(jcyc,222) == 0), escf1, escf2, .true., big_grad, .true.)       
@@ -411,7 +418,7 @@
         if (sum < 0.d0) then
           write(iw,'(10x,a, f25.2, a, /)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
         else
-          write(iw,'(10x,a, f13.2, a, /)')"WARNING! - Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"    
+          write(iw,'(10x,a, f13.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
         end if
         big_grad(:big_nvar) = store_big_grad(:big_nvar)
       end if
@@ -525,11 +532,15 @@
     end do
   end do
   if(density > 99.9499d0) then
-    txt = "5"
+    fmt = "5.1"
   else if(density > 9.9499d0) then
-    txt = "4"
+    fmt = "4.1"
+  else if (density > 0.9499d0) then
+    fmt = "3.1"
+  else if (density > 0.09499d0) then
+    fmt = "4.2"
   else
-    txt = "3"
+    fmt = "5.3"
   end if  
   line = refkey(1)
   call upcase(line, len_trim(line))
@@ -557,44 +568,47 @@
     k = index(line, "GEO_REF=") + 9
     l = index(line(k:),'"') + k
     line = input_fn(:len_trim(input_fn) - 5)
-    write(bias,'(f6.1)') density
-    title = "("//bias//"first)"//trim(title)
-    write(line(len_trim(line) + 1:),'(a,f'//txt//'.1,a)')" ",density, " first.mop"
-    i = len_trim(line) - 11
-    line(i:i) = "p"
+
+    write(bias,'(f'//fmt//')') density
+    title = "(Bias="//trim(bias)//" first) "//trim(title)
+    write(line(len_trim(line) + 1:),'(a,f'//fmt//',a)')" bias=",density, " first.mop"
     call add_path(line)
     inquire(unit=iarc, opened=opend) 
     if (opend) close(iarc)
     open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
-    write(iw,'(/10x,a,/10x,a,f'//txt//'.1,a,/10x,a,/)')"First geometry (derived from data-set) after optimization subject to ", &
+    write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"First geometry (derived from data-set) after optimization subject to ", &
     &"GEO_REF constraint of ", density, " Kcal/mol/Angstrom^2 towards the reference geometry written to file:", &
     &"'"//trim(line)//"'"
     call geout (iarc)
     close(iarc)
-    title = trim(title(15:))
+    k = index(title, ")") + 2
+    title = trim(title(k:))
     geo(:,:numat) = geoa(:,:numat)  
     line = refkey(1)
     call upcase(line, len_trim(line))
     k = index(line, "GEO_REF=") + 9
     l = index(line(k:),'"') + k
     line = input_fn(:len_trim(input_fn) - 5)
-    title = "("//bias//"second)"//trim(title)
-    write(line(len_trim(line) + 1:),'(a,f'//txt//'.1,a)')" ",density, " second.mop"
-    i = len_trim(line) - 12
-    line(i:i) = "p"
+    title = "(Bias="//trim(bias)//" second) "//trim(title)
+    write(line(len_trim(line) + 1:),'(a,f'//fmt//',a)')" bias=",density, " second.mop"
     call add_path(line)
     inquire(unit=iarc, opened=opend) 
     if (opend) close(iarc)
     open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
-    write(iw,'(/10x,a,/10x,a,f'//txt//'.1,a,/10x,a,/)')"Second geometry (derived from reference geometry)"// &
+    write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"Second geometry (derived from reference geometry)"// &
     & "after optimization subject to ", "GEO_REF constraint of ", density, &
     " Kcal/mol/Angstrom^2 towards the data-set geometry written to file:", "'"//trim(line)//"'"
     call geout (iarc)
     close(iarc)
-    title = trim(title(16:))
+    k = index(title, ")") + 2
+    title = trim(title(k:))
   end if
   write(iw,'(/10x,a,a)') "Job name: ","'"//input_fn(:len_trim(input_fn) - 5)//"'"
-  write(iw,'(10x,a,f20.2,a)') "Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
+  if (density < 0.01d0) then
+    write(iw,'(10x,a,f21.3,a)')"Current value of GEO_REF constraint:", density, " Kcal/mol/Angstrom^2"
+  else
+    write(iw,'(/10x,a,f20.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
+  end if
   write(iw,'(10x,a,f24.2,a)') "Distance between the geometries:", sum,"  Angstroms" 
   do i = 1, nvar 
     k = loc(1,i) 
@@ -613,7 +627,7 @@
   if (sum < 0.d0) then
     write(iw,'(10x,a, f25.2, a)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
   else
-    write(iw,'(10x,a, f12.2, a)')"WARNING! - Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"    
+    write(iw,'(10x,a, f12.2, a)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
   end if
   do i = 1, nvar
     xparam(i)=0.5d0*(big_xparam(i) + big_xparam(i + nvar))
@@ -623,20 +637,19 @@
   end do  
   if (extra_print) then
     line = input_fn(:len_trim(input_fn) - 5)
-    title = "("//bias//"average)"//trim(title)
-    write(line(len_trim(line) + 1:),'(a,f'//txt//'.1,a)')" ",density, " average.mop"
-    i = len_trim(line) - 13
-    line(i:i) = "p"
+    title = "(Bias="//trim(bias)//" average) "//trim(title)
+    write(line(len_trim(line) + 1:),'(a,f'//fmt//',a)')" bias=",density, " average.mop"
     call add_path(line)
     inquire(unit=iarc, opened=opend) 
     if (opend) close(iarc)
     open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
-     write(iw,'(/10x,a,/10x,a,f'//txt//'.1,a,/10x,a,/)')"Average of first and second geometries after optimization subject to ", &
+     write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"Average of first and second geometries after optimization subject to ", &
     &"GEO_REF constraint of ", density, " Kcal/mol/Angstrom^2 towards the data-set geometry written to file:", &
     &"'"//trim(line)//"'"
     call geout (iarc)
     close(iarc)
-    title = trim(title(17:))
+    k = index(title, ")") + 2
+    title = trim(title(k:))
   end if
   return
   end subroutine lbfgs_TS
@@ -1083,6 +1096,7 @@
     integer, allocatable :: nbonds_b(:), ibonds_b(:,:)
     character :: ch*2
     active_site(1) = 0
+    ninsite = 0
     if (index(keywrd," LOCATE-TS(SET") /= 0) then
       nsite = 0
       do i = 1, nvar
@@ -1133,10 +1147,7 @@
         end do
       end if
     end do    
-    if (nsite == 0) then
-      call mopend( "No atoms involved in bond-making or bond-breaking!")
-      return
-    end if
+    if (nsite == 0) return
     k = 0
     do i = 1, nsite
       k = max(k,nbonds_b(active_site(i)))
@@ -1196,7 +1207,7 @@
       "and bond-making, plus nearest neighbors"
     if (pdb_label) then
       write(iw,'(i4, 3x, a, i6, a)')(i, " Atom:  "//elemnt(nat(active_site(i))), active_site(i), &
-  "  PDB Label: ("//txtatm(active_site(i))//")", i = 1, nsite)
+  "  PDB Label: ("//txtatm(active_site(i))(:maxtxt)//")", i = 1, nsite)
     else
       write(iw,'(i12, 3x, a, i6)')(i, " Atom:  "//elemnt(nat(active_site(i))), active_site(i), i = 1, nsite)
     end if      
@@ -1245,7 +1256,7 @@
   return 
   end subroutine select_opt
   
-  subroutine Refine_TS_for_Proteins
+  subroutine Refine_TS
 !
 !       Refine the transition state by minimizing the heat of formation of everything 
 !       except the reaction side, followed by gradient minimization of the active site.
@@ -1324,7 +1335,7 @@
       converged = (converged .and. nstep < 3)
       if (converged) exit
     end do
-  end subroutine Refine_TS_for_Proteins
+  end subroutine Refine_TS
   subroutine minimize_energy(loop)
     USE molkst_C, only : numat, refkey, line, numcal, nvar, time0, escf, gnorm, keywrd
     use common_arrays_C, only : xparam, grad, geo, loc

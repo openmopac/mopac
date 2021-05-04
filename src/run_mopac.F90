@@ -30,7 +30,7 @@
       USE chanel_C, only : ir, iw, iarc, output_fn, end_fn, iend, &
         archive_fn, log, ilog, xyz_fn, job_fn, log_fn
 !
-      use MOZYME_C, only : rapid, nres, refnuc
+      use MOZYME_C, only : rapid, nres, refnuc, uni_res
 !
       use meci_C, only : nmos, lab
 !
@@ -155,6 +155,7 @@
       stress = 0.d0
       no_pKa = 0
       cell_ijk = 0
+      uni_res = 0
       id = 0
       time0 = seconds(1)
       MM_corrections = .false.
@@ -424,6 +425,7 @@
       end if
       call delete_ref_key("RESIDUES", len_trim("RESIDUES"), ' ', 1)
       call delete_ref_key("XENO", len_trim("XENO"), ' ', 1)
+      call output_rama()
       if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) call geochk()
       if ( index(keywrd," PDBOUT") /= 0 .and. maxtxt < 26 .and. index(keywrd," RESID") == 0) then
         if (maxtxt == 0) then
@@ -774,7 +776,7 @@
             return
           end if
         end if
-        call Locate_TS_for_Proteins
+        call Locate_TS
         if (iflepo == 0) iflepo = -1
       else if (index(keywrd,' NLLSQ') /= 0) then
         write(iw,'(5x,a)')" Transition state refinement using NLLSQ"

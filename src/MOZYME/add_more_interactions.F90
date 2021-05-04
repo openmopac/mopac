@@ -77,6 +77,7 @@ subroutine add_more_interactions()
         return
     end if
     h(1:i) = temp_store(1:i)
+    h(i+1:) = 0.d0
 !
     temp_store = f
     deallocate(f)

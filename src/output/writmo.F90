@@ -499,11 +499,13 @@
           end do 
         end if
       end if 
+      if (prt_coords) then
 !
 !     WRITE OUT THE GEOMETRY
 !
-      write (iw, '(3/)') 
-      if (prt_coords) call geout (1)
+        write (iw, '(3/)') 
+        call geout (1)
+      end if
       if (prt_cart) then
         if (numat > 9999) then
           write (iw, '(/28x,'' CARTESIAN COORDINATES'',/10000(/,i6,3x,a2,3x,3F16.9))') &
@@ -553,6 +555,9 @@
       if (norbs*nelecs > 0 ) then 
         if (id == 0 .and. .not. mozyme) &
         write (iw, '(2/,''      MOLECULAR POINT GROUP   :   '',A4)') name 
+        if (index(keywrd, " RAMA") /= 0) then
+          call output_rama()
+        end if
         if (mozyme) then
           if (index(keywrd," RE-LOC") /= 0) then
             write(iw,"(10x,a,/)")"  LMOs being Re-Localized"
