@@ -92,23 +92,25 @@
         t(i) = dble(i)*1.0D-10 
       end do 
 !
-      if (mol_weight > 0) then 
-        t(1) = t(1) + ddot(numat,atmass(:numat),1,y(:numat)**2+z(:numat)**2,1) 
-        t(2) = t(2) - ddot(numat,atmass(:numat)*x(:numat),1,y(:numat),1) 
-        t(3) = t(3) + ddot(numat,atmass(:numat),1,z(:numat)**2+x(:numat)**2,1) 
-        t(4) = t(4) - ddot(numat,atmass(:numat)*z(:numat),1,x(:numat),1) 
-        t(5) = t(5) - ddot(numat,atmass(:numat)*y(:numat),1,z(:numat),1) 
-        t(6) = t(6) + ddot(numat,atmass(:numat),1,x(:numat)**2+y(:numat)**2,1) 
-      else 
-        do i = 1, numat 
-          t(1) = t(1) + (y(i)**2+z(i)**2) 
-          t(2) = t(2) - x(i)*y(i) 
-          t(3) = t(3) + (z(i)**2+x(i)**2) 
-          t(4) = t(4) - z(i)*x(i) 
-          t(5) = t(5) - y(i)*z(i) 
-          t(6) = t(6) + (x(i)**2+y(i)**2) 
-        end do 
-      end if 
+      if (mol_weight > 0) then
+        do i = 1, numat
+          t(1) = t(1) + atmass(i)*(y(i)**2+z(i)**2)
+          t(2) = t(2) - atmass(i)*x(i)*y(i)
+          t(3) = t(3) + atmass(i)*(z(i)**2+x(i)**2)
+          t(4) = t(4) - atmass(i)*z(i)*x(i)
+          t(5) = t(5) - atmass(i)*y(i)*z(i)
+          t(6) = t(6) + atmass(i)*(x(i)**2+y(i)**2)
+        end do
+      else
+        do i = 1, numat
+          t(1) = t(1) + (y(i)**2+z(i)**2)
+          t(2) = t(2) - x(i)*y(i)
+          t(3) = t(3) + (z(i)**2+x(i)**2)
+          t(4) = t(4) - z(i)*x(i)
+          t(5) = t(5) - y(i)*z(i)
+          t(6) = t(6) + (x(i)**2+y(i)**2)
+        end do
+      end if
 !
       call rsp (t, 3, eig, evec) 
       if (mol_weight>0 .and. first .and. index(keywrd,'RC=')==0) then 
