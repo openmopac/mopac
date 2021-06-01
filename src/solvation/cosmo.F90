@@ -209,7 +209,7 @@ subroutine coscav
     use funcon_C, only : pi
     use chanel_C, only : iw
     implicit none
-    integer :: i, i0, ik, ilipa, info, inset, ipm, ips, ix, j, jmax, jps, k, &
+    integer :: i, i0, ik, ilipa, inset, ipm, ips, ix, j, jmax, jps, k, &
    & l, nara, narea, nfl1, nfl2, niter, nps0, maxrs
     double precision :: aa, d2, dist, dist1, dist2, dist3, fdiagr, r, ri, &
    & ri2, rj, rr, sininv, sp, spm, x1, x2, x3, x4, dists
@@ -610,11 +610,11 @@ subroutine coscav
    !
    ! PERFORM CHOLESKY FACTORIZATION
    !
-    call coscl1 (amat, nsetf, nps, info)
+    call coscl1 (amat, nsetf, nps)
     deallocate (rdat, rsc, tm, nn, isort, ipsrs, nipsrs, nset, nipa, lipa, dirtm, finel)
     100 continue
 end subroutine coscav
-subroutine coscl1 (a, id, n, info)
+subroutine coscl1 (a, id, n)
    ! THIS ROUTINE PERFORMS A CHOLESKY FACTORIZATION
    ! INPUT:   A = PACKED LOWER TRIANGLE OF A
    !               SYMMETRIC POSITIVE DEFINITE N*N MATRIX
@@ -625,7 +625,6 @@ subroutine coscl1 (a, id, n, info)
     integer, intent (in) :: n
     double precision, dimension (*), intent (inout) :: a
     integer, dimension (n), intent (inout) :: id
-    integer, intent (out) :: info
     integer :: i, indi, indk, j, k, kk
     double precision :: summe
     indi = 0
@@ -633,7 +632,6 @@ subroutine coscl1 (a, id, n, info)
       id(i) = indi
       indi = indi + i
     end do
-    info = 0
     do k = 1, n
       indk = id(k)
       kk = k + indk
@@ -646,7 +644,6 @@ subroutine coscl1 (a, id, n, info)
         summe = a(k + indi) - summe
         if (i == k) then
           if (summe < 0.0d0) then
-            info = -1
             summe = a(kk)
           end if
           a(kk) = 1.d0 / Sqrt (summe)
@@ -1867,7 +1864,7 @@ subroutine cosini(l_print)
     end if 
     call extvdw (usevdw, rvdw)
     if (moperr) return
-    rsolv = 1.3d0
+    rsolv = 1.30005d0
     ioldcv = 0
     inrsol = Index (keywrd, " RSOLV=")
     if (inrsol /= 0) then

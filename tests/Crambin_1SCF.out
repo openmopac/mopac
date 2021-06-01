@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.055M **
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,12 +12,12 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Feb 26 19:05:19 2021  *
+ *  CALCULATION DONE:                                Tue Jun  1 16:39:11 2021  *
  *  PDBOUT     - PRINT GEOMETRY IN PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
- *  Keyword:   START_RES=(1A 66) 
+ *  Keyword:     START_RES=(1A 66) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
- *  Keyword:   CHAINS=(A) 
+ *  Keyword:     CHAINS=(A) 
  *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
  *  RESIDUES   - DETERMINE THE SEQUENCE OF RESIDUES
  *  1SCF       - DO 1 SCF AND THEN STOP 
@@ -31,7 +31,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
-
+ 
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -682,7 +682,7 @@
    648       H(HETATM  649 1H2  EOH B  66)   16.47100000  *   1.10900000  *  13.51600000  *
    649       H(HETATM  650 2H2  EOH B  66)   16.16500000  *   0.57400000  *  11.84100000  *
    650       H(HETATM  651  H   EOH B  66)   14.08500000  *   2.06100000  *  12.73200000  *
-
+ 
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -1035,332 +1035,332 @@
     325          O (ATOM    325  OD1 ASN A  46)     324
     326          N (ATOM    326  ND2 ASN A  46)     324    643    644
     327          O (ATOM    327  O   ASN A  46)     321
-    328          C (HETATM  329  C1  EOH A  66)     329    645    646    647
-    329          C (HETATM  330  C2  EOH A  66)     330    328    648    649
-    330          O (HETATM  331  O   EOH A  66)     329    650
-    331          H (ATOM    332 1H   THR A   1)       1
-    332          H (ATOM    333 2H   THR A   1)       1
-    333          H (ATOM    334  HA  THR A   1)       2
-    334          H (ATOM    335  HB  THR A   1)       5
-    335          H (ATOM    336  HG1 THR A   1)       6
-    336          H (ATOM    337 1HG2 THR A   1)       7
-    337          H (ATOM    338 2HG2 THR A   1)       7
-    338          H (ATOM    339 3HG2 THR A   1)       7
-    339          H (ATOM    340  H   THR A   2)       8
-    340          H (ATOM    341  HA  THR A   2)       9
-    341          H (ATOM    342  HB  THR A   2)      12
-    342          H (ATOM    343  HG1 THR A   2)      13
-    343          H (ATOM    344 1HG2 THR A   2)      14
-    344          H (ATOM    345 2HG2 THR A   2)      14
-    345          H (ATOM    346 3HG2 THR A   2)      14
-    346          H (ATOM    347  H   CYS A   3)      15
-    347          H (ATOM    348  HA  CYS A   3)      16
-    348          H (ATOM    349 1HB  CYS A   3)      19
-    349          H (ATOM    350 2HB  CYS A   3)      19
-    350          H (ATOM    351  H   CYS A   4)      21
-    351          H (ATOM    352  HA  CYS A   4)      22
-    352          H (ATOM    353 1HB  CYS A   4)      25
-    353          H (ATOM    354 2HB  CYS A   4)      25
-    354          H (ATOM    355  HA  PRO A   5)      28
-    355          H (ATOM    356 1HB  PRO A   5)      31
-    356          H (ATOM    357 2HB  PRO A   5)      31
-    357          H (ATOM    358 1HG  PRO A   5)      32
-    358          H (ATOM    359 2HG  PRO A   5)      32
-    359          H (ATOM    360 1HD  PRO A   5)      33
-    360          H (ATOM    361 2HD  PRO A   5)      33
-    361          H (ATOM    362  H   SER A   6)      34
-    362          H (ATOM    363  HA  SER A   6)      35
-    363          H (ATOM    364 1HB  SER A   6)      38
-    364          H (ATOM    365 2HB  SER A   6)      38
-    365          H (ATOM    366  HG  SER A   6)      39
-    366          H (ATOM    367  H   ILE A   7)      40
-    367          H (ATOM    368  HA  ILE A   7)      41
-    368          H (ATOM    369  HB  ILE A   7)      44
-    369          H (ATOM    370 1HG1 ILE A   7)      45
-    370          H (ATOM    371 2HG1 ILE A   7)      45
-    371          H (ATOM    372 1HG2 ILE A   7)      46
-    372          H (ATOM    373 2HG2 ILE A   7)      46
-    373          H (ATOM    374 3HG2 ILE A   7)      46
-    374          H (ATOM    375 1HD1 ILE A   7)      47
-    375          H (ATOM    376 2HD1 ILE A   7)      47
-    376          H (ATOM    377 3HD1 ILE A   7)      47
-    377          H (ATOM    378  H   VAL A   8)      48
-    378          H (ATOM    379  HA  VAL A   8)      49
-    379          H (ATOM    380  HB  VAL A   8)      52
-    380          H (ATOM    381 1HG1 VAL A   8)      53
-    381          H (ATOM    382 2HG1 VAL A   8)      53
-    382          H (ATOM    383 3HG1 VAL A   8)      53
-    383          H (ATOM    384 1HG2 VAL A   8)      54
-    384          H (ATOM    385 2HG2 VAL A   8)      54
-    385          H (ATOM    386 3HG2 VAL A   8)      54
-    386          H (ATOM    387  H   ALA A   9)      55
-    387          H (ATOM    388  HA  ALA A   9)      56
-    388          H (ATOM    389 1HB  ALA A   9)      59
-    389          H (ATOM    390 2HB  ALA A   9)      59
-    390          H (ATOM    391 3HB  ALA A   9)      59
-    391          H (ATOM    392  H   ARG A  10)      60
-    392          H (ATOM    393  HA  ARG A  10)      61
-    393          H (ATOM    394 1HB  ARG A  10)      64
-    394          H (ATOM    395 2HB  ARG A  10)      64
-    395          H (ATOM    396 1HG  ARG A  10)      65
-    396          H (ATOM    397 2HG  ARG A  10)      65
-    397          H (ATOM    398 1HD  ARG A  10)      66
-    398          H (ATOM    399 2HD  ARG A  10)      66
-    399          H (ATOM    400  HE  ARG A  10)      67
-    400          H (ATOM    401 1HH1 ARG A  10)      69
-    401          H (ATOM    402 2HH1 ARG A  10)      69
-    402          H (ATOM    403  HH2 ARG A  10)      70
-    403          H (ATOM    404  H   SER A  11)      71
-    404          H (ATOM    405  HA  SER A  11)      72
-    405          H (ATOM    406 1HB  SER A  11)      75
-    406          H (ATOM    407 2HB  SER A  11)      75
-    407          H (ATOM    408  HG  SER A  11)      76
-    408          H (ATOM    409  H   ASN A  12)      77
-    409          H (ATOM    410  HA  ASN A  12)      78
-    410          H (ATOM    411 1HB  ASN A  12)      81
-    411          H (ATOM    412 2HB  ASN A  12)      81
-    412          H (ATOM    413 1HD2 ASN A  12)      84
-    413          H (ATOM    414 2HD2 ASN A  12)      84
-    414          H (ATOM    415  H   PHE A  13)      85
-    415          H (ATOM    416  HA  PHE A  13)      86
-    416          H (ATOM    417 1HB  PHE A  13)      89
-    417          H (ATOM    418 2HB  PHE A  13)      89
-    418          H (ATOM    419  HD1 PHE A  13)      91
-    419          H (ATOM    420  HD2 PHE A  13)      92
-    420          H (ATOM    421  HE1 PHE A  13)      93
-    421          H (ATOM    422  HE2 PHE A  13)      94
-    422          H (ATOM    423  HZ  PHE A  13)      95
-    423          H (ATOM    424  H   ASN A  14)      96
-    424          H (ATOM    425  HA  ASN A  14)      97
-    425          H (ATOM    426 1HB  ASN A  14)     100
-    426          H (ATOM    427 2HB  ASN A  14)     100
-    427          H (ATOM    428 1HD2 ASN A  14)     103
-    428          H (ATOM    429 2HD2 ASN A  14)     103
-    429          H (ATOM    430  H   VAL A  15)     104
-    430          H (ATOM    431  HA  VAL A  15)     105
-    431          H (ATOM    432  HB  VAL A  15)     108
-    432          H (ATOM    433 1HG1 VAL A  15)     109
-    433          H (ATOM    434 2HG1 VAL A  15)     109
-    434          H (ATOM    435 3HG1 VAL A  15)     109
-    435          H (ATOM    436 1HG2 VAL A  15)     110
-    436          H (ATOM    437 2HG2 VAL A  15)     110
-    437          H (ATOM    438 3HG2 VAL A  15)     110
-    438          H (ATOM    439  H   CYS A  16)     111
-    439          H (ATOM    440  HA  CYS A  16)     112
-    440          H (ATOM    441 1HB  CYS A  16)     115
-    441          H (ATOM    442 2HB  CYS A  16)     115
-    442          H (ATOM    443  H   ARG A  17)     117
-    443          H (ATOM    444  HA  ARG A  17)     118
-    444          H (ATOM    445 1HB  ARG A  17)     121
-    445          H (ATOM    446 2HB  ARG A  17)     121
-    446          H (ATOM    447 1HG  ARG A  17)     122
-    447          H (ATOM    448 2HG  ARG A  17)     122
-    448          H (ATOM    449 1HD  ARG A  17)     123
-    449          H (ATOM    450 2HD  ARG A  17)     123
-    450          H (ATOM    451  HE  ARG A  17)     124
-    451          H (ATOM    452 1HH1 ARG A  17)     126
-    452          H (ATOM    453 2HH1 ARG A  17)     126
-    453          H (ATOM    454  HH2 ARG A  17)     127
-    454          H (ATOM    455  H   LEU A  18)     128
-    455          H (ATOM    456  HA  LEU A  18)     129
-    456          H (ATOM    457 1HB  LEU A  18)     132
-    457          H (ATOM    458 2HB  LEU A  18)     132
-    458          H (ATOM    459  HG  LEU A  18)     133
-    459          H (ATOM    460 1HD1 LEU A  18)     134
-    460          H (ATOM    461 2HD1 LEU A  18)     134
-    461          H (ATOM    462 3HD1 LEU A  18)     134
-    462          H (ATOM    463 1HD2 LEU A  18)     135
-    463          H (ATOM    464 2HD2 LEU A  18)     135
-    464          H (ATOM    465 3HD2 LEU A  18)     135
-    465          H (ATOM    466  HA  PRO A  19)     137
-    466          H (ATOM    467 1HB  PRO A  19)     140
-    467          H (ATOM    468 2HB  PRO A  19)     140
-    468          H (ATOM    469 1HG  PRO A  19)     141
-    469          H (ATOM    470 2HG  PRO A  19)     141
-    470          H (ATOM    471 1HD  PRO A  19)     142
-    471          H (ATOM    472 2HD  PRO A  19)     142
-    472          H (ATOM    473  H   GLY A  20)     143
-    473          H (ATOM    474 1HA  GLY A  20)     144
-    474          H (ATOM    475 2HA  GLY A  20)     144
-    475          H (ATOM    476  H   THR A  21)     147
-    476          H (ATOM    477  HA  THR A  21)     148
-    477          H (ATOM    478  HB  THR A  21)     151
-    478          H (ATOM    479  HG1 THR A  21)     152
-    479          H (ATOM    480 1HG2 THR A  21)     153
-    480          H (ATOM    481 2HG2 THR A  21)     153
-    481          H (ATOM    482 3HG2 THR A  21)     153
-    482          H (ATOM    483  HA  PRO A  22)     155
-    483          H (ATOM    484 1HB  PRO A  22)     158
-    484          H (ATOM    485 2HB  PRO A  22)     158
-    485          H (ATOM    486 1HG  PRO A  22)     159
-    486          H (ATOM    487 2HG  PRO A  22)     159
-    487          H (ATOM    488 1HD  PRO A  22)     160
-    488          H (ATOM    489 2HD  PRO A  22)     160
-    489          H (ATOM    490  H   GLU A  23)     161
-    490          H (ATOM    491  HA  GLU A  23)     162
-    491          H (ATOM    492 1HB  GLU A  23)     165
-    492          H (ATOM    493 2HB  GLU A  23)     165
-    493          H (ATOM    494 1HG  GLU A  23)     166
-    494          H (ATOM    495 2HG  GLU A  23)     166
-    495          H (ATOM    496  HE2 GLU A  23)     169
-    496          H (ATOM    497  H   ALA A  24)     170
-    497          H (ATOM    498  HA  ALA A  24)     171
-    498          H (ATOM    499 1HB  ALA A  24)     174
-    499          H (ATOM    500 2HB  ALA A  24)     174
-    500          H (ATOM    501 3HB  ALA A  24)     174
-    501          H (ATOM    502  H   LEU A  25)     175
-    502          H (ATOM    503  HA  LEU A  25)     176
-    503          H (ATOM    504 1HB  LEU A  25)     179
-    504          H (ATOM    505 2HB  LEU A  25)     179
-    505          H (ATOM    506  HG  LEU A  25)     180
-    506          H (ATOM    507 1HD1 LEU A  25)     181
-    507          H (ATOM    508 2HD1 LEU A  25)     181
-    508          H (ATOM    509 3HD1 LEU A  25)     181
-    509          H (ATOM    510 1HD2 LEU A  25)     182
-    510          H (ATOM    511 2HD2 LEU A  25)     182
-    511          H (ATOM    512 3HD2 LEU A  25)     182
-    512          H (ATOM    513  H   CYS A  26)     183
-    513          H (ATOM    514  HA  CYS A  26)     184
-    514          H (ATOM    515 1HB  CYS A  26)     187
-    515          H (ATOM    516 2HB  CYS A  26)     187
-    516          H (ATOM    517  H   ALA A  27)     189
-    517          H (ATOM    518  HA  ALA A  27)     190
-    518          H (ATOM    519 1HB  ALA A  27)     193
-    519          H (ATOM    520 2HB  ALA A  27)     193
-    520          H (ATOM    521 3HB  ALA A  27)     193
-    521          H (ATOM    522  H   THR A  28)     194
-    522          H (ATOM    523  HA  THR A  28)     195
-    523          H (ATOM    524  HB  THR A  28)     198
-    524          H (ATOM    525  HG1 THR A  28)     199
-    525          H (ATOM    526 1HG2 THR A  28)     200
-    526          H (ATOM    527 2HG2 THR A  28)     200
-    527          H (ATOM    528 3HG2 THR A  28)     200
-    528          H (ATOM    529  H   TYR A  29)     201
-    529          H (ATOM    530  HA  TYR A  29)     202
-    530          H (ATOM    531 1HB  TYR A  29)     205
-    531          H (ATOM    532 2HB  TYR A  29)     205
-    532          H (ATOM    533  HD1 TYR A  29)     207
-    533          H (ATOM    534  HD2 TYR A  29)     208
-    534          H (ATOM    535  HE1 TYR A  29)     209
-    535          H (ATOM    536  HE2 TYR A  29)     210
-    536          H (ATOM    537  HH  TYR A  29)     212
-    537          H (ATOM    538  H   THR A  30)     213
-    538          H (ATOM    539  HA  THR A  30)     214
-    539          H (ATOM    540  HB  THR A  30)     217
-    540          H (ATOM    541  HG1 THR A  30)     218
-    541          H (ATOM    542 1HG2 THR A  30)     219
-    542          H (ATOM    543 2HG2 THR A  30)     219
-    543          H (ATOM    544 3HG2 THR A  30)     219
-    544          H (ATOM    545  H   GLY A  31)     220
-    545          H (ATOM    546 1HA  GLY A  31)     221
-    546          H (ATOM    547 2HA  GLY A  31)     221
-    547          H (ATOM    548  H   CYS A  32)     224
-    548          H (ATOM    549  HA  CYS A  32)     225
-    549          H (ATOM    550 1HB  CYS A  32)     228
-    550          H (ATOM    551 2HB  CYS A  32)     228
-    551          H (ATOM    552  H   ILE A  33)     230
-    552          H (ATOM    553  HA  ILE A  33)     231
-    553          H (ATOM    554  HB  ILE A  33)     234
-    554          H (ATOM    555 1HG1 ILE A  33)     235
-    555          H (ATOM    556 2HG1 ILE A  33)     235
-    556          H (ATOM    557 1HG2 ILE A  33)     236
-    557          H (ATOM    558 2HG2 ILE A  33)     236
-    558          H (ATOM    559 3HG2 ILE A  33)     236
-    559          H (ATOM    560 1HD1 ILE A  33)     237
-    560          H (ATOM    561 2HD1 ILE A  33)     237
-    561          H (ATOM    562 3HD1 ILE A  33)     237
-    562          H (ATOM    563  H   ILE A  34)     238
-    563          H (ATOM    564  HA  ILE A  34)     239
-    564          H (ATOM    565  HB  ILE A  34)     242
-    565          H (ATOM    566 1HG1 ILE A  34)     243
-    566          H (ATOM    567 2HG1 ILE A  34)     243
-    567          H (ATOM    568 1HG2 ILE A  34)     244
-    568          H (ATOM    569 2HG2 ILE A  34)     244
-    569          H (ATOM    570 3HG2 ILE A  34)     244
-    570          H (ATOM    571 1HD1 ILE A  34)     245
-    571          H (ATOM    572 2HD1 ILE A  34)     245
-    572          H (ATOM    573 3HD1 ILE A  34)     245
-    573          H (ATOM    574  H   ILE A  35)     246
-    574          H (ATOM    575  HA  ILE A  35)     247
-    575          H (ATOM    576  HB  ILE A  35)     250
-    576          H (ATOM    577 1HG1 ILE A  35)     251
-    577          H (ATOM    578 2HG1 ILE A  35)     251
-    578          H (ATOM    579 1HG2 ILE A  35)     252
-    579          H (ATOM    580 2HG2 ILE A  35)     252
-    580          H (ATOM    581 3HG2 ILE A  35)     252
-    581          H (ATOM    582 1HD1 ILE A  35)     253
-    582          H (ATOM    583 2HD1 ILE A  35)     253
-    583          H (ATOM    584 3HD1 ILE A  35)     253
-    584          H (ATOM    585  HA  PRO A  36)     255
-    585          H (ATOM    586 1HB  PRO A  36)     258
-    586          H (ATOM    587 2HB  PRO A  36)     258
-    587          H (ATOM    588 1HG  PRO A  36)     259
-    588          H (ATOM    589 2HG  PRO A  36)     259
-    589          H (ATOM    590 1HD  PRO A  36)     260
-    590          H (ATOM    591 2HD  PRO A  36)     260
-    591          H (ATOM    592  H   GLY A  37)     261
-    592          H (ATOM    593 1HA  GLY A  37)     262
-    593          H (ATOM    594 2HA  GLY A  37)     262
-    594          H (ATOM    595  H   ALA A  38)     265
-    595          H (ATOM    596  HA  ALA A  38)     266
-    596          H (ATOM    597 1HB  ALA A  38)     269
-    597          H (ATOM    598 2HB  ALA A  38)     269
-    598          H (ATOM    599 3HB  ALA A  38)     269
-    599          H (ATOM    600  H   THR A  39)     270
-    600          H (ATOM    601  HA  THR A  39)     271
-    601          H (ATOM    602  HB  THR A  39)     274
-    602          H (ATOM    603  HG1 THR A  39)     275
-    603          H (ATOM    604 1HG2 THR A  39)     276
-    604          H (ATOM    605 2HG2 THR A  39)     276
-    605          H (ATOM    606 3HG2 THR A  39)     276
-    606          H (ATOM    607  H   CYS A  40)     277
-    607          H (ATOM    608  HA  CYS A  40)     278
-    608          H (ATOM    609 1HB  CYS A  40)     281
-    609          H (ATOM    610 2HB  CYS A  40)     281
-    610          H (ATOM    611  HA  PRO A  41)     284
-    611          H (ATOM    612 1HB  PRO A  41)     287
-    612          H (ATOM    613 2HB  PRO A  41)     287
-    613          H (ATOM    614 1HG  PRO A  41)     288
-    614          H (ATOM    615 2HG  PRO A  41)     288
-    615          H (ATOM    616 1HD  PRO A  41)     289
-    616          H (ATOM    617 2HD  PRO A  41)     289
-    617          H (ATOM    618  H   GLY A  42)     290
-    618          H (ATOM    619 1HA  GLY A  42)     291
-    619          H (ATOM    620 2HA  GLY A  42)     291
-    620          H (ATOM    621  H   ASP A  43)     294
-    621          H (ATOM    622  HA  ASP A  43)     295
-    622          H (ATOM    623 1HB  ASP A  43)     298
-    623          H (ATOM    624 2HB  ASP A  43)     298
-    624          H (ATOM    625  H   TYR A  44)     302
-    625          H (ATOM    626  HA  TYR A  44)     303
-    626          H (ATOM    627 1HB  TYR A  44)     306
-    627          H (ATOM    628 2HB  TYR A  44)     306
-    628          H (ATOM    629  HD1 TYR A  44)     308
-    629          H (ATOM    630  HD2 TYR A  44)     309
-    630          H (ATOM    631  HE1 TYR A  44)     310
-    631          H (ATOM    632  HE2 TYR A  44)     311
-    632          H (ATOM    633  HH  TYR A  44)     313
-    633          H (ATOM    634  H   ALA A  45)     314
-    634          H (ATOM    635  HA  ALA A  45)     315
-    635          H (ATOM    636 1HB  ALA A  45)     318
-    636          H (ATOM    637 2HB  ALA A  45)     318
-    637          H (ATOM    638 3HB  ALA A  45)     318
-    638          H (ATOM    639  H   ASN A  46)     319
-    639          H (ATOM    640  HA  ASN A  46)     320
-    640          H (ATOM    641  HXT ASN A  46)     322
-    641          H (ATOM    642 1HB  ASN A  46)     323
-    642          H (ATOM    643 2HB  ASN A  46)     323
-    643          H (ATOM    644 1HD2 ASN A  46)     326
-    644          H (ATOM    645 2HD2 ASN A  46)     326
-    645          H (HETATM  646 1H1  EOH A  66)     328
-    646          H (HETATM  647 2H1  EOH A  66)     328
-    647          H (HETATM  648 3H1  EOH A  66)     328
-    648          H (HETATM  649 1H2  EOH A  66)     329
-    649          H (HETATM  650 2H2  EOH A  66)     329
-    650          H (HETATM  651  H   EOH A  66)     330
+    328          C (HETATM  328  C1  EOH A  66)     329    645    646    647
+    329          C (HETATM  329  C2  EOH A  66)     330    328    648    649
+    330          O (HETATM  330  O   EOH A  66)     329    650
+    331          H (ATOM    331 1H   THR A   1)       1
+    332          H (ATOM    332 2H   THR A   1)       1
+    333          H (ATOM    333  HA  THR A   1)       2
+    334          H (ATOM    334  HB  THR A   1)       5
+    335          H (ATOM    335  HG1 THR A   1)       6
+    336          H (ATOM    336 1HG2 THR A   1)       7
+    337          H (ATOM    337 2HG2 THR A   1)       7
+    338          H (ATOM    338 3HG2 THR A   1)       7
+    339          H (ATOM    339  H   THR A   2)       8
+    340          H (ATOM    340  HA  THR A   2)       9
+    341          H (ATOM    341  HB  THR A   2)      12
+    342          H (ATOM    342  HG1 THR A   2)      13
+    343          H (ATOM    343 1HG2 THR A   2)      14
+    344          H (ATOM    344 2HG2 THR A   2)      14
+    345          H (ATOM    345 3HG2 THR A   2)      14
+    346          H (ATOM    346  H   CYS A   3)      15
+    347          H (ATOM    347  HA  CYS A   3)      16
+    348          H (ATOM    348 1HB  CYS A   3)      19
+    349          H (ATOM    349 2HB  CYS A   3)      19
+    350          H (ATOM    350  H   CYS A   4)      21
+    351          H (ATOM    351  HA  CYS A   4)      22
+    352          H (ATOM    352 1HB  CYS A   4)      25
+    353          H (ATOM    353 2HB  CYS A   4)      25
+    354          H (ATOM    354  HA  PRO A   5)      28
+    355          H (ATOM    355 1HB  PRO A   5)      31
+    356          H (ATOM    356 2HB  PRO A   5)      31
+    357          H (ATOM    357 1HG  PRO A   5)      32
+    358          H (ATOM    358 2HG  PRO A   5)      32
+    359          H (ATOM    359 1HD  PRO A   5)      33
+    360          H (ATOM    360 2HD  PRO A   5)      33
+    361          H (ATOM    361  H   SER A   6)      34
+    362          H (ATOM    362  HA  SER A   6)      35
+    363          H (ATOM    363 1HB  SER A   6)      38
+    364          H (ATOM    364 2HB  SER A   6)      38
+    365          H (ATOM    365  HG  SER A   6)      39
+    366          H (ATOM    366  H   ILE A   7)      40
+    367          H (ATOM    367  HA  ILE A   7)      41
+    368          H (ATOM    368  HB  ILE A   7)      44
+    369          H (ATOM    369 1HG1 ILE A   7)      45
+    370          H (ATOM    370 2HG1 ILE A   7)      45
+    371          H (ATOM    371 1HG2 ILE A   7)      46
+    372          H (ATOM    372 2HG2 ILE A   7)      46
+    373          H (ATOM    373 3HG2 ILE A   7)      46
+    374          H (ATOM    374 1HD1 ILE A   7)      47
+    375          H (ATOM    375 2HD1 ILE A   7)      47
+    376          H (ATOM    376 3HD1 ILE A   7)      47
+    377          H (ATOM    377  H   VAL A   8)      48
+    378          H (ATOM    378  HA  VAL A   8)      49
+    379          H (ATOM    379  HB  VAL A   8)      52
+    380          H (ATOM    380 1HG1 VAL A   8)      53
+    381          H (ATOM    381 2HG1 VAL A   8)      53
+    382          H (ATOM    382 3HG1 VAL A   8)      53
+    383          H (ATOM    383 1HG2 VAL A   8)      54
+    384          H (ATOM    384 2HG2 VAL A   8)      54
+    385          H (ATOM    385 3HG2 VAL A   8)      54
+    386          H (ATOM    386  H   ALA A   9)      55
+    387          H (ATOM    387  HA  ALA A   9)      56
+    388          H (ATOM    388 1HB  ALA A   9)      59
+    389          H (ATOM    389 2HB  ALA A   9)      59
+    390          H (ATOM    390 3HB  ALA A   9)      59
+    391          H (ATOM    391  H   ARG A  10)      60
+    392          H (ATOM    392  HA  ARG A  10)      61
+    393          H (ATOM    393 1HB  ARG A  10)      64
+    394          H (ATOM    394 2HB  ARG A  10)      64
+    395          H (ATOM    395 1HG  ARG A  10)      65
+    396          H (ATOM    396 2HG  ARG A  10)      65
+    397          H (ATOM    397 1HD  ARG A  10)      66
+    398          H (ATOM    398 2HD  ARG A  10)      66
+    399          H (ATOM    399  HE  ARG A  10)      67
+    400          H (ATOM    400 1HH1 ARG A  10)      69
+    401          H (ATOM    401 2HH1 ARG A  10)      69
+    402          H (ATOM    402  HH2 ARG A  10)      70
+    403          H (ATOM    403  H   SER A  11)      71
+    404          H (ATOM    404  HA  SER A  11)      72
+    405          H (ATOM    405 1HB  SER A  11)      75
+    406          H (ATOM    406 2HB  SER A  11)      75
+    407          H (ATOM    407  HG  SER A  11)      76
+    408          H (ATOM    408  H   ASN A  12)      77
+    409          H (ATOM    409  HA  ASN A  12)      78
+    410          H (ATOM    410 1HB  ASN A  12)      81
+    411          H (ATOM    411 2HB  ASN A  12)      81
+    412          H (ATOM    412 1HD2 ASN A  12)      84
+    413          H (ATOM    413 2HD2 ASN A  12)      84
+    414          H (ATOM    414  H   PHE A  13)      85
+    415          H (ATOM    415  HA  PHE A  13)      86
+    416          H (ATOM    416 1HB  PHE A  13)      89
+    417          H (ATOM    417 2HB  PHE A  13)      89
+    418          H (ATOM    418  HD1 PHE A  13)      91
+    419          H (ATOM    419  HD2 PHE A  13)      92
+    420          H (ATOM    420  HE1 PHE A  13)      93
+    421          H (ATOM    421  HE2 PHE A  13)      94
+    422          H (ATOM    422  HZ  PHE A  13)      95
+    423          H (ATOM    423  H   ASN A  14)      96
+    424          H (ATOM    424  HA  ASN A  14)      97
+    425          H (ATOM    425 1HB  ASN A  14)     100
+    426          H (ATOM    426 2HB  ASN A  14)     100
+    427          H (ATOM    427 1HD2 ASN A  14)     103
+    428          H (ATOM    428 2HD2 ASN A  14)     103
+    429          H (ATOM    429  H   VAL A  15)     104
+    430          H (ATOM    430  HA  VAL A  15)     105
+    431          H (ATOM    431  HB  VAL A  15)     108
+    432          H (ATOM    432 1HG1 VAL A  15)     109
+    433          H (ATOM    433 2HG1 VAL A  15)     109
+    434          H (ATOM    434 3HG1 VAL A  15)     109
+    435          H (ATOM    435 1HG2 VAL A  15)     110
+    436          H (ATOM    436 2HG2 VAL A  15)     110
+    437          H (ATOM    437 3HG2 VAL A  15)     110
+    438          H (ATOM    438  H   CYS A  16)     111
+    439          H (ATOM    439  HA  CYS A  16)     112
+    440          H (ATOM    440 1HB  CYS A  16)     115
+    441          H (ATOM    441 2HB  CYS A  16)     115
+    442          H (ATOM    442  H   ARG A  17)     117
+    443          H (ATOM    443  HA  ARG A  17)     118
+    444          H (ATOM    444 1HB  ARG A  17)     121
+    445          H (ATOM    445 2HB  ARG A  17)     121
+    446          H (ATOM    446 1HG  ARG A  17)     122
+    447          H (ATOM    447 2HG  ARG A  17)     122
+    448          H (ATOM    448 1HD  ARG A  17)     123
+    449          H (ATOM    449 2HD  ARG A  17)     123
+    450          H (ATOM    450  HE  ARG A  17)     124
+    451          H (ATOM    451 1HH1 ARG A  17)     126
+    452          H (ATOM    452 2HH1 ARG A  17)     126
+    453          H (ATOM    453  HH2 ARG A  17)     127
+    454          H (ATOM    454  H   LEU A  18)     128
+    455          H (ATOM    455  HA  LEU A  18)     129
+    456          H (ATOM    456 1HB  LEU A  18)     132
+    457          H (ATOM    457 2HB  LEU A  18)     132
+    458          H (ATOM    458  HG  LEU A  18)     133
+    459          H (ATOM    459 1HD1 LEU A  18)     134
+    460          H (ATOM    460 2HD1 LEU A  18)     134
+    461          H (ATOM    461 3HD1 LEU A  18)     134
+    462          H (ATOM    462 1HD2 LEU A  18)     135
+    463          H (ATOM    463 2HD2 LEU A  18)     135
+    464          H (ATOM    464 3HD2 LEU A  18)     135
+    465          H (ATOM    465  HA  PRO A  19)     137
+    466          H (ATOM    466 1HB  PRO A  19)     140
+    467          H (ATOM    467 2HB  PRO A  19)     140
+    468          H (ATOM    468 1HG  PRO A  19)     141
+    469          H (ATOM    469 2HG  PRO A  19)     141
+    470          H (ATOM    470 1HD  PRO A  19)     142
+    471          H (ATOM    471 2HD  PRO A  19)     142
+    472          H (ATOM    472  H   GLY A  20)     143
+    473          H (ATOM    473 1HA  GLY A  20)     144
+    474          H (ATOM    474 2HA  GLY A  20)     144
+    475          H (ATOM    475  H   THR A  21)     147
+    476          H (ATOM    476  HA  THR A  21)     148
+    477          H (ATOM    477  HB  THR A  21)     151
+    478          H (ATOM    478  HG1 THR A  21)     152
+    479          H (ATOM    479 1HG2 THR A  21)     153
+    480          H (ATOM    480 2HG2 THR A  21)     153
+    481          H (ATOM    481 3HG2 THR A  21)     153
+    482          H (ATOM    482  HA  PRO A  22)     155
+    483          H (ATOM    483 1HB  PRO A  22)     158
+    484          H (ATOM    484 2HB  PRO A  22)     158
+    485          H (ATOM    485 1HG  PRO A  22)     159
+    486          H (ATOM    486 2HG  PRO A  22)     159
+    487          H (ATOM    487 1HD  PRO A  22)     160
+    488          H (ATOM    488 2HD  PRO A  22)     160
+    489          H (ATOM    489  H   GLU A  23)     161
+    490          H (ATOM    490  HA  GLU A  23)     162
+    491          H (ATOM    491 1HB  GLU A  23)     165
+    492          H (ATOM    492 2HB  GLU A  23)     165
+    493          H (ATOM    493 1HG  GLU A  23)     166
+    494          H (ATOM    494 2HG  GLU A  23)     166
+    495          H (ATOM    495  HE2 GLU A  23)     169
+    496          H (ATOM    496  H   ALA A  24)     170
+    497          H (ATOM    497  HA  ALA A  24)     171
+    498          H (ATOM    498 1HB  ALA A  24)     174
+    499          H (ATOM    499 2HB  ALA A  24)     174
+    500          H (ATOM    500 3HB  ALA A  24)     174
+    501          H (ATOM    501  H   LEU A  25)     175
+    502          H (ATOM    502  HA  LEU A  25)     176
+    503          H (ATOM    503 1HB  LEU A  25)     179
+    504          H (ATOM    504 2HB  LEU A  25)     179
+    505          H (ATOM    505  HG  LEU A  25)     180
+    506          H (ATOM    506 1HD1 LEU A  25)     181
+    507          H (ATOM    507 2HD1 LEU A  25)     181
+    508          H (ATOM    508 3HD1 LEU A  25)     181
+    509          H (ATOM    509 1HD2 LEU A  25)     182
+    510          H (ATOM    510 2HD2 LEU A  25)     182
+    511          H (ATOM    511 3HD2 LEU A  25)     182
+    512          H (ATOM    512  H   CYS A  26)     183
+    513          H (ATOM    513  HA  CYS A  26)     184
+    514          H (ATOM    514 1HB  CYS A  26)     187
+    515          H (ATOM    515 2HB  CYS A  26)     187
+    516          H (ATOM    516  H   ALA A  27)     189
+    517          H (ATOM    517  HA  ALA A  27)     190
+    518          H (ATOM    518 1HB  ALA A  27)     193
+    519          H (ATOM    519 2HB  ALA A  27)     193
+    520          H (ATOM    520 3HB  ALA A  27)     193
+    521          H (ATOM    521  H   THR A  28)     194
+    522          H (ATOM    522  HA  THR A  28)     195
+    523          H (ATOM    523  HB  THR A  28)     198
+    524          H (ATOM    524  HG1 THR A  28)     199
+    525          H (ATOM    525 1HG2 THR A  28)     200
+    526          H (ATOM    526 2HG2 THR A  28)     200
+    527          H (ATOM    527 3HG2 THR A  28)     200
+    528          H (ATOM    528  H   TYR A  29)     201
+    529          H (ATOM    529  HA  TYR A  29)     202
+    530          H (ATOM    530 1HB  TYR A  29)     205
+    531          H (ATOM    531 2HB  TYR A  29)     205
+    532          H (ATOM    532  HD1 TYR A  29)     207
+    533          H (ATOM    533  HD2 TYR A  29)     208
+    534          H (ATOM    534  HE1 TYR A  29)     209
+    535          H (ATOM    535  HE2 TYR A  29)     210
+    536          H (ATOM    536  HH  TYR A  29)     212
+    537          H (ATOM    537  H   THR A  30)     213
+    538          H (ATOM    538  HA  THR A  30)     214
+    539          H (ATOM    539  HB  THR A  30)     217
+    540          H (ATOM    540  HG1 THR A  30)     218
+    541          H (ATOM    541 1HG2 THR A  30)     219
+    542          H (ATOM    542 2HG2 THR A  30)     219
+    543          H (ATOM    543 3HG2 THR A  30)     219
+    544          H (ATOM    544  H   GLY A  31)     220
+    545          H (ATOM    545 1HA  GLY A  31)     221
+    546          H (ATOM    546 2HA  GLY A  31)     221
+    547          H (ATOM    547  H   CYS A  32)     224
+    548          H (ATOM    548  HA  CYS A  32)     225
+    549          H (ATOM    549 1HB  CYS A  32)     228
+    550          H (ATOM    550 2HB  CYS A  32)     228
+    551          H (ATOM    551  H   ILE A  33)     230
+    552          H (ATOM    552  HA  ILE A  33)     231
+    553          H (ATOM    553  HB  ILE A  33)     234
+    554          H (ATOM    554 1HG1 ILE A  33)     235
+    555          H (ATOM    555 2HG1 ILE A  33)     235
+    556          H (ATOM    556 1HG2 ILE A  33)     236
+    557          H (ATOM    557 2HG2 ILE A  33)     236
+    558          H (ATOM    558 3HG2 ILE A  33)     236
+    559          H (ATOM    559 1HD1 ILE A  33)     237
+    560          H (ATOM    560 2HD1 ILE A  33)     237
+    561          H (ATOM    561 3HD1 ILE A  33)     237
+    562          H (ATOM    562  H   ILE A  34)     238
+    563          H (ATOM    563  HA  ILE A  34)     239
+    564          H (ATOM    564  HB  ILE A  34)     242
+    565          H (ATOM    565 1HG1 ILE A  34)     243
+    566          H (ATOM    566 2HG1 ILE A  34)     243
+    567          H (ATOM    567 1HG2 ILE A  34)     244
+    568          H (ATOM    568 2HG2 ILE A  34)     244
+    569          H (ATOM    569 3HG2 ILE A  34)     244
+    570          H (ATOM    570 1HD1 ILE A  34)     245
+    571          H (ATOM    571 2HD1 ILE A  34)     245
+    572          H (ATOM    572 3HD1 ILE A  34)     245
+    573          H (ATOM    573  H   ILE A  35)     246
+    574          H (ATOM    574  HA  ILE A  35)     247
+    575          H (ATOM    575  HB  ILE A  35)     250
+    576          H (ATOM    576 1HG1 ILE A  35)     251
+    577          H (ATOM    577 2HG1 ILE A  35)     251
+    578          H (ATOM    578 1HG2 ILE A  35)     252
+    579          H (ATOM    579 2HG2 ILE A  35)     252
+    580          H (ATOM    580 3HG2 ILE A  35)     252
+    581          H (ATOM    581 1HD1 ILE A  35)     253
+    582          H (ATOM    582 2HD1 ILE A  35)     253
+    583          H (ATOM    583 3HD1 ILE A  35)     253
+    584          H (ATOM    584  HA  PRO A  36)     255
+    585          H (ATOM    585 1HB  PRO A  36)     258
+    586          H (ATOM    586 2HB  PRO A  36)     258
+    587          H (ATOM    587 1HG  PRO A  36)     259
+    588          H (ATOM    588 2HG  PRO A  36)     259
+    589          H (ATOM    589 1HD  PRO A  36)     260
+    590          H (ATOM    590 2HD  PRO A  36)     260
+    591          H (ATOM    591  H   GLY A  37)     261
+    592          H (ATOM    592 1HA  GLY A  37)     262
+    593          H (ATOM    593 2HA  GLY A  37)     262
+    594          H (ATOM    594  H   ALA A  38)     265
+    595          H (ATOM    595  HA  ALA A  38)     266
+    596          H (ATOM    596 1HB  ALA A  38)     269
+    597          H (ATOM    597 2HB  ALA A  38)     269
+    598          H (ATOM    598 3HB  ALA A  38)     269
+    599          H (ATOM    599  H   THR A  39)     270
+    600          H (ATOM    600  HA  THR A  39)     271
+    601          H (ATOM    601  HB  THR A  39)     274
+    602          H (ATOM    602  HG1 THR A  39)     275
+    603          H (ATOM    603 1HG2 THR A  39)     276
+    604          H (ATOM    604 2HG2 THR A  39)     276
+    605          H (ATOM    605 3HG2 THR A  39)     276
+    606          H (ATOM    606  H   CYS A  40)     277
+    607          H (ATOM    607  HA  CYS A  40)     278
+    608          H (ATOM    608 1HB  CYS A  40)     281
+    609          H (ATOM    609 2HB  CYS A  40)     281
+    610          H (ATOM    610  HA  PRO A  41)     284
+    611          H (ATOM    611 1HB  PRO A  41)     287
+    612          H (ATOM    612 2HB  PRO A  41)     287
+    613          H (ATOM    613 1HG  PRO A  41)     288
+    614          H (ATOM    614 2HG  PRO A  41)     288
+    615          H (ATOM    615 1HD  PRO A  41)     289
+    616          H (ATOM    616 2HD  PRO A  41)     289
+    617          H (ATOM    617  H   GLY A  42)     290
+    618          H (ATOM    618 1HA  GLY A  42)     291
+    619          H (ATOM    619 2HA  GLY A  42)     291
+    620          H (ATOM    620  H   ASP A  43)     294
+    621          H (ATOM    621  HA  ASP A  43)     295
+    622          H (ATOM    622 1HB  ASP A  43)     298
+    623          H (ATOM    623 2HB  ASP A  43)     298
+    624          H (ATOM    624  H   TYR A  44)     302
+    625          H (ATOM    625  HA  TYR A  44)     303
+    626          H (ATOM    626 1HB  TYR A  44)     306
+    627          H (ATOM    627 2HB  TYR A  44)     306
+    628          H (ATOM    628  HD1 TYR A  44)     308
+    629          H (ATOM    629  HD2 TYR A  44)     309
+    630          H (ATOM    630  HE1 TYR A  44)     310
+    631          H (ATOM    631  HE2 TYR A  44)     311
+    632          H (ATOM    632  HH  TYR A  44)     313
+    633          H (ATOM    633  H   ALA A  45)     314
+    634          H (ATOM    634  HA  ALA A  45)     315
+    635          H (ATOM    635 1HB  ALA A  45)     318
+    636          H (ATOM    636 2HB  ALA A  45)     318
+    637          H (ATOM    637 3HB  ALA A  45)     318
+    638          H (ATOM    638  H   ASN A  46)     319
+    639          H (ATOM    639  HA  ASN A  46)     320
+    640          H (ATOM    640  HXT ASN A  46)     322
+    641          H (ATOM    641 1HB  ASN A  46)     323
+    642          H (ATOM    642 2HB  ASN A  46)     323
+    643          H (ATOM    643 1HD2 ASN A  46)     326
+    644          H (ATOM    644 2HD2 ASN A  46)     326
+    645          H (HETATM  645 1H1  EOH A  66)     328
+    646          H (HETATM  646 2H1  EOH A  66)     328
+    647          H (HETATM  647 3H1  EOH A  66)     328
+    648          H (HETATM  648 1H2  EOH A  66)     329
+    649          H (HETATM  649 2H2  EOH A  66)     329
+    650          H (HETATM  650  H   EOH A  66)     330
 
    Ion                PDB Label        Charge     Distance        PDB label for Salt Bridge   Charge
-
+ 
 
                  All other ions
 
@@ -1372,10 +1372,10 @@
 
  PLS ESCF USING THE OLD LMOs:    -2991.990525 KCAL/MOL
 
- ITER.      1 PLS= 0.430E-02           ENERGY   -2991.99095 DELTAE-2991.9909509
+ ITER.      1 PLS= 0.430E-02           ENERGY   -2991.99095 DELTAE-2991.9909507
  ITER.      2 PLS= 0.336E-02           ENERGY   -2991.99112 DELTAE   -0.0001733
- ITER.      3 PLS= 0.219E-02           ENERGY   -2991.99109 DELTAE    0.0000300
- ITER.      4 PLS= 0.160E-02           ENERGY   -2991.99121 DELTAE   -0.0001203
+ ITER.      3 PLS= 0.219E-02           ENERGY   -2991.99109 DELTAE    0.0000299
+ ITER.      4 PLS= 0.160E-02           ENERGY   -2991.99121 DELTAE   -0.0001205
 
  -------------------------------------------------------------------------------
  START_RES=(1A 66)  CHAINS=(A)  1SCF pdbout MOZYME pl oldens residue CHARGE=-1
@@ -1388,8 +1388,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.055M)
-                                                       Fri Feb 26 19:05:34 2021
+                                                       MOPAC2016 (Version: 21.145M)
+                                                       Tue Jun  1 16:39:59 2021
 
 
 
@@ -1413,16 +1413,16 @@
 
 
           SCF CALCULATIONS        =          1
-
-          WALL-CLOCK TIME         =         14.758 SECONDS
-          COMPUTATION TIME        =         14.731 SECONDS
+ 
+          WALL-CLOCK TIME         =         47.789 SECONDS
+          COMPUTATION TIME        =         47.620 SECONDS
 
 
 
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
-
+ 
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -2943,7 +2943,7 @@
   206          C(ATOM    206  CG  TYR A  29)          -0.054171        4.0542     1.06363     2.99055
   207          C(ATOM    207  CD1 TYR A  29)          -0.071049        4.0710     1.08708     2.98397
   208          C(ATOM    208  CD2 TYR A  29)          -0.089949        4.0899     1.08487     3.00508
-  209          C(ATOM    209  CE1 TYR A  29)          -0.313350        4.3134     1.07803     3.23532
+  209          C(ATOM    209  CE1 TYR A  29)          -0.313350        4.3133     1.07803     3.23532
   210          C(ATOM    210  CE2 TYR A  29)          -0.264811        4.2648     1.07115     3.19366
   211          C(ATOM    211  CZ  TYR A  29)           0.309701        3.6903     1.07444     2.61586
   212          O(ATOM    212  OH  TYR A  29)          -0.527836        6.5278     1.81960     4.70824
@@ -3344,7 +3344,7 @@
   607          H(ATOM    608  HA  CYS A  40)           0.172867        0.8271     0.82713
   608          H(ATOM    609 1HB  CYS A  40)           0.192228        0.8078     0.80777
   609          H(ATOM    610 2HB  CYS A  40)           0.210581        0.7894     0.78942
-  610          H(ATOM    611  HA  PRO A  41)           0.155477        0.8445     0.84452
+  610          H(ATOM    611  HA  PRO A  41)           0.155478        0.8445     0.84452
   611          H(ATOM    612 1HB  PRO A  41)           0.175457        0.8245     0.82454
   612          H(ATOM    613 2HB  PRO A  41)           0.146041        0.8540     0.85396
   613          H(ATOM    614 1HG  PRO A  41)           0.155050        0.8450     0.84495
@@ -3437,7 +3437,7 @@
       ALA A  45       +0.051
       ASN A  46       -0.089
       EOH A  66       -0.001
-
+ 
 
 
  DIPOLE           X         Y         Z       TOTAL
@@ -4108,6 +4108,6 @@
 
 
 
- TOTAL JOB TIME:            14.80 SECONDS
+ TOTAL JOB TIME:            48.01 SECONDS
 
  == MOPAC DONE ==

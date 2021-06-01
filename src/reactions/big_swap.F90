@@ -383,11 +383,11 @@
       if (first) then
         call  geo_diff(sum, rms, .false.)  
         if (density < 0.01d0) then
-          write(iw,'(/10x,a,f21.3,a)')"Current value of GEO_REF constraint:", density, " Kcal/mol/Angstrom^2"
+          write(iw,'(/10x,a,f23.3,a)')"Current value of GEO_REF constraint:", density, " Kcal/mol/Angstrom^2"
         else
-          write(iw,'(/10x,a,f20.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
+          write(iw,'(/10x,a,f22.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
         end if
-        write(iw,'(10x,a,f24.2,a)') "Distance between the geometries:", sum,"  Angstroms"  
+        write(iw,'(10x,a,f26.2,a)') "Distance between the geometries:", sum,"  Angstroms"  
       end if        
       call compfg_TS (big_xparam, (mod(jcyc,222) == 0), escf1, escf2, .true., big_grad, .true.)       
       if (first) then
@@ -407,18 +407,18 @@
             e_stress = e_stress + (geo(l,i) - geoa(l,i))**2*density
           end do
         end do
-        write(iw,'(/10x,a,f17.3,a)') "Heat of formation of the first geometry:", escf1 - e_stress, " Kcal/mol"
-        write(iw,'(10x,a,f16.3,a)') "Heat of formation of the second geometry:", escf2 - e_stress, " Kcal/mol"
-        write(iw,'(10x,a,f8.2,a)') "Contribution to heat of formation due to stress:", 2.d0*e_stress, "  Kcal/mol"
+        write(iw,'(/10x,a,f19.3,a)') "Heat of formation of the first geometry:", escf1 - e_stress, " Kcal/mol"
+        write(iw,'(10x,a,f18.3,a)') "Heat of formation of the second geometry:", escf2 - e_stress, " Kcal/mol"
+        write(iw,'(10x,a,f11.3,a)') "Contribution to heat of formation due to stress:", 2.d0*e_stress, "  Kcal/mol"
         sum1 = sqrt(dot(big_grad, big_grad, nvar))
         sum2 = sqrt(dot(big_grad(nvar + 1), big_grad(nvar + 1), nvar))
-        write(iw,'(10x,a,f19.2,a)') "Gradient arising from first geometry:", sum1, "  Kcal/mol/Angstrom"
-        write(iw,'(10x,a,f18.2,a)') "Gradient arising from second geometry:", sum2,"  Kcal/mol/Angstrom"  
+        write(iw,'(10x,a,f22.3,a)') "Gradient arising from first geometry:", sum1, "  Kcal/mol/Angstrom"
+        write(iw,'(10x,a,f21.3,a)') "Gradient arising from second geometry:", sum2,"  Kcal/mol/Angstrom"  
         sum = dot(big_grad, big_grad(nvar + 1), nvar)/(sum1*sum2)
         if (sum < 0.d0) then
-          write(iw,'(10x,a, f25.2, a, /)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
+          write(iw,'(10x,a, f27.2, a, /)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
         else
-          write(iw,'(10x,a, f13.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
+          write(iw,'(10x,a, f15.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
         end if
         big_grad(:big_nvar) = store_big_grad(:big_nvar)
       end if
@@ -605,9 +605,9 @@
   end if
   write(iw,'(/10x,a,a)') "Job name: ","'"//input_fn(:len_trim(input_fn) - 5)//"'"
   if (density < 0.01d0) then
-    write(iw,'(10x,a,f21.3,a)')"Current value of GEO_REF constraint:", density, " Kcal/mol/Angstrom^2"
+    write(iw,'(10x,a,f23.3,a)')"Current value of GEO_REF constraint:", density, " Kcal/mol/Angstrom^2"
   else
-    write(iw,'(/10x,a,f20.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
+    write(iw,'(/10x,a,f22.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
   end if
   write(iw,'(10x,a,f24.2,a)') "Distance between the geometries:", sum,"  Angstroms" 
   do i = 1, nvar 
@@ -616,18 +616,18 @@
     geo(l,k) = big_xparam(i) 
   end do 
   call geo_diff(sum, rms, .true.)
-  write(iw,'(/10x,a,f17.3,a)') "Heat of formation of the first geometry:", escf1 - e_stress, " Kcal/mol"
-  write(iw,'(10x,a,f16.3,a)') "Heat of formation of the second geometry:", escf2 - e_stress, " Kcal/mol"
-  write(iw,'(10x,a,f8.2,a)') "Contribution to heat of formation due to stress:", 2.d0*e_stress, "  Kcal/mol"
-  escf1 = sqrt(dot(big_grad, big_grad, nvar))
-  escf2 = sqrt(dot(big_grad(nvar + 1), big_grad(nvar + 1), nvar))
-  write(iw,'(10x,a,f19.2,a)') "Gradient arising from first geometry:", escf1, "  Kcal/mol/Angstrom"
-  write(iw,'(10x,a,f18.2,a)') "Gradient arising from second geometry:", escf2,"  Kcal/mol/Angstrom"  
-  sum = dot(big_grad, big_grad(nvar + 1), nvar)/(escf1*escf2)
+  write(iw,'(/10x,a,f19.3,a)') "Heat of formation of the first geometry:", escf1 - e_stress, " Kcal/mol"
+  write(iw,'(10x,a,f18.3,a)') "Heat of formation of the second geometry:", escf2 - e_stress, " Kcal/mol"
+  write(iw,'(10x,a,f11.3,a)') "Contribution to heat of formation due to stress:", 2.d0*e_stress, "  Kcal/mol"
+  sum1 = sqrt(dot(big_grad, big_grad, nvar))
+  sum2 = sqrt(dot(big_grad(nvar + 1), big_grad(nvar + 1), nvar))
+  write(iw,'(10x,a,f22.3,a)') "Gradient arising from first geometry:", sum1, "  Kcal/mol/Angstrom"
+  write(iw,'(10x,a,f21.3,a)') "Gradient arising from second geometry:", sum2,"  Kcal/mol/Angstrom"  
+  sum = dot(big_grad, big_grad(nvar + 1), nvar)/(sum1*sum2)
   if (sum < 0.d0) then
-    write(iw,'(10x,a, f25.2, a)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
+    write(iw,'(10x,a, f27.2, a, /)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
   else
-    write(iw,'(10x,a, f12.2, a)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
+    write(iw,'(10x,a, f15.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
   end if
   do i = 1, nvar
     xparam(i)=0.5d0*(big_xparam(i) + big_xparam(i + nvar))

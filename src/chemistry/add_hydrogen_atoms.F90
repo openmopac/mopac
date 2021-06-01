@@ -2464,13 +2464,18 @@
             if (nat(ibonds(kk,j)) == 1) jj = jj + 1
           end do
         end if
-        if (sum < bond_length .and. jj < 2) then
-          if (bond_length < bond_length_2) then
-            l = k
-            bond_length_2 = bond_length
+        if (jj < 2) then
+          if (sum < bond_length_2) then
+            if (sum < bond_length) then
+              bond_length_2 = bond_length
+              l = k
+              bond_length = sum
+              k = j
+            else
+              bond_length_2 = sum
+              l = j
+            end if
           end if
-          k = j
-          bond_length = sum
         end if
       end do
       if (k > 0) then

@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.121M **
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.121M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue May  4 00:49:34 2021  *
+ *  CALCULATION DONE:                                Tue Jun  1 17:33:33 2021  *
  *  GEO-OK     - OVERRIDE INTERATOMIC DISTANCE AND OTHER SAFETY CHECKS
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Cyclobutadiene_1.arc"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "Cyclobutadiene_2.arc"
@@ -62,7 +62,7 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
             (HETATM    4  C   HET A   1)   0.479   1.072  -0.347        0.34         5.77
             (HETATM   11  C   HET A   1)  -0.291   0.141  -1.181        0.0376       5.81
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
 
    Difference between GEO_DAT and GEO_REF: 5.835 = total,  0.5305 = Average,  0.6846 = RMS, in Angstroms
@@ -100,30 +100,30 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
           Set 1 selected by keywork 'SET' within keyword 'LOCATE-TS'
 
-          Current value of GEO_REF constraint:               30.00  Kcal/mol/Angstrom^2
-          Distance between the geometries:                    5.84  Angstroms
+          Current value of GEO_REF constraint:                 30.00  Kcal/mol/Angstrom^2
+          Distance between the geometries:                      5.84  Angstroms
 
-          Heat of formation of the first geometry:           32.296 Kcal/mol
-          Heat of formation of the second geometry:          32.296 Kcal/mol
-          Contribution to heat of formation due to stress:  309.36  Kcal/mol
-          Gradient arising from first geometry:             272.41  Kcal/mol/Angstrom
-          Gradient arising from second geometry:            272.54  Kcal/mol/Angstrom
-          Angle between gradient vectors:                   179.71  degrees
+          Heat of formation of the first geometry:             32.296 Kcal/mol
+          Heat of formation of the second geometry:            32.296 Kcal/mol
+          Contribution to heat of formation due to stress:    309.358  Kcal/mol
+          Gradient arising from first geometry:               272.414  Kcal/mol/Angstrom
+          Gradient arising from second geometry:              272.543  Kcal/mol/Angstrom
+          Angle between gradient vectors:                     179.71  degrees
 
- CYCLE:     1 TIME:   0.026 TIME LEFT:  2.00D  GRAD.:   192.671 HEAT:  373.9494
+ CYCLE:     1 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:   192.671 HEAT:  373.9494
  CYCLE:     2 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:   191.980 HEAT:  373.3934
- CYCLE:     3 TIME:   0.019 TIME LEFT:  2.00D  GRAD.:   802.825 HEAT:  320.6296
- CYCLE:     4 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:   217.055 HEAT:  224.1060
- CYCLE:     5 TIME:   0.019 TIME LEFT:  2.00D  GRAD.:    99.166 HEAT:  216.6277
- CYCLE:     6 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    50.227 HEAT:  225.1485
- CYCLE:     7 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    34.558 HEAT:  220.5180
- CYCLE:     8 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    27.369 HEAT:  218.9171
- CYCLE:     9 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    20.224 HEAT:  218.5452
- CYCLE:    10 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    13.809 HEAT:  218.3957
- CYCLE:    11 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:     9.043 HEAT:  218.6183
- CYCLE:    12 TIME:   0.019 TIME LEFT:  2.00D  GRAD.:    21.174 HEAT:  218.6631
- CYCLE:    13 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     5.886 HEAT:  218.4811
- CYCLE:    14 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     3.259 HEAT:  218.4838
+ CYCLE:     3 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   802.825 HEAT:  320.6296
+ CYCLE:     4 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:   217.055 HEAT:  224.1060
+ CYCLE:     5 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    99.166 HEAT:  216.6277
+ CYCLE:     6 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    50.227 HEAT:  225.1485
+ CYCLE:     7 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    34.558 HEAT:  220.5180
+ CYCLE:     8 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    27.369 HEAT:  218.9171
+ CYCLE:     9 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    20.224 HEAT:  218.5452
+ CYCLE:    10 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    13.809 HEAT:  218.3957
+ CYCLE:    11 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.043 HEAT:  218.6183
+ CYCLE:    12 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    21.174 HEAT:  218.6631
+ CYCLE:    13 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     5.886 HEAT:  218.4811
+ CYCLE:    14 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     3.259 HEAT:  218.4838
 
      GRADIENT =  3.25875 IS LESS THAN CUTOFF =  4.00000
 
@@ -141,7 +141,7 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
           Job name: 'Locate_TS'
 
-          Current value of GEO_REF constraint:               30.00  Kcal/mol/Angstrom^2
+          Current value of GEO_REF constraint:                 30.00  Kcal/mol/Angstrom^2
           Distance between the geometries:                    3.77  Angstroms
 
                      Atoms that move a lot
@@ -159,35 +159,36 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
             (HETATM    4  C   HET A   1)   0.488   1.035  -0.353        0.25         3.65
             (HETATM   11  C   HET A   1)  -0.317   0.138  -1.184        0.0752       3.73
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
 
-          Heat of formation of the first geometry:           49.948 Kcal/mol
-          Heat of formation of the second geometry:          50.075 Kcal/mol
-          Contribution to heat of formation due to stress:  118.46  Kcal/mol
-          Gradient arising from first geometry:              84.41  Kcal/mol/Angstrom
-          Gradient arising from second geometry:             84.18  Kcal/mol/Angstrom
-          Angle between gradient vectors:                   177.99  degrees
+          Heat of formation of the first geometry:             49.948 Kcal/mol
+          Heat of formation of the second geometry:            50.075 Kcal/mol
+          Contribution to heat of formation due to stress:    118.461  Kcal/mol
+          Gradient arising from first geometry:                84.411  Kcal/mol/Angstrom
+          Gradient arising from second geometry:               84.185  Kcal/mol/Angstrom
+          Angle between gradient vectors:                     177.99  degrees
+
 
           Average of first and second geometries after optimization subject to 
           GEO_REF constraint of 30.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
           'Locate_TS bias=30.0 average.mop'
 
- CYCLE:     1 TIME:   0.050 TIME LEFT:  2.00D  GRAD.:   193.410 HEAT:  315.0738
- CYCLE:     2 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:   192.221 HEAT:  314.4787
+ CYCLE:     1 TIME:   0.051 TIME LEFT:  2.00D  GRAD.:   193.410 HEAT:  315.0738
+ CYCLE:     2 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   192.221 HEAT:  314.4787
  CYCLE:     3 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   281.405 HEAT:  237.1420
- CYCLE:     4 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:   412.663 HEAT:  214.8949
- CYCLE:     5 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    78.798 HEAT:  190.0529
- CYCLE:     6 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    27.161 HEAT:  203.4323
- CYCLE:     7 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    16.596 HEAT:  205.5840
- CYCLE:     8 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    31.313 HEAT:  200.7602
- CYCLE:     9 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    35.100 HEAT:  198.6274
- CYCLE:    10 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    12.840 HEAT:  201.5389
- CYCLE:    11 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     6.326 HEAT:  202.6725
- CYCLE:    12 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     8.094 HEAT:  201.9955
- CYCLE:    13 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     4.328 HEAT:  201.6801
+ CYCLE:     4 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   412.663 HEAT:  214.8949
+ CYCLE:     5 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    78.798 HEAT:  190.0529
+ CYCLE:     6 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    27.161 HEAT:  203.4323
+ CYCLE:     7 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    16.596 HEAT:  205.5840
+ CYCLE:     8 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    31.313 HEAT:  200.7602
+ CYCLE:     9 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    35.100 HEAT:  198.6274
+ CYCLE:    10 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    12.840 HEAT:  201.5389
+ CYCLE:    11 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     6.326 HEAT:  202.6725
+ CYCLE:    12 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     8.094 HEAT:  201.9955
+ CYCLE:    13 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     4.328 HEAT:  201.6801
  CYCLE:    14 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.426 HEAT:  202.0931
- CYCLE:    15 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     4.706 HEAT:  202.0477
+ CYCLE:    15 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     4.706 HEAT:  202.0477
  CYCLE:    16 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     2.694 HEAT:  202.0075
 
      GRADIENT =  2.69378 IS LESS THAN CUTOFF =  4.00000
@@ -206,7 +207,7 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
           Job name: 'Locate_TS'
 
-          Current value of GEO_REF constraint:               60.00  Kcal/mol/Angstrom^2
+          Current value of GEO_REF constraint:                 60.00  Kcal/mol/Angstrom^2
           Distance between the geometries:                    2.31  Angstroms
 
                      Atoms that move a lot
@@ -224,37 +225,38 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
             (HETATM    6  H   HET A   1)  -1.441  -1.668  -0.735        0.13         2.21
             (HETATM   11  C   HET A   1)  -0.325   0.144  -1.180        0.0745       2.29
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
 
-          Heat of formation of the first geometry:           55.867 Kcal/mol
-          Heat of formation of the second geometry:          55.880 Kcal/mol
-          Contribution to heat of formation due to stress:   90.26  Kcal/mol
-          Gradient arising from first geometry:             104.28  Kcal/mol/Angstrom
-          Gradient arising from second geometry:            104.14  Kcal/mol/Angstrom
-          Angle between gradient vectors:                   178.57  degrees
+          Heat of formation of the first geometry:             55.867 Kcal/mol
+          Heat of formation of the second geometry:            55.880 Kcal/mol
+          Contribution to heat of formation due to stress:     90.260  Kcal/mol
+          Gradient arising from first geometry:               104.278  Kcal/mol/Angstrom
+          Gradient arising from second geometry:              104.141  Kcal/mol/Angstrom
+          Angle between gradient vectors:                     178.57  degrees
+
 
           Average of first and second geometries after optimization subject to 
           GEO_REF constraint of 60.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
           'Locate_TS bias=60.0 average.mop'
 
- CYCLE:     1 TIME:   0.034 TIME LEFT:  2.00D  GRAD.:   211.800 HEAT:  278.7852
- CYCLE:     2 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:   209.527 HEAT:  278.0402
- CYCLE:     3 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:   146.416 HEAT:  219.7413
- CYCLE:     4 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:   266.453 HEAT:  198.1094
- CYCLE:     5 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    58.662 HEAT:  191.4829
- CYCLE:     6 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    24.720 HEAT:  198.4061
- CYCLE:     7 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    15.162 HEAT:  200.1826
- CYCLE:     8 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    23.255 HEAT:  197.1604
+ CYCLE:     1 TIME:   0.035 TIME LEFT:  2.00D  GRAD.:   211.800 HEAT:  278.7852
+ CYCLE:     2 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   209.527 HEAT:  278.0402
+ CYCLE:     3 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:   146.416 HEAT:  219.7413
+ CYCLE:     4 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:   266.453 HEAT:  198.1094
+ CYCLE:     5 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    58.662 HEAT:  191.4829
+ CYCLE:     6 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    24.720 HEAT:  198.4061
+ CYCLE:     7 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    15.162 HEAT:  200.1826
+ CYCLE:     8 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    23.255 HEAT:  197.1604
  CYCLE:     9 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    16.802 HEAT:  195.5307
- CYCLE:    10 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    15.818 HEAT:  199.0053
- CYCLE:    11 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    10.040 HEAT:  199.7500
- CYCLE:    12 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    15.381 HEAT:  197.0908
+ CYCLE:    10 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    15.818 HEAT:  199.0053
+ CYCLE:    11 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    10.040 HEAT:  199.7500
+ CYCLE:    12 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    15.381 HEAT:  197.0908
  CYCLE:    13 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.886 HEAT:  196.5417
- CYCLE:    14 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     9.447 HEAT:  198.2906
- CYCLE:    15 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     6.565 HEAT:  198.6534
- CYCLE:    16 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     4.804 HEAT:  197.5712
- CYCLE:    17 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     3.282 HEAT:  197.2797
+ CYCLE:    14 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.447 HEAT:  198.2906
+ CYCLE:    15 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     6.565 HEAT:  198.6534
+ CYCLE:    16 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     4.804 HEAT:  197.5712
+ CYCLE:    17 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     3.282 HEAT:  197.2797
 
      GRADIENT =  3.28200 IS LESS THAN CUTOFF =  4.00000
 
@@ -272,7 +274,7 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
           Job name: 'Locate_TS'
 
-          Current value of GEO_REF constraint:              120.00  Kcal/mol/Angstrom^2
+          Current value of GEO_REF constraint:                120.00  Kcal/mol/Angstrom^2
           Distance between the geometries:                    1.37  Angstroms
 
                      Atoms that move a lot
@@ -290,41 +292,42 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
             (HETATM    6  H   HET A   1)  -1.478  -1.650  -0.739        0.0427       1.32
             (HETATM    8  H   HET A   1)   1.093   1.823  -0.702        0.0425       1.37
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
 
-          Heat of formation of the first geometry:           63.184 Kcal/mol
-          Heat of formation of the second geometry:          63.010 Kcal/mol
-          Contribution to heat of formation due to stress:   71.09  Kcal/mol
-          Gradient arising from first geometry:             128.90  Kcal/mol/Angstrom
-          Gradient arising from second geometry:            130.27  Kcal/mol/Angstrom
-          Angle between gradient vectors:                   178.66  degrees
+          Heat of formation of the first geometry:             63.184 Kcal/mol
+          Heat of formation of the second geometry:            63.010 Kcal/mol
+          Contribution to heat of formation due to stress:     71.086  Kcal/mol
+          Gradient arising from first geometry:               128.901  Kcal/mol/Angstrom
+          Gradient arising from second geometry:              130.271  Kcal/mol/Angstrom
+          Angle between gradient vectors:                     178.66  degrees
+
 
           Average of first and second geometries after optimization subject to 
           GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
           'Locate_TS bias=120.0 average.mop'
 
- CYCLE:     1 TIME:   0.034 TIME LEFT:  2.00D  GRAD.:    88.983 HEAT:  188.1511
- CYCLE:     2 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    87.320 HEAT:  188.0074
+ CYCLE:     1 TIME:   0.031 TIME LEFT:  2.00D  GRAD.:    88.983 HEAT:  188.1511
+ CYCLE:     2 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    87.320 HEAT:  188.0074
  CYCLE:     3 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    29.652 HEAT:  180.3734
- CYCLE:     4 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    82.985 HEAT:  183.2689
- CYCLE:     5 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    85.030 HEAT:  187.9147
+ CYCLE:     4 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    82.985 HEAT:  183.2689
+ CYCLE:     5 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    85.030 HEAT:  187.9147
  CYCLE:     6 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    64.145 HEAT:  186.2564
- CYCLE:     7 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    38.312 HEAT:  181.3713
- CYCLE:     8 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    39.581 HEAT:  176.2078
- CYCLE:     9 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    20.184 HEAT:  175.1197
+ CYCLE:     7 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    38.312 HEAT:  181.3713
+ CYCLE:     8 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    39.581 HEAT:  176.2078
+ CYCLE:     9 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    20.184 HEAT:  175.1197
  CYCLE:    10 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    16.085 HEAT:  175.0112
- CYCLE:    11 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    14.489 HEAT:  174.9472
+ CYCLE:    11 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    14.489 HEAT:  174.9472
  CYCLE:    12 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    12.045 HEAT:  174.8797
- CYCLE:    13 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    16.764 HEAT:  175.3933
+ CYCLE:    13 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    16.764 HEAT:  175.3933
  CYCLE:    14 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    10.424 HEAT:  175.2581
- CYCLE:    15 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     9.426 HEAT:  175.1348
- CYCLE:    16 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:     8.862 HEAT:  175.0230
- CYCLE:    17 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    72.611 HEAT:  174.4867
- CYCLE:    18 TIME:   0.019 TIME LEFT:  2.00D  GRAD.:     8.553 HEAT:  174.5240
- CYCLE:    19 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     5.520 HEAT:  174.6106
- CYCLE:    20 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:     4.127 HEAT:  174.1211
- CYCLE:    21 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:     3.363 HEAT:  174.1656
+ CYCLE:    15 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.426 HEAT:  175.1348
+ CYCLE:    16 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     8.862 HEAT:  175.0230
+ CYCLE:    17 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    72.611 HEAT:  174.4867
+ CYCLE:    18 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     8.553 HEAT:  174.5240
+ CYCLE:    19 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     5.520 HEAT:  174.6106
+ CYCLE:    20 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     4.127 HEAT:  174.1211
+ CYCLE:    21 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     3.363 HEAT:  174.1656
 
      GRADIENT =  3.36291 IS LESS THAN CUTOFF =  4.00000
 
@@ -342,7 +345,7 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
           Job name: 'Locate_TS'
 
-          Current value of GEO_REF constraint:              120.00  Kcal/mol/Angstrom^2
+          Current value of GEO_REF constraint:                120.00  Kcal/mol/Angstrom^2
           Distance between the geometries:                    1.11  Angstroms
 
                      Atoms that move a lot
@@ -360,15 +363,16 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
             (HETATM    8  H   HET A   1)   1.102   1.818  -0.694        0.0271       1.08
             (HETATM    6  H   HET A   1)  -1.490  -1.643  -0.736        0.0270       1.10
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
 
-          Heat of formation of the first geometry:           61.366 Kcal/mol
-          Heat of formation of the second geometry:          62.252 Kcal/mol
-          Contribution to heat of formation due to stress:   50.55  Kcal/mol
-          Gradient arising from first geometry:             110.70  Kcal/mol/Angstrom
-          Gradient arising from second geometry:            109.55  Kcal/mol/Angstrom
-          Angle between gradient vectors:                   178.31  degrees
+          Heat of formation of the first geometry:             61.366 Kcal/mol
+          Heat of formation of the second geometry:            62.252 Kcal/mol
+          Contribution to heat of formation due to stress:     50.548  Kcal/mol
+          Gradient arising from first geometry:               110.704  Kcal/mol/Angstrom
+          Gradient arising from second geometry:              109.553  Kcal/mol/Angstrom
+          Angle between gradient vectors:                     178.31  degrees
+
 
           Average of first and second geometries after optimization subject to 
           GEO_REF constraint of 120.0 Kcal/mol/Angstrom^2 towards the data-set geometry written to file:
@@ -380,12 +384,12 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
  CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    19.715 HEAT:  73.32376
  CYCLE:     3 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    14.893 HEAT:  73.16719
  CYCLE:     4 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    19.787 HEAT:  73.32116
- CYCLE:     5 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    15.031 HEAT:  73.16652
- CYCLE:     6 TIME:   0.015 TIME LEFT:  2.00D  GRAD.:    12.958 HEAT:  73.05817
+ CYCLE:     5 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    15.031 HEAT:  73.16652
+ CYCLE:     6 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    12.958 HEAT:  73.05817
  CYCLE:     7 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    13.433 HEAT:  72.74146
- CYCLE:     8 TIME:   0.019 TIME LEFT:  2.00D  GRAD.:    21.923 HEAT:  72.58794
+ CYCLE:     8 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    21.923 HEAT:  72.58794
  CYCLE:     9 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.273 HEAT:  72.44839
- CYCLE:    10 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     4.969 HEAT:  72.36921
+ CYCLE:    10 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     4.969 HEAT:  72.36921
 
      GRADIENT =  4.96904 IS LESS THAN CUTOFF =  5.00000
 
@@ -398,32 +402,32 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
           HESSIAN CALCULATED NUMERICALLY
 
- CYCLE:     1 TIME:   0.119 TIME LEFT:  2.00D  GRAD.:    18.371 HEAT:  72.36817
- CYCLE:     2 TIME:   0.022 TIME LEFT:  2.00D  GRAD.:    35.110 HEAT:  73.32733
- CYCLE:     2 TIME:   0.019 TIME LEFT:  2.00D  GRAD.:    18.757 HEAT:  72.49871
- CYCLE:     3 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    15.202 HEAT:  72.40461
- CYCLE:     4 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    16.317 HEAT:  72.13347
- CYCLE:     5 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    16.009 HEAT:  72.01596
+ CYCLE:     1 TIME:   0.117 TIME LEFT:  2.00D  GRAD.:    18.371 HEAT:  72.36817
+ CYCLE:     2 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:    35.110 HEAT:  73.32733
+ CYCLE:     2 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    18.757 HEAT:  72.49871
+ CYCLE:     3 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    15.202 HEAT:  72.40461
+ CYCLE:     4 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    16.317 HEAT:  72.13347
+ CYCLE:     5 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    16.009 HEAT:  72.01596
  CYCLE:     6 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:    14.421 HEAT:  72.04954
- CYCLE:     7 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:     9.958 HEAT:  71.86089
- CYCLE:     8 TIME:   0.019 TIME LEFT:  2.00D  GRAD.:     2.550 HEAT:  71.82040
+ CYCLE:     7 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.958 HEAT:  71.86089
+ CYCLE:     8 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     2.550 HEAT:  71.82040
 
      GRADIENT =  2.55009 IS LESS THAN CUTOFF =  3.00000
 
 
   Loop:   2  Energy minimization, excluding active site, using L-BFGS
 
- CYCLE:     1 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    10.200 HEAT:  71.81277
- CYCLE:     2 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:    10.253 HEAT:  71.81141
- CYCLE:     3 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:  1448.629 HEAT:  325.8587
- CYCLE:     4 TIME:   0.034 TIME LEFT:  2.00D  GRAD.:    13.152 HEAT:  71.82088
- CYCLE:     5 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:  1442.946 HEAT:  311.1012
+ CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    10.200 HEAT:  71.81277
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    10.253 HEAT:  71.81141
+ CYCLE:     3 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:  1448.629 HEAT:  325.8587
+ CYCLE:     4 TIME:   0.035 TIME LEFT:  2.00D  GRAD.:    13.152 HEAT:  71.82088
+ CYCLE:     5 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:  1442.946 HEAT:  311.1012
  CYCLE:     6 TIME:   0.035 TIME LEFT:  2.00D  GRAD.:    18.895 HEAT:  71.86191
- CYCLE:     7 TIME:   0.026 TIME LEFT:  2.00D  GRAD.:   246.303 HEAT:  88.19662
- CYCLE:     8 TIME:   0.029 TIME LEFT:  2.00D  GRAD.:    18.635 HEAT:  71.77092
- CYCLE:     9 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:    24.636 HEAT:  71.83663
- CYCLE:    10 TIME:   0.015 TIME LEFT:  2.00D  GRAD.:     5.153 HEAT:  71.67033
- CYCLE:    11 TIME:   0.014 TIME LEFT:  2.00D  GRAD.:     4.237 HEAT:  71.65502
+ CYCLE:     7 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:   246.303 HEAT:  88.19662
+ CYCLE:     8 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:    18.635 HEAT:  71.77092
+ CYCLE:     9 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    24.636 HEAT:  71.83663
+ CYCLE:    10 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     5.153 HEAT:  71.67033
+ CYCLE:    11 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     4.237 HEAT:  71.65502
 
      GRADIENT =  4.23688 IS LESS THAN CUTOFF =  5.00000
 
@@ -433,22 +437,22 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
           Transition state on cycle 2 written to file:
           'Locate_TS Loop2.mop'
 
- CYCLE:     1 TIME:   0.014 TIME LEFT:  2.00D  GRAD.:     9.765 HEAT:  71.65466
- CYCLE:     2 TIME:   0.018 TIME LEFT:  2.00D  GRAD.:     6.273 HEAT:  71.73723
- CYCLE:     3 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     2.843 HEAT:  71.68059
+ CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     9.765 HEAT:  71.65466
+ CYCLE:     2 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     6.273 HEAT:  71.73723
+ CYCLE:     3 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     2.843 HEAT:  71.68059
 
      GRADIENT =  2.84289 IS LESS THAN CUTOFF =  3.00000
 
 
   Loop:   3  Energy minimization, excluding active site, using L-BFGS
 
- CYCLE:     1 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    12.655 HEAT:  71.67470
+ CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    12.655 HEAT:  71.67470
  CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    12.603 HEAT:  71.67285
- CYCLE:     3 TIME:   0.022 TIME LEFT:  2.00D  GRAD.:    77.285 HEAT:  73.03888
+ CYCLE:     3 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    77.285 HEAT:  73.03888
  CYCLE:     4 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:    16.334 HEAT:  71.68121
- CYCLE:     5 TIME:   0.025 TIME LEFT:  2.00D  GRAD.:   102.337 HEAT:  74.26579
- CYCLE:     6 TIME:   0.030 TIME LEFT:  2.00D  GRAD.:     5.804 HEAT:  71.61444
- CYCLE:     7 TIME:   0.014 TIME LEFT:  2.00D  GRAD.:     4.316 HEAT:  71.59722
+ CYCLE:     5 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:   102.337 HEAT:  74.26579
+ CYCLE:     6 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:     5.804 HEAT:  71.61444
+ CYCLE:     7 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     4.316 HEAT:  71.59722
 
      GRADIENT =  4.31581 IS LESS THAN CUTOFF =  5.00000
 
@@ -458,21 +462,21 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
           Transition state on cycle 3 written to file:
           'Locate_TS Loop3.mop'
 
- CYCLE:     1 TIME:   0.013 TIME LEFT:  2.00D  GRAD.:    11.466 HEAT:  71.59599
- CYCLE:     2 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     1.856 HEAT:  71.67536
+ CYCLE:     1 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    11.466 HEAT:  71.59599
+ CYCLE:     2 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     1.856 HEAT:  71.67536
 
      GRADIENT =  1.85569 IS LESS THAN CUTOFF =  3.00000
 
 
   Loop:   4  Energy minimization, excluding active site, using L-BFGS
 
- CYCLE:     1 TIME:   0.017 TIME LEFT:  2.00D  GRAD.:    13.083 HEAT:  71.66766
+ CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    13.083 HEAT:  71.66766
  CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    13.040 HEAT:  71.66559
- CYCLE:     3 TIME:   0.024 TIME LEFT:  2.00D  GRAD.:   118.147 HEAT:  74.96691
- CYCLE:     4 TIME:   0.026 TIME LEFT:  2.00D  GRAD.:    16.545 HEAT:  71.67253
- CYCLE:     5 TIME:   0.025 TIME LEFT:  2.00D  GRAD.:   158.621 HEAT:  77.44047
- CYCLE:     6 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:     6.996 HEAT:  71.61584
- CYCLE:     7 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     3.754 HEAT:  71.59607
+ CYCLE:     3 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:   118.147 HEAT:  74.96691
+ CYCLE:     4 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:    16.545 HEAT:  71.67253
+ CYCLE:     5 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:   158.621 HEAT:  77.44047
+ CYCLE:     6 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:     6.996 HEAT:  71.61584
+ CYCLE:     7 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     3.754 HEAT:  71.59607
 
      GRADIENT =  3.75371 IS LESS THAN CUTOFF =  5.00000
 
@@ -482,8 +486,8 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
           Transition state on cycle 4 written to file:
           'Locate_TS Loop4.mop'
 
- CYCLE:     1 TIME:   0.014 TIME LEFT:  2.00D  GRAD.:     9.181 HEAT:  71.59436
- CYCLE:     2 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     1.519 HEAT:  71.62580
+ CYCLE:     1 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     9.181 HEAT:  71.59436
+ CYCLE:     2 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     1.519 HEAT:  71.62580
 
      GRADIENT =  1.51903 IS LESS THAN CUTOFF =  3.00000
 
@@ -492,11 +496,11 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
  CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:    12.070 HEAT:  71.61887
  CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    12.030 HEAT:  71.61711
- CYCLE:     3 TIME:   0.024 TIME LEFT:  2.00D  GRAD.:   110.795 HEAT:  74.45175
- CYCLE:     4 TIME:   0.025 TIME LEFT:  2.00D  GRAD.:    15.939 HEAT:  71.62655
- CYCLE:     5 TIME:   0.026 TIME LEFT:  2.00D  GRAD.:   156.545 HEAT:  77.09157
+ CYCLE:     3 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:   110.795 HEAT:  74.45175
+ CYCLE:     4 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:    15.939 HEAT:  71.62655
+ CYCLE:     5 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:   156.545 HEAT:  77.09157
  CYCLE:     6 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:     6.039 HEAT:  71.58014
- CYCLE:     7 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:     2.924 HEAT:  71.56707
+ CYCLE:     7 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.924 HEAT:  71.56707
 
      GRADIENT =  2.92436 IS LESS THAN CUTOFF =  5.00000
 
@@ -506,8 +510,8 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
           Transition state on cycle 5 written to file:
           'Locate_TS Loop5.mop'
 
- CYCLE:     1 TIME:   0.014 TIME LEFT:  2.00D  GRAD.:    10.632 HEAT:  71.56448
- CYCLE:     2 TIME:   0.022 TIME LEFT:  2.00D  GRAD.:     0.987 HEAT:  71.61464
+ CYCLE:     1 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    10.632 HEAT:  71.56448
+ CYCLE:     2 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     0.987 HEAT:  71.61464
 
      GRADIENT =  0.98735 IS LESS THAN CUTOFF =  3.00000
 
@@ -524,8 +528,8 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.121M)
-                                                       Tue May  4 00:49:37 2021
+                                                       MOPAC2016 (Version: 21.145M)
+                                                       Tue Jun  1 17:33:36 2021
 
 
 
@@ -585,6 +589,12 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
   11    C       -0.268052739     0.150218501    -1.167341973
 
 
+                  UNUSUALLY SHORT HYDROGEN BOND DISTANCES
+
+  Hydrogen   R(H-A)  Atom A    R(H-B)  Atom B     R(A-B)      Loc-A      Loc-B
+       2      1.44   C    3     1.41   C    1      1.49     HET   1  A  HET   1  A
+ 
+
            Empirical Formula: C5 H6  =    11 atoms
 
 
@@ -641,6 +651,6 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
 
 
- TOTAL JOB TIME:             2.70 SECONDS
+ TOTAL JOB TIME:             2.63 SECONDS
 
  == MOPAC DONE ==

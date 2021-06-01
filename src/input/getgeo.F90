@@ -198,7 +198,8 @@
                   index(line,"EXPDTA") + index(line,"AUTHOR") + index(line,"REVDAT") + index(line,"JRNL  ") + &
                   index(line,"DBREF ") + index(line,"SEQRES") + index(line,"HET   ") + index(line,"HETNAM") + &
                   index(line,"LINK  ") + index(line,"CRYST1") + index(line,"SCALE" ) + index(line,"ORIGX" ) + &
-                  index(line,"FORMUL") + index(line,"SEQRES") + index(line,"CONECT") /= 0) then
+                  index(line,"FORMUL") + index(line,"SEQRES") + index(line,"CONECT") /= 0 .and. &
+                  index(line(:6), "(") == 0) then
             natoms = -2
             return
         end if

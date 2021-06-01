@@ -87,6 +87,7 @@
         allocate(pdiag(9*n), xparef(3*n), depmul(3*n), jelem(20, n))
         allocate(txtatm1(n), txtatm(n), locpar(3*n), idepfn(3*n), locdep(3*n))
         allocate(nbonds(n), ibonds(15,n), na_store(n), l_atom(n))
+        na = 0
         na_store = 0
         nfirst = -9999
         nlast = -9999

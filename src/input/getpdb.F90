@@ -34,7 +34,7 @@ subroutine getpdb (geo)
       old_natoms = 0, numerr
     integer :: new_elements, defined_elements, previous_res, current_res
     double precision :: degree
-    character :: commas(20), new_key_1*1000, new_key_2*1000 = " ", line1*1000
+    character :: commas(20), new_key_1*3000, new_key_2*3000 = " ", line1*3000
     character (len=2), dimension (maxel), save :: element
     character (len=4), dimension (20) :: txtpdb
     integer, dimension (20) :: ntxt_loc

@@ -142,9 +142,6 @@
           jl = nlast(jj) 
 !   GET FIRST ATOM
           ndi(1) = nat(jj) 
-          if (jj == 1 .and. ii == 5) then
-                   deriv = deriv
-                   end if
           if (mozyme) then
             if (ijbo(ii, jj) >= 0) then
                   ! GET FIRST ATOM
@@ -267,7 +264,7 @@
                   dxyz(1:3, iii+icuc) = dxyz(1:3, iii+icuc) - dstat(1:3)
                   dxyz(1:3, jjj+kkkk) = dxyz(1:3, jjj+kkkk) + dstat(1:3) 
                 else
-                  if (.not.force) then 
+                  if (.not. force) then 
                    cdi(1,1) = cdi(1,1) + chnge2 
                    cdi(2,1) = cdi(2,1) + chnge2 
                    cdi(3,1) = cdi(3,1) + chnge2 
@@ -281,7 +278,7 @@
                     cdi(k,2) = cdi(k,2) + chnge 
                     call dhc (pdi, padi, pbdi, cdi, ndi, jf, jl, if, il, ee, 2) 
                     cdi(k,2) = cdi(k,2) - chnge2 
-                    if (.not.force) cdi(k,2) = cdi(k,2) - chnge2 
+                    if (.not. force) cdi(k,2) = cdi(k,2) - chnge2 
                     deriv = half*(aa - ee)*const/chnge 
                     dxyz(k,iii+icuc) = dxyz(k,iii+icuc) - deriv 
                     dxyz(k,jjj+kkkk) = dxyz(k,jjj+kkkk) + deriv 

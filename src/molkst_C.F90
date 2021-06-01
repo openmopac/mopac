@@ -247,10 +247,10 @@ module molkst_C
                      !  Description  Year.Julian date. Operating System [X = placeholder]
   character ::     &
   & jobnam*240 = ' ', &!
-  & line*2000         !
+  & line*3000         !
   character :: backslash = achar(92) ! portable way of representing the backslash character
-  character :: keywrd*2000, koment*200, title*200, refkey(6)*2000, geo_ref_name*241, geo_dat_name*241, &
-    allkey*2000, keywrd_txt*2000, refkey_ref(6)*2000 
+  character :: keywrd*3000, koment*200, title*200, refkey(6)*3000, geo_ref_name*241, geo_dat_name*241, &
+    allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000 
   character :: errtxt*200, program_name*17="GUI             ", dh*20
 !
   logical ::            &

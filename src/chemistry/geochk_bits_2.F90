@@ -10,7 +10,7 @@
   logical, intent(in) :: neutral(10)
   integer, intent (in) :: nres, res(nres), max_sites
   character, intent (in) :: chain(nres)*1, alt(nres)*1
-  character, intent (inout) :: charge(max_sites,3)*1, allkey*2000
+  character, intent (inout) :: charge(max_sites,3)*1, allkey*3000
   integer :: i_atom, i_charge
   integer :: i, j, k, l, m, n, o(2), jres, metals(1), nmetals = 0, nadd, ndel, p, ncarbon
   logical :: l_res, bug = .false., first, let, l_type, first_2
@@ -963,7 +963,7 @@
             call mopend(trim(line_1))
           end if
         end select          
-      case (8)! Select for Oxygen in different coordination numbers
+      case (8, 16)! Select for Oxygen in different coordination numbers
   99    continue
         select case (nbonds(i))
         case (1)
@@ -1061,7 +1061,7 @@
           end if
         end select     
       case default
-        write(iw,'(/1x,a,/)')" An atom defined by keyword SITE is not a nitrogen or oxygen."
+        write(iw,'(/1x,a,/)')" An atom defined by keyword SITE is not a nitrogen, oxygen, or sulfur."
         write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
         call mopend(trim(line_1))
         bug = .true.      

@@ -9,7 +9,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icapa, ilowa, ilowz, i, iline, j 
-      character :: keybuf*2000 
+      character :: keybuf*3000 
 !-----------------------------------------------
 !
 !  UPCASE WILL TAKE A CHARACTER STRING, IN KEYWRD, AND PUT IT INTO

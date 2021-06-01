@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.055M **
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,15 +12,15 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Feb 26 19:06:15 2021  *
+ *  CALCULATION DONE:                                Tue Jun  1 17:10:46 2021  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
- *  Keyword:   START_RES=(1A) 
+ *  Keyword:     START_RES=(1A) 
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "PDB1EJG.ent"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "PDB1CBN.ent"
  *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
- *  Keyword:   CHAINS=(A) 
+ *  Keyword:     CHAINS=(A) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  OUTPUT     - MINIMIZE OUTPUT
@@ -28,7 +28,7 @@
  START_RES=(1A)  CHAINS=(A) geo_dat="PDB1EJG.ent" geo_ref="PDB1CBN.ent" compare output
  Two PDB structures for Crambin after deleting atoms not common to both
 
-
+ 
 
                             Differences in atoms sets
 
@@ -116,12 +116,12 @@
             (ATOM     86  HB  ILE A   7)   8.615   0.637  14.674        0.47        35.86
             (ATOM     91 HG23 ILE A   7)   7.993  -0.280  12.525        0.46        36.33
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
-    Ile   7(0.85)    Asn  46(0.78)    Asp  43(0.36)    Thr  39(0.27)    Val   8(0.25)
-    Asn  12(0.24)    Thr   2(0.20)    Gly  37(0.17)    Pro  36(0.16)    Thr   1(0.16)
-    Tyr  44(0.14)    Ala  45(0.14)    Ala  38(0.14)    Thr  30(0.14)    Ile  33(0.13)
-    Val  15(0.13)    Glu  23(0.13)    Pro  19(0.12)    Ile  34(0.12)    Phe  13(0.12)
+    Ile   7( 0.85)    Asn  46( 0.78)    Asp  43( 0.36)    Thr  39( 0.27)    Val   8( 0.25)
+    Asn  12( 0.24)    Thr   2( 0.20)    Gly  37( 0.17)    Pro  36( 0.16)    Thr   1( 0.16)
+    Tyr  44( 0.14)    Ala  45( 0.14)    Ala  38( 0.14)    Thr  30( 0.14)    Ile  33( 0.13)
+    Val  15( 0.13)    Glu  23( 0.13)    Pro  19( 0.12)    Ile  34( 0.12)    Phe  13( 0.12)
 
    Difference between GEO_DAT and GEO_REF: 98.262 = total,  0.1630 = Average,  0.3654 = RMS, in Angstroms
 

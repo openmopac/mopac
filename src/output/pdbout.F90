@@ -153,8 +153,13 @@ subroutine pdbout (mode1)
       if (txtatm(i)(23:26) == "****") txtatm(i)(23:26) = "9999"
       x = txtatm(i)(13:13)
       if (x == "X") txtatm(i)(13:13) = " "
+      if (i1 > 0) then
       write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f5.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
         & (coord(k, i), k=1, 3), "  1.00 ",q2(i1),"      PROT", ele_pdb, " "
+      else
+        write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f5.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
+        & (coord(k, i), k=1, 3), "  1.00 ",0.d0,"      PROT", ele_pdb, " "
+      end if
       txtatm(i)(13:13) = x
       if (ter) then
         i2 = i2 + 1

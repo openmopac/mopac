@@ -29,6 +29,7 @@
 !   REORIE IS NORMALLY .TRUE.   IF SET .FALSE., THEN THE ORIENTATION
 !   SUPPLIED WILL BE USED IN DETERMINING SYMMETRY
 !
+      ew = 0.d0
       reorie = index(keywrd,' NOREOR') == 0 
       toler = 0.1D0 
       ierror = 0 

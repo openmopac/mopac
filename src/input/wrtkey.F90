@@ -37,7 +37,7 @@ subroutine wrtchk (allkey)
   logical :: birad, exci, ci, trip
   integer :: i, j, k, l, nmos
   character :: ch
-  character (len=1000), intent (inout) :: allkey
+  character (len=3000), intent (inout) :: allkey
   logical, external :: myword
   double precision, external :: reada
   birad = (Index (keywrd, " BIRAD") /= 0)
@@ -680,7 +680,7 @@ subroutine wrtchk (allkey)
 !
    if (allkey /= ' ' .and. .not. is_PARAM) then 
         j = 0 
-        do i = 1, 999 
+        do i = 1, 3000 - 1
           if (allkey(i:i+1) == '  ') cycle  
           j = j + 1 
           ch = allkey(i:i) 
@@ -712,7 +712,7 @@ subroutine wrtcon (allkey)
   use conref_C, only : fpcref
   use common_arrays_C, only :  lopt
   implicit none
-  character (len=1000), intent (out) :: allkey
+  character (len=3000), intent (out) :: allkey
   double precision :: epsi, sum
   integer :: i, ielec, ilevel, j, k, l
   logical :: l_add_H = .false., l_temp

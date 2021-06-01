@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.055M **
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Feb 26 19:06:23 2021  *
+ *  CALCULATION DONE:                                Tue Jun  1 17:11:13 2021  *
  *  COMPARE    - Compare two geometries
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "PDB1EJG.arc"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "PDB1CBN.arc"
@@ -24,7 +24,7 @@
 geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
  Two PDB structures for Crambin (Atoms in PRO/SER 22, LEU/ILE 25, and others deleted)
 
-
+ 
 
                             Differences in atoms sets
 
@@ -114,10 +114,10 @@ geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
             (ATOM    161  ND2 ASN A  12)   1.432   4.110   9.735        0.40        34.99
             (ATOM    513  HB  THR A  39)  22.749  14.628  11.666        0.39        35.38
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
-    Ile   7(0.80)    Asn  46(0.63)    Asp  43(0.43)    Thr  39(0.41)    Glu  23(0.25)
-    Asn  12(0.22)    Gly  37(0.17)    Val   8(0.16)    Pro  36(0.15)    Ala  38(0.12)
+    Ile   7( 0.80)    Asn  46( 0.63)    Asp  43( 0.43)    Thr  39( 0.41)    Glu  23( 0.25)
+    Asn  12( 0.22)    Gly  37( 0.17)    Val   8( 0.16)    Pro  36( 0.15)    Ala  38( 0.12)
 
    Difference between GEO_DAT and GEO_REF: 77.360 = total,  0.1270 = Average,  0.3333 = RMS, in Angstroms
 
@@ -182,6 +182,6 @@ From GEO_DAT: 'Compare_ADD-H_1EJG_and_1CBN_PDB1EJG.pdb'
 
 
 
- TOTAL JOB TIME:             0.01 SECONDS
+ TOTAL JOB TIME:             0.00 SECONDS
 
  == MOPAC DONE ==

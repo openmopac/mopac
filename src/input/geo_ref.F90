@@ -600,7 +600,8 @@
           end if
         end do
         if (bug) then
-          write(iw,'(/10x,a,/)')"Edit GEO_REF data set and re-run."
+          if (index(keywrd, " GEO-OK") == 0) &
+            write(iw,'(/10x,a,/)')"Edit GEO_REF data set and re-run."
           any_bug = .true.
           bug = .false.            
         end if
@@ -662,7 +663,11 @@
             else
               write(iw,'(/10x,a)')"Faults detected in atom labels in a GEO_REF run,"
             end if
-            write(iw,'(10x,a)')"but because GEO-OK was used, corrective action will be taken."
+            if (index(keywrd, " COMPARE") /= 0) then
+              write(iw,'(10x,a)')"but because COMPARE was used, corrective action will be taken."
+            else
+              write(iw,'(10x,a)')"but because GEO-OK was used, corrective action will be taken."
+            end if
           end if            
         end if
 !
@@ -1017,7 +1022,8 @@
         i = index(line," GEO_REF")
         if (i /= 0) exit
       end do
-      if (index(keywrd, " TS ") /= 0) then
+      inquire(unit = 99, opened = opend, name = line)
+      if (index(keywrd, " TS ") /= 0 .and. index(keywrd, " LOCATE-TS") == 0) then
         write(iw,'(/,a)')"    The average of the supplied and reference geometry will be written to:"
         write(iw,'(a)')"'"//trim(line)//"'"
         geo(:,:natoms) = 0.5d0*(geoa(:,:natoms) + geo(:,:natoms))

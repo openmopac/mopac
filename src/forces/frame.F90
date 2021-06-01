@@ -82,32 +82,41 @@
           vib(6,j) = 0.D0 
         end do 
       else 
+! Translation along "x"
         vib(1,j+1:numat*3-2+j:3) = wtmass 
-        vib(2,j+1:numat*3-2+j:3) = 0.D0 
-        vib(3,j+1:numat*3-2+j:3) = 0.D0 
-        vib(4,j+1:numat*3-2+j:3) = 0.D0 
-        vib(5,j+1:numat*3-2+j:3) = coord1(3,:numat)*wtmass 
-        vib(6,j+1:numat*3-2+j:3) = coord1(2,:numat)*wtmass 
         vib(1,j+2:numat*3-1+j:3) = 0.D0 
-        vib(2,j+2:numat*3-1+j:3) = wtmass 
-        vib(3,j+2:numat*3-1+j:3) = 0.D0 
-        vib(4,j+2:numat*3-1+j:3) = coord1(3,:numat)*wtmass 
-        vib(5,j+2:numat*3-1+j:3) = 0.D0 
-        vib(6,j+2:numat*3-1+j:3) = -coord1(1,:numat)*wtmass 
         vib(1,j+3:numat*3+j:3) = 0.D0 
+! Translation along "y"
+        vib(2,j+1:numat*3-2+j:3) = 0.D0 
+        vib(2,j+2:numat*3-1+j:3) = wtmass 
         vib(2,j+3:numat*3+j:3) = 0.D0 
+! Translation along "z"
+        vib(3,j+1:numat*3-2+j:3) = 0.D0 
+        vib(3,j+2:numat*3-1+j:3) = 0.D0 
         vib(3,j+3:numat*3+j:3) = wtmass 
-        vib(4,j+3:numat*3+j:3) = -coord1(2,:numat)*wtmass 
-        vib(5,j+3:numat*3+j:3) = -coord1(1,:numat)*wtmass 
-        vib(6,j+3:numat*3+j:3) = 0.D0 
+! Rotation about "x"
+        vib(4,j+1:numat*3-2+j:3) = 0.D0 
+        vib(4,j+2:numat*3-1+j:3) =  coord1(3,:numat)*wtmass 
+        vib(4,j+3:numat*3+j:3)   = -coord1(2,:numat)*wtmass
+! Rotation about "y"
+        vib(5,j+1:numat*3-2+j:3) =  coord1(3,:numat)*wtmass 
+        vib(5,j+2:numat*3-1+j:3) =  0.D0
+        vib(5,j+3:numat*3+j:3)   = -coord1(1,:numat)*wtmass 
+! Rotation about "z"
+        vib(6,j+1:numat*3-2+j:3) =  coord1(2,:numat)*wtmass 
+        vib(6,j+2:numat*3-1+j:3) = -coord1(1,:numat)*wtmass
+        vib(6,j+3:numat*3+j:3)   =  0.D0 
       end if 
+!
+! Unitary transform to rotate vibrations into frame of moments of inertia.
+!      
       j = 1 
       do i = 1, numat 
         do k = 4, 6 
           x = vib(k,j) 
           y = vib(k,j+1) 
           z = vib(k,j+2) 
-          vib(k,j) = x*rot(1,1) + y*rot(1,2) + z*rot(1,3) 
+          vib(k,j)   = x*rot(1,1) + y*rot(1,2) + z*rot(1,3) 
           vib(k,j+1) = x*rot(2,1) + y*rot(2,2) + z*rot(2,3) 
           vib(k,j+2) = x*rot(3,1) + y*rot(3,2) + z*rot(3,3) 
         end do 

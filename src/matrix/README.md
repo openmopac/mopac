@@ -27,6 +27,8 @@ trugdu @ polar.F90
 trsub @ polar.F90
 transf @ polar.F90
 tf @ polar.F90
+coscl1 @ cosmo.F90
+coscl2 @ cosmo.F90
 
 NOTE: there are large temporary matrix workspaces throughout MOPAC that perhaps should be consolidated somehow.
 They will be listed here for consideration:

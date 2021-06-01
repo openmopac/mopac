@@ -54,7 +54,7 @@
       double precision, external :: distance, reada, snapth
       logical :: intern = .true., aigeo, xyz, opend, exists, l_rewind = .true., l_int
       logical, allocatable :: l_use(:)
-      character :: space, ch, idate*24, line_1*2000, line_2*2000, txt*15
+      character :: space, ch, idate*24, line_1*3000, line_2*3000, txt*15
       save  space, intern, ireact
 !-----------------------------------------------
 !
@@ -1928,7 +1928,7 @@
         if (sum1 < 0.1d0) exit
         residue_motion(j) = 0.d0
         if (l_first) then
-          write(iw,'(/5x, a, /)')"Residues that move a lot and their (Movement in Angstroms per atom)"
+          write(iw,'(/5x, a, /)')"Residues that move a lot and their (Movement in Angstroms, per atom)"
           l_first = .false.
         end if
         do i = 1, 22
@@ -1941,7 +1941,7 @@
           end do
         end if 
         i = len_trim(line)
-        write(line(i + 1:),'(4x, a, f4.2, a)') num(1:3)//residue_name(j)(7:)//"(", min(sum1,9.99d0),")"
+        write(line(i + 1:),'(4x, a, f5.2, a)') num(1:3)//residue_name(j)(7:)//"(", min(sum1,99.99d0),")"
         if (mod(k,5) == 0) then
           write(iw,'(a)') trim(line)
           line = " "

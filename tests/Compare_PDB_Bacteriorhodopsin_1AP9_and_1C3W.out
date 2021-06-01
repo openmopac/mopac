@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.055M **
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,15 +12,15 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Feb 26 19:06:15 2021  *
+ *  CALCULATION DONE:                                Tue Jun  1 17:10:47 2021  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
- *  Keyword:   START_RES=(7A 300) 
+ *  Keyword:     START_RES=(7A 300) 
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Bacteriorhodopsin_1AP9.ent"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "Bacteriorhodopsin_1C3W.ent"
  *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
- *  Keyword:   CHAINS=(A) 
+ *  Keyword:     CHAINS=(A) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  OUTPUT     - MINIMIZE OUTPUT
@@ -28,7 +28,7 @@
  START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_1C3W.ent" COMPARE OUTPUT
  Compare 1AP9 and 1C3W Bacteriorhodopsin
 
-
+ 
 
                             Differences in atoms sets
 
@@ -477,54 +477,54 @@
             (ATOM   1658  NH2 ARG A 225)  30.403  25.789  18.551       10.03       468.71
             (ATOM    941  CB  TYR A 131)  12.517  52.010 -14.710        9.92       478.63
 
-     Residues that move a lot and their (Movement in Angstroms per atom)
+     Residues that move a lot and their (Movement in Angstroms, per atom)
 
-    HOH 402(9.99)    HOH 412(9.99)    HOH 406(9.99)    HOH 403(9.99)    HOH 420(9.99)
-    HOH 414(9.99)    HOH 413(9.99)    HOH 411(9.99)    HOH 419(9.99)    HOH 405(9.99)
-    HOH 417(9.99)    HOH 415(9.99)    Tyr 131(9.99)    HOH 416(9.26)    HOH 407(9.08)
-    Gly  72(8.73)    Gly  73(8.69)    HOH 404(8.07)    HOH 418(7.84)    Met 163(7.08)
-    Phe  71(6.74)    Glu  74(6.63)    HOH 401(6.51)    Ser 132(5.97)    Met  32(5.87)
-    Gln  75(5.65)    Lys 129(5.62)    Met  68(5.31)    Arg 225(5.18)    Val  34(5.13)
-    Val 130(4.94)    Pro  70(4.76)    Leu  66(4.23)    Trp  10(3.82)    Thr 128(3.80)
-    Ser 162(3.76)    Tyr 133(3.52)    Val  69(3.35)    Ser  35(3.11)    Thr  67(3.10)
-    Arg 164(3.07)    Leu 224(2.96)    Tyr  64(2.93)    Gly  33(2.91)    Arg   7(2.75)
-    Tyr  26(2.74)    Gly  65(2.74)    Lys  30(2.44)    Ser 193(2.32)    Phe 156(2.23)
-    Asn  76(2.07)    Gly  21(2.07)    Phe 153(2.02)    Glu 204(2.01)    Pro 200(2.01)
-    Asp 104(1.96)    Gly 192(1.92)    Leu  22(1.88)    Thr 170(1.84)    Gly 197(1.84)
-    Ile 198(1.82)    Lys 172(1.81)    Asp  36(1.69)    Gly  31(1.68)    Glu 166(1.67)
-    Ile  78(1.67)    Lys  40(1.63)    Asp 102(1.60)    Pro  77(1.59)    Leu 190(1.58)
-    Asn 202(1.53)    Gly 155(1.51)    Asn 176(1.51)    Tyr  57(1.51)    Tyr  43(1.46)
-    Leu 111(1.41)    Arg  82(1.37)    Phe  88(1.36)    Arg 134(1.34)    Leu 146(1.33)
-    Asp  96(1.32)    Leu  97(1.31)    Glu 194(1.29)    Gly  63(1.29)    Pro  37(1.29)
-    Ile 222(1.26)    Phe  42(1.26)    Arg 175(1.26)    Ser 169(1.26)    Ala 196(1.24)
-    Val 199(1.23)    Ile 191(1.22)    Ser 183(1.21)    Leu  99(1.21)    Asp  85(1.20)
-    Leu  92(1.20)    Ile 117(1.20)    Leu 174(1.20)    Asp  38(1.20)    Leu 223(1.19)
-    Phe  27(1.19)    Val 167(1.19)    Gly 195(1.18)    Trp 189(1.17)    Ala  84(1.15)
-    Tyr 150(1.11)    Val  29(1.10)    Lys  41(1.08)    Met  20(1.08)    Leu  95(1.08)
-    Leu  13(1.07)    Val 112(1.05)    Phe 154(1.05)    Ile  45(1.04)    Val 173(1.04)
-    Leu  87(1.03)    Pro 165(1.01)    Leu 181(1.00)    Leu  62(1.00)    Gly  23(1.00)
-    Pro   8(0.98)    Trp 182(0.98)    Thr  17(0.98)    Leu 201(0.98)    Ala  39(0.97)
-    Gln 105(0.97)    Phe 171(0.96)    Leu  25(0.96)    Thr 205(0.95)    Thr  24(0.95)
-    Val 187(0.94)    Glu   9(0.93)    Leu  94(0.93)    Thr  89(0.93)    Ala 110(0.92)
-    Leu  93(0.92)    Leu  48(0.91)    Gly 113(0.90)    Thr  90(0.90)    Ala  18(0.89)
-    Ala 126(0.89)    Leu  58(0.89)    Leu 149(0.88)    Leu 207(0.88)    Thr 121(0.87)
-    Phe 135(0.87)    Thr 107(0.87)    Tyr  83(0.86)    Ala 168(0.86)    Tyr  79(0.86)
-    Trp  86(0.85)    Ala 103(0.85)    Ile 119(0.84)    Val 213(0.84)    Met  56(0.84)
-    Ala  81(0.83)    Thr  46(0.82)    Ile  11(0.82)    Leu  19(0.81)    Leu  61(0.80)
-    Leu  15(0.80)    Leu 100(0.80)    Asp 115(0.79)    Val 101(0.78)    Val 179(0.78)
-    Ser  59(0.78)    Trp 137(0.76)    Ile 148(0.76)    Ile 203(0.74)    Met 209(0.74)
-    Phe 219(0.73)    Ser 141(0.72)    Phe  54(0.72)    Leu 221(0.72)    Leu 206(0.71)
-    Met  60(0.70)    Ser 214(0.70)    Leu 109(0.68)    Pro  91(0.67)    Val 180(0.67)
-    Leu 127(0.66)    Trp  80(0.66)    Met 118(0.65)    Phe 208(0.65)    Asp 212(0.65)
-    Ala  44(0.63)    Val 188(0.63)    Pro 186(0.62)    Thr  47(0.61)    Leu  28(0.61)
-    Ala 144(0.59)    Ala  14(0.59)    Val 136(0.58)    Val 177(0.58)    Thr  55(0.58)
-    Leu 211(0.57)    Gly  16(0.57)    Gly 125(0.56)    Val 217(0.56)    Val 124(0.55)
-    Ala  98(0.55)    Leu 152(0.53)    Ala  53(0.53)    Lys 216(0.52)    Trp  12(0.50)
-    Tyr 147(0.49)    Ala 215(0.49)    Gly 122(0.48)    Ala 143(0.48)    Ile  52(0.47)
-    Leu 123(0.46)    Ala 114(0.45)    Thr 178(0.45)    Ala 184(0.45)    Gly 116(0.44)
-    Gly 120(0.44)    Gly 218(0.44)    Val 210(0.43)    Trp 138(0.43)    Val  49(0.42)
-    Thr 142(0.42)    Ile 140(0.42)    Tyr 185(0.41)    Val 151(0.38)    Gly 106(0.37)
-    Met 145(0.33)    Ala 139(0.32)    Ile 108(0.32)    Gly 220(0.30)    Ala  51(0.28)
+    HOH 402(32.84)    HOH 412(27.31)    HOH 406(27.13)    HOH 403(23.56)    HOH 420(21.37)
+    HOH 414(20.85)    HOH 413(20.74)    HOH 411(20.02)    HOH 419(17.63)    HOH 405(16.94)
+    HOH 417(13.61)    HOH 415(13.49)    Tyr 131(11.58)    HOH 416( 9.26)    HOH 407( 9.08)
+    Gly  72( 8.73)    Gly  73( 8.69)    HOH 404( 8.07)    HOH 418( 7.84)    Met 163( 7.08)
+    Phe  71( 6.74)    Glu  74( 6.63)    HOH 401( 6.51)    Ser 132( 5.97)    Met  32( 5.87)
+    Gln  75( 5.65)    Lys 129( 5.62)    Met  68( 5.31)    Arg 225( 5.18)    Val  34( 5.13)
+    Val 130( 4.94)    Pro  70( 4.76)    Leu  66( 4.23)    Trp  10( 3.82)    Thr 128( 3.80)
+    Ser 162( 3.76)    Tyr 133( 3.52)    Val  69( 3.35)    Ser  35( 3.11)    Thr  67( 3.10)
+    Arg 164( 3.07)    Leu 224( 2.96)    Tyr  64( 2.93)    Gly  33( 2.91)    Arg   7( 2.75)
+    Tyr  26( 2.74)    Gly  65( 2.74)    Lys  30( 2.44)    Ser 193( 2.32)    Phe 156( 2.23)
+    Asn  76( 2.07)    Gly  21( 2.07)    Phe 153( 2.02)    Glu 204( 2.01)    Pro 200( 2.01)
+    Asp 104( 1.96)    Gly 192( 1.92)    Leu  22( 1.88)    Thr 170( 1.84)    Gly 197( 1.84)
+    Ile 198( 1.82)    Lys 172( 1.81)    Asp  36( 1.69)    Gly  31( 1.68)    Glu 166( 1.67)
+    Ile  78( 1.67)    Lys  40( 1.63)    Asp 102( 1.60)    Pro  77( 1.59)    Leu 190( 1.58)
+    Asn 202( 1.53)    Gly 155( 1.51)    Asn 176( 1.51)    Tyr  57( 1.51)    Tyr  43( 1.46)
+    Leu 111( 1.41)    Arg  82( 1.37)    Phe  88( 1.36)    Arg 134( 1.34)    Leu 146( 1.33)
+    Asp  96( 1.32)    Leu  97( 1.31)    Glu 194( 1.29)    Gly  63( 1.29)    Pro  37( 1.29)
+    Ile 222( 1.26)    Phe  42( 1.26)    Arg 175( 1.26)    Ser 169( 1.26)    Ala 196( 1.24)
+    Val 199( 1.23)    Ile 191( 1.22)    Ser 183( 1.21)    Leu  99( 1.21)    Asp  85( 1.20)
+    Leu  92( 1.20)    Ile 117( 1.20)    Leu 174( 1.20)    Asp  38( 1.20)    Leu 223( 1.19)
+    Phe  27( 1.19)    Val 167( 1.19)    Gly 195( 1.18)    Trp 189( 1.17)    Ala  84( 1.15)
+    Tyr 150( 1.11)    Val  29( 1.10)    Lys  41( 1.08)    Met  20( 1.08)    Leu  95( 1.08)
+    Leu  13( 1.07)    Val 112( 1.05)    Phe 154( 1.05)    Ile  45( 1.04)    Val 173( 1.04)
+    Leu  87( 1.03)    Pro 165( 1.01)    Leu 181( 1.00)    Leu  62( 1.00)    Gly  23( 1.00)
+    Pro   8( 0.98)    Trp 182( 0.98)    Thr  17( 0.98)    Leu 201( 0.98)    Ala  39( 0.97)
+    Gln 105( 0.97)    Phe 171( 0.96)    Leu  25( 0.96)    Thr 205( 0.95)    Thr  24( 0.95)
+    Val 187( 0.94)    Glu   9( 0.93)    Leu  94( 0.93)    Thr  89( 0.93)    Ala 110( 0.92)
+    Leu  93( 0.92)    Leu  48( 0.91)    Gly 113( 0.90)    Thr  90( 0.90)    Ala  18( 0.89)
+    Ala 126( 0.89)    Leu  58( 0.89)    Leu 149( 0.88)    Leu 207( 0.88)    Thr 121( 0.87)
+    Phe 135( 0.87)    Thr 107( 0.87)    Tyr  83( 0.86)    Ala 168( 0.86)    Tyr  79( 0.86)
+    Trp  86( 0.85)    Ala 103( 0.85)    Ile 119( 0.84)    Val 213( 0.84)    Met  56( 0.84)
+    Ala  81( 0.83)    Thr  46( 0.82)    Ile  11( 0.82)    Leu  19( 0.81)    Leu  61( 0.80)
+    Leu  15( 0.80)    Leu 100( 0.80)    Asp 115( 0.79)    Val 101( 0.78)    Val 179( 0.78)
+    Ser  59( 0.78)    Trp 137( 0.76)    Ile 148( 0.76)    Ile 203( 0.74)    Met 209( 0.74)
+    Phe 219( 0.73)    Ser 141( 0.72)    Phe  54( 0.72)    Leu 221( 0.72)    Leu 206( 0.71)
+    Met  60( 0.70)    Ser 214( 0.70)    Leu 109( 0.68)    Pro  91( 0.67)    Val 180( 0.67)
+    Leu 127( 0.66)    Trp  80( 0.66)    Met 118( 0.65)    Phe 208( 0.65)    Asp 212( 0.65)
+    Ala  44( 0.63)    Val 188( 0.63)    Pro 186( 0.62)    Thr  47( 0.61)    Leu  28( 0.61)
+    Ala 144( 0.59)    Ala  14( 0.59)    Val 136( 0.58)    Val 177( 0.58)    Thr  55( 0.58)
+    Leu 211( 0.57)    Gly  16( 0.57)    Gly 125( 0.56)    Val 217( 0.56)    Val 124( 0.55)
+    Ala  98( 0.55)    Leu 152( 0.53)    Ala  53( 0.53)    Lys 216( 0.52)    Trp  12( 0.50)
+    Tyr 147( 0.49)    Ala 215( 0.49)    Gly 122( 0.48)    Ala 143( 0.48)    Ile  52( 0.47)
+    Leu 123( 0.46)    Ala 114( 0.45)    Thr 178( 0.45)    Ala 184( 0.45)    Gly 116( 0.44)
+    Gly 120( 0.44)    Gly 218( 0.44)    Val 210( 0.43)    Trp 138( 0.43)    Val  49( 0.42)
+    Thr 142( 0.42)    Ile 140( 0.42)    Tyr 185( 0.41)    Val 151( 0.38)    Gly 106( 0.37)
+    Met 145( 0.33)    Ala 139( 0.32)    Ile 108( 0.32)    Gly 220( 0.30)    Ala  51( 0.28)
 
    Difference between GEO_DAT and GEO_REF: 2892.888 = total,  1.7271 = Average,  3.1424 = RMS, in Angstroms
 

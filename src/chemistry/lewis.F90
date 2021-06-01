@@ -432,7 +432,7 @@ subroutine remove_bond(i)
 !
 !  Parse CVB(2:3,45:65)
 !
-     store = keywrd
+     store = trim(keywrd)
      i = index(keywrd, " CVB")
      if (i > 0) then
        j = index(keywrd(i:), ") ") + i

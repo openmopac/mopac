@@ -8,6 +8,7 @@
       use parameters_C, only : tore
       use funcon_C, only : fpc_10
       use chanel_C, only : iw, ilog, log
+      USE elemts_C, only : elemnt 
       implicit none
       integer , intent(out) :: nreal 
       logical, intent (in) :: ts
@@ -29,6 +30,7 @@
       character :: line*120
       double precision, external :: dipole_for_MOZYME     
       double precision, external :: ddot, dipole, dot, reada, seconds
+      character :: XYZ(3)*1, num
       save fact 
 !**********************************************************************
 !
@@ -44,6 +46,8 @@
 !                    CARTESIAN COORDINATES I AND J.
 !**********************************************************************
       data del2/ 3*0.D0/  
+      data xyz /"X", "Y", "Z"/
+      num = char(Int(log10(numat*1.0)) + ichar("1") + 1) 
 !
 !    FACT IS THE CONVERSION FACTOR FROM KCAL/MOLE TO ERGS
 !
@@ -138,6 +142,7 @@
         end if 
         time2 = seconds(1) 
         delta = 1.D0/120.D0 
+        g2old = 0.D0 
         if (precis) then 
 !
 !   DETERMINE A GOOD STEP SIZE
@@ -177,9 +182,13 @@
         emin = 0.d0
         call compfg (xparam, .TRUE., escf, .TRUE., grold, .TRUE.) 
         if (moperr) return  
-! MOPAC BLAS
-!        if (debug) write (iw, '(A,F12.5)') ' GNORM +0.5*DELTA', sqrt(dot(grold,grold,nvar)) 
-        if (debug) write (iw, '(A,F12.5)') ' GNORM +0.5*DELTA', dsqrt(ddot(nvar,grold,1,grold,1)) 
+        if (debug) then
+          if (precis) then
+            write (iw, '(A,F12.5)') ' GNORM +0.5*DELTA', dsqrt(ddot(nvar,grold,1,grold,1)) 
+          else
+            write (iw, '(A,F12.5)') ' GNORM +DELTA:', dsqrt(ddot(nvar,grold,1,grold,1))
+          end if
+        end if
 !        
         call chrge (p, q) 
 
@@ -198,7 +207,13 @@
         emin = 0.d0
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .TRUE.) 
         if (moperr) return  
-        if (debug) write (iw, '(A,F12.5)') ' GNORM -0.5*DELTA', sqrt(dot(grad,grad,nvar)) 
+        if (debug) then
+          if (precis) then
+            write (iw, '(A,F12.5)') ' GNORM -0.5*DELTA', sqrt(dot(grad,grad,nvar)) 
+          else
+            write (iw, '(A,F12.5)') ' GNORM -DELTA:', sqrt(dot(grad,grad,nvar)) 
+          end if
+        end if
         call chrge (p, q) 
         q(:numat) = tore(labels(:numat)) - q(:numat) 
 !
@@ -260,10 +275,23 @@
           end do 
         end if 
         if (big) then 
-          write (iw, '(A)') ' CONTRIBUTIONS TO F-MATRIX' 
-          write (iw, '(A)') &
+          j = (i - 1)/3 + 1
+          l = i - j*3 + 3
+          write (iw, '(a, i'//num//', a)') ' CONTRIBUTIONS TO F-MATRIX FOR '//xyz(l)//" COMPONENT OF ATOM", &
+            j, " ("//elemnt(labels(j))//")"
+          if (precis) then
+            write (iw, '(A)') &
       ' ELEMENT  +1.0*DELTA  +0.5*DELTA  -0.5*DELTA  -1.0*DELTA   2''ND ORDER 4TH ORDER' 
-          write (iw, '(I7,6F12.6)') (l,g2old(l),grold(l),grad(l),g2rad(l),dumy(l),eigs(l),l=1,nvar) 
+            write (iw, '(I7,6F12.6)') (l,g2old(l),grold(l),grad(l),g2rad(l),dumy(l),eigs(l),l=1,nvar) 
+          else
+            write (iw, '(A)') '  MATRIX ELEMENT  +Delta      -Delta      Hessian' 
+            do l = 1, nvar
+              j = (l - 1)/3 + 1
+              k = l - j*3 + 3
+              write (iw, '(I7, a2, a3, i'//num//', 3F12.6)') l, xyz(k), elemnt(labels(j)), j, grold(l) ,grad(l), dumy(l)
+            end do
+            write (iw, '(a, 2f12.6)')"   SUM:", sum(grold(1:nvar)), sum(grad(1:nvar))
+          end if
         end if 
         time3 = seconds(2) 
         tstep = time3 - time2 

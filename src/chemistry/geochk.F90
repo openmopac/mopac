@@ -36,7 +36,7 @@ subroutine geochk ()
 !
     integer, parameter :: max_sites = 400
     character :: padding*40, txtatm_1*27, txtatm_2*27, tmp*130
-    character (len=20), allocatable :: Lewis_formatted(:,:)
+    character, allocatable :: Lewis_formatted(:,:)*20, temp_txtatm(:)*27
     character (len=1), dimension (:), allocatable :: atom_charge
     character :: ion_names(-6:6)*12, charge(max_sites,3)*1, num
     double precision, dimension(:), allocatable :: radius
@@ -940,10 +940,20 @@ subroutine geochk ()
       call write_sequence
     end if
     if (index(keywrd, " PDBOUT") /= 0) then
+      allocate(temp_txtatm(natoms))
+      temp_txtatm = txtatm
+      j = 0
+      k = 0
       do i = 1, natoms
-        if (labels(i) == 99) write(txtatm(i), '(a, i5, a)')"HETATM", i, "  X   HET     "
+        if (labels(i) == 99) then
+          k = k + 1
+          write(txtatm(i), '(a, i5, a)')"HETATM", j, "  X   HET     "
+        else
+          j = j + 1
+          write (txtatm(i), "(a,i5,a)")temp_txtatm(j)(1:6),j + k,temp_txtatm(j)(12:maxtxt)
+        end if         
       end do
-      
+      deallocate(temp_txtatm)
 !
 !  Identify atoms where chain breaks occur
 !

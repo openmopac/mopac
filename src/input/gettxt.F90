@@ -7,7 +7,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: i, j, k, l, ipath
-      character :: filen*300, oldkey*2000, line1*2000, path*240, ch*1, geo_xxx(2)*3
+      character :: filen*300, oldkey*3000, line1*3000, path*240, ch*1, geo_xxx(2)*3
       logical :: aux, exists, setup_present, zero_scf, l_quote
       character (len = 300), external :: get_text
       data geo_xxx /"DAT", "REF"/
@@ -209,7 +209,7 @@
             keywrd(i:) = keywrd(j:)
           end do
           i = len_trim(keywrd)
-          keywrd(i + 1:) = " "//refkey(2)(:999 - i)
+          keywrd(i + 1:) = " "//refkey(2)(:3000 - 1 - i)
           refkey(1) = trim(keywrd)
           refkey(2) = refkey(3)
 !

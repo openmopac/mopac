@@ -208,7 +208,6 @@
         if (moperr) return  
       else 
         if (debug) write (iw, '(10x,a)') 'DOING VARIATIONALLY OPTIMIZED DERIVATIVES' 
-        if (debug) write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)') 
         call dcart (coord, dxyz)  
       end if  
       if (l_redo_bonds .and. mod(nscf,10) == 4 .and. nscf /= 0 .and. id == 0) then
