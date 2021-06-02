@@ -9,7 +9,7 @@
   !  use parameters_C, only : par8, par9
     implicit none
     integer, intent (in) :: max_h_bonds, i, hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds)
-    double precision :: angle_cos, angle, torsion_check, &
+    double precision :: angle_cos, angle, torsion_check, & ! weight_956, &
       angle2_shift, angle2_shift_2, torsion_shift, angle2, torsion_check_bac, &
       angle2_cos, angle2_cos_2, torsion_correct, torsion_value, torsion_cos, torsion_value_2, &
       torsion_cos_2, angle2_cos_new, angle2_cos_2_new, torsion_cos_new, torsion_cos_2_new, &
@@ -195,6 +195,10 @@
       end if
 ! second angle
       angle2 = angle(hblist(i, 6), hblist(i, 5), hblist(i, 9))   ! angle2_new 
+!
+!  Patch - as angle approaches 180 degrees, reduce the weight of this term.
+!
+!     weight_956 = 1.d0 - exp(-10.d0*(angle2 - pi)**2)
       angle2_cos_new = cos(angle2_shift -angle2) 
       angle2_cos_2_new = cos(angle2_shift_2 -angle2) 
       if (angle2_cos_2_new > angle2_cos_new) angle2_cos_new = angle2_cos_2_new
@@ -311,6 +315,7 @@
 !
         EH_plus = scale_c/XY_dist**2.d0*angle_cos**2* &
           (1.d0 - (1.d0 - angle2_cos*torsion_cos*angle2_cos_new*torsion_cos_new)**2)*hartree2kcal*damping 
+  !      (1.d0 - (1.d0 - weight_956*angle2_cos*torsion_cos*angle2_cos_new*torsion_cos_new)**2)*hartree2kcal*damping 
         if (nat(hblist(i, 1)) == 8 .and. nat(hblist(i, 5)) == 8) then
 !
 !  Add in extra stabilization as the O - O distance approaches 2.41 Angstroms.
