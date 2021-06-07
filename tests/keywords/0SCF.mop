@@ -1,0 +1,28 @@
+1SCF AM1
+comment1
+comment2
+C  0.00 0.0 0.0
+O  1.16 0.0 0.0
+O -1.16 0.0 0.0
+
+1SCF AM1 0SCF
+comment1
+comment2
+C  0.00 0.0 0.0
+O  1.16 0.0 0.0
+O -1.16 0.0 0.0
+
+1SCF AM1 AIGOUT
+comment1
+comment2
+C  0.00 0.0 0.0
+O  1.16 0.0 0.0
+O -1.16 0.0 0.0
+
+1SCF AM1 0SCF AIGOUT
+comment1
+comment2
+C  0.00 0.0 0.0
+O  1.16 0.0 0.0
+O -1.16 0.0 0.0
+

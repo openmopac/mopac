@@ -1,0 +1,378 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.121M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.121M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Mon May 24 15:08:32 2021  *
+ *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  BONDS      - NON-HYDROGEN BOND-ORDERS TO BE PRINTED
+ *******************************************************************************
+MOZYME BONDS
+ Ethane
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+     2       C          1.52380660  *   0.00000000  *   0.00000000  *
+     3       H          1.92386890  *   1.02043467  *   0.00000000  *
+     4       H          1.92386890  *  -0.51024884  *   0.88370416  *
+     5       H          1.92386890  *  -0.51024884  *  -0.88370416  *
+     6       H         -0.40006229  *   0.51021733  *  -0.88372235  *
+     7       H         -0.40006229  *  -1.02043467  *   0.00000000  *
+     8       H         -0.40006229  *   0.51024343  *   0.88370728  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         C          1.5238      0.0000      0.0000
+     3         H          1.9239      1.0204      0.0000
+     4         H          1.9239     -0.5102      0.8837
+     5         H          1.9239     -0.5102     -0.8837
+     6         H         -0.4001      0.5102     -0.8837
+     7         H         -0.4001     -1.0204      0.0000
+     8         H         -0.4001      0.5102      0.8837
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2 H6  =     8 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D3d 
+
+          COMPUTED CHARGE ON SYSTEM: +0
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.71728 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ MOZYME BONDS
+ Ethane
+
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.121M)
+                                                       Mon May 24 15:08:32 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -18.19689 KCAL/MOL =     -76.13581 KJ/MOL
+
+
+          TOTAL ENERGY            =       -326.96604 EV
+          ELECTRONIC ENERGY       =       -936.57862 EV
+          CORE-CORE REPULSION     =        609.61258 EV
+
+          GRADIENT NORM           =          0.71728 = 0.25360 PER ATOM
+          NO. OF FILLED LEVELS    =          7
+          MOLECULAR WEIGHT        =         30.0694
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     7    H     3     3.09286
+            H     8    H     5     2.90085
+            H     4    H     6     2.80297
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.020 SECONDS
+          COMPUTATION TIME        =          0.019 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+     2       C          1.52380660  *   0.00000000  *   0.00000000  *
+     3       H          1.92386890  *   1.02043467  *   0.00000000  *
+     4       H          1.92386890  *  -0.51024884  *   0.88370416  *
+     5       H          1.92386890  *  -0.51024884  *  -0.88370416  *
+     6       H         -0.40006229  *   0.51021733  *  -0.88372235  *
+     7       H         -0.40006229  *  -1.02043467  *   0.00000000  *
+     8       H         -0.40006229  *   0.51024343  *   0.88370728  *
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    C        1.523806605     0.000000000     0.000000000
+   3    H        1.923868899     1.020434671     0.000000000
+   4    H        1.923868899    -0.510248843     0.883704156
+   5    H        1.923868899    -0.510248843    -0.883704156
+   6    H       -0.400062294     0.510217335    -0.883722348
+   7    H       -0.400062294    -1.020434671     0.000000000
+   8    H       -0.400062294     0.510243434     0.883707279
+
+
+           Empirical Formula: C2 H6  =     8 atoms
+
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.421537        4.4215     1.04716     3.37438
+    2          C          -0.420677        4.4207     1.04720     3.37348
+    3          H           0.140266        0.8597     0.85973
+    4          H           0.140259        0.8597     0.85974
+    5          H           0.140249        0.8598     0.85975
+    6          H           0.140479        0.8595     0.85952
+    7          H           0.140476        0.8595     0.85952
+    8          H           0.140485        0.8595     0.85952
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.001     0.000     0.000     0.001
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM           -0.001     0.000     0.000     0.001
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.04716   1.03221   1.17108   1.17109
+    2  C   1.04720   1.03190   1.17078   1.17079
+    3  H   0.85973
+    4  H   0.85974
+    5  H   0.85975
+    6  H   0.85952
+    7  H   0.85952
+    8  H   0.85952
+
+
+            (VALENCIES)   BOND ORDERS
+
+     1  C     (3.935)     2  C 1.012
+ 
+     2  C     (3.935)     1  C 1.012
+ 
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.121M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.121M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Mon May 24 15:08:32 2021  *
+ *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  ALLBONDS   - ALL SIGNIFICANT BOND-ORDERS TO BE PRINTED
+ *******************************************************************************
+MOZYME ALLBONDS
+ Ethane
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+     2       C          1.52380660  *   0.00000000  *   0.00000000  *
+     3       H          1.92386890  *   1.02043467  *   0.00000000  *
+     4       H          1.92386890  *  -0.51024884  *   0.88370416  *
+     5       H          1.92386890  *  -0.51024884  *  -0.88370416  *
+     6       H         -0.40006229  *   0.51021733  *  -0.88372235  *
+     7       H         -0.40006229  *  -1.02043467  *   0.00000000  *
+     8       H         -0.40006229  *   0.51024343  *   0.88370728  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         C          1.5238      0.0000      0.0000
+     3         H          1.9239      1.0204      0.0000
+     4         H          1.9239     -0.5102      0.8837
+     5         H          1.9239     -0.5102     -0.8837
+     6         H         -0.4001      0.5102     -0.8837
+     7         H         -0.4001     -1.0204      0.0000
+     8         H         -0.4001      0.5102      0.8837
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2 H6  =     8 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D3d 
+
+          COMPUTED CHARGE ON SYSTEM: +0
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.71728 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ MOZYME ALLBONDS
+ Ethane
+
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.121M)
+                                                       Mon May 24 15:08:32 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -18.19689 KCAL/MOL =     -76.13581 KJ/MOL
+
+
+          TOTAL ENERGY            =       -326.96604 EV
+          ELECTRONIC ENERGY       =       -936.57862 EV
+          CORE-CORE REPULSION     =        609.61258 EV
+
+          GRADIENT NORM           =          0.71728 = 0.25360 PER ATOM
+          NO. OF FILLED LEVELS    =          7
+          MOLECULAR WEIGHT        =         30.0694
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     7    H     3     3.09286
+            H     8    H     5     2.90085
+            H     4    H     6     2.80297
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.039 SECONDS
+          COMPUTATION TIME        =          0.037 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+     2       C          1.52380660  *   0.00000000  *   0.00000000  *
+     3       H          1.92386890  *   1.02043467  *   0.00000000  *
+     4       H          1.92386890  *  -0.51024884  *   0.88370416  *
+     5       H          1.92386890  *  -0.51024884  *  -0.88370416  *
+     6       H         -0.40006229  *   0.51021733  *  -0.88372235  *
+     7       H         -0.40006229  *  -1.02043467  *   0.00000000  *
+     8       H         -0.40006229  *   0.51024343  *   0.88370728  *
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    C        1.523806605     0.000000000     0.000000000
+   3    H        1.923868899     1.020434671     0.000000000
+   4    H        1.923868899    -0.510248843     0.883704156
+   5    H        1.923868899    -0.510248843    -0.883704156
+   6    H       -0.400062294     0.510217335    -0.883722348
+   7    H       -0.400062294    -1.020434671     0.000000000
+   8    H       -0.400062294     0.510243434     0.883707279
+
+
+           Empirical Formula: C2 H6  =     8 atoms
+
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.421537        4.4215     1.04716     3.37438
+    2          C          -0.420677        4.4207     1.04720     3.37348
+    3          H           0.140266        0.8597     0.85973
+    4          H           0.140259        0.8597     0.85974
+    5          H           0.140249        0.8598     0.85975
+    6          H           0.140479        0.8595     0.85952
+    7          H           0.140476        0.8595     0.85952
+    8          H           0.140485        0.8595     0.85952
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.001     0.000     0.000     0.001
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM           -0.001     0.000     0.000     0.001
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.04716   1.03221   1.17108   1.17109
+    2  C   1.04720   1.03190   1.17078   1.17079
+    3  H   0.85973
+    4  H   0.85974
+    5  H   0.85975
+    6  H   0.85952
+    7  H   0.85952
+    8  H   0.85952
+
+
+            (VALENCIES)   BOND ORDERS
+
+     1  C     (3.935)     2  C 1.012     6  H 0.974     7  H 0.974     8  H 0.974
+ 
+     2  C     (3.935)     1  C 1.012     3  H 0.974     4  H 0.974     5  H 0.974
+ 
+     3  H     (0.980)     2  C 0.974     7  H 0.004
+ 
+     4  H     (0.980)     2  C 0.974     6  H 0.004
+ 
+     5  H     (0.980)     2  C 0.974     8  H 0.004
+ 
+     6  H     (0.980)     1  C 0.974     4  H 0.004
+ 
+     7  H     (0.980)     1  C 0.974     3  H 0.004
+ 
+     8  H     (0.980)     1  C 0.974     5  H 0.004
+ 
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.06 SECONDS
+
+ == MOPAC DONE ==

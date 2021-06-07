@@ -1,5 +1,7 @@
 #Basic input/output comparison tests
 
+add_subdirectory(keywords)
+
 add_test(NAME port COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
          port.mop port.parameters setup.iter try.txt aa.txt mol.in SETUP)
 

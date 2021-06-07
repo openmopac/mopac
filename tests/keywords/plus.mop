@@ -1,0 +1,23 @@
+1SCF AM1 PULAY
+comment1
+comment2
+C  0.00 0.0 0.0
+O  1.16 0.0 0.0
+O -1.16 0.0 0.0
+
+1SCF +
+AM1 PULAY
+comment1
+comment2
+C  0.00 0.0 0.0
+O  1.16 0.0 0.0
+O -1.16 0.0 0.0
+
+1SCF +
+AM1 +
+PULAY
+comment1
+comment2
+C  0.00 0.0 0.0
+O  1.16 0.0 0.0
+O -1.16 0.0 0.0

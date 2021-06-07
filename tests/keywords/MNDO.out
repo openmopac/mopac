@@ -1,0 +1,169 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              MNDO CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Mon Jun  7 15:20:23 2021  *
+ *  MNDO       - The MNDO Hamiltonian to be used
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+MNDO
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+     2       O          1.16000000  *   0.00000000  *   0.00000000  *
+     3       O         -1.16000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         O          1.1600      0.0000      0.0000
+     3         O         -1.1600      0.0000      0.0000
+
+  C: (MNDO): M.J.S. DEWAR, W. THIEL, J. AM. CHEM. SOC., 99, 4899, (1977)
+  O: (MNDO): M.J.S. DEWAR, W. THIEL, J. AM. CHEM. SOC., 99, 4899, (1977)
+
+           Empirical Formula: C O2  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D*h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 8
+
+
+          Geometry optimization using EF
+
+          DIAGONAL MATRIX USED AS START HESSIAN
+
+ CYCLE:     1 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:   128.244 HEAT: -72.79170
+ CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    81.875 HEAT: -73.98166
+ CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     6.585 HEAT: -75.10299
+ CYCLE:     4 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.406 HEAT: -75.10973
+
+     GRADIENT =  0.40576 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ MNDO
+ comment1
+ comment2
+
+
+     GEOMETRY OPTIMISED USING EIGENVECTOR FOLLOWING (EF).     
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              MNDO CALCULATION
+                                                       MOPAC2016 (Version: 21.145M)
+                                                       Mon Jun  7 15:20:23 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -75.10973 KCAL/MOL =    -314.25912 KJ/MOL
+
+
+          TOTAL ENERGY            =       -772.07063 EV
+          ELECTRONIC ENERGY       =      -1442.41298 EV  POINT GROUP:     D*h 
+          CORE-CORE REPULSION     =        670.34235 EV
+          COSMO AREA              =         65.84 SQUARE ANGSTROMS
+          COSMO VOLUME            =         47.52 CUBIC ANGSTROMS
+
+          GRADIENT NORM           =          0.40576 = 0.23426 PER ATOM
+          IONIZATION POTENTIAL    =         12.793643 EV
+          HOMO LUMO ENERGIES (EV) =        -12.794  0.850
+          NO. OF FILLED LEVELS    =          8
+          MOLECULAR WEIGHT        =         44.0098
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            O     3    O     2     2.37226
+            C     1    O     2     0.00000
+            O     2    C     1     0.00000
+
+
+          SCF CALCULATIONS        =          6
+ 
+          WALL-CLOCK TIME         =          0.039 SECONDS
+          COMPUTATION TIME        =          0.035 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.00000000  *  -0.00000000  *   0.00000000  *
+     2       O          1.18612842  *   0.00000000  *  -0.00000000  *
+     3       O         -1.18612842  *   0.00000000  *  -0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.000000000    -0.000000000     0.000000000
+   2    O        1.186128425     0.000000000    -0.000000000
+   3    O       -1.186128424     0.000000000    -0.000000000
+
+
+           Empirical Formula: C O2  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D*h 
+
+
+                  EIGENVALUES  
+ -45.57387 -42.64387 -21.24545 -17.81442 -17.68067 -17.68067 -12.79364 -12.79364
+   0.84959   0.84959   3.18290   7.94132
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C           0.447999        3.5520     1.21684     2.33517
+    2          O          -0.223999        6.2240     1.88135     4.34265
+    3          O          -0.223999        6.2240     1.88135     4.34265
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.000    -0.000     0.000     0.000
+ HYBRID        -0.000    -0.000     0.000     0.000
+ SUM           -0.000    -0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.21684   0.85047   0.74235   0.74235
+    2  O   1.88135   1.08500   1.62883   1.62883
+    3  O   1.88135   1.08500   1.62883   1.62883
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.04 SECONDS
+
+ == MOPAC DONE ==
