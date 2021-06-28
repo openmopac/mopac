@@ -80,6 +80,7 @@
           if (labels(i) == 99) cycle  
           l = l + 1 
           labels(l) = labels(i) 
+          txtatm(l) = txtatm(i)
         end do 
         numat = l 
         natoms = numat 
@@ -240,7 +241,7 @@
       &/10X,'' TO GIVE ACCURATE RESULTS'')') sum
       end if 
       if ( .not. mozyme .and. .not. restrt) call mullik()
-      if (tscf > 0.D0) then 
+      if (tscf > 0.01D0) then 
         write (iw, '(2/10X,''TIME FOR SCF CALCULATION ='',F8.2)') tscf 
         write (iw, '( /10X,''TIME FOR DERIVATIVES     ='',F8.2)') tder 
       end if 

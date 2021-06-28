@@ -917,7 +917,7 @@
           end if
           rewind iarc 
         end if
-        if ( index(keywrd," PDBOUT") /= 0 .and. latom == 0 ) then
+        if ( index(keywrd," HTML") + index(keywrd," PDBOUT") /= 0 .and. latom == 0 ) then
           line = archive_fn(:len_trim(archive_fn) - 3)
           line = archive_fn(:len_trim(archive_fn) - 3)
           do i = len_trim(line), 1, -1
@@ -925,6 +925,7 @@
           end do
           line = trim(line)//"pdb"
           open(unit=31, file=trim(line), status='UNKNOWN', position='asis') 
+          call l_control("Write_Escf", len("Write_Escf"), 1)
           call pdbout(31)
           close (31)
         end if
@@ -1213,6 +1214,7 @@
      !    molecule.
      !
       nlab = 4
+      llab = 0
       llab(1) = 6
       llab(2) = 1
       llab(3) = 7
@@ -1231,6 +1233,7 @@
         cycle
   1000  mlab(k) = mlab(k) + 1
       end do
+      if (llab(nlab) == 0) nlab = nlab - 1
       j = 0
       do i = 1, nlab
         if (mlab(i) /= 0) then

@@ -1239,7 +1239,7 @@ subroutine wrtcon (allkey)
     j = Index (keywrd(i:i+10), ",") + i   - 1
     ilevel = Nint (reada (keywrd, j))
     ielec = Nint (reada (keywrd, Index (keywrd, " OPEN")+6)) 
-    write (iw,'(" *  OPEN(N,N)- THERE ARE", i2, " ELECTRONS IN", i2, " LEVELS")') &
+    write (iw,'(" *  OPEN(N,N)  - THERE ARE", i2, " ELECTRONS IN", i2, " LEVELS")') &
      ielec, ilevel
   end if
 !
@@ -1858,7 +1858,9 @@ subroutine wrtwor (allkey)
   if (index(allkey, " METAL") /= 0) then
     j = Index (keywrd, " METAL")
     i = Index (keywrd, " METAL=") 
-    if (i == 0) keywrd = keywrd(:j + 5)//"="//trim(keywrd(j + 6:))
+    if (keywrd(j + 6:j + 6) /= " ") then
+      if (i == 0) keywrd = keywrd(:j + 5)//"="//trim(keywrd(j + 6:))
+    end if
     i = Index (keywrd, " METAL")
     j = Index (keywrd(i:), ") ") + i 
      if (j < i) then

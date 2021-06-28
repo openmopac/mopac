@@ -21,7 +21,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
     j = -1
     i = index(keywrd," METAL")
     if (i /= 0) j = index(keywrd(i:),") ") + i
-    if (i == j .or. index(keywrd, " ADD-H") /= 0) then
+    if (i /= 0 .and. keywrd(i + 6:i + 6) == " " .or. index(keywrd, " ADD-H") /= 0) then
       is_metal = .false.
       do i = 1, 102
         select case (i)

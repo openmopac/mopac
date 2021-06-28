@@ -143,7 +143,10 @@
             pold(1:mpack) = pa(1:mpack)*2.d0
           end if
         else
-          if (.not. is_PARAM) then
+!
+! If a reaction path of some kind and it's a UHF, don't reset the density matrix after the first SCF
+!
+          if (.not. is_PARAM .and. (latom == 0 .or. nscf == 0) .or. .not. UHF) then
             p(:mpack) = 0.D0
             pa(:mpack) = 0.D0
             pb(:mpack) = 0.D0

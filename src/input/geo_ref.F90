@@ -20,7 +20,7 @@
 !
       use molkst_C, only : numat, keywrd, nvar, id, natoms, moperr, line, refkey, density, &
         maxtxt, numat_old, koment, title, geo_ref_name, geo_dat_name, arc_hof_2, arc_hof_1, &
-        keywrd_txt, pdb_label, ncomments, refkey_ref, backslash
+        keywrd_txt, pdb_label, ncomments, refkey_ref, backslash, formula
 !
       use parameters_C, only : ams
 !
@@ -39,7 +39,8 @@
       double precision, external :: reada
       logical :: intern = .true., exists, bug, any_bug, swap, first, let, l_0SCF_HTML, opend
       logical, allocatable :: same(:), ok(:)
-      character :: line_1*1000, line_2*1000, num*2, geo_dat*7
+      character :: line_1*1000, line_2*1000, num*2, geo_dat*7, txt(12)*1
+      data txt /" ",".","0","1","2","3","4","5","6","7","8","9"/
 !
 !   For Geo-Ref to work, some very specific conditions must be satisfied.  
 !   So before attempting a GEO_REF calculation, check that the data are okay
@@ -73,7 +74,12 @@
         call mopend(trim(line))
         return
       end if
-      j = index(keywrd(i + 2:),'" ') + i 
+!
+! Search for '" ' or '"x' where "x" is one of ., 0 - 9
+      do k = 1, 12
+        j = index(keywrd(i + 2:),'"'//txt(k)) + i 
+        if (j /= i) exit
+      end do
       if (j == i) then
         write(line,'(a)')" File name after GEO_REF must end with a quotation mark."
         call mopend(trim(line))
@@ -258,6 +264,8 @@
         return
       end if
       numat_dat = numat
+      nat(numat + 1:) = 0
+      atom_no(:numat) = nat(:numat)
 !
 !  Put atoms in the reference data set into the same order as those in the current data set
 !
@@ -319,9 +327,20 @@
       call l_control("GEO_DAT", len_trim("GEO_DAT"), -1) 
       call l_control("GEO_REF", len_trim("GEO_REF"), -1)  
       if (index(keywrd," 0SCF") + index(keywrd, " LOCATE-TS") + index(keywrd, " SADDLE") /= 0) then
-        if (maxtxt == 0) then
-          call mopend("In this job, atoms in both data-sets must have PDB-type labels")
-          return
+        if (maxtxt == 0 .or. txtatm(1) == " ") then
+          if (index(keywrd, " GEO-OK") /= 0) then
+            if (maxtxt == 0) then
+              maxtxt = 26
+              txtatm1(:numat) = txtatm(:numat)
+            else
+              txtatm(:numat) = txtatm1(:numat)
+            end if
+          else            
+            call mopend("In this job, atoms in both data-sets must have PDB-type labels")
+            write(iw,'(a)')"Or add ""GEO-OK"" if one of the two data sets has PDB-type "// &
+              "labels and the other does not have PDB information."
+            return
+          end if
         end if
 !
 !  Before starting, check that the chains are the same.  If they're not, then
@@ -377,7 +396,7 @@
             end if
           end do
         end do
-        let = (index(keywrd, " LOCATE-TS") + index(keywrd, " SADDLE") /= 0 .or. &
+        let = (index(keywrd, " LOCATE-TS") + index(keywrd, " SADDLE")  /= 0 .or. &
           (index(keywrd," GEO-OK+") /= 0 .and. index(keywrd, " COMPARE") /= 0)) 
         do j = 1, ii
 !
@@ -471,8 +490,8 @@
           do i = 1, l
             write(iw,'(i4,a)')i, trim(diffs(i))
           end do
-          if (.not. let) &
-            write(iw,'(/5x,a)')"If ""LET"" is used, then some or all of these differences will be ignored"
+          if (.not. let .and. index(keywrd, " COMPARE") == 0) &
+            write(iw,'(/10x,a)')"If ""LET"" is used, then some or all of these differences will be ignored"
         end if
         geoa(:,:k) = tmp_geoa(:,:k)
         tmp_txt(:k) = txtatm(:k)
@@ -498,10 +517,30 @@
             end if           
             write(iw,'(/10x,a)')"GEO_REF name: """//trim(geo_ref_name)//""""
             return
+          else
+            write(iw,'(/10x, a)')"Empirical formulae of data-set and GEO_REF are different"            
           end if
-          write(iw,'(/22x,a,i5)')"Number of atoms in "//geo_dat//":",numat_dat
-          write(iw,'(22x,a,i5)')   "Number of atoms in GEO_REF:",numat_ref
-          write(iw,'(10x,a,i5,/)') "Number of atoms common to both systems:",ii
+!
+! Do GEO_REF first, because it's currently available
+!
+          call empiri()
+          write(iw,'(/10x,a,i5)')   "Empirical formula of system in GEO_REF:"//trim(formula(30:))
+!
+! Now do GEO_DAT
+! First store the data for GEO_REF
+!
+          i = numat
+          nc(:numat) = nat(:numat)
+          numat = numat_dat
+          nat(:numat) = atom_no(:numat)
+          call empiri()
+!
+! Restore GEO_REF
+!
+          numat = i
+          nat(:numat) = nc(:numat)
+          write(iw,'(10x,a,i5)')"Empirical formula of system in "//geo_dat//":"//trim(formula(30:))
+          write(iw,'(/10x,a,i5,/)') "Number of atoms common to both systems:",ii
         end if      
         natoms = k 
         numat = k
@@ -510,8 +549,26 @@
         coord(:,:numat) = geoa(:,:numat)
       end if
       if (numat /= numat_dat .and. index(keywrd, " LOCATE-TS") /= 0) then
-        call mopend("ERRORS DETECTED IN PDB LABELS DURING DOCKING MUST BE CORRECTED BEFORE LOCATE-TS CAN BE RUN.")
-        return
+        if (maxtxt == 0 .or. txtatm(1) == " ") then
+          if (index(keywrd, " GEO-OK") /= 0) then
+            if (maxtxt == 0) then
+              maxtxt = 26
+              txtatm1(:numat) = txtatm(:numat)
+            else
+              txtatm(:numat) = txtatm1(:numat)
+            end if
+          else            
+            call mopend("In this job, atoms in both data-sets must have PDB-type labels")
+            write(iw,'(a)')"Or add ""GEO-OK"" if one of the two data sets has "// &
+              "PDB-type labels and the other does not have PDB information."
+            return
+          end if
+        else
+          call mopend("ERRORS DETECTED IN PDB LABELS DURING DOCKING MUST BE CORRECTED BEFORE LOCATE-TS CAN BE RUN.")
+          write(iw,'(a)')"Or add ""GEO-OK"" if one of the two data sets has"// &
+            " PDB-type labels and the other does not have PDB information."
+          return
+        end if
       end if
       if (moperr) then
         i = index(keywrd_txt," GEO_REF")

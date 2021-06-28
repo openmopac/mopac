@@ -614,16 +614,16 @@ subroutine moldat(mode)
           i = nint(reada(keywrd,index(keywrd,'C.I.=(') + 5)) 
           i = i - ndoubl 
           if (nopen > i) then 
-            write (iw, '(2/,'' NUMBER OF OPEN-SHELLS ALLOWED IN C.I. IS LESS '',/,    &
-      &''    THAN THAT SPECIFIED BY OTHER KEYWORDS'')') 
             call mopend ('NUMBER OF OPEN-SHELLS ALLOWED IN C.I. IS LESS THAN THAT SPECIFIED BY OTHER KEYWORDS') 
             return  
           end if 
           if (i + nclose > norbs) then 
-            write (iw, '(A,/,A,I3)') &
-      ' NUMBER OF M.O.s REQUESTED IN C.I. IS GREATER THAN THE NUMBER OF ORBITALS' 
-            call mopend (&
-       'NUMBER OF M.O.s REQUESTED IN C.I. IS GREATER THAN THE NUMBER OF ORBITALS') 
+            write(iw,'(10x,a,i2)')"Number of doubly-occupied levels requested in C.I.:", ndoubl
+            write(iw,'(10x,a,i13)')"Total number of M.O.s requested in C.I.:", i + ndoubl
+            write(iw,'(10x,a,i2)')"Calculated number of empty M.O.s requested in C.I.:", i
+            write(iw,'(10x,a,i13)')"Index of highest M.O. requested in C.I.:", nclose + i    
+            write(iw,'(10x,a,i13)')"Number of M.O.s in system:              ", norbs         
+            call mopend ('NUMBER OF M.O.s REQUESTED IN C.I. IS GREATER THAN THE NUMBER OF ORBITALS') 
             return  
           end if 
         end if 

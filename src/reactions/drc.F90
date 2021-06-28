@@ -769,6 +769,7 @@
           q(:numat) = tore(labels(:numat)) - q(:numat)           
           dip = dipole(p, xparam, dipvec,0)
         end if
+        iw0 = iw00
         if (abs(half) < 0.00001d0) then 
 !
 !   FOR THE IRC:
@@ -803,6 +804,7 @@
           escf_diff = escf - escf_old
           escf_old = escf
         end if 
+        iw0 = -1
         tnow = seconds(2) 
         tcycle = tnow - oldtim 
         oldtim = tnow 

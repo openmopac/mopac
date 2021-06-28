@@ -95,7 +95,7 @@
 !
 !   'd' transform
 !
-        call dtrans (d, ioper, first, r) 
+        call dtrans (d, h, ioper, first, r) 
         do i = 1, 5 
           if (id(1,i) < 1) return  
           ii = id(1,i) 

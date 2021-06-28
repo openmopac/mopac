@@ -56,6 +56,7 @@
       data icalcn/ 0/  
       data refscf/ 0.D0/  
       data cotype/ 'BL', 'BA', 'DI'/  
+      geo = 0.d0
       if (icalcn /= numcal) then 
         if (allocated(vref)) deallocate(vref)
         if (allocated(vref0)) deallocate(vref0)
@@ -70,6 +71,7 @@
         i = 3*numat
         allocate(vref(i), vref0(i), allxyz(3,i), allvel(3,i), xyz3(3,i), vel3(3,i), &
         allgeo(3,i), geo3(3,i), parref(i), now(i) )
+        allgeo = 0.d0
         now = ref
         old_sum = 0.d0
         icalcn = numcal 

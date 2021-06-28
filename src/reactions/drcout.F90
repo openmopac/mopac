@@ -143,6 +143,7 @@
         jloop = 0
       end if
       write(iw,'(a)')trim(line)
+      call to_screen(line)
       natoms = nvar/3 
       l = 0 
       do i = 1, natoms 

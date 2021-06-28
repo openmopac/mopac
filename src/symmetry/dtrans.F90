@@ -1,4 +1,4 @@
-      subroutine dtrans(d, ioper, first, r)  
+      subroutine dtrans(d, h, ioper, first, r)  
 !
 !  Perform symmetry operation ioper on the "d" orbital set d 
 !  
@@ -10,11 +10,11 @@
       integer , intent(in) :: ioper 
       logical , intent(inout) :: first 
       double precision , intent(inout) :: d(5) 
+      double precision , intent(inout) :: h(5) 
       double precision , intent(in) :: r(3,3) 
       integer :: i, k 
       double precision, dimension(5,5,12) :: t1 
       double precision, dimension(3,3) :: s 
-      double precision :: h(5)
 !-----------------------------------------------
       if (first) then 
         first = .FALSE. 

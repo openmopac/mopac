@@ -12,7 +12,7 @@
 !
     use common_arrays_C, only : xparam, loc, geoa, lopt, geo, grad
     USE molkst_C, only : nvar, keywrd, numcal, numat, density, use_ref_geo, mpack, n2elec, &
-     line, step_num, escf, moperr, prt_coords, refkey
+     line, step_num, escf, moperr, prt_coords
     use MOZYME_C, only : geo_1, geo_2
     use chanel_C, only : iw, iarc, input_fn, iden
     implicit none
@@ -133,10 +133,6 @@
     call delete_ref_key("LOCATE-TS", len_trim("LOCATE-TS"), ') ', 2) 
     call delete_ref_key("XYZ", len_trim("XYZ"), " ", 1)
     call delete_ref_key("OPT", len_trim("OPT"), " ", 1)
-    if (index(keywrd, " MOZYME") == 0) then
-      i = len_trim(refkey(1))
-      refkey(1)(i + 1:) = " MOZYME"
-    end if
     if (nloop == 0) then
 !
 !  Use average of the two geometries, i.e., the average of the input data-set and reference geometries.

@@ -4,7 +4,7 @@
       use chanel_C, only : iw, ir
       use elemts_C, only : elemnt
       use common_arrays_C, only : p, pa, pb, geo, geoa, coord, &
-      & labels, na, nb, nc, xparam, grad, nat
+      & labels, na, nb, nc, xparam, grad, nat, loc
       implicit none
       integer :: linear, iflag, i, maxstp, maxcyc, j, k, iloop, lopt(3,natoms)
       double precision, dimension(3*numat) :: xold, grold
@@ -93,17 +93,17 @@
       sumy = 0.d0
       sumz = 0.d0
       do j = 1, numat
-        sumx = sumx + coord(1, j)
-        sumy = sumy + coord(2, j)
-        sumz = sumz + coord(3, j)
+        sumx = sumx + xyz(1, j)
+        sumy = sumy + xyz(2, j)
+        sumz = sumz + xyz(3, j)
       end do
       sumx = sumx / numat
       sumy = sumy / numat
       sumz = sumz / numat
       do j = 1, numat
-        geo(1, j) = coord(1, j) - sumx
-        geo(2, j) = coord(2, j) - sumy
-        geo(3, j) = coord(3, j) - sumz
+        geoa(1, j) = xyz(1, j) - sumx
+        geoa(2, j) = xyz(2, j) - sumy
+        geoa(3, j) = xyz(3, j) - sumz
       end do    
       write (iw, "(//,'  CARTESIAN GEOMETRY OF FIRST SYSTEM',//)")
       write (iw, "(i4,3x,a2,3x,3F14.5)") (i,elemnt(nat(i)),(geo(j, i), j=1, 3), i=1, numat)
@@ -158,10 +158,9 @@
         step = Min (0.2d0, Min (swap, 0.5d0, 6.d0/gnorm, dell, stepmx*step0)/step0) * step0
         swap = swap + 1.D0 
         dell = dell + 0.1D0 
-        write (iw, '(''            BAR SHORTENED BY'',F12.3,'' PERCENT'')') step/step0*&
-          100.D0 
+        write (iw, '(''            BAR SHORTENED BY'',F12.3,'' PERCENT'')') step/step0*100.D0 
         step0 = step0 - step 
-        if (step0 < 0.01D0) exit 
+        if (step0 < 0.1D0) exit 
         step = step0 
         if (lef) then 
           call ef (xparam, escf) 
@@ -216,12 +215,28 @@
         call to_screen(trim(line))
         if (intl) then
           xyz = geo(:,:numat)
-          call xyzint (xyz, numat, na, nb, nc, 1.d0, geo) 
+          call xyzint (xyz, numat, na, nb, nc, 1.d0, geo)         
+          k = 0
+          do i = 1, numat
+            do j = 1, min(i - 1,3)
+              k = k + 1
+              loc(1,k) = i
+              loc(2,k) = j
+            end do
+          end do 
         end if
         call geout (iw) 
         if (intl) then
           na = 0
           geo(:,:numat) = xyz
+          k = 0
+          do i = 1, numat
+            do j = 1, 3
+              k = k + 1
+              loc(1,k) = i
+              loc(2,k) = j
+            end do
+          end do 
         end if
         if (cosine < 0.d0) then
          i = 0

@@ -694,6 +694,8 @@
 !  available in the arrays.
 !  Now decide what type of calculation is to be done.
 !
+      call l_control("GEO_DAT", len_trim("GEO_DAT"), -1) 
+      call l_control("GEO_REF", len_trim("GEO_REF"), -1) 
       if (mozyme) then
         call geochk()
         if (moperr) then

@@ -153,7 +153,7 @@ subroutine pdbout (mode1)
       if (txtatm(i)(23:26) == "****") txtatm(i)(23:26) = "9999"
       x = txtatm(i)(13:13)
       if (x == "X") txtatm(i)(13:13) = " "
-      if (i1 > 0) then
+      if (txtatm(i)(14:14) /= "X") then
       write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f5.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
         & (coord(k, i), k=1, 3), "  1.00 ",q2(i1),"      PROT", ele_pdb, " "
       else
@@ -184,7 +184,7 @@ subroutine pdbout (mode1)
     save :: icalcn
     it = 0
     iprt = 27
-    if (icalcn == numcal) return
+    if (icalcn == numcal .and. index(keywrd, " Write_Escf") == 0) return
     icalcn = numcal
     l_compare = (index(keywrd, " COMPARE") /= 0)
     l_prt_res = (index(keywrd," NORJSMOL") == 0)

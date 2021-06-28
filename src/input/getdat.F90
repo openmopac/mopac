@@ -300,8 +300,11 @@
       else if (.not. is_PARAM .and. nlines < 4) then
         inquire(unit=iw, opened=exists) 
         if (.not. exists) open(unit=iw, file=trim(jobnam)//'.out') 
-        if (keywrd /= " ") write(iw,'(3/10x,a,/)')" Data set does not contain "//&
+        if (keywrd /= " ") then
+          if (index(keywrd, "++") == 0) &
+          write(iw,'(3/10x,a,/)')" Data set does not contain "//&
             "any atoms and neither GEO_DAT or SETUP is  present on the keyword line"
+        end if
       end if
       keywrd = "  "
       if (nlines == 1 .and. Len_trim(line1) > 0 .and. .not. is_PARAM) then  

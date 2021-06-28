@@ -511,6 +511,14 @@
         if (i == 0) exit
         keywrd(i:i) = "/"
       end do 
+!
+! Convert all fancy quotation marks into normal ASCII quotation marks
+!
+      do
+        i = index(keywrd, char(148))
+        if (i == 0) exit
+        keywrd(i:i) = '"'
+      end do 
       return  
   end subroutine gettxt
   character (len = 300) function get_text(line, i_start, zero)
