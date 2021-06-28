@@ -360,10 +360,11 @@
  324                                           HETATM 5674  C2  GOL B  33
  325                                           HETATM 5675  C3  GOL B  33
 
-     If "LET" is used, then some or all of these differences will be ignored
+          Empirical formulae of data-set and GEO_REF are different
 
-                      Number of atoms in GEO_DAT: 1740
-                      Number of atoms in GEO_REF: 2013
+          Empirical formula of system in GEO_REF: C1163 N254 O314 S9  =  2013 atoms
+          Empirical formula of system in GEO_DAT: C1163 N254 O314 S9  =  1740 atoms
+
           Number of atoms common to both systems: 1688
 
 
