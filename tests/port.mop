@@ -1,4 +1,4 @@
-    VECTORS PM3          noxyz 1scf        threads=1
+     VECTORS PM3          noxyz 1scf        threads=1
 
  
  XX    0.0000000  0      0.000000  0      0.000000  0    0    0    0
@@ -3752,9 +3752,9 @@ H 1.1 1 109 1 -120 1 3 2 4
 
  T=1H XYZ BAR=0.05  SADDLE mndo
    SADDLE CALCULATION, CH2O - HCOH
- FINAL HEAT OF FORMATION SHOULD BE MORE THAN 75 KCAL/MOL
+ FINAL HEAT OF FORMATION SHOULD BE ABOUT 71.7 KCAL/MOL
   O    0.000000  0   0.000000  0    0.000000  0     0     0     0
-  C    1.282350  1   0.000000  0    0.000000  0     1     0     0
+  C    1.400000  1   0.000000  0    0.000000  0     1     0     0
   H    1.096644  1 121.297223  1    0.000000  0     2     1     0
   H    1.242505  1  62.472319  1 -179.925472  1     1     2     3
 
@@ -4185,10 +4185,7 @@ N 1.2 1
 
 niter=20  1electron  times  scfcrt=1.D-6 oldgeo oldens uhf  &
 fock  debug  iter gradients cutoff1=6 cutoff2=20 hcore setup=setup.iter
-*
-*  Note - no blank line for third line of data, because SETUP supplies
-*  the third line
-
+ Third line 
  SETUP C.I.=2
 H2
 
@@ -5213,7 +5210,7 @@ oldgeo reseq
 *
 *  
 *
-   BONDS PI  gradients OPT-B RESIDUES & 1SCF MOZYME   PM3  POPS
+   BONDS PI  gradients OPT-B RESIDUES & 1SCF MOZYME   PM3  POPS  
 
 
   N     0.00000000 +0    0.0000000 +0    0.0000000 +0                         0.0000
@@ -6166,6 +6163,22 @@ H        2.161967 1     -1.647675 1     -0.863256  1
 O        2.437694 1      0.446167 1     -2.772301  1  
 H        2.510824 1      0.745272 1     -3.697950  1  
 
+ PM6-D3H4 1SCF gradients
+  Water, tetramer
+ h=0 hr=ref
+  O     0.00000000 +0    0.0000000 +0    0.0000000 +0     0     0     0
+  O     2.65924193 +1    0.0000000 +0    0.0000000 +0     1     0     0
+  O     2.65966831 +1   89.9230769 +1    0.0000000 +0     1     2     0
+  O     2.66010476 +1   90.0477962 +1   -2.3415347 +1     3     1     2
+  H     1.01703118 +1   15.2218417 +1  124.0531066 +1     1     2     3
+  H     0.96632493 +1  104.2319698 +1 -124.0337489 +1     1     2     3
+  H     1.01700474 +1   98.2538844 +1   15.0257848 +1     2     1     3
+  H     0.96639169 +1  122.8488416 +1 -104.5063096 +1     2     1     3
+  H     1.01721681 +1   15.0429807 +1  127.5975498 +1     4     3     1
+  H     0.96629752 +1  104.5843449 +1 -121.6552629 +1     4     3     1
+  H     1.01706626 +1   15.2060404 +1 -125.2643071 +1     3     1     2
+  H     0.96649055 +1  103.7928902 +1  121.2687357 +1     3     1     2
+ 
 1scf       PM6-DH2 gradients MMOK
       
       
@@ -6403,7 +6416,5 @@ MOZYME   METAL Lewis
   H(ATOM      8 1HA  GLY A   1) -25.69287976 +1   6.68778227 +1  -8.82479163 +1
   H(ATOM      9 2HA  GLY A   1) -26.23321524 +1   5.24134118 +1  -7.93929041 +1
  Au(ATOM     10 Au   ILE A   2) -23.71399842 +1   4.81601771 +1  -9.03299275 +1
- 
- 
- 
+
 
