@@ -1,0 +1,419 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM6-D3H4 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jun  8 16:55:50 2021  *
+ *  PM6-D3H4   - CORRECT DISPERSION AND HYDROGEN BOND TERMS USING THE D3H4 METHOD
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  DISP       - PRINT DISPERSION AND HYDROGEN BOND ENERGIES
+ *******************************************************************************
+PM6-D3H4 DISP 1SCF
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.04000000  *   2.00000000  *   0.00000000  *
+     2       C          0.04000000  *  -2.00000000  *   0.00000000  *
+     3       O          1.17000000  *   1.43000000  *   0.00000000  *
+     4       O         -1.07000000  *   1.33000000  *   0.00000000  *
+     5       O          1.07000000  *  -1.33000000  *   0.00000000  *
+     6       O         -1.17000000  *  -1.43000000  *   0.00000000  *
+     7       H          0.04000000  *   3.08000000  *   0.00000000  *
+     8       H          0.04000000  *  -3.08000000  *   0.00000000  *
+     9       H          1.15000000  *   0.38000000  *   0.00000000  *
+    10       H         -1.15000000  *  -0.38000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.0400      2.0000      0.0000
+     2         C          0.0400     -2.0000      0.0000
+     3         O          1.1700      1.4300      0.0000
+     4         O         -1.0700      1.3300      0.0000
+     5         O          1.0700     -1.3300      0.0000
+     6         O         -1.1700     -1.4300      0.0000
+     7         H          0.0400      3.0800      0.0000
+     8         H          0.0400     -3.0800      0.0000
+     9         H          1.1500      0.3800      0.0000
+    10         H         -1.1500     -0.3800      0.0000
+
+ General Reference for PM6:
+ "Optimization of Parameters for Semiempirical Methods V: Modification of NDDO Approximations
+ and Application to 70 Elements", J. J. P. Stewart, J. Mol. Mod., 13, 1173-1213 (2007)
+ URL: https://link.springer.com/article/10.1007/s00894-007-0233-4
+
+           Empirical Formula: C2 H4 O4  =    10 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 18
+
+
+ -------------------------------------------------------------------------------
+ PM6-D3H4 DISP 1SCF
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM6-D3H4 CALCULATION
+                                                       MOPAC2016 (Version: 21.145M)
+                                                       Tue Jun  8 16:55:50 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =       -192.38220 KCAL/MOL =    -804.92711 KJ/MOL
+
+          TOTAL ENERGY            =     -33809.56058 KCAL/MOL
+          ENERGY OF ATOMS         =      33624.30811 KCAL/MOL
+                              SUM =       -185.25248 KCAL/MOL
+          DISPERSION ENERGY       =         -0.93349 KCAL/MOL
+          H-BOND ENERGY           =         -6.30538 KCAL/MOL
+          H - H CORRECTION ENERGY =          0.10916 KCAL/MOL
+                              SUM =       -192.38220 KCAL/MOL
+
+          No. OF HYDROGEN BONDS   =          2       (H-bond Energy < -1.0 Kcal/mol)
+
+
+          TOTAL ENERGY            =      -1466.12251 EV
+          ELECTRONIC ENERGY       =      -4519.77090 EV  POINT GROUP:     C2h 
+          CORE-CORE REPULSION     =       3053.64839 EV
+          COSMO AREA              =        118.87 SQUARE ANGSTROMS
+          COSMO VOLUME            =        101.81 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         11.687334 EV
+          HOMO LUMO ENERGIES (EV) =        -11.687 -0.105
+          NO. OF FILLED LEVELS    =         18
+          MOLECULAR WEIGHT        =         92.0512
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     8    H     7     6.16000
+            O     6    O     3     2.34000
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.059 SECONDS
+          COMPUTATION TIME        =          0.173 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.04000000  *   2.00000000  *   0.00000000  *
+     2       C          0.04000000  *  -2.00000000  *   0.00000000  *
+     3       O          1.17000000  *   1.43000000  *   0.00000000  *
+     4       O         -1.07000000  *   1.33000000  *   0.00000000  *
+     5       O          1.07000000  *  -1.33000000  *   0.00000000  *
+     6       O         -1.17000000  *  -1.43000000  *   0.00000000  *
+     7       H          0.04000000  *   3.08000000  *   0.00000000  *
+     8       H          0.04000000  *  -3.08000000  *   0.00000000  *
+     9       H          1.15000000  *   0.38000000  *   0.00000000  *
+    10       H         -1.15000000  *  -0.38000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.040000000     2.000000000     0.000000000
+   2    C        0.040000000    -2.000000000     0.000000000
+   3    O        1.170000000     1.430000000     0.000000000
+   4    O       -1.070000000     1.330000000     0.000000000
+   5    O        1.070000000    -1.330000000     0.000000000
+   6    O       -1.170000000    -1.430000000     0.000000000
+   7    H        0.040000000     3.080000000     0.000000000
+   8    H        0.040000000    -3.080000000     0.000000000
+   9    H        1.150000000     0.380000000     0.000000000
+  10    H       -1.150000000    -0.380000000     0.000000000
+
+
+           Empirical Formula: C2 H4 O4  =    10 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2h 
+
+
+                  EIGENVALUES  
+ -32.80740 -32.41249 -31.06197 -30.88491 -24.70715 -23.81702 -19.39638 -17.94388
+ -17.70955 -17.56997 -16.38093 -16.31963 -14.95966 -13.69068 -12.68494 -12.63528
+ -12.04947 -11.68733  -0.10519  -0.10022   1.60798   1.70982   2.79195   3.38261
+   3.97402   3.99703   4.55492   5.19985
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C           0.532470        3.4675     1.12557     2.34196
+    2          C           0.532485        3.4675     1.12495     2.34257
+    3          O          -0.504088        6.5041     1.81829     4.68579
+    4          O          -0.571276        6.5713     1.85149     4.71978
+    5          O          -0.577226        6.5772     1.85054     4.72669
+    6          O          -0.499336        6.4993     1.81755     4.68179
+    7          H           0.158287        0.8417     0.84171
+    8          H           0.158155        0.8418     0.84184
+    9          H           0.384292        0.6157     0.61571
+   10          H           0.386237        0.6138     0.61376
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.007     0.004     0.000     0.008
+ HYBRID         0.000    -0.002    -0.000     0.002
+ SUM           -0.007     0.002    -0.000     0.007
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.12557   0.74710   0.94225   0.65261
+    2  C   1.12495   0.74635   0.94314   0.65308
+    3  O   1.81829   1.44703   1.44875   1.79001
+    4  O   1.85149   1.46098   1.70141   1.55739
+    5  O   1.85054   1.46087   1.71001   1.55580
+    6  O   1.81755   1.44333   1.44734   1.79112
+    7  H   0.84171
+    8  H   0.84184
+    9  H   0.61571
+   10  H   0.61376
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.145M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM6-D3H4 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jun  8 16:55:50 2021  *
+ *  PM6-D3H4   - CORRECT DISPERSION AND HYDROGEN BOND TERMS USING THE D3H4 METHOD
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  DISP       - PRINT DISPERSION AND HYDROGEN BOND ENERGIES
+ *******************************************************************************
+PM6-D3H4 DISP(1.0) 1SCF
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.04000000  *   2.00000000  *   0.00000000  *
+     2       C          0.04000000  *  -2.00000000  *   0.00000000  *
+     3       O          1.17000000  *   1.43000000  *   0.00000000  *
+     4       O         -1.07000000  *   1.33000000  *   0.00000000  *
+     5       O          1.07000000  *  -1.33000000  *   0.00000000  *
+     6       O         -1.17000000  *  -1.43000000  *   0.00000000  *
+     7       H          0.04000000  *   3.08000000  *   0.00000000  *
+     8       H          0.04000000  *  -3.08000000  *   0.00000000  *
+     9       H          1.15000000  *   0.38000000  *   0.00000000  *
+    10       H         -1.15000000  *  -0.38000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.0400      2.0000      0.0000
+     2         C          0.0400     -2.0000      0.0000
+     3         O          1.1700      1.4300      0.0000
+     4         O         -1.0700      1.3300      0.0000
+     5         O          1.0700     -1.3300      0.0000
+     6         O         -1.1700     -1.4300      0.0000
+     7         H          0.0400      3.0800      0.0000
+     8         H          0.0400     -3.0800      0.0000
+     9         H          1.1500      0.3800      0.0000
+    10         H         -1.1500     -0.3800      0.0000
+
+ General Reference for PM6:
+ "Optimization of Parameters for Semiempirical Methods V: Modification of NDDO Approximations
+ and Application to 70 Elements", J. J. P. Stewart, J. Mol. Mod., 13, 1173-1213 (2007)
+ URL: https://link.springer.com/article/10.1007/s00894-007-0233-4
+
+           Empirical Formula: C2 H4 O4  =    10 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 18
+
+
+ -------------------------------------------------------------------------------
+ PM6-D3H4 DISP(1.0) 1SCF
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM6-D3H4 CALCULATION
+                                                       MOPAC2016 (Version: 21.145M)
+                                                       Tue Jun  8 16:55:50 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =       -192.38220 KCAL/MOL =    -804.92711 KJ/MOL
+
+          TOTAL ENERGY            =     -33809.56058 KCAL/MOL
+          ENERGY OF ATOMS         =      33624.30811 KCAL/MOL
+                              SUM =       -185.25248 KCAL/MOL
+          DISPERSION ENERGY       =         -0.93349 KCAL/MOL
+          H-BOND ENERGY           =         -6.30538 KCAL/MOL
+          H - H CORRECTION ENERGY =          0.10916 KCAL/MOL
+                              SUM =       -192.38220 KCAL/MOL
+
+          No. OF HYDROGEN BONDS   =          2       (H-bond Energy < -1.0 Kcal/mol)
+
+                                                List of hydrogen bonds found
+   No.            Donor                R(D-H)           Hydrogen                       Acceptor                 H-bond energy
+    1     Atom No.:    3    O          1.050      Atom No.:    9    H            Atom No.:    5    O            -2.21 Kcal/mol
+    2     Atom No.:    6    O          1.050      Atom No.:   10    H            Atom No.:    4    O            -2.21 Kcal/mol
+
+
+          TOTAL ENERGY            =      -1466.12251 EV
+          ELECTRONIC ENERGY       =      -4519.77090 EV  POINT GROUP:     C2h 
+          CORE-CORE REPULSION     =       3053.64839 EV
+          COSMO AREA              =        118.87 SQUARE ANGSTROMS
+          COSMO VOLUME            =        101.81 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         11.687334 EV
+          HOMO LUMO ENERGIES (EV) =        -11.687 -0.105
+          NO. OF FILLED LEVELS    =         18
+          MOLECULAR WEIGHT        =         92.0512
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     8    H     7     6.16000
+            O     6    O     3     2.34000
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.109 SECONDS
+          COMPUTATION TIME        =          0.368 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.04000000  *   2.00000000  *   0.00000000  *
+     2       C          0.04000000  *  -2.00000000  *   0.00000000  *
+     3       O          1.17000000  *   1.43000000  *   0.00000000  *
+     4       O         -1.07000000  *   1.33000000  *   0.00000000  *
+     5       O          1.07000000  *  -1.33000000  *   0.00000000  *
+     6       O         -1.17000000  *  -1.43000000  *   0.00000000  *
+     7       H          0.04000000  *   3.08000000  *   0.00000000  *
+     8       H          0.04000000  *  -3.08000000  *   0.00000000  *
+     9       H          1.15000000  *   0.38000000  *   0.00000000  *
+    10       H         -1.15000000  *  -0.38000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.040000000     2.000000000     0.000000000
+   2    C        0.040000000    -2.000000000     0.000000000
+   3    O        1.170000000     1.430000000     0.000000000
+   4    O       -1.070000000     1.330000000     0.000000000
+   5    O        1.070000000    -1.330000000     0.000000000
+   6    O       -1.170000000    -1.430000000     0.000000000
+   7    H        0.040000000     3.080000000     0.000000000
+   8    H        0.040000000    -3.080000000     0.000000000
+   9    H        1.150000000     0.380000000     0.000000000
+  10    H       -1.150000000    -0.380000000     0.000000000
+
+
+           Empirical Formula: C2 H4 O4  =    10 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2h 
+
+
+                  EIGENVALUES  
+ -32.80740 -32.41249 -31.06197 -30.88491 -24.70715 -23.81702 -19.39638 -17.94388
+ -17.70955 -17.56997 -16.38093 -16.31963 -14.95966 -13.69068 -12.68494 -12.63528
+ -12.04947 -11.68733  -0.10519  -0.10022   1.60798   1.70982   2.79195   3.38261
+   3.97402   3.99703   4.55492   5.19985
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C           0.532470        3.4675     1.12557     2.34196
+    2          C           0.532485        3.4675     1.12495     2.34257
+    3          O          -0.504088        6.5041     1.81829     4.68579
+    4          O          -0.571276        6.5713     1.85149     4.71978
+    5          O          -0.577226        6.5772     1.85054     4.72669
+    6          O          -0.499336        6.4993     1.81755     4.68179
+    7          H           0.158287        0.8417     0.84171
+    8          H           0.158155        0.8418     0.84184
+    9          H           0.384292        0.6157     0.61571
+   10          H           0.386237        0.6138     0.61376
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.007     0.004     0.000     0.008
+ HYBRID         0.000    -0.002    -0.000     0.002
+ SUM           -0.007     0.002    -0.000     0.007
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.12557   0.74710   0.94225   0.65261
+    2  C   1.12495   0.74635   0.94314   0.65308
+    3  O   1.81829   1.44703   1.44875   1.79001
+    4  O   1.85149   1.46098   1.70141   1.55739
+    5  O   1.85054   1.46087   1.71001   1.55580
+    6  O   1.81755   1.44333   1.44734   1.79112
+    7  H   0.84171
+    8  H   0.84184
+    9  H   0.61571
+   10  H   0.61376
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.18 SECONDS
+
+ == MOPAC DONE ==

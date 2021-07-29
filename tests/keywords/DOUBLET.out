@@ -1,0 +1,930 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:25:44 2021  *
+ *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 0.5
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+UHF MS=0.5
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Co          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+          UHF CALCULATION, NO. OF ALPHA ELECTRONS =    5
+                           NO. OF BETA  ELECTRONS =    4
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ UHF MS=0.5
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:25:44 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        110.70816 KCAL/MOL =     463.20296 KJ/MOL
+
+
+          TOTAL ENERGY            =       -398.01083 EV
+          ELECTRONIC ENERGY       =       -398.01083 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         72.38 SQUARE ANGSTROMS
+          COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =          8.931507 EV
+          ALPHA SOMO LUMO (EV)    =         -8.932 -3.231
+          BETA  SOMO LUMO (EV)    =         -9.856 -1.121
+          NO. OF ALPHA ELECTRONS  =          5
+          NO. OF BETA  ELECTRONS  =          4
+          MOLECULAR WEIGHT        =         58.9332
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.027 SECONDS
+          COMPUTATION TIME        =          0.028 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Co        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+          ALPHA EIGENVALUES  
+ -13.40418 -13.40418 -12.32329 -12.32328  -8.93151  -3.23142  53.04616  53.04617
+  54.02608
+
+
+           BETA EIGENVALUES 
+ -12.43186 -11.91595 -11.91593  -9.85606  -1.12101  -1.12101  52.95774  53.78644
+  53.78644
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Co           0.000000        9.0000     1.62556     0.00000     7.37444
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Co   1.62556   0.00000   0.00000   0.00000   1.00000   2.00000   1.37444   2.00000   1.00000
+
+
+                    (SZ)    =    0.500000
+                    (S**2)  =    1.750000
+
+
+          ATOMIC ORBITAL SPIN POPULATIONS
+
+    Atom   Total    s     px     py     pz   x^2-y^2  xz     z^2    yz     xy
+         Atomic
+    1 Co  1.0000 -0.374 -0.000  0.000  0.000  1.000  0.000 -0.626  0.000  1.000
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:25:44 2021  *
+ *  DOUBLET    - SPIN STATE DEFINED AS A DOUBLET
+ *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+UHF DOUBLET
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Co          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+ DOUBLET STATE CALCULATION
+
+
+          UHF CALCULATION, NO. OF ALPHA ELECTRONS =    5
+                           NO. OF BETA  ELECTRONS =    4
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ UHF DOUBLET
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:25:44 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        110.70816 KCAL/MOL =     463.20296 KJ/MOL
+
+
+          TOTAL ENERGY            =       -398.01083 EV
+          ELECTRONIC ENERGY       =       -398.01083 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         72.38 SQUARE ANGSTROMS
+          COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =          8.931507 EV
+          ALPHA SOMO LUMO (EV)    =         -8.932 -3.231
+          BETA  SOMO LUMO (EV)    =         -9.856 -1.121
+          NO. OF ALPHA ELECTRONS  =          5
+          NO. OF BETA  ELECTRONS  =          4
+          MOLECULAR WEIGHT        =         58.9332
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.059 SECONDS
+          COMPUTATION TIME        =          0.054 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Co        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+          ALPHA EIGENVALUES  
+ -13.40418 -13.40418 -12.32329 -12.32328  -8.93151  -3.23142  53.04616  53.04617
+  54.02608
+
+
+           BETA EIGENVALUES 
+ -12.43186 -11.91595 -11.91593  -9.85606  -1.12101  -1.12101  52.95774  53.78644
+  53.78644
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Co           0.000000        9.0000     1.62556     0.00000     7.37444
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Co   1.62556   0.00000   0.00000   0.00000   1.00000   2.00000   1.37444   2.00000   1.00000
+
+
+                    (SZ)    =    0.500000
+                    (S**2)  =    1.750000
+
+
+          ATOMIC ORBITAL SPIN POPULATIONS
+
+    Atom   Total    s     px     py     pz   x^2-y^2  xz     z^2    yz     xy
+         Atomic
+    1 Co  1.0000 -0.374 -0.000  0.000  0.000  1.000  0.000 -0.626  0.000  1.000
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:25:44 2021  *
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+RHF
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Co          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+      THERE ARE    4 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    1
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:25:44 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        138.73074 KCAL/MOL =     580.44941 KJ/MOL
+
+
+          TOTAL ENERGY            =       -396.79565 EV  STATE:   1 DOUBLET ????
+          ELECTRONIC ENERGY       =       -396.79565 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         72.38 SQUARE ANGSTROMS
+          COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         11.317081 EV
+          HOMO (SOMO) LUMO (EV)   =       -9.675 ( -7.432) -1.334
+          NO. OF FILLED LEVELS    =          4
+          AND NO. OF OPEN LEVELS  =          1
+          MOLECULAR WEIGHT        =         58.9332
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.078 SECONDS
+          COMPUTATION TIME        =          0.072 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Co        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -11.59967 -11.27941 -11.27940  -9.67517  -7.43165  -1.33398  53.44574  53.44575
+  53.53435
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Co          -0.000000        9.0000     1.51829     0.00000     7.48171
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Co   1.51829   0.00000   0.00000   0.00000   2.00000   2.00000   1.48171   2.00000   0.00000
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:25:44 2021  *
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+RHF
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Co          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+      THERE ARE    4 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    1
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:25:44 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        138.73074 KCAL/MOL =     580.44941 KJ/MOL
+
+
+          TOTAL ENERGY            =       -396.79565 EV  STATE:   1 DOUBLET ????
+          ELECTRONIC ENERGY       =       -396.79565 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         72.38 SQUARE ANGSTROMS
+          COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         11.317081 EV
+          HOMO (SOMO) LUMO (EV)   =       -9.675 ( -7.432) -1.334
+          NO. OF FILLED LEVELS    =          4
+          AND NO. OF OPEN LEVELS  =          1
+          MOLECULAR WEIGHT        =         58.9332
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.094 SECONDS
+          COMPUTATION TIME        =          0.090 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Co        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -11.59967 -11.27941 -11.27940  -9.67517  -7.43165  -1.33398  53.44574  53.44575
+  53.53435
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Co          -0.000000        9.0000     1.51829     0.00000     7.48171
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Co   1.51829   0.00000   0.00000   0.00000   2.00000   2.00000   1.48171   2.00000   0.00000
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:25:44 2021  *
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  OPEN(M,N)  - THERE ARE 1 ELECTRONS IN 1 LEVELS
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 0.5
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+RHF MS=0.5 MECI OPEN(1,1)
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Co          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+      THERE ARE    4 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    1
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF MS=0.5 MECI OPEN(1,1)
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:25:44 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        138.73074 KCAL/MOL =     580.44941 KJ/MOL
+
+
+          TOTAL ENERGY            =       -396.79565 EV  STATE:   1 DOUBLET ????
+          ELECTRONIC ENERGY       =       -396.79565 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         72.38 SQUARE ANGSTROMS
+          COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         11.317081 EV
+          HOMO (SOMO) LUMO (EV)   =       -9.675 ( -7.432) -1.334
+          NO. OF FILLED LEVELS    =          4
+          AND NO. OF OPEN LEVELS  =          1
+          MOLECULAR WEIGHT        =         58.9332
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.113 SECONDS
+          COMPUTATION TIME        =          0.108 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Co        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -11.59967 -11.27941 -11.27940  -9.67517  -7.43165  -1.33398  53.44574  53.44575
+  53.53435
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Co          -0.000000        9.0000     1.51829     0.00000     7.48171
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Co   1.51829   0.00000   0.00000   0.00000   2.00000   2.00000   1.48171   2.00000   0.00000
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.5
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 1
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         5
+          ENERGY
+
+              1        1
+         -1.9427       0
+
+
+ DIAGONAL OF C.I. MATRIX
+    -1.942713
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -1.942713    0.000000     1+  DOUBLET     ????
+ 'RELATIVE ENERGY' Is relative to the lowest state calculated.
+ This may or may not be the ground state.
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:25:44 2021  *
+ *  DOUBLET    - SPIN STATE DEFINED AS A DOUBLET
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  OPEN(M,N)  - THERE ARE 1 ELECTRONS IN 1 LEVELS
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+RHF DOUBLET MECI OPEN(1,1)
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Co          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+ DOUBLET STATE CALCULATION
+
+      THERE ARE    4 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    1
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF DOUBLET MECI OPEN(1,1)
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:25:44 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        138.73074 KCAL/MOL =     580.44941 KJ/MOL
+
+
+          TOTAL ENERGY            =       -396.79565 EV  STATE:   1 DOUBLET ????
+          ELECTRONIC ENERGY       =       -396.79565 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         72.38 SQUARE ANGSTROMS
+          COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         11.317081 EV
+          HOMO (SOMO) LUMO (EV)   =       -9.675 ( -7.432) -1.334
+          NO. OF FILLED LEVELS    =          4
+          AND NO. OF OPEN LEVELS  =          1
+          MOLECULAR WEIGHT        =         58.9332
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.133 SECONDS
+          COMPUTATION TIME        =          0.127 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Co          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Co        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Co  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -11.59967 -11.27941 -11.27940  -9.67517  -7.43165  -1.33398  53.44574  53.44575
+  53.53435
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Co          -0.000000        9.0000     1.51829     0.00000     7.48171
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Co   1.51829   0.00000   0.00000   0.00000   2.00000   2.00000   1.48171   2.00000   0.00000
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.5
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 1
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         5
+          ENERGY
+
+              1        1
+         -1.9427       0
+
+
+ DIAGONAL OF C.I. MATRIX
+    -1.942713
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -1.942713    0.000000     1+  DOUBLET     ????
+ 'RELATIVE ENERGY' Is relative to the lowest state calculated.
+ This may or may not be the ground state.
+ The "+" symbol indicates the root used.
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.51 SECONDS
+
+ == MOPAC DONE ==

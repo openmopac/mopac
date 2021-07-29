@@ -1,0 +1,652 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:19:36 2021  *
+ *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 3.0
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+UHF MS=3.0
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Ni          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+          UHF CALCULATION, NO. OF ALPHA ELECTRONS =    8
+                           NO. OF BETA  ELECTRONS =    2
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ UHF MS=3.0
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:19:36 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =       1293.36484 KCAL/MOL =    5411.43848 KJ/MOL
+
+
+          TOTAL ENERGY            =       -323.69579 EV
+          ELECTRONIC ENERGY       =       -323.69579 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         45.84 SQUARE ANGSTROMS
+          COSMO VOLUME            =         29.19 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =        -17.948253 EV
+          ALPHA SOMO LUMO (EV)    =         17.948 23.601
+          BETA  SOMO LUMO (EV)    =         -8.627 -1.631
+          NO. OF ALPHA ELECTRONS  =          8
+          NO. OF BETA  ELECTRONS  =          2
+          MOLECULAR WEIGHT        =         58.7100
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.066 SECONDS
+          COMPUTATION TIME        =          0.065 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Ni        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+          ALPHA EIGENVALUES  
+ -12.42312 -12.37080 -12.02169 -11.65151 -11.12734  -9.37652  17.75516  17.94825
+  23.60099
+
+
+           BETA EIGENVALUES 
+  -8.73334  -8.62733  -1.63058  -1.57430  -1.57273   0.33040  26.91985  28.18719
+  28.35469
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Ni          -0.000000       10.0000     1.01678     2.00000     6.98322
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000     0.000     0.000     0.000
+ SUM           -0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Ni   1.01678   1.00000   1.00000   0.00000   1.15441   2.00000   1.82881   1.00000   1.00000
+
+
+                    (SZ)    =    3.000000
+                    (S**2)  =   12.000000
+
+
+          ATOMIC ORBITAL SPIN POPULATIONS
+
+    Atom   Total    s     px     py     pz   x^2-y^2  xz     z^2    yz     xy
+         Atomic
+    1 Ni  6.0000  0.983  1.000  1.000  0.000  0.846  0.000  0.171  1.000  1.000
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:19:36 2021  *
+ *  SEPTET     - SPIN STATE DEFINED AS A SEPTET
+ *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+UHF SEPTET
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Ni          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+ SEPTET STATE CALCULATION
+
+
+          UHF CALCULATION, NO. OF ALPHA ELECTRONS =    8
+                           NO. OF BETA  ELECTRONS =    2
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ UHF SEPTET
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:19:36 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =       1293.36484 KCAL/MOL =    5411.43848 KJ/MOL
+
+
+          TOTAL ENERGY            =       -323.69579 EV
+          ELECTRONIC ENERGY       =       -323.69579 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         45.84 SQUARE ANGSTROMS
+          COSMO VOLUME            =         29.19 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =        -17.948253 EV
+          ALPHA SOMO LUMO (EV)    =         17.948 23.601
+          BETA  SOMO LUMO (EV)    =         -8.627 -1.631
+          NO. OF ALPHA ELECTRONS  =          8
+          NO. OF BETA  ELECTRONS  =          2
+          MOLECULAR WEIGHT        =         58.7100
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.137 SECONDS
+          COMPUTATION TIME        =          0.131 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Ni        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+          ALPHA EIGENVALUES  
+ -12.42312 -12.37080 -12.02169 -11.65151 -11.12734  -9.37652  17.75516  17.94825
+  23.60099
+
+
+           BETA EIGENVALUES 
+  -8.73334  -8.62733  -1.63058  -1.57430  -1.57273   0.33040  26.91985  28.18719
+  28.35469
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Ni          -0.000000       10.0000     1.01678     2.00000     6.98322
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000     0.000     0.000     0.000
+ SUM           -0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Ni   1.01678   1.00000   1.00000   0.00000   1.15441   2.00000   1.82881   1.00000   1.00000
+
+
+                    (SZ)    =    3.000000
+                    (S**2)  =   12.000000
+
+
+          ATOMIC ORBITAL SPIN POPULATIONS
+
+    Atom   Total    s     px     py     pz   x^2-y^2  xz     z^2    yz     xy
+         Atomic
+    1 Ni  6.0000  0.983  1.000  1.000  0.000  0.846  0.000  0.171  1.000  1.000
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:19:36 2021  *
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  OPEN(M,N)  - THERE ARE 6 ELECTRONS IN 6 LEVELS
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 3.0
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+RHF MS=3.0 MECI OPEN(6,6)
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Ni          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+      THERE ARE    2 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 2
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    6
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF MS=3.0 MECI OPEN(6,6)
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:19:36 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =       1298.14482 KCAL/MOL =    5431.43791 KJ/MOL
+
+
+          TOTAL ENERGY            =       -323.48851 EV  STATE:   1 SEPTET  ????
+          ELECTRONIC ENERGY       =       -323.48851 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         45.84 SQUARE ANGSTROMS
+          COSMO VOLUME            =         29.19 CUBIC ANGSTROMS
+
+          NO. OF FILLED LEVELS    =          2
+          AND NO. OF OPEN LEVELS  =          6
+          MOLECULAR WEIGHT        =         58.7100
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.180 SECONDS
+          COMPUTATION TIME        =          0.171 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Ni        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -10.06926 -10.00695  -6.73435  -6.69074  -6.67342  -5.09706  23.09179  23.10373
+  25.21408
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Ni           0.000000       10.0000     1.00018     2.00000     6.99982
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Ni   1.00018   1.00000   1.00000   0.00000   1.61301   2.00000   1.38681   1.00000   1.00000
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  3.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 1
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         3   4   5   6   7   8
+          ENERGY
+
+              1        1   1   1   1   1   1
+        -15.4218       0   0   0   0   0   0
+
+
+ DIAGONAL OF C.I. MATRIX
+   -15.421799
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+  -15.421799    0.000000     1+  SEPTET      ????
+ 'RELATIVE ENERGY' Is relative to the lowest state calculated.
+ This may or may not be the ground state.
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 14:19:36 2021  *
+ *  SEPTET     - SPIN STATE DEFINED AS A SEPTET
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  OPEN(M,N)  - THERE ARE 6 ELECTRONS IN 6 LEVELS
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+RHF SEPTET MECI OPEN(6,6)
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Ni          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+ SEPTET STATE CALCULATION
+
+      THERE ARE    2 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 2
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    6
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF SEPTET MECI OPEN(6,6)
+ comment1
+ comment2
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 14:19:36 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =       1298.14482 KCAL/MOL =    5431.43791 KJ/MOL
+
+
+          TOTAL ENERGY            =       -323.48851 EV  STATE:   1 SEPTET  ????
+          ELECTRONIC ENERGY       =       -323.48851 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         45.84 SQUARE ANGSTROMS
+          COSMO VOLUME            =         29.19 CUBIC ANGSTROMS
+
+          NO. OF FILLED LEVELS    =          2
+          AND NO. OF OPEN LEVELS  =          6
+          MOLECULAR WEIGHT        =         58.7100
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.223 SECONDS
+          COMPUTATION TIME        =          0.213 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1      Ni          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1   Ni        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: Ni  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -10.06926 -10.00695  -6.73435  -6.69074  -6.67342  -5.09706  23.09179  23.10373
+  25.21408
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       d-Pop       
+    1         Ni           0.000000       10.0000     1.00018     2.00000     6.99982
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz      x^2-y^2     xz        z^2       yz        xy
+    1 Ni   1.00018   1.00000   1.00000   0.00000   1.61301   2.00000   1.38681   1.00000   1.00000
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  3.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 1
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         3   4   5   6   7   8
+          ENERGY
+
+              1        1   1   1   1   1   1
+        -15.4218       0   0   0   0   0   0
+
+
+ DIAGONAL OF C.I. MATRIX
+   -15.421799
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+  -15.421799    0.000000     1+  SEPTET      ????
+ 'RELATIVE ENERGY' Is relative to the lowest state calculated.
+ This may or may not be the ground state.
+ The "+" symbol indicates the root used.
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.62 SECONDS
+
+ == MOPAC DONE ==

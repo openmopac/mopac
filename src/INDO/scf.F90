@@ -47,8 +47,10 @@
       v = 0.d0
 
 !     **** diagonal term, sum Coulomb integrals from all other atoms ****
-      if (.not. allocated(pg)) allocate(pg(na, 0:2))
-      if (.not. allocated(ppg)) allocate(ppg(norbs, 0:2))
+      if (allocated(pg)) deallocate(pg)
+      if (allocated(ppg)) deallocate(ppg)
+      allocate(pg(na, 0:2))
+      allocate(ppg(norbs, 0:2))
 
       do ishell = 0, nshell
         do ib = 1, n
@@ -384,7 +386,8 @@
         ll(3) = 'v'
       end if
 
-      if (.not. allocated(nsym)) allocate(nsym(n))
+      if (allocated(nsym)) deallocate(nsym)
+      allocate(nsym(n))
       do i = 1, n
         nsym(i) = 1
       end do

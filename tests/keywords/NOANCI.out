@@ -1,0 +1,325 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Sun Jul 25 21:41:33 2021  *
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+RHF
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       H          0.00000000  *   0.00000000  *   0.00000000  *
+     2       O          0.96000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         H          0.0000      0.0000      0.0000
+     2         O          0.9600      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: H O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+      THERE ARE    3 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 3
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    1
+
+          Geometry optimization using EF
+
+          DIAGONAL MATRIX USED AS START HESSIAN
+
+ CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     7.100 HEAT:  7.888059
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.624 HEAT:  7.872335
+ CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.021 HEAT:  7.869798
+
+     GRADIENT =  0.02086 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF
+ comment1
+ comment2
+
+
+     GEOMETRY OPTIMISED USING EIGENVECTOR FOLLOWING (EF).     
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Sun Jul 25 21:41:33 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =          7.86980 KCAL/MOL =      32.92723 KJ/MOL
+
+
+          TOTAL ENERGY            =       -306.50217 EV  STATE:   1 DOUBLET ????
+          ELECTRONIC ENERGY       =       -375.09213 EV  POINT GROUP:     C*v 
+          CORE-CORE REPULSION     =         68.58996 EV
+          COSMO AREA              =         39.78 SQUARE ANGSTROMS
+          COSMO VOLUME            =         23.30 CUBIC ANGSTROMS
+
+          GRADIENT NORM           =          0.02086 = 0.01475 PER ATOM
+          IONIZATION POTENTIAL    =         14.075162 EV
+          HOMO (SOMO) LUMO (EV)   =      -11.696 ( -7.873)  4.777
+          NO. OF FILLED LEVELS    =          3
+          AND NO. OF OPEN LEVELS  =          1
+          MOLECULAR WEIGHT        =         17.0073
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            O     2    H     1     0.96733
+            O     2    H     1     0.00000
+            H     1    O     2     0.00000
+
+
+          SCF CALCULATIONS        =          4
+ 
+          WALL-CLOCK TIME         =          0.086 SECONDS
+          COMPUTATION TIME        =          0.050 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       H         -0.00366561  *  -0.00000000  *  -0.00000000  *
+     2       O          0.96366561  *  -0.00000000  *  -0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    H       -0.003665610    -0.000000000    -0.000000000
+   2    O        0.963665611    -0.000000000    -0.000000000
+
+
+           Empirical Formula: H O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+                  EIGENVALUES  
+ -28.44786 -15.81535 -11.69562  -7.87349   4.77685
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          H           0.251527        0.7485     0.74847
+    2          O          -0.251527        6.2515     1.93396     4.31757
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -1.169    -0.000    -0.000     1.169
+ HYBRID        -0.221    -0.000    -0.000     0.221
+ SUM           -1.390    -0.000    -0.000     1.390
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  H   0.74847
+    2  O   1.93396   1.31757   2.00000   1.00000
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Sun Jul 25 21:41:33 2021  *
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  NOANCI     - DO NOT USE ANALYTICAL C.I. DERIVATIVES
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+RHF NOANCI
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       H          0.00000000  *   0.00000000  *   0.00000000  *
+     2       O          0.96000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         H          0.0000      0.0000      0.0000
+     2         O          0.9600      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: H O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+      THERE ARE    3 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 3
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    1
+
+          Geometry optimization using EF
+
+          DIAGONAL MATRIX USED AS START HESSIAN
+
+ CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.085 HEAT:  7.888059
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.597 HEAT:  7.872293
+ CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.100 HEAT:  7.869798
+
+     GRADIENT =  0.09951 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ RHF NOANCI
+ comment1
+ comment2
+
+
+     GEOMETRY OPTIMISED USING EIGENVECTOR FOLLOWING (EF).     
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Sun Jul 25 21:41:33 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =          7.86980 KCAL/MOL =      32.92723 KJ/MOL
+
+
+          TOTAL ENERGY            =       -306.50217 EV  STATE:   1 DOUBLET ????
+          ELECTRONIC ENERGY       =       -375.09200 EV  POINT GROUP:     C*v 
+          CORE-CORE REPULSION     =         68.58983 EV
+          COSMO AREA              =         39.78 SQUARE ANGSTROMS
+          COSMO VOLUME            =         23.30 CUBIC ANGSTROMS
+
+          GRADIENT NORM           =          0.09951 = 0.07036 PER ATOM
+          IONIZATION POTENTIAL    =         14.075157 EV
+          HOMO (SOMO) LUMO (EV)   =      -11.696 ( -7.873)  4.777
+          NO. OF FILLED LEVELS    =          3
+          AND NO. OF OPEN LEVELS  =          1
+          MOLECULAR WEIGHT        =         17.0073
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            O     2    H     1     0.96733
+            O     2    H     1     0.00000
+            H     1    O     2     0.00000
+
+
+          SCF CALCULATIONS        =         25
+ 
+          WALL-CLOCK TIME         =          0.133 SECONDS
+          COMPUTATION TIME        =          0.091 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       H         -0.00354679  *   0.00001350  *   0.00003006  *
+     2       O          0.96378713  *   0.00001646  *   0.00003158  *
+
+                             CARTESIAN COORDINATES
+
+   1    H       -0.003546790     0.000013505     0.000030059
+   2    O        0.963787130     0.000016460     0.000031576
+
+
+           Empirical Formula: H O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+                  EIGENVALUES  
+ -28.44783 -15.81535 -11.69562  -7.87349   4.77682
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          H           0.251528        0.7485     0.74847
+    2          O          -0.251528        6.2515     1.93396     4.31757
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -1.169    -0.000    -0.000     1.169
+ HYBRID        -0.221     0.000     0.000     0.221
+ SUM           -1.390    -0.000     0.000     1.390
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  H   0.74847
+    2  O   1.93396   1.31757   2.00000   1.00000
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.23 SECONDS
+
+ == MOPAC DONE ==

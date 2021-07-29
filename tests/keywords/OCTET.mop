@@ -1,0 +1,19 @@
+UHF MS=3.5
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+UHF OCTET
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF MS=3.5 MECI OPEN(7,7)
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF OCTET MECI OPEN(7,7)
+comment1
+comment2
+Co 0.0 0.0 0.0

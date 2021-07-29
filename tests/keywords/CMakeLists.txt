@@ -39,11 +39,71 @@ add_test(NAME key-AM1 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compa
 add_test(NAME key-ANGSTROMS COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          ANGSTROMS.mop)
 
+add_test(NAME key-BIRADICAL COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         BIRADICAL.mop)
+
+add_test(NAME key-CdotAdotSdot COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         CdotAdotSdot.mop)
+
+add_test(NAME key-CdotIdot COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         CdotIdot.mop)
+
+add_test(NAME key-CdotIdotDdot COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         CdotIdotDdot.mop)
+
+add_test(NAME key-CIS COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         CIS.mop)
+
+add_test(NAME key-CISD COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         CISD.mop)
+
+add_test(NAME key-CISDT COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         CISDT.mop)
+
+add_test(NAME key-DISP COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         DISP.mop)
+
+add_test(NAME key-DOUBLET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         DOUBLET.mop)
+
+add_test(NAME key-EXCITED COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         EXCITED.mop)
+
+add_test(NAME key-INDO COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         INDO.mop)
+
+add_test(NAME key-MAXCI COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         MAXCI.mop)
+
+add_test(NAME key-MECI COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         MECI.mop)
+
 add_test(NAME key-MNDO COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          MNDO.mop)
 
 add_test(NAME key-MNDOD COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          MNDOD.mop)
+
+add_test(NAME key-MRCI COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         MRCI.mop)
+
+add_test(NAME key-MS COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         MS.mop)
+
+add_test(NAME key-NOANCI COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         NOANCI.mop)
+
+add_test(NAME key-NONET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         NONET.mop)
+
+add_test(NAME key-OCTET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         OCTET.mop)
+
+add_test(NAME key-OPEN COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         OPEN.mop)
+
+add_test(NAME key-PECI COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         PECI.mop)
 
 add_test(NAME key-PM3 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          PM3.mop)
@@ -75,5 +135,41 @@ add_test(NAME key-PM7 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compa
 add_test(NAME key-PM7-TS COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          PM7-TS.mop)
 
+add_test(NAME key-QUARTET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         QUARTET.mop)
+
+add_test(NAME key-QUINTET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         QUINTET.mop)
+
+add_test(NAME key-RHF COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         RHF.mop)
+
 add_test(NAME key-RM1 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          RM1.mop)
+
+add_test(NAME key-ROOT COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         ROOT.mop)
+
+add_test(NAME key-SEPTET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         SEPTET.mop)
+
+add_test(NAME key-SEXTET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         SEXTET.mop)
+
+add_test(NAME key-SINGLET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         SINGLET.mop)
+
+add_test(NAME key-TDIP COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         TDIP.mop)
+
+add_test(NAME key-TRIPLET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         TRIPLET.mop)
+
+add_test(NAME key-UHF COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         UHF.mop)
+
+add_test(NAME key-WRTCI COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         WRTCI.mop)
+
+add_test(NAME key-WRTCONF COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         WRTCONF.mop)

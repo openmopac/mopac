@@ -1,0 +1,19 @@
+UHF MS=3.0
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+UHF SEPTET
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF MS=3.0 MECI OPEN(6,6)
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF SEPTET MECI OPEN(6,6)
+comment1
+comment2
+Ni 0.0 0.0 0.0

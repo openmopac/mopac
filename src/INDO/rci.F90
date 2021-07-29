@@ -30,11 +30,13 @@
       nptg = 1
       ion = 1
       call ptgrp(0)
-      if(.not. allocated(ci)) allocate(ci(n, n))
+      if(allocated(ci))  deallocate(ci)
+      allocate(ci(n, n))
 
       call stgamm (gamma, ci)
 
-      if(.not. allocated(dm))     allocate(dm(nb2, 3))
+      if(allocated(dm))  deallocate(dm)
+      allocate(dm(nb2, 3))
 
 ! Need to compute ground-state dipole to get proper dm matrix for CI
 ! dipoles  
@@ -115,6 +117,8 @@
         end if
         occd = min(max(occd, ndoubl), noh)
         vird = min(max(vird, nmos - ndoubl), norbs - nvl + 1)
+        occd = min(occd, occ)
+        vird = min(vird, vir)
       end if
 ! CAS active space
       occc = 0
@@ -140,6 +144,10 @@
         end if
         occc = min(max(occc, ndoubl), noh)
         virc = min(max(virc, nmos - ndoubl), norbs - nvl + 1)
+        occ = max(occ, occc)
+        vir = max(vir, virc)
+        occd = max(occd, occc)
+        vird = max(vird, virc)
       end if
 
       nol = max(1, nvl-occ)
@@ -181,13 +189,14 @@
 ! Make sure nconf and nciout are not too large
       nconf = min(nex, nconf)
       nciout = min(nconf, nciout)
-   !   if (allocated(cimatr))  deallocate(cimatr, stat = i)
+      if (allocated(cimatr))  deallocate(cimatr, stat = i)
       allocate(cimatr(nconf*(nconf+1)/2))
       allocate(e(nconf))
       do i = 1, nconf*(nconf+1)/2
         cimatr(i) = 0.d0
       end do
-      if(.not. allocated(iconf))  allocate(iconf(nconf))
+      if(allocated(iconf))  deallocate(iconf)
+      allocate(iconf(nconf))
       do i = 1, nconf
         iconf(i) = 0
       end do
@@ -197,8 +206,10 @@
 
 !     ****	  construct dipole moment matrix in config-state basis ****
       deallocate(ci)
+      if(allocated(dmci))  deallocate(dmci)
       allocate(dmci(nconf*(nconf+1)/2, 3))
       allocate(ci(nconf, nconf))
+      if(allocated(evalci))  deallocate(evalci)
       allocate(evalci(nconf))
       open        (ic, status ='scratch', form ='unformatted')
       write (ic)  ((cc0(i, j), j = 1, n), i = 1, n), (beta(i), i = 1, nb2)
@@ -229,5 +240,7 @@
 
 3     continue
             if (allocated(cimatr))  deallocate(cimatr, stat = i)
+      close (id)
+      close (ic)
       return
       end subroutine rci

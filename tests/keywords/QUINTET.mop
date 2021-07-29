@@ -1,0 +1,19 @@
+UHF MS=2.0
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+UHF QUINTET
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF MS=2.0 MECI OPEN(4,4)
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF QUINTET MECI OPEN(4,4)
+comment1
+comment2
+Ni 0.0 0.0 0.0

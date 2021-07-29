@@ -1,0 +1,14 @@
+UHF MS=1.5
+comment1
+comment2
+N  0.0 0.0 0.0
+
+RHF MS=1.5 C.I.=(3,1) MECI
+comment1
+comment2
+N 0.0 0.0 0.0
+
+RHF MS=1.5 OPEN(3,3) MECI
+comment1
+comment2
+N 0.0 0.0 0.0

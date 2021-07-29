@@ -1,0 +1,365 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Mon Jul 26 16:58:03 2021  *
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  OPEN(M,N)  - THERE ARE 2 ELECTRONS IN 2 LEVELS
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.0
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+1SCF RHF MS=1.0 OPEN(2,2) MECI
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.50000000  *   0.00000000  *   0.00000000  *
+     2       C          0.50000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.5000      0.0000      0.0000
+     2         C          0.5000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D*h 
+
+      THERE ARE    3 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 3
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    2
+
+ -------------------------------------------------------------------------------
+ 1SCF RHF MS=1.0 OPEN(2,2) MECI
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Mon Jul 26 16:58:03 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        327.29105 KCAL/MOL =    1369.38574 KJ/MOL
+
+
+          TOTAL ENERGY            =       -232.00937 EV  STATE:   1 TRIPLET ????
+          ELECTRONIC ENERGY       =       -405.31496 EV  POINT GROUP:     D*h 
+          CORE-CORE REPULSION     =        173.30560 EV
+          COSMO AREA              =         62.71 SQUARE ANGSTROMS
+          COSMO VOLUME            =         45.70 CUBIC ANGSTROMS
+
+          NO. OF FILLED LEVELS    =          3
+          AND NO. OF OPEN LEVELS  =          2
+          MOLECULAR WEIGHT        =         24.0220
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            C     2    C     1     1.00000
+            C     2    C     1     0.00000
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.027 SECONDS
+          COMPUTATION TIME        =          0.025 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.50000000  *   0.00000000  *   0.00000000  *
+     2       C          0.50000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.500000000     0.000000000     0.000000000
+   2    C        0.500000000     0.000000000     0.000000000
+
+
+           Empirical Formula: C2  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D*h 
+
+
+                  EIGENVALUES  
+ -29.14576 -14.14942 -13.27525  -9.30780  -5.49080   2.19536   2.41361   6.64017
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.000000        4.0000     1.41205     2.58795
+    2          C           0.000000        4.0000     1.41205     2.58795
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000    -0.000     0.000     0.000
+ SUM            0.000    -0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.41205   1.08795   1.00000   0.50000
+    2  C   1.41205   1.08795   1.00000   0.50000
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  1.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 1
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         4   5
+          ENERGY
+
+              1        1   1
+         -4.8911       0   0
+
+
+ DIAGONAL OF C.I. MATRIX
+    -4.891116
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -4.891116    0.000000     1+  TRIPLET     ????
+ 'RELATIVE ENERGY' Is relative to the lowest state calculated.
+ This may or may not be the ground state.
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Mon Jul 26 16:58:03 2021  *
+ *  CIS        - C.I. USES 1 ELECTRON EXCITATIONS ONLY
+ *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
+ *  OPEN(M,N)  - THERE ARE 2 ELECTRONS IN 2 LEVELS
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.0
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+1SCF RHF MS=1.0 OPEN(2,2) MECI CIS
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.50000000  *   0.00000000  *   0.00000000  *
+     2       C          0.50000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.5000      0.0000      0.0000
+     2         C          0.5000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D*h 
+
+      THERE ARE    3 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 3
+
+
+                       NO. OF SINGLY OCCUPIED LEVELS =    2
+
+ -------------------------------------------------------------------------------
+ 1SCF RHF MS=1.0 OPEN(2,2) MECI CIS
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Mon Jul 26 16:58:03 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        260.23563 KCAL/MOL =    1088.82586 KJ/MOL
+
+
+          TOTAL ENERGY            =       -234.91717 EV  STATE:   1 SINGLET ????
+          ELECTRONIC ENERGY       =       -408.22277 EV  POINT GROUP:     D*h 
+          CORE-CORE REPULSION     =        173.30560 EV
+          COSMO AREA              =         62.71 SQUARE ANGSTROMS
+          COSMO VOLUME            =         45.70 CUBIC ANGSTROMS
+
+          NO. OF FILLED LEVELS    =          3
+          AND NO. OF OPEN LEVELS  =          2
+          MOLECULAR WEIGHT        =         24.0220
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            C     2    C     1     1.00000
+            C     2    C     1     0.00000
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.055 SECONDS
+          COMPUTATION TIME        =          0.051 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.50000000  *   0.00000000  *   0.00000000  *
+     2       C          0.50000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.500000000     0.000000000     0.000000000
+   2    C        0.500000000     0.000000000     0.000000000
+
+
+           Empirical Formula: C2  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D*h 
+
+
+                  EIGENVALUES  
+ -29.14576 -14.14942 -13.27525  -9.30780  -5.49080   2.19536   2.41361   6.64017
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.000000        4.0000     1.32494     2.67506
+    2          C           0.000000        4.0000     1.32494     2.67506
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000    -0.000     0.000     0.000
+ SUM            0.000    -0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.32494   0.67506   1.00000   1.00000
+    2  C   1.32494   0.67506   1.00000   1.00000
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 3
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         4   5
+          ENERGY
+
+              1        1   0
+         -7.7989       1   0
+
+              2        1   0
+         -4.5850       0   1
+
+              3        0   1
+         -4.5850       1   0
+
+
+ DIAGONAL OF C.I. MATRIX
+    -7.798916    -4.585031    -4.585031
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -7.798916    0.000000     1+  SINGLET     ????
+    2    -4.891116    2.907801     1   TRIPLET     ????
+    3    -4.278947    3.519969     2   SINGLET     ????      0.0000      0.0000      0.0598
+ The "+" symbol indicates the root used.
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.09 SECONDS
+
+ == MOPAC DONE ==

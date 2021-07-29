@@ -1,0 +1,29 @@
+UHF MS=0.5
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+UHF DOUBLET
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF MS=0.5 MECI OPEN(1,1)
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF DOUBLET MECI OPEN(1,1)
+comment1
+comment2
+Co 0.0 0.0 0.0

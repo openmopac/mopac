@@ -94,7 +94,7 @@ subroutine wrtchk (allkey)
       j = index(keywrd(i + 7:), " ") + i + 7
       if (index(keywrd(i:j), "=")  + index(keywrd," DENOUT") + &
         index(keywrd," VEC") + index(keywrd," ALLVE") == 0) then
-        call mopend("Keyword RE-LOC only has meaning if DENOUT or VECTORS or ALLVECTORS is present")
+        call mopend("Keyword RE-LOC only has meaning if DENOUT or VECTORS or ALLVEC is present")
       end if  
       if (index(keywrd, "BANANA") /= 0) &
         call mopend("Keyword BANANA only works with keyword LOCAL, i.e. NOT with MOZYME")
@@ -1234,20 +1234,20 @@ subroutine wrtcon (allkey)
 !
 !                       Fractionally occupied degenerate Open shell
 !
-  if (myword(allkey, " OPEN")) then
-    i = Index (keywrd, " OPEN")
+  if (myword(allkey, " OPEN(")) then
+    i = Index (keywrd, " OPEN(")
     j = Index (keywrd(i:i+10), ",") + i   - 1
     ilevel = Nint (reada (keywrd, j))
-    ielec = Nint (reada (keywrd, Index (keywrd, " OPEN")+6)) 
-    write (iw,'(" *  OPEN(N,N)  - THERE ARE", i2, " ELECTRONS IN", i2, " LEVELS")') &
+    ielec = Nint (reada (keywrd, Index (keywrd, " OPEN(")+6)) 
+    write (iw,'(" *  OPEN(M,N)  - THERE ARE", i2, " ELECTRONS IN", i2, " LEVELS")') &
      ielec, ilevel
   end if
 !
 !                       Magnetic component of spin
 !
   if (myword(allkey, " MS=")) &
-    write (iw,'(" *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =", i3)') &
-    Nint (reada (keywrd, Index (keywrd, " MS=")))
+    write (iw,'(" *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =", f4.1)') &
+    reada (keywrd, Index (keywrd, " MS="))
 !
 !   Select root of C.I. matrix
 !

@@ -470,7 +470,7 @@ subroutine moldat(mode)
 !
 !  Generic declaration of spin state
 !
-      i = Index (keywrd, " MS")
+      i = Index (keywrd, " MS=")
       if (i /= 0) then
         if (msdel < 100000) then
           write(iw,'(a)')" MS cannot be used with other keywords that define spin"
@@ -480,7 +480,7 @@ subroutine moldat(mode)
           call to_screen(" Specify either MS or other keyword, but not both.")
           return
         end if
-        i = Nint (2*reada (keywrd, Index (keywrd, " MS")))
+        i = Nint (2*reada (keywrd, Index (keywrd, " MS=")))
         if((odd .eqv. mod(i,2) == 0) .and. index(keywrd,' 0SCF') == 0) then
           write(iw,"(10x,a,i5)")" Number of electrons in system =", nelecs
           write(iw,"(10x,a,f5.1)")" Value of MS supplied =", i*0.5d0
@@ -488,9 +488,9 @@ subroutine moldat(mode)
           call mopend ("Value of MS not consistent with number of electrons")
           return
         end if
-        i = index(keywrd,' MS') 
+        i = index(keywrd,' MS=') 
         if (i /= 0   .and. index(keywrd,' 0SCF') == 0) then 
-          msdel = nint(2.d0*reada(keywrd,index(keywrd,' MS')))
+          msdel = nint(2.d0*reada(keywrd,index(keywrd,' MS=')))
           if (Mod(nelecs+msdel,2) == 1) then
             write (iw, '(//10 x, "Impossible value of MS ")')
             call mopend ("Impossible value of MS")
@@ -676,7 +676,7 @@ subroutine moldat(mode)
             write (iw, '(a,i3)')' Number of alpha electrons in active space:', nupp 
             write (iw, '(a,i3)')'  Number of beta electrons in active space:', ndown 
             write (iw, '(a,i3)')'                      Size of active space:', nmos 
-            if (Index (keywrd, " MS") /= 0) then
+            if (Index (keywrd, " MS=") /= 0) then
               call web_message(iw,"ms.html")
             else
               call web_message(iw,"active_space.html")

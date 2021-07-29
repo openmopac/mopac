@@ -1,0 +1,1166 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 19:11:09 2021  *
+ *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+1SCF C.I.=2 MECI
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.6700      0.0000      0.0000
+     2         C          0.6700      0.0000      0.0000
+     3         H         -1.2300     -0.9300      0.0000
+     4         H         -1.2300      0.9300      0.0000
+     5         H          1.2300     -0.9300      0.0000
+     6         H          1.2300      0.9300      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 6
+
+
+ -------------------------------------------------------------------------------
+ 1SCF C.I.=2 MECI
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 19:11:09 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =          8.74306 KCAL/MOL =      36.58098 KJ/MOL
+
+
+          TOTAL ENERGY            =       -299.13957 EV  STATE:   1 SINGLET Ag  
+          ELECTRONIC ENERGY       =       -738.39616 EV  POINT GROUP:     D2h 
+          CORE-CORE REPULSION     =        439.25660 EV
+          COSMO AREA              =         71.45 SQUARE ANGSTROMS
+          COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         10.684421 EV
+          HOMO LUMO ENERGIES (EV) =        -10.684  0.976
+          NO. OF FILLED LEVELS    =          6
+          MOLECULAR WEIGHT        =         28.0536
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     4     3.08402
+            H     6    H     3     2.96729
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.039 SECONDS
+          COMPUTATION TIME        =          0.036 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.670000000     0.000000000     0.000000000
+   2    C        0.670000000     0.000000000     0.000000000
+   3    H       -1.230000000    -0.930000000     0.000000000
+   4    H       -1.230000000     0.930000000     0.000000000
+   5    H        1.230000000    -0.930000000     0.000000000
+   6    H        1.230000000     0.930000000     0.000000000
+
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+                  EIGENVALUES  
+ -26.77535 -20.00189 -16.32165 -14.22366 -12.19463 -10.68442   0.97572   5.48787
+   5.57216   6.33974   6.41349   6.48301
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.283670        4.2837     1.10305     3.18062
+    2          C          -0.283670        4.2837     1.10305     3.18062
+    3          H           0.141835        0.8582     0.85817
+    4          H           0.141835        0.8582     0.85817
+    5          H           0.141835        0.8582     0.85817
+    6          H           0.141835        0.8582     0.85817
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM            0.000     0.000    -0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.10305   1.04647   1.13415   1.00000
+    2  C   1.10305   1.04647   1.13415   1.00000
+    3  H   0.85817
+    4  H   0.85817
+    5  H   0.85817
+    6  H   0.85817
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 4
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         6   7
+          ENERGY
+
+              1        1   0
+          0.0000       1   0
+
+              2        1   0
+          4.1841       0   1
+
+              3        0   1
+          4.1841       1   0
+
+              4        0   1
+          8.3682       0   1
+
+
+ DIAGONAL OF C.I. MATRIX
+     0.000000     4.184110     4.184110     8.368220
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -0.256747    0.000000     1+  SINGLET     Ag  
+    2     2.696011    2.952759     1   TRIPLET     B1u 
+    3     5.672209    5.928956     1   SINGLET     B1u       1.1986      0.0000      0.0000
+    4     8.624967    8.881715     2   SINGLET     Ag  
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 19:11:09 2021  *
+ *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
+ *  ROOT       - IN A C.I. CALCULATION, ROOT 1 TO BE OPTIMIZED.
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+1SCF C.I.=2 MECI ROOT=1
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.6700      0.0000      0.0000
+     2         C          0.6700      0.0000      0.0000
+     3         H         -1.2300     -0.9300      0.0000
+     4         H         -1.2300      0.9300      0.0000
+     5         H          1.2300     -0.9300      0.0000
+     6         H          1.2300      0.9300      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 6
+
+
+ -------------------------------------------------------------------------------
+ 1SCF C.I.=2 MECI ROOT=1
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 19:11:09 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =          8.74306 KCAL/MOL =      36.58098 KJ/MOL
+
+
+          TOTAL ENERGY            =       -299.13957 EV  STATE:   1 SINGLET Ag  
+          ELECTRONIC ENERGY       =       -738.39616 EV  POINT GROUP:     D2h 
+          CORE-CORE REPULSION     =        439.25660 EV
+          COSMO AREA              =         71.45 SQUARE ANGSTROMS
+          COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         10.684421 EV
+          HOMO LUMO ENERGIES (EV) =        -10.684  0.976
+          NO. OF FILLED LEVELS    =          6
+          MOLECULAR WEIGHT        =         28.0536
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     4     3.08402
+            H     6    H     3     2.96729
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.078 SECONDS
+          COMPUTATION TIME        =          0.071 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.670000000     0.000000000     0.000000000
+   2    C        0.670000000     0.000000000     0.000000000
+   3    H       -1.230000000    -0.930000000     0.000000000
+   4    H       -1.230000000     0.930000000     0.000000000
+   5    H        1.230000000    -0.930000000     0.000000000
+   6    H        1.230000000     0.930000000     0.000000000
+
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+                  EIGENVALUES  
+ -26.77535 -20.00189 -16.32165 -14.22366 -12.19463 -10.68442   0.97572   5.48787
+   5.57216   6.33974   6.41349   6.48301
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.283670        4.2837     1.10305     3.18062
+    2          C          -0.283670        4.2837     1.10305     3.18062
+    3          H           0.141835        0.8582     0.85817
+    4          H           0.141835        0.8582     0.85817
+    5          H           0.141835        0.8582     0.85817
+    6          H           0.141835        0.8582     0.85817
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM            0.000     0.000    -0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.10305   1.04647   1.13415   1.00000
+    2  C   1.10305   1.04647   1.13415   1.00000
+    3  H   0.85817
+    4  H   0.85817
+    5  H   0.85817
+    6  H   0.85817
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 4
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         6   7
+          ENERGY
+
+              1        1   0
+          0.0000       1   0
+
+              2        1   0
+          4.1841       0   1
+
+              3        0   1
+          4.1841       1   0
+
+              4        0   1
+          8.3682       0   1
+
+
+ DIAGONAL OF C.I. MATRIX
+     0.000000     4.184110     4.184110     8.368220
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -0.256747    0.000000     1+  SINGLET     Ag  
+    2     2.696011    2.952759     1   TRIPLET     B1u 
+    3     5.672209    5.928956     1   SINGLET     B1u       1.1986      0.0000      0.0000
+    4     8.624967    8.881715     2   SINGLET     Ag  
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 19:11:09 2021  *
+ *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
+ *  ROOT       - IN A C.I. CALCULATION, ROOT 2 TO BE OPTIMIZED.
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+1SCF C.I.=2 MECI ROOT=2
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.6700      0.0000      0.0000
+     2         C          0.6700      0.0000      0.0000
+     3         H         -1.2300     -0.9300      0.0000
+     4         H         -1.2300      0.9300      0.0000
+     5         H          1.2300     -0.9300      0.0000
+     6         H          1.2300      0.9300      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 6
+
+
+ -------------------------------------------------------------------------------
+ 1SCF C.I.=2 MECI ROOT=2
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 19:11:09 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =         76.83524 KCAL/MOL =     321.47864 KJ/MOL
+
+
+          TOTAL ENERGY            =       -296.18681 EV  STATE:   1 TRIPLET B1u 
+          ELECTRONIC ENERGY       =       -735.44341 EV  POINT GROUP:     D2h 
+          CORE-CORE REPULSION     =        439.25660 EV
+          COSMO AREA              =         71.45 SQUARE ANGSTROMS
+          COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         10.684421 EV
+          HOMO LUMO ENERGIES (EV) =        -10.684  0.976
+          NO. OF FILLED LEVELS    =          6
+          MOLECULAR WEIGHT        =         28.0536
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     4     3.08402
+            H     6    H     3     2.96729
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.117 SECONDS
+          COMPUTATION TIME        =          0.105 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.670000000     0.000000000     0.000000000
+   2    C        0.670000000     0.000000000     0.000000000
+   3    H       -1.230000000    -0.930000000     0.000000000
+   4    H       -1.230000000     0.930000000     0.000000000
+   5    H        1.230000000    -0.930000000     0.000000000
+   6    H        1.230000000     0.930000000     0.000000000
+
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+                  EIGENVALUES  
+ -26.77535 -20.00189 -16.32165 -14.22366 -12.19463 -10.68442   0.97572   5.48787
+   5.57216   6.33974   6.41349   6.48301
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.283670        4.2837     1.10305     3.18062
+    2          C          -0.283670        4.2837     1.10305     3.18062
+    3          H           0.141835        0.8582     0.85817
+    4          H           0.141835        0.8582     0.85817
+    5          H           0.141835        0.8582     0.85817
+    6          H           0.141835        0.8582     0.85817
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM           -0.000     0.000    -0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.10305   1.04647   1.13415   1.00000
+    2  C   1.10305   1.04647   1.13415   1.00000
+    3  H   0.85817
+    4  H   0.85817
+    5  H   0.85817
+    6  H   0.85817
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 4
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         6   7
+          ENERGY
+
+              1        1   0
+          0.0000       1   0
+
+              2        1   0
+          4.1841       0   1
+
+              3        0   1
+          4.1841       1   0
+
+              4        0   1
+          8.3682       0   1
+
+
+ DIAGONAL OF C.I. MATRIX
+     0.000000     4.184110     4.184110     8.368220
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1    -0.256747    0.000000     1   SINGLET     Ag  
+    2+    2.696011    2.952759     1+  TRIPLET     B1u 
+    3     5.672209    5.928956     1   SINGLET     B1u 
+    4     8.624967    8.881715     2   SINGLET     Ag  
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 19:11:09 2021  *
+ *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
+ *  ROOT       - IN A C.I. CALCULATION, ROOT 3 TO BE OPTIMIZED.
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+1SCF C.I.=2 MECI ROOT=3
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.6700      0.0000      0.0000
+     2         C          0.6700      0.0000      0.0000
+     3         H         -1.2300     -0.9300      0.0000
+     4         H         -1.2300      0.9300      0.0000
+     5         H          1.2300     -0.9300      0.0000
+     6         H          1.2300      0.9300      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 6
+
+
+ -------------------------------------------------------------------------------
+ 1SCF C.I.=2 MECI ROOT=3
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 19:11:09 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        145.46793 KCAL/MOL =     608.63783 KJ/MOL
+
+
+          TOTAL ENERGY            =       -293.21061 EV  STATE:   1 SINGLET B1u 
+          ELECTRONIC ENERGY       =       -732.46721 EV  POINT GROUP:     D2h 
+          CORE-CORE REPULSION     =        439.25660 EV
+          COSMO AREA              =         71.45 SQUARE ANGSTROMS
+          COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         10.684421 EV
+          HOMO LUMO ENERGIES (EV) =        -10.684  0.976
+          NO. OF FILLED LEVELS    =          6
+          MOLECULAR WEIGHT        =         28.0536
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     4     3.08402
+            H     6    H     3     2.96729
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.148 SECONDS
+          COMPUTATION TIME        =          0.138 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.670000000     0.000000000     0.000000000
+   2    C        0.670000000     0.000000000     0.000000000
+   3    H       -1.230000000    -0.930000000     0.000000000
+   4    H       -1.230000000     0.930000000     0.000000000
+   5    H        1.230000000    -0.930000000     0.000000000
+   6    H        1.230000000     0.930000000     0.000000000
+
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+                  EIGENVALUES  
+ -26.77535 -20.00189 -16.32165 -14.22366 -12.19463 -10.68442   0.97572   5.48787
+   5.57216   6.33974   6.41349   6.48301
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.283670        4.2837     1.10305     3.18062
+    2          C          -0.283670        4.2837     1.10305     3.18062
+    3          H           0.141835        0.8582     0.85817
+    4          H           0.141835        0.8582     0.85817
+    5          H           0.141835        0.8582     0.85817
+    6          H           0.141835        0.8582     0.85817
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM            0.000     0.000    -0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.10305   1.04647   1.13415   1.00000
+    2  C   1.10305   1.04647   1.13415   1.00000
+    3  H   0.85817
+    4  H   0.85817
+    5  H   0.85817
+    6  H   0.85817
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 4
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         6   7
+          ENERGY
+
+              1        1   0
+          0.0000       1   0
+
+              2        1   0
+          4.1841       0   1
+
+              3        0   1
+          4.1841       1   0
+
+              4        0   1
+          8.3682       0   1
+
+
+ DIAGONAL OF C.I. MATRIX
+     0.000000     4.184110     4.184110     8.368220
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1    -0.256747    0.000000     1   SINGLET     Ag        1.1986      0.0000      0.0000
+    2     2.696011    2.952759     1   TRIPLET     B1u 
+    3+    5.672209    5.928956     1+  SINGLET     B1u 
+    4     8.624967    8.881715     2   SINGLET     Ag        0.5970      0.0000      0.0000
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Tue Jul 27 19:11:09 2021  *
+ *  C.I.=4     -  4 M.O.S TO BE USED IN C.I.
+ *  ROOT       - IN A C.I. CALCULATION, ROOT 2 TO BE OPTIMIZED.
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+1SCF C.I.=4 MECI ROOT=2B1u
+ comment1
+ comment2
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C         -0.6700      0.0000      0.0000
+     2         C          0.6700      0.0000      0.0000
+     3         H         -1.2300     -0.9300      0.0000
+     4         H         -1.2300      0.9300      0.0000
+     5         H          1.2300     -0.9300      0.0000
+     6         H          1.2300      0.9300      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 6
+
+
+ -------------------------------------------------------------------------------
+ 1SCF C.I.=4 MECI ROOT=2B1u
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Tue Jul 27 19:11:09 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        233.20424 KCAL/MOL =     975.72654 KJ/MOL
+
+
+          TOTAL ENERGY            =       -289.40600 EV  STATE:   2 TRIPLET B1u 
+          ELECTRONIC ENERGY       =       -728.66260 EV  POINT GROUP:     D2h 
+          CORE-CORE REPULSION     =        439.25660 EV
+          COSMO AREA              =         71.45 SQUARE ANGSTROMS
+          COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         10.684421 EV
+          HOMO LUMO ENERGIES (EV) =        -10.684  0.976
+          NO. OF FILLED LEVELS    =          6
+          MOLECULAR WEIGHT        =         28.0536
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     4     3.08402
+            H     6    H     3     2.96729
+            C     1    C     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.188 SECONDS
+          COMPUTATION TIME        =          0.246 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C         -0.67000000  *   0.00000000  *   0.00000000  *
+     2       C          0.67000000  *   0.00000000  *   0.00000000  *
+     3       H         -1.23000000  *  -0.93000000  *   0.00000000  *
+     4       H         -1.23000000  *   0.93000000  *   0.00000000  *
+     5       H          1.23000000  *  -0.93000000  *   0.00000000  *
+     6       H          1.23000000  *   0.93000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C       -0.670000000     0.000000000     0.000000000
+   2    C        0.670000000     0.000000000     0.000000000
+   3    H       -1.230000000    -0.930000000     0.000000000
+   4    H       -1.230000000     0.930000000     0.000000000
+   5    H        1.230000000    -0.930000000     0.000000000
+   6    H        1.230000000     0.930000000     0.000000000
+
+
+           Empirical Formula: C2 H4  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   D2h 
+
+
+                  EIGENVALUES  
+ -26.77535 -20.00189 -16.32165 -14.22366 -12.19463 -10.68442   0.97572   5.48787
+   5.57216   6.33974   6.41349   6.48301
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.216611        4.2166     1.10305     3.11356
+    2          C          -0.216611        4.2166     1.10305     3.11356
+    3          H           0.108306        0.8917     0.89169
+    4          H           0.108306        0.8917     0.89169
+    5          H           0.108306        0.8917     0.89169
+    6          H           0.108306        0.8917     0.89169
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000     0.000    -0.000     0.000
+ SUM            0.000     0.000    -0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.10305   1.04647   1.06709   1.00000
+    2  C   1.10305   1.04647   1.06709   1.00000
+    3  H   0.89169
+    4  H   0.89169
+    5  H   0.89169
+    6  H   0.89169
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  0.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 36
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         5   6   7   8
+          ENERGY
+
+              1        1   1   0   0
+          0.0000       1   1   0   0
+
+              2        1   1   0   0
+          4.1841       1   0   1   0
+
+              3        1   1   0   0
+          8.5463       1   0   0   1
+
+              4        1   1   0   0
+          5.4405       0   1   1   0
+
+              5        1   1   0   0
+         10.0224       0   1   0   1
+
+              6        1   1   0   0
+         14.2394       0   0   1   1
+
+              7        1   0   1   0
+          4.1841       1   1   0   0
+
+              8        1   0   1   0
+          8.3682       1   0   1   0
+
+              9        1   0   1   0
+         12.7304       1   0   0   1
+
+             10        1   0   1   0
+          9.6247       0   1   1   0
+
+             11        1   0   1   0
+         14.2065       0   1   0   1
+
+             12        1   0   1   0
+         18.4235       0   0   1   1
+
+             13        1   0   0   1
+          8.5463       1   1   0   0
+
+             14        1   0   0   1
+         12.7304       1   0   1   0
+
+             15        1   0   0   1
+         18.4765       1   0   0   1
+
+             16        1   0   0   1
+         12.6805       0   1   1   0
+
+             17        1   0   0   1
+         18.6463       0   1   0   1
+
+             18        1   0   0   1
+         22.8633       0   0   1   1
+
+             19        0   1   1   0
+          5.4405       1   1   0   0
+
+             20        0   1   1   0
+          9.6247       1   0   1   0
+
+             21        0   1   1   0
+         12.6805       1   0   0   1
+
+             22        0   1   1   0
+         12.1319       0   1   1   0
+
+             23        0   1   1   0
+         15.4074       0   1   0   1
+
+             24        0   1   1   0
+         19.6244       0   0   1   1
+
+             25        0   1   0   1
+         10.0224       1   1   0   0
+
+             26        0   1   0   1
+         14.2065       1   0   1   0
+
+             27        0   1   0   1
+         18.6463       1   0   0   1
+
+             28        0   1   0   1
+         15.4074       0   1   1   0
+
+             29        0   1   0   1
+         20.0669       0   1   0   1
+
+             30        0   1   0   1
+         24.2839       0   0   1   1
+
+             31        0   0   1   1
+         14.2394       1   1   0   0
+
+             32        0   0   1   1
+         18.4235       1   0   1   0
+
+             33        0   0   1   1
+         22.8633       1   0   0   1
+
+             34        0   0   1   1
+         19.6244       0   1   1   0
+
+             35        0   0   1   1
+         24.2839       0   1   0   1
+
+             36        0   0   1   1
+         28.5009       0   0   1   1
+
+
+ DIAGONAL OF C.I. MATRIX
+     0.000000     4.184110     8.546269     5.440549    10.022369
+    14.239351     4.184110     8.368220    12.730379     9.624659
+    14.206479    18.423461     8.546269    12.730379    18.476530
+    12.680508    18.646320    22.863302     5.440549     9.624659
+    12.680508    12.131895    15.407406    19.624387    10.022369
+    14.206479    18.646320    15.407406    20.066908    24.283890
+    14.239351    18.423461    22.863302    19.624387    24.283890
+    28.500871
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1    -0.295569    0.000000     1   SINGLET     Ag  
+    2     2.688584    2.984153     1   TRIPLET     B1u 
+    3     5.281914    5.577483     1   TRIPLET     B1g 
+    4     5.502403    5.797972     1   SINGLET     B1u 
+    5     5.553780    5.849349     1   SINGLET     B1g 
+    6     8.431349    8.726918     2   TRIPLET     B1g 
+    7     8.491369    8.786938     2   SINGLET     Ag  
+    8     8.631456    8.927025     2   SINGLET     B1g 
+    9     9.471012    9.766581     1   TRIPLET     Au  
+   10+    9.476818    9.772387     2+  TRIPLET     B1u 
+   11     9.691543    9.987112     1   SINGLET     Au  
+   12    10.123265   10.418834     2   SINGLET     B1u 
+   13    12.119408   12.414977     3   SINGLET     Ag  
+   14    12.207543   12.503112     1   QUINTET     Ag  
+   15    12.613321   12.908890     2   TRIPLET     Au  
+   16    12.673243   12.968812     1   TRIPLET     Ag  
+   17    12.764479   13.060048     2   SINGLET     Au  
+   18    12.918588   13.214157     4   SINGLET     Ag  
+   19    13.032754   13.328322     2   TRIPLET     Ag  
+   20    15.335952   15.631520     3   TRIPLET     Au  
+   21    15.420342   15.715911     3   TRIPLET     Ag        1.1968      0.0000      0.0000
+   22    15.559644   15.855213     3   SINGLET     Au  
+   23    15.951525   16.247094     5   SINGLET     Ag  
+   24    18.387570   18.683138     3   TRIPLET     B1u 
+   25    18.479636   18.775205     6   SINGLET     Ag  
+   26    18.548386   18.843955     4   TRIPLET     Au  
+   27    18.833193   19.128761     4   SINGLET     Au  
+   28    18.902234   19.197803     3   SINGLET     B1u 
+   29    19.523883   19.819452     3   TRIPLET     B1g 
+   30    19.752738   20.048307     3   SINGLET     B1g 
+   31    19.955643   20.251212     7   SINGLET     Ag  
+   32    22.731524   23.027093     4   TRIPLET     B1g 
+   33    22.803080   23.098649     4   TRIPLET     B1u 
+   34    23.042369   23.337938     4   SINGLET     B1g 
+   35    25.943706   26.239275     4   SINGLET     B1u 
+   36    28.842620   29.138189     8   SINGLET     Ag  
+ The "+" symbol indicates the root used.
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.35 SECONDS
+
+ == MOPAC DONE ==

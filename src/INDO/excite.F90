@@ -67,7 +67,8 @@
 
 !     **** determine basis - vector type of each MO ****
 !     **** if type j = s, px, py, etc is present, then nbtmo bit j is set to 1 ****
-      if(.not.allocated(nbtmo)) allocate(nbtmo(n))
+      if(allocated(nbtmo)) deallocate(nbtmo)
+      allocate(nbtmo(n))
       do i = 1, n
         do j = 0, 8
           ifbinc(j) = 0
@@ -127,8 +128,10 @@
       nov2 = nov*(nov + 1)/2
       nov4 = nov2*(nov2 + 1)/2
 
-      if(.not. allocated(eec)) allocate(eec(nov2))
-      if(.not. allocated(ee2)) allocate(ee2(nov4))
+      if(allocated(eec)) deallocate(eec)
+      if(allocated(ee2)) deallocate(ee2)
+      allocate(eec(nov2))
+      allocate(ee2(nov4))
 
       if (fastci) then
         ifst = 0
@@ -175,19 +178,32 @@
       end do
 !     ******************** form determinants ***************************
 !     **** loop over reference determinates; first read alpha occupancy ****z
-      if(.not. allocated(vv))  allocate(vv(n))
-      if(.not. allocated(aor)) allocate(aor(nov))
-      if(.not. allocated(bor)) allocate(bor(nov))
-      if(.not. allocated(aor1)) allocate(aor1(nov))
-      if(.not. allocated(bor1)) allocate(bor1(nov))
-      if(.not. allocated(aoc)) allocate(aoc(nov))
-      if(.not. allocated(boc)) allocate(boc(nov))
-      if(.not. allocated(aos)) allocate(aos(nov))
-      if(.not. allocated(bos)) allocate(bos(nov))
-      if(.not. allocated(aod)) allocate(aod(nov))
-      if(.not. allocated(bod)) allocate(bod(nov))
-      if(.not. allocated(ao1)) allocate(ao1(nov, mspn))
-      if(.not. allocated(bo1)) allocate(bo1(nov, mspn))
+      if(allocated(vv))  deallocate(vv)
+      if(allocated(aor)) deallocate(aor)
+      if(allocated(bor)) deallocate(bor)
+      if(allocated(aor1)) deallocate(aor1)
+      if(allocated(bor1)) deallocate(bor1)
+      if(allocated(aoc)) deallocate(aoc)
+      if(allocated(boc)) deallocate(boc)
+      if(allocated(aos)) deallocate(aos)
+      if(allocated(bos)) deallocate(bos)
+      if(allocated(aod)) deallocate(aod)
+      if(allocated(bod)) deallocate(bod)
+      if(allocated(ao1)) deallocate(ao1)
+      if(allocated(bo1)) deallocate(bo1)
+      allocate(vv(n))
+      allocate(aor(nov))
+      allocate(bor(nov))
+      allocate(aor1(nov))
+      allocate(bor1(nov))
+      allocate(aoc(nov))
+      allocate(boc(nov))
+      allocate(aos(nov))
+      allocate(bos(nov))
+      allocate(aod(nov))
+      allocate(bod(nov))
+      allocate(ao1(nov, mspn))
+      allocate(bo1(nov, mspn))
 
       irefd = 0
 
@@ -256,15 +272,24 @@
           end do
         end if
 
-        if(.not. allocated(ao1))    allocate(ao1(nov, mspn))
-        if(.not. allocated(bo1))    allocate(bo1(nov, mspn))
-        if(.not. allocated(aocc))   allocate(aocc(nov, mspn, nex))
-        if(.not. allocated(bocc))   allocate(bocc(nov, mspn, nex))
-        if(.not. allocated(nspn))   allocate(nspn(nconf))
-        if(.not. allocated(krefd))  allocate(krefd(nconf))
-        if(.not. allocated(spintr)) allocate(spintr(mspn, nconf))
-        if(.not. allocated(aii))    allocate(aii(n))
-        if(.not. allocated(tr1))    allocate(tr1(mspn))
+        if(allocated(ao1))    deallocate(ao1)
+        if(allocated(bo1))    deallocate(bo1)
+        if(allocated(aocc))   deallocate(aocc)
+        if(allocated(bocc))   deallocate(bocc)
+        if(allocated(nspn))   deallocate(nspn)
+        if(allocated(krefd))  deallocate(krefd)
+        if(allocated(spintr)) deallocate(spintr)
+        if(allocated(aii))    deallocate(aii)
+        if(allocated(tr1))    deallocate(tr1)
+        allocate(ao1(nov, mspn))
+        allocate(bo1(nov, mspn))
+        allocate(aocc(nov, mspn, nex))
+        allocate(bocc(nov, mspn, nex))
+        allocate(nspn(nconf))
+        allocate(krefd(nconf))
+        allocate(spintr(mspn, nconf))
+        allocate(aii(n))
+        allocate(tr1(mspn))
 
         do i=1, n
           aii(i) = evalmo(i)
@@ -499,8 +524,10 @@
       jconf =  nconf
       write (iw, "(/' CI excitations=', i5, ':', 8(5x, a3, '=', i3))") nconf, (nmrep(k, nptg), nci(k), k=1, nr)
 
-      if (.not. allocated(icifrag))  allocate(icifrag(nconf))
-      if (.not. allocated(mofrag))   allocate(mofrag(n))
+      if (allocated(icifrag))  deallocate(icifrag)
+      if (allocated(mofrag))   deallocate(mofrag)
+      allocate(icifrag(nconf))
+      allocate(mofrag(n))
       do i = 1, n
         mofrag(i) = 1
       end do

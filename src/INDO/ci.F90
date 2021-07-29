@@ -39,8 +39,10 @@
       nmc = 0
       nme = 0
 
-      if (.not. allocated(wk1)) allocate(wk1(n))
-      if (.not. allocated(wk2)) allocate(wk2(n))
+      if (allocated(wk1)) deallocate(wk1)
+      if (allocated(wk2)) deallocate(wk2)
+      allocate(wk1(n))
+      allocate(wk2(n))
       if (ifstor == 1) then
 !	**** see if element already evaluated and stored ****
         nm1 = matind(max(i, j) - ncore) + min(i, j) - ncore
@@ -427,7 +429,8 @@
             cc0(i, j) = c(i, j)
           end do
         end do
-        if (.not. allocated(diagsl)) allocate(diagsl(nconf))
+        if (allocated(diagsl)) deallocate(diagsl)
+        allocate(diagsl(nconf))
         call diagci(ci, aocc, bocc, diagsl)
       end if
 
@@ -800,10 +803,12 @@
       nciouv = nciout
       nese = 1
       ndtype = 1
-      if(.not. allocated(occ)) allocate(occ(nov))
+      if(allocated(occ)) deallocate(occ)
+      allocate(occ(nov))
 
 !     **** determine CI state symmetry ****
-      if(.not.allocated(istate)) allocate(istate(nconf))
+      if(allocated(istate)) deallocate(istate)
+      allocate(istate(nconf))
       do il = 1, nconf
         j = 1
         do while (abs(ci(il, j)) < 1.d-2)

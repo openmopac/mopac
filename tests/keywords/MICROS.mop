@@ -1,0 +1,15 @@
+C.I.=4 MS=1 MECI
+a polarized carbon atom
+
+C 0.0 0.0 0.0
+
+C.I.=4 MS=1 MICROS=4 MECI
+a polarized carbon atom with a full alpha 2p shell
+
+C 0.0 0.0 0.0
+
+MICROS
+01111000
+01110100
+01110010
+01110001

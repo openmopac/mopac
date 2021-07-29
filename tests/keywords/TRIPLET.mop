@@ -1,0 +1,19 @@
+UHF MS=1.0
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+UHF TRIPLET
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF MS=1.0 MECI OPEN(2,2)
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF TRIPLET MECI OPEN(2,2)
+comment1
+comment2
+Ni 0.0 0.0 0.0

@@ -1,0 +1,401 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Jul 28 17:28:18 2021  *
+ *  C.I.=4     -  4 M.O.S TO BE USED IN C.I.
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.0
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+C.I.=4 MS=1 MECI
+ a polarized carbon atom
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 2
+
+
+          Geometry optimization using EF
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ C.I.=4 MS=1 MECI
+ a polarized carbon atom
+
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Wed Jul 28 17:28:18 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        169.53788 KCAL/MOL =     709.34649 KJ/MOL
+
+
+          TOTAL ENERGY            =       -115.74932 EV  STATE:   1 TRIPLET P(g)
+          ELECTRONIC ENERGY       =       -115.74932 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         50.27 SQUARE ANGSTROMS
+          COSMO VOLUME            =         33.51 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =          6.620227 EV
+          HOMO LUMO ENERGIES (EV) =         -6.620  1.165
+          NO. OF FILLED LEVELS    =          2
+          MOLECULAR WEIGHT        =         12.0110
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.027 SECONDS
+          COMPUTATION TIME        =          0.026 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: C  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -15.96233  -6.62023   1.16518   1.16518
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C           0.000000        4.0000     1.98938     2.01062
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID         0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.98938   0.67021   0.67021   0.67021
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  1.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 16
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         1   2   3   4
+          ENERGY
+
+              1        1   1   1   0
+         -1.6001       1   0   0   0
+
+              2        1   1   1   0
+          5.1947       0   1   0   0
+
+              3        1   1   1   0
+          5.1947       0   0   1   0
+
+              4        1   1   1   0
+          4.1280       0   0   0   1
+
+              5        1   1   0   1
+         -1.6001       1   0   0   0
+
+              6        1   1   0   1
+          5.1947       0   1   0   0
+
+              7        1   1   0   1
+          4.1280       0   0   1   0
+
+              8        1   1   0   1
+          5.1947       0   0   0   1
+
+              9        1   0   1   1
+         -1.6001       1   0   0   0
+
+             10        1   0   1   1
+          4.1280       0   1   0   0
+
+             11        1   0   1   1
+          5.1947       0   0   1   0
+
+             12        1   0   1   1
+          5.1947       0   0   0   1
+
+             13        0   1   1   1
+          4.6665       1   0   0   0
+
+             14        0   1   1   1
+          9.3285       0   1   0   0
+
+             15        0   1   1   1
+          9.3285       0   0   1   0
+
+             16        0   1   1   1
+          9.3285       0   0   0   1
+
+
+ DIAGONAL OF C.I. MATRIX
+    -1.600092     5.194707     5.194707     4.127979    -1.600092
+     5.194707     4.127979     5.194707    -1.600092     4.127979
+     5.194707     5.194707     4.666519     9.328537     9.328537
+     9.328537
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -1.658725    0.000000     1+  TRIPLET     P(g)
+    4     2.258617    3.917342     1   QUINTET     S(u)
+    5     4.661343    6.320068     1   TRIPLET     D(u)      0.1873      0.1828      0.1673
+   10     5.469153    7.127878     1   TRIPLET     S(u)      0.2619      0.2619      0.2619
+   11     5.728071    7.386796     1   TRIPLET     P(u)      0.1037      0.1037      0.1037
+   14     9.387170   11.045896     2   TRIPLET     P(g)
+ 'RELATIVE ENERGY' Is relative to the lowest state calculated.
+ This may or may not be the ground state.
+ The "+" symbol indicates the root used.
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.178M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Jul 28 17:28:18 2021  *
+ *  C.I.=4     -  4 M.O.S TO BE USED IN C.I.
+ *  MICROS=N -   4 MICROSTATES TO BE SUPPLIED FOR C.I.
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.0
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  MECI       - M.E.C.I. WORKING TO BE PRINTED
+ *******************************************************************************
+C.I.=4 MS=1 MICROS=4 MECI
+ a polarized carbon atom with a full alpha 2p shell
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 2
+
+
+          Geometry optimization using EF
+
+          NUMBER OF ELECTRONS IN C.I. REDEFINED TO:   5
+
+
+     GRADIENT =  0.00000 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+ C.I.=4 MS=1 MICROS=4 MECI
+ a polarized carbon atom with a full alpha 2p shell
+
+
+
+     GRADIENTS WERE INITIALLY ACCEPTABLY SMALL                
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.178M)
+                                                       Wed Jul 28 17:28:18 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        185.45999 KCAL/MOL =     775.96459 KJ/MOL
+
+
+          TOTAL ENERGY            =       -115.05887 EV  STATE:   1 QUARTET S(u)
+          ELECTRONIC ENERGY       =       -115.05887 EV  POINT GROUP:     R3  
+          CORE-CORE REPULSION     =          0.00000 EV
+          COSMO AREA              =         50.27 SQUARE ANGSTROMS
+          COSMO VOLUME            =         33.51 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =          6.620227 EV
+          HOMO LUMO ENERGIES (EV) =         -6.620  1.165
+          NO. OF FILLED LEVELS    =          2
+          MOLECULAR WEIGHT        =         12.0110
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.055 SECONDS
+          COMPUTATION TIME        =          0.053 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       C          0.00000000  *   0.00000000  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+
+
+           Empirical Formula: C  =     1 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   R3  
+
+
+                  EIGENVALUES  
+ -15.96233  -6.62023   1.16518   1.16518
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -1.000000        5.0000     2.00000     3.00000
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000     0.000     0.000     0.000
+ HYBRID        -0.000    -0.000     0.000     0.000
+ SUM           -0.000    -0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   2.00000   1.00000   1.00000   1.00000
+
+
+          MULTI-ELECTRON CONFIGURATION INTERACTION CALCULATION
+
+
+          COMPONENT OF SPIN  =  1.0
+
+
+           NO OF CONFIGURATIONS CONSIDERED = 4
+
+ CONFIGURATIONS CONSIDERED IN C.I.      
+ M.O. NUMBER :         1   2   3   4
+          ENERGY
+
+              1        1   1   1   1
+         -0.9683       1   0   0   0
+
+              2        1   1   1   1
+          3.2792       0   1   0   0
+
+              3        1   1   1   1
+          3.2792       0   0   1   0
+
+              4        1   1   1   1
+          3.2792       0   0   0   1
+
+
+ DIAGONAL OF C.I. MATRIX
+    -0.968277     3.279219     3.279219     3.279219
+
+  STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
+         ABSOLUTE     RELATIVE                                X           Y           Z
+
+    1+   -0.968277    0.000000     1+  QUARTET     S(u)
+    2     3.279219    4.247496     1   QUARTET     P(g)      0.1715      0.1715      0.1715
+ 'RELATIVE ENERGY' Is relative to the lowest state calculated.
+ This may or may not be the ground state.
+ The "+" symbol indicates the root used.
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.09 SECONDS
+
+ == MOPAC DONE ==

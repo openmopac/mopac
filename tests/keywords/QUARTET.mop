@@ -1,0 +1,19 @@
+UHF MS=1.5
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+UHF QUARTET
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF MS=1.5 MECI OPEN(3,3)
+comment1
+comment2
+Co 0.0 0.0 0.0
+
+RHF QUARTET MECI OPEN(3,3)
+comment1
+comment2
+Co 0.0 0.0 0.0

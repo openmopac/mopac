@@ -1,0 +1,19 @@
+UHF MS=4.0
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+UHF NONET
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF MS=4.0 MECI OPEN(8,8)
+comment1
+comment2
+Ni 0.0 0.0 0.0
+
+RHF NONET MECI OPEN(8,8)
+comment1
+comment2
+Ni 0.0 0.0 0.0
