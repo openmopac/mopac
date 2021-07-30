@@ -179,6 +179,38 @@
         else
           i = 4
         end if
+      ! AM1 B-H, B-C, & B-halogen corrections
+      else if (method_am1 .and. (ni == 5 .or. nj == 5) .and. &
+          (ni == 1 .or. nj == 1 .or. ni == 6 .or. nj == 6 .or. ni == 9 .or. nj == 9 .or. &
+           ni == 17 .or. nj == 17 .or. ni == 35 .or. nj == 35 .or. ni == 53 .or. nj == 53)) then
+          if (ni == 1 .or. nj == 1) then
+            ax = 10.0d0*(r - 0.832586d0)**2
+            if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*0.412253d0*exp(-ax)
+            ax = 6.0d0*(r - 1.186220d0)**2
+            if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*(-0.149917d0)*exp(-ax)
+          else if (ni == 6 .or. nj == 6) then
+            ax = 8.0d0*(r - 1.063995d0)**2
+            if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*0.261751d0*exp(-ax)
+            ax = 5.0d0*(r - 1.936492d0)**2
+            if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*0.050275d0*exp(-ax)
+          else
+            ax = 9.0d0*(r - 0.819351d0)**2
+            if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*0.359244d0*exp(-ax)
+            ax = 9.0d0*(r - 1.574414d0)**2
+            if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*0.074729d0*exp(-ax)
+          end if
+          if (ni == 5) then
+            do ig = 1, 4
+              ax = guess2(nj,ig)*(r - guess3(nj,ig))**2 
+              if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(nj,ig)*exp(-ax)
+            end do
+          else
+            do ig = 1, 4
+              ax = guess2(ni,ig)*(r - guess3(ni,ig))**2 
+              if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,ig)*exp(-ax)
+            end do
+          end if
+          i = 0
       else
           i = 4
           if (fff > 1.d-4) i = 0

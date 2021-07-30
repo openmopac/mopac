@@ -70,6 +70,30 @@
       data      gp2am1(  4)/       9.3833365d0/
       data      hspam1(  4)/       0.3996483d0/
 !
+!       Data for Element   5:    Boron
+!
+      data      ussam1(  5)/     -34.492870d0/
+      data      uppam1(  5)/     -22.631525d0/
+      data      betasa(  5)/      -9.599114d0/
+      data      betapa(  5)/      -6.273757d0/
+      data       zsam1(  5)/       1.611709d0/
+      data       zpam1(  5)/       1.555385d0/
+      data      alpam1(  5)/       2.446909d0/
+      data      gssam1(  5)/      10.590000d0/
+      data      gspam1(  5)/       9.560000d0/
+      data      gppam1(  5)/       8.860000d0/
+      data      gp2am1(  5)/       7.860000d0/
+      data      hspam1(  5)/       1.810000d0/
+      data    guesa1(  5,1)/       0.182613d0/
+      data    guesa2(  5,1)/       6.000000d0/
+      data    guesa3(  5,1)/       0.727592d0/
+      data    guesa1(  5,2)/       0.118587d0/
+      data    guesa2(  5,2)/       6.000000d0/
+      data    guesa3(  5,2)/       1.466639d0/
+      data    guesa1(  5,3)/      -0.073280d0/
+      data    guesa2(  5,3)/       5.000000d0/
+      data    guesa3(  5,3)/       1.570975d0/
+!
 !       Data for Element   6:       Carbon
 !
       data      ussam1(  6)/     -52.0286580d0/

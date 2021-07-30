@@ -162,6 +162,7 @@
  data  allref(  2,3)/ ' He: (AM1):                                                                     '/
  data  allref(  3,3)/ ' Li: (AM1): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                  '/
  data  allref(  4,3)/ ' Be: (AM1): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                  '/
+ data  allref(  5,3)/ '  B: (AM1): M.J.S. DEWAR ET AL, ORGANOMETALLICS, 7, 513-521 (1988)              '/
  data  allref(  6,3)/ '  C: (AM1): M.J.S. DEWAR ET AL, J. AM. CHEM. SOC. 107 3902-3909 (1985)          '/
  data  allref(  7,3)/ '  N: (AM1): M.J.S. DEWAR ET AL, J. AM. CHEM. SOC. 107 3902-3909 (1985)          '/
  data  allref(  8,3)/ '  O: (AM1): M.J.S. DEWAR ET AL, J. AM. CHEM. SOC. 107 3902-3909 (1985)          '/

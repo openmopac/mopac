@@ -1,9 +1,7 @@
 target_sources(mopac-all PRIVATE
 # modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/analyt_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mndod_C.F90
 # source
-        ${CMAKE_CURRENT_SOURCE_DIR}/analyt.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/bfn.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/ccrep.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/coe.F90
