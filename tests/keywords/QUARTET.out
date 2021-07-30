@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:15:15 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:52 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.5
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -66,8 +66,8 @@ UHF MS=1.5
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:15:15 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:52 2021
 
 
 
@@ -91,8 +91,8 @@ UHF MS=1.5
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.023 SECONDS
-          COMPUTATION TIME        =          0.022 SECONDS
+          WALL-CLOCK TIME         =          0.020 SECONDS
+          COMPUTATION TIME        =          0.019 SECONDS
 
 
 
@@ -150,9 +150,9 @@ UHF MS=1.5
          Atomic
     1 Co  3.0000  1.000 -0.000  0.000  0.000  0.000  0.000  0.000  1.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -163,7 +163,7 @@ UHF MS=1.5
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:15:15 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:52 2021  *
  *  QUARTET    - SPIN STATE DEFINED AS A QUARTET
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -220,8 +220,8 @@ UHF QUARTET
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:15:15 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:52 2021
 
 
 
@@ -245,8 +245,8 @@ UHF QUARTET
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.039 SECONDS
-          COMPUTATION TIME        =          0.039 SECONDS
+          WALL-CLOCK TIME         =          0.035 SECONDS
+          COMPUTATION TIME        =          0.037 SECONDS
 
 
 
@@ -304,9 +304,9 @@ UHF QUARTET
          Atomic
     1 Co  3.0000  1.000 -0.000  0.000  0.000  0.000  0.000  0.000  1.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -317,7 +317,7 @@ UHF QUARTET
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:15:15 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:52 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 3 ELECTRONS IN 3 LEVELS
  *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.5
@@ -377,8 +377,8 @@ RHF MS=1.5 MECI OPEN(3,3)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:15:15 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:52 2021
 
 
 
@@ -399,8 +399,8 @@ RHF MS=1.5 MECI OPEN(3,3)
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.059 SECONDS
-          COMPUTATION TIME        =          0.059 SECONDS
+          WALL-CLOCK TIME         =          0.055 SECONDS
+          COMPUTATION TIME        =          0.057 SECONDS
 
 
 
@@ -458,21 +458,18 @@ RHF MS=1.5 MECI OPEN(3,3)
               1        1   1   1
          -7.6597       0   0   0
 
-
- DIAGONAL OF C.I. MATRIX
-    -7.659652
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+   -7.659652    0.000000     1+  QUARTET     ????
- 'RELATIVE ENERGY' Is relative to the lowest state calculated.
- This may or may not be the ground state.
- The "+" symbol indicates the root used.
+
+           'RELATIVE ENERGY' Is relative to the lowest state calculated.
+           This may or may not be the ground state.
+           The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -483,7 +480,7 @@ RHF MS=1.5 MECI OPEN(3,3)
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:15:15 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:52 2021  *
  *  QUARTET    - SPIN STATE DEFINED AS A QUARTET
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 3 ELECTRONS IN 3 LEVELS
@@ -546,8 +543,8 @@ RHF QUARTET MECI OPEN(3,3)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:15:15 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:52 2021
 
 
 
@@ -569,7 +566,7 @@ RHF QUARTET MECI OPEN(3,3)
           SCF CALCULATIONS        =          1
  
           WALL-CLOCK TIME         =          0.078 SECONDS
-          COMPUTATION TIME        =          0.078 SECONDS
+          COMPUTATION TIME        =          0.076 SECONDS
 
 
 
@@ -627,17 +624,14 @@ RHF QUARTET MECI OPEN(3,3)
               1        1   1   1
          -7.6597       0   0   0
 
-
- DIAGONAL OF C.I. MATRIX
-    -7.659652
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+   -7.659652    0.000000     1+  QUARTET     ????
- 'RELATIVE ENERGY' Is relative to the lowest state calculated.
- This may or may not be the ground state.
- The "+" symbol indicates the root used.
+
+           'RELATIVE ENERGY' Is relative to the lowest state calculated.
+           This may or may not be the ground state.
+           The "+" symbol indicates the root used.
 
  **********************
  *                    *

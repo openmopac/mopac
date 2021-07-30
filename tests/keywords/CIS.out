@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Jul 21 14:51:08 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:20 2021  *
  *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -71,8 +71,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Wed Jul 21 14:51:08 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:20 2021
 
 
 
@@ -101,8 +101,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.074 SECONDS
-          COMPUTATION TIME        =          0.041 SECONDS
+          WALL-CLOCK TIME         =          0.031 SECONDS
+          COMPUTATION TIME        =          0.034 SECONDS
 
 
 
@@ -189,10 +189,6 @@
               4        0   1
           8.3682       0   1
 
-
- DIAGONAL OF C.I. MATRIX
-     0.000000     4.184110     4.184110     8.368220
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
@@ -200,11 +196,11 @@
     2     2.696011    2.952759     1   TRIPLET     B1u 
     3     5.672209    5.928956     1   SINGLET     B1u       1.1986      0.0000      0.0000
     4     8.624967    8.881715     2   SINGLET     Ag  
- The "+" symbol indicates the root used.
+           The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -215,7 +211,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Jul 21 14:51:08 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:20 2021  *
  *  CIS        - C.I. USES 1 ELECTRON EXCITATIONS ONLY
  *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
  *  1SCF       - DO 1 SCF AND THEN STOP 
@@ -275,8 +271,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Wed Jul 21 14:51:08 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:20 2021
 
 
 
@@ -305,8 +301,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.113 SECONDS
-          COMPUTATION TIME        =          0.076 SECONDS
+          WALL-CLOCK TIME         =          0.070 SECONDS
+          COMPUTATION TIME        =          0.071 SECONDS
 
 
 
@@ -390,17 +386,13 @@
               3        0   1
           4.1841       1   0
 
-
- DIAGONAL OF C.I. MATRIX
-     0.000000     4.184110     4.184110
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+    0.000000    0.000000     1+  SINGLET     Ag  
     2     2.696011    2.696011     1   TRIPLET     B1u 
     3     5.672209    5.672209     1   SINGLET     B1u       0.8978      0.0000      0.0000
- The "+" symbol indicates the root used.
+           The "+" symbol indicates the root used.
 
  **********************
  *                    *
@@ -410,6 +402,6 @@
 
 
 
- TOTAL JOB TIME:             0.20 SECONDS
+ TOTAL JOB TIME:             0.12 SECONDS
 
  == MOPAC DONE ==

@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:20:34 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 3.5
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -66,8 +66,8 @@ UHF MS=3.5
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:20:34 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:51 2021
 
 
 
@@ -92,7 +92,7 @@ UHF MS=3.5
           SCF CALCULATIONS        =          1
  
           WALL-CLOCK TIME         =          0.020 SECONDS
-          COMPUTATION TIME        =          0.019 SECONDS
+          COMPUTATION TIME        =          0.020 SECONDS
 
 
 
@@ -150,9 +150,9 @@ UHF MS=3.5
          Atomic
     1 Co  7.0000  1.000  1.000  1.000  0.000  0.000  1.000  1.000  1.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -163,7 +163,7 @@ UHF MS=3.5
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:20:34 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
  *  OCTET      - SPIN STATE DEFINED AS A OCTET
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -220,8 +220,8 @@ UHF OCTET
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:20:34 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:51 2021
 
 
 
@@ -246,7 +246,7 @@ UHF OCTET
           SCF CALCULATIONS        =          1
  
           WALL-CLOCK TIME         =          0.039 SECONDS
-          COMPUTATION TIME        =          0.037 SECONDS
+          COMPUTATION TIME        =          0.039 SECONDS
 
 
 
@@ -304,9 +304,9 @@ UHF OCTET
          Atomic
     1 Co  7.0000  1.000  1.000  1.000  0.000  0.000  1.000  1.000  1.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -317,7 +317,7 @@ UHF OCTET
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:20:34 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 7 ELECTRONS IN 7 LEVELS
  *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 3.5
@@ -377,8 +377,8 @@ RHF MS=3.5 MECI OPEN(7,7)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:20:34 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:51 2021
 
 
 
@@ -399,8 +399,8 @@ RHF MS=3.5 MECI OPEN(7,7)
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.059 SECONDS
-          COMPUTATION TIME        =          0.056 SECONDS
+          WALL-CLOCK TIME         =          0.062 SECONDS
+          COMPUTATION TIME        =          0.059 SECONDS
 
 
 
@@ -458,21 +458,18 @@ RHF MS=3.5 MECI OPEN(7,7)
               1        1   1   1   1   1   1   1
         -20.7829       0   0   0   0   0   0   0
 
-
- DIAGONAL OF C.I. MATRIX
-   -20.782945
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+  -20.782945    0.000000     1+  OCTET       ????
- 'RELATIVE ENERGY' Is relative to the lowest state calculated.
- This may or may not be the ground state.
- The "+" symbol indicates the root used.
+
+           'RELATIVE ENERGY' Is relative to the lowest state calculated.
+           This may or may not be the ground state.
+           The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -483,7 +480,7 @@ RHF MS=3.5 MECI OPEN(7,7)
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:20:34 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
  *  OCTET      - SPIN STATE DEFINED AS A OCTET
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 7 ELECTRONS IN 7 LEVELS
@@ -546,8 +543,8 @@ RHF OCTET MECI OPEN(7,7)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:20:34 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:51 2021
 
 
 
@@ -568,8 +565,8 @@ RHF OCTET MECI OPEN(7,7)
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.078 SECONDS
-          COMPUTATION TIME        =          0.076 SECONDS
+          WALL-CLOCK TIME         =          0.082 SECONDS
+          COMPUTATION TIME        =          0.082 SECONDS
 
 
 
@@ -627,17 +624,14 @@ RHF OCTET MECI OPEN(7,7)
               1        1   1   1   1   1   1   1
         -20.7829       0   0   0   0   0   0   0
 
-
- DIAGONAL OF C.I. MATRIX
-   -20.782945
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+  -20.782945    0.000000     1+  OCTET       ????
- 'RELATIVE ENERGY' Is relative to the lowest state calculated.
- This may or may not be the ground state.
- The "+" symbol indicates the root used.
+
+           'RELATIVE ENERGY' Is relative to the lowest state calculated.
+           This may or may not be the ground state.
+           The "+" symbol indicates the root used.
 
  **********************
  *                    *

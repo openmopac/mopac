@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:14:06 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.0
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -66,8 +66,8 @@ UHF MS=1.0
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:14:06 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:54 2021
 
 
 
@@ -91,8 +91,8 @@ UHF MS=1.0
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.027 SECONDS
-          COMPUTATION TIME        =          0.027 SECONDS
+          WALL-CLOCK TIME         =          0.023 SECONDS
+          COMPUTATION TIME        =          0.024 SECONDS
 
 
 
@@ -150,9 +150,9 @@ UHF MS=1.0
          Atomic
     1 Ni  2.0000  1.000  0.000  0.000 -0.000 -0.000  0.000  0.000  0.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -163,7 +163,7 @@ UHF MS=1.0
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:14:06 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
  *  TRIPLET    - SPIN STATE DEFINED AS A TRIPLET
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -220,8 +220,8 @@ UHF TRIPLET
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:14:06 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:54 2021
 
 
 
@@ -245,8 +245,8 @@ UHF TRIPLET
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.051 SECONDS
-          COMPUTATION TIME        =          0.050 SECONDS
+          WALL-CLOCK TIME         =          0.047 SECONDS
+          COMPUTATION TIME        =          0.046 SECONDS
 
 
 
@@ -304,9 +304,9 @@ UHF TRIPLET
          Atomic
     1 Ni  2.0000  1.000  0.000  0.000 -0.000 -0.000  0.000  0.000  0.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -317,7 +317,7 @@ UHF TRIPLET
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:14:06 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 2 ELECTRONS IN 2 LEVELS
  *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 1.0
@@ -377,8 +377,8 @@ RHF MS=1.0 MECI OPEN(2,2)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:14:06 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:54 2021
 
 
 
@@ -400,7 +400,7 @@ RHF MS=1.0 MECI OPEN(2,2)
           SCF CALCULATIONS        =          1
  
           WALL-CLOCK TIME         =          0.078 SECONDS
-          COMPUTATION TIME        =          0.079 SECONDS
+          COMPUTATION TIME        =          0.076 SECONDS
 
 
 
@@ -458,21 +458,18 @@ RHF MS=1.0 MECI OPEN(2,2)
               1        1   1
          -3.6468       0   0
 
-
- DIAGONAL OF C.I. MATRIX
-    -3.646772
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+   -3.646772    0.000000     1+  TRIPLET     ????
- 'RELATIVE ENERGY' Is relative to the lowest state calculated.
- This may or may not be the ground state.
- The "+" symbol indicates the root used.
+
+           'RELATIVE ENERGY' Is relative to the lowest state calculated.
+           This may or may not be the ground state.
+           The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -483,7 +480,7 @@ RHF MS=1.0 MECI OPEN(2,2)
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 14:14:06 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
  *  TRIPLET    - SPIN STATE DEFINED AS A TRIPLET
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 2 ELECTRONS IN 2 LEVELS
@@ -546,8 +543,8 @@ RHF TRIPLET MECI OPEN(2,2)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 14:14:07 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:54 2021
 
 
 
@@ -569,7 +566,7 @@ RHF TRIPLET MECI OPEN(2,2)
           SCF CALCULATIONS        =          1
  
           WALL-CLOCK TIME         =          0.109 SECONDS
-          COMPUTATION TIME        =          0.111 SECONDS
+          COMPUTATION TIME        =          0.108 SECONDS
 
 
 
@@ -627,17 +624,14 @@ RHF TRIPLET MECI OPEN(2,2)
               1        1   1
          -3.6468       0   0
 
-
- DIAGONAL OF C.I. MATRIX
-    -3.646772
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+   -3.646772    0.000000     1+  TRIPLET     ????
- 'RELATIVE ENERGY' Is relative to the lowest state calculated.
- This may or may not be the ground state.
- The "+" symbol indicates the root used.
+
+           'RELATIVE ENERGY' Is relative to the lowest state calculated.
+           This may or may not be the ground state.
+           The "+" symbol indicates the root used.
 
  **********************
  *                    *

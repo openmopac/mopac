@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 13:26:41 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -57,9 +57,9 @@ RHF C.I.=2 MECI
           DIAGONAL MATRIX USED AS START HESSIAN
 
  CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:   471.259 HEAT:  10.91828
- CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:   258.057 HEAT:  7.005458
- CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:   109.437 HEAT: -6.463654
- CYCLE:     4 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    60.744 HEAT: -8.006031
+ CYCLE:     2 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:   258.057 HEAT:  7.005458
+ CYCLE:     3 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:   109.437 HEAT: -6.463654
+ CYCLE:     4 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    60.744 HEAT: -8.006031
  CYCLE:     5 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     7.355 HEAT: -8.488418
  CYCLE:     6 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.428 HEAT: -8.496260
 
@@ -78,8 +78,8 @@ RHF C.I.=2 MECI
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 13:26:41 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:54 2021
 
 
 
@@ -110,7 +110,7 @@ RHF C.I.=2 MECI
           SCF CALCULATIONS        =          7
  
           WALL-CLOCK TIME         =          0.043 SECONDS
-          COMPUTATION TIME        =          0.041 SECONDS
+          COMPUTATION TIME        =          0.043 SECONDS
 
 
 
@@ -180,21 +180,17 @@ RHF C.I.=2 MECI
               4        0   1
           0.0000       0   1
 
-
- DIAGONAL OF C.I. MATRIX
-     0.000000    -0.987900    -0.987900     0.000000
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1+   -1.481849    0.000000     1+  TRIPLET     Sig-
     2    -0.493950    0.987900     1   SINGLET     Delg
     4     0.493950    1.975799     1   SINGLET     Sig 
- The "+" symbol indicates the root used.
+           The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -205,7 +201,7 @@ RHF C.I.=2 MECI
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 27 13:26:41 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
  *  SINGLET    - SPIN STATE DEFINED AS A SINGLET
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
@@ -275,8 +271,8 @@ RHF SINGLET C.I.=2 MECI
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 27 13:26:41 2021
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Fri Jul 30 14:25:54 2021
 
 
 
@@ -306,8 +302,8 @@ RHF SINGLET C.I.=2 MECI
 
           SCF CALCULATIONS        =          7
  
-          WALL-CLOCK TIME         =          0.086 SECONDS
-          COMPUTATION TIME        =          0.084 SECONDS
+          WALL-CLOCK TIME         =          0.082 SECONDS
+          COMPUTATION TIME        =          0.080 SECONDS
 
 
 
@@ -377,17 +373,13 @@ RHF SINGLET C.I.=2 MECI
               4        0   1
           0.0000       0   1
 
-
- DIAGONAL OF C.I. MATRIX
-     0.000000    -0.987777    -0.987777     0.000000
-
   STATE       ENERGY (EV)        Q.N.  SPIN   SYMMETRY              POLARIZATION
          ABSOLUTE     RELATIVE                                X           Y           Z
 
     1    -1.481665    0.000000     1   TRIPLET     Sig-
     2+   -0.493888    0.987777     1+  SINGLET     Delg
     4     0.493888    1.975554     1   SINGLET     Sig 
- The "+" symbol indicates the root used.
+           The "+" symbol indicates the root used.
 
  **********************
  *                    *
