@@ -418,22 +418,22 @@
           open(unit=l, file=xyz_fn)
           write(l,"(i6,a)") nl_atoms," "
           write(l,*)"POINT "
-          do i = 1, numat
-            if (l_atom(i)) write(l,"(3x,a2,3f15.5)")elemnt(nat(i)), (coord(j,i),j=1,3)
+          do i = 1, natoms
+            if (l_atom(i)) write(l,"(3x,a2,3f15.5)")elemnt(labels(i)), (coord(j,i),j=1,3)
           end do
         end if
       end if
       call delete_ref_key("RESIDUES", len_trim("RESIDUES"), ' ', 1)
       call delete_ref_key("XENO", len_trim("XENO"), ' ', 1)
       call output_rama()
-      if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) call geochk()
+      if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) call geochk()  
       if ( index(keywrd," PDBOUT") /= 0 .and. maxtxt < 26 .and. index(keywrd," RESID") == 0) then
         if (maxtxt == 0) then
           maxtxt = 26
-          do i = 1, numat
-            write(txtatm(i),'(a,i5,1x,a,a)')"HETATM",i, elemnt(nat(i)),"   HET A   1"
+          do i = 1, natoms
+            write(txtatm(i),'(a,i5,1x,a,a)')"HETATM",i, elemnt(labels(i)),"   HET A   1"
           end do
-          txtatm1(:numat) = txtatm(:numat)
+          txtatm1(:natoms) = txtatm(:natoms)
         else
           write(line,'(a)')"PDBOUT only works when the atom labels are in PDB format or keyword RESIDUES is also present"
           call mopend(trim(line))

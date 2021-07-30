@@ -34,7 +34,7 @@
       logical :: debug, large, prnt, lspin, lspin1, peci, first1, bigprt, sing, &
         doub, trip, quar, quin, sext, prnt2, geook, getmic, sept, octe, none, &
         cis, cisd, cisdt
-      character, dimension(10) :: tspin*8 
+      character, dimension(11) :: tspin*8 
       character :: srep(maxci)*15, root_ir*4, tex_root*1, num1*1, num2*1
 
       save spin, debug, large, lspin1, first1, sing, doub, trip, quar, quin, &
@@ -70,7 +70,7 @@
 !
       data icalcn/ 0/  
       data tspin/ 'SINGLET ', 'DOUBLET ', 'TRIPLET ', 'QUARTET ', 'QUINTET ', &
-      'SEXTET  ', 'SEPTET  ', 'OCTET   ', 'NONET   ', '??????? '/  
+      'SEXTET  ', 'SEPTET  ', 'OCTET   ', 'NONET   ', 'DECET   ', '??????? '/  
       meci = 0.d0
       if (numat == 0) then
         if (allocated(spin))   deallocate(spin)
@@ -606,11 +606,6 @@
       if (bigprt) then 
         write (iw, '(2/,'' C.I. MATRIX'')')  
         call vecprt (cimat, (-lab)) 
-      else 
-        if (prnt) then 
-          write (iw, '(2/,'' DIAGONAL OF C.I. MATRIX'')') 
-          write (iw, '(5F13.6)') (cimat((i*(i+1))/2),i=1,lab) 
-        end if 
       end if 
 !
 !  Sometimes exact degeneracies cause problems with RSP, so perturb the C.I. matrix
@@ -666,9 +661,9 @@
         y = (-1.D0 + sqrt(1.D0 + 4.D0*x))*0.5D0 
         ispin(i) = nint(y*2.D0 + 1) 
         if (Abs(ispin(i) - y*2.d0 - 1.d0) > 0.2d0) then
-          ispin(i) = 10
+          ispin(i) = 11
         else
-          ispin(i) = Min(ispin(i), 10)
+          ispin(i) = Min(ispin(i), 11)
         end if
         cimat(j) = cimat(j) + 1 
       end do 
@@ -827,10 +822,10 @@
           end if 
         end do 
       end if 
-      if (prnt .and. msdel/=0) write (iw, '(A)') &
+      if (prnt .and. msdel /= 0) write (iw, '(/10x, A, /10x, a)') &
         ' ''RELATIVE ENERGY'' Is relative to the lowest state calculated.', &
         ' This may or may not be the ground state.'
-      if (prnt) write (iw, '(A)')  ' The "+" symbol indicates the root used.' 
+      if (prnt) write (iw, '(10x, A)')  ' The "+" symbol indicates the root used.' 
   580 format(i5,a,2f12.6,i6,a1,2x,a8,4x,a4,3f12.4) 
       if (root_requested == 0) then 
         call mopend (&

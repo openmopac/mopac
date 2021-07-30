@@ -468,7 +468,7 @@
             else if (natoms /= -3) then
               if (moperr .and. numcal == 1) return
               if (maxtxt > txtmax) txtmax = maxtxt
-              txtatm1(:numat) = txtatm(:numat)
+              txtatm1(:natoms) = txtatm(:natoms)
               if (index(keywrd, " RESID") /= 0) txtatm1(:numat)(22:22) = " "
               i = size(coorda)/3
               if (i < numat) then
@@ -638,7 +638,7 @@
           if (numcal == 1 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
         end if
       end if
-      maxci = 10000
+      maxci = 16000
       if (Academic) then
         if (site_no > 9999) then
           write (iw, '(A,i6,a,a)') ' ** Site#:',site_no, &
@@ -1446,15 +1446,10 @@
             index(keywrd,' GRAD') /= 0) then 
             if (intern .and. nvar/=0 .and. nvar<3*numat-6) then 
               write (iw, &
-         '(2/10X,'' CARTESIAN COORDINATES READ IN, AND CALCULATION '',/10X, &
+         '(2/10X,''CARTESIAN COORDINATES READ IN, AND CALCULATION '',/10X, &
       & ''TO BE RUN IN INTERNAL COORDINATES, '',/10X, &
-      & ''BUT NOT ALL COORDINATES MARKED FOR OPTIMISATION'')') 
-              write (iw, &
-      & '(2/10X,''MOPAC, BY DEFAULT, USES INTERNAL COORDINATES'',/10&
-      & X,''TO SPECIFY CARTESIAN COORDINATES USE KEY-WORD :XYZ:'')') 
-              write (iw, &
-      & '(10X,''YOUR CURRENT CHOICE OF KEY-WORDS INVOLVES A LOGICALLY'',/10X, &
-      & ''ABSURD CHOICE SO THE CALCULATION IS TERMINATED AT THIS POINT'')') 
+      & ''BUT NOT ALL COORDINATES MARKED FOR OPTIMIZATION'')') 
+              write (iw, '(10x,a)')'EITHER ADD "OPT", EDIT THE GEOMETRY, OR REMOVE "INT"'
               call mopend ('INCONSISTENT USE OF OPTIMIZATION FLAGS') 
               return  
             end if 

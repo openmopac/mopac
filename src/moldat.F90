@@ -482,8 +482,15 @@ subroutine moldat(mode)
         end if
         i = Nint (2*reada (keywrd, Index (keywrd, " MS=")))
         if((odd .eqv. mod(i,2) == 0) .and. index(keywrd,' 0SCF') == 0) then
-          write(iw,"(10x,a,i5)")" Number of electrons in system =", nelecs
-          write(iw,"(10x,a,f5.1)")" Value of MS supplied =", i*0.5d0
+          write(iw,"(/10x,a,i5)")"Number of electrons in system =", nelecs
+          write(iw,"(10x,a,f5.1)")"Value of MS supplied          =  ", i*0.5d0
+          if (odd) then
+            write(iw,'(10x, a)')"Number of electrons is odd, but MS is integer "//&
+              "implying number of electrons is even." 
+          else
+            write(iw,'(10x, a)')"Number of electrons is even, but MS is not integer "//&
+              "implying number of electrons is odd." 
+          end if
           write(iw,"(10x,a)")"Correct the error and re-submit"
           call mopend ("Value of MS not consistent with number of electrons")
           return
@@ -521,7 +528,6 @@ subroutine moldat(mode)
           ielec = nint(reada(keywrd,index(keywrd,'OPEN(') + 5))  
           fract = (ielec*1.d0)/nmos 
           if (nclose < 0   .and. index(keywrd,' 0SCF') == 0) then 
-            write (iw, '(A)') ' IMPOSSIBLE NUMBER OF FILLED SHELLS' 
             call mopend ('IMPOSSIBLE NUMBER OF FILLED SHELLS') 
             return   
           end if
@@ -529,7 +535,11 @@ subroutine moldat(mode)
           ielec = 0
           nmos = 0
         end if 
-         nalpha = nalpha - ielec
+          nalpha = nalpha - ielec
+          if (nalpha < 0) then 
+            call mopend ('NUMBER OF ALPHA ELECTRONS IS LESS THAN ZERO') 
+            return   
+          end if
          nalpha_open = nalpha + nmos
          nbeta_open = nbeta
       else  !  The RHF option
@@ -567,19 +577,24 @@ subroutine moldat(mode)
         nclose = nelecs/2 
         nopen = nelecs - nclose*2 
         if (ielec /= 0 .and. norbs > 0) then 
-          if (((nelecs/2)*2==nelecs .neqv. (ielec/2)*2==ielec)  .and. index(keywrd,' 0SCF') == 0) then 
-            write (iw, &
-              '('' IMPOSSIBLE NUMBER OF OPEN SHELL ELECTRONS'')') 
-            write (iw, '(A,I5)') ' NUMBER OF ELECTRONS IN SYSTEM:    ', nelecs 
-            write (iw, '(A,I5)') ' NUMBER OF ELECTRONS IN OPEN SHELL:', ielec 
+          if (((nelecs/2)*2 == nelecs .neqv. (ielec/2)*2 == ielec)  .and. index(keywrd,' 0SCF') == 0) then 
+            write (iw, '(/10x, A,I5)') ' NUMBER OF ELECTRONS IN SYSTEM:    ', nelecs 
+            write (iw, '(10x, A,I5)') ' NUMBER OF ELECTRONS IN OPEN SHELL:', ielec 
             call mopend ('IMPOSSIBLE NUMBER OF OPEN SHELL ELECTRONS') 
             return  
           end if 
           nclose = nclose - ielec/2 
           nopen = nmos 
           if (nclose + nopen > norbs) then 
+            write (iw, '(/10x, A,I5)') 'TOTAL NUMBER OF ELECTRONS:                      ', nelecs 
+            write (iw, '(10x, A,I5)') 'NUMBER OF ELECTRONS IN PARTIALLY-FILLED LEVELS: ', ielec 
+            write (iw, '(10x, A,I5)') 'NUMBER OF DOUBLY FILLED LEVELS:                 ', nclose 
+            write (iw, '(10x, A,I5)') 'NUMBER OF PARTLY FILLED LEVELS:                 ', nopen 
+            write (iw, '(10x, A,I3)') 'NUMBER OF DOUBLY FILLED PLUS PARTLY FILLED LEVELS:', &
+              nclose + nopen
+            write (iw, '(10x, A,I5)') 'TOTAL NUMBER OF ORBITALS:                       ', nopen 
             call mopend (&
-       'NUMBER OF DOUBLY FILLED PLUS PARTLY FILLED LEVELS GREATER THAN TOTAL NUMBER OF ORBITALS') 
+       'NUMBER OF DOUBLY FILLED PLUS PARTLY FILLED LEVELS IS GREATER THAN THE TOTAL NUMBER OF ORBITALS') 
             return  
           end if 
           if (nmos == 0) then 

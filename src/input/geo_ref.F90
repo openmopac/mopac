@@ -130,11 +130,6 @@
           line = trim(geo_dat_name)
           call upcase(line, len_trim(line))
           line = line(len_trim(line) - 3:)
-          if (line == ".PDB") then
-            call mopend("GEO_DAT file should not be a PDB file (It would be over-written)")
-            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_DAT&
-                                & file name's suffix "".pdb"" with "".ent"")"
-          end if
         else
           do i = len_trim(geo_dat_name), 1, -1
             if (geo_dat_name(i:i) == "/" .or. geo_dat_name(i:i) == backslash) exit
@@ -154,11 +149,6 @@
           line = trim(geo_ref_name)
           call upcase(line, len_trim(line))
           line = line(len_trim(line) - 3:)
-          if (line == ".PDB") then
-            call mopend("GEO_REF file should not be a PDB file (It would be over-written)")
-            write(iw,'(10x,a)')"(The simplest way to correct this is to replace the GEO_REF&
-                                & file name's suffix "".pdb"" with "".ent"")"
-          end if
         else
           do i = len_trim(geo_ref_name), 1, -1
             if (geo_ref_name(i:i) == "/" .or. geo_ref_name(i:i) == backslash) exit
@@ -327,14 +317,15 @@
       call l_control("GEO_DAT", len_trim("GEO_DAT"), -1) 
       call l_control("GEO_REF", len_trim("GEO_REF"), -1)  
       if (index(keywrd," 0SCF") + index(keywrd, " LOCATE-TS") + index(keywrd, " SADDLE") /= 0) then
-        if (maxtxt == 0 .or. txtatm(1) == " ") then
+        if (maxtxt == 0 .or. txtatm(1) == " " .or. txtatm1(1) == " ") then
           if (index(keywrd, " GEO-OK") /= 0) then
-            if (maxtxt == 0) then
-              maxtxt = 26
-              txtatm1(:numat) = txtatm(:numat)
-            else
+            if (txtatm(1) == " " .and. txtatm1(1) == " ") call geochk()          
+            if (txtatm(1) == " ") then
               txtatm(:numat) = txtatm1(:numat)
+            else
+              txtatm1(:numat) = txtatm(:numat)
             end if
+            maxtxt = 26
           else            
             call mopend("In this job, atoms in both data-sets must have PDB-type labels")
             write(iw,'(a)')"Or add ""GEO-OK"" if one of the two data sets has PDB-type "// &

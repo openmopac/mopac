@@ -1,4 +1,66 @@
-      double precision function charst (vects, ntype, istate, ioper, r,nvecs, first) 
+module get_det
+  implicit none
+contains
+  recursive function determinant(matrix, n) 
+!
+! Evaluate the determinant of the matrix "matrix"
+!
+! On input,  matrix      = square matrix of size "n"
+! On output, determinant = value of the determinant of matrix "matrix"
+!
+    implicit none
+    integer, intent (in) :: n
+    double precision, intent (in) :: matrix(n,n)
+!
+! Local variables
+!
+    double precision :: determinant
+    integer :: i
+    double precision :: sum
+    double precision, allocatable :: cf(:,:)
+    if (n == 0) then
+      sum = 1.d0
+    else if (n == 1) then  
+      sum = matrix(1,1)
+    else
+      sum = 0
+      do i = 1, n  
+        allocate(cf(n - 1, n - 1))
+        cf = cofactor(matrix, n, i)
+        sum = sum + ((-1)**(i + 1))*matrix(i, 1)*determinant(cf, n - 1)
+        deallocate(cf)
+      end do
+    end if
+    determinant = sum
+  end function determinant
+!
+  function cofactor(matrix, n, mI)
+    implicit none
+    integer, intent (in) :: n, mI
+    double precision, intent (in) :: matrix(n, n)
+!
+! Local variables
+!
+    integer ::  i, j, k, l
+    double precision, dimension(:,:), allocatable :: cofactor
+    allocate(cofactor(n - 1, n - 1))
+    l = 0
+    k = 1
+    do i = 1, n
+      if (i /= mI) then
+        l = 1
+        do j = 2, n
+          cofactor(k, l) = matrix(i, j)
+          l = l + 1
+        end do
+        k = k + 1
+      end if
+    end do
+    return
+  end function cofactor
+end module
+
+  double precision function charst (vects, ntype, istate, ioper, r,nvecs, first) 
 !-----------------------------------------------
 !   M o d u l elem s 
 !-----------------------------------------------
@@ -6,6 +68,7 @@
       use chanel_C, only : iw
       use symmetry_C, only : elem, jelem
       use molkst_C, only : keywrd, numat, norbs
+      use get_det
       implicit none
       integer , intent(in) :: istate 
       integer  :: ioper 
@@ -26,16 +89,14 @@
       integer , dimension(:), allocatable :: iphase 
       integer , dimension(:,:), allocatable :: iperma, ipermb 
       integer :: nstate, j, i, iloop, iatom, jatom, ibase, kj, icheck, jcheck, &
-        ii, jj, k, l, ne, ia1, ia2, ia3, ib1, ib2, ib3, nai, ja1, ja2, ja3, jb1&
-        , jb2, jb3, nbi 
+        ii, jj, k, l, ne, nai, nbi 
       double precision, dimension(:,:), allocatable :: vect1, vect2 
-      double precision :: h(5), p(3), d(5) 
+      double precision :: h(5), p(3), d(5), matrix(36)
       double precision, dimension(:,:), allocatable :: t2, t4
       double precision, dimension(:), allocatable :: work
       double precision :: sum, det, suma, sumb 
       logical :: posita, positb, debug 
       double precision, external :: ddot
-!-----------------------------------------------
 !***********************************************************************
 !
 !    CHARST evaluates the character of the State ISTATE under the
@@ -46,10 +107,6 @@
 !           NVECS  = Number of atomic bases
 !           NMOS   = Number of M.O.s in active space
 !           NSTATE    = Number of Microstates in each State
-!
-!    This routine is limited to systems having a maximum of the lesser
-!    of three electrons of either spin, or three holes of either spin,
-!    in other words all systems involving up to seven M.O.s
 !
 !***********************************************************************
       data nstate/ 0/  
@@ -304,68 +361,33 @@
 !   The big loop to fill T4
 !
         do i = 1, nstate 
-          ia1 = iperma(1,i) 
-          ia2 = iperma(2,i) 
-          ia3 = iperma(3,i) 
-          ib1 = ipermb(1,i) 
-          ib2 = ipermb(2,i) 
-          ib3 = ipermb(3,i) 
           nai = nalmat(i) 
           do j = 1, nstate 
-            ja1 = iperma(1,j) 
-            ja2 = iperma(2,j) 
-            ja3 = iperma(3,j) 
-            jb1 = ipermb(1,j) 
-            jb2 = ipermb(2,j) 
-            jb3 = ipermb(3,j) 
             if (nalmat(j) /= nai) cycle  
+             nbi = ne - nai 
 !
 !    NAI = Number of alpha electrons
 !    NBI = Number of beta electrons
-            nbi = ne - nai 
-            select case (nai + 1)  
 !
-!  General case: for NAI greater than 3
+! Fill the matrix for alpha electrons
 !
-            case default 
-              k = 0 
-              do ii = 1, nai 
-                work(k+1:nai+k) = t2(iperma(ii,i),iperma(:nai,j)) 
-                k = nai + k 
-              end do 
-              call minv (work, nai, suma) 
-            case (1)  
-              suma = 1.D0 
-            case (2)  
-              suma = t2(ja1,ia1) 
-            case (3)  
-              suma = t2(ja1,ia1)*t2(ja2,ia2) - t2(ja2,ia1)*t2(ja1,ia2) 
-            case (4)  
-              suma = t2(ja1,ia1)*t2(ja2,ia2)*t2(ja3,ia3) - t2(ja1,ia1)*t2(ja2,&
-                ia3)*t2(ja3,ia2) - t2(ja1,ia2)*t2(ja2,ia1)*t2(ja3,ia3) + t2(ja1&
-                ,ia2)*t2(ja2,ia3)*t2(ja3,ia1) + t2(ja1,ia3)*t2(ja2,ia1)*t2(ja3,&
-                ia2) - t2(ja1,ia3)*t2(ja2,ia2)*t2(ja3,ia1) 
-            end select 
-            select case (nbi + 1)  
-            case default 
-              k = 0 
-              do ii = 1, nbi 
-                work(k+1:nbi+k) = t2(ipermb(ii,i),ipermb(:nbi,j)) 
-                k = nbi + k 
-              end do 
-              call minv (work, nbi, sumb) 
-            case (1)  
-              sumb = 1.D0 
-            case (2)  
-              sumb = t2(jb1,ib1) 
-            case (3)  
-              sumb = t2(jb1,ib1)*t2(jb2,ib2) - t2(jb2,ib1)*t2(jb1,ib2) 
-            case (4)  
-              sumb = t2(jb1,ib1)*t2(jb2,ib2)*t2(jb3,ib3) - t2(jb1,ib1)*t2(jb2,&
-                ib3)*t2(jb3,ib2) - t2(jb1,ib2)*t2(jb2,ib1)*t2(jb3,ib3) + t2(jb1&
-                ,ib2)*t2(jb2,ib3)*t2(jb3,ib1) + t2(jb1,ib3)*t2(jb2,ib1)*t2(jb3,&
-                ib2) - t2(jb1,ib3)*t2(jb2,ib2)*t2(jb3,ib1) 
-            end select 
+            do ii = 1, nai
+              do jj = 1,nai
+                k = (ii - 1)*nai + jj
+                matrix(k) = t2(iperma(jj,j),iperma(ii,i))
+              end do
+            end do
+            suma = determinant(matrix, nai )
+!
+! Fill the matrix for beta electrons
+!
+            do ii = 1, nbi
+              do jj = 1,nbi
+                k = (ii - 1)*nbi + jj
+                matrix(k) = t2(ipermb(jj,j),ipermb(ii,i))
+              end do
+            end do
+            sumb = determinant(matrix, nbi )
             t4(i,j) = suma*sumb*iphase(i)*iphase(j)*det 
           end do 
         end do 

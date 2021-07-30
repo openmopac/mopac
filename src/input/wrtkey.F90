@@ -1627,7 +1627,7 @@ subroutine wrtout (allkey)
   if (myword(allkey, " NORJSMOL")) write (iw,'(" *  HTML(NORES)- SUPPRESS LIST OF RESIDUES IN HTML FILE")')  
   if (myword(allkey, " AIGOUT")) write (iw,'(" *  AIGOUT     - IN ARC FILE, INCLUDE AB-INITIO GEOMETRY")')
   if (myword(allkey, " GRAP"))   write (iw,'(" *  GRAPH      - GENERATE FILE FOR GRAPHICS")')
-  if (myword(allkey, " 1ELEC"))  write (iw,'(" *  1ELECTRON- FINAL ONE-ELECTRON MATRIX TO BE PRINTED")')
+  if (myword(allkey, " 1ELEC"))  write (iw,'(" *  1ELECTRON  - FINAL ONE-ELECTRON MATRIX TO BE PRINTED")')
   if (myword(allkey, " INTERP")) write (iw,'(" *  INTERP     - PRINT DETAILS OF CAMP-KING CONVERGER")')
   if (myword(allkey, " HTML"))   write (iw,'(" *  HTML       - WRITE HTML SCRIPT TO READ PDB FILE USING JSMOL")')
   if (myword(allkey, " SUPER"))  write (iw,'(" *  SUPER      - PRINT SUPERDELOCALIZABILITIES")')
@@ -1862,8 +1862,7 @@ subroutine wrtwor (allkey)
       if (i == 0) keywrd = keywrd(:j + 5)//"="//trim(keywrd(j + 6:))
     end if
     i = Index (keywrd, " METAL")
-    j = Index (keywrd(i:), ") ") + i 
-     if (j < i) then
+    if (Index (keywrd, " METAL ") /= 0) then
       write (iw,'(" *  METAL      - METALS ARE DEFINED AS BEING FULLY IONIC")')
     else
       j = Index (keywrd(i:), ") ") + i 

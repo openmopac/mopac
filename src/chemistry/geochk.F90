@@ -25,7 +25,7 @@ subroutine geochk ()
     iopt, nres, at_res, Lewis_tot, Lewis_elem, noccupied, nvirtual, &
     odd_h, tyres, start_res, lstart_res, uni_res
 !    
-    use molkst_C, only: natoms, numat, nelecs, keywrd, moperr, maxtxt, &
+    use molkst_C, only: natoms, numat, nelecs, keywrd, moperr, maxtxt, mozyme, &
       maxatoms, line, nalpha, nbeta, uhf, nclose, nopen, norbs, numcal, id, &
       ncomments, numat_old, nvar, prt_coords, prt_topo, allkey, txtmax, pdb_label
     use chanel_C, only: iw, iarc, archive_fn, log, ilog
@@ -222,7 +222,7 @@ subroutine geochk ()
         j = index(line(i + 1:), '"') + i + 1
         if (line(j:j) /= "(") then
          call mopend("ERROR IN SITE KEYWORD AT THE END OF '"//line(i:j)//"'")
-          write(iw,'(10x,a)')"The last character must be an open parenthesis, '('"
+          write(iw,'(10x,a)')"The last three characters must be one of '(+)', '(0)', or '(-)', e.g,"//line(i:j-1)//"(+)"
           return
         end if
         j = j + 1
@@ -796,6 +796,7 @@ subroutine geochk ()
       else
         ires = start_res(nfrag)         
       end if
+      call lewis(.true.)
       call ligand (ires, start_res, nfrag)
 !
 !  If ligands are present, set a break at the end of the protein, to separate protein from ligands
@@ -882,7 +883,16 @@ subroutine geochk ()
             end if
           end do
           if (j > 1) write(txtatm(i)(15:15),'(i1)')1
-        end if
+        end if 
+      end do
+      do i = 1, natoms
+        if (txtatm(i)(1:6) /= "HETATM" .and. txtatm(i)(1:6) /= "ATOM  ") then
+!
+!  Catch all atoms that have still not been identified
+!
+          write(line, '(a,i5, a, a)')"HETATM", i, " "//elemnt(labels(i)), "   HET"
+          txtatm(i) = trim(line)
+        end if  
       end do
       if (n_new /= 0) then
 !
@@ -954,6 +964,7 @@ subroutine geochk ()
         end if         
       end do
       deallocate(temp_txtatm)
+      
 !
 !  Identify atoms where chain breaks occur
 !
@@ -993,6 +1004,8 @@ subroutine geochk ()
       end if
       if (index(keywrd, " RESEQ") == 0) return
     end if
+    ibad = 0
+    if (.not. mozyme) goto 99
 !
 !  MODIFY IONS SO THAT IT REFERS TO ALL ATOMS (REAL AND DUMMY)
 !
@@ -1007,7 +1020,6 @@ subroutine geochk ()
         ions(i) = iz(j)
       end if
     end do
-    ibad = 0
     if (lres .and. .not. lreseq) then
 !
 !   CHECK ALL IONS TO SEE IF ANY RESIDUE IS A DI-ION
@@ -1401,7 +1413,6 @@ subroutine geochk ()
                   kkk = kkk + 1
                   write(line,"(i5, 2x, 3x, a,SP,i5,S,a)") &
                     kkk, padding(:ii)//"("//txtatm_1(1:kk)//")"//padding(:j2), ions(i)
-                  k = k + 1
                   if (m == 0) then
 !
 ! Find the first free unit, and use that number for the scratch file
@@ -1474,7 +1485,7 @@ subroutine geochk ()
          ", THIS IS NOT THE SAME AS THE CHARGE DEFINED IN THE DATA-SET: """//keywrd(i:j)//"""."
         end if
       else
-        write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
+        if (.not. charges) write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
       end if      
       if (log) write (ilog, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
       end if
@@ -1482,6 +1493,7 @@ subroutine geochk ()
     if (index(keywrd, " LEWIS") /= 0 .and. index(keywrd," 0SCF") == 0) &
       call mopend ("RUN STOPPED BECAUSE KEYWORD LEWIS WAS USED.")
 !
+99  continue  
     atmass(1:numat) = ams(nat(1:numat))
     if (done .and. .not. lreseq) then
       call xyzint (coord, numat, na, nb, nc, 1.d0, geo)
@@ -1517,6 +1529,7 @@ subroutine geochk ()
         close (i)
       end if
     end if
+    if (.not. mozyme) goto 98
     if (irefq /= ichrge .and. .not. lreseq .or. charges) then
 !
 !  THE CALCULATED CHARGE DOES NOT MATCH THAT DEFINED BY CHARGE=N.
@@ -1539,11 +1552,14 @@ subroutine geochk ()
         else if (noccupied > 0) then
           call write_sequence
           if (irefq /= ichrge) then
-            write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM: ", ichrge
-            if (index(keywrd," CHARGE=") /= 0) &
-            write (iw, "(10x,A,SP,I"//num//",A)") "CHARGE SPECIFIED IN DATA SET: ", irefq," IS INCORRECT." 
+            if (index(keywrd," CHARGE=") /= 0) then
+              write (iw, "(10x,A,SP,I"//num//",A)") "CHARGE SPECIFIED IN DATA SET: ", irefq," IS INCORRECT." 
+            else
+              write (iw, "(SP/10x,A,I"//num//",a)") "COMPUTED CHARGE ON SYSTEM: ", ichrge, &
+                "  (THIS DOES NOT AGREE WITH THE DEFAULT CHARGE OF ZERO)"
+            end if
           else
-            write (iw, "(SP/3x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM = ", ichrge, &
+            if (.not. charges) write (iw, "(SP/3x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM = ", ichrge, &
             ". THIS AGREES WITH THE CHARGE IN THE DATA-SET."             
           end if
           call mopend ("JOB STOPPED HERE BECAUSE KEYWORD ""CHARGES"" WAS USED")
@@ -1599,20 +1615,20 @@ subroutine geochk ()
               write(iw,"(/10x,a)")"The charge keyword, Lewis structure, or the chemical formula is faulty"
           end if            
           if (Index(keywrd," GEO-OK") == 0 .and. index(keywrd," CHARGE=") /= 0 ) then  
-          call mopend("CHARGE SPECIFIED IS INCORRECT. CORRECT THE ERROR BEFORE CONTINUING")
-          write(iw,"(/10x,a)")"If that is done, then the correct charge will be used."
-          return  
-        else if (id > 0) then
-          write(iw,"(/10x,a)")"INFINITE SYSTEMS MUST HAVE A ZERO CHARGE ON THE UNIT CELL"
-          call mopend("Unit cell has a charge. Correct fault and re-submit ")
-          return
-        else 
-          call fix_charges(ichrge)  
+            call mopend("CHARGE SPECIFIED IS INCORRECT. CORRECT THE ERROR BEFORE CONTINUING")
+            write(iw,"(/10x,a)")"If that is done, then the correct charge will be used."
+            return  
+          else if (id > 0) then
+            write(iw,"(/10x,a)")"INFINITE SYSTEMS MUST HAVE A ZERO CHARGE ON THE UNIT CELL"
+            call mopend("Unit cell has a charge. Correct fault and re-submit ")
+            return
+          else 
+            call fix_charges(ichrge)  
+          end if
         end if
       end if
-      end if
     end if
-    if (done) then
+98  if (done) then
       if (prt_coords) write (iw, "(//10X,A,//)") " GEOMETRY AFTER RE-SEQUENCING"
       call update_txtatm(.true., .true.) 
       if (prt_coords) call geout (iw)

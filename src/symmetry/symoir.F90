@@ -3,7 +3,7 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE symmetry_C, ONLY: jndex, namo, nirred, nclass, name, jx, group
-      USE meci_C, only : lab 
+      USE meci_C, only : lab, eig
       use molkst_C, only : keywrd, numat
       use chanel_C, only : iw
 !***********************************************************************
@@ -108,10 +108,18 @@
       if (itype == 3) i = int(charst(vects ,ntype, -1, 0, r, nvecs, first))
       debug = index(keywrd,'SYMOIR') /= 0 
       if (debug) then 
-        write (iw, '(A)') ' Characters of Transform' 
-        do i = 1, nfind 
-          write (iw, '(I5,6F12.6)') i, (carmat(i,j),j=1,nclass) 
-        end do 
+        write (iw, '(/10x,a)') 'Characters of Transform' 
+        if (itype == 3) then 
+          write (iw, '(a)') ' State    Energy           Characters for Operations' 
+          do i = 1, nfind 
+            write (iw, '(I5,6F12.6)') i, eig(i), (carmat(i,j),j=1,nclass) 
+          end do 
+        else
+          write (iw, '(A)') ' Characters of Transform' 
+          do i = 1, nfind 
+            write (iw, '(I5,6F12.6)') i, (carmat(i,j),j=1,nclass) 
+          end do
+        end if
       end if 
       i = 0 
    70 continue 

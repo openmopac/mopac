@@ -255,6 +255,11 @@
           call mopend ("Restart file is corrupt")
           return
         end if
+        if ((abs(etot) > 1.d5 .or. abs(etot) < 1.d-5) .and. (abs(escf) > 1.d5 .or. abs(escf) < 1.d-5)) then
+          call mopend ("RESTART FILE DOES NOT APPEARS TO BE AN IRC OR DRC RESTART. ")
+          write(iw,'(10x,a)')"COULD IT BE A FORCE RESTART, IF SO USE IRC=n"
+          return
+        end if        
         write (iw, &
       '(2/10X,''CALCULATION RESTARTED, CURRENT KINETIC ENERGY='',F10.5,2/)') ekin 
         go to 100 
@@ -781,7 +786,7 @@
 !   IN DRCOUT  'TOTAL' = ESCF + ELOST1
 !              'ERROR' = ESCF + ELOST1 - ETOT
 !
-          call prtdrc (deltat, xparam, georef, escf, elost1, gtot, etot, velo0, mcoprt, ncoprt, parmax, &
+      call prtdrc (deltat, xparam, georef, escf, elost1, gtot, etot, velo0, mcoprt, ncoprt, parmax, &
           l_dipole, dip)
         else 
 !
@@ -803,7 +808,7 @@
           end if
           escf_diff = escf - escf_old
           escf_old = escf
-        end if 
+        end if
         iw0 = -1
         tnow = seconds(2) 
         tcycle = tnow - oldtim 

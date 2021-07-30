@@ -7,11 +7,11 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
       Use call_syrk_cublas
 #endif
       implicit none
-      Integer :: ndubl, nsingl, mode, mpack, norbs, nl1, nl2, nu1, nu2, i, j, &
+      Integer :: ndubl, nsingl, mode, mpack, norbs, nl1, nl2, nu1, nu2, i, j, l, &
 	           & nl21, nl11, iopc
       double precision,allocatable :: xmat(:,:)
       double precision :: c(norbs,norbs), pp(mpack)
-      double precision :: cst, sign, fract, frac, occ
+      double precision :: cst, sign, fract, frac, occ, sum1, sum2
 #if GPU
       double precision, allocatable :: pdens(:)
 #endif
@@ -86,12 +86,30 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
           deallocate(xmat,stat=i)
 #endif
         case(5)   ! Option to use dsyrk from BLAS 
-
-          allocate(xmat(norbs,norbs),stat = i)
-          forall (j = 1:norbs, i=1:norbs) xmat(i, j) = 0.d0
-          call dsyrk ('u', 'n', norbs, ndubl, occ, c(1:norbs,1:ndubl), norbs, 0.d0, xmat, norbs) ! For RHF	      	      	
-          call dtrttp('u', norbs, xmat, norbs, pp, i )
-          deallocate (xmat,stat=i)
+          if (fract < 1.d-2) then
+            allocate(xmat(norbs,norbs),stat = i)
+            forall (j = 1:norbs, i=1:norbs) xmat(i, j) = 0.d0
+            call dsyrk ('u', 'n', norbs, ndubl, occ, c(1:norbs,1:ndubl), norbs, 0.d0, xmat, norbs) ! For RHF	      	      	
+            call dtrttp('u', norbs, xmat, norbs, pp, i )
+            deallocate (xmat,stat=i)
+          else
+!
+! The following block should be re-cast in a modern style "someday"
+! It's used only infrequently, so updating it is not urgent.
+!
+            l = 0 
+            do i = 1, norbs 
+              do j = 1, i 
+                l = l + 1 
+                sum1 = 0.D0 
+                sum2 = sum(c(i,nl2:nu2)*c(j,nl2:nu2)) 
+                sum2 = sum2*occ 
+                sum1 = sum(c(i,nl1:nu1)*c(j,nl1:nu1)) 
+                pp(l) = (sum2 + sum1*frac)*sign 
+              end do 
+              pp(l) = cst + pp(l) 
+            end do 
+          end if            
     End select
     continue
     return

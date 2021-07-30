@@ -3,7 +3,7 @@
       use molkst_C, only : natoms, ndep,  nvar, gnorm, iflepo, keywrd, &
       & last, numat, escf, id, jloop => itemp_1, numcal, n_trivial => itemp_2, &
       moperr, this_point => itemp_2, zpe, mozyme, uhf, prt_force, prt_normal_coords, &
-      prt_orientation
+      prt_orientation, maxtxt
 !
       use common_arrays_C, only : xparam, na, nb, nc, geo, geoa, ca => c, cb, eigs, eigb, &
       & labels, coord, loc, grad, errfn, na_store, nat, lopt, fmatrx, p, q, txtatm
@@ -463,7 +463,11 @@
         write(iw,'(//25x,a,/)')"Atoms used in the FORCETS calculation"
         do i = 1, nvar, 3
           j = loc(1,i)
-          write(iw,'(i4,4x,a2,"(",a26,")",3(F13.8," +1"))')(i + 2)/3, elemnt(nat(j)),txtatm(j), geo(:,j)
+          if (maxtxt == 26) then
+            write(iw,'(i4,4x,a2,"(",a26,")",3(F13.8," +1"))')(i + 2)/3, elemnt(nat(j)),txtatm(j), geo(:,j)
+          else
+            write(iw,'(10x,i4,4x,a2,3(F13.8," +1"))')(i + 2)/3, elemnt(nat(j)), geo(:,j)
+          end if          
         end do
       end if
       if (prnt .and. prt_normal_coords) then 
