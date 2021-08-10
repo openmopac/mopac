@@ -1,0 +1,482 @@
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Aug  4 11:19:40 2021  *
+ *  SNAP       - INCREASE PRECISION OF SYMMETRY ANGLES
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+1SCF SNAP
+ comment1
+ comment2
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       C          0.00000000  *    0.0000000  *    0.0000000  *     0     0     0
+     2       H          1.09000000  *    0.0000000  *    0.0000000  *     1     0     0
+     3       H          1.09000000  *  109.5000000  *    0.0000000  *     1     2     0
+     4       H          1.09000000  *  109.5000000  *  120.0000000  *     1     2     3
+     5       H          1.09000000  *  109.5000000  * -120.0000000  *     1     2     3
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         H          1.0900      0.0000      0.0000
+     3         H         -0.3638      1.0275      0.0000
+     4         H         -0.3638     -0.5137     -0.8898
+     5         H         -0.3638     -0.5137      0.8898
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C H4  =     5 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Td  
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+ -------------------------------------------------------------------------------
+ 1SCF SNAP
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Wed Aug  4 11:19:40 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -14.37282 KCAL/MOL =     -60.13588 KJ/MOL
+
+
+          TOTAL ENERGY            =       -177.04186 EV
+          ELECTRONIC ENERGY       =       -389.77691 EV  POINT GROUP:     Td  
+          CORE-CORE REPULSION     =        212.73505 EV
+          COSMO AREA              =         54.87 SQUARE ANGSTROMS
+          COSMO VOLUME            =         37.11 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         13.694998 EV
+          HOMO LUMO ENERGIES (EV) =        -13.695  5.892
+          NO. OF FILLED LEVELS    =          4
+          MOLECULAR WEIGHT        =         16.0426
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     4    H     2     1.78028
+            H     3    H     5     1.77965
+            H     5    H     4     1.25862
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.035 SECONDS
+          COMPUTATION TIME        =          0.033 SECONDS
+
+
+
+
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       C          0.00000000  *    0.0000000  *    0.0000000  *     0     0     0
+     2       H          1.09000000  *    0.0000000  *    0.0000000  *     1     0     0
+     3       H          1.09000000  *  109.5000000  *    0.0000000  *     1     2     0
+     4       H          1.09000000  *  109.5000000  *  120.0000000  *     1     2     3
+     5       H          1.09000000  *  109.5000000  * -120.0000000  *     1     2     3
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    H        1.090000000     0.000000000     0.000000000
+   3    H       -0.363849477     1.027479225     0.000000000
+   4    H       -0.363849477    -0.513739613    -0.889823111
+   5    H       -0.363849477    -0.513739613     0.889823111
+
+
+           Empirical Formula: C H4  =     5 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Td  
+
+
+                  EIGENVALUES  
+ -24.91348 -13.69857 -13.69500 -13.69500   5.89218   5.89218   5.89422   7.37174
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.602561        4.6026     1.04729     3.55527
+    2          H           0.150677        0.8493     0.84932
+    3          H           0.150628        0.8494     0.84937
+    4          H           0.150628        0.8494     0.84937
+    5          H           0.150628        0.8494     0.84937
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.001    -0.000     0.000     0.001
+ HYBRID        -0.001     0.000    -0.000     0.001
+ SUM           -0.002    -0.000     0.000     0.002
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.04729   1.18497   1.18515   1.18515
+    2  H   0.84932
+    3  H   0.84937
+    4  H   0.84937
+    5  H   0.84937
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Aug  4 11:19:40 2021  *
+ *  SNAP       - INCREASE PRECISION OF SYMMETRY ANGLES
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+1SCF SNAP
+ comment1
+ comment2
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       C          0.00000000  *    0.0000000  *    0.0000000  *     0     0     0
+     2       H          1.09000000  *    0.0000000  *    0.0000000  *     1     0     0
+     3       H          1.09000000  *  109.4712206  *    0.0000000  *     1     2     0
+     4       H          1.09000000  *  109.4712206  *  120.0000000  *     1     2     3
+     5       H          1.09000000  *  109.4712206  * -120.0000000  *     1     2     3
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         H          1.0900      0.0000      0.0000
+     3         H         -0.3633      1.0277      0.0000
+     4         H         -0.3633     -0.5138     -0.8900
+     5         H         -0.3633     -0.5138      0.8900
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C H4  =     5 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Td  
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+ -------------------------------------------------------------------------------
+ 1SCF SNAP
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Wed Aug  4 11:19:40 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -14.37287 KCAL/MOL =     -60.13611 KJ/MOL
+
+
+          TOTAL ENERGY            =       -177.04187 EV
+          ELECTRONIC ENERGY       =       -389.77691 EV  POINT GROUP:     Td  
+          CORE-CORE REPULSION     =        212.73504 EV
+          COSMO AREA              =         54.87 SQUARE ANGSTROMS
+          COSMO VOLUME            =         37.11 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         13.696189 EV
+          HOMO LUMO ENERGIES (EV) =        -13.696  5.893
+          NO. OF FILLED LEVELS    =          4
+          MOLECULAR WEIGHT        =         16.0426
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     3     1.77996
+            H     4    H     2     1.77996
+            H     3    H     2     1.25862
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.066 SECONDS
+          COMPUTATION TIME        =          0.066 SECONDS
+
+
+
+
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       C          0.00000000  *    0.0000000  *    0.0000000  *     0     0     0
+     2       H          1.09000000  *    0.0000000  *    0.0000000  *     1     0     0
+     3       H          1.09000000  *  109.4712206  *    0.0000000  *     1     2     0
+     4       H          1.09000000  *  109.4712206  *  120.0000000  *     1     2     3
+     5       H          1.09000000  *  109.4712206  * -120.0000000  *     1     2     3
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    H        1.090000000     0.000000000     0.000000000
+   3    H       -0.363333333     1.027661855     0.000000000
+   4    H       -0.363333333    -0.513830928    -0.889981273
+   5    H       -0.363333333    -0.513830928     0.889981273
+
+
+           Empirical Formula: C H4  =     5 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Td  
+
+
+                  EIGENVALUES  
+ -24.91348 -13.69619 -13.69619 -13.69619   5.89286   5.89286   5.89286   7.37174
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.602561        4.6026     1.04729     3.55527
+    2          H           0.150640        0.8494     0.84936
+    3          H           0.150640        0.8494     0.84936
+    4          H           0.150640        0.8494     0.84936
+    5          H           0.150640        0.8494     0.84936
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.000    -0.000     0.000     0.000
+ HYBRID         0.000     0.000    -0.000     0.000
+ SUM           -0.000    -0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.04729   1.18509   1.18509   1.18509
+    2  H   0.84936
+    3  H   0.84936
+    4  H   0.84936
+    5  H   0.84936
+ *******************************************************************************
+ ** Site#:    0         For non-commercial use only           Version 21.207M **
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
+ ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Aug  4 11:19:40 2021  *
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+1SCF
+ comment1
+ comment2
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       C          0.00000000  *    0.0000000  *    0.0000000  *     0     0     0
+     2       H          1.09000000  *    0.0000000  *    0.0000000  *     1     0     0
+     3       H          1.09000000  *  109.4700000  *    0.0000000  *     1     2     0
+     4       H          1.09000000  *  109.4700000  *  120.0000000  *     1     2     3
+     5       H          1.09000000  *  109.4700000  * -120.0000000  *     1     2     3
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         H          1.0900      0.0000      0.0000
+     3         H         -0.3633      1.0277      0.0000
+     4         H         -0.3633     -0.5138     -0.8900
+     5         H         -0.3633     -0.5138      0.8900
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: C H4  =     5 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Td  
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+ -------------------------------------------------------------------------------
+ 1SCF
+ comment1
+ comment2
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.207M)
+                                                       Wed Aug  4 11:19:40 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -14.37287 KCAL/MOL =     -60.13611 KJ/MOL
+
+
+          TOTAL ENERGY            =       -177.04187 EV
+          ELECTRONIC ENERGY       =       -389.77691 EV  POINT GROUP:     Td  
+          CORE-CORE REPULSION     =        212.73504 EV
+          COSMO AREA              =         54.87 SQUARE ANGSTROMS
+          COSMO VOLUME            =         37.11 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         13.696088 EV
+          HOMO LUMO ENERGIES (EV) =        -13.696  5.893
+          NO. OF FILLED LEVELS    =          4
+          MOLECULAR WEIGHT        =         16.0426
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     3     1.77998
+            H     4    H     2     1.77995
+            H     3    H     2     1.25862
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.098 SECONDS
+          COMPUTATION TIME        =          0.096 SECONDS
+
+
+
+
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       C          0.00000000  *    0.0000000  *    0.0000000  *     0     0     0
+     2       H          1.09000000  *    0.0000000  *    0.0000000  *     1     0     0
+     3       H          1.09000000  *  109.4700000  *    0.0000000  *     1     2     0
+     4       H          1.09000000  *  109.4700000  *  120.0000000  *     1     2     3
+     5       H          1.09000000  *  109.4700000  * -120.0000000  *     1     2     3
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    H        1.090000000     0.000000000     0.000000000
+   3    H       -0.363311440     1.027669596     0.000000000
+   4    H       -0.363311440    -0.513834798    -0.889987976
+   5    H       -0.363311440    -0.513834798     0.889987976
+
+
+           Empirical Formula: C H4  =     5 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Td  
+
+
+                  EIGENVALUES  
+ -24.91348 -13.69624 -13.69624 -13.69609   5.89280   5.89289   5.89289   7.37174
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C          -0.602561        4.6026     1.04729     3.55527
+    2          H           0.150639        0.8494     0.84936
+    3          H           0.150641        0.8494     0.84936
+    4          H           0.150641        0.8494     0.84936
+    5          H           0.150641        0.8494     0.84936
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     0.000    -0.000     0.000     0.000
+ HYBRID         0.000     0.000    -0.000     0.000
+ SUM            0.000    -0.000     0.000     0.000
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.04729   1.18510   1.18509   1.18509
+    2  H   0.84936
+    3  H   0.84936
+    4  H   0.84936
+    5  H   0.84936
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.17 SECONDS
+
+ == MOPAC DONE ==

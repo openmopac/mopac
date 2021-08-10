@@ -2,7 +2,7 @@
  ** Site#: 26757        For non-commercial use only    Version 21.051M 64BITS **
  *******************************************************************************
  ** Cite this program as: MOPAC2016, Version: 21.051M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 207**
+ ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 205**
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Jul 28 17:40:10 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 15:19:22 2021  *
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -60,8 +60,8 @@
 
                               PM7 CALCULATION
                                                        MOPAC2016 (Version: 21.051M)
-                                                       Wed Jul 28 17:40:10 2021
-                                                       No. of days remaining = 207
+                                                       Fri Jul 30 15:19:22 2021
+                                                       No. of days remaining = 205
 
 
 
@@ -84,7 +84,7 @@
           SCF CALCULATIONS        =          1
  
           WALL-CLOCK TIME         =          0.023 SECONDS
-          COMPUTATION TIME        =          0.009 SECONDS
+          COMPUTATION TIME        =          0.010 SECONDS
 
 
 
@@ -128,7 +128,7 @@
  ** Site#: 26757        For non-commercial use only    Version 21.051M 64BITS **
  *******************************************************************************
  ** Cite this program as: MOPAC2016, Version: 21.051M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 207**
+ ** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left: 205**
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -138,7 +138,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Wed Jul 28 17:40:10 2021  *
+ *  CALCULATION DONE:                                Fri Jul 30 15:19:22 2021  *
  *  OPEN(N,N)- THERE ARE 2 ELECTRONS IN 1 LEVELS
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -191,8 +191,8 @@
 
                               PM7 CALCULATION
                                                        MOPAC2016 (Version: 21.051M)
-                                                       Wed Jul 28 17:40:10 2021
-                                                       No. of days remaining = 207
+                                                       Fri Jul 30 15:19:22 2021
+                                                       No. of days remaining = 205
 
 
 

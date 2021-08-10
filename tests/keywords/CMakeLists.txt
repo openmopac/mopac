@@ -39,6 +39,9 @@ add_test(NAME key-AM1 COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compa
 add_test(NAME key-ANGSTROMS COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          ANGSTROMS.mop)
 
+add_test(NAME key-AUTOSYM COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         AUTOSYM.mop)
+
 add_test(NAME key-BIRADICAL COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          BIRADICAL.mop)
 
@@ -50,6 +53,9 @@ add_test(NAME key-CdotIdot COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_
 
 add_test(NAME key-CdotIdotDdot COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          CdotIdotDdot.mop)
+
+add_test(NAME key-CHARGE COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         CHARGE.mop)
 
 add_test(NAME key-CIS COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          CIS.mop)
@@ -95,6 +101,9 @@ add_test(NAME key-NOANCI COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_co
 
 add_test(NAME key-NONET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          NONET.mop)
+
+add_test(NAME key-NOSYM COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         NOSYM.mop)
 
 add_test(NAME key-OCTET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          OCTET.mop)
@@ -158,6 +167,12 @@ add_test(NAME key-SEXTET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_co
 
 add_test(NAME key-SINGLET COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          SINGLET.mop)
+
+add_test(NAME key-SNAP COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         SNAP.mop)
+
+add_test(NAME key-SYMMETRY COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
+         SYMMETRY.mop)
 
 add_test(NAME key-TDIP COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../../mopac
          TDIP.mop)
