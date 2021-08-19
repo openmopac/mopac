@@ -125,7 +125,7 @@
     part_dxyz, p1, p2, p3, ws, partf, parth, &
     partp, idiag, nfmo, fmo, ifmo, iorbs
 !
-    use common_arrays_C, only : h, w, wk, p, f, ifact, fb, q, &
+    use common_arrays_C, only : c, h, w, wk, p, f, ifact, fb, q, &
     dxyz, eigs, errfn
 !
     use iter_C, only : pold, pold2, pold3, pbold, pbold2
@@ -135,6 +135,7 @@
       if (allocated(iopt))     deallocate(iopt)
     end if
     
+    if (allocated(c))          deallocate(c)
     if (allocated(h))          deallocate(h)
     if (allocated(jopt))       deallocate(jopt)
     if (allocated(wk))         deallocate(wk)
