@@ -1,6 +1,9 @@
 # Using Cmake version 3.11 for better CUDA & Fortran support
 cmake_minimum_required(VERSION 3.11)
 
+# location for CMake modules (MDI)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 # Specify project name & programming language (C is only needed for auto-detection of MKL by find_package)
 project(openmopac LANGUAGES Fortran C)
 
@@ -85,6 +88,12 @@ endif()
 
 # Add list of source files from src directory
 add_subdirectory(src)
+
+# MDI functionality
+option(MDI "MDI build flag" OFF)
+if(MDI)
+  include(MDI)
+endif(MDI)
 
 # Add tests
 enable_testing()
