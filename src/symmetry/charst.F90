@@ -1,12 +1,12 @@
 module get_det
   implicit none
 contains
-  recursive function determinant(matrix, n) 
+  recursive function determinant(matrix, n) result(det)
 !
 ! Evaluate the determinant of the matrix "matrix"
 !
 ! On input,  matrix      = square matrix of size "n"
-! On output, determinant = value of the determinant of matrix "matrix"
+! On output, det         = value of the determinant of matrix "matrix"
 !
     implicit none
     integer, intent (in) :: n
@@ -14,7 +14,7 @@ contains
 !
 ! Local variables
 !
-    double precision :: determinant
+    double precision :: det
     integer :: i
     double precision :: sum
     double precision, allocatable :: cf(:,:)
@@ -31,7 +31,7 @@ contains
         deallocate(cf)
       end do
     end if
-    determinant = sum
+    det = sum
   end function determinant
 !
   function cofactor(matrix, n, mI)
