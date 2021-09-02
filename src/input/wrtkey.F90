@@ -680,7 +680,7 @@ subroutine wrtchk (allkey)
 !
    if (allkey /= ' ' .and. .not. is_PARAM) then 
         j = 0 
-        do i = 1, 3000 - 1
+        do i = 1, 3000 - 1 
           if (allkey(i:i+1) == '  ') cycle  
           j = j + 1 
           ch = allkey(i:i) 
@@ -732,7 +732,7 @@ subroutine wrtcon (allkey)
   l_temp = (index(keywrd," MOZ") + index(keywrd," LEWIS") + index(keywrd," LOCATE-TS") + &
     index(keywrd, " RESEQ") + index(keywrd, " CHARGES") + &
     index(keywrd, " RAPID") + index(keywrd, " SITE=") + index(keywrd, " SITE(")  /= 0)   
-  mozyme = (l_temp .or. + index(keywrd, " PDBOUT") /= 0)   
+  mozyme = (l_temp .or. index(keywrd, " PDBOUT") /= 0)   
   if (index(keywrd, "CHARGE=") == 0 .and. old_chrge /= 0 .and. index(keywrd, " OLDGEO") /= 0) then
 !
 !  Use the charge from the previous calculation
@@ -882,7 +882,16 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " GEO_DAT")) then
     i = index(keywrd," GEO_DAT")
     j = index(keywrd(i + 10:),'"') + i + 9 
-    write (iw, '(" *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE """,a,"""")')keywrd(i+10:j   - 1)
+    write (iw, '(" *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE """,a,"""")')keywrd(i + 10:j   - 1)
+    if (index(keywrd(i + 10:j   - 1), " ADD-H") /= 0) then
+!
+! Force the "DD" to be "dd"
+!
+      k = index(keywrd(i + 10:j   - 1), " ADD-H") + i + 10
+      do k = k, j - 1
+        if (keywrd(k:k) == "D") keywrd(k:k) = "d"
+      end do
+    end if
     allkey(i:j) = " "
   end if
   if (myword(allkey, " GEO_REF")) then
@@ -1198,7 +1207,8 @@ subroutine wrtcon (allkey)
       i = Index (keywrd, "C.I.=")
       j = Index(keywrd(i + 1:), " ") + i 
       line = " *  "//keywrd(i:j)
-      write (iw, "(a, i2, a)")line(1:15)//"- ", nmos, " M.O.S TO BE USED IN C.I."
+      num = char(ichar("2") + int(log10(nmos*1.0)))
+      write (iw, "(a, i"//num//", a)")line(1:15)//"-", nmos, " M.O.S TO BE USED IN C.I."
     else    
       write (iw, "(' *',/,a)") " *      C.I. keyword must be of form 'C.I.=n' or 'C.I.=(n1,n2)' (See manual)"
       call mopend("C.I. keyword must be of form 'C.I.=n' or 'C.I.=(n1,n2)'")
@@ -1234,11 +1244,11 @@ subroutine wrtcon (allkey)
 !
 !                       Fractionally occupied degenerate Open shell
 !
-  if (myword(allkey, " OPEN(")) then
-    i = Index (keywrd, " OPEN(")
+  if (myword(allkey, " OPEN")) then
+    i = Index (keywrd, " OPEN")
     j = Index (keywrd(i:i+10), ",") + i   - 1
     ilevel = Nint (reada (keywrd, j))
-    ielec = Nint (reada (keywrd, Index (keywrd, " OPEN(")+6)) 
+    ielec = Nint (reada (keywrd, Index (keywrd, " OPEN")+6)) 
     write (iw,'(" *  OPEN(M,N)  - THERE ARE", i2, " ELECTRONS IN", i2, " LEVELS")') &
      ielec, ilevel
   end if
@@ -1251,9 +1261,19 @@ subroutine wrtcon (allkey)
 !
 !   Select root of C.I. matrix
 !
-  if (myword(allkey, " ROOT")) &
-    write (iw,'(" *  ROOT       - IN A C.I. CALCULATION, ROOT", i2, &
-   & " TO BE OPTIMIZED.")') Nint (reada (keywrd, Index (keywrd, " ROOT")))
+  if (myword(allkey, " ROOT")) then
+    i = Index (keywrd, " ROOT") + 6
+    j = index(keywrd(i:), " ") + i - 2
+    line = keywrd(i:j)
+    do k = 3,5
+      if (line(k:k) >="A" .and. line(k:k) <= "Z") &
+      & line(k:k) = Char(Ichar(line(k:k)) + Ichar('a') - Ichar('A'))
+    end do
+    write (iw,'(" *  ROOT       - IN A C.I. CALCULATION, ROOT """, a, """ TO BE OPTIMIZED.")') trim(line)
+    if (keywrd(i:i) > "9" .or. keywrd(i:i) < "0") then
+      call mopend("THE VALUE OF ""ROOT"" MUST START WITH AN INTEGER")
+    end if
+  end if
 !**********************************************************************
 !
 !   SOLVATION KEYWORDS
@@ -1351,9 +1371,12 @@ subroutine wrtcon (allkey)
        if (lopt(l,j) < 0) k = k + 1
      end do
    end do
-   if(i /= k) then
-     if (index(keywrd," 0SCF") == 0) &
+   if (i /= k) then
+     if (index(keywrd," 0SCF") == 0) then
+       write(iw,'(10x, a,i1)')"Number of optimization flags requested by keywords: ", i
+       write(iw,'(10x, a,i1)')"Number of optimization flags found in data-set:     ", k
        call mopend("The number of optimization flags set to '-1' does not match the keywords used")
+     end if
    end if
  end if
  if (myword(allkey, " MERS"))then
@@ -1671,7 +1694,7 @@ subroutine wrtout (allkey)
   return
 end subroutine wrtout
 subroutine wrtwor (allkey)
-  use molkst_C, only: tleft, tdump, keywrd, natoms, numat, mozyme, pdb_label
+  use molkst_C, only: tleft, tdump, keywrd, natoms, numat, mozyme, pdb_label, line
   use chanel_C, only: iw
   implicit none
   character (len=1000), intent (inout) :: allkey
@@ -1755,9 +1778,9 @@ subroutine wrtwor (allkey)
        write (iw,'(" *  T=         - A TIME OF", f'//ch4(1:2)//'.1, " ", a, " REQUESTED")') tleft, trim(chrono)
     end if
 !
-!  Limit time to 9,999,999 seconds =115.74 days.
+!  Limit time to 999 weeks
 !
-    tleft = Min (1.d7-1.d0, tleft*time)
+    tleft = Min (6.0479d8, tleft*time)
     go to 1020
 1000  ch = keywrd(j:j)
     if (ch == "M") then
@@ -1857,29 +1880,49 @@ subroutine wrtwor (allkey)
   end if
   if (index(allkey, " METAL") /= 0) then
     j = Index (keywrd, " METAL")
-    i = Index (keywrd, " METAL=") 
-    if (keywrd(j + 6:j + 6) /= " ") then
-      if (i == 0) keywrd = keywrd(:j + 5)//"="//trim(keywrd(j + 6:))
+!
+!  Force an equals sign in, if one is not present
+!
+    if (keywrd(j + 6:j + 6) == "(") then
+      line = keywrd(:j + 5)//"="//trim(keywrd(j + 6:))
+      keywrd = trim(line)
     end if
-    i = Index (keywrd, " METAL")
-    if (Index (keywrd, " METAL ") /= 0) then
+    i = Index (keywrd, " METAL=") 
+    if (i == 0) then
+!
+! The word "METAL" on its own.
+!
       write (iw,'(" *  METAL      - METALS ARE DEFINED AS BEING FULLY IONIC")')
     else
-      j = Index (keywrd(i:), ") ") + i 
-      if (index(keywrd(i:j), '"') /= 0) &
-        write (iw, '(" *               ATOMS DEFINED AS BEING FULLY IONIC", /," *",15x,a)') keywrd(i + 8:j - 2)//" ="
-    end if
 !
-! Convert PDB into atom-numbers
+! The word "METAL" in the construction "METAL=(text)"
 !
-    do
-      k = index(keywrd(i:j), '"')
-      if (k == 0) exit
-      call txt_to_atom_no(keywrd(i:j), k, .false.)
-    end do
-    if (j > i) then
       j = Index (keywrd(i:), ") ") + i 
-      write (iw, '(" *",15x,a)') keywrd(i + 8:j - 2)
+!
+! Write out the labels of all atoms that are explicitely defined in PDB or Jmol format
+!
+      
+      if (index(keywrd(i:j), '"') /= 0) then
+        write (iw, '(" *  METAL        INDIVIDUAL ATOMS DEFINED AS BEING FULLY IONIC")')
+        line = keywrd(i + 8:j - 2)
+!
+! Convert PDB and Jmol format into atom-numbers
+!
+        do
+          k = index(keywrd(i:j), '"')
+          if (k == 0) exit
+          call txt_to_atom_no(keywrd(i:j), k, .false.)
+        end do
+!
+! Now write out atoms and atom numbers
+!
+        j = Index (keywrd(i:), ") ") + i 
+        write (iw, '(" *",15x,a)')"("//trim(line)//") = "//keywrd(i + 8:j - 2)
+      else
+        j = Index (keywrd(i:), ") ") + i 
+        write (iw,'(" *  METAL      - THE FOLLOWING ELEMENTS ARE DEFINED AS BEING FULLY IONIC: ", a)') &
+          keywrd(i + 8:j - 2)
+      end if        
     end if
     if (.not. myword(allkey, " METAL")) return ! dummy call to use "myword"
   end if

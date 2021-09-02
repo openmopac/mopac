@@ -2,7 +2,7 @@
   use common_arrays_C, only : geo, coord, labels, nat, nbonds, ibonds, &
     atmass, txtatm, tvec
   use parameters_C, only : ams
-  use chanel_C, only : iw
+  use chanel_C, only : iw, job_fn
   use elemts_C, only : elemnt
   use molkst_C, only : numat, natoms, line, keywrd, id, moperr,maxtxt
   use funcon_C,  only : pi
@@ -16,10 +16,13 @@
   logical :: l_res, bug = .false., first, let, l_type, first_2
   character :: res_txt*14, txt*26, num*1, line_1*1200
   character, allocatable :: changes(:)*30
-  double precision :: bond_length, angle, dihedral, internal_dihedral, tetrahedral
+  double precision :: bond_length, angle, dihedral, internal_dihedral, tetrahedral, sum
+  logical, allocatable :: l_used(:)
   double precision, external :: reada, distance
   i = max(20,numat)
-  allocate (changes(i))
+  allocate (changes(i), l_used(natoms))
+  l_used = .false.
+  labels(numat + 1:) = 0
   tetrahedral = 109.4712206d0
   let = (index(keywrd," LET") /= 0)
   first = (.not. let)
@@ -718,6 +721,18 @@
       first_2 = .false.
       cycle
     end if
+    if (l_used(i)) then
+      num = char(ichar("2") + int(log10(i*1.0001))) 
+      write(iw,'(/5x, a, i'//num//', a)')"Two requests were made to modify the number of hydrogen atoms on atom", i, &
+        ", a carbon atom, PDB label: """//txtatm(i)(:26)//"""."
+      write(iw,'(5x, a)')"When more than one hydrogen atom is to be added or deleted use "// &
+        """+3"" or ""+2"" or ""-2"" or ""-3"" instead of ""+"" or ""-""."
+      call mopend("MULTIPLE REQUESTS WERE MADE USING ""SITE"" TO CHANGE THE NUMBER "// &
+        "OF HYDROGEN ATOMS ON AN ATOM.  THIS IS NOT ALLOWED") 
+      return
+    else
+      l_used(i) = .true.
+    end if
     j = nat(i)
     select case (j)
     case (6) ! Add and delete hydrogen atoms on Carbon
@@ -741,7 +756,34 @@
 !
 ! There were "m" hydrogen atoms, so new number of hydrogen atoms should be
 !
-        i_charge = min(4 - nbonds(i), i_charge + m)
+        i_charge =  i_charge + m
+        if (4 - nbonds(i) < i_charge) then
+          num = char(ichar("2") + int(log10(i*1.0001))) 
+          write(iw,'(/5x, a, i'//num//', a)')"An attempt to add a hydrogen atom to atom", i, &
+            ", a carbon atom, PDB label: """//txtatm(i)(:26)//""","
+          write(iw,'(5x, a, i'//num//', a,/)')"failed because the atom was already saturated. "// &
+            "Atoms currently bonded to atom", i, " are:"
+          write(iw,'(10x, a, i'//num//')')" Atom No.    <------ PDB Label ------->      Distance to atom", i
+          sum = 0.d0
+          do j = 1, nbonds(i)
+            bond_length = distance(i, ibonds(j,i))
+            if (bond_length > sum) then
+              sum = bond_length
+              k = ibonds(j,i)
+            end if
+            write(iw,'(i5, i11, a, f12.4, a)')j, ibonds(j,i), "      """//txtatm(ibonds(j,i))(:26)//"""", bond_length, " Angstroms"
+          end do
+          write(iw,'(/2x,a)')"[ The simplest way to correct this fault would be to use the"// &
+            & " CVB keyword, e.g., CVB=("""//txtatm(i)(14:26)//""":-"""//txtatm(k)(14:26)//""") ]"
+          if (index(keywrd, " HTML") + index(keywrd, "PDBOUT") /= 0) then
+            line = job_fn(:len_trim(job_fn) - 3)//"pdb"
+            call add_path(line)
+            open(unit = 99, file = trim(line), iostat = i) 
+            call pdbout(99)
+          end if          
+          call mopend("ATTEMPT WAS MADE TO ADD A HYDROGEN ATOM TO A CARBON ATOM THAT WAS ALREADY SATURATED")
+          return
+        end if
         j = ibonds(1,i)
         do l = 1, nbonds(i)
           k = ibonds(l,i)
@@ -786,14 +828,14 @@
             select case (nbonds(i))
               case (1)
 !
-! Cabon bonded to one other non-hydrogen atom
+! Carbon bonded to one other non-hydrogen atom
 !
                 angle = 120.d0*pi/180.d0 
                 internal_dihedral = pi
                 dihedral = pi
               case (2)
 !
-! Cabon bonded to two other non-hydrogen atoms
+! Carbon bonded to two other non-hydrogen atoms
 !
                 angle = tetrahedral*pi/180.d0
                 internal_dihedral = 120.d0*pi/180.d0

@@ -153,7 +153,7 @@ subroutine getpdb (geo)
             index(line,"EXPDTA") + index(line,"AUTHOR") + index(line,"REVDAT") + index(line,"JRNL  ") + &
             index(line,"DBREF ") + index(line,"SEQRES") + index(line,"HET   ") + index(line,"HETNAM") + &
             index(line,"LINK  ") + index(line,"CRYST1") + index(line,"SCALE" ) + index(line,"ORIGX" ) + &
-            index(line,"FORMUL") + index(line,"SEQRES") + index(line,"CONECT") /= 0) then
+            index(line,"FORMUL") + index(line,"SEQRES") + index(line,"CONECT") /= 0 ) then
           if (line(1:6) /= "CONECT") then
             ncomments = ncomments + 1
             tmp_comments(ncomments) = "*"//line(:80)
@@ -180,6 +180,8 @@ subroutine getpdb (geo)
           lchain = .true.
         end if
         if (line(1:3) == "END") exit
+        if (line(1:3) == "TER") cycle
+        if (line(1:6) == "MASTER") cycle
         if (l_pdb) then
           if (first) then
             first = .false.

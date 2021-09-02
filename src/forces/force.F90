@@ -51,7 +51,6 @@
 !
       k = 0
       nvaold = 0
-      ndeold = 0
       rot = 0.d0
       a = 0.d0
       b = 0.d0
@@ -85,7 +84,6 @@
         numat = l 
         natoms = numat 
         nvib = 0
-        if (numat == 1) goto 98
         call xyzint (coord, numat, na, nb, nc, 1.D0, geo)
         na_store = na
         call gmetry (geo, coord) 
@@ -174,6 +172,7 @@
       time1 = seconds(1) 
       if (.not. restrt) then
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.) 
+        if (numat == 1) goto 98
         if (moperr) goto 99
         write (iw,'(2/10X,''HEAT OF FORMATION ='',F15.6,'' KCALS/MOLE'')') escf 
         time2 = seconds(1) 
@@ -619,8 +618,10 @@
       end if 
       if (allocated(store_coord)) coord(:,:numat) = store_coord(:,:numat)
       call to_screen("To_file: Force output")
-      fmatrx = oldf*1.d-5      
-      if ( .not. ts .and. numat > 1) call intfc (oldf, xparam, geoa, nar, nbr, ncr)       
+      if (numat > 1) then
+        fmatrx = oldf*1.d-5      
+        if ( .not. ts .and. numat > 1) call intfc (oldf, xparam, geoa, nar, nbr, ncr) 
+      end if
       na(1) = 0      
       nvar = 0 
       ndep = ndeold      

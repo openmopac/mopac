@@ -421,6 +421,7 @@
       call geochk()           !  set_up_dentate is needed because array radius is now too small
     end if
     if (index(keywrd, "SITE") /= 0) call geochk()
+    call l_control("NOSITE", len("NOSITE"), 1)
     call reset_breaks()
     do i = numat + 1, numat + id
       labels(i) = 107
@@ -1195,6 +1196,14 @@
               return
             end if
             call dihed(coord, icc, ii, jj, kk, sum) 
+!
+!  A dihedral angle involving the current atom and the three joined to it
+!  can be used in deciding whether or not it should be sp2 or sp3
+!
+!  The tetrahedral dihedral angle, that is the torsion angle from an atom 
+!  to the first ligand, then to the second, then to the third, is ~35.26439 degrees.
+!  The sine of this number is: 0.57735
+!
             if (min(2*pi - sum, sum) < 0.05d0) then
               nH = 0    ! Very flat, so it must be sp2
               hybrid(icc) = 2
@@ -1213,7 +1222,7 @@
                 return
               end if
             end if
-            if (min(2*pi - sum, sum) < 0.20d0) then
+            if (min(2*pi - sum, sum) < 0.40d0) then
               bits = 0.d0
               if (nat(ii) == 7 .or. nat(ii) == 8) bits = bits + 0.1d0
               if (nat(jj) == 7 .or. nat(jj) == 8) bits = bits + 0.1d0
@@ -1470,7 +1479,7 @@
               end if
               if (guanidine(icc, ionized, nH, angle, internal_dihedral, dihedral, hybrid)) return
               if (nat(jj) == 7) then
-                if (Rab < 1.36d0 .or. Rac < 1.35d0) then
+                if (Rab < 1.39d0 .or. Rac < 1.40d0) then
                   nH = 0
                   return
                 end if

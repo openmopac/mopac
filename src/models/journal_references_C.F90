@@ -123,7 +123,7 @@
  data  allref( 10,1)/ ' Ne: (MNDO):                                                                    '/
  data  allref( 11,1)/ ' Na: (MNDO): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                 '/
  data  allref( 12,1)/ ' Mg: (MNDO): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                 '/
- data  allref( 13,1)/ ' Al: (MNDO): L.P. DAVIS, ET.AL.  J. COMP. CHEM., 2, 433, (1981) SEE MANUAL.     '/
+ data  allref( 13,1)/ ' Al: (MNDO): L.P. DAVIS, ET.AL.  J. COMP. CHEM., 2, 433, (1981)                 '/
  data  allref( 14,1)/ ' Si: (MNDO): M.J.S.DEWAR, ET. AL. ORGANOMETALLICS  5, 375 (1986)                '/
  data  allref( 15,1)/ '  P: (MNDO): M.J.S.DEWAR, M.L.MCKEE, H.S. RZEPA,J. AM. CHEM. SOC., 100 3607 1978'/
  data  allref( 16,1)/ '  S: (MNDO): M.J.S.DEWAR, C.H. REYNOLDS, J. COMP. CHEM. 7, 140-143 (1986)       '/
@@ -148,7 +148,7 @@
  data  allref( 54,1)/ ' Xe: (MNDO):                                                                    '/
  data  allref( 55,1)/ ' Cs: (MNDO): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                 '/
  data  allref( 56,1)/ ' Ba: (MNDO): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                 '/
- data  allref( 80,1)/ ' Hg: (MNDO): M.J.S.DEWAR,  ET. AL. ORGANOMETALLICS 4, 1964, (1985) SEE MANUAL   '/
+ data  allref( 80,1)/ ' Hg: (MNDO): M.J.S.DEWAR,  ET. AL. ORGANOMETALLICS 4, 1964, (1985)              '/
  data  allref( 81,1)/ ' Tl: (MNDO): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                 '/
  data  allref( 82,1)/ ' Pb: (MNDO): M.J.S.DEWAR, ET.AL ORGANOMETALLICS 4, 1973-1980 (1985)             '/
  data  allref( 83,1)/ ' Bi: (MNDO): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                 '/

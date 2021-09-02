@@ -55,6 +55,20 @@ subroutine lewis (use_cvs)
     call set_up_dentate()   
     if (use_cvs) call check_cvs(.true.)
 !
+! Sanity check - Are all TXTATM filled
+!
+     do i = 1, numat
+       do j = 1, nbonds(i)
+         if (ibonds(j,i) == 0) then
+            call mopend("A SEVERE ERROR OCCURRED WHILE ATTEMPTING TO RESEQUENCE THE ATOMS.")
+            if (index(keywrd," RESEQ") == 0) &            
+              write(iw,'(10x, a)')"(Try adding keyword ""NORESEQ"" and re-submit.)"
+            write(iw,'(10x, a)')"(Ignore any error messages after this line.)"
+            return
+         end if
+       end do
+     end do
+!
 !  Put limit on maximum number of bonds to an atom.
 !
 !  This is a practical issue.  In theory, it should be possible to make Lewis structures
@@ -413,7 +427,7 @@ subroutine remove_bond(i)
   double precision, external :: reada
   double precision, allocatable :: store_coord(:,:)
   double precision, external :: distance
-  character :: num*1, store*2000
+  character :: num*1, num_1*1, store*2000
   save :: store_coord, OO_first, first
   error = .false.
   PDB_input = .false.
@@ -613,7 +627,7 @@ subroutine remove_bond(i)
             if (ibonds(ii, j) == l .and. .not. let .and. index(keywrd, " GEO-OK") == 0 .and. &
               index(keywrd, " 0SCF") == 0) then
               r = distance(j,l)
-              write(iw,"(/,a,i5,a,i5,a, f6.3, a)")" The bond defined by CVB between atoms",j," and", &
+              write(iw,"(/,a,i5,a,i5,a, f6.3, a)")" The bond to be made by CVB between atoms",j," and", &
               l, " already exists, bond length =", r," Angstrom."
               write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
               write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
@@ -627,7 +641,7 @@ subroutine remove_bond(i)
               index(keywrd, " 0SCF") == 0) then
             if (.not. is_metal(nat(j)) .and. .not. is_metal(nat(l))) then
               num = char(ichar("5") + int(log10(r)))
-              write(iw,'(/,a,i5,a,i5,a,f'//num//'.2,a)')" The bond defined by CVB between atoms", j, &
+              write(iw,'(/,a,i5,a,i5,a,f'//num//'.2,a)')" The bond to be made by CVB between atoms", j, &
               " and", l, " would be", r, " Angstroms long.  This is unrealistic."
               write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
               write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
@@ -692,17 +706,19 @@ subroutine remove_bond(i)
           end do
           made = .false.
           if (.not. lbond .and. .not. let) then
-            if (radius(i) > 0.1d0 .and. radius(j) > 0.1d0) then
+            if (radius(l) > 0.1d0 .and. radius(j) > 0.1d0) then
             if (index(keywrd, " GEO-OK") == 0 .and. index(keywrd, " 0SCF") == 0) then
+              num = char(ichar("2") + int(log10(j*1.0001)))
+              num_1 = char(ichar("2") + int(log10(l*1.0001)))
               
-            write(iw,"(/,a,i5,a,i5,a)")" The bond defined by CVB between atoms",j," and", &
-              l, " did not exist.  Correct error and re-submit"
-            write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
-            write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
-            write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", l, ": "//elemnt(nat(l)), "("//txtatm(l)//")", coord(:,l)
+              write(iw,"(/,a,i"//num//",a,i"//num_1//",a)")" The bond to be deleted by CVB between atoms",j," and", &
+                l, " did not exist.  Correct error and re-submit"
+              write(iw,'(/30x,a,/)')"PDB label              Coordinates of the two atoms"
+              write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", j, ": "//elemnt(nat(j)), "("//txtatm(j)//")", coord(:,j)
+              write(iw,"(a,i5,a,3x,a, 3f12.6)")" Atom:", l, ": "//elemnt(nat(l)), "("//txtatm(l)//")", coord(:,l)
             else
               if (index(keywrd, " LOCATE-TS") == 0 .and. index(keywrd, " 0SCF") == 0) then          
-                write(iw,"(/,a,i5,a,i5,a,/,a)")" The bond defined by CVB between atoms",j," and", &
+                write(iw,"(/,a,i5,a,i5,a,/,a)")" The bond to be deleted by CVB between atoms",j," and", &
                 l, " did not exist,", " but, because GEO-OK is present, the job will continue."
               end if
             end if

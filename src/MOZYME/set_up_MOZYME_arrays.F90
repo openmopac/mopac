@@ -125,8 +125,7 @@
     part_dxyz, p1, p2, p3, ws, partf, parth, &
     partp, idiag, nfmo, fmo, ifmo, iorbs
 !
-    use common_arrays_C, only : c, h, w, wk, p, f, ifact, fb, q, &
-    dxyz, eigs, errfn
+    use common_arrays_C, only : h, w, wk, p, f, ifact, fb, q, c, dxyz, eigs, errfn
 !
     use iter_C, only : pold, pold2, pold3, pbold, pbold2
     implicit none

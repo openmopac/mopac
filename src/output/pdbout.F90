@@ -171,8 +171,8 @@ subroutine pdbout (mode1)
   end subroutine pdbout
   subroutine write_html
     use chanel_C, only: input_fn
-    use molkst_C, only : line, koment, title, numat, keywrd, numcal, geo_ref_name, geo_dat_name, &
-      maxtxt, backslash
+    use molkst_C, only : line, koment, title, keywrd, numcal, geo_ref_name, geo_dat_name, &
+      maxtxt, backslash, natoms, id
     use common_arrays_C, only : txtatm, p
     use mozyme_C, only : tyres, tyr
     implicit none
@@ -196,7 +196,7 @@ subroutine pdbout (mode1)
 !   Identify all residues
 !
 
-      do i = 1, numat
+      do i = 1, natoms - id
         if (txtatm(i)(18:20) == "HOH") cycle
         if (txtatm(i)(18:20) == "SO4") cycle
         j = nint(reada(txtatm(i), 23))
@@ -231,6 +231,7 @@ subroutine pdbout (mode1)
         if (k > nres) then
           nres = nres + 1
           res_txt(nres) = trim(l_res)
+          if (res_txt(nres)(1:1) /= " " .and. res_txt(nres)(2:2) == " ") res_txt(nres)(2:2) ="Q"
           if (res_txt(nres)(1:1) /= " " .and. res_txt(nres)(3:3) == " ") res_txt(nres)(3:3) ="Q"
         end if     
       end do

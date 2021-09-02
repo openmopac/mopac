@@ -52,7 +52,7 @@
       double precision, dimension(400) :: xyzt 
       double precision :: degree, convrt, dum1, dum2, sum, Rab
       double precision, external :: distance, reada, snapth
-      logical :: intern = .true., aigeo, xyz, opend, exists, l_rewind = .true., l_int
+      logical :: intern = .true., aigeo, xyz, opend, exists, l_rewind = .true., l_int, l_dummy
       logical, allocatable :: l_use(:)
       character :: space, ch, idate*24, line_1*3000, line_2*3000, txt*15
       save  space, intern, ireact
@@ -162,6 +162,27 @@
           return
         end if
         line = keywrd(i:j)
+        call upcase(line, len_trim(line))
+        k = index(line, "SELF")
+        if (k /= 0) then
+          ii = len_trim(job_fn)
+          if (index(job_fn, "/") /= 0) then
+            do l = ii, 2, -1
+              if (job_fn(l:l) == "/") exit
+            end do 
+            line_1 = line(:k - 2)//job_fn(l:ii - 4)//trim(line(k + 4:))
+            if (line_1(1:1) == "/") then
+              line = trim(line_1(2:))
+              line_1 = trim(line)
+            end if
+          else
+            line_1 = line(:k - 2)//"/"//job_fn(1:ii - 4)//trim(line(k + 4:))
+          end if
+          line = trim(line_1)
+          call add_path(line)
+        else
+          line = keywrd(i:j)        
+        end if
         line_1 = trim(line)
         call upcase(line_1, len_trim(line_1))
         line_2 = job_fn
@@ -244,14 +265,16 @@
           keywrd = trim(line_2)
         end if
         natoms = 0
+        j = 0
         do 
           read (from_data_set, '(A241)',  iostat=i) line 
           if (i /= 0) exit
           do i = 1, 100
             if (line(i:i) /= " ") exit
           end do
+          if (i < 101) j = j + 1
           if (line(1:1) /= "*") then
-            write (ir, '(A)', iostat=j) trim(line(i:))
+            write (ir, '(A)', iostat=k) trim(line(i:))
             natoms = natoms + 1
           end if
         end do
@@ -261,6 +284,14 @@
         call setup_mopac_arrays(0, 0)
         call setup_mopac_arrays(natoms + 200, 1) 
         allocate(lopt(3,maxatoms))
+        if (j == 0) then
+!
+! PANIC! 
+!
+          call mopend("THE FILE DEFINED BY ""GEO_DAT"": """//trim(line_1)//""" IS FAULTY")
+          write(iw,'(10x, a)')"It either does not exist or it does not contain a geometry"
+          return
+        end if
       end if
       chains = " "
       if (index(keywrd,"OLDGEO") .ne. 0) then 
@@ -510,7 +541,9 @@
 !
 !  "SELF" with a suffix, so use the name of the job but using the suffix from "SELF".
 !
-          j = index(job_fn(k + 1:), ".") + k 
+          do j = len_trim(job_fn), k + 1, -1
+            if (job_fn(j:j) == ".") exit
+          end do
           line_1 = keywrd(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd(i + 4:i + 7)
           i = i + index(keywrd(i:), '"') - 1
         end if
@@ -1020,6 +1053,19 @@
             i_loop = i
             line_2 = trim(line)
             lopt(:,:natoms) = 0
+!
+! If dummy atoms are present, they must not be deleted when working out which atoms are to be selected
+! for optimization.  This is because both the atom's coordinate and the atom's PDB label are used.
+! After the selection is done, the dummy atoms can be deleted again from the coordinate list
+! 
+            l_dummy = .false.
+            do i = 1, natoms
+              if (labels(i) == 99) then
+                l_dummy = .true.
+                labels(i) = 86
+              end if
+            end do
+            if (l_dummy) call gmetry (geo, coord) 
             do
               i = i_loop
               j = index(line(i + 1:), ") ")
@@ -1114,6 +1160,12 @@
               i_loop = i_loop + i
               k = index(line(i_loop:), "=") 
             end do
+            if (l_dummy) then
+              do i = 1, natoms
+                if (labels(i) == 86) labels(i) = 99
+              end do
+              call gmetry (geo, coord)
+            end if
           else  
 !
 !   Keyword OPT("text1"[,"text2"[,"text3"]]...) used, so use only atoms in the defined residues.

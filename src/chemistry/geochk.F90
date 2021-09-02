@@ -378,7 +378,9 @@ subroutine geochk ()
           lsite = .true.
           call update_txtatm(.true., .true.)
           i = numat
-          call site(neutral, new_chain, new_res, new_alt, charge, m, max_sites, allkey)
+          if (index(keywrd, " NOSITE") == 0 .or. index(keywrd, " CVB") == 0) &
+            call site(neutral, new_chain, new_res, new_alt, charge, m, max_sites, allkey)
+          if (moperr) return
           l_atom(i:numat) = .true.
           call update_txtatm(.true., .true.)
           if (index(keywrd, " LET") /= 0) moperr = .false.
@@ -951,17 +953,12 @@ subroutine geochk ()
     end if
     if (index(keywrd, " PDBOUT") /= 0) then
       allocate(temp_txtatm(natoms))
+!
+! Assign atom numbers
+!
       temp_txtatm = txtatm
-      j = 0
-      k = 0
       do i = 1, natoms
-        if (labels(i) == 99) then
-          k = k + 1
-          write(txtatm(i), '(a, i5, a)')"HETATM", j, "  X   HET     "
-        else
-          j = j + 1
-          write (txtatm(i), "(a,i5,a)")temp_txtatm(j)(1:6),j + k,temp_txtatm(j)(12:maxtxt)
-        end if         
+        write (txtatm(i), "(a,i5,a)")temp_txtatm(i)(1:6),i,temp_txtatm(i)(12:maxtxt)         
       end do
       deallocate(temp_txtatm)
       
@@ -1555,7 +1552,7 @@ subroutine geochk ()
             if (index(keywrd," CHARGE=") /= 0) then
               write (iw, "(10x,A,SP,I"//num//",A)") "CHARGE SPECIFIED IN DATA SET: ", irefq," IS INCORRECT." 
             else
-              write (iw, "(SP/10x,A,I"//num//",a)") "COMPUTED CHARGE ON SYSTEM: ", ichrge, &
+              write (iw, "(/10x,A,SP,I"//num//",a)") "COMPUTED CHARGE ON SYSTEM: ", ichrge, &
                 "  (THIS DOES NOT AGREE WITH THE DEFAULT CHARGE OF ZERO)"
             end if
           else

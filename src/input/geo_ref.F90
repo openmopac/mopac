@@ -1019,7 +1019,10 @@
           do i = len_trim(job_fn), 1, -1
             if (job_fn(i:i) == "/" .or. job_fn(i:i) == backslash) exit
           end do
-          line_1 =  job_fn(i + 1:len_trim(job_fn)-4)//"_"
+          do j = len_trim(job_fn) - 4, 2, -1
+            if (job_fn(j:j) /= " ") exit
+          end do
+          line_1 =  job_fn(i + 1:j)//"_"
         else
           line_1 = " "
         end if
@@ -1137,7 +1140,10 @@
               do i = len_trim(job_fn), 1, -1
                 if (job_fn(i:i) == "/" .or. job_fn(i:i) == backslash) exit
               end do
-              line_1 =  job_fn(i + 1:len_trim(job_fn)-4)//"_"
+              do j = len_trim(job_fn) - 4, 2, -1
+                if (job_fn(j:j) /= " ") exit
+              end do
+              line_1 =  job_fn(i + 1:j)//"_"
             else
               line_1 = " "
             end if

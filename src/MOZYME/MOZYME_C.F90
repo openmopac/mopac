@@ -78,7 +78,7 @@ module MOZYME_C
                         !
     start_res(-20:maxres), &   !
                         !
-    bbone(3,-20:maxres)! Atom numbers of the backbone atoms in a polypeptide
+    bbone(3,-20:maxres) = 0! Atom numbers of the backbone atoms in a polypeptide
 
    double precision :: &
     angles(3, -20:maxres) !  Phi, Psi, and Omega for backbone angles (Ramachandran)

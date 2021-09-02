@@ -723,7 +723,7 @@
   use molkst_C, only : keywrd
   implicit none
   integer :: nt, mode
-  character :: txt*(nt), store*2000, line*200
+  character :: txt*(nt), store*2000, line*2000
   integer :: i, j, trim_len, mt
   character :: local_txt*(nt), ch*1
   local_txt = txt

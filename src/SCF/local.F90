@@ -5,6 +5,7 @@
       use molkst_C, only : norbs, numat, keywrd, nbeta
       use common_arrays_C, only : nat, nfirst, nlast, p, pa, pb
       use chanel_C, only : iw
+      use symmetry_C, only : namo, jndex
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -50,7 +51,7 @@
 !       SUBROUTINE MAXIMIZES (PSI)**4
 !       REFERENCE_
 !       A NEW RAPID METHOD FOR ORBITAL LOCALISATION, P.G. PERKINS AND
-!       J.J.P. STEWART, J.C.S. FARADAY (II) 77, 000, (1981).
+!       J.J.P. STEWART, J.C.S. FARADAY (II) 78, 285-296, (1982).
 !
 !       MODIFIED AND CORRECTED TO AVOID SIGMA-PI ORBITAL MIXING BY
 !       JUAN CARLOS PANIAGUA, UNIVERSITY OF BARCELONA, MAY 1983.
@@ -65,6 +66,13 @@
         'LU', 'HF', 'TA', 'W', 'RE', 'OS', 'IR', 'PT', 'AU', 'HG', 'TL', 'PB', &
         'BI', 'PO', 'AT', 'RN', 'FR', 'RA', 'AC', 'TH', 'PA', 'U', 'NP', 'PU', &
         'AM', 'CM', 'BK', 'CF', 'XX'/  
+!
+! Set all symmetry names to "a", the lowest symmetry, because LMOs do not normally have any symmetry.
+!
+      namo(:norbs) = "a   "
+      do i = 1, norbs
+        jndex(i) = i
+      end do
       niter = 100 
       eps = 1.0D-10 
       refeig(:norbs) = eig(:norbs) 

@@ -131,13 +131,13 @@
             if (keywrd(j:j) > "9" .or. keywrd(j:j) < "0") exit
           end do
           lroot = Nint (reada (keywrd(:j), i + 6))
-          do j = i+7,i+14
+          do j = i + 7, i + 14
             if (keywrd(j:j) == " ") exit
             if (keywrd(j:j) >= "A" .and. keywrd(j:j) <= "Z") then
               root_ir = keywrd(j:)
               i = Index(root_ir," ")
-              if(i /= 0) root_ir(i:) = " "
-              do k = 2,3
+              if (i /= 0) root_ir(i:) = " "
+              do k = 2,4
                 if (root_ir(k:k) >="A" .and. root_ir <= "Z") &
                 & root_ir(k:k) = Char(Ichar(root_ir(k:k)) + Ichar('a') - Ichar('A'))
               end do

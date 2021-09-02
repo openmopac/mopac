@@ -254,6 +254,9 @@ subroutine moldat(mode)
       do i = 1, numat 
         mol_weight = mol_weight + atmass(i) 
       end do 
+      mpack = 1
+      if (Index (keywrd, " RESEQ") + index(keywrd,' 0SCF') + index(keywrd,' ADD-H') &
+        + index(keywrd,' SITE')/= 0) return
       n9 = 0
       n4 = 0
       n1 = 0
@@ -281,8 +284,7 @@ subroutine moldat(mode)
      &  10*n4*n1 + (n1*(n1 + 1))/2 + 10
       end if
       if (.not. mozyme .and. n2elec8 > 2147483647) then
-        if (Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") + index(keywrd, " ADD-H") &
-          + index(keywrd, " 0SCF") == 0) then
+        if (Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") + index(keywrd, " ADD-H") == 0) then
           call mopend(" Data set '"//trim(jobnam)//"' exists, but is too large to run.")
           write(iw,'(10x,a)')"(Maximum number of two-electron integrals allowed: 2,147,483,647)"
           write(iw,'(10x,a, i10,a)')"(Number of two-electron integrals exceeded this by:", &
@@ -320,7 +322,6 @@ subroutine moldat(mode)
         i = norbs
       end if
       mpack = (i*(i+1))/2
-      if (index(keywrd," 0SCF") /= 0) mpack = 1
 !
 !   NOW TO CALCULATE THE NUMBER OF LEVELS OCCUPIED
 !
@@ -362,7 +363,7 @@ subroutine moldat(mode)
         rhf = .true.
         uhf = .false.
       end if
-      if (uhf .and. index(keywrd," 0SCF") == 0) then
+      if (uhf) then
         if (index(keywrd," POLAR") /= 0) then
             write(iw,'(//10x,a)')" Keyword POLAR used with an odd-electron system."
             write(iw,'(10x,a)')" By default, UHF is used for odd-electron systems."
@@ -470,7 +471,7 @@ subroutine moldat(mode)
 !
 !  Generic declaration of spin state
 !
-      i = Index (keywrd, " MS=")
+      i = Index (keywrd, " MS")
       if (i /= 0) then
         if (msdel < 100000) then
           write(iw,'(a)')" MS cannot be used with other keywords that define spin"
@@ -480,8 +481,8 @@ subroutine moldat(mode)
           call to_screen(" Specify either MS or other keyword, but not both.")
           return
         end if
-        i = Nint (2*reada (keywrd, Index (keywrd, " MS=")))
-        if((odd .eqv. mod(i,2) == 0) .and. index(keywrd,' 0SCF') == 0) then
+        i = Nint (2*reada (keywrd, Index (keywrd, " MS")))
+        if((odd .eqv. mod(i,2) == 0)) then
           write(iw,"(/10x,a,i5)")"Number of electrons in system =", nelecs
           write(iw,"(10x,a,f5.1)")"Value of MS supplied          =  ", i*0.5d0
           if (odd) then
@@ -495,9 +496,9 @@ subroutine moldat(mode)
           call mopend ("Value of MS not consistent with number of electrons")
           return
         end if
-        i = index(keywrd,' MS=') 
-        if (i /= 0   .and. index(keywrd,' 0SCF') == 0) then 
-          msdel = nint(2.d0*reada(keywrd,index(keywrd,' MS=')))
+        i = index(keywrd,' MS') 
+        if (i /= 0) then 
+          msdel = nint(2.d0*reada(keywrd,index(keywrd,' MS')))
           if (Mod(nelecs+msdel,2) == 1) then
             write (iw, '(//10 x, "Impossible value of MS ")')
             call mopend ("Impossible value of MS")
@@ -527,7 +528,7 @@ subroutine moldat(mode)
           nmos = nint(reada(keywrd,j)) 
           ielec = nint(reada(keywrd,index(keywrd,'OPEN(') + 5))  
           fract = (ielec*1.d0)/nmos 
-          if (nclose < 0   .and. index(keywrd,' 0SCF') == 0) then 
+          if (nclose < 0) then 
             call mopend ('IMPOSSIBLE NUMBER OF FILLED SHELLS') 
             return   
           end if
@@ -577,7 +578,7 @@ subroutine moldat(mode)
         nclose = nelecs/2 
         nopen = nelecs - nclose*2 
         if (ielec /= 0 .and. norbs > 0) then 
-          if (((nelecs/2)*2 == nelecs .neqv. (ielec/2)*2 == ielec)  .and. index(keywrd,' 0SCF') == 0) then 
+          if (((nelecs/2)*2 == nelecs .neqv. (ielec/2)*2 == ielec)) then 
             write (iw, '(/10x, A,I5)') ' NUMBER OF ELECTRONS IN SYSTEM:    ', nelecs 
             write (iw, '(10x, A,I5)') ' NUMBER OF ELECTRONS IN OPEN SHELL:', ielec 
             call mopend ('IMPOSSIBLE NUMBER OF OPEN SHELL ELECTRONS') 
@@ -603,7 +604,7 @@ subroutine moldat(mode)
             return  
           end if 
           fract = ielec*1.D0/nmos 
-          if (nclose < 0   .and. index(keywrd,' 0SCF') == 0) then 
+          if (nclose < 0) then 
             write (iw, '(A)') ' IMPOSSIBLE NUMBER OF CLOSED SHELLS' 
             call mopend ('IMPOSSIBLE NUMBER OF CLOSED SHELLS') 
             return  
@@ -691,7 +692,7 @@ subroutine moldat(mode)
             write (iw, '(a,i3)')' Number of alpha electrons in active space:', nupp 
             write (iw, '(a,i3)')'  Number of beta electrons in active space:', ndown 
             write (iw, '(a,i3)')'                      Size of active space:', nmos 
-            if (Index (keywrd, " MS=") /= 0) then
+            if (Index (keywrd, " MS") /= 0) then
               call web_message(iw,"ms.html")
             else
               call web_message(iw,"active_space.html")
@@ -705,7 +706,7 @@ subroutine moldat(mode)
       & .or. index(keywrd,'C.I.')/=0) 
       if (halfe) halfe = (.not. (index(keywrd,'EXCI') /= 0 .or. &
                                  index(keywrd,'ROOT') /= 0 .and. index(keywrd,'ROOT=1') == 0)) 
-      if (halfe .and. id /= 0 .and. index(keywrd,' NOANCI') + index(keywrd,' 0SCF') == 0) then 
+      if (halfe .and. id /= 0 .and. index(keywrd,' NOANCI') == 0) then 
         write (iw, *) 
         write (iw, *) ' ''NOANCI'' MUST BE USED FOR RHF OPEN-SHELL SYSTEMS' 
         write (iw, *) ' THAT INVOLVE TRANSLATION VECTORS'  
@@ -806,7 +807,7 @@ subroutine moldat(mode)
       end do
   !    Si_O_H_present = .false.
       if (nvar == 0) then
-        if (index(keywrd," GRAD") /= 0 .and. index(keywrd, " 0SCF") == 0) then
+        if (index(keywrd," GRAD") /= 0) then
           if (index(keywrd, " RESEQ") + index(keywrd, " ADD-H") + index(keywrd, " SITE") == 0) then
             line = " Keyword GRADIENTS used, but geometry has no variables."
             call mopend(trim(line))
@@ -833,7 +834,6 @@ subroutine moldat(mode)
       if (nnhco > 3 .and. &
         index(keywrd," GEO-OK") == 0 .and. &
         index(keywrd," RESEQ") == 0 .and. &
-        index(keywrd," 0SCF") == 0 .and. &
         index(keywrd," CHARGES") == 0 .and. &
         index(keywrd," 1SCF") == 0) then
         j = 1
@@ -841,7 +841,7 @@ subroutine moldat(mode)
           if (na(i) > 0) j = j + 1
         end do
         if (nvar > 0 .and. j == natoms .and. .not. is_PARAM) then
-          if (index(keywrd," 0SCF") + index(keywrd," ADD-H") + index(keywrd," SITE=") == 0) then
+          if (index(keywrd," ADD-H") + index(keywrd," SITE=") == 0) then
             write(iw,"(5x,a)")"The system contains peptide linkages, but all atoms are in internal coordinates.", &
             "This is likely to result in problems in geometry optimization.", &
             "To correct this, add ""XYZ"" to the keyword line.", &
@@ -856,8 +856,7 @@ subroutine moldat(mode)
         write (iw, '(A)') ' Keyword "NOMM" has been used, therefore a Molecular Mechanics correction will not be used' 
       else if (mode /= 1 .and. nnhco /= 0 .and. (method_RM1 .or. method_pm6 .or. method_PM7) &
       & .and. (index(keywrd, "MMOK") == 0)) then 
-        if (index(keywrd, " LEWIS") + index(keywrd, " 0SCF") + &
-          index(keywrd, " RESEQ") + index(keywrd, " CHARGES")== 0) then
+        if (index(keywrd, " LEWIS") + index(keywrd, " RESEQ") + index(keywrd, " CHARGES")== 0) then
           if (method_RM1) line = "RM1"
           if (method_PM6) line = "PM6"
           if (method_PM7) line = "PM7"
@@ -884,41 +883,37 @@ subroutine moldat(mode)
           if (icount /= jminr) cycle  
           jreal = i 
         end do
-        if (index(keywrd,' 0SCF') == 0) then
-          write(line,"('ATOMS',i6,' AND',i6,' ARE SEPARATED BY',f7.4,' ANGSTROMS.')")ireal, jreal, rmin
-          if (index(keywrd,'CHECK') /= 0) then
-            call mopend(trim(line))
-            write(iw,'(/10x,a)')'FAULT DETECTED BY KEYWORD "CHECK'
-            if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'FAULT DETECTED BY KEYWORD "CHECK'          
-          else
-            call mopend(trim(line))
-            write(iw,'(/10x,a)')'TO CONTINUE CALCULATION SPECIFY "GEO-OK"'
-            num1 = char(Int(log10(max(ireal,jreal)     + 1.0)) + ichar("1")) 
-            if (pdb_label) then
-              write(iw,"(/10x,a,i"//num1//",a)")"(Label for atom ", ireal, ": """//txtatm(ireal)//""")"   
-              write(iw,"( 10x,a,i"//num1//",a)")"(Label for atom ", jreal, ": """//txtatm(jreal)//""")"  
-            end if
-            if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'TO CONTINUE CALCULATION SPECIFY "GEO-OK"'   
-          end if         
-          write (iw, '(/,a)')'   NOTE THAT THE ATOM NUMBERS CORRESPOND TO THE'//&
-            ' ''CARTESIAN COORDINATES'' ATOM LIST.'
-          if (index(keywrd,' 0SCF') == 0) then 
-            if (index(keywrd,' ADD-H') /= 0) then 
-              write(line,'(a,i6,a,i6)')'SEVERE ERROR IN GEOMETRY, FIX FAULT BEFORE CONTINUING. Atoms:',ireal, ' and', jreal
-              call mopend (trim(line))   
-              numat = 0
-              natoms = 0
-              return
-            end if
-            if (rmin < 1.d-4) then 
-              write(line,'(a,i6,a,i6)')'GEOMETRY IN ERROR, FIX FAULT BEFORE CONTINUING. Atoms:',ireal, ' and', jreal
-              call mopend (trim(line))
-            else
-              call mopend ("GEOMETRY IN ERROR.  TO CONTINUE CALCULATION SPECIFY 'GEO-OK'.")
-            end if
-            return  
-          end if 
+        write(line,"('ATOMS',i6,' AND',i6,' ARE SEPARATED BY',f7.4,' ANGSTROMS.')")ireal, jreal, rmin
+        if (index(keywrd,'CHECK') /= 0) then
+          call mopend(trim(line))
+          write(iw,'(/10x,a)')'FAULT DETECTED BY KEYWORD "CHECK'
+          if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'FAULT DETECTED BY KEYWORD "CHECK'          
+        else
+          call mopend(trim(line))
+          write(iw,'(/10x,a)')'TO CONTINUE CALCULATION SPECIFY "GEO-OK"'
+          num1 = char(Int(log10(max(ireal,jreal)     + 1.0)) + ichar("1")) 
+          if (pdb_label) then
+            write(iw,"(/10x,a,i"//num1//",a)")"(Label for atom ", ireal, ": """//txtatm(ireal)//""")"   
+            write(iw,"( 10x,a,i"//num1//",a)")"(Label for atom ", jreal, ": """//txtatm(jreal)//""")"  
+          end if
+          if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'TO CONTINUE CALCULATION SPECIFY "GEO-OK"'   
+        end if         
+        write (iw, '(/,a)')'   NOTE THAT THE ATOM NUMBERS CORRESPOND TO THE'//&
+          ' ''CARTESIAN COORDINATES'' ATOM LIST.'
+        if (index(keywrd,' ADD-H') /= 0) then 
+          write(line,'(a,i6,a,i6)')'SEVERE ERROR IN GEOMETRY, FIX FAULT BEFORE CONTINUING. Atoms:',ireal, ' and', jreal
+          call mopend (trim(line))   
+          numat = 0
+          natoms = 0
+          return
         end if
+        if (rmin < 1.d-4) then 
+          write(line,'(a,i6,a,i6)')'GEOMETRY IN ERROR, FIX FAULT BEFORE CONTINUING. Atoms:',ireal, ' and', jreal
+          call mopend (trim(line))
+        else
+          call mopend ("GEOMETRY IN ERROR.  TO CONTINUE CALCULATION SPECIFY 'GEO-OK'.")
+        end if
+        return  
       end if 
       if (.not.debug) return  
       write (iw, 290) numat, norbs, ndorbs, natoms 

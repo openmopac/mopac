@@ -88,6 +88,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
       iatom = jatom
       if (iatom == 0 .and. ires_loop == ires_start) go to 1010
       ires = ires + 1
+      if (ires == 0) ires = 1
     end do
     return
  999 ires = ires - 1

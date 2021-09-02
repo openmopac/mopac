@@ -29,6 +29,7 @@ transf @ polar.F90
 tf @ polar.F90
 coscl1 @ cosmo.F90
 coscl2 @ cosmo.F90
+determinant @ charst.F90 (recursive, exponential-scaling matrix determinant, YIKES)
 
 NOTE: there are large temporary matrix workspaces throughout MOPAC that perhaps should be consolidated somehow.
 They will be listed here for consideration:
