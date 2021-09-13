@@ -1,3 +1,19 @@
+! Molecular Orbital PACkage (MOPAC)
+! Copyright (C) 2021, Virginia Polytechnic Institute and State University
+!
+! MOPAC is free software: you can redistribute it and/or modify it under
+! the terms of the GNU Lesser General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version.
+!
+! MOPAC is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+! GNU Lesser General Public License for more details.
+!
+! You should have received a copy of the GNU Lesser General Public License
+! along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
   module Parameters_for_RM1_C
     double precision, dimension(107) :: ussRM1, uppRM1, uddRM1, zsRM1, zpRM1, zdRM1, betasRM1, &
     betapRM1, betadRM1, gssRM1, gspRM1, gppRM1, gp2RM1, hspRM1, alpRM1, zsnRM1, zpnRM1, zdnRM1, &

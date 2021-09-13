@@ -1,3 +1,19 @@
+! Molecular Orbital PACkage (MOPAC)
+! Copyright (C) 2021, Virginia Polytechnic Institute and State University
+!
+! MOPAC is free software: you can redistribute it and/or modify it under
+! the terms of the GNU Lesser General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version.
+!
+! MOPAC is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+! GNU Lesser General Public License for more details.
+!
+! You should have received a copy of the GNU Lesser General Public License
+! along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
   module Parameters_for_PM7_C
     double precision, dimension(107) :: uss7, upp7, udd7, zs7, zp7, zd7, betas7, &
     betap7, betad7, gss7, gsp7, gpp7, gp27, hsp7, polvo7, poc_7, &
