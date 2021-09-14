@@ -35,9 +35,10 @@ Many types of contributions, including non-software, are welcome:
 Attribution
 ===========
 
-Every contributor is welcome to be listed in the `AUTHORS.rst` file. List
-yourself by including a change to `AUTHORS.rst` in your pull
-request. Contributors should be ordered alphabetically by their family name.
+Contributors are welcome to add their names to the `AUTHORS.rst` file as part
+of their pull request if they are not already listed as a contributor.
+Affiliations at the time of the contribution can be included if desired.
+For major contributions, a brief summary of the contribution can also be included.
 
 Developer Certificate of Origin
 ===============================
