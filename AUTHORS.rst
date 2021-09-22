@@ -41,7 +41,7 @@ was authored by only Michael J. S. Dewar and Walter Thiel.
 Historic Contributors
 =====================
 
-James McIver Jr. & Andrew Komornicki
+James McIver, Jr. & Andrew Komornicki
    POWSQ geometry optimizer
    [`DOI:10.1021/ja00763a011 <https://doi.org/10.1021/ja00763a011>`_]
 
@@ -66,7 +66,7 @@ James Friedheim
 Eamon Healy
    testing & feature validation
 
-R. Nicholas Camp & Harry King
+Harry King & R. Nicholas Camp
    original implementation of the Camp-King SCF converger
    [`DOI:10.1063/1.441834 <https://doi.org/10.1063/1.441834>`_]
 
@@ -161,7 +161,7 @@ Walter Thiel & Alexander Voityuk
    reference implementation of semiempirical models with d orbitals
    [`DOI:10.1007/BF01134863 <https://doi.org/10.1007/BF01134863>`_]
 
-Brent Besler & Kenneth Merz Jr.
+Brent Besler & Kenneth Merz, Jr.
    implementation of atomic charge model for electrostatic potentials (ESP)
    [`DOI:10.1002/jcc.540110404 <https://doi.org/10.1002/jcc.540110404>`_]
 
