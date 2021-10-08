@@ -1,6 +1,6 @@
 geo_dat="IONIZE.arc"  OUTPUT   site=("[GLY]2:B.N"(0),"[ARG]5:B.NH2"(0),"[8OG]1157:B.OP3"(0),"[GLU]41:B.OE2"(0)) +
 site=("[GLY]2:B.N"(+),"[ARG]5:B.NH2"(+),"[8OG]1157:B.OP3"(-),"[GLU]41:B.OE2"(-)) site=(B2(0),B5(0),B1157(0),B41(0)) +
-site=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP3 8OG B1157"(0))
+site=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP1 8OG B1157"(0))
 Test that ionized sites can be de-ionized
 
 

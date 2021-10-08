@@ -58,7 +58,7 @@ subroutine geochk ()
     double precision, dimension(:), allocatable :: radius
     logical, save :: debug, let, lres, lreseq, times, opend, charges, l_protein, &
       done, neutral(100), lsite, ter, residues, lbreaks, l_use_old_labels, &
-    l_names(max_sites), first, first_prt, header, l_rama
+    l_names(max_sites), first, first_prt, header, l_rama, l_salt
     logical, dimension (:), allocatable :: ioptl
     integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, kkk, near_ions_store(2), &
    & j, jbad, k, l, large, n1, new, alloc_stat, mres, near_ions(2, 100), atomic_charges(8), &
@@ -514,6 +514,7 @@ subroutine geochk ()
       iz = -1000
       do
         if (n1 /= 0) call reseq (ioptl, iz, n1, new, io)
+          if (n1 == -100) goto 90
         if (moperr) go to 1100
         call findn1 (n1, ioptl, io, delta_res)
         if (n1 == 0) exit
@@ -967,7 +968,7 @@ subroutine geochk ()
       call update_txtatm(l_use_old_labels, .true.)
       call write_sequence
     end if
-    if (index(keywrd, " PDBOUT") /= 0) then
+90   if (index(keywrd, " PDBOUT") /= 0) then
       allocate(temp_txtatm(natoms))
 !
 ! Assign atom numbers
@@ -992,6 +993,8 @@ subroutine geochk ()
 !  Edit keywords to remove text that would not be used in the next calculation. 
 !
     call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
+    i = index(keywrd, "SITE=()")
+    if (i /= 0) keywrd(i:i + 6) = " "
     if (index(keywrd, " RESEQ") /= 0) call delete_ref_key("RESEQ", len_trim("RESEQ"), ' ', 1)
     numat = nnumat
     natoms = max(natoms, numat)
@@ -1296,18 +1299,12 @@ subroutine geochk ()
       end do
       maxtxt_store = maxtxt
       if (maxtxt < 0) maxtxt = 14
+      l_salt = .false.
       if (first_prt .and. .not. l_rama) then
         if (i <= numat) then
           if (maxtxt > 1) then        
-             write(line,"(a)")"   Ion                PDB Label        Charge     "// &
-               &"Distance        PDB label for Salt Bridge   Charge"
-             write(iw,'(/,a)') trim(line)
-             if (log) write(ilog,"(/,a)") trim(line)
              l = max(1,(17 - maxtxt/2))
              residues = (index(keywrd, " RESID") /= 0)
-          else
-             write(iw,"(/,a)")"     Ion Atom No.  Type    Charge"
-             if (log) write(ilog,"(/,a)")"    Ion Atom No.  Type    Charge"
           end if
         else
           write(iw,'(/18x,a)') "NO CHARGED ATOMS FOUND."        
@@ -1325,7 +1322,7 @@ subroutine geochk ()
               if (first) then
                 write(iw,*)
                 first = .false.
-              end if
+                end if
               line = " "
               jj = 0
               if (j == 1) then
@@ -1397,11 +1394,23 @@ subroutine geochk ()
                         ii = maxtxt
                         kk = maxtxt
                       end if
+                      if ( .not. l_salt) then
+                        if (maxtxt > 1) then        
+                           write(line,"(a)")"   Ion     <--------PDB Label------->   Charge     "// &
+                             &"Distance        PDB label for Salt Bridge   Charge"
+                           write(iw,'(/,a,/)') trim(line)
+                           if (log) write(ilog,"(/,a)") trim(line)
+                        else
+                           write(iw,"(/,a)")"     Ion Atom No.  Type    Charge"
+                           if (log) write(ilog,"(/,a,/)")"    Ion Atom No.  Type    Charge"
+                        end if
+                      end if
                       k = k + 1
                       write(tmp,"(i5, 2x, 3x, a, SP,i5,S, f13.2, 9x, a, a, a)") &
                       & k, padding(:l-5)//"("//txtatm_1(1:kk)//")"//padding(:l-15), ions(i), &
                       & r_ions(1), "("//txtatm_2(:ii)//")", "   -1"
                       write(iw,'(a)') trim(tmp)
+                      l_salt = .true.
                       if (log) write(ilog,"(a)") trim(line)
                   end if
                 else
@@ -1440,7 +1449,12 @@ subroutine geochk ()
                   end if
                   if (j /= 1) then
                     if (header) then
-                      write(iw,'(/17x, a, /)') "All other ions"
+                      if (maxtxt < 2) then
+                        write(iw,'(10x, a, /)') "All other ions"
+                        if (maxtxt < 2)write(iw,"(a)")"   Ion Atom No.  Type    Charge"
+                      else
+                        write(iw,'(/17x, a)') "All other ions"
+                      end if
                       header = .false.
                     end if
                     write(iw,'(a)')trim(line)
@@ -1456,7 +1470,12 @@ subroutine geochk ()
                 k = k + 1
                 write(line,"(i5,3x,i5,5x,a2,SP,i9,S)")k, i, elemnt(nat(i)),ions(i)
                 if (header) then
-                  write(iw,'(/17x, a, /)') "All other ions"
+                  if (maxtxt < 2) then
+                    write(iw,'(10x, a, /)') "All other ions"
+                    if (maxtxt < 2)write(iw,"(a)")"   Ion Atom No.  Type    Charge"
+                  else
+                    write(iw,'(/17x, a)') "All other ions"
+                  end if
                   header = .false.
                 end if
                 write(iw,'(a)') trim(line)
@@ -1470,7 +1489,12 @@ subroutine geochk ()
 !
             rewind (m)
             if (header) then
-              write(iw,'(/17x, a, /)') "All other ions"
+              if (maxtxt < 2) then
+                    write(iw,'(10x, a, /)') "All other ions"
+                    if (maxtxt < 2)write(iw,"(a)")"   Ion Atom No.  Type    Charge"
+                  else
+                    write(iw,'(/17x, a)') "All other ions"
+                  end if
               header = .false.
             end if
             do k = 1, 10000
@@ -1543,7 +1567,7 @@ subroutine geochk ()
       end if
     end if
     if (.not. mozyme) goto 98
-    if (irefq /= ichrge .and. .not. lreseq .or. charges) then
+    if (irefq /= ichrge .and. .not. lreseq .or. charges .or. index(keywrd, " Move") /= 0) then
 !
 !  THE CALCULATED CHARGE DOES NOT MATCH THAT DEFINED BY CHARGE=N.
 !  THEREFORE, THE USER HAS MADE A MISTAKE.  WRITE OUT CHARGES
@@ -1579,12 +1603,39 @@ subroutine geochk ()
         end if
         call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
       end if    
-      if (lreseq) then
-        if (index(keywrd, " 0SCF") == 0) then
-          call mopend("JOB STOPPED BECAUSE GEOMETRY RESEQUENCED")
+      if (lreseq .or. index(keywrd, " Move") /= 0) then
+!
+!  Check to see if any atoms are in internal coordinates
+!
+        j = 0
+        do i = 1, numat
+          if (na(i) /= 0) j = j + 1
+        end do
+        if (j /= 0) then
+          if (index(keywrd, " Move") /= 0) then
+            call mopend("WHEN HYDROGEN ATOMS ARE ADDED OR DELETED, ALL ATOMS MUST BE IN CARTESIAN COORDINATES")
+           if (j < 5) then
+             write(iw,'(/10x,a)')'(When only a small number of atoms are in internal coordinates, and the connectivity'
+             write(iw,'(10x,a)')' is in PDB or Jmol format, a useful strategy would be to convert those atoms into'
+             write(iw,'(10x,a)')' Cartesian coordinates, then after the job has run, replace the atoms in the ARC file'
+             write(iw,'(10x,a)')' with the atoms in the original internal coordinates)'
+             return
+           end if
+          else if (index(keywrd, "GEO-OK") == 0) then
+            call mopend("WHEN SYSTEM IS RESEQENCED, EITHER ADD ""GEO-OK"" OR ALL ATOMS MUST BE IN CARTESIAN COORDINATES")
+          end if
+        end if
+        call move_hydrogen_atoms
+        call lewis(.false.)
+        if (index(keywrd, " ADD-H") > 0) then
+          call mopend("ADD-H: SYSTEM HAS BEEN HYDROGENATED")
+        else if (index(keywrd, " Move") > 0) then
+          call mopend("HYDROGEN ATOMS ADDED OR DELETED")
         else
           call mopend("GEOMETRY RESEQUENCED")
         end if
+        moperr = .false.
+        if (prt_coords) call geout (iw)
       end if
       if (charges .or. lreseq) return
       if (index(keywrd, " LEWIS") /= 0) then
@@ -1668,13 +1719,19 @@ subroutine geochk ()
     end if
     if (lreseq .or. lsite) then     
       if (lsite) then
-        call mopend ("Keyword SITE used")
-        write(iw,'(//,a)')" Run stopped because SITE used"
+        call mopend ("RUN STOPPED BECAUSE KEYWORD ""SITE"" USED")
         call delete_ref_key("SITE", len_trim("SITE"), ') ', len_trim(') '))
-      else
-        call mopend ("Keyword RESEQ used")
-        write(iw,'(//,a)')" Run stopped because RESEQ used"
-      end if      
+      else if (lreseq) then
+        if (index(keywrd, " ADD-H") > 0) then
+          call mopend("ADD-H: SYSTEM HAS BEEN HYDROGENATED")
+        else if (index(keywrd, " Move") > 0) then
+          call mopend("HYDROGEN ATOMS ADDED OR DELETED")
+        else
+          call mopend("GEOMETRY RESEQUENCED")
+        end if
+      end if   
+      moperr = .false.
+      if (prt_coords) call geout (iw)
       return
     end if
 !

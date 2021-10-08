@@ -29,7 +29,7 @@
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, &
         sparkle, itemp_1, maxtxt, koment, &
-        nl_atoms, use_ref_geo, prt_coords, pdb_label, txtmax, step, &
+        nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
@@ -442,7 +442,10 @@
       call delete_ref_key("RESIDUES", len_trim("RESIDUES"), ' ', 1)
       call delete_ref_key("XENO", len_trim("XENO"), ' ', 1)
       call output_rama()
-      if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) call geochk()  
+      if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) then
+        call geochk()
+        if (moperr) goto 100
+      end if
       if ( index(keywrd," PDBOUT") /= 0 .and. maxtxt < 26 .and. index(keywrd," RESID") == 0) then
         if (maxtxt == 0) then
           maxtxt = 26
@@ -498,13 +501,6 @@
           if (moperr) return
           if (mozyme) call density_for_MOZYME (p, 0, nelecs/2, pa)
         end if
-        if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") > 0) then
-!
-!  Add RESEQ by default
-!
-          if (index(keywrd, " NORES") == 0 .and. (maxtxt == txtmax .or. index(keywrd, " RESID") /= 0) &
-          .and. index(keywrd, " RESEQ") == 0) call l_control("RESEQ", len("RESEQ"), 1)
-        end if
         if (prt_coords) call geout (iw)
         if (index(keywrd,' AIGOUT') /= 0) then
           write (iw, '(2/,A)') '  GEOMETRY IN GAUSSIAN Z-MATRIX FORMAT'
@@ -513,7 +509,7 @@
           write (iarc, '(2/,A)') '  GEOMETRY IN GAUSSIAN Z-MATRIX FORMAT'
           call wrttxt (iarc)
           call geoutg (iarc)
-        else if (mozyme .or. &
+        else if (mozyme .or. index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0  .or. &
           (index(keywrd," PDBOUT") + index(keywrd," RESEQ") + index(keywrd," RESID") /= 0)) then
           i = size(coorda)
           j = size(coord)
@@ -528,9 +524,12 @@
             goto 10
           end if
           if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0) then
+            if (index(keywrd, " RESEQ") == 0 ) call l_control("Move", len("Move"), 1)
             moperr = .false.
             if (index(keywrd, " ADD-H") /= 0) then
               call add_hydrogen_atoms()
+              call move_hydrogen_atoms
+              call lewis(.false.)
               if (moperr) then
                 inquire(unit=iarc, opened=opend) 
                 if (opend) close (iarc, status="DELETE") 
@@ -554,8 +553,8 @@
             i = index(refkey(1), "ADD-H")
             if (i /= 0) refkey(1) = refkey(1)(:i - 1)//refkey(1)(i + 5:)
           end if
-          if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") + index(keywrd," RESEQ") + &
-            index(keywrd," RESID") /= 0) &
+          if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0 .and. &
+            index(keywrd," RESEQ") + index(keywrd," RESID") /= 0) &
             call update_txtatm(.true., .false.)         !  Now that geometry checks are done, switch to input labels
           call write_sequence
           if (log) call bridge_H()

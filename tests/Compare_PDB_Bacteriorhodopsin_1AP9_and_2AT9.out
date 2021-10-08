@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.055M **
+ ** Site#:    0         For non-commercial use only           Version 21.269M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.269M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,15 +12,15 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Feb 26 19:06:15 2021  *
+ *  CALCULATION DONE:                                Thu Oct  7 01:33:55 2021  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
- *  Keyword:   START_RES=(7A 300) 
+ *  Keyword:     START_RES=(7A 300) 
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Bacteriorhodopsin_1AP9.ent"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "Bacteriorhodopsin_2AT9.ent"
  *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
- *  Keyword:   CHAINS=(A) 
+ *  Keyword:     CHAINS=(A) 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  OUTPUT     - MINIMIZE OUTPUT
@@ -28,7 +28,7 @@
  START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_2AT9.ent" Compare Output
  Compare 1AP9 and 2AT9 Bacteriorhodopsin
 
-
+ 
 
                             Differences in atoms sets
 
@@ -566,7 +566,7 @@
 
           Empirical formulae of data-set and GEO_REF are different
 
-          Empirical formula of system in GEO_REF: C1163 N254 O314 S9  =  2223 atoms
+          Empirical formula of system in GEO_REF: C1554 N262 O382 S9 P16  =  2223 atoms
           Empirical formula of system in GEO_DAT: C1163 N254 O314 S9  =  1740 atoms
 
           Number of atoms common to both systems: 1694

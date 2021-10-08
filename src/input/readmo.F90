@@ -256,6 +256,15 @@
           line_2 = trim(keywrd)
           do
             read (from_data_set, '(A241)',  iostat=j) keywrd
+            if (keywrd(4:4) == "(" .and. keywrd(31:31) == ")" .and. keywrd(36:36) == ".") then
+              rewind(from_data_set)
+              exit
+            end if
+            if (j == -1) then
+              call mopend(" END OF FILE FOUND WHILE TRYING TO READ IN GEOMETRY DATA FROM """//trim(line_1)//"""")
+              write(iw,'(10x,a)')"(Error occurred while trying to read over the keyword line in the data-set.)"
+              return
+            end if
             if (keywrd(1:1) /= "*") then
               if (index(keywrd,"ATOM") + index(keywrd,"HETATM") /= 0) then
                 write (ir, '(A)', iostat=i) trim(keywrd)
@@ -571,6 +580,19 @@
         keywrd = trim(line)
       end do
           if (index(keywrd, " HTML") + index(keywrd, " PDBOUT") /= 0 .and. maxtxt == 0) then
+            if (index(keywrd," ADD-H") + index(keywrd," SITE=") /= 0) then
+              if (index(keywrd," ADD-H") /= 0) then
+                call mopend("KEYWORD ""ADD-H"" CANNOT BE USED WHEN PDB DATA ARE NOT"// &
+                  "PRESENT AND KEYWORDS THAT USE PDB DATA ARE PRESENT")
+              else
+                call mopend("KEYWORD ""SITE"" CANNOT BE USED WHEN PDB DATA ARE NOT "// &
+                  "PRESENT AND KEYWORDS THAT USE PDB DATA ARE PRESENT")
+              end if
+              write(iw,'(10x, a)')"This fault can be corrected by using two jobs:"
+              write(iw,'(10x, a)')"Job-1 uses keywords ""0SCF RESIDUES"" - that adds PDB data to the ARC file."
+              write(iw,'(10x, a)')"Job-2 uses that data when adding or deleting hydrogen atoms"
+              return
+            end if
               call l_control("RESIDUES", len_trim("RESIDUES"), 1) 
               if (index(keywrd," MOZ") + index(keywrd," LOCATE-TS") + index(keywrd," RAPID") &
               + index(keywrd," ADD-H") == 0) &

@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.055M **
+ ** Site#:    0         For non-commercial use only           Version 21.269M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.055M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.269M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Feb 26 19:06:25 2021  *
+ *  CALCULATION DONE:                                Fri Oct  8 01:25:13 2021  *
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "IONIZE.arc"
  *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -21,10 +21,10 @@
  *******************************************************************************
 geo_dat="IONIZE.arc"  OUTPUT   site=("[GLY]2:B.N"(0),"[ARG]5:B.NH2"(0),"[8OG]1157:B.OP3"(0),"[GLU]41:B.OE2"(0)) +
 site=("[GLY]2:B.N"(+),"[ARG]5:B.NH2"(+),"[8OG]1157:B.OP3"(-),"[GLU]41:B.OE2"(-)) site=(B2(0),B5(0),B1157(0),B41(0)) +
-site=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP3 8OG B1157"(0))
+site=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP1 8OG B1157"(0))
  Test that ionized sites can be de-ionized
 
-
+ 
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -69,15 +69,19 @@ site=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP3 8OG B1157"(0
 
        Changes in Ionization caused by keyword SITE
 
-       Keyword: SITE=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP3 8OG B1157"(0))
+       Keyword: SITE=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP1 8OG B1157"(0))
 
       Hydrogen atoms added to     Hydrogen atoms deleted from
 
   1       N   GLY B   2                 OE2 GLU B  41
   2       NH2 ARG B   5                      -
-  3       OP3 8OG B1157                      -
+  3       OP1 8OG B1157                      -
 
           Change in net ionization:  +2
+
+          CHARGES MODIFIED BY SITE COMMAND
+
+          HYDROGEN ATOMS ADDED OR DELETED
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: B
 
@@ -114,22 +118,18 @@ site=("N   GLY B   2"(+),"NH2 ARG B   5"(+),"OE2 GLU B  41"(-),"OP3 8OG B1157"(0
        60  VDALHKVGQI VFEFVGEPEL MDVHVFCTDS IQGTPVESDE MRPCWFQLDQ
       110  IPFKDMWPDD SYWFPLLLQK KKFHGYFKFQ GQDTILDYTL REVDTV
 
-          CHARGES MODIFIED BY SITE COMMAND
-
-          GEOMETRY RESEQUENCED
-
  ******************************************************************************
  *                                                                            *
  *     Error and normal termination messages reported in this calculation     *
  *                                                                            *
  * CHARGES MODIFIED BY SITE COMMAND                                           *
- * GEOMETRY RESEQUENCED                                                       *
+ * HYDROGEN ATOMS ADDED OR DELETED                                            *
  * JOB ENDED NORMALLY                                                         *
  *                                                                            *
  ******************************************************************************
 
 
 
- TOTAL JOB TIME:             0.00 SECONDS
+ TOTAL JOB TIME:             6.97 SECONDS
 
  == MOPAC DONE ==

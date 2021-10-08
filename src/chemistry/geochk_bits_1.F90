@@ -257,6 +257,8 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
         if (txtatm(ii) == " ") exit
         chain = txtatm(ii)(22:22)        
         ires = nint(reada(txtatm(ii), 23)) 
+        allres = " "
+        allres(ires) = txtatm(ii)(18:20)
         ilet = txtatm(ii)(27:27)
         charge = ions(ii)
         irold = ires
@@ -280,12 +282,15 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
 !
 !  Take residue name from the previous atom (the atom label has just changed)
 !
-          allres(ires) = txtatm(ii - 1)(18:20)
+!  Charge is the net charge on the previous residue, so:
+!
           if (charge == 1) then
             allres(ires)(4:4) = "+"
           else if (charge == -1) then
             allres(ires)(4:4) = "-"
           end if
+          ires = ires + 1
+          allres(ires)(1:3) = txtatm(ii)(18:20)
           if (maxtxt == 27) then
             i_alt = i_alt + 1
             res_no(i_alt) = ii - 1
@@ -301,8 +306,9 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
             return
           end if          
         end do
+        if (ii > numat) j = numat
         if (j /= 0) then
-          if (txtatm(j)(18:20) /= "   ") allres(ires) = txtatm(j)(18:20) 
+          if (txtatm(j)(18:20) /= "   " .and. allres(ires) == " ") allres(ires) = txtatm(j)(18:20)
         end if
         if (charge == 1) then
           allres(ires)(4:4) = "+"
@@ -550,6 +556,7 @@ subroutine add_sp_H(i1, i, i2)
   geo(:,natoms) = geo(:,i1) + scale*(geo(:,natoms) - geo(:,i1))
   nat(natoms) = 1
   txtatm(natoms) = " "
+  return
 end subroutine add_sp_H
 subroutine add_sp2_H(i1, i, i2)
 !

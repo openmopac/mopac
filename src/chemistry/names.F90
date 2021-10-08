@@ -18,7 +18,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
     use molkst_C, only: natoms, numat, keywrd, id
     use MOZYME_C, only : nres, allres, maxres, nbackb, nxeno, mxeno, k, iatom, jatom, &
        & loop, bbone, angles, txeno, afn, allr, lstart_res
-    use common_arrays_C, only : nat, labels, txtatm, ibonds, coord, breaks, nbonds
+    use common_arrays_C, only : nat, labels, txtatm, txtatm1, ibonds, coord, breaks, nbonds
     use funcon_C, only : pi
     use chanel_C, only: iw
     implicit none
@@ -104,7 +104,22 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
       iatom = jatom
       if (iatom == 0 .and. ires_loop == ires_start) go to 1010
       ires = ires + 1
-      if (ires == 0) ires = 1
+      if (ires == 0) then
+        if (txtatm1(1) == " " .or. index(keywrd, " CHECKZERO") /= 0) then
+          call l_control("CHECKZERO", len("CHECKZERO"), 1)
+            if (index(keywrd, " NOZERO") /= 0) then
+              ires = 1
+            else if (index(keywrd, " ZERO") /= 0) then
+              ires = 0
+            else
+              write(iw,'(/10x, a)') "A residue that can have either the number 1 or 0 has been detected"
+              write(iw,'(10x, a)') "Add keyword ""NOZERO"" if the number 1 is to be used for this residue" 
+              write(iw,'(10x, a)') "Add keyword ""ZERO"" if the number 0 is to be used for this residue" 
+              call mopend("DURING ASSIGNMENT OF RESIDUES AN AMBIGUITY IN RESIDUE NUMBER 0 WAS FOUND.")
+              return
+            end if
+          end if
+        end if
     end do
     return
  999 ires = ires - 1

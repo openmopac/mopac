@@ -50,7 +50,7 @@
 !            ARE IN ARRAY XYZ.
 !
 !     DIHED IS A MODIFIED VERSION OF A SUBROUTINE OF THE SAME NAME
-!           WHICH WAS WRITTEN BY DR. W. THEIL IN 1973.
+!           WHICH WAS WRITTEN BY DR. W. THIEL IN 1973.
 !
 !********************************************************************
   if (id == 0) then

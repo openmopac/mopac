@@ -23,7 +23,7 @@ subroutine reseq (iopt, lused, n1, new, io)
     use elemts_C, only: elemnt, atom_names
     use common_arrays_C, only : nat, ibonds, nbonds, txtatm, coord
     implicit none
-    integer, intent (in) :: n1
+    integer, intent (inout) :: n1
     integer, intent (inout) :: new
     integer, intent (out) :: io
     logical, dimension (numat), intent (inout) :: iopt
@@ -40,6 +40,21 @@ subroutine reseq (iopt, lused, n1, new, io)
     logical, external :: peptide_n
 !
     allocate (inres(natomr))
+    if (index(keywrd, " Move") /= 0) then
+!
+! "Move" is only present if hydrogen atoms have been added or deleted.  If this is done, then the
+! hydrogen atoms need to be put in their correct place in the list of atoms.  It is also important that
+! the order of the non-hydrogen atoms is not changed.  For this reason a special subroutine "move_hydrogen_atoms"
+! is used.  
+!
+      call move_hydrogen_atoms
+      call lewis(.false.)
+      n1 = -100
+      return
+    end if
+!
+! If "Move" is not present, do a complete resequence of the atoms.  This is complicated...
+!
     nbackb = 0
     inres = 0    
     call lewis(.false.)
@@ -346,4 +361,112 @@ subroutine reseq (iopt, lused, n1, new, io)
       end if
     end do
     return
-end subroutine reseq
+  end subroutine reseq
+subroutine move_hydrogen_atoms
+  !
+  ! At this point, some hydrogen atoms might not be in their correct location in the list of atoms
+  ! so move the hydrogen atoms to their correct place.
+  !
+  !  This operation assumes that the geometry had PDB labels in "txtatm"
+  ! 
+   use common_arrays_C, only : coord, txtatm, nat, atmass, labels, geo
+   USE molkst_C, only : natoms
+   USE chanel_C, only : iw
+   use elemts_C, only : elemnt
+   implicit none
+   integer :: i, j, k, l, n_res, n_heavy, n_hydrogens
+   integer, allocatable :: res_end(:), new_nat(:)
+   double precision, allocatable :: not_H_coord(:,:), H_coord(:,:), new_coord(:,:), new_atmass(:), &
+     H_atmass(:), not_H_atmass(:)
+   character*27, allocatable :: not_H_txtatm(:), H_txtatm(:), new_txtatm(:)
+   logical :: l_debug
+   l_debug = .false.
+  !
+  ! Separate all the atoms into two sets, one set consisting of the hydrogen atoms, the other set 
+  ! consisting of the non-hydrogen atoms.
+  !
+  ! "res_end" = Atom number of the last atom in residue in the set "not_H_txtatm" 
+  !
+   allocate(not_H_txtatm(natoms), H_txtatm(natoms), not_H_coord(3,natoms), H_coord(3,natoms), not_H_atmass(natoms), &
+     H_atmass(natoms))
+   allocate(res_end(natoms), new_txtatm(natoms), new_coord(3,natoms), new_nat(natoms), new_atmass(natoms))
+   n_heavy = 0
+   n_hydrogens = 0
+   n_res = 0
+   do i = 1, natoms
+     if (txtatm(i)(14:14) == "H") then
+       n_hydrogens = n_hydrogens + 1
+       H_coord(:,n_hydrogens) = coord(:,i)
+       H_txtatm(n_hydrogens) = txtatm(i)
+       H_atmass(n_hydrogens) = atmass(i)
+     else
+       n_heavy = n_heavy + 1
+       not_H_coord(:,n_heavy) = coord(:,i)
+       not_H_txtatm(n_heavy) = txtatm(i)
+       nat(n_heavy) = nat(i)
+       not_H_atmass(n_heavy) = atmass(i)
+      if (n_heavy > 1) then
+         if (not_H_txtatm(n_heavy)(17:26) /= not_H_txtatm(n_heavy - 1)(17:26)) then
+           n_res = n_res + 1
+           res_end(n_res) = n_heavy - 1
+         end if 
+       end if
+     end if
+   end do
+   n_res = n_res + 1
+   res_end(n_res) = n_heavy 
+   if (l_debug) then
+     write(iw,'(10x,a)')"Heavy atoms"
+     write(iw,'(i5,3x,a)')(i, not_H_txtatm(i), i = 1, n_heavy)
+     write(iw,'(10x,a)')"Hydrogen atoms"
+     write(iw,'(i5,3x,a)')(i, H_txtatm(i), i = 1, n_hydrogens)
+     write(iw,'(10x,a)')"Number of the last atom in residues"
+     write(iw,'(20i5)')res_end(1:n_res)
+   end if
+  !
+  ! Start the merge of hydrogen atoms into their correct locations
+  ! 
+  ! l = atom number in merged set
+  ! j = atom number in non-hydrogen atom set
+  !
+   l = 0 
+   j = 0
+   do i = 1, n_res
+     do
+       l = l + 1
+       j = j + 1
+       new_coord(:,l) = not_H_coord(:,j)
+       new_txtatm(l) = not_H_txtatm(j)
+       write(new_txtatm(l)(7:12),'(i5)') l
+       new_nat(l) = nat(j)
+       new_atmass(l)= not_H_atmass(j)
+       if (j == res_end(i)) then
+         do k = 1, n_hydrogens
+           if (H_txtatm(k)(17:26) == not_H_txtatm(j)(17:26)) then
+             l = l + 1
+             new_coord(:,l) = H_coord(:,k)
+             new_txtatm(l) = H_txtatm(k)
+             H_txtatm(k)(17:26) = "Used"
+             new_nat(l) = 1
+             new_atmass(l)= H_atmass(k)
+             write(new_txtatm(l)(7:12),'(i5)') l
+           end if
+         end do
+         exit
+       end if
+     end do
+   end do  
+   if (l_debug) then
+     write(iw,*)" New sequence of atoms"
+     do i = 1,l
+       write(iw, '(1x, a,a, 3(f13.8, a3))')elemnt(new_nat(i)), "("//new_txtatm(i)//")", (new_coord(j,i), " +1", j=1,3)
+     end do
+   end if
+   nat(:natoms) = new_nat(:natoms)
+   labels(:natoms) = nat(:natoms)
+   atmass(:natoms) = new_atmass(:natoms)
+   coord(:,:natoms) = new_coord(:,:natoms)
+   geo(:,:natoms) = coord(:,:natoms)
+   txtatm(:natoms) = new_txtatm(:natoms)
+   return
+  end subroutine move_hydrogen_atoms

@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
+ ** Site#:    0         For non-commercial use only           Version 21.269M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.269M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Jul 30 14:19:59 2021  *
+ *  CALCULATION DONE:                                Thu Oct  7 01:28:33 2021  *
  *  PDBOUT     - PRINT GEOMETRY IN PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A 66) 
@@ -1358,12 +1358,9 @@
     648          H (HETATM  648 1H2  EOH A  66)     329
     649          H (HETATM  649 2H2  EOH A  66)     329
     650          H (HETATM  650  H   EOH A  66)     330
-
-   Ion                PDB Label        Charge     Distance        PDB label for Salt Bridge   Charge
  
 
                  All other ions
-
     1     (ATOM    301  OD2 ASP A  43)   -1
 
           COMPUTED CHARGE ON SYSTEM: -1
@@ -1388,8 +1385,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Fri Jul 30 14:20:45 2021
+                                                       MOPAC2016 (Version: 21.269M)
+                                                       Thu Oct  7 01:29:20 2021
 
 
 
@@ -1414,8 +1411,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =         45.852 SECONDS
-          COMPUTATION TIME        =         45.768 SECONDS
+          WALL-CLOCK TIME         =         47.300 SECONDS
+          COMPUTATION TIME        =         47.236 SECONDS
 
 
 
@@ -4108,6 +4105,6 @@
 
 
 
- TOTAL JOB TIME:            46.07 SECONDS
+ TOTAL JOB TIME:            47.53 SECONDS
 
  == MOPAC DONE ==

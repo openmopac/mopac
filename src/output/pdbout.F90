@@ -247,9 +247,10 @@ subroutine pdbout (mode1)
         if (k > nres) then
           nres = nres + 1
           res_txt(nres) = trim(l_res)
-          if (res_txt(nres)(1:1) /= " " .and. res_txt(nres)(2:2) == " ") res_txt(nres)(2:2) ="Q"
-          if (res_txt(nres)(1:1) /= " " .and. res_txt(nres)(3:3) == " ") res_txt(nres)(3:3) ="Q"
-        end if     
+          do k = 1, len_trim(l_res)
+            if (res_txt(nres)(k:k) == " ") res_txt(nres)(k:k) ="Q"
+          end do
+        end if
       end do
     end if
 !

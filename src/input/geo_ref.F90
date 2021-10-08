@@ -221,6 +221,10 @@
       do
         i = i + 1
         read(99,"(a)", err = 99, iostat = ii)refkey_ref(i)  !  Dummy read over first three lines
+        if (refkey_ref(i)(4:4) == "(" .and. refkey_ref(i)(31:31) == ")" .and. refkey_ref(i)(36:36) == ".") then
+          rewind(99)
+          exit
+        end if
         if (ii /= 0) then
           write(iw,'(10x,a)')"Line 1 of data file defined by GEO_REF: """//trim(refkey_ref(1))//""""
           line = trim(refkey_ref(1))
@@ -229,7 +233,7 @@
             call mopend("A data file defined by GEO_REF cannot use GEO_DAT to point to another file.")
             return
           else
-            write(line,'(a,i1,a)')"The data file defined by GEO_REF contains only ", i, "lines."
+            write(line,'(a,i1,a)')"The data file defined by GEO_REF contains only ", i, " lines."
             call mopend(trim(line))
             return
           end if           
@@ -528,8 +532,12 @@
             write(iw,'(/10x, a)')"Empirical formulae of data-set and GEO_REF are different"            
           end if
 !
-! Do GEO_REF first, because it's currently available
+! First do GEO_REF
+! Store the nat for GEO_DAT in nc
+! Load the labels for geo_ref into nat
 !
+          nc(:numat_dat) = nat(:numat_dat)
+          nat(:numat) = labels(:numat)
           call empiri()
           write(iw,'(/10x,a,i5)')   "Empirical formula of system in GEO_REF:"//trim(formula(30:))
 !
@@ -537,7 +545,6 @@
 ! First store the data for GEO_REF
 !
           i = numat
-          nc(:numat) = nat(:numat)
           numat = numat_dat
           nat(:numat) = atom_no(:numat)
           call empiri()

@@ -20,7 +20,7 @@
 !
 !   Intended for use in converting PDB files into files suitable for running in MOPAC
 !
-  use molkst_C,  only : numat, natoms, keywrd, isok, maxatoms, moperr, refkey, line, id
+  use molkst_C,  only : numat, natoms, keywrd, maxatoms, moperr, refkey, line, id
   use common_arrays_C,  only : nat,  coord,  nbonds,  ibonds, txtatm, labels, atmass, geo, &
     lopt, na, l_atom, loc, xparam, nfirst, nlast, txtatm1, coorda, tvec
   use parameters_C, only : ams
@@ -432,10 +432,11 @@
     l_atom(store_numat + 1: numat + id) = .true.
     na(:numat) = 0
     atom_radius_covalent = store_atom_radius_covalent
-    if (.not. isok)  then     !  A problem was found with the nitrogen end of a chain
-      call set_up_dentate()   !  To correct this, re-run now that hydrogen atoms are present.
-      call geochk()           !  set_up_dentate is needed because array radius is now too small
-    end if
+!
+! At this point it's necessary to re-calculate nbonds and ibonds
+!
+    call set_up_dentate()
+    call geochk()
     if (index(keywrd, "SITE") /= 0) call geochk()
     call l_control("NOSITE", len("NOSITE"), 1)
     call reset_breaks()
@@ -2725,9 +2726,6 @@
 !  distances will be used in deciding which oxygen atom has the hydrogen
 !
         RO1 = 10.d0
-        if (O1 == 814 .or. O1 == 815) then
-                      continue
-                    end if
         do i = 1, n1
           if (RO1 > RO1_near(i)) then
             RO1 = RO1_near(i)

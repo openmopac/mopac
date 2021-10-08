@@ -28,15 +28,17 @@
   character, intent (in) :: chain(nres)*1, alt(nres)*1
   character, intent (inout) :: charge(max_sites,3)*1, allkey*3000
   integer :: i_atom, i_charge
-  integer :: i, j, k, l, m, n, o(2), jres, metals(1), nmetals = 0, nadd, ndel, p, ncarbon
+  integer :: i, j, k, l, m, n, o(2), jres, metals(1), nmetals = 0, nadd, ndel, p, ncarbon, &
+    nb_icc, nc_icc, nd_icc
   logical :: l_res, bug = .false., first, let, l_type, first_2
   character :: res_txt*14, txt*26, num*1, line_1*1200
   character, allocatable :: changes(:)*30
   double precision :: bond_length, angle, dihedral, internal_dihedral, tetrahedral, sum
   logical, allocatable :: l_used(:)
+  integer, allocatable :: hybrid(:)
   double precision, external :: reada, distance
   i = max(20,numat)
-  allocate (changes(i), l_used(natoms))
+  allocate (changes(i), l_used(natoms), hybrid(natoms))
   l_used = .false.
   labels(numat + 1:) = 0
   tetrahedral = 109.4712206d0
@@ -249,12 +251,20 @@
 !  -COO(-) or -CH2O(-) group identified.  Now add a hydrogen
 !
                 call add_sp_H(j, o(1), o(2))
-                nbonds(j) = nbonds(j) + 1
-                ibonds(nbonds(j), j) = numat
-                nadd = nadd + 1
-                changes(nadd)(:15) = trim(txtatm(j)(12:))
-                charge(jres,1:2) = charge(jres,2:3)
-                write(txtatm(natoms),'(a,i5," 3H",a)')txtatm(j)(:6), natoms, txtatm(j)(15:)
+                m = 1
+                call h_type(22, j, .false., m, nb_icc, nc_icc, nd_icc, bond_length, angle, dihedral, internal_dihedral, &
+        hybrid, metals, nmetals)
+                if (abs(bond_length - 1.d0) < 1.d-3) then
+                  angle = angle*pi/180.d0
+                  call add_a_generic_hydrogen_atom(j, nb_icc, nc_icc, bond_length, angle, dihedral, metals, nmetals)
+                  geo(:,numat) = coord(:,numat)    
+                  nbonds(j) = nbonds(j) + 1
+                  ibonds(nbonds(j), j) = numat
+                  nadd = nadd + 1
+                  changes(nadd)(:15) = trim(txtatm(j)(12:))
+                  charge(jres,1:2) = charge(jres,2:3)
+                  write(txtatm(natoms),'(a,i5," 3H",a)')txtatm(j)(:6), natoms, txtatm(j)(15:)
+                end if
               end if
             end if
           end if

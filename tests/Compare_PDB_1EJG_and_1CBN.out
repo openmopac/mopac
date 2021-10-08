@@ -1,7 +1,7 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.145M **
+ ** Site#:    0         For non-commercial use only           Version 21.269M **
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.269M, James J. P. Stewart,   **
  ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
  *******************************************************************************
  **                                                                           **
@@ -12,7 +12,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jun  1 17:10:46 2021  *
+ *  CALCULATION DONE:                                Thu Oct  7 01:33:54 2021  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A) 
@@ -74,7 +74,7 @@
 
           Empirical formulae of data-set and GEO_REF are different
 
-          Empirical formula of system in GEO_REF: C198 H311 N56 O66 S6  =   640 atoms
+          Empirical formula of system in GEO_REF: C200 H311 N56 O67 S6  =   640 atoms
           Empirical formula of system in GEO_DAT: C202 H310 N55 O64 S6  =   637 atoms
 
           Number of atoms common to both systems:  603

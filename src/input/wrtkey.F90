@@ -991,7 +991,13 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " OLDCAV")) write (iw, '(" *  OLDCAV")')
   if (myword(allkey, " SYM ") .or. myword(allkey, " SYMM")) &
     write (iw, '(" *  SYMMETRY   - SYMMETRY CONDITIONS TO BE IMPOSED")')
-  if (myword(allkey, " POLAR"))  write (iw, '(" *  POLAR      - CALCULATE FIRST, SECOND AND THIRD-ORDER POLARIZABILITIES")')
+  if (myword(allkey, " POLAR")) then
+    write (iw, '(" *  POLAR      - CALCULATE FIRST, SECOND AND THIRD-ORDER POLARIZABILITIES")')
+    if (id /= 0) then
+      call mopend("KEYWORD ""POLAR"" CANNOT BE USED WITH PERIODIC BOUNDARY CONDITIONS")
+      write(iw,'(2x,a)')"(TV in the geometry implies PBC, but PBC cannot allow an electric field gradient.) "     
+    end if
+  end if
   if (myword(allkey, " RESI")) then
     write (iw, '(" *  RESIDUES   - DETERMINE THE SEQUENCE OF RESIDUES")')
     if (index(keywrd," RESIDUES0") /= 0) then
@@ -1004,6 +1010,10 @@ subroutine wrtcon (allkey)
         call web_message(iw,"Residues.html")
       end if
     end if
+    if(myword(allkey, " NOZERO")) &
+      write (iw, '(" *  NOZERO     - THE NUMBER ZERO IN THE RESIDUE SEQUENCE IS DELETED")')
+    if(myword(allkey, " ZERO")) &
+      write (iw, '(" *  ZERO       - A RESIDUE IS ALLOWED TO HAVE THE NUMBER ZERO")')
   end if
   if (myword(allkey, " NORES"))  &
     write (iw, '(" *  NORES      - THIS IS THE DEFAULT.  USE ""RESIDUES"" IF RESIDUES ARE TO BE CALCULATED")')
@@ -1272,7 +1282,7 @@ subroutine wrtcon (allkey)
 !                       Magnetic component of spin
 !
   if (myword(allkey, " MS=")) &
-    write (iw,'(" *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =", f4.1)') &
+    write (iw,'(" *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =", f5.1)') &
     reada (keywrd, Index (keywrd, " MS="))
 !
 !   Select root of C.I. matrix
