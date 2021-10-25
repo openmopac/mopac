@@ -1,0 +1,5 @@
+ OPEN(5,6) MECI     ALLVECS MS=1.5 external=s:\data\elements\00_bio\params.txt
+Tantalum, 4F(g) 5d(3)6s(2)
+ ROOT=1,4,F(G) H=0 HR=NIST HWT=20
+ Ta         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

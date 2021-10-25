@@ -1,0 +1,5 @@
+  CHARGE=1 OPEN(6,4) NOLOG     MECI
+Chlorine, cation 3P(u)
+ H=268 ROOT=1,3,P(U) HR=NIST
+ Cl         0.00000000  0    0.0000000  0    0.0000000  0   -1    0    0       1.0000
+ 

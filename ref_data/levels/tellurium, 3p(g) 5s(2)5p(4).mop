@@ -1,0 +1,5 @@
+  OPEN(6,4) MECI     NOLOG
+Tellurium, 3P(g) 5s(2)5p(4)
+ H=-1.0 HWT=20 HR=MOORE  ROOT=1,3,P(G) 
+ Te         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

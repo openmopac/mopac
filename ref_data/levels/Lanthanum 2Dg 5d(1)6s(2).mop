@@ -1,0 +1,5 @@
+  OPEN(3,9) MECI     external=i:/pm7.txt 
+Lanthanum 2Dg 5d(1)6s(2)  (gs)
+ HR=MOORE H=0.0 ROOT=1,2,D(G) hwt=5
+ La         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

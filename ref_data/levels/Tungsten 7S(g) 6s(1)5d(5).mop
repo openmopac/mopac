@@ -1,0 +1,5 @@
+  OPEN(6,6) MECI SHIFT=90 ALLVECS MS=2 pulay external=i:/pm7.txt
+Tungsten 7S(g) 6s(1)5d(5)
+ ROOT=1,7,S(G) H=-10 HR=NIST hwt=10
+  W         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

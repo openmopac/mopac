@@ -1,0 +1,5 @@
+  OPEN(8,6) MS=2 MECI     NOLOG
+Iron, 5D(g) 3d(6)4s(2)
+ HR=NIST H=0.000 ROOT=1,5,D(G) hwt=3
+ Fe         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

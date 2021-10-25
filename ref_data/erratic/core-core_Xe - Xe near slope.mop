@@ -1,0 +1,9 @@
+*
+*   -40.995
+*
+ XFAC PM7
+Xe - Xe core-core at 3.0 Angstroms (near slope)
+ HR=GUESS HWT=200 H=-42+"CORE-CORE_XE - XE NEAR" NOSCALE
+ Xe     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ Xe     3.10000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

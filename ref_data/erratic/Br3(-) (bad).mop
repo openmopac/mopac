@@ -1,0 +1,6 @@
+ charge=-1
+ Br3(-) (bad)
+H=5+"Br3(-) (good)" hr=guess HWT=20
+Br
+Br 2.32 0
+Br 3.51 0 180 0 0 0 2 1 0

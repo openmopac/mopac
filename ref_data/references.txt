@@ -1,0 +1,2187 @@
+ GRIFFITH
+ J. S. Griffith, "The Theory of Transition-Metal Ions", Cambridge University Press, 1961.
+
+
+ CCDC
+ The Cambridge Structural Database: a quarter of a million crystal structures and rising.
+ F. H. Allen, Acta Cryst. B58, 380-388, (2002)
+
+ B3LYP
+ 6-31G(d) basis set using the B3LYP Density Functional
+
+
+ DMOL
+ Density Functional Theory Electronic Structure Program (DMOL), B. Delley, J. Chem. Phys. 113, 7756 (2000).
+
+ 
+ WPCT05
+ P. Winget, T. Clark, J. Mol. Model.  11, 439-456 (2005). 
+
+
+ WHSMC03
+ P. Winget, A.H.C. Horn, C. Seloki, B. Martin, T. Clark, J. Mol. Model.  9, 408 (2003). 
+
+
+ TLHVSQ02
+ G. S. Tschumper, M. L. Leininger, B. C. Hoffman, E. F. Valeev, H. F. Schaefer III,
+ M. Quack, J. Chem. Phys. 116, 690 (2002)
+
+ WSHC2003
+ P. Winget, C. Selcuki, A. H. C. Horn, B. Martin, T. Clark, Theor. Chem. Acc.,
+ 110, 254 (2003)
+
+ PW91D
+ Estimated from DGauss results of DFT calculations, using the B88-PW91 functional and 
+ the DZVP basis set, in CAChe 6.0, Fujitsu Ltd, 2003.
+
+ PWEA2003
+ P. Winget, et.al., Theor. Chim. Acta. 110, 254, (2003)
+
+
+ THUM2002
+ S.Tsuzuki, K. Honda, T. Uchimaru, M. Mikami, K. Tanabe, J. Am. Chem. Soc.,
+124, 104 (2002).
+
+ G3-99
+ Assessment of Gaussian-3 and Density Functional Theories for a Larger Test Set"
+ L. A. Curtiss, K. Raghavachari, P. C. Redfern, and J. A. Pople, 
+ Journal of Chemical Physics, 112, 7374 (2000).
+ PDB
+ Protein Data Bank, Research Collaboratory for Structural Bioinformatics, 
+ The San Diego Supercomputer Center, San Diego, CA, 2001.
+
+ RMMBB85
+ Rochon F.D., Melanson R., Macquet J.-P., Belanger-Gariepy F., Beauchamp A.L.
+    Inorg.Chim.Acta, 108, 1 (1985).
+
+ HF631G
+ Calculated using the HF 6-31G(d) basis set in Gaussian 03: M.J. Frisch, et. al., 
+ Gaussian 03, Gaussian Inc, Pittsburg, (2003).
+
+ GS
+ Presumed ground state.
+
+
+ METALS
+ Normal Ground State of Metal Complex.
+
+
+ B88_LYP
+ DGAUSS using the Lee-Parr-Yang correlation functional, in CAChe 5.0, 
+ Fujitsu Ltd, 2001.
+
+ EF72
+ J. H. Enemark and R. D. Feltham, Proc. Natl. Acad. Sci., U. S., 69, 3524 (1972).
+
+
+ TV76
+ T. Tistler and P. A. Vaughan, Inorg. Chem., 6, 126 (1976).
+
+
+ ST74
+ S. Takagi, et.al., J. Am. Chem. Soc., 96, 6606 (1974).
+
+
+ CKJ62
+ C. K. Joergensen, "Absorption Spectra and Chemical Bonding in 
+ Complexes", Pergamon Press, London, 1962.
+
+ JJAG68
+ (a) J. J. Alexander and H. B. Gray, J. Am. Chem. Soc., 90, 4260 (1968); 
+ (b) V. M. Miskowski, H. B. Gray, R. B. Wilson, and E. I. Solomon, 
+ Inorg. Chem., 18, 1410 (1979).
+ DUMMY
+ No reference available, but data are consistent with other data.
+
+
+ WWFL99
+Z. Wang, S. R. Wilson, B. M. Foxman, and W. Lin, Crystal Eng., 2, 91-100 (1999).
+
+
+ NIK2000
+ http://www.oldenbourg.de/verlag/zkristallogr/mn-ncsfi2000.htm.
+ 
+
+ MVV69
+ M. V. Veidis, et. al., J. Am. Chem. Soc., 91, 1859 (1969).
+
+
+ DWM70
+ D. W. Meek, et. al., J. Am. Chem. Soc., 92, 5351 (1970).
+
+
+ EC71
+ P. G. Eller and P. W. R. Corfield, Chem. Comm., 105, (1971).
+
+
+ RC68
+ K. N. Raymond and P. W. R. Corfield, Inorg. Chem., 7, 1362 (1968).
+
+
+ KNR68
+ K. N. Raymond, et. al., Inorg. Chem., 7, 1111, (1968).
+
+
+ AKS00
+ C. Aubauer, T. M. Klapoetke, and A. Schulz, J. Mol. Struct., 6, 76-85 (2000).
+
+
+ KVKC01
+ L. A. Kovbasyuk, O. Y. Vassilyeva, V. N. Kokozay, et. al., Crystal Engineering,
+4, 201-213 (2001).
+
+ SFK00
+ M. Siodmiak, G. Frenking, and A Korkin, J. Mol. Model., 6, 413-424 (2000).
+
+ 
+ WB83
+ S. P. Walsh and C. W. Bauschlicher, J. Chem. Phys.,79, 3590 (1983).
+
+
+ MHLZ84
+ M. D. Morse, G. P. Hansen, P. R. R. Langridge-Smith, L. S. Zheng, 
+ M. E. Gensic, D . L. Michalopoulus, and R. E. Smalley, 
+ J. Chem. Phys., 80 5400 (1984).
+ BGB2000
+ K. L. Bartlett, K. I. Goldberg, and W. T. Borden, J. Am. Chem. Soc., 122, 1456-1465 (2000).
+
+
+ SJH97
+ Steinborn D., Junicke H., Heinemann F.W. Inorg. Chim. Acta 256, 87 (1997).
+
+
+ SMI93
+ Suzuki Y., Miyamoto T.K., Ichida H. Acta Cryst. C, 49, 1317 (1993).
+
+
+ RLBB86
+ Raudaschl-Sieber G., Lippert B., Britten J.F., Beauchamp A.L.
+    Inorg. Chim. Acta 124, 213 (1986).
+
+ ABLM87
+ Alibrandi G., Bruno G., Lanza S., Minniti D., Romeo R., Tobe M.L.,
+    Inorg. Chem. 26, 185 (1987).
+
+ BZE93
+ Bevilacqua J.M., Zuleta J.A., Eisenberg R., Inorg.Chem., 32, 3689 (1993).
+
+
+ MPBG95
+ Marangoni G., Pitteri B., Bertolasi V., Gilli P. Inorg.Chim.Acta 234, 173 (1995). 
+
+
+ CHKA95
+ Y. M. Chen, C. L. Haynes, F. A. Khan, and P. Armentrout,
+J. Am. Chem. Soc., 117, 6994 (1995).
+
+ HLK77
+ J. C. Huffman, M. P. Laurent, and J. K. Kochi, Inorg. Chem., 16, 2639 (1977).
+
+
+ LHID69
+ S. J. LaPlaca, W. C. Hamilton, J. A. Ibers, and 
+ A. Davidson, Inorg. Chem., 8, 1938 (1969).
+
+ IDW82
+ J. A. Ibers, R. DiCosimo, and G. M. Whitsides, Organometallics, 1, 13 (1982).
+
+
+ JTC94
+ J.-T. Chen, et.al., Organometallics, 13, 4804 (1994).
+
+
+ CO75
+ P. Colamarino and P. L. Orioli, J. Chem. Soc., Dalton Trans., 1656 (1975).
+
+
+ CHMG96
+ W. B. Connick, L. M. Henling, R. E. Marsh, and H. B. Gray, Inorg. Chem., 35 6261 (1996).
+
+
+ HL83
+ L. S. Hollis and S. J. Lippard, Inorg. Chem., 22, 28709 (1983).
+
+
+ OG90
+ G. Ohanessian and W. A. Goddard, Acc. Chem. Res., 23, 386 (1990).
+
+
+ RBLP90
+ M. Rosi, C. W. Bauschlicher, 
+ S. R. Langhoff, and H. Partridge,  
+ J. Chem. Phys., 94, 8656 (1990).
+ BNB85
+ C. W. Bauschlicher, C. J. Nelin, and P. S. Bagus, J. Chem. Phys., 97, 2564 (1985).
+
+
+ BKS93
+ M. R. A. Blomberg, C. A. M. Karlsson, and P. E. M. Siegbahn, 
+J. Phys. Chem., 97, 9341 (1993).
+
+ SBS93
+ P. E. M. Siegbahn, M. R. A. Blomberg, and M. Svensson, J. Phys. Chem., 97, 2564 (1993).
+
+
+ SB92
+ P. E. M. Siegbahn and M. R. A. Blomberg, J. Am. Chem. Soc., 114, 10548 (1992).
+
+
+ SBS87
+ P. E. M. Siegbahm, M. R. A. Blomberg, and M. Svensson, J. Am. Chem. Soc., 109, 5573 (1987).
+
+
+ BSS00
+ B. Biswas, M. Sugimoto, and S. Sakaki, Organometallics, 19, 3895 (2000).
+
+
+ SOMA94
+ S. Sakaki, M. Ogawa, Y. Musashi, and T. Arai, Inorg. Chem., 33, 1660 (1994).
+
+
+ CMM98
+ Q. Cui, D. G. Musaev, and K. Morokuma, Organometallics, 17, 742 (1998).
+
+
+ CMM1998
+ Q. Cui, D. G. Musaev, and K. Morokuma, J. Chem. Phys., 108, 8418 (1998).
+
+
+ FAC1974
+ F. A. Cotton, et. al., J. Chem. Soc. Dalton Trans., 800 (1974).
+
+
+ REGK1982
+ L. J. Radonovich, M. W. Eyring, T. J. Groshens, 
+ and K. J. Klabunde, J. Am. Chem. Soc., 104 2816 (1982). i
+
+ KOMT1982
+ C. L. Klein, C. J. O'Connor, R. J. Majeste, and L. M. Trefonas, 
+ J. Chem. Soc., Dalton Trans., 2419 (1982).
+
+ CAS1982
+ A. S. Cheung, et. al., J. Mol. Spectr., 95 213 (1982).
+
+
+ STEV83
+ Stevens, et. al., J. Chem. Phys., 78, 5420 (1983).
+
+
+ CFLTA97
+ L. Capron, W. Y. Feng, C. Lifshittz, 
+B. L. Tjelta, and P. B. Armentrout, J. Phys. Chem., 
+101, 2064 (1997).
+ MKA1995
+ F. Meyer, F. A. Khan, and P. B. Armentrout, J. Am. Chem. Soc., 117, 9740 (1995).
+
+
+ SJA1996
+ M. R. Sievers, L. M. Jarvis, i
+ P. B. Armentrout, J. Am. Chem. Soc., 
+ 100, 16571 (1996).
+ APB1995
+ P. B. Armentrout, Acc. Chem. Res., 28, 430 (1995)
+ 
+
+ VS01
+ S. F. Vyboishchikov and Sauer, J. Chem. Phys., 105, 00,(2001).
+
+
+ SB1990
+ M. Simoes and J. L. Beauchamp, Chem. Rev. 90, 629 (1990).
+
+ 
+ SNSM89
+ T. C. Steimple, D. E., Nachman, 
+ J. E. Shirley, A. J. Meyers, 
+ J. Chem. Phys., 90, 5360 (1989).
+ CS1982
+ Ch. Corliss and J. Sugar, J. Phys. Chem. Ref. Data, No. 1, 11, 135 (1982).
+
+
+ KEN91
+ H. Krause, B. Ernstberger, 
+and H. J. Neusser, Chem. Phys. 
+Lett., 184, 411 (1991).
+ NRM99
+ A. Noll, S. Rabe, and U. Muller, Z. Naturforsch. B, 54, 591 (1999).
+
+
+ HYKD97
+ Y.-P. Ho, Y. Yang, S. J. Kipperstein, and R. C. Dunbar, 
+ J. Chem. Phys., 101, 3338 (1997).
+
+ DUPONT
+ Private Communication by Dr Dave Dixon, DuPont.
+ 
+ 
+ WKSD2000
+ S. S. Weselowski, R.A. King, H. F. Schaefer, and M. A. Duncan, 
+ J. Chem. Phys., 
+ 113, 701 (2000).
+ KC1986
+ R. G. Keesee and A. W. Castleman, Jr., J. Phys. Chem. Ref. Data, 15, 1011 (1986).
+ 
+ 
+ SK1969
+ S. K. Searles and P. Kebarie, Can. J. Chem., 47, 262 (1969).
+ 
+ 
+ DVT1968
+ G. Dallinga, R. K. van der, Draai, and L. H. Toneman,Recl. 
+ Trav. Chim. Pays-Bas, 87, 897 (1968).
+ 
+ RNLP1965
+ R. Nelson, L. Pierce, J. Mol. Spectrosc. 18, 344 (1965).
+ 
+ 
+ JEWVWL68
+ J. E. Wollrab, V. W. Laurie, J. Chem. Phys., 48, 5058 (1968).
+ 
+ 
+ DGS75
+ D. G. Schmidling, J. Mol. Struct., 24, 1 (1975).
+
+
+ KSSR98
+ I. Kretzschmar, D. Scroeder, H. Schwarz, C. Rue, and 
+  P. B. Armentrout, J. Phys. Chem., 102, 10060, (1998).
+
+ HIKL1992
+ Hirota, T. Iijima, K. Kuchitsu, W. J. Lafferty, and D. A. Ramsay,
+ "Structure Data on Free Polyatomic Molecules," Landolt-Bornstein, 
+ New Series, Group II, Vol. 21, Springer, Berlin (1992).
+ CHIK1986
+ J. H. Callomon, E. Hirota, T. Iijima, K. Kuchitsu, W. J. Lafferty, 
+ "Structure Data on Free Polyatomic Molecules," Landolt-Bornstein, 
+ New Series, Group II, Vol. 15, Springer, Berlin (1977).
+ OTMF1989
+ L. Operti, E. C. Tews, T. J. Macmahon, B. S. Freiser, J. Am. Chem. Soc.,
+ 111, 9152 (1989).
+ 
+ NOH1982
+ J. Nakagawa, H. Okutani, M. Hayashi, J. Mol. Spectrosc., 94, 410 (1982).
+ 
+ 
+ JFB1966
+ J. F. Beecher, J. Mol. Spectrosc., 21, 414 (1966).
+ 
+ 
+ CSS75
+ N. S. Chiu, L. Schaefer, and R. Seip, J. Organomet. Chem., 101, 331 (1975).
+
+
+ HSS1978
+ A. Haaland, S. Samdal, R. Seip, J. Organomet. Chem., 153, 187 (1978).
+ 
+ 
+ HMM1989
+ S. Husebye, K. Maartmann-Moe, O. Mikalsen, Acta Chem. Scand., 43, 868 (1989).
+ 
+ 
+ EHZ1989
+ W. J. Evans, J. H. Hain, J. W. Ziller, J. Chem. Soc., Chem. Commun.,
+ 1628, (1989).
+ 
+ CFK1963
+ H. C. Clark, S. G. Furnival, J. T. Kwon, Can. J. Chem., 41, 2889 (1963).
+ 
+ 
+ HVPF1985
+ M. Henchman, A. A. Viggiano, J. F. Paulson, A. Freeman, J. Wormhoudt,
+ J. Am. Chem. Soc., 107, 1253 (1985).
+ 
+ GDPR1988
+ M. J. Goode, A. J. Downs, C. R. Pulham, D. W. H. Rankin, H. E. Robertson,
+ J. Chem. Soc. Chem. Comm., 768 (1988).
+ 
+ OWSW1989
+ O. I. Osman, B. J. Whitaker, N. P. C. Simmons, D. R. M. Walton,
+ J. F. Nixon, H. W. Krojo, J. Mol. Spect., 137, 373 (1989).
+ 
+ HKFM1989
+ M. Hayashi, S. Kaminaka, M. Fujitake, S. Miyazaki, J. Mol. Spect.,
+ 135, 289 (1989).
+ 
+ BL1989
+ K. Balasubramanian, J. Li, J. Mol. Spect., 135, 169 (1989).
+ 
+ 
+ ESZ1989
+ W. E. Ernst, J. O. Schroeder, B. Zeller, J. Mol. Spect., 135, 161 (1989).
+ 
+ 
+ SLW1991
+ M. Sana, G. Leroy, and C. Wilante, Organometallics, 10, 264 (1991)
+ 
+ 
+ BMCR1997
+ J.-P. Blaudeau, M. P. McGrath, L. A. Curtis, and L. Radom, J. Chem. Phys., 
+ 107, 5016 (1997).
+ 
+ KS1996
+ J. Kapp and P. v. R. Schleyer, Inorg. Chem., 35, 2247 (1996).
+ 
+ 
+ TSNMM89
+ J. Takacs, E. Soos, Z. Nagy-Magos, L. Marko, G. Gervasio, 
+ and T. Hoffmann, Inorg. Chim. Acta, 166, 39 (1989).
+
+ IF1977
+ O. A. Ileperuma and R. D. Feltham, Inorg. Chem., 16, 1876 (1977).
+
+
+ PCFG92
+ A. K. Powell, J. M. Charnock, A. C. Flood, C. D. Garner, 
+ M. J. Ware, W. Clegg, J. Chem. Soc., Dalton Trans, 203 (1992).
+
+ AI1977
+ J. Ahmed and J. A. Ibers, Inorg. Chem., 16, 935 (1977).
+
+
+ TMV1995
+ M. V. Tsodikov, et. al., Izv. Akad. Kauk, SSSR, Ser. Khim., 1454 (1995).
+
+
+ OMSD88
+ A. Ozarowski, B. R. McGarvey, A. B. Sarkar, 
+ and J. E. Drake, Inorg. Chem., 27, 628 (1988).
+
+ SLPS96
+ B. Singh, J. R. Long, G. C. Papaefthymiou, and 
+ P. Stavropoulos, J. Am. Chem. Soc., 118, 5824 (1996).
+
+ TSST1989
+ S. Tomoda, M. Shimoda, M. Sanami, Y. Takeuchi, Y. Litaka, J. Chem. Soc.
+ Chem. Comm., 1304 (1989).
+ 
+ JT1978
+ J. K. Tyler, J. Sheridan, Trans. Farad. Soc., 59, 2661 (1963).
+ 
+ 
+ JTS1978
+ H. Jones, M. Takami, J. Sheridan, Z. Naturforsch., A33, 156 (1978).
+ 
+ 
+ JSS1977
+ H. Jones, J. Sheridan, O. Stiefvater, Z. Naturforsch., A32, 866 (1977).
+ 
+ 
+ AKF1993
+ E. Anders, R. Koch, and P. Freunscht, J. Comp. Chem., 14, 1301-1312 (1993).
+ 
+ 
+ AHD1989
+ U. Anderson, N. Heineking, H. Dreizler, J. Mol. Struct. 137, 296 (1989).
+ 
+ 
+ UHMW1989
+ S. Urban, E. Herbst, P. Mittler, G. Winnewisser, K. M. T. Yamada,
+ M. Winnewisser, J. Mol. Spect., 137, 327 (1989).
+ 
+ BBHM1975
+ T. Bartke, A. Bjorseth, A. Haaland, K. M. Marstokk, H. Mollendal,
+ J. Organomet. Chem., 85, 271 (1975).
+ 
+ DR1978
+ M. J. S. Dewar, H. S. Rzepa, J. Am. Chem. Soc., 100, 777 (1989).
+ 
+ 
+ CCG1970
+ D. B. Chambers, G. E. Coates, F. Glonkling, J. Chem. Soc., A. 741 (1970).
+ 
+ 
+ BKK1977
+ I. Barin, O. Knacke, O. Kubaschewski, "Thermochemical Properties of
+ Inorganic Compounds", Springer-Verlag, Berlin, 1977.
+ 
+ KABK1996
+ J. S. Klassen, S. G. Anderson, A. T. Blades, and P. Kebarle, 
+ J. Phys. Chem., 100, 14218 (1996).
+ 
+ GC1991
+ B. C. Guo and A. W. Castleman, Chme. Phys. Lett., 16, 181 (1991).
+
+
+ BSKR1997
+ G. A. Bowmaker, H. Schmidtbauere, S. Kruger, 
+ and N. Rosch, Inorg. Chem., 36, 1754 (1997).
+
+ SNK1981
+ J. Sunner, K. Nishijawa, and P. Kebarle, J. Phys. Chem., 85, 1814 (1981).
+ 
+ 
+ DS1962
+ J. V. Davis, S. Sunner, Acta Chem. Scand., 16, 1870 (1962).
+ 
+ 
+ GZ1989
+ J. J. Grabowski, L. Zhang, J. Am. Chem. Soc., 111, 1193 (1989).
+ 
+ 
+ MM1963
+ H. Mackle, R. T. B. McLean, Trans. Faraday Soc., 59, 669 (1963).
+ 
+ 
+ MO1963
+ H. Mackle, P. A. G. O'Hare, Tetrahedron, 19, 961 (1963).
+ 
+ 
+ MS1962
+ M. Mansson, S. Sunner, Acta Chem. Scand., 16, 1863 (1962).
+ 
+ 
+ SW1975
+ G. G. B. Souza, J. D. Wieser, J. Mol. Struct., 25, 442 (1975).
+ 
+ 
+ SKGZ1979
+ V. G. Solomonik, K. S. Krasnov, G. V. Girichev, E. Z. Zasorin, Zh. Strukt.
+ Khim., 20, 427 (1979).
+ 
+ MH1988
+ M. Hargittai, Coord. Chem. Rev., 91, 35 (1988).
+ 
+ 
+ PUGI1985
+ V. M. Petrov, A. N. Utkin, G. V. Girichev, A. A. Ivanov, Zh. Strukt.
+ Khim., 26, 52 (1985).
+ 
+ OTIO1989
+ K. Ozutsumi, T. Takamuka, S. Ishiguko, H. Ohtaki, Bull. Chem. Soc. Japan,
+ 62, 1875 (1989).
+ 
+ GCC1989
+ B. C. Guo, B. J. Conklin, A. W. Castleman, Jr., J. Am. Chem. Soc., 111,
+ 6506 (1989).
+ 
+ GR1964
+ L. J. Guggenberger, R. E. Rundle, J. Am. Chem. Soc., 86, 5344 (1964).
+ 
+ 
+ EKT21986
+ W. E. Ernst, J. Kaendler, T. Toerring, Chem. Phys. Lett., 123, 243 (1986).
+ 
+ 
+ NH1983
+ K. P. R. Nair, J. Hoeft, Chem. Phys. Lett., 96, 348 (1983).
+ 
+ 
+ EKKT1985
+ W. E. Ernst, J. Kaendler, S. Kindt, T. Toerring, 
+ Chem. Phys. Lett., 113, 351 (1985).
+ 
+ SRBH1985
+ H. S. Schweda, A. Renn, H. Buesener, A. Hese, Chem. Phys., 98, 157 (1985).
+ 
+ 
+ EKT1986
+ W. E. Ernst, J. Kaendler, T. Toerring, 
+ J. Chem. Phys., 84, 4769 (1986).
+ 
+ LSL1972
+ E. A. Laws, R. M. Stevens, W. N. Lipscomb, J. Am. Chem. Soc., 94, 4461
+ (1972).
+ 
+ CHW1989
+ C. H. Wu, J. Chem. Phys., 91, 546 (1989).
+ 
+ 
+ YFH1989
+ C. Yamada, M. Fujitake, E. Hirota, J. Chem. Phys., 91, 137 (1989).
+ 
+ 
+ CODA1978
+ CODATA, J. Chem. Thermod., 10, 903 (1978).
+ 
+ 
+ STHK1982
+ G. Schultz, J. Tremmel, I. Hargittai, N. D. Kagramanov, A. K. Maltsev,
+ O. M. Nefedov, J. Mol. Struct., 82, 107 (1982).
+ 
+ SEH1986
+ S. Saito, Y. Endo, E. Hirota, J. Mol. Spect., 116, 499 (1986).
+ 
+ 
+ NSH1987
+ J. Nakagawa, Y. Shiko, M. Hayashi, J. Mol. Spect., 122, 1 (1987).
+ 
+ 
+ TD1985
+ T. Torring, K. Doebl, Chem. Phys. Lett., 115, 328 (1985).
+ 
+ 
+ MSPH1982
+ K. Moller, H.-U. Schutze-Pahlmann, J. Hoeft, T. Torring, Chem. Phys., 68,
+ 399 (1982).
+ 
+ DBF1980
+ M. Dulick, P. F. Bernath, R. W. Field, J. Chem. Phys., 82, 5023 (1985).
+ 
+ 
+ MGWO1987
+ G. A. McRae, M. C. L. Gerry, M. Wong, I. Ozier, E. A. Cohen, J. Mol. 
+ Spect., 123, 321 (1987).
+ 
+ CEG1987
+ A. P. Cox, I. C. Ewart, T. R. Gayton, J. Mol. Spect., 125, 76 (1987).
+ 
+ 
+ MCFW00
+ V. Mastryukov, C.-y. Ruan, M. Fink, Z. Wang, and R. Pachter, 
+ J. Mol. Struct., 556, 225-237 (2000).
+ 
+ FS1987
+ E. H. Fink, K. D. Setzer, J. Mol. Spect., 125, 66 (1987).
+ 
+ 
+ VJ1988
+ S. N. Vempati, W. E. Jones, J. Mol. Spect., 127, 232 (1988).
+ 
+ 
+ RC1988
+ C. A. Rego, P. A. Cox, J. Chem. Phys., 89, 124 (1988).
+ 
+ 
+ KRZ1973
+ G. M. Kolyakova, I. B. Rabinovich, E. N Zoria, Dokl. Akad. Nauk
+ SSSR, 209, 616 (1973).
+ 
+ DPC1984
+ P. D. Dao, K. I. Peterson, A. W. Castlemon, J. Chem. Phys., 80, 563 (1984).
+ 
+ 
+ DLS1979
+ J. R. Durig, Y. S. Li, J. F. Sullivan, J. Chem. Phys., 71, 1041 (1979).
+ 
+ 
+ MRB1976
+ J. D. Murdoch, D. W. H. Rankin, B. Beagley, J. Mol. Struct., 
+ 31, 291, (1976).
+ 
+ GAMS1989
+ P. Groner, G. M. Attia, A. B. Mohamad, J. F. Sullivan,
+ Y. S. Li, J. R. Durig, J. Chem. Phys., 91, 1434 (1989).
+ 
+ WELLS84
+ "Structural Inorganic Chemistry", A. F. Wells, Clarendon Press, Oxford, 1984.
+ 
+ 
+ WH1966
+ H. H. Wang, K. M. Hui, J. Organomet. Chem. 6, 504 (1966)
+ 
+ 
+ LTZM1963
+ W. F. Lautsch, A. Trober, W. Zimmer, L. Mehner, W. Linck, H. M. Lehmann,
+ H. Brandenberger, H. Korner, H. J. Metzschker, H. J. Wagner,
+ R. Kaden, Z. Chem., 3, 415 (1963).
+ EKLT1985
+ W. E. Ernst, J. Kandler, J. Ludtke, T. Torring, 
+ J. Chem. Phys., 83 2744 (1985).
+ 
+ KMW1972
+ L. C. Krishner, J. A. Morrison, W. A. Watson, 
+ J. Chem. Phys., 57, 1357 (1972).
+ 
+ SPIO1980
+ "Spectroscopic Properties of Inorganic and Organometallic Compounds", 
+ Royal Society of Chemistry, Spottiswoode Ballantyne Ltd., Colchester
+ and London, 1980, Vol. 14.
+ BC1965
+ L. S. Bartell and B. L. Carroll, J. Chem. Phys., 42, 3076 (1965).
+ 
+ 
+ BJ1984
+ L. S. Bartell, A. Jin, J. Mol. Struct., 118, 47 (1984).
+ 
+ 
+ MWE1974
+ N. K. Moncur, P. D. Willson, T. H. Edwards, J. Mol. Spectrosc., 52, 
+ 380 (1974).
+ 
+ RGPG6269
+ J. R. Rusk, W. Gordy, Phys. Rev., 127, 817 (1962); E. Pearson, 
+ W. Gordy, Phys. Rev, 177, 52 (1969).
+ 
+ WLBG1989
+ N. P. C. Westwood, W. Lewis-Bevan, M. C. L. Gerry, 
+ J. Mol. Spectr., 136, 93 (1989).
+ 
+ NO1989
+ Y. Niide, I. Ohkoshi, J. Mol. Spectr., 136, 17 (1989).
+ 
+ 
+ HB
+ Hydrogen bonded system  Hydrogen bond energies are "guestimates".
+ 
+ 
+ CED1973
+ B. G. Cooksey, J. H. D. Eland, C. J. Danby, J. Chem. Soc., 
+ Faraday Trans. 2 69, 1558 (1973).
+ 
+ AS1957
+ P. A. Akishin, V. P. Spiridonov, Sov. Phys. Crystallog., 2, 472 (1957).
+ 
+ 
+ AHHS1982
+ A. Almenningen, T. U. Halgaker, A. Haaland, S. Samdal, 
+ Acta Chem. Scand., Part A. A36, 159 (1982).
+ 
+ D1983
+ V. Demidov, J. Struct. Chem., 24, 7 (1983).
+ 
+ 
+ CS1938
+ E. Coop, L. E. Sutton, J. Chem. Soc., 1269 (1938).
+ 
+ 
+ FKA1970
+ H. Fujii, M. Kimura, Bull. Chem. Soc. Japan, 44, 2643 (1970)
+ 
+ 
+ FK1970
+ H. Fujii, M. Kimura, Bull. Chem. Soc. Japan, 43, 1933 (1970)
+ 
+ 
+ WW1987
+ "Comprehensive Coordination Chemistry", ed. W. Wilkinson, 
+ Pergamon Press, 1987, v5, 775-860.
+
+ WW1956
+ G. R. Wilkinson, M. K. Wilson, J. Chem. Phys., 25, 784 (1956).
+ 
+ 
+ PP1989
+ G. Pilcher, "The Chemistry of Organophosphorus Compounds", 
+ F. R. Hartley, Ed., Wiley, New York, 1989.
+
+ TPBZ84
+ D. Takhin, G. Pilcher, J. Bickerton, and A. Zaki, 
+ J. Chem. Soc., Dalton Trans., 371 (1984).
+
+ TS1983
+ D. Takhin and H. A. Skinner, J. Chem. Soc., Dalton Trans., 2323 (1983).
+
+
+ TS1984
+ D. Takhin and H. A. Skinner, J. Chem. Soc., Dalton Trans., 371 (1984).
+
+
+ PS1982
+ G.Pilcher and H. A. Skinner, 
+ The Chemistry of the Metal-Carbon Bond, F. R. Hartley and S. Patai, Eds., 
+ Wiley, New York, pp. 43-90 (1982).
+ S1964
+ H. A. Skinner, Adv. Organomet. Chem., 2, 49 (1964).
+ 
+ 
+ FSSS1976
+ A. Flamini, E. Semprini, F. Stefani, S. Sorriso, G. Cardaci,
+ J. Chem. Soc., Dalton Trans., 731 (1976).
+ 
+ BK1966
+ E. V. van den Berghe, G. P. van den Kelen, J. Organomet. 
+ Chem., 6, 515 (1966).
+ 
+ NSS1965
+ G. A. Nash, H. A. Skinner, W. F. Stack, Trans. Faraday Soc., 
+ 61, 640 (1965).
+ 
+ GM1971
+ R. Gupta, B. Majee, J. Organomet. Chem., 33, 169 (1971).
+ 
+ 
+ GHAC1972
+ "Gmelins Handbuch der anorganischen Chemie", Zinn, Thiel C1, 
+ Verlag Chemie, GMBH, Weinheim, 1972.
+ 
+ VT1969
+ L. V. Vilkov, N. A. Tarensenko, Zh. Strukt. Khim., 10, 102 (1969).
+ 
+ 
+ MNI1960
+ Y. Morino, Y. Nakamura, T. Iijima, J. Chem. Phys., 32, 643 (1960).
+ 
+ 
+ DHS1977
+ J. E. Drake, H. L. Hencher, Q. Shem, Can. J. Chem., 55, 1104 (1977).
+ 
+ 
+ DH1975
+ J. Durig, K. L. Hellams, J. Mol. Struct., 29, 349 (1975).
+ 
+ 
+ DG1981
+ J. R. Drake, K. Gorzelska, J. Electron Spectrosc., 21, 1981 (1981).
+ 
+ 
+ LD1973
+ Y. S. Li, J. Durig, Inorg. Chem., 12, 306 (1973).
+ 
+ 
+ DHHM1976
+ J. E. Drake, R. T. Hemmings, J. L. Hencher, F. M. Mustoe, Q. Shem,
+ J. Chem. Soc., Dalton Trans., 394, (1976).
+ 
+ HM1975
+ J. L. Hencher, F. J. Mistoe, Can. J. Chem., 53, 3542 (1975).
+ 
+ 
+ BLPP1972
+ J. C. Baldwin, M. F. Lappert, J. B. Pedley, J. S. Poland,
+ J. Chem. Soc., Dalton Trans., 1943 (1972).
+ 
+ BMF1974
+ B. Beagley, K. McAloon, J. M. Freeman, Acta Crystallogr., 
+ Sect. B, B30, 444 (1974).
+ 
+ DCL1973
+ J. Durig, M. M. Chen, Y. S. Li, J. Phys. Chem., 77, 227 (1973), and
+ E. C. Thomas, V. W. Laurie, J. Chem. Phys., 50, 3512 (1969).
+ 
+ PCMS1970
+ B. P. Pullen, T. A. Carlson, W. E. Moddeman, G. K. Schweitzer, 
+ J. Chem. Phys., 53, 768 (1970).
+ 
+ ED1980
+ R. A. Eades, D. A. Dixon, J. Chem. Phys., 72, 3309 (1980).
+ 
+ 
+ ETSS1971
+ nI. R. Epstein, J. A. Tossell, E. Switkes, I. R. M. Stevens,
+ W. N. Lipscomb, Inorg. Chem., 10, 171, (1971).
+ 
+ SETS1970
+ E. Switkes, I. R. Epstein, J. A. Tossell, R. M. Stevens, W. N. Lipscomb,
+ J. Am. Chem. Soc., 92, 3837 (1970).
+ 
+ SSLN1969
+ E. Switkes, R. M. Stevens, W. N. Lipscomb, M. D. Newton,
+ J. Chem. Phys., 51, 2085 (1969).
+ 
+ HJ1967
+ G. Herzberg, J. W. C. Johns, Proc. R. Soc. London, Ser. A., 298, 142 (1967).
+ 
+ 
+ BCTS1981
+ V. N. Baidin, Y. V. Chizhov, N. M. Timoshenko, O. K. Sokolikova,
+ Yu. K. Grishin, Yu. A. Ustynyuk, J. Struct. Chem. 
+ (Engl. Transl.) 22, 616 (1981).
+ E1970
+ J. H. D. Elan, Int. J. Mass Spect. Ion Phys. 4, 37 (1970).
+ 
+ 
+ FUNK1976
+ Tl. P. Fahler, J. Ulman, W. A. Nugent, J. K. Kochi, 
+ Inorg. Chem. 15, 2544 (1976).
+ 
+ O1978
+ H. Oberhammer, J. Mol. Struct., 48, 389 (1978).
+ 
+ 
+ SGB1979
+ V. P. Spiridonov, A. G. Gershikov, B. S. Butayev, 
+ J. Mol. Struct., 52, 53 (1979).
+ 
+ AS1950
+ P. W. Allen, L. E. Sutton, Acta. Crystallogr. 3, 46 (1950).
+ 
+ 
+ KKK1973
+ K. Kashiwabara, S. Konaka, N. M. Kimura, Bull. Chem. Soc. Japan,
+ 46, 410 (1973).
+ 
+ I1976
+ N. Iwasaki, Bull. Chem. Soc. Japan, 49, 2735 (1976).
+ 
+ 
+ GS1954
+ W. Gordy, J. Sheridan, J. Chem. Phys., 22, 92 (1954).
+ 
+ 
+ VAM1968
+ L. V. Vilikov, M. G. Anashkin, G. I. Mamaeva, J. Struct. Chem.
+ (Engl. Transl.) 9, 310 (1968).
+ 
+ KKIK1973
+ K. Kashiwabara, S. Konaka, T. Iijima, N. M. Kimura, Bull. Chem. Soc. Japan,
+ 46, 407 (1973).
+ 
+ LPSS1971
+ M. F. Lappert, J. B. Pedley, J. Simpson, T. R. Spalding, J. Organomet. 
+ Chem., 29, 195 (1971).
+ 
+ K1978
+ J. K. Kochi, "Organometallic Mechanisms and Catalysis"; Academic Press:
+ New York, 1978, p 454.
+ 
+ ZM1978
+ K. F. Zmbov, M. Miletic, Adv. Mass Spect., 7A, 573 (1978).
+ 
+ 
+ SS1963
+ F. E. Saalfeld, H. Svec, J. Inorg. Chem., 2, 46 (1963).
+ 
+ 
+ NP1984
+ I. Novak, A. W. Potts, J. Electron Spect. Rel. Phenom. 33, 1 (1984).
+ 
+ 
+ NP1983
+ I. Novak, A. W. Potts, J. Chem. Soc., Dalton Trans., 2211 (1983).
+ 
+ 
+ SS1940
+ H. A. Skinner, L. E. Sutton, Trans. Farad. Soc., 36, 1209 (1940).
+ 
+ 
+ SS1944
+ H. A. Skinner, L. E. Sutton, Trans. Farad. Soc., 44, 164 (1944).
+ 
+ 
+ OIK1971
+ T. Oyamada, T. Iijima, M. Kimura, Bull. Chem. Soc. Japan, 44, 2638 (1971).
+ 
+ 
+ IH1983
+ I. Hargittai, J. Mol. Struct., 100, 129 (1983).
+ 
+ 
+ DGZSI83
+ A. V. Demidov, A. G. Gershikov, E. Z. Zasorin, V. P. Spiridonov,
+ A. A. Ivanov, J. Struct. Chem., 24, 9 (1983).
+ 
+ KML1970
+ Yu. K. Knobel, E. A. Miroschnichenko, Yu. A. Lebedev, Dokl. Akad. Nauk
+ SSSR, 190, 348 (1970).
+ 
+ CP1962
+ Reference faulty                                              
+ 
+ 
+ CP1989
+ L. A. Curtiss, J. A. Pople, J. Chem. Phys., 90, 4314 (1989).
+ 
+ 
+ YFH1989
+ C. Yamada, M. Fujitake, E. Hirota, J. Chem. Phys., 3033, 90 (1989).
+ 
+ 
+ S1984
+ H. B. Schlegel, J. Phys. Chem., 88, 6254 (1984).
+ 
+ 
+ HL1989
+ K. Hagen, B. Lunelli, J. Phys. Chem., 93, 1326 (1989).
+ 
+ 
+ PC1989
+ J. A. Pople, L. A. Curtiss, J. Chem. Phys. 90, 2833 (1989). Ref. gives -19.9
+ kcal/mol for calculated heat of formation of HOF at 0K.  
+ 
+ HTYT1989
+ D. Hwang, M. Tamura, T. Yoshida, N. Tanaka, F. Hosoya, J. Energetic
+ Matls, (1989) in press.
+ 
+ SBB1977
+ D. Schwock, A. B. Burg, R. A. Beaudet, Inorg. Chem. 16, 3219 (1977).
+ 
+ 
+ BWP1965
+ L. Barton, S. K. Watson, R. F. Porter, J. Phys, Chem., 69, 3160 (1965).
+ 
+ 
+ GRB1950
+ W. Gordy, H. Ring, A. B. Burg, Phys. Rev., 78, 512 (1950).
+ 
+ 
+ HLPB1969
+ W. Harshbarger, G. Lee, R. F. Porter, S. H. Bauer, Inorg. Chem. 8, 1683 
+ (1969).
+ 
+ CPB1969
+ C. H. Chang, R. F. Porter, S. H. Bauer, Inorg. Chem., 8, 1689 (1969).
+ 
+ 
+ PB1974
+ J. P. Pasinski, R. A. Beaudet, J. Chem. Phys., 61, 683 (1974).
+ 
+ 
+ BP1970
+ R. A. Beaudet, R. L. Poynter, J. Chem. Phys., 53, 1899 (1970).
+ 
+ 
+ CKBT1975
+ P. Cassoux, R. L. Kuczkowski, P. S. Bryan, R. C. Taylor, Inorg. Chem.,
+ 14, 126 (1975).
+ 
+ CLS1974
+ D. Christen, D. G. Lister, J. Sheridom, J. Chem. Soc., Faraday Trans. 
+ 2, 70, 1953 (1974).
+ 
+ GKO1968
+ S. G. W. Ginn, J. K. Kennedy, J. Overend, J. Chem. Phys., 48, 1571 (1968).
+ 
+ 
+ TD1969
+ R. Thomson, F. W. Dalby, Can J. Phys., 47, 1155 (1969).
+ 
+ 
+ TCK1971
+ J. Tyson, H. H. Claassen, H. Kim, J. Chem. Phys., 54, 3142 (1971).
+ 
+ 
+ SPW1949
+ M. W. P. Strandberg, C. S. Pearsall, M. T. Weiss, J. Chem. Phys., 17,
+ 429 (1949).
+ 
+ HM1954 
+ H. J. Hrostowski, R. J. Myers, J. Chem. Phys., 22, 262 (1954).
+ 
+ 
+ WHP1959
+ J. R. Weaver, C. W. Hertsch, R. W. Parry, J. Chem. Phys, 30, 1075 (1959).
+ 
+ 
+ LLRG1975
+ D. R. Lloyd, N. Lynaugh, P. J. Roberts, M. F. Guest, J. Chem. Soc. Faraday
+ Trans. 1, 1382 (1975).
+ 
+ LL1970
+ D. R. Lloyd, N. Lynaugh, Chem. Comm. 1545 (1970).
+ 
+ 
+ RHBM72
+ R. H. B. Mais, Acta Cryst., B27 2538 (1972).
+
+
+ DSM75
+ D. S. Martin, Acta Cryst., B31, 1340 (1975).
+
+
+ SJL71
+ S. Jerome-Lerutte, Acta Cryst., B27, 2538 (1971).
+
+
+ PEMS94
+ P. E. M. Siegbahn, Theo. Chim. Acta, 87, 277 (1994);
+ ibid 86, 219 (1993).
+
+ SGB1994
+ J. B. Schilling, W. A. Goddard, J. L. Beauchamp, J. Am. Chem. Soc., 116, 7722 (1994).
+
+
+ PEMS294
+ P. E. M. Siegbahn, Theo. Chim. Acta, 87, 441 (1994).
+ 
+
+ PEMS394
+ P. E. M. Siegbahn, J. Am. Chem. Soc., 116, 7722 (1994).
+ 
+
+ PEMS93
+ P. E. M. Siegbahn, J. Phys. Chem., 97, 9096 (1993).
+ 
+
+ SAA1974
+ K. Siegbahn, D. A. Allison, J. H. Allison, Handbook of Spectroscopy,
+ W. J. Robinson, Ed.,CRC Press, Cleveland, Oh, (1974).
+ 
+ HLKS1979
+ M. D. Harmony, V. W. Laurie, R. L. Kuczkowsky, R. H. Schwendeman, 
+ D. A. Ramsay, F. J. Lovas, W. J. Lafferty, A. G. Maki, J. Phys.
+ Chem. Ref. Data 8, 3 (1979).
+ GPH1969
+ M. F. Guest, J. B. Pedley, M. Horn, J. Chem. Thermodyn., 1, 345 (1969).
+ 
+ 
+ JTF1982
+ H. D. B. Jenkins, K. P. Thakur, A. Finch, P. N. Gates, Inorg. Chem.
+ 21, 423 (1982).
+ 
+ YK1964
+ Y. Wada, R. W. Kiser, J. Phys. Chem., 68, 2290 (1964).
+ 
+ 
+ CLRR1988
+ S. Cradock, P. B. Liescheski, D. W. H. Rankin, H. E. Robertson, J. Am.
+ Chem. Soc., 110, 2758 (1988).
+ 
+ DCO1974
+ J. R. Durig, L. A. Carreira, J. M. Odom, J. Am. Chem. Soc., 96, 2688 (1974)
+ 
+ 
+ WEPS1982
+ D. D. Wagman, W. H. Evans, V. B. Parker, R. H. Schumm, I. Halow, 
+ S. M. Bailey, K. L. Churney, R. L. Nuttall, J. Phys. Chem. 
+ Ref. Data Suppl. 11, 2 (1982).
+ BMDS1974
+ M. S. Banna, B. E. Mills, D. W. Davis, D. A. Shirley, J. Chem. Phys.,
+ 61, 4780 (1974).
+ 
+ CCHP1974
+ M. W. Chase, J. L. Curnutt, A. T. Hu, H. Prophet, A. N. Syverud, L. C. Walker,
+ J. Phys. Chem. Ref. Data, 3, 311, (1974).
+ 
+ FPL1971
+ F. P. Lossing, Can J. Chem., 49, 357 (1971).
+ 
+ 
+ WMK1971
+ C. S. Wofsy, J. S. Muenter, W. Klemperer, J. Chem. Phys., 55, 2014 (1971).
+ 
+ 
+ CCPM1975
+ M. W. Chase, J. L. Curnutt, H. Prophet, R. A. McDonald, A. N. Syverud, 
+ J. Phys. Chem. Ref. Data, 4, 1 (1975).
+ 
+ CKB1974
+ J. L. Carlos, R. R. Karl, S. H. Bauer, J. Chem. Soc., Faraday Trans. 2,
+ 177 (1974).
+ 
+ RFC1959
+ R. F. Curl, Jr. J. Chem. Phys., 30, 1529 (1959).
+ 
+ 
+ KC1960
+ G. H. Kwei, R. F. Curl, J. Chem. Phys., 32, 1592 (1960).
+ 
+ 
+ HIH79
+ L. Hedberg, T. Ijima, K. Hedberg, J. Chem. Phys., 70, 3224 (1979).
+
+
+ SH1956
+ D. W. Smith, K. Hedberg, J. Chem. Phys., 25, 1282 (1956).
+ 
+ 
+ DRL1960
+ D. R. Lide, J. Chem. Phys., 33, 1519 (1960).
+ 
+ 
+ AAH1970
+ A. Almenningen, I. M. Anfinsen, A. Haaland, Acta Chem. Scand., 24, 43
+ (1970).
+ 
+ SLL1975
+ W. M. Stigliani, V. W. Laurie, J. C. Li, J. Chem. Phys., 62, 1890 (1975).
+ 
+ 
+ MS1970
+ S. Meiboom, L. C. Snyder, J. Chem. Phys., 52, 3857 (1970).
+ 
+ 
+ CB1969
+ J. F. Chiang, S. H. Bauer, J. Am. Chem. Soc., 91, 1898 (1969).
+ 
+ 
+ CHNW1969
+ K. W. Cox, M. D. Harmony, G. Nelson, K. B. Wiburg, J. Chem. Phys., 50,
+ 1976 (1969).
+ 
+ WL1969
+ J. E. Wollrab, V. W. Laurie, J. Chem. Phys., 51, 1580 (1969).
+ 
+ 
+ HF1974
+ P. W. Harland, J. L. Franklin, J. Chem. Phys., 61, 1621 (1974).
+ 
+ 
+ HM1972
+ G. Hojer, S. Meza, Acta Chem. Scand., 26, 3723 (1972).
+ 
+ 
+ A1971
+ C. P. Anderson, G. Mamantov, W. E. Bull, F. A. Grimm, J. C. Carver, 
+ T. A. Carlson, Chem. Phys. Lett., 12, 137 (1971).
+ 
+ BLPSW75
+ G. K. Baker, M. F. Lappert, J. B. Pedley, G. J. Sharp, N. P. C. Westwood, 
+ J. Chem. Soc. Dalton Trans., 1765, (1975).
+ 
+ LT1974
+ F. J. Lovas, E. Tiemann, J. Phys. Chem. Ref. Data 3, 609 (1974).
+ 
+ 
+ TM1981
+ J. C. Traeger, R. G. McLoughlin, J. Am. Chem. Soc., 103, 3647 (1981).
+ 
+ 
+ HHKS1986
+ H. Halim, N. Heinrich, W. Koch, J. Schmidt, G. Frenking, J. Comp. Chem.,
+ 7, 93 (1986), references therein.
+ 
+ LC1961
+ D. R. Lide, D. Christensen, J. Chem. Phys., 35, 1374 (1961).
+ 
+ 
+ CZBR1970
+ G. A. Carpenter, M. F. Zimmer, E. E. Baroody, R. A. Robb, J. Chem. Eng.
+ Data, 15, 553 (1970).
+ 
+ BM1926
+ J. F. T. Berliner, O. E. May, J. Amer. Chem. Soc., 48, 2630 (1926).
+ 
+ 
+ HK1963
+ B. G. Hobrock, R. W. Kiser, J. Phys. Chem., 67, 1283 (1963).
+ 
+ 
+ SB1977
+ B. Solouki, H. Bock, Inorg. Chem., 16, 665 (1977).
+ 
+ 
+ OHB1956
+ I. Omura, K. Higasi, H. Baba, Bull. Chem. Soc. Japan, 29, 504 (1956).
+ 
+ 
+ KLSV1974
+ H. W. Korto, B. M. Landsberg, R. J. Suffolk, A. Vodden, A.; Chem. Phys. Lett.,
+ 29, 265 (1974).
+ 
+ SRB1976
+ B. Solouki, P. Rosmus, H. Bock, Chem. Phys. Lett., 98, 6054 (1976).
+ 
+ 
+ SRB1974
+ B. Solouki, P. Rosmus, H. Bock, Chem. Phys. Lett., 26, 20 (1974).
+ 
+ 
+ CF1972
+ S. L. Chong, J. L. Franklin, J. Am. Chem. Soc., 94, 6347 (1972).
+ 
+ 
+ ID1953
+ E. V. Ivash, D. M. Dennison, J. Chem. Phys., 21, 1804 (1953).
+ 
+ 
+ JLK1972
+ D. R. Johnson, F. J. Lovas, W. H. Kirchhoff, J. Phys. Chem. Ref. Data,
+ 1, 1011 (1972).
+ 
+ KK1975
+ S. A. Kudchadker, A. P. Kudchadker, J. Phys. Chem. Ref. Data, 
+ 4, 457 (1975).
+ 
+ CZ1976
+ J. Chao, B. J. Zwolinski, J. Phys. Chem. Ref. Data, 5, 319 (1976).
+ 
+ 
+ LM1985
+ J. W. Larson, T. B. McMahon, J. Am. Chem. Soc., 107, 766 (1985).
+ 
+ 
+ MS1976
+ J. H. Meadows, H. F. Schaefer III, J. Am. Chem. Soc., 98, 4383 (1976).
+ 
+ 
+ MMH1977
+ M. M. Heaton, J. Chem. Phys., 67, 5396 (1977).
+ 
+ 
+ ST1985
+ S. Schroder, W. Thiel, J. Am. Chem. Soc., 107, 4422 (1985). "BEST" ab-initio
+ involving at least MP2 correction to 6-31G* wavefunctions.
+ 
+ WA1998
+ D. Walter, P. B. Armentrout, J. Am. Chem. Soc., 120, 3176 (1998).
+
+
+ KA1995
+ B. L. Kickel and P. B. Armentrout, J. Am. Chem. Soc., 117, 764 (1995).
+
+
+ DHSA94
+ N. F. Dalleska, K. Honma, L. S. Sunderlin, and P. B. Armentrout, 
+ J. Am. Chem. Soc., 116, 3519 (1994).
+
+ CW1958
+ W. Cooper, W. D. Walters, J. Am. Chem. Soc., 80, 4220 (1958).
+ 
+ 
+ BSWD1984
+ S. L. Baughcum, Z. Smith, E. B. Wilson, R. W. Duerst, J. Am. Chem. Soc.,
+ 106, 2260 (1984).
+ 
+ MH1987
+ B. W. McCelland, K. Hedberg, J. Am. Chem. Soc., 109, 7304 (1987)
+ 
+ 
+ RW1983
+ R. Walsh, J. Chem. Soc.; Faraday I, 79, 2233 (1983).
+ 
+ 
+ TGMD1968
+ R. B. Turner, P. Goebel, B. J. Mallon, W. von E. Doering, J. F. Coburn, 
+ M. Pomerantz, J. Am. Chem. Soc., 90, 4315 (1968).
+ 
+ NE1986
+ M. R. Nimlos, G. B. Ellison, J. Am. Chem. Soc., 108, 6522-6529 (1986).
+ 
+ 
+ FOMH1986
+ S. Fujisawa, K. Ohno, S. Masuda, Y. Harada, J. Am. Chem. Soc., 
+ 108, 6505-6511 (1986).
+ 
+ MS1972
+ J. N. Murrell, W. Schmidt, J. Chem. Soc., Faraday Trans. 2, 68, 1709 (1972).
+ 
+ 
+ KR1973
+ A. Katrib, J. W. Rabalais, J. Phys. Chem., 77, 2358 (1973).
+ 
+ 
+ BH1970
+ P. Bischof, E. Heilbronner, Helv. Chim. Acta, 53, 1677 (1970).
+ 
+ 
+ BBBDK72
+ P. A. Baron, R. D. Brown, F. R. Burden, P. J. Domaille, J. E. Kent, 
+ J. Mol. Spectrosc., 43, 401 (1970).
+ 
+ CRB1974
+ C. R. Brundle, Chem. Phys. Lett.; 26, 25 (1974).
+ 
+ 
+ ST1972
+ D. A. Sweigart, D. W. Turner, J. Am. Chem. Soc., 94, 5592 (1972).
+ 
+ 
+ MT1973
+ J. P. Maier, D. W. Turner, J. Chem. Soc., Faraday Trans. 2, 69, 521 (1973).
+ 
+ 
+ KS1960  
+ D. W. J. Cruickshanck and R. A. Sparks, Proc. R. Soc. 
+ London, Ser. A. 258, 270 (1960).
+ 
+ BCGH1969
+ S. W. Benson, F. R. Cruickshank, D. M. Golden, G. R. Haugen, H. E. O'Neal,
+ A. S. Rodgers, R. Shaw, R. Walsh, Chem. Rev., 69, 279 (1969).
+ 
+ EWSM1974
+ P. S. Engel, J. L. Wood, J. A. Sweet, M. L. Margrave, J. Am. Chem. Soc.
+ 96, 2381 (1974).
+ 
+ VRON1975
+ A. J. Vanderwielen, M. A. Ring, H. E. O'Neal, J. Am. Chem. Soc., 97,
+ 993 (1975).
+ 
+ FHKM1971
+ D. C. Frost, F. G. Herring, A. Katrib, R. A. N. McLean, J. E. Drake, 
+ N. P. C. Westwood, Can. J. Chem., 49, 4033 (1971).
+ 
+ CCC1958
+ C. C. Costain, J. Chem. Phys., 29, 864 (1958).
+ 
+ 
+ BKM1963
+ U. Blukis, P. H. Kasai, R. J. Myers, J. Chem. Phys., 38, 2753 (1963).
+ 
+ 
+ KSN1956
+ G. A. Kuipers, D. F. Smith, A. N. Nielsen, J. Chem. Phys., 25, 275 (1956).
+ 
+ 
+ FKM1969
+ T. Fukuyama, K. Kuchitsu, Y. Morino, Bull. Chem. Soc. Jap., 42, 379 (1969).
+ 
+ 
+ BB1959
+ R. A. Bonham, L. S. Bartell, J. Am. Chem. Soc., 81, 3491 (1959).
+ 
+ 
+ BFM1964
+ O. Bastiansen, F. N. Fritsch, K. Hedberg, Acta. Crystallogr., 17, 538
+ (1964).
+ 
+ MADT1952
+ S. L. Miller, L. C. Aamodt, G. Dousmanis, C. H. Townes, J. Kraitchman, 
+ J. Chem. Phys., 20, 1112 (1952)
+ 
+ LB1968
+ R. M. Lees, J. G. Baker, J. Chem. Phys., 48, 5299 (1968).
+ 
+ 
+ RWK1955
+ R. W. Kilb, J. Chem. Phys., 23, 1736 (1955).
+ 
+ 
+ BJ1936
+ L. O. Brockway, H. O. Jenkins, J. Am. Chem. Soc., 58, 2036 (1936).
+ 
+ 
+ JKGW1973
+ J. K. G. Watson, J. Mol. Spectrosc., 48, 479 (1973).
+ 
+ 
+ WWG1968
+ G. Winnewisser, M. Winnewisser, W. Gordy, J. Chem. Phys., 49, 3465 (1968).
+ 
+ 
+ SNS1962
+ W. C. Steele, L. D. Nichols, F. G. A. Stone, J. Am. Chem. Soc., 84,
+ 4441 (1962)
+ 
+ CWZ1975
+ S. S. Chen, A. C. Wilhoit, B. J. Zwolinski, J. Phys. Chem. Ref. Data 5,
+ 571 (1975).
+ 
+ HLPH1965
+ R. H. Hunt, R. A. Leacock, C. W. Peters, K. T. Hecht, J. Chem. Phys.,
+ 42, 1931 (1965).
+ 
+ DCG1961
+ J. Donohue, A. Caron, E. Goldish, J. Am. Chem. Soc., 83, 3748 (1961).
+ 
+ 
+ CD1965
+ A. Caron, J. Donohue, Acta Crystallogr., 18, 562 (1965).
+ 
+ 
+ LM1976
+ F. P. Lossing, A. Maccoll, Can. J. Chem., 54, 990 (1976).
+ 
+ 
+ VDHV1969
+ G. Vincow, H. J. Dauben, F. R. Hunter, W. V. Volland, J. Am. Chem. Soc.,
+ 91, 2823 (1969).
+ 
+ AHT1972
+ J. L. Abboud, W. J. Hehre, R. W. Taft, J. Am. Chem. Soc., 94, 6072
+ (1972).
+ 
+ HSW1982
+ J. M. Harris, S. G. Shafer, S. D. Worley, J. Comput. Chem., 3, 208 (1982).
+ 
+ 
+ RL1965
+ B. S. Rabinovitch, F. S. Looney, J. Chem. Phys., 23, 2439 (1955).
+ 
+ 
+ BSBR1977
+ H. Bock, B. Solouki, G. Bert, P. Rosmus, J. Am. Chem. Soc., 99, 
+ 1663 (1977).
+ 
+ R1975
+ D. P. Ridge, J. Am. Chem. Soc., 97, 5670 (1975).
+ 
+ 
+ CDHK1980
+ A. P. Cox, G. Duxbury, J. A. Hardy, Y. Kawashima J. Chem. Soc. Faraday 2
+ 76, 339 (1980).
+ 
+ MK1970
+ J. S. Muenter, W. Klemperer, J. Chem. Phys., 52, 6033 (1970).
+ 
+ 
+ RPAN1973
+ S. L. Rock, E. F. Pearson, E. H. Appleman, C. L. Norris, W. H. Flygare, 
+ J. Chem. Phys., 59, 3940 (1973).
+ 
+ BW1974
+ P. Buckley, J. P. Weber, Can. J. Chem., 52, 942 (1974).
+ 
+ 
+ BRKB1972
+ C. F. Brundle, M. B. Robin, N. A. Kuebler, H. Basch, J. Am. Chem. Soc.,
+ 94, 1451 (1972).
+ 
+ BMB1974
+ R. J. Blint, T. B. McMahon, J. L. Beauchamp, J. Am. Chem. Soc., 96, 1269 
+ (1974).
+ 
+ SUF1974
+ R. D. Srivastava, O. M. Uy, M. Farber, J. Chem. Soc. Faraday Trans. 1,
+ 70, 1033 (1974).
+ 
+ WR1974
+ E. C. Wu, A. S. Rodgers, J. Phys. Chem.; 78, 2315 (1974).
+ 
+ 
+ BDC1973
+ J. Berkowitz, P. M. Dehmer, W. A. Chupka, J. Chem. Phys., 59, 925 (1973).
+ 
+ 
+ HHK1970
+ E. Heilbronner, V. Hornung, E. Kloster-Jensen, Helv. Chim. Acta, 53, 
+ 331 (1970).
+ 
+ FMV1967
+ D. C. Frost, C. A. McDowell, D. A. Vroom, J. Chem. Phys., 46, 4255 (1967).
+ 
+ 
+ PFHD1982
+ W. J. Pietro, M. M. Francl, W. J. Hehre, D. J. DeFrees, J. A. Pople, 
+ J. S. Binkley, J. Am. Chem. Soc., 104, 5039 (1982).
+ 
+ OD1980
+ J. A. Odutola, T. R. Dyke, J. Chem. Phys., 72, 5062 (1980).
+ 
+ 
+ BKS1984*
+ Ave. -3.6 A. Beyer, A. Karpfen, P. Schuster, "Hydrogen Bonds," P. Schuster, 
+ Ed., Springer-Verlag, Berlin, p12, (1984) and -5.44 from  L. A. Curtiss, 
+ D. J. Frurip, M. Blander, J. Chem. Phys., 71, 2703 (1979).
+ HK1977
+ K. Hiraoka, P. Kebarle, Can. J. Chem., 55, 24 (1977).
+ 
+ 
+ BI1986
+ K. Burstein, A. Isaev, Zh. Strukt. Khim. 27, 3 (1986).
+ 
+ 
+ VB1975
+ J. Vogt, J. L. Beauchamp, J. Am. Chem. Soc., 97, 6682 (1975).
+ 
+ 
+ BBBT1968
+ A. D. Baker, C. Baker, C. R. Brundle, D. W. Turner, J. Mass Spectrom.
+ Ion Phys., 1, 285 (1968).
+ 
+ OFYH1987
+ T. Ogata, K. Fujii, M. Yoshikawa, F. Hirota, J. Am. Chem. Soc., 109,
+ 7639 (1987).
+ 
+ JOM1987
+ J. O. Morley, J. Chem. Soc. Perkin Trans. II, (1987), (in press).
+ 
+ 
+ RW1981
+ R. Walsh, Acc. Chem. Res., 14, 246 (1981)
+ 
+ 
+ BM1979
+ J. E. Bartmess, R. T. McIver, "Gas Phase Ion Chemistry," Academic Press,
+ New York, 1979, Vol. II.
+ 
+ FDRH1969
+ J. L. Franklin, J. G. Dillard, H. M. Rosenstock, J. T. Herron, 
+ K. Draxl, F. H. Field, Natl. Stand. Ref. Data Ser., Natl. Bur. 
+ Stand., No. 26 (1969).
+ BMH1971
+ B. Beagley, J. J. Monaghan, T. G. Hewitt, J. Mol. Structure, 8, 401 (1971).
+ 
+ 
+ AB1979
+ D. H. Aue, M. T. Bowers, "Gas Phase Ion Chemistry," Bowers, M. D., Ed.,
+ Academic Press, New York, (1979).
+ 
+ PK1976
+ P. Kebarle, "Environmental Effects on Molecular Structure and Properties,"
+ B. Pullman, Ed., D. Reidel, Dodrecht, p. 81 (1976).
+ 
+ CA1993
+ Y.-M. Chem and P. B. Armentrout, Chem. Phys. Lett., 210, 123 (1993).
+
+
+ AF1995
+ I. Antes and G. Frenking, Organometallics, 14, 4263(1995).
+
+
+ SB1991
+ M. Sodupe and C. W. Bauschlicher, J. Phys. Chem., 95, 8640 (1991).
+
+
+ HH1979
+ K. P. Huber, G. Herzberg, "Molecular Spectra and Molecular Structure,"
+ IV. "Constants for Diatomic Molecules," Van Nostrand, Reinhold, 
+ New York, (1979).
+ GE1984
+ N. N. Greenwood, A. Earnshaw, "Chemistry of the Elements," Pergamon Press,
+ Oxford, p.976 (1984). 
+ 
+ MTB1979
+ M. T. Bowers, "Gas Phase Ion Chemistry," Vol. 2 (Academic Press, New York, 
+ (1979).
+ 
+ S1978
+ P. Scharffenberg, Theo. Chim. Acta 49, 115 (1978).
+ 
+ 
+ SLJ1973
+ K. C. Shotton, A. G. Lee, W. J. Jones, J. Raman Spectrosc., 1, 243 (1973).
+ 
+ 
+ IH1969
+ I. Hargittai, Acta Chem. (Budapest), 49, 351 (1969).
+ 
+ 
+ SDR1965
+ R. Sutter, H. Driezler, F. Z. Rudolph, Naturforschung A, 20 1676 (1965).
+ 
+ 
+ PP1972
+ A. W. Potts, W. C. Price, Proc. R. Soc. London, Ser. A, 326, 
+ 165 (1972).
+ 
+ RSB1975
+ P. Rosmus, H. Stafast, H. Bock, Chem. Phys. Lett., 34, 275 (1975).
+ 
+ 
+ ARR1972
+ D. W. W. Anderson, D. W. H. Rankin, A. Robertson, J. Mol. Struct., 14
+ 385 (1972).
+ 
+ CTS1959
+ A. P. Cox, L. F. Thomas, J. Sheridan, Spectrochim. Acta, 15, 542 (1959).
+ 
+ 
+ ABT1961  
+ A. Almenningen, O. Bastiansen, M. Traetteberg, Acta Chem. Scand., 15, 1557
+ (1961).
+ 
+ SL1963  
+ L. R. H. Scharpen, V. W. Laurie, J. Chem. Phys., 39, 1972 (1963).
+ 
+ 
+ JKT1963
+ J. K. Tyler, J. Mol. Spectrosc., 11, 39 (1963).
+ 
+ 
+ BFSK1973
+ O. Bastiansen, L. Fernholt, H. M. Seip, H. Kambara, K. Kuchitsu, J. Mol.
+ Struct., 18, 163 (1973).
+ 
+ OMM1968
+ M. Otake, C. Matsumura, Y. Morino, J. Mol. Spectrosc., 28, 316 (1968).
+ 
+ 
+ JLD1970
+ J. L. Duncan, J. Mol. Struct., 6, 447 (1970).
+ 
+ 
+ BCHR1961
+ B. Bak, D. Christensen, L. Hansen-Nygarrd, J. Rastrup-Anderson, 
+ J. Mol. Spectrosc., 7, 58 (1961).
+ 
+ BCDH1962
+ B. Bak, D. Christensen, W. B. Dixon, L. Hansen-Nygarrd, 
+ J. Rastrup-Anderson, M. Shottlander, J. Mol. Spectrosc., 9, 124 (1962).
+ 
+ JT1960      
+ J. Trotter, Acta Crystallogr., 13, 86 (1960).
+ 
+ 
+ KFM1968
+ K. Kuchitsu, T. Fukuyama, Y. Marino, J. Mol. Struct., 1, 463 (1968).
+ 
+ 
+ LS1965
+ J. E. Lancaster, B. J. Stoicheff, Can. J. Phys., 34, 1016 (1965).
+ 
+ 
+ YK1999
+ C. N. Yang and S. J. Klipperstein, J. Phys. Chem. A, 103, 1094 (1999).
+
+
+ PLGM1986
+ L. G. M. Petterson, et. al., J. Chem. Phys., 87, 481 (1987).
+
+
+ CHKL1976
+ J. H. Callomon, E. Hirota, K. Kuchitsu, W. J. Lafferty, A. G. Maki, 
+ C. S. Pote, "Structure Data on Free Polyatomic Molecules,"
+ Landolt-Bornstein, New Series, Group II, Vol. 7, Springer, Berlin (1976).
+ LES1965
+ L.E. Sutton, "Tables of Interatomic Distances and Configurations in 
+ Molecules and Ions," Special Publication No. 11 + 18, Chem. Soc.,
+ London (1958), (1965).
+ CS1957
+ J. H. Callomon, B. P. Stoicheff, Can. J. Phys., 35, 373 (1957).
+ 
+ 
+ MT1965
+ A. G. Maki, R. A. Toth, J. Mol. Spectr., 17, 136 (1965).
+ 
+ 
+ LTHL1974
+ D. G. Lister, J. K. Tyler, J. H. Hog, N. W. Larson, J. Mol. Struct., 23,
+ 253 (1974).
+ 
+ OG1969
+ W. C. Oelfke, W. Gordy, J. Chem. Phys., 51, 5336 (1969).
+ 
+ 
+ TO1963
+ K. Takagi, T. Oka, J. Phys. Soc. Jap., 18, 1174 (1963).
+ 
+ 
+ TIK1976
+ K. Tamagawa, T. Iijima, M. Kimura, J. Mol. Struct., 30, 243 (1976).
+ 
+ 
+ HT1966  
+ W. Haugen, M. Traetteberg, Acta Chem. Scand., 20, 1226 (1966).
+ 
+ 
+ CCA1993
+ Y.-M. Chen, D. E. Clemmer, P. B. Armentrout, 
+J. Chem. Phys., 98, 4929, (1993).
+
+ YUNG1999
+"Thermal Constants of Substances", V. S. Yungman, Ed., Wiley, New York, 1999.
+
+
+ CRC05
+ "CRC Handbook of Chemistry and Physics," 85th Edition, D. R. Lide, (Ed.),
+ CRC Press, Boca Raton, FL, 2005.
+ 
+ CRC
+ "CRC Handbook of Chemistry and Physics," 60th Edition, R. C. Weast, (Ed.),
+ CRC Press, Boca Raton, FL, 1980.
+ 
+ ABER1987
+ E. C. Penski, E. S. Domalski, CRDEC-TR-87063, (1987).
+ 
+ 
+ CFMR1971
+ A. B. Cornforth, D. C. Frost, C. A. McDowell, J. L. Ragle, 
+ I. A. Stonehouse, J. Chem. Phys., 54, 2651 (1971).
+ 
+ BCR1971
+ C. R. Byfleet, A. Carrington, D. K. Russell, Mol. Phys., 10, 271 (1971).
+ 
+ 
+ KHLB1972
+ R. L. De Kock, B. R. Higginson, D. R. Lloyd, A. Breeze, 
+ D. W. J. Cruickshank, D. R. Armstrong, Mol. Phys., 24, 1059 (1972).
+ 
+ HH1967
+ K. H. Hellwege, A. M. Hellwege, Eds. "Molecular Constants from Microwave
+ Spectroscopy," Landolt-Bornstein, New Series II; Springer-Verlag; 
+ Berlin, Vol. 4, (1967).
+ NKK1979
+ K. P. R. Nair, Kemiai Kozl 52, 431 (1979).
+ 
+ 
+ NBS1952
+ Natl. Bur. Stand. Selected Values of Chemical and Thermodynamic Properties,
+ Rossini, 1st Feb. (1952).
+ 
+ RH75
+ A. R. Rossi and R. Hoffmann, Inorg. Chem., 14, 365 (1975).
+
+
+ NBS1968
+ NBS Technical Note 270-3, Jan. (1968).
+ 
+ 
+ D&N1982
+ G. Ditter, U. Niemann, Philips J. Res., 37, 1 (1982).
+ 
+ 
+ FCWK1974  
+ P. B. Foreman, K. R. Chien, J. R. Williams, S. G. Kukolich, J. Mol.
+ Spectrosc. 52, 251 (1974).
+ 
+ TS1963  
+ J. K. Tyler, J. Sheridan, Trans. Faraday Soc., 59, 2661 (1963).
+ 
+ 
+ RJ1999
+ R. Janoschek, Sulfur Rep., 21 (1999).
+ 
+ 
+ RJ2001
+ R. Janoschek, IUPAC Report, (2001).
+ 
+ 
+ NNKMR69
+ L. Nygaard, J. T. Nielsen, J. Kirchheimer, G. Maltesen, J. Rastrup-Andersen, 
+ and G. O. Sorensen, J. Mol. Struct., 3, 491, (1969).
+ 
+ NHHR1967
+ L. Nygaard, E. R. Hansen, R. Hansen, J. Rastrup-Anderson, G. O. Sorensen, 
+ Spectrochim. Acta, Part A, 23, 2813 (1967).
+ 
+ LT1970
+ R. F. Lake, H. Thompson, Proc. R. Soc. London, Ser. A, 315, 323 (1970).
+ 
+ 
+ SDGS1974
+ P. Sauvageau, J. Doucet, R. Gilbert, C. Sandorfy, J. Chem. Phys.,
+ 61, 391 (1974).
+ 
+ FLMW1975
+ D. C. Frost, S. T. Lee, C. A. McDowell, N. P. C. Westwood, J. Electron
+ Spectrosc. Relat. Phenom., 7, 331 (1975).
+ 
+ KTKM1976
+ P. Kebarle, R. Tamdagni, H. Kirooka, T. B. McMahon, Int. J. Mass Spectrom.
+ Ion Phys., 19 71 (1976).
+ 
+ BBD1973
+ A. Bhaumik, W. V. F. Brooks, S. C. Dass, J. Mol. Struct., 16, 29 (1973).
+ 
+ 
+ RCWZ1974
+ A. S. Rodgers, J. Chao, R. C. Wilhoit, B. J. Zwolinski, J. Phys. Chem.
+ Ref. Data, 3, 117 (1974).
+ 
+ GSL1979
+ G. Gleiter, J. Spanget-Larsen, "Topics in Current Chemistry," 86, 139 (1979).
+ 
+ 
+ RDSH1977
+ H. M. Rosenstock, K. Draxl, B. W. Steiner, J. T. Herron, "Energetics
+ of Gaseous Ions," J. Phys. Ref. Data, 6 Suppl. 1 (1977).
+ 
+ MCC1963
+ A. L. McClellan, "Tables of Experimental Dipole Moments," Freeman, 
+ San Francisco, 1963.
+ 
+ MCC1974
+ A. L. McClellan, "Tables of Experimental Dipole Moments," Vol 2, 
+ Rahara Enterprises, El Cerrito, (1974).
+ 
+ LLNBS82
+ R. D. Levin, S. G. Lias, "Ionization Potentials and Appearance Potential
+ Measurements," 1971-1981, Natl. Stand. Ref. Data Ser., Natl. Bur. 
+ Stand. 71, (1982), Cat. No. C13.48:71.
+ ELEMENT
+ Element in its standard state.
+ 
+ 
+ MDM86
+ M. D. Morse, Chem. Rev., 86, 1049 (1986).
+
+
+ LSMH1984
+ P. R. R. Langridge-Smith, M. D. Morse, 
+ G. P. Hansen, and R. E. Smalley, J. 
+ Chem. Phys., 80, 583 (1984).
+ IP1973
+ B. I. Istomin, V. Palm, Reakts. Sposobnosi Org. Soedin., 10, 583 (1973).
+ 
+ 
+ BL1971
+ P. J. Bassett, D. R. Lloyd, J. Chem. Soc. A, 641 (1971).
+ 
+ 
+ GGJO1970
+ J. C. Green, M. L. H. Green, P. J. Joachim, A. F. Orchard, D. W. Turner, 
+ Philos. Trans. R. Soc. London, Ser. A, 111, A268 (1970).
+ 
+ CATCH
+ J. B. Pedley, B. S. Iseard, "CATCH Tables of Silicon Compounds," University
+ of Sussex, 1972
+ 
+ LH1970      
+ R. P. Lattimer, M. D. Harmony, J. Phys. Chem., 53, 4575 (1970).
+ 
+ 
+ WEPH1968
+ D. D. Wagman, W. H. Evans, V. B. Parker, T. Hawlow, S. M. Bailey, 
+ R. H. Schumm, Natl. Bur. Stand. (U.S.), Tech. Note, No 270-3 (1968)
+ and "Errata in NBS Technical Note 270-8" (1981).
+ MRA1997
+ M. B. More, D. Ray, and P. B. Armentrout, J. Phys. Chem. A, 101, 4254 (1997).
+ 
+ 
+ SMRA1974
+ G. O. Sorensen, L. Mahler, J. Rastrup-Andersen, J. Mol. Struct., 
+ 20, 119 (1974).
+ 
+ NNKMRS69
+ L. Nygaard, J. T. Nielsen, J. Kirchheimer, G. Maltesen, J. Rastrup-Andersen,
+ G. O. Sorensen, J. Mol. Struct., 3, 491 (1969).
+ 
+ CBF1971      
+ A. P. Cox, A. H. Brittain, D. J. Finnigan, Trans. Faraday Soc., 67, 
+ 2179, (1971).
+ 
+ GH1950
+ G. Herzberg, "Molecular Spectra and Molecular Structure I. Spectra of 
+ Diatomic Molecules," 2nd ed, Van Nostrand, New York, N.Y., 1950.
+ 
+ HERZ1966
+ G. Herzberg, "Molecular Spectra and Molecular Structure III. Electronic
+ Spectra and Electronic Structure of Polyatomic Molecules," 
+ Van Nostrand, New York, N.Y., 1966.
+ TBBB1970
+ D. W. Turner, C. Baker, A. D. Baker, C. R. Brundle, "Molecular 
+ Photoelectron Spectroscopy," Wiley-Interscience, London, 1970.
+ 
+ NLM1967
+ R. D. Nelson, D. R. Lide, A. A. Maryott, Nat. Stand. Ref. Data Set., 
+ Natl. Bur. Stand. No. 10 (1967).
+ 
+ MRBS7071
+ Average value from two determinations: M. Mansson, N. Rapport, E. F. Westrum,
+ J. Am. Chem. Soc., 92, 7296 (1970); R. S. Butler, A. S. Carson, 
+ P. G. Laye, W. V. Steele, J. Chem. Thermodyn. 3, 277 (1971).
+ MOORE  
+ C.E. Moore, "Atomic Energy Levels", Natl. Bur. Stand., U.S. Circ. 467, 1958.
+ 
+ 
+ GMOD1974
+ W. D. Good, R. T. Moore, A. G. Osborn, D. R. Douslin, J. Chem. 
+ Thermodyn., 6, 303 (1974).
+ 
+ SWB1970      
+ P. v. R. Schleyer, J. E. Williams, K. R. Blanchard, J. Am. Chem. Soc.,
+ 92, 3277, (1970).
+ 
+ JANAF86
+ M. W. Chase, C. A. Davies, J. R. Downey, D. R. Frurip, R. A. McDonald, 
+ A. N. Syverud, JANAF Thermochemical Tables, Third Edition, 
+ J. Phys. Chem. Ref. Data 14, Suppl. 1 (1985).
+ SWS1969
+ D. R. Stull, E. F. Westrum, Jr., G. C. Sinke, "The Chemical Thermodynamics
+ of Organic Compounds," Wiley, New York, N.Y., 1969.
+ 
+ WVS1983
+ W. V. Steele, J. Chem. Thermo., 15, 595 (1983).
+ 
+ 
+ P&R1977 
+ J. B. Pedley, G. Rylance, "Sussex-N.P.L. Computer Analysed Thermochemical 
+ Data: Organic and Organometallic Compounds," Sussex University, 1977.
+ 
+ C&P1970
+ J. O. Cox, G. Pilcher, "Thermochemistry of Organic and Organometallic 
+ Compounds," Academic Press, New York, N.Y., 1970.
+ 
+ GICK1972
+ A. S. Gordon, Int. J. Chem. Kinet., 4, 541 (1972).
+ 
+ 
+ PRK1975
+ P. Potzinger, A. Ritter, J. Krause, Z. Naturforsch., Teil A, 30, 347,
+ (1975).
+ 
+ JANAF
+ D. R. Stull, H. Prophet, Natl. Stand., Ref. Data Ser. (U.S., Natl. Bur.
+ Stand.) NSRDS-NBS 37, 1971.
+ 
+ F&S1979
+ M. Farber, R. D. Srivastava, Chem. Phys. Lett., 60, 216, (1979).
+ 
+ 
+ WLB1967
+ C. Willis, F. P. Lossing, R. A. Back, Can. J. Chem. 54, 1 (1967). Note:
+ S. N. Foner, R. L. Hudson, J. Chem. Phys., 68, 3162 (1978) give the
+ heat of formation of diazine as 50.7 +/- 2 kcals/mole.
+ DG1976
+ R. W. Davis, M. C. L. Gerry, J. Mol. Spectrosc. 60, 117 (1976).
+ 
+ 
+ WL1968
+ S. Weiss, G. E. Leroi, J. Chem. Phys., 48, 962 (1968).
+ 
+ 
+ DRL1957
+ D. R. Lide, J. Chem. Phys., 27, 343 (1957).
+ 
+ 
+ KLW1957
+ R. W. Kilb, C. C. Lin, E. B. Wilson, Jr., J. Chem. Phys., 26, 1695 (1957).
+ 
+ 
+ RBLP90
+ M.Rosi, C.W.Bauschlicher, S.R.Langhoff, and H.Partridge,
+    J.Phys.Chem., 94, 8656 (1990).
+
+ LBLHLM88
+ S. G. Lias, J. E. Bartmess, J. F. Liebman, J. L. Holmes, R. D. Levin, and 
+ W. G. Mallard, "Gas Phase Ion and Neutral Thermochemistry", J. Phys. Chem., i
+ Ref. Data, Suppl. 1, 17 (1988).
+ SS1991
+ M. Steinberg and K. J. Schofield, J. Chem. Phys., 94, 3901 (1991)
+ 
+ 
+ SNS1994
+ A. B. Sannigrahi, P. K. Nandi, and P. v.R. Schleyer, (ab initio calc'n.) 
+ J. Am. Chem. Soc., 116, 7225 (1994).
+ 
+ HNMO1999
+ S. Hoyau, K. Norrman, T. B. McMahon, G. Ohanessian, J. Am. Chem. Soc., 121, 8864 (1999).
+ 
+ 
+ NMK1999
+ S. B. Nielsen, M. Marsella, and P. Kebarle, J. Phys Chem, A 103, 9891 (1999).
+ 
+ 
+ BT1995
+ M. Buhl, W. Thiel, unpublished results of G2 calculation (1995).
+ 
+ 
+ K1979
+ Molecular Constants of Inorganic Compounds, K. S. Krasnov, Ed., Khimia, 
+ Leningrad, (1979) (in Russian).
+ 
+ SSR1999
+ A. Schulz, B. J. Smith, L. Radom, J. Phys. Chem., 103, 7522 (1999).
+ 
+ 
+ GPSS1993
+ P. Gardner S. R. Preston, R. Siertsema, and F. Steele, J. Comp. Chem., 14, 1523 (1993).
+ 
+ 
+ R1988
+ M. Ribeiro, "Proceedings of the 11th Summer School on Coordination 
+ Chemistry and Catalysis", J. Ziolkowski, Ed., World Scientific, Singapore (1988).
+ 
+ SB1990
+ M. Simoes and J. L. Beauchamp, Chem. Rev., 90, 629 (1990).
+ 
+ 
+ WAG1990
+ W. A. Goddard, Acc. Chem. Res., 23, 386 (1990).
+ 
+ 
+ GKRJ99
+ G. L. Gutsev, S. N. Khanna, B. K. Rao, and P. Jena, J. Phys. Chem. A, 103, 5812 (1999).
+
+
+ BLPB1989
+ C. W. Bauschlicher,  S.R. Langhoff, H. Partridge, and 
+ L. A. Barnes, J. Chem. Phys., 91, 2399 (1989).
+
+ HC1982
+ P. M. Holland and A. W. Castleman, J. Chem. Phys., 76, 3195 (1982).
+
+ 
+ HO1997
+ S. Hoyau and G. Ohanessian, (CCSD(T), 
+ B3LYP and MP2 calculations) J. Am. 
+ Chem. Soc., 119, 2016 (1997).
+ NIST   
+ NIST Chemistry WebBook, NIST Standard Reference Database, No. 69; W. G. Mallard, 
+ P. J. Linstrom, Eds., National Institute of
+ Standards and Technology, Gaithersberg, http://webbook.nist.gov/chemistry.
+ MR1988
+ M. Ribeiro, "Proceedings of the 11th Summer 
+ School on Coordination Chemistry and Catalysis", J. Ziolkowski, 
+ Ed., World Scientific, Singapore (1988)
+ CL1975
+ H. H. Cady and A. C. Lawson, Acta Crystallogr., B31, 1864 (1975).
+ 
+ 
+ AR2000
+ P. B. Armentrout and M. T. Rodgers J. Phys. Chem. A. 104, 2238 (2000).
+ 
+ 
+ RA2000
+ M. T. Rodgers and P. B. Armentrout, J. Am. Chem. Soc., 122, 8548 (2000).
+ 
+ 
+ D2000
+ R. C. Dunbar, J. Phys. Chem. A, 104, 8067 (2000).
+
+
+ PNK1986
+ J. B. Pedley, R. D. Naylor, and S. P. Kirby, 
+ "Thermochemical Data of Organic Compounds", second edition, 
+ University of Sussex, 1986.
+ LBLH1988
+ S.G. Lias, J.E. Bartness, J. F. Liebman, J.L. Holmes, R.D. Levin, W.G. Mallard,
+ "Gas-Phase Ion and Neutral Thermochemistry", J. Phys. Chem. Ref. Data, 1988,
+17, Suppl. 1
+ CCSDT
+ P. Jurecka, J. Sponer, J. Cerny, P. Hobza,  Phys. Chem. Chem. Phys. Lett. 8, 1985 (2006)
+
+
+ S12L
+ T. Risthaus and S. Grimme, Benchmarking of London Dispersion-Accounting Density 
+ Functional Theory Methods on Very Large Molecular Complexes. JCTC, 9, 1580 (2013)
+
+ JMLM2006
+ J. M. L. Martin, J. Mol. Structure THEOCHEM, 771, 19:26 (2006)
+
+ 
+ SJH2004
+ Sponer J, Jurecka P, Hobza P, J Am Chem Soc 126, 10142 (2004)
+
+
+ X-RAY
+ X-ray analysis.
+
+
+ GHGB1964
+ Gross,P.; Hayman,C.; Greene,P. D.; Bingham,J. T. Accession number: AD0630633 (1964)
+
+
+ LVD2004
+ Lischka, H., Ventura, E. and Dallos, M., The Diels-Alder Reaction of Ethene 
+ and 1,3-Butadiene: An Extended Multireference ab initio Investigation. ChemPhysChem, 
+ 5: 1365-1371, (2004).
+ ZGT2005
+ Yan Zhao, Núria González-García, and Donald G. Truhlar, "Benchmark Database of Barrier 
+ Heights for Heavy Atom Transfer, Nucleophilic Substitution, Association, and Unimolecular 
+Reactions and Its Use to Test Theoretical Methods" J. Phys. Chem.  A  109, 2012-2018, (2005)
+ POM2001
+Parthiban, S., de Oliveira, G., and Martin, J. M. L., "Benchmark ab Initio Energy Profiles 
+for the Gas-Phase SN2 Reactions Y- + CH3X ? CH3Y + X- (X,Y = F,Cl,Br). Validation of Hybrid 
+DFT Methods" J. Phys. Chem. A 105, 895-904 (2001)
+ CRCSEMI
+Berger, Lev Isaakovich, "Semiconductor Materials", CRC Press, 1997
+
+
+ HWIC2002
+ Holleman-Wiberg's Inorganic Chemistry, Academic Press, 2002
+
+
+ EH2005
+Ess, D. H., Houk, K. N., Activation Energies of Pericyclic Reactions ... 
+J. Phys. Chem. A 109 9542-9553 2005
+
+ ICSD
+Inorganic Crystal Structure Database. FIZ Karlsruhe, 2012
+
+
+ AC2002
+Chickos, J. S., Acree, W. E., "Enthalpies of Sublimation of Organic and 
+Organometallic Compounds. 1910-2001" J. Phys. Chem. Ref. Data 31 537:698 (2002)
+
+ ZZT2009
+Zheng, J., Zhao, Y,Truhlar, D. G., "The DBH24/08 Database and Its Use to Assess Electronic
+Structure Model Chemistries for Chemical Reaction Barrier Heights",
+J. Chem. Theory Comput. 2009, 5, 808–821
+ LDLY2006
+Lopez, X., Dejaegere, A., Leclerc, F., York, D. M., Karplus, M., "Nucleophilic Attack on 
+Phosphate Diesters: A Density Functional Study of In-Line Reactivity in Dianionic, 
+Monoanionic, and Neutral Systems" J. Phys. Chem. B, 2006, 110, 11525–11539
+ BH76
+L. Goerigk and S. Grimme in J. Chem. Theory Comput. 2010, 6, 107-126. http://toc.uni-muenster.de/GMTKN/GMTKN24/BH76both.html
+
+
+ GURVICH
+Pure and Applied Chemistry. Volume 61, Issue 6, Pages 1027–1031, ISSN (Online) 1365-3075, 
+ISSN (Print) 0033-4545, DOI: 10.1351/pac198961061027, January 2009
+
+ D3H4_2011
+Jan Rezác and Pavel Hobza, 
+"Advanced Corrections of Hydrogen Bonding and Dispersion for Semiempirical Quantum Mechanical Methods" 
+J. Chem. Theory Comput., 2011,  8, 141-151
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,5 @@
+  OPEN(5,4) MECI     NOLOG
+Antimony, 4P(g) 5s(1)5p(4)
+ HR=DUMMY    H=1.0 ROOT=1,4,P(G) HWT=100
+ Sb         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

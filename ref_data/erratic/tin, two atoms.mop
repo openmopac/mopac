@@ -1,0 +1,5 @@
+ OPEN(4,6) SCFCRT=1.D-3 
+Tin, two atoms
+ H=130 HR=guess hwt=2
+ Sn         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ sn 3.5 0 0 0 0 0 0

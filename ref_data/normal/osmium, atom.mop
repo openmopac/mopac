@@ -1,0 +1,8 @@
+*
+*   188.000
+*
+ OPEN(8,6) MS=2 ALLVECS MECI PM7
+Osmium, atom
+ H=188.0 HR=CRC
+ Os     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

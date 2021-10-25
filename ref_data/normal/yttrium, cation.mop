@@ -1,0 +1,8 @@
+*
+*   150.137
+*
+ OPEN(2,9) MECI CHARGE=1 PM7
+Yttrium, cation
+ HR=NIST H=244.0
+  Y     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

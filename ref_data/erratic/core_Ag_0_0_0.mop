@@ -1,0 +1,7 @@
+*
+*  11400 11500 11600 12500 13000
+*         
+pm7 xfac debug pop=(0,0,0) 
+Ag with populations s=0, p=0, d=0
+ h=13000  hr=guess hwt=1 noscale
+Ag

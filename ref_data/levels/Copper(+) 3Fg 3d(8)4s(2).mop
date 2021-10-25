@@ -1,0 +1,5 @@
+  OPEN(10,6) MECI CHARGE=1 pulay root=1F(g) triplet
+Copper(+) 3Fg 3d(8)4s(2)
+ H=203.1 HR=NIST ROOT=1,3,F(G)
+ Cu         0.00000000  0    0.0000000  0    0.0000000  0                      1.0000
+ 

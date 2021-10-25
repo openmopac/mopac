@@ -1,0 +1,5 @@
+ MS=1.5 OPEN(5,6) MECI
+Tantalum, 6D(g)
+ H=10 HR=DUMMY HWT=2 ROOT=1,6,D(G)
+ Ta         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

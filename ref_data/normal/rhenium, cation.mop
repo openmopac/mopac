@@ -1,0 +1,8 @@
+*
+*   467.405
+*
+ OPEN(6,5) MECI CHARGE=1 MS=1 PM7
+Rhenium, cation
+ H=365.6 HR=NIST
+ Re     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

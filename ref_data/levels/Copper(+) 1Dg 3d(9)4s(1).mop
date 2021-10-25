@@ -1,0 +1,5 @@
+  OPEN(10,6) MECI CHARGE=1 pulay
+Copper(+) 1Dg 3d(9)4s(1)
+ H=75.1 HR=NIST ROOT=1,1,D(G) HWT=2
+ Cu         0.00000000  0    0.0000000  0    0.0000000  0                      1.0000
+ 

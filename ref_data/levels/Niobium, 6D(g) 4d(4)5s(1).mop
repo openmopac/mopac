@@ -1,0 +1,5 @@
+  OPEN(5,6) MECI MS=1.5 external=V:\PARAM_work\Nb.rp
+Niobium, 6D(g) 4d(4)5s(1)
+ H=0 HR=NIST ROOT=1,6,D(G) HWT=20
+ Nb         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

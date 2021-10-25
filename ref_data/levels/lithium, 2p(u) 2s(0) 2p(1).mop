@@ -1,0 +1,5 @@
+  OPEN(1,4) ROOT=2     NOLOG
+Lithium, 2P(u) 2s(0) 2p(1)
+ H=81.2 HR=MOORE  TYPE=7
+ Li         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

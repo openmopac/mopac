@@ -1,0 +1,8 @@
+*
+*   318.536
+*
+ OPEN(8,6) MECI ALLVECS CHARGE=1 PM7
+Rhodium, cation
+ H=300.7 HR=NIST
+ Rh     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

@@ -1,0 +1,9 @@
+*
+*   -13.500
+*
+ XFAC PM7
+Ge - Ge core-core at 2.5 Angstroms (near slope)
+ HR=GUESS HWT=200 H=-13.500+"CORE-CORE_GE - GE NEAR" NOSCALE
+ Ge     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ Ge     2.60000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

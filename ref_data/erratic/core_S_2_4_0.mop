@@ -1,0 +1,4 @@
+         pm7 xfac debug pop=(2,4,0)  OPEN(4,3) MECI pulay 
+S with populations s=2, p=4, d=0
+ h=0  hr=guess hwt=5 noscale
+Si

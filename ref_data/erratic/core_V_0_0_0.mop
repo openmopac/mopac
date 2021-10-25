@@ -1,0 +1,8 @@
+*
+*  2886.851
+*
+ XFAC DEBUG POP=(0,0,0) PM7
+V with populations s=0, p=0, d=0
+ H=2886.851 HR=GUESS HWT=2 NOSCALE
+  V     0.00000000 +0   0.00000000 +0   0.00000000 +0                         5.0000
+ 

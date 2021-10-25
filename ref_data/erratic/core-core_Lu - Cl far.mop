@@ -1,0 +1,9 @@
+*
+*     0.035
+*
+ XFAC DEBUG PM7
+Lu - Cl core-core at 4.0 Angstroms (far)
+ H=0.035 HR=GUESS HWT=50 NOSCALE
+ Lu     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ Cl     4.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

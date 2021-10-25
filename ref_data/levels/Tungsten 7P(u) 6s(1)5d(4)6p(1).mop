@@ -1,0 +1,5 @@
+  OPEN(6,9) MECI SHIFT=30 ALLVECS MS=3 
+Tungsten 7P(u) 6s(1)5d(4)6p(1) Force 6p high
+ ROOT=1,7,P(U) H=200 HR=guess
+  W         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

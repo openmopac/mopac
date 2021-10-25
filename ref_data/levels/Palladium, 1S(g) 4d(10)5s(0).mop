@@ -1,0 +1,5 @@
+  NOLOG OPEN(10,6) MECI
+Palladium, 1S(g) 4d(10)5s(0)
+ H=0 ROOT=1,1,S(G) HR=NIST
+ Pd         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

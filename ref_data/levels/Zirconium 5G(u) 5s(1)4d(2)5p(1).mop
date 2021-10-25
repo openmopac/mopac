@@ -1,0 +1,5 @@
+  OPEN(4,9) MECI     ALLVECS MS=2 ROOT=1G(U) pulay
+Zirconium 5G(u) 5s(1)4d(2)5p(1)
+ ROOT=1,5,G(U) H=150 HR=guess hwt=3
+ Zr         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

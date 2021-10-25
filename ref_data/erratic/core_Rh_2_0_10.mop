@@ -1,0 +1,7 @@
+*
+* 400 500
+*
+         pm7 xfac debug pop=(2,0,10) 
+Rh with populations s=2, p=0, d=10
+ h=500  hr=guess hwt=2 noscale
+Rh

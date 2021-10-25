@@ -1,0 +1,7 @@
+*
+* 8600 8650 8800
+*
+         pm7 xfac debug pop=(2,6,10) 
+Fe with populations s=2, p=6, d=10
+ h=9000  hr=guess hwt=2 noscale
+Fe

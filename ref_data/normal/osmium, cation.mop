@@ -1,0 +1,8 @@
+*
+*   289.741
+*
+ OPEN(7,6) MS=1.5 ALLVECS MECI CHARGE=1 PM7
+Osmium, cation
+ H=375.0 HR=NIST
+ Os     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

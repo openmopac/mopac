@@ -1,0 +1,8 @@
+*
+*   153.991
+*
+ MS=1.5 OPEN(7,5) MECI ALLVECS PM7
+Iridium, atom
+ H=160.0 HR=CRC
+ Ir     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

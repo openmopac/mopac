@@ -1,0 +1,4 @@
+         pm7 xfac debug pop=(1,0,5) MS=3 OPEN(6,6) MECI
+Cr with populations s=0, p=0, d=6
+ h=95 hr=guess hwt=0.01  noscale 
+Cr

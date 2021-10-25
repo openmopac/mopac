@@ -1,0 +1,6 @@
+charge=1
+Ba(iii)F2 (+)
+ h=230+"Ba(ii)F2 (ref)" hwt=2 hr=guess
+Ba
+F 2.0 0
+F 2.0 0 180 0 0 0 1 2

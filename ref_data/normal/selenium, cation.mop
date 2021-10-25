@@ -1,0 +1,8 @@
+*
+*   243.929
+*
+ CHARGE=1 OPEN(3,3) SCFCRT=1.D-3 PM7
+Selenium, cation
+ HR=NIST HWT=0.5 H=276.49
+ Se     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

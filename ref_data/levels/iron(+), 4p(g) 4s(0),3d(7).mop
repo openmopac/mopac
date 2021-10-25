@@ -1,0 +1,5 @@
+  QUARTET CHARGE=1 OPEN(7,6) MECI     NOLOG
+Iron(+), 4P(g) 4s(0),3d(7)
+ H=37.7  HR=NIST ROOT=1,4,P(G)  HWT=1.5
+ Fe         0.00000000  0    0.0000000  0    0.0000000  0    1    0    0       1.0000
+ 

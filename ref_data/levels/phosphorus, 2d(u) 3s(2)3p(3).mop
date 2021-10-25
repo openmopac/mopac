@@ -1,0 +1,5 @@
+  OPEN(5,4) MECI ROOT=24     NOLOG
+Phosphorus, 2D(u) 3s(2)3p(3)
+ HR=NIST H=32.51 ROOT=1,2,D(U) HWT=4
+  P         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

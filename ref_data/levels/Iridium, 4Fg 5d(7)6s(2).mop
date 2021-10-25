@@ -1,0 +1,5 @@
+  OPEN(9,6) MECI     NOLOG MS=1.5
+Iridium, 4Fg 5d(7)6s(2)
+ H=0 HR=NIST ROOT=1,4,F(G) hwt=10
+ Ir         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

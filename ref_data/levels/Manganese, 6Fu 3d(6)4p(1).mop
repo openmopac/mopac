@@ -1,0 +1,5 @@
+  CISD MS=2.5     OPEN(7,9) MECI NOLOG
+Manganese, 6Fu 3d(6)4p(1)
+ H=124.29 HR=NIST ROOT=1,6,F(U)
+ Mn         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

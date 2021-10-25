@@ -1,0 +1,5 @@
+  OPEN(1,4) CHARGE=1 MECI     NOLOG
+Calcium, cation 2P(u) 4s(0)4p(1)
+ H=72.45 HR=NIST ROOT=1,2,P(U)
+ Ca         0.00000000  0    0.0000000  0    0.0000000  0    1    0    0       1.0000
+ 

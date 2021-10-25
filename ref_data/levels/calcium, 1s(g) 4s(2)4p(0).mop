@@ -1,0 +1,5 @@
+  OPEN(2,4) MECI     NOLOG
+Calcium, 1S(g) 4s(2)4p(0)
+ H=0.00 HR=NIST ROOT=1,1,S(G) hwt=4
+ Ca         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

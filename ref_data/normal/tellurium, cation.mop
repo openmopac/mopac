@@ -1,0 +1,8 @@
+*
+*   212.502
+*
+ CHARGE=1 OPEN(3,3) SCFCRT=1.D-3 PM7
+Tellurium, cation
+ HR=MOORE H=254.8
+ Te     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

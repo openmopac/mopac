@@ -1,0 +1,9 @@
+*
+*    -2.085
+*
+ XFAC DEBUG PM7
+Li - Li core-core at 2.0 Angstroms (near slope)
+ HR=GUESS HWT=200 H=-2.085+"CORE-CORE_LI - LI NEAR" NOSCALE
+ Li     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ Li     2.10000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

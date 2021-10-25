@@ -1,0 +1,8 @@
+*
+*  Optimize PM7 parameters for a single element
+*
+ OPEN(10,6) MECI
+Platinum, 1D(g) 5d(8)6s(2)
+ H=64.1 ROOT=2,1,D(G) HR=NIST
+ Pt         0.00000000 +0    0.0000000 +0    0.0000000 +0                         0.0000
+ 

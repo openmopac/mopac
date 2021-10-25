@@ -1,0 +1,8 @@
+*
+*  -263.791
+*
+ XFAC DEBUG POP=(2,2,0) OPEN(4,4) MECI PULAY PM7
+Si with populations s=2, p=2, d=0
+ H=-263.791 HR=GUESS HWT=5 NOSCALE
+ Si     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

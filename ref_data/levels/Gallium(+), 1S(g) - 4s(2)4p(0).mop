@@ -1,0 +1,5 @@
+  OPEN(2,4) MECI     CHARGE=1
+Gallium(+), 1S(g) - 4s(2)4p(0)
+ H=0 ROOT=1,1,S(G) HR=NIST HWT=2
+ Ga         0.00000000  0    0.0000000  0    0.0000000  0                      1.0000
+ 

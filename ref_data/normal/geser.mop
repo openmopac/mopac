@@ -1,0 +1,9 @@
+*
+*  -169.890
+*
+ OPEN(2,2) SHIFT=50 TRIPLET GEO-OK PM7
+Germanium selenide
+ <Ge-Se> GR=HLKS1979
+ Ge     0.00000000 +0    0.0000000 +0    0.0000000 +0     0     0     0
+ Se     2.13500000 +1    0.0000000 +0    0.0000000 +0     1     0     0
+ 

@@ -1,0 +1,5 @@
+  OPEN(6,4) MECI ROOT=15     NOLOG
+Tellurium, 1S(g) 5s(2)5p(4)
+ HR=MOORE H=59.9   ROOT=1,1,S(G) hwt=3
+ Te         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

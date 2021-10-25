@@ -1,0 +1,8 @@
+*
+*   133.000
+*
+ MS=1.5 OPEN(9,6) MECI ALLVECS PM7
+Rhodium, atom
+ H=133.0 HR=CRC
+ Rh     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

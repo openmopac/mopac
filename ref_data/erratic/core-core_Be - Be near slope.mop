@@ -1,0 +1,9 @@
+*
+*   -13.000
+*
+ XFAC PM7
+Be - Be core-core at 1.7 Angstroms (near slope)
+ H=-13.000+"CORE-CORE_BE - BE NEAR" HR=GUESS HWT=200 NOSCALE
+ Be     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ Be     1.80000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

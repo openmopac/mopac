@@ -1,0 +1,4 @@
+         pm7 xfac debug pop=(2,0,2) TRIPLET OPEN(2,5) MECI
+Ti with populations s=2, p=0, d=2 (good)
+ h=112.3 hr=guess hwt=0.01  noscale 
+Ti

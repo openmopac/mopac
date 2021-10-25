@@ -1,0 +1,5 @@
+  MS=1.5 OPEN(9,6) MECI     ALLVECS
+Cobalt, Second 4F(g)
+ H=20 HR=DUMMY ROOT=2,4,F(G) HWT=10
+ Co         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

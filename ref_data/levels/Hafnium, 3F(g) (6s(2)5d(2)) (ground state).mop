@@ -1,0 +1,5 @@
+ MS=1 OPEN(4,6) MECI ALLVECS                               NOLOG
+Hafnium, 3F(g) (6s(2)5d(2)) (ground state)
+ ROOT=1,3,F(G) H=0 HWT=2 HR=DUMMY
+ Hf         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

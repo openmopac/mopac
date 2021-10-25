@@ -1,0 +1,4 @@
+         pm7 xfac debug pop=(0,2,4) 
+Ti with populations s=0, p=2, d=4 (bad)
+ h=650+"core_ti" hr=guess hwt=2  noscale 
+Ti

@@ -1,0 +1,5 @@
+  OPEN(4,3) SCFCRT=1.D-3 MECI     NOLOG
+Sulfur 1D(g) 3s(2)3p(4)
+ HR=NIST H=25.85 ROOT=1,1,D(G)
+  S         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

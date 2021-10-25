@@ -1,0 +1,5 @@
+  OPEN(3,9) MECI MS=1.5     NOLOG
+Scandium 4Pu(2) 3d(2)4p(1)
+ HR=MOORE H=75.25 ROOT=2,4,P(U)
+ Sc         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

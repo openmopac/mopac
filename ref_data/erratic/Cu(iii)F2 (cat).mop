@@ -1,0 +1,6 @@
+charge=1
+Cu(iii)F2 (+)
+ h=250+"Cu(ii)F2 (ref)" hwt=2 hr=guess
+Cu
+F 2.0 0
+F 2.0 0 180 0 0 0 1 2

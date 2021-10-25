@@ -1,0 +1,7 @@
+uhf external=Y:\PARAM_Platform\PM7.txt field=(0.0,0.1,0.0)
+ Lead dibromide (bad)
+ H=5+"Lead dibromide (good)" hr=guess hwt=5
+ Br     0.00000000 +0    0.0000000 +0    0.0000000 +0                        -0.2104
+ Pb     1.88378381 +0    0.0000000 +0    0.0000000 +0     1     0     0       0.8204
+ Br     2.85062963 +0   96.4548418 +0    0.0000000 +0     2     1     0      -0.6100
+ 

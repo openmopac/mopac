@@ -1,0 +1,7 @@
+*
+* 8000
+*
+         pm7 xfac debug pop=(0.9,0.5,7.7) 
+Co with populations s=0.9, p=0.5, d=7.7
+ h=7830  hr=guess hwt=2 noscale
+Co

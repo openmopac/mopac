@@ -1,0 +1,5 @@
+  OPEN(10,6) MECI     NOLOG
+Nickel, 1Gg 3d(8)4s(2)
+ H=61.10 HR=NIST ROOT=1,1,G(G)
+ Ni         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

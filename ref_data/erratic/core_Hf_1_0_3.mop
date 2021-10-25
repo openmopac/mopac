@@ -1,0 +1,8 @@
+*
+*   474.553
+*
+ XFAC DEBUG POP=(1,0,3) PM7
+Hf with populations s=1, p=0, d=3
+ H=500 HR=GUESS HWT=5 NOSCALE
+ Hf     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

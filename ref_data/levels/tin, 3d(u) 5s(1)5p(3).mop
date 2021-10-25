@@ -1,0 +1,5 @@
+  OPEN(4,4) MECI ROOT=24     NOLOG
+Tin, 3D(u) 5s(1)5p(3)
+ HR=MOORE H=155.8   ROOT=1,3,D(U)
+ Sn         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

@@ -1,0 +1,5 @@
+  MECI ROOT=2 CHARGE=1 OPEN(5,6) SEXTET     NOLOG
+Molybdenum, cation 6D(g) 4d(5)
+ H=359.2 HR=MOORE
+ Mo         0.00000000  0    0.0000000  0    0.0000000  0    1    0    0       1.0000
+ 

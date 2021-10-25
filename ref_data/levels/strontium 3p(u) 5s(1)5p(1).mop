@@ -1,0 +1,5 @@
+  OPEN(2,4) MECI     NOLOG
+Strontium 3P(u) 5s(1)5p(1)
+ H=42.0 HR=MOORE ROOT=1,3,P(U) hwt=2
+ Sr         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

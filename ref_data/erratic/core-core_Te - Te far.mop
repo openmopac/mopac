@@ -1,0 +1,9 @@
+*
+*     0.244
+*
+ XFAC DEBUG PM7
+Te - Te core-core at 3.7 Angstroms (far) (long bond)
+ HR=GUESS HWT=50 NOSCALE H=0.244
+ Te     0.00000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ Te     3.70000000 +0   0.00000000 +0   0.00000000 +0                         0.0000
+ 

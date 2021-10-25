@@ -1,0 +1,5 @@
+  MS=2.5 OPEN(5,9) MECI     NOLOG
+Vanadium 6Gu 3d(3)4s(1)4p(1)
+ H=100 HR=guess ROOT=1,6,G(U)
+  V         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

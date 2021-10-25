@@ -1,0 +1,5 @@
+  OPEN(3,4) MECI     external=i:/pm7.txt root=1D(u)
+Aluminum, 2D(u) - 3s(0)3p(3)
+ HR=NIST H=106 ROOT=1,2,D(U) hwt=20
+ Al         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

@@ -1,0 +1,8 @@
+*
+*    59.559
+*
+ OPEN(4,3) SCFCRT=1.D-3 TRIPLET PM7
+Oxygen, atom
+ H=59.559 HR=CRC
+  O     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

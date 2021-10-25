@@ -1,0 +1,8 @@
+*
+*   302.507
+*
+ OPEN(10,6) ALLVECS MECI CHARGE=1 PM7
+Gold, cation
+ H=300.7 HR=NIST
+ Au     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

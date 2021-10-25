@@ -1,0 +1,5 @@
+  MS=1.5 OPEN(9,6) MECI     NOLOG
+Cobalt, 4Pg 3d(7)4s(2)
+ H=37.69 HR=NIST ROOT=1,4,P(G) hwt=0.5
+ Co         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

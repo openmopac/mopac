@@ -1,0 +1,5 @@
+external=i:/pm7.txt  OPEN(1,4) MECI charge=2
+Aluminum, (2+) 2Pu
+ H=70 HR=guess ROOT=1,2,P(u) noscale hwt=5
+ Al         0.00000000 +0    0.0000000 +0    0.0000000 +0                      0.0000
+ 

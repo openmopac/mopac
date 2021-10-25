@@ -1,0 +1,5 @@
+  OPEN(2,9)     ALLVECS MECI CHARGE=1 NOLOG
+Yttrium, cation 1D(g)
+ ROOT=1,1,D(G) H=12 HR=DUMMY HWT=2
+  Y         0.00000000  0    0.0000000  0    0.0000000  0    1    0    0       1.0000
+ 

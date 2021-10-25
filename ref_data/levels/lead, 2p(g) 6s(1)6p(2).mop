@@ -1,0 +1,5 @@
+  OPEN(3,4) MECI CHARGE=1     NOLOG
+Lead, 2P(g) 6s(1)6p(2)
+ HR=MOORE H=256.6    ROOT=1,2,P(G)
+ Pb         0.00000000  0    0.0000000  0    0.0000000  0    1    0    0       1.0000
+ 

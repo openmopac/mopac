@@ -1,0 +1,5 @@
+  OPEN(4,9) MECI MS=2 CHARGE=1
+Niobium(+), 5D(u) 4d(3)5p(1)
+ H=106.5 HR=NIST ROOT=1,5,D(U) HWT=5
+ Nb         0.00000000  0    0.0000000  0    0.0000000  0                      1.0000
+ 

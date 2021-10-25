@@ -1,0 +1,5 @@
+ OPEN(6,4) CHARGE=1 MECI
+Bromine, cation, 3P(u) 4s(1)4p(5)
+ HR=NIST H=274.96 ROOT=1,3,P(U)
+ Br         0.00000000 +0    0.0000000 +0    0.0000000 +0    1    0    0       1.0000
+ 

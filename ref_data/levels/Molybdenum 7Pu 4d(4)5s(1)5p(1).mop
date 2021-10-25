@@ -1,0 +1,5 @@
+  OPEN(6,9) MECI MS=3.0
+Molybdenum, 7P(u) 4d(4)5s(1)5p(1)
+ H=91.4 HR=MOORE ROOT=1,7,P(U)
+ Mo         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

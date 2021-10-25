@@ -1,0 +1,8 @@
+*
+*   157.300
+*
+ OPEN(6,6) SEPTET PM7
+Molybdenum, atom
+ H=157.3 HR=NIST
+ Mo     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

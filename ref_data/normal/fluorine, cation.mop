@@ -1,0 +1,8 @@
+*
+*   236.069
+*
+ SCFCRT=1.D-3 OPEN(4,3) CHARGE=1 PM7
+Fluorine, cation
+ H=419.6 HR=MOORE WT=0.2
+  F     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

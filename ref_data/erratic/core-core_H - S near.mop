@@ -1,0 +1,8 @@
+*
+*  64
+*
+          pm7 xfac debug
+H - S core-core at 1.5 Angstroms (near) 
+ h=64 hr=guess hwt=20 noscale
+S 
+H 1.5

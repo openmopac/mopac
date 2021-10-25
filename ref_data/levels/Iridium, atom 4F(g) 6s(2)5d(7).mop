@@ -1,0 +1,5 @@
+  MS=1.5 OPEN(9,6) MECI     ALLVECS                           NOLOG
+Iridium, atom 4F(g) 6s(2)5d(7)
+ H=0  HR=DUMMY ROOT=1,4,F(G) HWT=2
+ Ir         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

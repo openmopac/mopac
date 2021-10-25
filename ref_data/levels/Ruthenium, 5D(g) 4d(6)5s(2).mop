@@ -1,0 +1,5 @@
+ MS=2 OPEN(8,6)     MECI ALLVECS
+Ruthenium, 5D(g) 4d(6)5s(2)
+ H=20 ROOT=1,5,D(G) HR=NIST HWT=5
+ Ru         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

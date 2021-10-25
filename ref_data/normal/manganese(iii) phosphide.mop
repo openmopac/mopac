@@ -1,0 +1,9 @@
+*
+*   145.520
+*
+ RELSCF=0.1 UHF TRIPLET PULAY PM7
+Manganese(III) phosphide
+ I=4.645 IR=PW91D D=2.539 DR=PW91D
+  P     0.00000000 +0    0.0000000 +0    0.0000000 +0     0     0     0
+ Mn     2.85032043 +1    0.0000000 +0    0.0000000 +0     1     0     0
+ 

@@ -1,0 +1,8 @@
+*
+*   341.045
+*
+ OPEN(6,5) MECI ALLVECS CHARGE=1 PM7
+Iridium, cation
+ H=349.5 HR=NIST
+ Ir     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

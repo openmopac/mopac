@@ -1,0 +1,9 @@
+*
+*  -156.804
+*
+ SINGLET DELTA=0.2 NOANCI RELSCF=0.1 OPEN(2,8) PM7
+Cesium, dimer
+ <Cs-Cs> GR=JANAF86
+ Cs     0.00000000 +0    0.0000000 +0    0.0000000 +0     0     0     0
+ Cs     4.64600000 +1    0.0000000 +0    0.0000000 +0     1     0     0
+ 

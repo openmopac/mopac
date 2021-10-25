@@ -1,0 +1,5 @@
+  OPEN(9,6) MECI    CHARGE=1                                         ROOT=11
+Nickel (+), 2Dg 3d(9)4s(0)
+ H=0 HR=NIST ROOT=1,2,D(G) HWT=10
+ Ni         0.00000000  0    0.0000000  0    0.0000000  0                      1.0000
+ 

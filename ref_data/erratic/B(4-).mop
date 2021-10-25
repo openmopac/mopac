@@ -1,0 +1,5 @@
+PL  EXTERNAL=s:\data\elements\00_bio\params.txt charge=-4 open(5,3)
+ B 4- ion (for BN)
+ H=1100  Hr=guess 
+  B         0.00000000  0    0.0000000  0    0.0000000  0                      0.1931
+ 

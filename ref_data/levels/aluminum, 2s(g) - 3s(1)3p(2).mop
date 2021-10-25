@@ -1,0 +1,5 @@
+  OPEN(3,4) MECI ROOT=7     external=Y:\PARAM_Platform\PM7.txt
+Aluminum, 2S(g) - 3s(1)3p(2)
+ HR=NIST H=147.64 ROOT=1,2,S(G) hwt=5
+ Al         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

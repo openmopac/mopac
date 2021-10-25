@@ -1,0 +1,5 @@
+ MS=2.5 OPEN(7,6) MECI NOLOG
+Technetium, 6Sg 4d(5)5s(2)
+ HWT=5 H=0.0 HR=NIST ROOT=1,6,S(G)
+ Tc         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 

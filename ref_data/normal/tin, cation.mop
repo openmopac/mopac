@@ -1,0 +1,8 @@
+*
+*   204.099
+*
+ CHARGE=1 OPEN(3,4) SCFCRT=1.D-3 PM7
+Tin, cation
+ H=241.5 HR=MOORE
+ Sn     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

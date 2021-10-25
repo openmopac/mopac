@@ -1,0 +1,5 @@
+  OPEN(2,4) MECI     NOLOG
+Magnesium, 1S(g) 3s(2)3p(0) (ground state)
+ H=-1.0 HR=NIST ROOT=1,1,S(G) hwt=10
+ Mg         0.00000000  0    0.0000000  0    0.0000000  0                      0.0000
+ 
