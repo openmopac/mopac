@@ -62,6 +62,7 @@ module Common_arrays_C
   &  loc,        & !  Indices of atoms and coordinates marked for optimization
   &  ibonds,     & !  Atom numbers of atoms bonded to a given atom
   &  lopt,       & !  optimization flags
+  &  lopt_store, & !  Optimization flags in GEO_REF
   &  pibonds,    & !  Pi bonds supplied by the user (requires keyword SETPI)
   &  hblist,     & !  List of hydrogen bonds X-H --- Y and types used by PM6-DH2
   &  ijpars,     & !

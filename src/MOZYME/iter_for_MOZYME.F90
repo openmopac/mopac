@@ -174,7 +174,7 @@ subroutine iter_for_MOZYME (ee)
     end if
     if (index(keywrd," tighten")  /= 0) then
       call l_control("tighten", len_trim("tighten"), -1)
- !     selcon = selcon/1.5d0
+      selcon = max( selcon*0.1d0, 1.d-3)
     end if
    !
    ! Fill the array IDIAG pointing to the diagonal elements of P

@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.269M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.269M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu Oct  7 01:33:52 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:44:39 2021  *
  *  RESEQ      - RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(40, 50, 60) 
@@ -939,6 +937,6 @@ END
 
 
 
- TOTAL JOB TIME:             0.06 SECONDS
+ TOTAL JOB TIME:             0.04 SECONDS
 
  == MOPAC DONE ==

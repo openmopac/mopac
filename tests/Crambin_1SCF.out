@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.269M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.269M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu Oct  7 01:28:33 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:43:59 2021  *
  *  PDBOUT     - PRINT GEOMETRY IN PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A 66) 
@@ -1370,9 +1368,9 @@
  PLS ESCF USING THE OLD LMOs:    -2991.990525 KCAL/MOL
 
  ITER.      1 PLS= 0.430E-02           ENERGY   -2991.99095 DELTAE-2991.9909507
- ITER.      2 PLS= 0.336E-02           ENERGY   -2991.99112 DELTAE   -0.0001733
- ITER.      3 PLS= 0.219E-02           ENERGY   -2991.99109 DELTAE    0.0000299
- ITER.      4 PLS= 0.160E-02           ENERGY   -2991.99121 DELTAE   -0.0001205
+ ITER.      2 PLS= 0.336E-02           ENERGY   -2991.99112 DELTAE   -0.0001735
+ ITER.      3 PLS= 0.219E-02           ENERGY   -2991.99109 DELTAE    0.0000301
+ ITER.      4 PLS= 0.160E-02           ENERGY   -2991.99121 DELTAE   -0.0001206
 
  -------------------------------------------------------------------------------
  START_RES=(1A 66)  CHAINS=(A)  1SCF pdbout MOZYME pl oldens residue CHARGE=-1
@@ -1385,8 +1383,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.269M)
-                                                       Thu Oct  7 01:29:20 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:44:05 2021
 
 
 
@@ -1394,9 +1392,6 @@
           FINAL HEAT OF FORMATION =      -2991.99121 KCAL/MOL =  -12518.49124 KJ/MOL
 
 
-          TOTAL ENERGY            =     -59885.52930 EV
-          ELECTRONIC ENERGY       =   -2486689.11003 EV
-          CORE-CORE REPULSION     =    2426803.58074 EV
 
           NO. OF FILLED LEVELS    =        919
           MOLECULAR WEIGHT        =       4775.4615
@@ -1411,8 +1406,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =         47.300 SECONDS
-          COMPUTATION TIME        =         47.236 SECONDS
+          WALL-CLOCK TIME         =          6.488 SECONDS
+          COMPUTATION TIME        =          6.485 SECONDS
 
 
 
@@ -2940,7 +2935,7 @@
   206          C(ATOM    206  CG  TYR A  29)          -0.054171        4.0542     1.06363     2.99055
   207          C(ATOM    207  CD1 TYR A  29)          -0.071049        4.0710     1.08708     2.98397
   208          C(ATOM    208  CD2 TYR A  29)          -0.089949        4.0899     1.08487     3.00508
-  209          C(ATOM    209  CE1 TYR A  29)          -0.313350        4.3133     1.07803     3.23532
+  209          C(ATOM    209  CE1 TYR A  29)          -0.313350        4.3134     1.07803     3.23532
   210          C(ATOM    210  CE2 TYR A  29)          -0.264811        4.2648     1.07115     3.19366
   211          C(ATOM    211  CZ  TYR A  29)           0.309701        3.6903     1.07444     2.61586
   212          O(ATOM    212  OH  TYR A  29)          -0.527836        6.5278     1.81960     4.70824
@@ -3176,7 +3171,7 @@
   442          H(ATOM    443  H   ARG A  17)           0.349398        0.6506     0.65060
   443          H(ATOM    444  HA  ARG A  17)           0.181431        0.8186     0.81857
   444          H(ATOM    445 1HB  ARG A  17)           0.173909        0.8261     0.82609
-  445          H(ATOM    446 2HB  ARG A  17)           0.161940        0.8381     0.83806
+  445          H(ATOM    446 2HB  ARG A  17)           0.161941        0.8381     0.83806
   446          H(ATOM    447 1HG  ARG A  17)           0.145882        0.8541     0.85412
   447          H(ATOM    448 2HG  ARG A  17)           0.181013        0.8190     0.81899
   448          H(ATOM    449 1HD  ARG A  17)           0.168886        0.8311     0.83111
@@ -4105,6 +4100,6 @@
 
 
 
- TOTAL JOB TIME:            47.53 SECONDS
+ TOTAL JOB TIME:             6.55 SECONDS
 
  == MOPAC DONE ==

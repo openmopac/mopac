@@ -117,7 +117,7 @@
       nvar = abs(nvar) 
       if (debug) then 
         write (iw, '('' XPARAM'')') 
-        write (iw, '(5(2I3,F10.4))') (loc(1,i),loc(2,i),xparam(i),i=1,nvar) 
+        write (iw, '(5(i8,i2,F10.4))') (loc(1,i),loc(2,i),xparam(i),i=1,nvar) 
       end if 
       if (.not.restrt) then 
         grad(:nvar) = 0.D0 

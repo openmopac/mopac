@@ -41,7 +41,7 @@
       use parameters_C, only : ams
 !
       use common_arrays_C, only : geo, coord, xparam, na, nb, nc, nat, c, labels, txtatm, lopt, &
-        txtatm1, geoa, atmass, loc
+        txtatm1, geoa, atmass, loc, lopt_store
 !
       use elemts_C, only: atom_names
       implicit none
@@ -1062,10 +1062,29 @@
         close (99)
       end if
       coord(:,:natoms) = geo(:,:natoms)   ! Store input geometry
-      do i = 1, nvar
-        xparam(i) = geoa(loc(2,i), loc(1,i))
-      end do
-      geo(:,:numat) = geoa(:,:numat)
+      if (index(keywrd, " LOCATE-TS") == 0) then
+        do i = 1, nvar
+          xparam(i) = geoa(loc(2,i), loc(1,i))
+        end do
+      else
+        if (.not. allocated(lopt_store)) then
+!
+! Store lopt for input data-set or GEO_DAT in case it will be needed in LOCATE_TS
+!
+          allocate(lopt_store(3,natoms))
+          lopt_store = lopt(:3,:natoms)
+        end if
+        nvar = 0
+        do i = 1, natoms
+          do j = 1,3
+            if (lopt_store(j,i) == 1) then
+              nvar = nvar + 1
+              xparam(nvar) = geoa(j,i)
+            end if
+          end do
+        end do
+      end if
+      geo(:,:natoms) = geoa(:,:natoms)
 !
 ! The following "big_swap" saves the geometry and xparam for the rotated input geometry
 !

@@ -20,7 +20,7 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE molkst_C, only : numat, keywrd, numcal, nvar, jloop => itemp_1, line
-      use common_arrays_C, only : nat, na, nb, nc, p, na_store
+      use common_arrays_C, only : nat, na, nb, nc, p, na_store, geoa, loc, l_atom
       USE parameters_C, only : tore
       use chanel_C, only : iw, ires
       use drc_C, only: vref, vref0, allxyz, allvel, xyz3, vel3, allgeo, geo3, parref, &
@@ -34,7 +34,7 @@
       integer, dimension (2, 3*numat) :: mcoprt  
       integer, intent(in) ::  ncoprt
       logical, intent(in) :: parmax
-      integer ::  iloop, icalcn, ione, i, l, j, nfract, ii, n, k 
+      integer ::  iloop, icalcn, ione, i, l, j, nfract, ii, n, k, ij
       double precision, dimension(3) :: escf3, ekin3
       double precision, dimension(numat) :: charge 
       double precision, dimension(3) :: xold3 
@@ -46,7 +46,7 @@
         stept, steph, stepx, tref = 0.d0, xtot0, xtot1, xtot2, etot2, escf2, ekin2, &
         sum, deltat, t1, t2, sum1, dh, cc, bb, aa, c1, fract, dip2 = 0.d0, dip1 = 0.d0, dip0 = 0.d0, &
         suma, sumb, total = 0.d0
-      logical :: goturn, ldrc, exists, l_pdbout      
+      logical :: goturn, ldrc, exists, l_pdbout    
       character , dimension(3) :: cotype*2 
       character :: text1*3, text2*2 
       double precision, external :: dot, reada
@@ -74,6 +74,10 @@
       data cotype/ 'BL', 'BA', 'DI'/  
       geo = 0.d0
       if (icalcn /= numcal) then 
+        l_atom = .false.
+        do i = 1, numat
+          l_atom(loc(1,i)) = .true.
+        end do
         if (allocated(vref)) deallocate(vref)
         if (allocated(vref0)) deallocate(vref0)
         if (allocated(allxyz)) deallocate(allxyz)
@@ -86,7 +90,7 @@
         if (allocated(now)) deallocate(now)
         i = 3*numat
         allocate(vref(i), vref0(i), allxyz(3,i), allvel(3,i), xyz3(3,i), vel3(3,i), &
-        allgeo(3,i), geo3(3,i), parref(i), now(i) )
+        allgeo(3,i), geo3(3,i), parref(i), now(i))
         allgeo = 0.d0
         now = ref
         old_sum = 0.d0
@@ -260,7 +264,13 @@
       deltat = deltt*1.D15 
       if ( .not. l_pdbout) then
         na(:numat) =  na_store(:numat)
-        call xyzint (xparam, numat, na, nb, nc, 57.29577951308232D0, geo) 
+!
+!  Load geometry into geoa
+!
+        do i = 1, nvar
+          geoa(loc(2,i), loc(1,i)) = xparam(i)
+        end do
+        call xyzint (geoa, numat, na, nb, nc, 57.29577951308232D0, geo) 
       end if
       if (iloop == 1) then 
         etot1 = etot0 
@@ -336,21 +346,23 @@
 !
 !   CALCULATE CHANGE IN GEOMETRY
 !
-      l = 0
-      xtot0 = 0.D0 
-      sum = 0.D0 
-      sum1 = 0.D0 
-      do i = 1, numat 
-        suma = 0.d0
-        sumb = 0.d0
-        do j = 1, 3 
-          l = l + 1 
-          suma = suma + (allxyz(1,l) - ref(l))**2 
-          sumb = sumb + (allxyz(1,l) - now(l))**2
-        end do 
-        sum = sum + sqrt(sumb)
-        sum1 = sum1 + sqrt(suma)
-      end do 
+        l = 0
+        xtot0 = 0.D0 
+        sum = 0.D0 
+        sum1 = 0.D0
+        do ij = 1, nvar, 3
+          suma = 0.d0
+          sumb = 0.d0
+          i = loc(1, ij)
+          do j = 1, 3
+            l = (i - 1) *3 + j
+            suma = suma + (allxyz(1,ij + j - 1) - ref(l))**2 
+            sumb = sumb + (allxyz(1,ij + j - 1) - now(ij + j - 1))**2
+            continue
+          end do
+          sum = sum + sqrt(sumb)
+          sum1 = sum1 + sqrt(suma)
+        end do
 !
 !  xtot0 is the change in geometry from the start of the run
 !  xold0 is the change in geometry from the last step

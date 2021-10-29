@@ -451,7 +451,7 @@ subroutine pdbout (mode1)
       if (p(1) > -900.d0) then
         write(iprt,"(a)")"<TR><TD>"
         write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_x); " 
-        write(iprt,"(a)")"var use = {visible}; var sel = {selected};"
+        write(iprt,"(a)")"var use = {visible}; select off; var sel = use;"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
         write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"for (var x IN @use){select @x; var txt =  (x.temperature > 0 ? "//backslash// & 
@@ -465,7 +465,7 @@ subroutine pdbout (mode1)
 
         write(iprt,"(a)")"</TD><TD>"
         write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_s); "
-         write(iprt,"(a)")"var use = {visible}; var sel = {selected};"
+        write(iprt,"(a)")"var use = {visible}; select off; var sel = use;"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
         write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"for (var x IN @use)"

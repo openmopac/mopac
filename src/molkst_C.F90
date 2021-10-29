@@ -136,10 +136,7 @@ module molkst_C
   &  l31,      & !  1 if l3u > 0, 0 otherwise
   &  msdel,    & !  Magnetic component of spin
   &  Run = 1,  & !  Run-number (=1 if a single job)
-  &  ijulian   & !  Number of days that this program has left before it stops working
-  &  = 100000, & !  Be generous
   &  ilim,     & !  Number of temperatures in a thermodynamics calculation
-  &  site_no,  & !  The number of this site
   &  ncomments,& !  Number of lines of comment
   &  mers(3),  & !  Number of mers in each direction, in solids
   &  itemp_1,  & !  Used for very temporary transfer of information
@@ -267,11 +264,10 @@ module molkst_C
   character :: backslash = achar(92) ! portable way of representing the backslash character
   character :: keywrd*3000, koment*200, title*200, refkey(6)*3000, geo_ref_name*241, geo_dat_name*241, &
     allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000 
-  character :: errtxt*200, program_name*17="GUI             ", dh*20
+  character :: errtxt*200, dh*20
 !
   logical ::            &
      moperr,            & !
-     Academic = .true., & !  TRUE is this is an academic licence.
      uhf,               & !  Term        Should the Unrestricted Hartree Fock method be used?
                           !  Definition  True if the calculation is Unrestricted Hartree-Fock
                           !  Default    = .false.

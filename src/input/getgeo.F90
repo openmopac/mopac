@@ -62,9 +62,9 @@
       integer :: i, icapa, icapz, iserr, k, icomma, khar, nvalue, label, j, ndmy, &
       jj, ltl, max_atoms, ii
       double precision :: weight, real, sum 
-      logical :: lxyz, velo, leadsp, ircdrc, saddle, lturn, mini, l_gaussian
+      logical :: lxyz, velo, leadsp, ircdrc, saddle, mini, l_gaussian
       character , dimension(107) :: elemnt*2 
-      character :: space, nine, zero, comma, string*120, ele*2, turn, no
+      character :: space, nine, zero, comma, string*120, ele*2, no
       double precision, external :: reada
       save elemnt, space, nine, zero, comma 
 !-----------------------------------------------
@@ -103,7 +103,6 @@
       if (index(keywrd," FORCETS") /= 0) ircdrc = .false.
       icapa = ichar('A') 
       icapz = ichar('Z') 
-      lturn = .true.
       get_q = (index(keywrd, " 0SCF") > 0 .and. index(keywrd, " HTML") > 0 .and. index(keywrd_txt, " GEO_REF") == 0)
       if (get_q) then
         if (allocated(p)) deallocate(p)
@@ -182,6 +181,11 @@
 ! Read in keywords, title and comment
 !
             call gettxt 
+            saddle = (index(keywrd, "SADDLE") > 0)
+            lxyz = (index(keywrd, " XYZ") > 0 .or. saddle .or. (index(keywrd, " LOCATE-TS") /= 0))
+            int = (index(keywrd, " INT ") > 0)
+            velo = (index(keywrd,' VELO') > 0) 
+            lmop = (Index (keywrd, " MOPAC") /= 0)
             read (iread, '(A)', end=120, err=210) line 
             ii = 3
           else
@@ -451,42 +455,16 @@
         geo(1,natoms) = reada(line,istart(2)) 
         geo(2,natoms) = reada(line,istart(4)) 
         geo(3,natoms) = reada(line,istart(6)) 
-        if (.not. mini .and. ircdrc) then 
-          turn = line(istart(3):istart(3)) 
-          if (turn == 'T') then 
-            lopt(1,natoms) = 1 
-            if (lturn) then
-              write (iw, '(A)') &
-              ' IN DRC MONITOR POTENTIAL ENERGY TURNING POINTS' 
-              lturn = .false.
-            end if
-          else 
-            lopt(1,natoms) = 0 
-          end if 
-          turn = line(istart(5):istart(5)) 
-          if (turn == 'T') then 
-            lopt(2,natoms) = 1 
-          else 
-            lopt(2,natoms) = 0 
-          end if 
-          turn = line(istart(7):istart(7)) 
-          if (turn == 'T') then 
-            lopt(3,natoms) = 1 
-          else 
-            lopt(3,natoms) = 0 
-          end if 
-        else 
-          lopt(1,natoms) = nint(reada(line,istart(3))) 
-          lopt(2,natoms) = nint(reada(line,istart(5))) 
-          lopt(3,natoms) = nint(reada(line,istart(7))) 
-          if (nvalue == 8 .and. get_q) p(natoms) = reada(line,istart(8))
-          if (nvalue == 11 .and. get_q) p(natoms) = reada(line,istart(11))
-          do i = 3, 7, 2 
-            if (.not.(ichar(line(istart(i):istart(i)))>=icapa .and. ichar(line(&
-              istart(i):istart(i)))<=icapz .and. natoms>1)) cycle  
-            iserr = 1 
-          end do 
-        end if 
+        lopt(1,natoms) = nint(reada(line,istart(3))) 
+        lopt(2,natoms) = nint(reada(line,istart(5))) 
+        lopt(3,natoms) = nint(reada(line,istart(7))) 
+        if (nvalue == 8 .and. get_q) p(natoms) = reada(line,istart(8))
+        if (nvalue == 11 .and. get_q) p(natoms) = reada(line,istart(11))
+        do i = 3, 7, 2 
+          if (.not.(ichar(line(istart(i):istart(i)))>=icapa .and. ichar(line(&
+            istart(i):istart(i)))<=icapz .and. natoms>1)) cycle  
+          iserr = 1 
+        end do  
       end if
       pdb_label = (maxtxt > 25)
       if (line(istart(10):istart(10)) == '"' .or. line(istart(9):istart(9)) == '"' .or. &
@@ -676,7 +654,7 @@
           return  
         end do 
       end if
-      if (ircdrc) then
+      if (ircdrc .and. index(keywrd,' 0SCF') == 0) then
         if (numat /= natoms) then
           call mopend ('Only real atoms are allowed in IRC and DRC calculations.')
           return
@@ -813,7 +791,7 @@
         if (k >= 3*numat - 6) lopt(:,:min(3, numat)) = 1
         natoms = numat
         if (saddle .or. (index(keywrd, " LOCATE-TS") /= 0)) then
-          lopt(:,:numat) = 1  ! In a saddle or locate-ts calculation, all parameters must be optimizable.
+          if (index(keywrd, " LOCATE-TS") == 0) lopt(:,:numat) = 1  ! In a saddle calculation, all parameters must be optimizable.
           na(:natoms) = 0
         end if
       end if 
@@ -837,7 +815,6 @@
           lopt(i:3,i) = 0 
         end do 
       end if 
-!      if (Index (keywrd, " NEWGEO") /= 0) call newflg ()
       return  
 ! ERROR CONDITIONS
   210 continue 

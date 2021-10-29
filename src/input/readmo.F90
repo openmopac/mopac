@@ -30,7 +30,7 @@
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
       & verson, is_PARAM, line, nl_atoms, l_feather, backslash, &
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
-      isok, ijulian, gui, Academic, site_no, method_pm6_dh2, caltyp, &
+      isok, gui, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &   
@@ -45,7 +45,7 @@
 !
       use common_arrays_C, only : xparam, loc, labels, nat, na, nb, nc, & 
         geo, coord, atmass, lopt, pibonds, l_atom, chains, pibonds_txt, &
-        coorda, txtatm, txtatm1, break_coords, breaks, nbonds, tvec
+        coorda, txtatm, txtatm1, break_coords, breaks, nbonds, tvec, lopt_store
 !
       use MOZYME_C, only : start_res, lstart_res, start_letter
 !
@@ -709,38 +709,9 @@
           if (numcal == 1 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
         end if
       end if
-      maxci = 16000
-      if (Academic) then
-        if (site_no > 9999) then
-          write (iw, '(A,i6,a,a)') ' ** Site#:',site_no, &
-          & '        For non-commercial use only           Version '//verson, ' **' 
-        else
-          write (iw, '(A,i5,a,a)') ' ** Site#:',site_no, &
-          & '         For non-commercial use only           Version '//verson, ' **' 
-        end if
-      else
-        if (site_no == -1) then
-          write (iw, '(A)') ' **  Evaluation copy      E-mail support: MrMOPAC@ATT.net     Version '//verson//' **'
-        else if (site_no > 9999) then
-          write (iw, '(A,i6,a,a)') ' ** Site#:',site_no, &
-          & '  E-mail support:    MrMOPAC@ATT.net           Version '//verson, ' **' 
-        else
-          write (iw, '(A,i5,a,a)') ' ** Site#:',site_no, &
-          & '  E-mail support:    MrMOPAC@ATT.net           Version '//verson, ' **' 
-        end if
-      end if
-               
-      write (iw, '(1X,a)')"*******************************************************************************"            
+      maxci = 16000          
       write (iw, '(1X,a)')"** Cite this program as: MOPAC2016, Version: "//verson//", James J. P. Stewart,   **"
-      
-
-      if (ijulian > 410) then
-        write (iw, '(1X,a, a,a)') &
-          "** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **"
-      else
-        write (iw, '(1X,a, i4,a)') &
-                          "** Stewart Computational Chemistry, web: HTTP://OpenMOPAC.net. Days left:",ijulian,"**"
-      end if
+      write (iw, '(1X,a, a,a)')"**                           web-site: HTTP://OpenMOPAC.net.                 **"
       write (iw, '(1X,a)')"*******************************************************************************"
       write (iw, '(1X,a)')"**                                                                           **"
       write (iw,"(1x,a)") "**                                MOPAC2016                                  **"
@@ -864,7 +835,7 @@
       write (iw, &
         '(1X,14(''*****''),''*********'')')
       if (moperr) return
-      if (index(keywrd, " LOCATE-TS") /= 0) lopt(:,:natoms) = 1
+      if (index(keywrd, " LOCATE-TS") /= 0 .and. index(keywrd, " LOCATE-TS(SET") == 0) lopt(:,:natoms) = 1
       if (index(keywrd, "INVERT") /= 0) then
         nvar = 0
         do i = 1, natoms
@@ -1004,7 +975,7 @@
         end if 
       end if 
       
-      if (index(keywrd, " NOOPT") /= 0)   then
+      if (index(keywrd, " NOOPT") /= 0 .and. index(keywrd, " IRC") + index(keywrd, " DRC") == 0)   then
         k = 0
         do_noopt: do i = 1, natoms
           do j = 1,3
@@ -1633,6 +1604,13 @@
           return
         end if
         call geo_ref
+        if (.not. allocated(lopt_store)) then
+!
+! Store lopt for input data-set or GEO_DAT in case it will be needed in LOCATE_TS
+!
+          allocate(lopt_store(3,numat))
+          lopt_store = lopt(:3,:numat)
+        end if
         if (moperr) return
         lopt = 1
       end if

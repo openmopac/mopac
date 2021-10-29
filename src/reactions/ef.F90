@@ -1577,7 +1577,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
    ! ... Executable Statements ...
    !
     allocate (gnext1(nvar), gmin1(nvar))
-    if (index(keywrd, " MOZ") /= 0) then
+    if (index(keywrd, " MOZ") + index(keywrd, " LOCATE-TS")/= 0) then
 !
 !  MOZYME is not as precise as conventional, so use a bigger step
 !

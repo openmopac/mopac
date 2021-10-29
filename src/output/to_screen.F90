@@ -419,8 +419,6 @@
     write(hook,"(a)")" ####################################"
 
     write(hook,"(a,sp, d"//fmt13p6//",a)")" HEAT_OF_FORMATION:KCAL/MOL=",escf
-    write(hook,"(a,sp, d"//fmt13p6//",a)")" ENERGY_ELECTRONIC:EV=",elect
-    write(hook,"(a,sp, d"//fmt13p6//",a)")" ENERGY_NUCLEAR:EV=",enuclr
     write(hook,"(a,sp, d"//fmt13p6//",a)")" GRADIENT_NORM:KCAL/MOL/ANGSTROM=",gnorm
     write(hook,"(a,a)")" POINT_GROUP=",name
     if (id > 0) then
@@ -477,7 +475,6 @@
       sum = sum - i*1000000
     write(hook,"(a,sp, d"//fmt13p6//",a)")" CPU_TIME:SEC=",sum
     write(hook,"(a,sp, d"//fmt13p6//",a)")" MOLECULAR_WEIGHT:AMU=",mol_weight
-    write(hook,"(a,sp, d"//fmt13p6//",a)")" TOTAL_ENERGY:EV=",elect + enuclr + solv_energy
     write(hook,"(a,i"//paras//",a)")" ATOM_X_OPT:ANGSTROMS[",3*numat, "]="
     write(hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
     if(nelecs == 0)then

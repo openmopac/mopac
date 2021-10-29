@@ -49,8 +49,9 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
 !END
 !ENDMDL
 !                                 
-  use molkst_C, only : step_num, numat, jloop => itemp_1, line, nl_atoms, keywrd, backslash
+  use molkst_C, only : step_num, numat, jloop => itemp_1, line, keywrd, backslash
   use chanel_C, only : ixyz, xyz_fn
+  use drc_C, only : georef
   USE elemts_C, only : elemnt 
   use common_arrays_C, only : nat, l_atom
   implicit none
@@ -77,7 +78,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
 !
 !  Write out "xyz" file
 !
-  write(ixyz,"(i6,a)") nl_atoms," "
+  write(ixyz,"(i6,a)") numat," "
   if (index(keywrd, " REVERSE") /= 0) then
     npt = npt - 1
     imodel = imodel -1
@@ -89,7 +90,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
   num3 = char(max(ichar("0"), ichar("0") + min(9, int(log10(4.184d0*factor)) - 1))) 
   npt = npt + 1
   if (l_dipole) then
-    write(ixyz1,"(i6,a)") nl_atoms," "
+    write(ixyz1,"(i6,a)") numat," "
     write(line,'(a, i'//num1//', a, f1'//num2//'.4, a)')"Profile.", jloop, &
     " DIPOLE =", rc_dipo, " DEBYE"
      k = index(line, "DIPO")
@@ -99,10 +100,15 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
     " HEAT OF FORMATION =", escf, " KCAL "
   k = index(line, "HEAT") 
   write(ixyz,'(a,i4,a)')line(:8), npt," "//trim(line(k:))
+  k = 0
   do i = 1, numat
     if (l_atom(i)) then
-      if (l_dipole) write(ixyz1,"(3x,a2,3f15.5)")elemnt(nat(i)), (xyz(j,i),j=1,3)
-      write(ixyz,"(3x,a2,3f15.5)")elemnt(nat(i)), (xyz(j,i),j=1,3)
+      k = k + 1
+      if (l_dipole) write(ixyz1,"(3x,a2,3f15.5)")elemnt(nat(i)), (xyz(j,k), j = 1, 3)
+      write(ixyz,"(3x,a2,3f15.5)")elemnt(nat(i)), (xyz(j,k), j = 1,3)
+    else
+      if (l_dipole) write(ixyz1,"(3x,a2,3f15.5)")elemnt(nat(i)), (georef(j,i), j = 1, 3)
+      write(ixyz,"(3x,a2,3f15.5)")elemnt(nat(i)), (georef(j,i), j = 1, 3)
     end if
   end do
   if (mod(jloop,10) == 0) then! write out every 10'th iteration.

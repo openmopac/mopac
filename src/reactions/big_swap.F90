@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  subroutine Locate_TS 
+subroutine Locate_TS 
 !
 ! Multi-step procedure for locating a transition state involving two stationary points in a
 ! protein mechanism
@@ -26,7 +26,7 @@
 ! C: Using normal geometry optimization optimize the positions of all other atoms
 ! D: Repeat B and C until the geometry is stable
 !
-    use common_arrays_C, only : xparam, loc, geoa, lopt, geo, grad
+    use common_arrays_C, only : xparam, loc, geoa, lopt, geo, grad, lopt_store
     USE molkst_C, only : nvar, keywrd, numcal, numat, density, use_ref_geo, mpack, n2elec, &
      line, step_num, escf, moperr, prt_coords
     use MOZYME_C, only : geo_1, geo_2
@@ -43,17 +43,36 @@
     character :: num
     allocate(active_site(200))
     if (.not. allocated(geoa)) allocate(geoa(3,numat))
-    if (allocated(geo_1)) geoa(:,:numat) = geo_1(:,:numat)      
-    call build_active_site(active_site, ninsite)
-    if (moperr) return
-    nset = 1
-    if (index(keywrd," LOCATE-TS(SET") /= 0) then
-      shell = ninsite(1)
+    if (allocated(geo_1)) then
+      geoa(:,:numat) = geo_1(:,:numat)      
+      call build_active_site(active_site, ninsite)
+      if (moperr) return
+    end if    
+    gnorm_store = 0.d0
+!
+!   Fill array "lopt"  When two systems are used, "lopt" is the difference in connectivity (topology) of them.
+!   
+    if (.not. allocated(geo_1)) then
+!
+! If geo_1 does not exist, only one system was input, i.e. GEO_REF was not used.
+! so set up conditions to go straight to "Refine_TS"
+!
+!  Set "lopt" to 
+!
+      shell = 0
+      if (.not. allocated(lopt_store)) then
+        allocate(lopt_store(3,numat))
+        lopt(:3,:numat) = 1 - lopt(:3,:numat)
+      end if 
+      lopt_store = 1       
       deallocate(grad)
       allocate(grad(3*numat))
       goto 99
     end if
-    gnorm_store = 0.d0
+!
+! If geo_1 does exist, so two systems were input, i.e. GEO_REF was used.
+! so run LOCATE-TS in the normal way
+!
     i = index(keywrd, " GNORM=")
     if (i /= 0) gnorm_store = reada(keywrd, i)
     gradients = max(4.d0,min(20.d0,sqrt(numat*0.5d0)))    
@@ -121,12 +140,27 @@
         end if        
       end if
     else
+      nset = 1
       if (index(keywrd(i:j), "C:") == 0) then
         write(iw,'(/10x, a)')"By default, set 1 will be used.  To change default, see keyword 'LOCATE-TS'"
       else
         l_refine = .false.
       end if
     end if
+!
+!   Use optimization flags from GEO_REF
+!
+    nvar = 0
+    do i = 1, numat
+      do j = 1,3
+        if (lopt_store(j,i) == 1) then
+          nvar = nvar + 1
+          loc(1, nvar) = i
+          loc(2, nvar) = j
+        end if
+      end do
+    end do 
+    loc(:,nvar + 1:) = 0
     big_nvar = 2*nvar
     allocate(big_xparam(big_nvar))
     if (nset > 0) then
@@ -138,6 +172,7 @@
         l = loc(2,i) 
         big_xparam(i) = geo_1(l,k)
         big_xparam(i + nvar) = geo_2(l,k)
+        xparam(i) = geo(l,k)
       end do      
     else
       shell = 0
@@ -182,7 +217,16 @@
 !
 ! Run data-set geometry 
 !
-      call big_swap(1,1)  
+      call big_swap(1,1) 
+      nvar = 0
+      do i = 1, numat
+        do j = 1,3
+          if (lopt_store(j,i) == 1) then
+            nvar = nvar + 1
+            xparam(nvar) = geo(j,i)
+          end if
+        end do
+      end do
       numcal = numcal + 1
       step_num = step_num + 1
       call set_up_rapid("ON")
@@ -231,10 +275,12 @@
     call moldat(1)
     mpack = store_mpack
     n2elec = store_n2elec
-    lopt(:,:numat) = 1 
-    do i = 1, shell
-      lopt(:,active_site(i)) = 0
-    end do
+    if (shell > 0) then
+      lopt(:,:numat) = 1 
+      do i = 1, shell
+        lopt(:,active_site(i)) = 0
+      end do
+    end if
     call Refine_TS
     close(iarc)
     if (index(keywrd, " PDBOUT") /= 0) then
@@ -410,14 +456,12 @@
 !  Evaluate the cosine of the angle between the gradient-vectors for the two geometries
 !  This should be need to -1.0, i.e., the angle should be about 180 degrees.
 !
-        k = 0
-        do i = 1, numat
-          do l = 1,3
-            k = k + 1
-            big_grad(k) = big_grad(k) + (geo(l,i) - geoa(l,i))*density*2.d0
-            big_grad(k + nvar) = big_grad(k + nvar) + (geoa(l,i) - geo(l,i))*density*2.d0
-            e_stress = e_stress + (geo(l,i) - geoa(l,i))**2*density
-          end do
+        do k = 1, nvar
+          i = loc(1,k)
+          l = loc(2,k)
+          big_grad(k) = big_grad(k) + (geo(l,i) - geoa(l,i))*density*2.d0
+          big_grad(k + nvar) = big_grad(k + nvar) + (geoa(l,i) - geo(l,i))*density*2.d0
+          e_stress = e_stress + (geo(l,i) - geoa(l,i))**2*density
         end do
         write(iw,'(/10x,a,f19.3,a)') "Heat of formation of the first geometry:", escf1 - e_stress, " Kcal/mol"
         write(iw,'(10x,a,f18.3,a)') "Heat of formation of the second geometry:", escf2 - e_stress, " Kcal/mol"
@@ -514,7 +558,7 @@
 !  EXIT CRITERIA.  (The criteria in SETULB are ignored.)
 !
       if (gnorm < tolerg) then
-        iflepo = 3
+        iflepo = 19
         exit
       end if
     else if (task(1:5) /= "NEW_X") then
@@ -534,14 +578,12 @@
 !  Evaluate the cosine of the angle between the gradient-vectors for the two geometries
 !  This should be need to -1.0, i.e., the angle should be about 180 degrees.
 !
-  k = 0
-  do i = 1, numat
-    do l = 1,3
-      k = k + 1
-      big_grad(k) = big_grad(k) + (geo(l,i) - geoa(l,i))*density*2.d0
-      big_grad(k + nvar) = big_grad(k + nvar) + (geoa(l,i) - geo(l,i))*density*2.d0
-      e_stress = e_stress + (geo(l,i) - geoa(l,i))**2*density
-    end do
+  do k = 1, nvar
+    i = loc(1,k)
+    l = loc(2,k)
+    big_grad(k) = big_grad(k) + (geo(l,i) - geoa(l,i))*density*2.d0
+    big_grad(k + nvar) = big_grad(k + nvar) + (geoa(l,i) - geo(l,i))*density*2.d0
+    e_stress = e_stress + (geo(l,i) - geoa(l,i))**2*density
   end do
   if(density > 99.9499d0) then
     fmt = "5.1"
@@ -1095,9 +1137,9 @@
 !  This is typically 2 - 6 atoms.  By using the nearest neighbors and second nearest neighbors,
 !  a good approximation to the active site can be constructed.
 !
-    use molkst_C, only : numat, line, keywrd, nvar, pdb_label, maxtxt
+    use molkst_C, only : numat, line, pdb_label, maxtxt
 !
-    use common_arrays_C, only : nbonds, ibonds, txtatm, nat, loc
+    use common_arrays_C, only : nbonds, ibonds, txtatm, nat
 !
     USE chanel_C, only : iw
 !
@@ -1107,22 +1149,8 @@
     integer i, ii, j, jj, k, l, nsite
     integer, allocatable :: nbonds_b(:), ibonds_b(:,:)
     character :: ch*2
-    active_site(1) = 0
+    active_site = 0
     ninsite = 0
-    if (index(keywrd," LOCATE-TS(SET") /= 0) then
-      nsite = 0
-      do i = 1, nvar
-        do j = 1, nsite
-          if (loc(1,i) == active_site(j)) exit
-        end do
-        if (j > nsite) then
-          nsite = j
-          active_site(nsite) = loc(1,i)
-        end if
-      end do
-      ninsite(1) = nsite
-      return
-    end if      
     allocate (nbonds_b(numat), ibonds_b(15,numat))
     call big_swap(1,1)!  Extract system 1 - the input data set
     nbonds_b = nbonds
@@ -1134,7 +1162,6 @@
 !  Compare topologies
 !
     nsite = 0
-    active_site = 0
     do i = 1, numat
       if (nbonds(i) /= nbonds_b(i)) then
         do k = 1, nsite
@@ -1275,9 +1302,10 @@
 !       This is an iterative process, so up to five cycles of 
 !       (HoF minimization followed by gradient minimization) are used
 !   
-  use common_arrays_C, only : xparam, loc, lopt, geo
+  use common_arrays_C, only : xparam, loc, lopt, geo, f, h, lopt_store
   USE molkst_C, only : nvar, numat, moperr, keywrd
   use ef_C, only: nstep
+  use MOZYME_C, only : partf, parth, mode
   implicit none
   integer :: loop, i, j
   logical :: converged, extra_print, l_ts, l_nllsq, l_sigma
@@ -1308,11 +1336,17 @@
           end do
         end do 
       end if
+!
+!  lopt = geometric variables to be optimized.  This consists of all atoms not involved in bond-making or bond-breaking.
+!  lopt_store = all geometric variables to be optimized.
+!
+! At this point, the set to be optimized is (lopt .and. lopt_store)
+!
       loc = 0
       nvar = 0
       do i = 1, numat
         do j = 1, 3 
-          if (lopt(j,i) == 1) then
+          if (lopt(j,i) == 1 .and. lopt_store(j,i) == 1) then
             nvar = nvar + 1 
             loc(1,nvar) = i 
             loc(2,nvar) = j 
@@ -1320,6 +1354,11 @@
           end if
         end do 
       end do 
+      h = 0.d0
+      f = 0.d0
+      parth = 0.d0
+      partf = 0.d0
+      mode = 0
       call minimize_energy(loop)
       converged = (nstep < 3)
 !
@@ -1331,11 +1370,17 @@
           lopt(j,i) = 1 - lopt(j,i)
         end do
       end do  
+!
+!  lopt = geometric variables to be optimized.  This consists of all atoms involved in bond-making or bond-breaking.
+!  lopt_store = all geometric variables to be optimized.
+!
+! At this point, the set to be optimized is (lopt .and. lopt_store)
+!
       loc = 0
       nvar = 0
       do i = 1, numat
         do j = 1, 3 
-          if (lopt(j,i) == 1) then
+          if (lopt(j,i) == 1 .and. lopt_store(j,i) == 1) then
             nvar = nvar + 1 
             loc(1,nvar) = i 
             loc(2,nvar) = j 
@@ -1376,6 +1421,11 @@
       time0 = seconds(1)
       if (nvar > 0) then
         call lbfgs(xparam,escf)
+        if (gnorm < gnorm_lim) then
+          i = index(keywrd, " GNORM")
+          write (iw, '(/, 5 x, "GRADIENT =", f9.5, " IS LESS THAN CUTOFF =", f9.5,//)') gnorm, &
+          gnorm_lim
+        end if
         do i = 1, nvar 
           k = loc(1,i) 
           l = loc(2,i) 
@@ -1384,11 +1434,6 @@
       else
         call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.) 
         gnorm = 0.d0
-      end if
-      if (gnorm < gnorm_lim) then
-        i = index(keywrd, " GNORM")
-        write (iw, '(/, 5 x, "GRADIENT =", f9.5, " IS LESS THAN CUTOFF =", f9.5,//)') gnorm, &
-        gnorm_lim
       end if
       return
   end subroutine minimize_energy
@@ -1418,6 +1463,11 @@
     "  Gradient minimization of atoms in the active site using "//trim(line)
     i = int(log10(loop + 0.05)) 
     num = char(ichar("1") + i)
+    do
+      if (title(1:5) /= "(Loop") exit
+      line = trim(title(8:))
+      title = trim(line)
+    end do
     write(line,'("(Loop", i'//num//',")", a)')loop, trim(title)
     title = trim(line)
     line = input_fn(:len_trim(input_fn) - 5)
@@ -1447,6 +1497,7 @@
     else if (l_nllsq) then
       call nllsq()
     end if 
+    iflepo = 19
     if (moperr) then
       write(iw,'(//2x,a,//)')" Gradient minimization failed.  The best geometry at this point will be output to ARC file"
       converged = .true.

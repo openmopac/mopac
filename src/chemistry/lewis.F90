@@ -33,34 +33,21 @@ subroutine lewis (use_cvs)
    ! for checking purposes, but for a SCF calculation, 4 is the maximum.
    !
    !***********************************************************************
-    use molkst_C, only: natoms, numat, maxtxt, keywrd, &
-      line, moperr, numcal, prt_topo
+    use molkst_C, only: natoms, numat, maxtxt, keywrd, line, moperr, prt_topo
     use chanel_C, only: iw
     use elemts_C, only: elemnt
-    use common_arrays_C, only: txtatm, nat, coord, &
-      nbonds, ibonds
+    use common_arrays_C, only: txtatm, nat, nbonds, ibonds
     implicit none
     logical, intent (in) :: use_cvs
 !
     logical :: debug, let
-    integer :: i, ibad, j, jbad, k, l, m, n, icalcn = -1
-    double precision, allocatable :: store_coord(:,:)
+    integer :: i, ibad, j, jbad, k, l, m, n
     integer, dimension (:), allocatable :: iz
-    save :: store_coord
     l = 0
 !
 ! Most of the time, LET should be false, the commonest exceptions being 0SCF and RESEQ
 !
-    if (allocated (store_coord) .and. icalcn /= numcal) then
-      deallocate (store_coord)
-      icalcn = numcal
-    end if
     allocate (iz(natoms))
-    if (.not. allocated (store_coord)) then
-      i = size(coord)/3
-      allocate (store_coord(3,i))
-      store_coord = coord
-    end if
     let = (Index (keywrd, " 0SCF") + Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") +  &
       Index (keywrd, " GEO-OK") + Index (keywrd, " ADD-H") + Index (keywrd, " LET") /= 0)
     debug = (Index (keywrd, " LEWIS") /= 0)
@@ -429,7 +416,7 @@ subroutine remove_bond(i)
   
   
   subroutine check_CVS(let)
-  use molkst_C, only: numat, keywrd, line, numcal, moperr, nscf, maxtxt
+  use molkst_C, only: numat, keywrd, line, numcal, moperr, nscf, maxtxt, natoms
   use common_arrays_C, only: txtatm, nat, coord, &
       nbonds, ibonds
   use elemts_C, only: elemnt
@@ -581,7 +568,7 @@ subroutine remove_bond(i)
           return
         end if
         i = ii
-        if (j > numat .or. j == 0 .or. j < -numat) then
+        if (j > natoms .or. j == 0 .or. j < -natoms) then
           write (iw,*) " AT LEAST ONE ATOM DEFINED BY CVB IS FAULTY"
           write (iw,*) " THE FAULTY ATOM NUMBER IS", j
           j = Index (keywrd, " CVB")
@@ -589,7 +576,7 @@ subroutine remove_bond(i)
           error = .true.
         end if
         l = Nint (reada (keywrd(i:k), 1))
-        if (l > numat .or. l == 0 .or. l < -numat) then
+        if (l > natoms .or. l == 0 .or. l < -natoms) then
           write (iw,*) " AT LEAST ONE ATOM DEFINED BY CVB IS FAULTY"
           write (iw,*) " THE FAULTY ATOM NUMBER IS", l
           m = Index (keywrd, " CVB")
@@ -938,6 +925,10 @@ subroutine remove_bond(i)
       return
     end if
     txt = txtatm(atom_no)(12:)
+    do
+      if (txt(1:1) /= " ") exit
+      txt = trim(txt(2:))
+    end do
     text = '"'//trim(txt)//'"'
     return
   end subroutine atom_no_to_txt

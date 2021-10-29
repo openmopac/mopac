@@ -20,9 +20,9 @@
       use molkst_C, only : numat, nclose, nopen, fract, nalpha, nelecs, nbeta, &
       & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, escf, &
       & keywrd, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
-      ijulian, jobnam, line, mers, uhf, method_indo, &
+      jobnam, line, mers, uhf, method_indo, &
       gui, density, formula, mozyme, mpack, stress, &
-      site_no, sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
+      sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
       hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
       prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash
@@ -64,7 +64,7 @@
       dip, dumy(3), pKa_unsorted(numat), distortion, rms, gnorm_norm, escf_min
       logical :: ci, lprtgra, still, bcc, opend, bigcycles
       character  :: type(3)*11, idate*24, gtype*13, grtype*14, &
-      flepo(18)*58, iter(2)*58, namfil*241, num*2
+      flepo(19)*58, iter(2)*58, namfil*241, num*2
       character, allocatable :: old_arc_file(:)*1000
       double precision, external :: dipole, dipole_for_MOZYME, dot, meci, seconds, volume
       integer, external :: ijbo
@@ -101,6 +101,8 @@
         ' NO PARAMETERS MARKED FOR OPTIMIZATION, SO 1SCF WAS USED  ', &
         ' GEOMETRY OPTIMISED USING EIGENVECTOR FOLLOWING (TS).     ', &
         ' TRANSITION STATE LOCATED USING THE "SADDLE" TECHNIQUE    '/  
+      data flepo(19)/ &
+        ' TRANSITION GEOMETRY LOCATED USING LOCATE-TS              '/  
       data iter/ ' SCF FIELD WAS ACHIEVED                                   ', &
         '  ++++----**** FAILED TO ACHIEVE SCF. ****----++++        '/   
 !
@@ -134,7 +136,6 @@
       write (iw, "(2/29X,A,' CALCULATION')") trim(caltyp)
       write (iw, '(55X,''MOPAC2016 (Version: '',a,a)') verson, ")"
       write (iw, '(55X,A24)') idate
-      if (ijulian < 500) write (iw, '(55x,a,i3)')"No. of days remaining = ",ijulian
       if (iscf == 2) then 
 !
 !   RESULTS ARE MEANINGLESS. DON'T PRINT ANYTHING!
@@ -201,11 +202,11 @@
       '(4/10X,''FINAL HEAT OF FORMATION ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0 
       end if
       if (index(keywrd," DISP") /= 0) then
-                                      write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-                                        (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL"
-                                      write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
-                                      write(iw,'(10x,"                    SUM =",f17.5,a)') &
-                                      (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
+        write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL"
+        write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
+        write(iw,'(10x,"                    SUM =",f17.5,a)') &
+        (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
         if (abs(hpress) > 1.d-5)      write(iw,'(10x,"ENERGY DUE TO PRESSURE  =",f17.5,a)') hpress, " KCAL/MOL"
         
         write(iw,'(10x,"DISPERSION ENERGY       =", f17.5, a)') e_disp, " KCAL/MOL"
@@ -243,26 +244,17 @@
       if (index(keywrd,' EPS') /= 0) write (iw, '(10X,A,F14.2,A)') &
         'VAN DER WAALS AREA      =', area, ' SQUARE ANGSTROMS' 
       if (latom == 0) write (iw, '(/)') 
-      if (state_Irred_Rep /= '    ') then 
-         write (iw, &
-      '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' ,''  STATE:  '',i2,1x,3A)') &
-      elect + enuclr + solv_energy, state_QN, state_spin, state_Irred_Rep
-      else 
-        write (iw, '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' )') &
-          elect + enuclr + solv_energy
-      end if 
+      if (index(keywrd," DISP") /= 0) &
+        write (iw, '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' )') elect + enuclr + solv_energy 
 !
 !  There is a bug in the call to symtrz.  This appears to be a compiler bug!
 !
       if (norbs > 0 .and. .not. mozyme .and. numat < 200) call symtrz (c, eigs, 1, .true.) 
       if (moperr) return  
-      if (id == 0 .and. .not. mozyme) then 
-        write (iw, '(10X,''ELECTRONIC ENERGY       ='',F17.5,'' EV  POINT GROUP:  &
-      &   '',A4)') elect, name 
-      else 
-        write (iw, '(    10X,''ELECTRONIC ENERGY       ='',F17.5,'' EV'' )') elect 
-      end if 
-      write (iw, '(    10X,''CORE-CORE REPULSION     ='',F17.5,'' EV''    )') enuclr 
+      if (index(keywrd," DISP") /= 0) then
+        write (iw, '(10X,"ELECTRONIC ENERGY       =",F17.5," EV ")') elect
+        write (iw, '(    10X,''CORE-CORE REPULSION     ='',F17.5,'' EV''    )') enuclr 
+      end if
       if (iseps) then 
         if (abs(solv_energy) > 1.d-1) &
         write (iw, '(    10X,''SOLVATION ENERGY        ='',F17.5,'' EV''   )') solv_energy
@@ -344,7 +336,8 @@
       end if
       if (latom == 0) write (iw, '(1X)') 
       if (lprtgra .or. gnorm > 1.D-15 ) &
-        write (iw, '(10X,''GRADIENT NORM           ='',F17.5, '' = '',f'//num//'.5, '' PER ATOM'')') gnorm, gnorm/sqrt(1.0*numat)
+        write (iw, '(10X,"GRADIENT NORM           =",F17.5, 10x, "=", 7x, f'//num//'.5, '' PER ATOM'')') &
+        gnorm, gnorm/sqrt(1.0*numat)
       if (gnorm > 2.D0 .and. fract > 0.05D0 .and. fract < 1.95D0 .and. &
         index(keywrd,' 1SCF') == 0 .and. index(keywrd,' UHF') == 0 .and. &
         index(keywrd,' NOANCI') == 0) write (iw, *) &
@@ -418,8 +411,14 @@
       if ( .not. mozyme ) then        
 !   CORRECTION TO I.P. OF DOUBLETS
         if (nopn == 1) eionis = eionis + 0.5D0*rjkab(1,1) 
-        if (abs(eionis) > 1.D-5 .and. nopn < 2) write (iw, &
-          '(  10X,''IONIZATION POTENTIAL    =  '',F16.6,'' EV'')') eionis 
+        if (abs(eionis) > 1.D-5 .and. nopn < 2) then
+          if (state_Irred_Rep /= " ") then
+            write(line, '(10x, "STATE:  ",i2,1x,3A)') state_QN, state_spin, state_Irred_Rep
+          else
+            line = " "
+          end if
+          write (iw, '(  10X,"IONIZATION POTENTIAL    =  ",F16.6," EV", a)') eionis, trim(line)
+        end if
         if (uhf) then 
           if (nalpha >= 1) write (iw, &
           '(  10X,''ALPHA SOMO LUMO (EV)    =  '',F13.3,F7.3)') eigs(nalpha), &
@@ -451,8 +450,13 @@
         write (iw, '(      10X,''NO. OF FILLED LEVELS    ='',I11)') nopen - nopn 
         if (nopn /= 0) write (iw, '(   10X,''AND NO. OF OPEN LEVELS  ='',I11)') nopn 
       end if     
-      if (mol_weight > 0.1D0) write (iw, &
-        '(    10X,''MOLECULAR WEIGHT        ='',F16.4)') mol_weight 
+      if (mol_weight > 0.1D0) then
+        if (name /= " ") then
+          write (iw, '(    10X,"MOLECULAR WEIGHT        =",F16.4, 9x, "POINT GROUP:", 2x, a)') mol_weight, name
+        else
+          write (iw, '(    10X,"MOLECULAR WEIGHT        =",F16.4 )') mol_weight
+        end if
+      end if
       call gmetry (geo, coord) 
       if (id == 0) call dimens (coord, iw) 
       if (id == 3) then 
@@ -971,22 +975,13 @@
       end if 
       if (moperr) return  
       iwrite = iarc 
-      if (site_no > 9999) then
-        write (iwrite, "(2/20X,' SUMMARY OF ',A,' CALCULATION, Site No:',i6,/)", iostat = j) trim(caltyp), site_no
-      else if (site_no > -1) then
-        write (iwrite, "(2/20X,' SUMMARY OF ',A,' CALCULATION, Site No:',i5,/)", iostat = j) trim(caltyp), site_no
-      else
-        write (iwrite, &
-          "(2/20X,' SUMMARY OF ',A,' CALCULATION')", iostat = j) caltyp
-          write (iwrite, '(A,i5,a)') '             Demo version - limited to 1-12, 50-60, or 110-120 atoms. ' 
-      end if
+      write (iwrite, "(2/20X,' SUMMARY OF ',A,' CALCULATION',/)", iostat = j) trim(caltyp)
       if (j /= 0) then
             write(iw,'(/10x,a)') "Could not write to archive file, run continuing."
             return
           end if
       write (iwrite, '(55X,''MOPAC2016 (Version: '',a,a)') verson, ")"
       write (iwrite, '(55X,A24)') idate
-      if (ijulian < 500) write (iwrite, '(55x,a,i3)')"No. of days remaining = ",ijulian 
       write(iwrite,"(/,a,/)")formula(:len_trim(formula))  
       call wrttxt (iwrite) 
       write (iwrite, '(2/4X,A58)') flepo(iflepo) 
@@ -1009,11 +1004,11 @@
       '(/10X,''HEAT OF FORMATION       ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0 
       end if
       if (index(keywrd," DISP") /= 0) then
-                                      write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-                                        (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL"
-                                      write(iwrite,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
-                                      write(iwrite,'(10x,"                    SUM =",f17.5,a)') &
-                                      (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
+        write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL"
+        write(iwrite,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
+        write(iwrite,'(10x,"                    SUM =",f17.5,a)') &
+        (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
         if (abs(hpress) > 1.d-5)      write(iwrite,'(10x,"ENERGY DUE TO PRESSURE  =",f17.5,a)') hpress, " KCAL/MOL"
         write(iwrite,'(10x,"DISPERSION ENERGY       =", f17.5, a)') e_disp, " KCAL/MOL"
         if (E_hb < -1.d-5) write(iwrite,'(10x,"H-BOND ENERGY           =", f17.5, a)') e_hb, " KCAL/MOL"
@@ -1036,18 +1031,11 @@
       if (numat > 1 .and. iscf == 1 .and. escf > 1.d4 .and. index(keywrd, " CHECK") == 0) &
         write(iwrite,'(//10x,a,//)') "Calculated Heat of Formation is very large, re-run using keyword 'CHECK'"
       if (id == 3 .or. id == 1) call write_unit_cell_HOF(iwrite)
-      if (state_Irred_Rep /= '    ') then 
-         write (iwrite, &
-      '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' ,''  STATE:  '',i2,1x,3A)') &
-       elect + enuclr + solv_energy, state_QN, state_spin, state_Irred_Rep
-      else 
-        write (iwrite, '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' )') &
-          elect + enuclr + solv_energy 
-      end if 
-      write (iwrite, '(  10X,''ELECTRONIC ENERGY       ='',F17.5,'' EV'')')  elect 
-      write (iwrite, &
-        '(  10X,''CORE-CORE REPULSION     ='',F17.5,'' EV'')') &
-        enuclr 
+      if (index(keywrd," DISP") /= 0) then
+        write (iwrite, '(    10X,''TOTAL ENERGY            ='',F17.5,'' EV'' )') elect + enuclr + solv_energy 
+        write (iwrite, '(  10X,''ELECTRONIC ENERGY       ='',F17.5,'' EV'')')  elect 
+        write (iwrite, '(  10X,''CORE-CORE REPULSION     ='',F17.5,'' EV'')')  enuclr 
+      end if
       if (iseps) then 
         write (iwrite, '(    10X,''DIELECTRIC ENERGY       ='',F17.5,'' EV''   )') ediel 
       !  if (Index (keywrd, "COSWRT") /= 0) call coswrt()
@@ -1077,7 +1065,7 @@
         write(iwrite,*)
       end if
       if (lprtgra .or. gnorm > 1.D-15 ) write (iwrite, &
-        '(  10X,''GRADIENT NORM           ='',F17.5, '' = '',f'//num//'.5, '' PER ATOM'')') gnorm, gnorm/sqrt(1.0*numat)
+        '(  10X, "GRADIENT NORM           =",F17.5, 10x, "=", 7x, f'//num//'.5, " PER ATOM")') gnorm, gnorm/sqrt(1.0*numat)
       if (latom == 0) then 
         if (.not.still) then
           write (iwrite, '(9x,A)') &
@@ -1099,10 +1087,11 @@
           ) gcoord(1,1), grtype 
       end if 
       if(id == 0) then
-        if(.not. mozyme) write (iwrite, '(  10X,''DIPOLE                  ='',F17.5, &
-        & '' DEBYE    POINT GROUP:       '',A)') dip, name 
-        if(mozyme) write (iwrite, '(  10X,''DIPOLE                  ='',F17.5, &
-        & '' DEBYE   '')') dip
+        if(name /= " ") then
+          write (iwrite, '(  10X,''DIPOLE                  ='',F17.5, " DEBYE   POINT GROUP:", 2x,A)') dip, name 
+        else
+          write (iwrite, '(  10X,''DIPOLE                  ='',F17.5,  '' DEBYE   '')') dip
+        end if
       end  if
       if (uhf) then 
         write (iwrite, '(  10X,''(SZ)                    =  '',F16.6)') sz 
@@ -1114,7 +1103,7 @@
         write (iwrite, '(  10X,''NO. OF ALPHA ELECTRONS  =  '',I9)') nalpha + nint((nalpha_open - nalpha)*fract)
         write (iwrite, '(  10X,''NO. OF BETA  ELECTRONS  =  '',I9)') nbeta + nint((nbeta_open - nbeta)*fract)
       else 
-        write (iwrite, '(      10X,''NO. OF FILLED LEVELS    =  '',I9)') nopen - nopn 
+        write (iwrite, '(      10X,''NO. OF FILLED LEVELS    =  '',I9, 3a)') nopen - nopn
         if (nopn /= 0) write (iwrite, &
           '(  10X,''AND NO. OF OPEN LEVELS  =  '',I9)') nopn 
       end if 
@@ -1123,8 +1112,13 @@
       if (kchrge /= 0) write (iwrite, &
         '(  10X,''CHARGE ON SYSTEM        =  '',I9)') kchrge 
       if ( .not. mozyme ) then
+        if (state_Irred_Rep /= " ") then
+          write(line, '(11x, "STATE:  ",i2,1x,3A)') state_QN, state_spin, state_Irred_Rep
+        else
+          line = " "
+        end if
         write (iwrite, &
-        '(  10X,''IONIZATION POTENTIAL    =  '',F16.6,'' EV'')') eionis 
+        '(  10X,"IONIZATION POTENTIAL    =  ",F16.6," EV", a)') eionis, trim(line)
         if (uhf) then 
           if (nalpha >= 1) write (iwrite, &
           '(  10X,''ALPHA SOMO LUMO (EV)    =  '',F13.3,F7.3)') eigs(nalpha), &

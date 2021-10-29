@@ -18,7 +18,7 @@
 !-----------------------------------------------
 !   M o d u l e s 
 !-----------------------------------------------
-      use molkst_C, only : natoms, jobnam, run, ijulian, verson, backslash, &
+      use molkst_C, only : natoms, jobnam, run, backslash, &
       gui, line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2
       use chanel_C, only : iw0, job_fn, input_fn, iw
       use common_arrays_C, only : all_comments
@@ -34,7 +34,7 @@
       integer, parameter :: from_data_set = 7
       integer :: i, j, io_stat, l, nlines, iargc
       logical :: exists, arc_file, comments = .true.
-      character :: text*90, line1*3000, num1*1, num2*1
+      character :: line1*3000, num1*1, num2*1
       character, allocatable :: tmp_comments(:)*120
       double precision, external :: reada
       save i 
@@ -167,14 +167,6 @@
       end if
   98  if (exists) then 
          if (iw0 > -1) then           
-           if (ijulian < 365) then
-             call to_screen("********************************************************************************")
-             write (text,"(a,a,a,i4,a)") &
-!            " <-Start of text                                                              End of text->"
-             "**                          MOPAC (",verson,")        Days remaining",ijulian,"         **"
-             call to_screen(text)
-             call to_screen("********************************************************************************")
-           end if
            call to_screen("Preparing to read the following MOPAC file: ")
            i = min(len_trim(line), 240)
                          call to_screen(line(:min(i,120)))

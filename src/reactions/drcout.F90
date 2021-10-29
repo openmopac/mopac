@@ -29,7 +29,7 @@
       integer, intent(inout) :: jloop
       double precision, intent(in) :: time, fract 
       character, intent(in) :: text1*3, text2*2 
-      double precision, intent(in) :: xyz3(3,nvar), geo3(3,3*numat), vel3(3,nvar), &
+      double precision, intent(in) :: xyz3(3,3*numat), geo3(3,3*numat), vel3(3,3*numat), &
         escf3(3), ekin3(3), etot3(3), dip3(3), xtot3(3), charge(natoms) 
       logical, intent (in) :: l_dipole
 !
@@ -160,9 +160,8 @@
       end if
       write(iw,'(a)')trim(line)
       call to_screen(line)
-      natoms = nvar/3 
       l = 0 
-      do i = 1, natoms 
+      do i = 1, nvar/3 
         vel(:,i) = vel3(1,l+1:3+l) + vel3(2,l+1:3+l)*fract + vel3(3,l+1:3+l)*fract**2 
         xyz(:,i) = xyz3(1,l+1:3+l) + xyz3(2,l+1:3+l)*fract + xyz3(3,l+1:3+l)*fract**2 
         l = 3 + l 

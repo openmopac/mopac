@@ -21,8 +21,8 @@
       double precision, dimension(:,:), allocatable :: hess, bmat, u, oldhss, oldu, alparm
       end module ef_C 
       module drc_C 
-        double precision, dimension(:), allocatable :: vref, vref0, now  
-        double precision, dimension(:,:), allocatable :: allxyz, allvel, xyz3, vel3, allgeo, geo3 
+        double precision, dimension(:), allocatable :: vref, vref0, now
+        double precision, dimension(:,:), allocatable :: allxyz, allvel, xyz3, vel3, allgeo, geo3, georef
         double precision, dimension(:), allocatable :: parref
         double precision :: time
       end module drc_C 

@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
       subroutine timout(nout) 
-      use molkst_C, only : wall_clock_0, wall_clock_1, CPU_1, CPU_0, keywrd
+      use molkst_C, only : wall_clock_0, wall_clock_1, CPU_1, CPU_0
 !
 !     CONVERT THE TIME FROM SECONDS TO DAYS, HOURS, MINUTES, AND SECONDS
 !
@@ -25,7 +25,6 @@
         wall_clock_days, wall_clock_hours, wall_clock_mins 
       double precision :: mins, days, hours, CPU_secs, wall_clock_secs, tim
       character :: day*5, hour*6, minute*8
-      if (index(keywrd, "LOCATE-TS") /= 0) return
       tim = CPU_1 - CPU_0
       days = (wall_clock_1 - wall_clock_0)/86400.0 
       wall_clock_days = idint(days) 

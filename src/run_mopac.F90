@@ -28,7 +28,7 @@
         time0, atheat, errtxt, isok, mpack, gui, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, &
-        sparkle, itemp_1, maxtxt, koment, &
+        sparkle, itemp_1, maxtxt, koment, sz, ss2, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash
 !
@@ -41,7 +41,7 @@
 !
       USE maps_C, only : latom, react, rxn_coord
 !
-      use symmetry_C, only : state_Irred_Rep
+      use symmetry_C, only : state_Irred_Rep, name
 !
       USE chanel_C, only : ir, iw, iarc, output_fn, end_fn, iend, &
         archive_fn, log, ilog, xyz_fn, job_fn, log_fn
@@ -148,6 +148,7 @@
       end if
       step_num = step_num + 1  ! New electronic structure, therefore increment step_num
       moperr = .FALSE.
+      name = " "
       escf   = 0.d0
       gnorm  = 0.D0
       press  = 0.d0
@@ -155,6 +156,8 @@
       E_hb   = 0.d0
       E_hh   = 0.d0
       solv_energy = 0.d0
+      sz = 0.d0
+      ss2 = 0.d0
       step = 0.d0
       density = 0.d0
       area = 0.d0

@@ -22,7 +22,7 @@
     use molkst_C, only : tdump, maxatoms, is_PARAM, numat, jobnam, &
      moperr, &
      norbs, mpack, nvar, n2elec, keywrd, uhf, l123, run, method_pm6_d3, &
-     method_pm6, lm61, program_name, gui, tleft, &
+     method_pm6, lm61, gui, tleft, &
      method_pm6_dh_plus, method_pm6_dh2, method_pm7, trunc_1, method_pm8, &
      trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, verson, n_methods, methods, &
      methods_keys, method_pm7_hh, method_pm7_minus, method_pm7_ts, method_pm6_dh2x, &
@@ -58,7 +58,6 @@
   ! ... Executable Statements ...
   !
   !
-    program_name = "Standalone MOPAC "
     verson = "18.000W"
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
     t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."

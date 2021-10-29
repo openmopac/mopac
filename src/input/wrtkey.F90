@@ -1551,6 +1551,12 @@ subroutine wrtout (allkey)
     if (prt_orientation)   write (iw,'(" *           O - ORIENTATION)")')
     if (prt_velocity)      write (iw,'(" *           V - VELOCITY)")')
     if (.not. myword(allkey, " OUTPUT")) return ! An impossible option
+    if (index(keywrd, " FORCE ") /= 0 .and. .not. prt_force ) then
+      if (index(keywrd, " GEO-OK") == 0) then
+        call mopend("KEYWORD ""FORCE"" PRESENT BUT KEYWORD ""OUTPUT"" SUPPRESSES RESULTS OF ""FORCE"" CALCULATION")
+        write (iw,'(10x, "(Either add ""GEO-OK"" or ""ISOTOPE"", remove ""OUTPUT"", or use ""OUTPUT(F)"")")')
+      end if
+    end if
   else
     prt_coords        = .TRUE.
     prt_gradients     = .TRUE.

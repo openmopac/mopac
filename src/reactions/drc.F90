@@ -19,20 +19,20 @@
       line, nopen, nclose, moperr, jloop => itemp_1, prt_velocity
       USE chanel_C, only : iw, ires, iscr, restart_fn, iw0
       use common_arrays_C, only : geo, loc, grad, xparam, atmass, nat, &
-      & errfn, coord, na, p, q, labels
+      & errfn, coord, na, p, q, labels, geoa
       USE parameters_C, only : tore
       USE elemts_C, only : elemnt
+      use drc_C, only : georef
       implicit none
       double precision :: startv(9*numat*numat) 
       double precision , intent(in) :: startk(3*numat) 
 !
-      integer :: i, l, j, iskin,   iloop, k, kl, ncoprt, bigcycles, jloop_lim, i_constant = 1, &
+      integer :: i, j, iskin,   iloop, k, kl, ncoprt, bigcycles, jloop_lim, i_constant = 1, &
         ii, i1, maxcyc, iupper, ilp, io_stat, ilim, iw00, percent, n_escf, n_min, iwd = 9
       integer, dimension(2,3*numat) :: mcoprt
       double precision, dimension(3*numat) :: velo0, velo1, velo2, velo3, gerror, grold2 
       double precision, dimension(10) :: past10 
       double precision, dimension(3*numat) :: grold 
-      double precision, dimension(3,numat) :: georef 
       double precision :: ekin, elost1, etold, dlold2, tnow, oldtim, delold, gtot, &
         accu, gnlim, half, addonk, deltat, quadr, etot, const, one, summ, &
         summas, ams, error, velvec, delta1, elost, sum, dummy, tcycle, &
@@ -82,7 +82,8 @@
       end if
       if (allocated(grad))  deallocate(grad)
       if (allocated(errfn)) deallocate(errfn)
-      allocate(grad(3*numat), errfn(3*numat))
+      if (allocated(georef)) deallocate(georef)
+      allocate(grad(3*numat), errfn(3*numat), georef(3,numat))
       errfn = 0.d0
       inquire(unit=iscr, opened=opend) 
       if (opend) close(unit=iscr) 
@@ -183,26 +184,26 @@
         ncoprt = 0
       end if 
       ncoprt = 0  !  Do NOT print turning points. These just mess up the output.
-      l = 0 
-      do i = 1, numat 
-        loc(1,l+1) = i 
-        loc(2,l+1) = 1 
-        georef(1,i) = geo(1,i) 
-        xparam(l+1) = geo(1,i) 
-!
-        loc(1,l+2) = i 
-        loc(2,l+2) = 2 
-        georef(2,i) = geo(2,i) 
-        xparam(l+2) = geo(2,i) 
-!
-        loc(1,l+3) = i 
-        loc(2,l+3) = 3 
-        georef(3,i) = geo(3,i) 
-        xparam(l+3) = geo(3,i) 
-!
-        l = l + 3 
-      end do 
-      nvar = numat*3 
+      if (allocated(geoa)) deallocate(geoa)
+      allocate( geoa(3,numat))
+      geoa(:,:numat) = geo(:,:numat)
+      georef = geo
+      if (index(keywrd, " NOOPT") == 0) then
+        k = 0
+        do i = 1, numat
+          do j = 1, 3
+            k = k + 1
+            loc(1,k) = i
+            loc(2,k) = j
+          end do
+        end do
+        nvar = k
+      end if
+        
+          
+      do i = 1, nvar
+        xparam(i) = geo(loc(2,i), loc(1,i))
+      end do      
 !
 ! DETERMINE DAMPING FACTOR
 !
@@ -511,7 +512,7 @@
               0.0416666d0*deltat**2*(1.d30*deltat**2)*velo3(i)) 
             end do
             if (stepxx < 1.d-5 .or. (l_irc .and. iloop > 4)) exit
-            sum = 0.d0
+            sum = 1.d-5
             do i = 1, nvar
               sum = sum + (xparam(i) - startv(i))**2
             end do

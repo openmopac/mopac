@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.269M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.269M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu Oct  7 01:34:37 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:44:50 2021  *
  *  COMPARE    - Compare two geometries
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "PDB1EJG.arc"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "PDB1CBN.arc"
