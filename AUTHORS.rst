@@ -18,8 +18,8 @@ version of MOPAC or a self-contained reference program to be integrated into MOP
 stipulations of these donations was the prior academic publication of the new feature, and the
 historic contributions listed below include a DOI link to the relevant publications in these cases.
 
-Prehistoric Contributors
-========================
+Pre-MOPAC Contributors
+======================
 
 MINDO/3 Developers
 ------------------
@@ -38,33 +38,12 @@ W. Thiel, P. Weiner, J. Stewart, and M. J. S. Dewar, although the 1977 methodolo
 [`DOI:10.1021/ja00457a004 <https://doi.org/10.1021/ja00457a004>`_]
 was authored by only Michael J. S. Dewar and Walter Thiel.
 
-Historic Contributors
-=====================
-
-James McIver, Jr. & Andrew Komornicki
-   POWSQ geometry optimizer
-   [`DOI:10.1021/ja00763a011 <https://doi.org/10.1021/ja00763a011>`_]
-
-Juan Carlos Paniagua
-   improvements to the orbital localization procedure
-   [`DOI:10.1002/qua.560260307 <https://doi.org/10.1002/qua.560260307>`_]
-
-Santiago Olivella
-   semiempirical energy partitioning (ENPART subroutine)
-   [`DOI:10.1002/jhet.5570180625 <https://doi.org/10.1002/jhet.5570180625>`_]
+Historic MOPAC Contributors
+===========================
 
 Peter Pulay
    design & optimization of pseudodiagonalization
    [`DOI:10.1002/jcc.540030214 <https://doi.org/10.1002/jcc.540030214>`_]
-
-Donn Storch
-   architectural design suggestions
-
-James Friedheim
-   testing & bug hunting
-
-Eamon Healy
-   testing & feature validation
 
 Harry King & R. Nicholas Camp
    original implementation of the Camp-King SCF converger
@@ -73,21 +52,40 @@ Harry King & R. Nicholas Camp
 John McKelvey
    adaptation of the Camp-King converger for MOPAC & improved output formatting
 
-Anna Stewart
-   copyediting of MOPAC documentation
-
-Ernest Davidson
-   improvements to the 2-electron matrix elements
-
-Yukio Yamaguchi
-   partial support for analytical derivatives
-   [`DOI:10.1016/0097-8485(78)80005-9 <https://doi.org/10.1016/0097-8485(78)80005-9>`_]
-
-Daniel Liotard
-   partial analytical derivatives of the density matrix & 2-electron matrix elements
+James McIver, Jr. & Andrew Komornicki
+   POWSQ geometry optimizer
+   [`DOI:10.1021/ja00763a011 <https://doi.org/10.1021/ja00763a011>`_]
 
 Roger Sargent, Dimitris Agrafiotis, & Henry Rzepa
-   implementation of the Broyden–Fletcher–Goldfarb–Shanno (BFGS) optimizer.
+   implementation of the Broyden-Fletcher-Goldfarb-Shanno (BFGS) optimizer.
+
+Larry Davis & Larry Burggraf
+   design of the dynamic reaction coordinate (DRC) & intrinsic reaction coordinate (IRC) features
+   [`DOI:10.1002/jcc.540080808 <https://doi.org/10.1002/jcc.540080808>`_]
+
+Frank Jensen
+   efficiency improvements to the Eigenvector-Following (EF) method
+
+Juan Carlos Paniagua
+   improvements to the orbital localization procedure
+   [`DOI:10.1002/qua.560260307 <https://doi.org/10.1002/qua.560260307>`_]
+
+Jorge Medrano
+   expanded bonding analysis
+   [`DOI:10.1002/jcc.540060205 <https://doi.org/10.1002/jcc.540060205>`_]
+
+Santiago Olivella
+   semiempirical energy partitioning (ENPART subroutine)
+   [`DOI:10.1002/jhet.5570180625 <https://doi.org/10.1002/jhet.5570180625>`_]
+
+Tsuneo Hirano
+   revision of energy partitioning & thermodynamic corrections
+
+James Friedheim
+   testing & bug hunting
+
+Eamonn Healy
+   testing & feature validation
 
 James Ritchie
    bug fixes (SCF restarting)
@@ -101,61 +99,48 @@ Michael Frisch
 Patrick Redington
    bug fixes (heavy atom matrix elements)
 
-Tsuneo Hirano
-   revision of energy partitioning & thermodynamic corrections
+Ernest Davidson
+   improvements to the 2-electron matrix elements
 
-Larry Davis & Larry Burggraf
-   design of the dynamic reaction coordinate (DRC) & intrinsic reaction coordinate (IRC) features
-   [`DOI:10.1002/jcc.540080808 <https://doi.org/10.1002/jcc.540080808>`_]
+Daniel Liotard
+   partial analytical derivatives of the density matrix & 2-electron matrix elements
 
-Mark Gordon
-   suggestions to improve the intrinsic reaction coordinate (IRC) feature
+Yukio Yamaguchi
+   partial support for analytical derivatives
+   [`DOI:10.1016/0097-8485(78)80005-9 <https://doi.org/10.1016/0097-8485(78)80005-9>`_]
+
+George Purvis III
+   expanded STO-6G orbital implementation up to principal quantum number 6
+   for use in analytical derivatives
 
 Henry Kurtz
    implementation of polarizability and hyperpolarizability
    [`DOI:10.1002/jcc.540110110 <https://doi.org/10.1002/jcc.540110110>`_]
 
-Yoshihisa Inoue
-   many suggestions for improving readability
-
-Skip Dieter
-   code review
-
-Erich Wimmer
-   optimization suggestions
-
-Michael Coolidge
-   use of symmetry to accelerate vibrational analysis
-   [`DOI:10.1002/jcc.540120807 <https://doi.org/10.1002/jcc.540120807>`_]
+Prakashan Korambath
+   frequency dependence of hyperpolarizability
+   [`DOI:10.1021/bk-1996-0628.ch007 <https://doi.org/10.1021/bk-1996-0628.ch007>`_]
 
 David Danovich
    implementation of point-group symmetry & Green's function corrections to ionization potentials
    [`DOI:10.1039/P29930000321 <https://doi.org/10.1039/P29930000321>`_]
 
+Michael Coolidge
+   use of symmetry to accelerate vibrational analysis
+   [`DOI:10.1002/jcc.540120807 <https://doi.org/10.1002/jcc.540120807>`_]
+
 Andreas Klamt
    implementation of the COSMO solvation model
    [`DOI:10.1039/P29930000799 <https://doi.org/10.1039/P29930000799>`_]
 
+Anna Stewart
+   copyediting of MOPAC documentation
+
 Victor Danilov
    edited the MOPAC7 manual & identified bugs in the MECI feature
 
-Prakashan Korambath
-   frequency dependence of hyperpolarizability
-   [`DOI:10.1021/bk-1996-0628.ch007 <https://doi.org/10.1021/bk-1996-0628.ch007>`_]
-
-Frank Jensen
-   efficiency improvements to the Eigenvector-Following (EF) method
-
 John Simmie
    conversion of the MOPAC7 manual to LaTeX
-
-Jorge Medrano
-   expanded bonding analysis
-   [`DOI:10.1002/jcc.540060205 <https://doi.org/10.1002/jcc.540060205>`_]
-
-George Purvis III
-   expanded STO-6G orbital implementation up to principal quantum number 6
-   for use in analytical derivatives
 
 Walter Thiel & Alexander Voityuk
    reference implementation of semiempirical models with d orbitals
@@ -185,8 +170,8 @@ Rebecca Gieseking
    implementation of the INDO/S spectroscopy model
    [`DOI:10.1002/jcc.26455 <https://doi.org/10.1002/jcc.26455>`_]
 
-Modern Contributors
-===================
+Open-Source MOPAC Contributors
+==============================
 
 Jonathan Moussa
    reorganization & clean-up of the codebase, portability testing & debugging, minor performance tuning
