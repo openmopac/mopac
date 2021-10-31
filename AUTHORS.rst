@@ -24,19 +24,19 @@ Pre-MOPAC Contributors
 MINDO/3 Developers
 ------------------
 
-The authors of the MINDO/3 program [QCPE Program #279 (1975)] as stated in bibliographic citations
-were M. J. S. Dewar, H. Metiu, P. J. Student, A. Brown, R. C. Bingham, D. H. Lo, C. A. Ramsden,
-H. Kollmar, P. Werner, and P. K. Bischof, although the 1975 methodology paper
-[`DOI:10.1021/ja00839a001 <https://doi.org/10.1021/ja00839a001>`_]
-was authored by only Richard C. Bingham, Michael J. S. Dewar, and Donald H. Lo.
+The 1975 methodology paper [`DOI:10.1021/ja00839a001 <https://doi.org/10.1021/ja00839a001>`_]
+was authored by Richard C. Bingham, Michael J. S. Dewar, and Donald H. Lo.
+The MINDO/3 program [QCPE Program #279 (1975)] developers according to the QCPE listing were
+M. J. S. Dewar, H. Metiu, P. J. Student, A. Brown, R. C. Bingham, D. H. Lo, C. A. Ramsden,
+H. Kollmar, P. Werner, and P. K. Bischof.
 
 MNDO Developers
 ---------------
 
-The authors of the MNDO program [QCPE Program #428 (1981)] as stated in bibliographic citations were
-W. Thiel, P. Weiner, J. Stewart, and M. J. S. Dewar, although the 1977 methodology paper
-[`DOI:10.1021/ja00457a004 <https://doi.org/10.1021/ja00457a004>`_]
-was authored by only Michael J. S. Dewar and Walter Thiel.
+The 1977 methodology paper [`DOI:10.1021/ja00457a004 <https://doi.org/10.1021/ja00457a004>`_]
+was authored by Michael J. S. Dewar and Walter Thiel.
+The MNDO program [QCPE Program #428 (1981)] developers according to the QCPE listing were
+W. Thiel, P. Weiner, J. Stewart, and M. J. S. Dewar.
 
 Historic MOPAC Contributors
 ===========================
