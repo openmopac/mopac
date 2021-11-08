@@ -16,10 +16,10 @@ jobs:
       run: conda install -c anaconda mkl
 
     - name: Configure with CMake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
+      run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
 
     - name: Build with Make
-      run: cmake --build ${{github.workspace}}/build
+      run: cmake --build build
 
   mac-build:
     runs-on: macos-latest
@@ -33,10 +33,10 @@ jobs:
         conda install -c anaconda mkl
 
     - name: Configure with CMake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=gfortran-11 -DCMAKE_C_COMPILER=gcc-11
+      run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran-11 -DCMAKE_C_COMPILER=gcc-11
 
     - name: Build with Make
-      run: cmake --build ${{github.workspace}}/build
+      run: cmake --build build
 
   windows-build:
     runs-on: windows-latest
@@ -58,7 +58,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Configure with CMake
-      run: cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -G "MSYS Makefiles" -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
+      run: cmake -B build -G "MSYS Makefiles" -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
 
     - name: Build with Make
-      run: cmake --build ${{github.workspace}}/build
+      run: cmake --build build
