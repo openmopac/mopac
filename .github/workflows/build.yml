@@ -11,8 +11,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        fc: gfortran
-        cc: gcc
+        fc: [gfortran]
+        cc: [gcc]
         include:
           - os: macos-latest
             fc: gfortran-10
