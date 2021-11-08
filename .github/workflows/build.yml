@@ -48,9 +48,8 @@ jobs:
     - uses: msys2/setup-msys2@v2
       with:
         install: >-
-          base-devel
           git
-          mingw-w64-cmake
+          mingw-w64-x86_64-cmake
           mingw-w64-x86_64-gcc-fortran
           mingw-w64-x86_64-openblas
           mingw-w64-x86_64-lapack
