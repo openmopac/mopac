@@ -6,32 +6,56 @@ on:
       - master
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            fc: gfortran
-            cc: gcc
-
-          - os: macos-latest
-            fc: gfortran-10
-            cc: gcc-10
-
+  linux-build:
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Fix Anaconda path permissions (MacOS only)
-      run: sudo chown -R runner:staff $CONDA
-      if: ${{ matrix.os == 'macos-latest' }}
 
     - name: Install MKL (BLAS & LAPACK) with Anaconda
       run: conda install -c anaconda mkl
 
     - name: Configure with CMake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=${{matrix.fc}} -DCMAKE_C_COMPILER=${{matrix.cc}}
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
+
+    - name: Build with Make
+      run: cmake --build ${{github.workspace}}/build
+
+  mac-build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install MKL (BLAS & LAPACK) with Anaconda
+      run: |
+        sudo chown -R runner:staff $CONDA
+        conda install -c anaconda mkl
+
+    - name: Configure with CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=gfortran11 -DCMAKE_C_COMPILER=gcc-11
+
+    - name: Build with Make
+      run: cmake --build ${{github.workspace}}/build
+
+  windows-build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          base-devel
+          git
+
+    - uses: actions/checkout@v2
+
+    - name: Configure with CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
 
     - name: Build with Make
       run: cmake --build ${{github.workspace}}/build
