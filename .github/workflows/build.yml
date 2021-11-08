@@ -33,7 +33,7 @@ jobs:
         conda install -c anaconda mkl
 
     - name: Configure with CMake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=gfortran11 -DCMAKE_C_COMPILER=gcc-11
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=gfortran-11 -DCMAKE_C_COMPILER=gcc-11
 
     - name: Build with Make
       run: cmake --build ${{github.workspace}}/build
@@ -47,10 +47,13 @@ jobs:
     steps:
     - uses: msys2/setup-msys2@v2
       with:
-        update: true
         install: >-
           base-devel
           git
+          mingw-w64-cmake
+          mingw-w64-x86_64-gcc-fortran
+          mingw-w64-x86_64-openblas
+          mingw-w64-x86_64-lapack
 
     - uses: actions/checkout@v2
 
