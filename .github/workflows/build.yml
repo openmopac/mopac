@@ -10,13 +10,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        fc: [gfortran]
-        cc: [gcc]
         include:
+          - os: ubuntu-latest
+            fc: gfortran
+            cc: gcc
+
           - os: macos-latest
             fc: gfortran-10
             cc: gcc-10
+
 
     steps:
     - uses: actions/checkout@v2
@@ -29,7 +31,7 @@ jobs:
       run: conda install -c anaconda mkl
 
     - name: Configure with CMake
-      run: cmake -B ${{github.workspace}}/build --DCMAKE_Fortran_COMPILER=${{matrix.fc}} -DCMAKE_C_COMPILER=${{matrix.cc}}
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_Fortran_COMPILER=${{matrix.fc}} -DCMAKE_C_COMPILER=${{matrix.cc}}
 
     - name: Build with Make
       run: cmake --build ${{github.workspace}}/build
