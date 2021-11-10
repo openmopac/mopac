@@ -21,14 +21,11 @@ jobs:
       - name: Build with Make
         run: cmake --build build
 
-      - name: Rename executable
-        run: cp build/mopac mopac-linux-continuous
-
       - name: Save executable
         uses: actions/upload-artifact@v2
         with:
-          name: Linux executable
-          path: mopac-linux-continuous
+          name: mopac-linux-continuous
+          path: build/mopac
 
   mac-build:
     runs-on: macos-latest
@@ -47,14 +44,11 @@ jobs:
       - name: Build with Make
         run: cmake --build build
 
-      - name: Rename executable
-        run: cp build/mopac mopac-mac-continuous
-
       - name: Save executable
         uses: actions/upload-artifact@v2
         with:
-          name: Mac executable
-          path: mopac-mac-continuous
+          name: mopac-mac-continuous
+          path: build/mopac
 
   windows-build:
     runs-on: windows-latest
@@ -81,14 +75,11 @@ jobs:
       - name: Build with Make
         run: cmake --build build
 
-      - name: Rename executable
-        run: cp build/mopac.exe mopac-windows-continuous.exe
-
       - name: Save executable
         uses: actions/upload-artifact@v2
         with:
-          name: Windows executable
-          path: mopac-windows-continuous.exe
+          name: mopac-windows-continuous.exe
+          path: build/mopac.exe
 
   continuous-deployment:
     runs-on: ubuntu-latest
@@ -124,7 +115,7 @@ jobs:
           DESCRIPTION="Triggered on $(date -u '+%Y/%m/%d, %H:%M') UTC by commit ${{ github.sha }} (@${{ github.actor }})
           This is an automated build of the latest source in the master branch. It is not intended for production work.
           Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          github-release release \
+          github-release edit \
             --tag continuous \
             --name "Continuous Build" \
             --description "$DESCRIPTION" \
