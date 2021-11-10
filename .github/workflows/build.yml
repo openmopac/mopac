@@ -97,6 +97,9 @@ jobs:
       - mac-build
       - windows-build
 
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
 
