@@ -113,7 +113,7 @@ jobs:
           DESCRIPTION="Triggered on $(date -u '+%Y/%m/%d, %H:%M') UTC by commit ${{ github.sha }} (@${{ github.actor }})
           This is an automated build of the latest source in the master branch. It is not intended for production work.
           Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          github-release release \
+          $GOPATH/bin/github-release release \
             --tag continuous \
             --name "Continuous Build" \
             --description "$DESCRIPTION" \
@@ -126,17 +126,17 @@ jobs:
 
       - name: Add executables to the continuous release
         run: |
-          github-release upload \
+          $GOPATH/bin/github-release upload \
             --tag continuous \
             --replace \
             --name mopac-linux-continuous \
             --file mopac-linux-continuous
-          github-release upload \
+          $GOPATH/bin/github-release upload \
             --tag continuous \
             --replace \
             --name mopac-mac-continuous \
             --file mopac-mac-continuous
-          github-release upload \
+          $GOPATH/bin/github-release upload \
             --tag continuous \
             --replace \
             --name mopac-windows-continuous.exe \
