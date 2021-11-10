@@ -10,33 +10,51 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Install MKL (BLAS & LAPACK) with Anaconda
-      run: conda install -c anaconda mkl
+      - name: Install MKL (BLAS & LAPACK) with Anaconda
+        run: conda install -c anaconda mkl
 
-    - name: Configure with CMake
-      run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
+      - name: Configure with CMake
+        run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
 
-    - name: Build with Make
-      run: cmake --build build
+      - name: Build with Make
+        run: cmake --build build
+
+      - name: Rename executable
+        run: cp build/mopac mopac-linux-continuous
+
+      - name: Save executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: Linux executable
+          path: mopac-linux-continuous
 
   mac-build:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Install MKL (BLAS & LAPACK) with Anaconda
-      run: |
-        sudo chown -R runner:staff $CONDA
-        conda install -c anaconda mkl
+      - name: Install MKL (BLAS & LAPACK) with Anaconda
+        run: |
+          sudo chown -R runner:staff $CONDA
+          conda install -c anaconda mkl
 
-    - name: Configure with CMake
-      run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran-11 -DCMAKE_C_COMPILER=gcc-11
+      - name: Configure with CMake
+        run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran-11 -DCMAKE_C_COMPILER=gcc-11
 
-    - name: Build with Make
-      run: cmake --build build
+      - name: Build with Make
+        run: cmake --build build
+
+      - name: Rename executable
+        run: cp build/mopac mopac-mac-continuous
+
+      - name: Save executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: Mac executable
+          path: mopac-mac-continuous
 
   windows-build:
     runs-on: windows-latest
@@ -45,20 +63,82 @@ jobs:
         shell: msys2 {0}
 
     steps:
-    - uses: msys2/setup-msys2@v2
-      with:
-        install: >-
-          git
-          make
-          mingw-w64-x86_64-cmake
-          mingw-w64-x86_64-gcc-fortran
-          mingw-w64-x86_64-openblas
-          mingw-w64-x86_64-lapack
+      - uses: msys2/setup-msys2@v2
+        with:
+          install: >-
+            git
+            make
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-gcc-fortran
+            mingw-w64-x86_64-openblas
+            mingw-w64-x86_64-lapack
 
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Configure with CMake
-      run: cmake -B build -G "MSYS Makefiles" -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
+      - name: Configure with CMake
+        run: cmake -B build -G "MSYS Makefiles" -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
 
-    - name: Build with Make
-      run: cmake --build build
+      - name: Build with Make
+        run: cmake --build build
+
+      - name: Rename executable
+        run: cp build/mopac.exe mopac-windows-continuous.exe
+
+      - name: Save executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: Windows executable
+          path: mopac-windows-continuous.exe
+
+  continuous-deployment:
+    runs-on: ubuntu-latest
+    needs:
+      - linux-build
+      - mac-build
+      - windows-build
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install GitHub Release
+        run: go get github.com/github-release/github-release
+
+      - name: Move/Create continuous tag
+        run: |
+          git tag --force continuous ${{ github.sha }}
+          git push --tags --force
+
+      - name: Setup continuous release
+        run: |
+          DESCRIPTION="Triggered on $(date -u '+%Y/%m/%d, %H:%M') UTC by commit ${{ github.sha }} (@${{ github.actor }})
+          This is an automated build of the latest source in the master branch. It is not intended for production work.
+          Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          github-release release \
+#          github-release edit \
+            --tag continuous \
+            --name "Continuous Build" \
+            --description "$DESCRIPTION" \
+            --pre-release
+
+      - name: Load all executables
+        uses: actions/download-artifact@v2
+        with:
+          path: ${{ github.workspace }}
+
+      - name: Add executables to the continuous release
+        run: |
+          github-release upload \
+            --tag continuous \
+            --replace \
+            --name mopac-linux-continuous \
+            --file mopac-linux-continuous
+          github-release upload \
+            --tag continuous \
+            --replace \
+            --name mopac-mac-continuous \
+            --file mopac-mac-continuous
+          github-release upload \
+            --tag continuous \
+            --replace \
+            --name mopac-windows-continuous.exe \
+            --file mopac-windows-continuous.exe
