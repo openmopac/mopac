@@ -114,7 +114,6 @@ jobs:
           This is an automated build of the latest source in the master branch. It is not intended for production work.
           Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           github-release release \
-#          github-release edit \
             --tag continuous \
             --name "Continuous Build" \
             --description "$DESCRIPTION" \
