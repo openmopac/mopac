@@ -105,17 +105,23 @@ jobs:
           go get github.com/github-release/github-release
           echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+
       - name: Move/Create continuous tag
         run: |
           git tag --force continuous ${{ github.sha }}
           git push --tags --force
+
+      - name: Assign GitHub user info for GitHub Release
+        run: |
+          echo "GITHUB_USER=$( echo ${{ github.repository }} | cut -d/ -f1 )" >> $GITHUB_ENV
+          echo "GITHUB_REPO=$( echo ${{ github.repository }} | cut -d/ -f2 )" >> $GITHUB_ENV
 
       - name: Setup continuous release
         run: |
           DESCRIPTION="Triggered on $(date -u '+%Y/%m/%d, %H:%M') UTC by commit ${{ github.sha }} (@${{ github.actor }})
           This is an automated build of the latest source in the master branch. It is not intended for production work.
           Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          $GOPATH/bin/github-release release \
+          github-release release \
             --tag continuous \
             --name "Continuous Build" \
             --description "$DESCRIPTION" \
