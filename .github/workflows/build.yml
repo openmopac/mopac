@@ -21,11 +21,14 @@ jobs:
       - name: Build with Make
         run: cmake --build build
 
-      - name: Save executable
+      - name: Tar executable to preserve permissions
+        run: tar -cvf mopac-linux.tar build/mopac
+
+      - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mopac-linux-continuous
-          path: build/mopac
+          name: linux
+          path: mopac-linux.tar
 
   mac-build:
     runs-on: macos-latest
@@ -44,11 +47,14 @@ jobs:
       - name: Build with Make
         run: cmake --build build
 
-      - name: Save executable
+      - name: Tar executable to preserve permissions
+        run: tar -cvf mopac-mac.tar build/mopac
+
+      - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mopac-mac-continuous
-          path: build/mopac
+          name: mac
+          path: mopac-mac.tar
 
   windows-build:
     runs-on: windows-latest
@@ -75,10 +81,10 @@ jobs:
       - name: Build with Make
         run: cmake --build build
 
-      - name: Save executable
+      - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mopac-windows-continuous.exe
+          name: windows
           path: build/mopac.exe
 
   continuous-deployment:
@@ -113,7 +119,10 @@ jobs:
       - name: Setup continuous release
         run: |
           DESCRIPTION="Triggered on $(date -u '+%Y/%m/%d, %H:%M') UTC by commit ${{ github.sha }} (@${{ github.actor }})
-          This is an automated build of the latest source in the master branch. It is not intended for production work.
+
+          This is an automated build of the latest source in the master branch.
+          It is not an official release, and it is not intended for production work.
+
           Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           github-release edit \
             --tag continuous \
@@ -121,10 +130,16 @@ jobs:
             --description "$DESCRIPTION" \
             --pre-release
 
-      - name: Load all executables
+      - name: Download all artifacts
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}
+
+      - name: Unpack executables
+        run: |
+          tar -xvf linux/mopac-linux.tar
+          mv build build2
+          tar -xvf mac/mopac-mac.tar
 
       - name: Add executables to the continuous release
         run: |
@@ -132,14 +147,14 @@ jobs:
             --tag continuous \
             --replace \
             --name mopac-linux-continuous \
-            --file mopac-linux-continuous
+            --file build2/mopac
           github-release upload \
             --tag continuous \
             --replace \
             --name mopac-mac-continuous \
-            --file mopac-mac-continuous
+            --file build/mopac
           github-release upload \
             --tag continuous \
             --replace \
             --name mopac-windows-continuous.exe \
-            --file mopac-windows-continuous.exe
+            --file windows/mopac.exe
