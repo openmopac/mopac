@@ -22,13 +22,15 @@ jobs:
         run: cmake --build build
 
       - name: Tar executable to preserve permissions
-        run: tar -cvf mopac-linux.tar build/mopac
+        run: |
+          mv build/mopac .
+          tar -cvf mopac.tar mopac
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: linux
-          path: mopac-linux.tar
+          path: mopac.tar
 
   mac-build:
     runs-on: macos-latest
@@ -48,13 +50,15 @@ jobs:
         run: cmake --build build
 
       - name: Tar executable to preserve permissions
-        run: tar -cvf mopac-mac.tar build/mopac
+        run: |
+          mv build/mopac .
+          tar -cvf mopac.tar mopac
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: mac
-          path: mopac-mac.tar
+          path: mopac.tar
 
   windows-build:
     runs-on: windows-latest
@@ -135,24 +139,18 @@ jobs:
         with:
           path: ${{ github.workspace }}
 
-      - name: Unpack executables
-        run: |
-          tar -xvf linux/mopac-linux.tar
-          mv build build2
-          tar -xvf mac/mopac-mac.tar
-
       - name: Add executables to the continuous release
         run: |
           github-release upload \
             --tag continuous \
             --replace \
-            --name mopac-linux-continuous \
-            --file build2/mopac
+            --name mopac-linux-continuous.tar \
+            --file linux/mopac.tar
           github-release upload \
             --tag continuous \
             --replace \
-            --name mopac-mac-continuous \
-            --file build/mopac
+            --name mopac-mac-continuous.tar \
+            --file mac/mopac.tar
           github-release upload \
             --tag continuous \
             --replace \
