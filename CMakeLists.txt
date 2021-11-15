@@ -30,10 +30,7 @@ add_executable(param)
 target_link_libraries(mopac PUBLIC mopac-all)
 target_link_libraries(param PUBLIC mopac-all)
 
-message("compiler = " ${CMAKE_Fortran_COMPILER})
-message("build type = " ${CMAKE_BUILD_TYPE})
-
-# OS-detection
+# Pass OS information to MOPAC's Fortran source using preprocessor variables
 if(APPLE)
   add_definitions(-DMOPAC_OS='M')
 elseif(UNIX)
@@ -72,27 +69,27 @@ else()
   target_link_libraries(param PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
 endif()
 
-# compiler-specific flags
-if(${CMAKE_Fortran_COMPILER} MATCHES "pgfortran")
-  target_compile_options(mopac PRIVATE -g -Mbackslash)
-elseif(${CMAKE_Fortran_COMPILER} MATCHES "gfortran")
+# compiler-specific debug flags
+#if(${CMAKE_Fortran_COMPILER} MATCHES "pgfortran")
+#  target_compile_options(mopac PRIVATE -g -Mbackslash)
+#elseif(${CMAKE_Fortran_COMPILER} MATCHES "gfortran")
 #    target_compile_options(mopac PRIVATE -g -O -Wuninitialized)
 #    target_compile_options(mopac PRIVATE --coverage)
 #  target_compile_options(mopac-lib PUBLIC "-fprofile-arcs" "-ftest-coverage")
 #  target_link_libraries(mopac-lib PUBLIC gcov)
-     target_compile_options(mopac-all PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
-     target_compile_options(mopac PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
-     target_compile_options(param PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
+#     target_compile_options(mopac-all PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
+#     target_compile_options(mopac PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
+#     target_compile_options(param PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
 #    target_compile_options(mopac-lib PUBLIC -g -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra -Wunused-parameter -Waliasing -Wampersand -Wcharacter-truncation -Wreal-q-constant)
 #    target_compile_options(mopac-lib PUBLIC -g -static -finit-local-zero -ffpe-trap=invalid,zero,overflow -fbacktrace -std=gnu -Wall -Wunused-parameter -fcheck=all -Waliasing -Wampersand -Wcharacter-truncation -Wreal-q-constant)
 #    target_compile_options(mopac-lib PRIVATE -g -static -finit-local-zero -ffpe-trap=invalid,zero,overflow -fbacktrace -std=gnu -Wall -Wunused-parameter -fcheck=all -Waliasing -Wampersand -Wcharacter-truncation -Wreal-q-constant)
-elseif(${CMAKE_Fortran_COMPILER} MATCHES "ifort")
-     target_compile_options(mopac-all PUBLIC -g -traceback -check all -debug all -fpe0 -warn all)
+#elseif(${CMAKE_Fortran_COMPILER} MATCHES "ifort")
+#     target_compile_options(mopac-all PUBLIC -g -traceback -check all -debug all -fpe0 -warn all)
 #    target_compile_options(mopac PRIVATE -g -traceback -check all -debug all -fpe0 -warn all)
 #    target_compile_options(mopac PRIVATE -g -traceback -check all -debug all -fpe0 -warn all -init=zero,arrays)
-else()
-  message("compiler not recognized, using default compiler options")
-endif()
+#else()
+#  message("compiler not recognized, using default compiler options")
+#endif()
 
 #target_link_libraries(mopac PUBLIC -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl)
 
@@ -101,6 +98,14 @@ endif()
 # ^^^ with -liomp5, which is causing linking problems
 # THIS IS TOO IFORT SPECIFIC: target_link_libraries(mopac PUBLIC -mkl=parallel -Wl,-rpath,/opt/intel/compilers_and_libraries_2018.3.185/mac/compiler/lib)
 # ^^^ embeds path to dynamic OpenMP library
+
+# Force static linking of GNU libraries by request
+option(STATIC_GNU "STATIC_GNU" OFF)
+if(STATIC_GNU)
+  find_library(LIBQUADMATH libquadmath.a /usr/local/Cellar/gcc/10.2.0/lib/gcc/10 REQUIRED)
+  target_link_libraries(mopac PUBLIC -lgfortran ${LIBQUADMATH} -static-libgfortran -static-libgcc)
+  message("LIBQUADMATH = " ${LIBQUADMATH})
+endif()
 
 # Add list of source files from src directory
 add_subdirectory(src)

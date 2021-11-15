@@ -16,7 +16,11 @@ jobs:
         run: conda install -c anaconda mkl
 
       - name: Configure with CMake
-        run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
+        run: |
+          cmake -B build \
+            -DCMAKE_Fortran_COMPILER=gfortran \
+            -DCMAKE_C_COMPILER=gcc \
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc"
 
       - name: Build with Make
         run: cmake --build build
@@ -44,10 +48,17 @@ jobs:
           conda install -c anaconda mkl
 
       - name: Configure with CMake
-        run: cmake -B build -DCMAKE_Fortran_COMPILER=gfortran-11 -DCMAKE_C_COMPILER=gcc-11
+        run: |
+          cmake -B build \
+            -DCMAKE_Fortran_COMPILER=gfortran-11 \
+            -DCMAKE_C_COMPILER=gcc-11 \
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc"
 
-      - name: Build with Make
-        run: cmake --build build
+      - name: Build with Make (static libquadmath workaround)
+        run: |
+          mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
+          cmake --build build
+          mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
 
       - name: Tar executable to preserve permissions
         run: |
@@ -80,7 +91,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Configure with CMake
-        run: cmake -B build -G "MSYS Makefiles" -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_C_COMPILER=gcc
+        run: |
+          cmake -B build \
+            -G "MSYS Makefiles" \
+            -DCMAKE_Fortran_COMPILER=gfortran \
+            -DCMAKE_C_COMPILER=gcc \
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc"
 
       - name: Build with Make
         run: cmake --build build
