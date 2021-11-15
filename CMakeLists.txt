@@ -41,33 +41,28 @@ else()
   add_definitions(-DMOPAC_OS='X')
 endif()
 
-# Link w/ MKL if it is available
-if(DEFINED ENV{MKLROOT})
-  set(CMAKE_BUILD_TYPE Release)
-  message("environment variable MKLROOT is defined, assuming that Intel MKL is available")
+# Handle special cases that CMake can't handle right now
+if(APPLE AND (BLA_VENDOR MATCHES "Intel") AND (DEFINED ENV{MKLROOT}) AND BLA_STATIC)
+  message("WARNING: CMake cannot detect static MKL libraries on MacOS right now, using custom solution")
   if(DEFINED ENV{OMPROOT})
-    message("environment variable OMPROOT is defined, building threaded MKL w/ OMPROOT as the path to libiomp5")
-    target_link_libraries(mopac PUBLIC -Wl,-rpath,$ENV{OMPROOT}
-                          $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a 
-                          $ENV{MKLROOT}/lib/libmkl_core.a -L$ENV{OMPROOT} -liomp5 -lpthread -lm -ldl)
-    target_link_libraries(param PUBLIC -Wl,-rpath,$ENV{OMPROOT}
-                          $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a 
-                          $ENV{MKLROOT}/lib/libmkl_core.a -L$ENV{OMPROOT} -liomp5 -lpthread -lm -ldl)
-#                          -dynamiclib -lgfortran -static-libgfortran
-#                          /usr/local/opt/gcc/lib/gcc/8/libquadmath.a -static-libgcc)
+    set(BLAS_LIBRARIES "-Wl,-rpath,$ENV{OMPROOT} \
+        $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a \
+        $ENV{MKLROOT}/lib/libmkl_core.a -L$ENV{OMPROOT} -liomp5 -lpthread -lm -ldl")
   else()
-    message("environment variable OMPROOT is not defined, building serial MKL")
-    target_link_libraries(mopac PUBLIC $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_sequential.a
-                          $ENV{MKLROOT}/lib/libmkl_core.a -lpthread -lm -ldl)
+    set(BLAS_LIBRARIES "$ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_sequential.a \
+        $ENV{MKLROOT}/lib/libmkl_core.a -lpthread -lm -ldl")
   endif()
-# Otherwise try generic BLAS/LAPACK libraries
+# Use CMake's library detection system
 else()
-  message("environment variable MKLROOT is not defined, relying on CMake to find working BLAS & LAPACK libraries")
   find_package(BLAS REQUIRED)
   find_package(LAPACK REQUIRED)
-  target_link_libraries(mopac PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
-  target_link_libraries(param PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
 endif()
+
+# Use BLAS/LAPACK information provided by CMake's find_package system
+target_link_libraries(mopac PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+target_link_libraries(param PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 
 # compiler-specific debug flags
 #if(${CMAKE_Fortran_COMPILER} MATCHES "pgfortran")
@@ -98,14 +93,6 @@ endif()
 # ^^^ with -liomp5, which is causing linking problems
 # THIS IS TOO IFORT SPECIFIC: target_link_libraries(mopac PUBLIC -mkl=parallel -Wl,-rpath,/opt/intel/compilers_and_libraries_2018.3.185/mac/compiler/lib)
 # ^^^ embeds path to dynamic OpenMP library
-
-# Force static linking of GNU libraries by request
-option(STATIC_GNU "STATIC_GNU" OFF)
-if(STATIC_GNU)
-  find_library(LIBQUADMATH libquadmath.a /usr/local/Cellar/gcc/10.2.0/lib/gcc/10 REQUIRED)
-  target_link_libraries(mopac PUBLIC -lgfortran ${LIBQUADMATH} -static-libgfortran -static-libgcc)
-  message("LIBQUADMATH = " ${LIBQUADMATH})
-endif()
 
 # Add list of source files from src directory
 add_subdirectory(src)
