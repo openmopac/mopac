@@ -17,6 +17,8 @@ jobs:
           conda install -c intel intel-fortran-rt
           conda install -c intel dpcpp-cpp-rt    
           conda install -c intel mkl-static
+          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
+          echo "$CONDA/bin" >> $GITHUB_PATH
 
       - name: Configure with CMake
         run: |
@@ -52,6 +54,8 @@ jobs:
           conda install -c intel intel-fortran-rt
           conda install -c intel dpcpp-cpp-rt
           conda install -c intel mkl-static
+          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
+          echo "$CONDA/bin" >> $GITHUB_PATH
 
       - name: Configure with CMake
         run: |
