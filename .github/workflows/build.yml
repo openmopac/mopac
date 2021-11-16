@@ -12,15 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install MKL (BLAS & LAPACK) with Anaconda
-        run: conda install -c anaconda mkl
+      - name: Install Intel toolchain with Anaconda
+        run: |
+          conda install -c intel intel-fortran-rt
+          conda install -c intel dpcpp-cpp-rt    
+          conda install -c intel mkl-static
 
       - name: Configure with CMake
         run: |
           cmake -B build \
-            -DCMAKE_Fortran_COMPILER=gfortran \
-            -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
+            -DCMAKE_Fortran_COMPILER=ifort \
+            -DCMAKE_C_COMPILER=icc \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
@@ -44,25 +46,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install MKL (BLAS & LAPACK) with Anaconda
+      - name: Install Intel toolchain with Anaconda
         run: |
           sudo chown -R runner:staff $CONDA
-          conda install -c anaconda mkl
+          conda install -c intel intel-fortran-rt
+          conda install -c intel dpcpp-cpp-rt
+          conda install -c intel mkl-static
 
       - name: Configure with CMake
         run: |
           cmake -B build \
-            -DCMAKE_Fortran_COMPILER=gfortran-11 \
-            -DCMAKE_C_COMPILER=gcc-11 \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
+            -DCMAKE_Fortran_COMPILER=ifort \
+            -DCMAKE_C_COMPILER=icc \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
-      - name: Build with Make (static libquadmath workaround)
-        run: |
-          mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
-          cmake --build build
-          mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
+      - name: Build with Make
+        run: cmake --build build
 
       - name: Tar executable to preserve permissions
         run: |
