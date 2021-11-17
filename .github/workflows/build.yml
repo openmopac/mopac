@@ -13,7 +13,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Clone glibc compatibility library
-        run: gh repo clone wheybags/glibc_version_header ..
+        uses: actions/checkout@v2
+        with:
+          repository: wheybags/glibc_version_header
+          path: glibc
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
@@ -26,7 +29,7 @@ jobs:
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
-            -DCMAKE_C_FLAGS="-pthread -static-libgcc -include ../glibc_version_header/version_headers/x64/force_link_glibc_2.17.h" \
+            -DCMAKE_C_FLAGS="-pthread -static-libgcc -include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
@@ -108,7 +111,7 @@ jobs:
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA" >> $GITHUB_ENV
-          ls $CONDA/lib
+          ls $CONDA
 
       - name: Configure with CMake
         run: |

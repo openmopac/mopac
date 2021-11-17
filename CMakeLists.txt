@@ -55,16 +55,38 @@ if(APPLE AND (BLA_VENDOR MATCHES "Intel") AND (DEFINED ENV{MKLROOT}) AND BLA_STA
   set(LAPACK_LIBRARIES "")
   set(BLAS_LINKER_FLAGS "")
   set(LAPACK_LINKER_FLAGS "")
+#
+target_link_libraries(mopac "$ENV{MKLROOT}/lib/libmkl_intel_lp64.a")
+target_link_libraries(mopac "$ENV{MKLROOT}/lib/libmkl_intel_thread.a")
+target_link_libraries(mopac "$ENV{MKLROOT}/lib/libmkl_core.a")
+target_link_libraries(mopac "-liomp5")
+target_link_libraries(mopac "-lpthread")
+target_link_libraries(mopac "-lm")
+target_link_libraries(mopac "-ldl")
+target_link_libraries(param "$ENV{MKLROOT}/lib/libmkl_intel_lp64.a")
+target_link_libraries(param "$ENV{MKLROOT}/lib/libmkl_intel_thread.a")
+target_link_libraries(param "$ENV{MKLROOT}/lib/libmkl_core.a")
+target_link_libraries(param "-liomp5")
+target_link_libraries(param "-lpthread")
+target_link_libraries(param "-lm")
+target_link_libraries(param "-ldl")
+#
 else()
   find_package(BLAS REQUIRED)
   find_package(LAPACK REQUIRED)
-endif()
-
-# Use BLAS/LAPACK information provided by CMake's find_package system
+#
 target_link_libraries(mopac ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 target_link_libraries(param ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+#
+endif()
+
+# Use BLAS/LAPACK information provided by CMake's find_package system
+#target_link_libraries(mopac ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+#target_link_libraries(param ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+#target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+#target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 
 # Add list of source files from src directory
 add_subdirectory(src)
