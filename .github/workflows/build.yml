@@ -50,7 +50,7 @@ jobs:
         run: |
           sudo chown -R runner:staff $CONDA
           conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
+          echo "MKLROOT=$CONDA/lib" >> $GITHUB_ENV
 
       - name: Configure with CMake
         run: |
