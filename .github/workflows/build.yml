@@ -65,6 +65,7 @@ jobs:
       - name: Build with Make (static libquadmath workaround)
         run: |
           mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
+          cmake --build build --target help
           cmake --build build
           mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
 
