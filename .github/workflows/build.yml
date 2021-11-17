@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Clone glibc compatibility library
+        run: gh repo clone wheybags/glibc_version_header ..
+
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
           conda install -c intel mkl-static
@@ -23,6 +26,7 @@ jobs:
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
+            -DCMAKE_C_FLAGS="-pthread -static-libgcc -include ../glibc_version_header/version_headers/x64/force_link_glibc_2.17.h" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
@@ -65,9 +69,7 @@ jobs:
 
       - name: Build with Make (static libquadmath workaround)
         run: |
-          ls build/CMakeFiles
-          ls build/CMakeFiles/mopac.dir
-          cat build/CMakeFiles/mopac.dir/link.txt
+          cat build/CMakeFiles/mopac.dir/build.make
           mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
           cmake --build build
           mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
@@ -104,7 +106,6 @@ jobs:
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
-          conda install -c intel mkl-static
           $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA" >> $GITHUB_ENV
           ls $CONDA/lib
