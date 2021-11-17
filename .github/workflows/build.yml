@@ -123,9 +123,13 @@ jobs:
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
-      - name: Debug logs
+      - name: CMake output
         if: always()
         run: cat build/CMakeFiles/CMakeOutput.log
+
+      - name: CMake error
+        if: always()
+        run: cat build/CMakeFiles/CMakeError.log
 
       - name: Build with Make
         run: cmake --build build
