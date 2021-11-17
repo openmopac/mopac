@@ -53,6 +53,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install OpenMP library
+        run: brew extract libomp
+
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
           sudo chown -R runner:staff $CONDA
@@ -110,8 +113,7 @@ jobs:
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
-          cat $CONDA/conda-meta/mkl-static-2021.4.0-intel_640.json
+          echo "MKLROOT=$CONDA/Library" >> $GITHUB_ENV
 
       - name: Configure with CMake
         run: |
