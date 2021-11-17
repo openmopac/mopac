@@ -44,7 +44,17 @@ endif()
 # Handle special cases that CMake can't handle right now
 if(APPLE AND (BLA_VENDOR MATCHES "Intel") AND (DEFINED ENV{MKLROOT}) AND BLA_STATIC)
   message("WARNING: CMake cannot detect static MKL libraries on MacOS right now, using custom solution")
-  set(BLAS_LIBRARIES "$ENV{MKLROOT}/lib/libmkl_intel_lp64.a;$ENV{MKLROOT}/lib/libmkl_intel_thread.a;$ENV{MKLROOT}/lib/libmkl_core.a;-liomp5;-lpthread;-lm;-ldl")
+  set(BLAS_LIBRARIES
+      "$ENV{MKLROOT}/lib/libmkl_intel_lp64.a"
+      "$ENV{MKLROOT}/lib/libmkl_intel_thread.a"
+      "$ENV{MKLROOT}/lib/libmkl_core.a"
+      "-liomp5"
+      "-lpthread"
+      "-lm"
+      "-ldl")
+  set(LAPACK_LIBRARIES "")
+  set(BLAS_LINKER_FLAGS "")
+  set(LAPACK_LINKER_FLAGS "")
 else()
   find_package(BLAS REQUIRED)
   find_package(LAPACK REQUIRED)
