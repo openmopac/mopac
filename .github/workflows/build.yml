@@ -55,7 +55,7 @@ jobs:
       - name: Configure with CMake
         run: |
           cmake -B build \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran-11 \
             -DCMAKE_C_COMPILER=gcc-11 \
@@ -105,7 +105,7 @@ jobs:
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
-          echo "MKLROOT=$CONDA/lib" >> $GITHUB_ENV
+          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
       - name: Configure with CMake
         run: |
