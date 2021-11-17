@@ -29,7 +29,7 @@ jobs:
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
-            -DCMAKE_C_FLAGS="-pthread -static-libgcc -include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
+            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install OpenMP library
-        run: brew extract libomp
+        run: brew install libomp
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
