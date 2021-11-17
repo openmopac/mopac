@@ -67,7 +67,6 @@ jobs:
             -DCMAKE_Fortran_COMPILER=gfortran-11 \
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
-            -DCMAKE_LIBRARY_PATH="$CONDA/lib" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
