@@ -110,6 +110,8 @@ jobs:
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA/Library" >> $GITHUB_ENV
+          echo "$MKLROOT/lib" >> $GITHUB_PATH
+          echo "$MKLROOT/bin" >> $GITHUB_PATH
           dir $CONDA/Library/lib
 
       - name: Configure with CMake
@@ -119,10 +121,6 @@ jobs:
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a"
-
-      - name: CMake output
-        if: always()
-        run: cat build/CMakeFiles/CMakeOutput.log
 
       - name: Build with Make
         run: cmake --build build
