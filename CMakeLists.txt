@@ -44,15 +44,7 @@ endif()
 # Handle special cases that CMake can't handle right now
 if(APPLE AND (BLA_VENDOR MATCHES "Intel") AND (DEFINED ENV{MKLROOT}) AND BLA_STATIC)
   message("WARNING: CMake cannot detect static MKL libraries on MacOS right now, using custom solution")
-  if(DEFINED ENV{OMPROOT})
-    set(BLAS_LIBRARIES "-Wl,-rpath,$ENV{OMPROOT} \
-        $ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a \
-        $ENV{MKLROOT}/lib/libmkl_core.a -L$ENV{OMPROOT} -liomp5 -lpthread -lm -ldl")
-  else()
-    set(BLAS_LIBRARIES "$ENV{MKLROOT}/lib/libmkl_intel_lp64.a $ENV{MKLROOT}/lib/libmkl_sequential.a \
-        $ENV{MKLROOT}/lib/libmkl_core.a -lpthread -lm -ldl")
-  endif()
-# Use CMake's library detection system
+  set(BLAS_LIBRARIES "$ENV{MKLROOT}/lib/libmkl_intel_lp64.a;$ENV{MKLROOT}/lib/libmkl_intel_thread.a;$ENV{MKLROOT}/lib/libmkl_core.a;-liomp5;-lpthread;-lm;-ldl")
 else()
   find_package(BLAS REQUIRED)
   find_package(LAPACK REQUIRED)
@@ -63,6 +55,21 @@ target_link_libraries(mopac PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 target_link_libraries(param PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+
+# Add list of source files from src directory
+add_subdirectory(src)
+
+# MDI functionality
+option(MDI "MDI build flag" OFF)
+if(MDI)
+  include(MDI)
+endif(MDI)
+
+# Add tests
+enable_testing()
+add_subdirectory(tests)
+
+# some old stuff that should probably be deleted or cleaned up:
 
 # compiler-specific debug flags
 #if(${CMAKE_Fortran_COMPILER} MATCHES "pgfortran")
@@ -94,15 +101,3 @@ target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 # THIS IS TOO IFORT SPECIFIC: target_link_libraries(mopac PUBLIC -mkl=parallel -Wl,-rpath,/opt/intel/compilers_and_libraries_2018.3.185/mac/compiler/lib)
 # ^^^ embeds path to dynamic OpenMP library
 
-# Add list of source files from src directory
-add_subdirectory(src)
-
-# MDI functionality
-option(MDI "MDI build flag" OFF)
-if(MDI)
-  include(MDI)
-endif(MDI)
-
-# Add tests
-enable_testing()
-add_subdirectory(tests)
