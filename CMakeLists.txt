@@ -27,8 +27,8 @@ project(openmopac LANGUAGES Fortran C)
 add_library(mopac-all)
 add_executable(mopac)
 add_executable(param)
-target_link_libraries(mopac PUBLIC mopac-all)
-target_link_libraries(param PUBLIC mopac-all)
+target_link_libraries(mopac mopac-all)
+target_link_libraries(param mopac-all)
 
 # Pass OS information to MOPAC's Fortran source using preprocessor variables
 if(APPLE)
@@ -61,8 +61,8 @@ else()
 endif()
 
 # Use BLAS/LAPACK information provided by CMake's find_package system
-target_link_libraries(mopac PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-target_link_libraries(param PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+target_link_libraries(mopac ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+target_link_libraries(param ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
 target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 
