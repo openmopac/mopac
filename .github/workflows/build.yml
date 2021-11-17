@@ -68,7 +68,8 @@ jobs:
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
             -DBLA_STATIC=ON \
-            -DBLA_VENDOR=Intel10_64lp
+            -DBLA_VENDOR=Intel10_64lp \
+            -DCMAKE_LIBRARY_PATH=$CONDA/lib
 
       - name: Build with Make (static libquadmath workaround)
         run: |
