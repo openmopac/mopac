@@ -55,8 +55,8 @@ jobs:
       - name: Configure with CMake
         run: |
           cmake -B build \
-            -DCMAKE_Fortran_COMPILER=gfortran \
-            -DCMAKE_C_COMPILER=gcc \
+            -DCMAKE_Fortran_COMPILER=gfortran-11 \
+            -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
