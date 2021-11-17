@@ -65,12 +65,12 @@ jobs:
 
       - name: Build with Make (static libquadmath workaround)
         run: |
-          mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
-          cmake --build build
-          mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
           ls build/CMakeFiles
           ls build/CMakeFiles/mopac.dir
           cat build/CMakeFiles/mopac.dir/link.txt
+          mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
+          cmake --build build
+          mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
 
       - name: Tar executable to preserve permissions
         run: |
@@ -104,8 +104,10 @@ jobs:
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
+          conda install -c intel mkl-static
           $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA" >> $GITHUB_ENV
+          ls $CONDA/lib
 
       - name: Configure with CMake
         run: |
