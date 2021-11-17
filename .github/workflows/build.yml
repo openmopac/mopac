@@ -123,6 +123,10 @@ jobs:
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
+      - name: Debug logs on failure
+      - run: cat build/CMakeFiles/CMakeOutput.log
+        if: failed()
+
       - name: Build with Make
         run: cmake --build build
 
