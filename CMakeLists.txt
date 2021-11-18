@@ -64,8 +64,12 @@ if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
     find_library(INTEL_CORE mkl_core PATHS ${MKL_PATH1} REQUIRED)
   endif()
   message("path check:" ${MKL_PATH1} ${MKL_PATH2} ${MKL_PATH3})
-  find_library(INTEL_OPENMP NAMES iomp5 libiomp5md.dll PATHS ${MKL_PATH1} ${MKL_PATH2} ${MKL_PATH3})
+  find_library(INTEL_OPENMP NAMES iomp5 libiomp5md.dll PATHS ${MKL_PATH2} ${MKL_PATH1} ${MKL_PATH3})
+  find_library(LIB_PTHREAD pthread)
+  find_library(LIB_MATH m)
+  find_library(LIB_DL dl)
   if(NOT INTEL_OPENMP)
+    message("attempting to hard-code iomp for Windows")
     set(INTEL_OPENMP "${MKL_PATH2}/libiomp5md.dll")
   endif()
   set(BLAS_LIBRARIES
@@ -73,9 +77,9 @@ if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
       ${INTEL_THREAD}
       ${INTEL_CORE}
       ${INTEL_OPENMP}
-      "-lpthread"
-      "-lm"
-      "-ldl")
+      ${LIB_PTHREAD}
+      ${LIB_MATH}
+      ${LIB_DL})
   set(LAPACK_LIBRARIES "")
   set(BLAS_LINKER_FLAGS "")
   set(LAPACK_LINKER_FLAGS "")
