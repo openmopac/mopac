@@ -109,7 +109,9 @@ jobs:
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl
           echo "MKLROOT=$CONDA\Library" >> $GITHUB_ENV
+          echo "LIB"
           ls $CONDA/Library/lib
+          echo "BIN"
           ls $CONDA/Library/bin
 
       - name: Configure with CMake
@@ -119,7 +121,7 @@ jobs:
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a -l:/C/Miniconda/Library/bin/mkl_rt.1.dll" \
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a -L /C/Miniconda/Library/bin -lmkl_rt.1" \
             -DBLA_STATIC=OFF \
             -DBLA_VENDOR=Intel10_64lp
 
