@@ -45,6 +45,11 @@ endif()
 find_package(BLAS)
 find_package(LAPACK)
 
+  set(BLAS_LIBRARIES "")
+  set(LAPACK_LIBRARIES "")
+  set(BLAS_LINKER_FLAGS "")
+  set(LAPACK_LINKER_FLAGS "")
+
 # Attempt to manually set libraries if find_package fails
 if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND) AND 0)
   message(WARNING "find_package could not find BLAS or LAPACK libraries, attempting to find Intel MKL with find_library (setting MKLROOT might help)")
