@@ -116,7 +116,7 @@ jobs:
             -G "MSYS Makefiles" \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a -lbufferoverflow -lbufferoverflowU -lbufferoverflowK" \
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp \
             -DCMAKE_FIND_DEBUG_MODE=true
