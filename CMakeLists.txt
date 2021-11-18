@@ -63,8 +63,8 @@ if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
     find_library(INTEL_THREAD mkl_intel_thread PATHS ${MKL_PATH1} REQUIRED)
     find_library(INTEL_CORE mkl_core PATHS ${MKL_PATH1} REQUIRED)
   endif()
-  find_library(INTEL_OPENMP NAMES iomp5 libiomp5md.dll PATHS ${MKL_PATH1} ${MKL_PATH2} ${MKL_PATH3} REQUIRED)
   message("path check:" ${MKL_PATH1} ${MKL_PATH2} ${MKL_PATH3})
+  find_library(INTEL_OPENMP NAMES iomp5 libiomp5md.dll PATHS ${MKL_PATH1} ${MKL_PATH2} ${MKL_PATH3} REQUIRED)
   set(BLAS_LIBRARIES
       ${INTEL_LP64}
       ${INTEL_THREAD}
