@@ -119,7 +119,7 @@ jobs:
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a -l:C:/Miniconda/Library/bin/mkl_rt.1.dll" \
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a -l:/C/Miniconda/Library/bin/mkl_rt.1.dll" \
             -DBLA_STATIC=OFF \
             -DBLA_VENDOR=Intel10_64lp
 
