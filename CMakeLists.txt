@@ -47,32 +47,28 @@ find_package(LAPACK)
 
 # Attempt to manually set libraries if find_package fails
 if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
-  message(WARNING "find_package could not find BLAS or LAPACK libraries, attempting to use find_library")
-  if(DEFINED ENV{MKLROOT})
-    if(BLA_STATIC)
-      find_library(INTEL_LP64 libmkl_intel_lp64.a mkl_intel_lp64.lib PATHS $ENV{MKLROOT}/lib REQUIRED)
-      find_library(INTEL_THREAD libmkl_intel_thread.a mkl_intel_thread.lib PATHS $ENV{MKLROOT}/lib REQUIRED)
-      find_library(INTEL_CORE libmkl_core.a mkl_core.lib PATHS $ENV{MKLROOT}/lib REQUIRED)
-    else()
-      find_library(INTEL_LP64 mkl_intel_lp64 PATHS $ENV{MKLROOT}/lib REQUIRED)
-      find_library(INTEL_THREAD mkl_intel_thread PATHS $ENV{MKLROOT}/lib REQUIRED)
-      find_library(INTEL_CORE mkl_core PATHS $ENV{MKLROOT}/lib REQUIRED)
-    endif()
-    find_library(INTEL_OPENMP iomp5 REQUIRED PATHS $ENV{MKLROOT}/lib $ENV{MKLROOT}/bin $ENV{MKLROOT}/../compiler/lib)
-    set(BLAS_LIBRARIES
-        ${INTEL_LP64}
-        ${INTEL_THREAD}
-        ${INTEL_CORE}
-        ${INTEL_OPENMP}
-        "-lpthread"
-        "-lm"
-        "-ldl")
-    set(LAPACK_LIBRARIES "")
-    set(BLAS_LINKER_FLAGS "")
-    set(LAPACK_LINKER_FLAGS "")
+  message(WARNING "find_package could not find BLAS or LAPACK libraries, attempting to find Intel MKL with find_library (setting MKLROOT might help)")
+  if(BLA_STATIC)
+    find_library(INTEL_LP64 libmkl_intel_lp64.a mkl_intel_lp64.lib PATHS $ENV{MKLROOT}/lib REQUIRED)
+    find_library(INTEL_THREAD libmkl_intel_thread.a mkl_intel_thread.lib PATHS $ENV{MKLROOT}/lib REQUIRED)
+    find_library(INTEL_CORE libmkl_core.a mkl_core.lib PATHS $ENV{MKLROOT}/lib REQUIRED)
   else()
-    message(FATAL_ERROR "environmental variable MKLROOT not set, cannot find Intel MKL libraries")
+    find_library(INTEL_LP64 mkl_intel_lp64 PATHS $ENV{MKLROOT}/lib REQUIRED)
+    find_library(INTEL_THREAD mkl_intel_thread PATHS $ENV{MKLROOT}/lib REQUIRED)
+    find_library(INTEL_CORE mkl_core PATHS $ENV{MKLROOT}/lib REQUIRED)
   endif()
+  find_library(INTEL_OPENMP iomp5 iomp5md REQUIRED PATHS $ENV{MKLROOT}/lib $ENV{MKLROOT}/bin $ENV{MKLROOT}/../compiler/lib)
+  set(BLAS_LIBRARIES
+      ${INTEL_LP64}
+      ${INTEL_THREAD}
+      ${INTEL_CORE}
+      ${INTEL_OPENMP}
+      "-lpthread"
+      "-lm"
+      "-ldl")
+  set(LAPACK_LIBRARIES "")
+  set(BLAS_LINKER_FLAGS "")
+  set(LAPACK_LINKER_FLAGS "")
 endif()
 
 # Use BLAS/LAPACK information provided by CMake's find_package system
