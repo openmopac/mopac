@@ -116,12 +116,12 @@ jobs:
         run: |
           cmake -B build \
             -G "MSYS Makefiles" \
+            -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a -L$CONDA/Library/bin -lmkl_rt" \
             -DBLA_STATIC=OFF \
-            -DBLA_VENDOR=Intel10_64lp \
-            -DCMAKE_FIND_DEBUG_MODE=true
+            -DBLA_VENDOR=Intel10_64lp
 
       - name: Build with Make
         run: cmake --build build
