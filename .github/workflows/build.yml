@@ -109,6 +109,8 @@ jobs:
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA/Library" >> $GITHUB_ENV
+          ls $MKLROOT/lib
+          ls $MKLROOT/bin
 
       - name: Configure with CMake
         run: |
