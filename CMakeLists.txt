@@ -41,6 +41,15 @@ else()
   add_definitions(-DMOPAC_OS='X')
 endif()
 
+# Try to use CMake's system of finding BLAS & LAPACK libraries
+#find_package(BLAS)
+#find_package(LAPACK)
+
+# Attempt to manually set libraries if find_package fails
+#if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
+#  message("find_package could not find BLAS or LAPACK libraries, attempting to set MKL libraries manually")
+#endif()
+
 # Handle special cases that CMake can't handle right now
 if(APPLE AND (BLA_VENDOR MATCHES "Intel") AND (DEFINED ENV{MKLROOT}) AND BLA_STATIC)
   message("WARNING: CMake cannot detect static MKL libraries on MacOS right now, using custom solution")
