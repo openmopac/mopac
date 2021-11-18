@@ -68,8 +68,7 @@ jobs:
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
             -DBLA_STATIC=ON \
-            -DBLA_VENDOR=Intel10_64lp \
-            -DCMAKE_LIBRARY_PATH=$CONDA/lib
+            -DBLA_VENDOR=Intel10_64lp
 
       - name: Build with Make (static libquadmath workaround)
         run: |
@@ -110,9 +109,6 @@ jobs:
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA/Library" >> $GITHUB_ENV
-          echo "$MKLROOT/lib" >> $GITHUB_PATH
-          echo "$MKLROOT/bin" >> $GITHUB_PATH
-          dir $CONDA/Library/lib
 
       - name: Configure with CMake
         run: |
@@ -120,10 +116,9 @@ jobs:
             -G "MSYS Makefiles" \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a"
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:quadmath.lib" \
             -DBLA_STATIC=ON \
-            -DBLA_VENDOR=Intel10_64lp \
-            -DCMAKE_LIBRARY_PATH=$CONDA/lib
+            -DBLA_VENDOR=Intel10_64lp
 
       - name: Log1
         if: always()
