@@ -107,7 +107,7 @@ jobs:
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
-          $CONDA/Scripts/conda.exe install -c intel mkl-static
+          $CONDA/Scripts/conda.exe install -c intel mkl
           echo "MKLROOT=$CONDA\Library" >> $GITHUB_ENV
 
       - name: Configure with CMake
