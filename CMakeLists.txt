@@ -57,7 +57,7 @@ if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
     find_library(INTEL_THREAD mkl_intel_thread PATHS $ENV{MKLROOT}/lib REQUIRED)
     find_library(INTEL_CORE mkl_core PATHS $ENV{MKLROOT}/lib REQUIRED)
   endif()
-  find_library(INTEL_OPENMP iomp5 iomp5md REQUIRED PATHS $ENV{MKLROOT}/lib $ENV{MKLROOT}/bin $ENV{MKLROOT}/../compiler/lib)
+  find_library(INTEL_OPENMP iomp5 libiomp5md REQUIRED PATHS $ENV{MKLROOT}/lib $ENV{MKLROOT}/bin $ENV{MKLROOT}/../compiler/lib)
   set(BLAS_LIBRARIES
       ${INTEL_LP64}
       ${INTEL_THREAD}
