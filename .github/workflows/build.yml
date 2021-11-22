@@ -67,12 +67,11 @@ jobs:
             -DCMAKE_Fortran_COMPILER=gfortran-11 \
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
-            -DBLA_STATIC=ON \
-            -DBLA_VENDOR=Intel10_64lp
+            -DAUTO_BLAS=OFF \
+            -DMATH_LINK="-L $MKLROOT -l:libmkl_intel_lp64.a -l:libmkl_intel_thread.a -l:libmkl_core.a"
 
       - name: Build with Make (static libquadmath workaround)
         run: |
-          cat build/CMakeFiles/mopac.dir/build.make
           mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
           cmake --build build
           mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
@@ -109,10 +108,6 @@ jobs:
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl
           echo "MKLROOT=$CONDA\Library" >> $GITHUB_ENV
-          echo "LIB"
-          ls $CONDA/Library/lib
-          echo "BIN"
-          ls $CONDA/Library/bin
 
       - name: Configure with CMake
         run: |
@@ -121,9 +116,9 @@ jobs:
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a -L /C/Miniconda/Library/bin -lmkl_rt.1" \
-            -DBLA_STATIC=OFF \
-            -DBLA_VENDOR=Intel10_64lp
+            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
+            -DAUTO_BLAS=OFF \
+            -DMATH_LINK="-L /C/Miniconda/Library/bin -lmkl_rt.1"
 
       - name: Build with Make
         run: cmake --build build

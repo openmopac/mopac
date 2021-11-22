@@ -42,13 +42,28 @@ else()
 endif()
 
 # Try to use CMake's system of finding BLAS & LAPACK libraries
-find_package(BLAS)
-find_package(LAPACK)
+option(AUTO_BLAS "Use find_package to detect BLAS & LAPACK libraries" ON)
+if(AUTO_BLAS)
+  find_package(BLAS)
+  find_package(LAPACK)
 
-  set(BLAS_LIBRARIES "")
-  set(LAPACK_LIBRARIES "")
-  set(BLAS_LINKER_FLAGS "")
-  set(LAPACK_LINKER_FLAGS "")
+  if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
+    message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust system paths/variables (e.g. MKLROOT) or set AUTO_BLAS=OFF & manually define a link line with MATH_LINK")
+  endif()
+
+  # Use BLAS/LAPACK information provided by CMake's find_package system
+  target_link_libraries(mopac ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+  target_link_libraries(param ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+  target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+  target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+else()
+  if(DEFINED MATH_LINK)
+    target_link_libraries(mopac ${MATH_LINK})
+    target_link_libraries(param ${MATH_LINK})
+  else()
+    message(FATAL_ERROR "define MATH_LINK as a link line for BLAS & LAPACK libraries")
+  endif()
+endif()
 
 # Attempt to manually set libraries if find_package fails
 if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND) AND 0)
@@ -89,12 +104,6 @@ if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND) AND 0)
     list(APPEND BLAS_LIBRARIES ${LIB_PTHREAD} ${LIB_MATH} ${LIB_DL})
   endif()
 endif()
-
-# Use BLAS/LAPACK information provided by CMake's find_package system
-target_link_libraries(mopac ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-target_link_libraries(param ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
-target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 
 # Add list of source files from src directory
 add_subdirectory(src)
