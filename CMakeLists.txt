@@ -65,46 +65,6 @@ else()
   endif()
 endif()
 
-# Attempt to manually set libraries if find_package fails
-if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND) AND 0)
-  message(WARNING "find_package could not find BLAS or LAPACK libraries, attempting to find Intel MKL with find_library (setting MKLROOT might help)")
-  if(DEFINED ENV{MKLROOT})
-    message(STATUS "MKLROOT = " $ENV{MKLROOT})
-    file(TO_CMAKE_PATH "$ENV{MKLROOT}/lib" MKL_PATH1)
-    file(TO_CMAKE_PATH "$ENV{MKLROOT}/bin" MKL_PATH2)
-    file(TO_CMAKE_PATH "$ENV{MKLROOT}/../compiler/lib" MKL_PATH3)
-  endif()
-  if(BLA_STATIC)
-    find_library(INTEL_LP64 NAMES libmkl_intel_lp64.a mkl_intel_lp64.lib PATHS ${MKL_PATH1})
-    find_library(INTEL_THREAD NAMES libmkl_intel_thread.a mkl_intel_thread.lib PATHS ${MKL_PATH1})
-    find_library(INTEL_CORE NAMES libmkl_core.a mkl_core.lib PATHS ${MKL_PATH1})
-  else()
-    find_library(INTEL_LP64 mkl_intel_lp64 PATHS ${MKL_PATH1} ${MKL_PATH2})
-    find_library(INTEL_THREAD mkl_intel_thread PATHS ${MKL_PATH1} ${MKL_PATH2})
-    find_library(INTEL_CORE mkl_core PATHS ${MKL_PATH1} ${MKL_PATH2})
-  endif()
-  message("path check:" ${MKL_PATH1} ${MKL_PATH2} ${MKL_PATH3})
-  find_library(INTEL_OPENMP NAMES iomp5 libiomp5md.dll PATHS ${MKL_PATH1} ${MKL_PATH2} ${MKL_PATH3})
-  if(NOT INTEL_OPENMP)
-    message("attempting to hard-code iomp for Windows")
-    set(INTEL_OPENMP "${MKL_PATH2}/libiomp5md.dll")
-  endif()
-  set(BLAS_LIBRARIES
-      ${INTEL_LP64}
-      ${INTEL_THREAD}
-      ${INTEL_CORE}
-      ${INTEL_OPENMP})
-  set(LAPACK_LIBRARIES "")
-  set(BLAS_LINKER_FLAGS "")
-  set(LAPACK_LINKER_FLAGS "")
-  if(APPLE OR UNIX)
-    find_library(LIB_PTHREAD pthread)
-    find_library(LIB_MATH m)
-    find_library(LIB_DL dl)
-    list(APPEND BLAS_LIBRARIES ${LIB_PTHREAD} ${LIB_MATH} ${LIB_DL})
-  endif()
-endif()
-
 # Add list of source files from src directory
 add_subdirectory(src)
 

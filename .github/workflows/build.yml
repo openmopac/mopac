@@ -68,7 +68,7 @@ jobs:
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
             -DAUTO_BLAS=OFF \
-            -DMATH_LINK="-L $MKLROOT/lib -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core"
+            -DMATH_LINK="-L $MKLROOT/lib -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl"
 
       - name: Build with Make (static libquadmath workaround)
         run: |
