@@ -74,6 +74,12 @@ if(MDI)
   include(MDI)
 endif(MDI)
 
+# GPU functionality
+option(GPU "GPU build flag" OFF)
+if(GPU)
+  add_definitions(-DGPU)
+endif(GPU)
+
 # Add tests
 enable_testing()
 add_subdirectory(tests)

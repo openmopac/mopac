@@ -31,7 +31,7 @@
          nbeta_open, npulay, method_indo
       USE reimers_C, only: dd, ff, tot, cc0, aa, dtmp, nb2
       use cosmo_C, only : useps
-#if GPU
+#ifdef GPU
       Use mod_vars_cuda, only: lgpu, real_cuda, prec
       use density_cuda_i
 #endif
@@ -202,12 +202,12 @@
         halfe = (nopen /= nclose .and. Abs(fract - 2.D0) > 1.d-20 .and. Abs(fract) > 1.d-20)
         if (halfe) then
           iopc_calcp = 3            ! DGEMM on CPU
-#if GPU
+#ifdef GPU
           if (lgpu) iopc_calcp = 2  ! DGEMM on GPU
 #endif
         else
           iopc_calcp = 5            ! DSYRK on CPU
-#if GPU
+#ifdef GPU
           if (lgpu) iopc_calcp = 4  ! DSYRK on GPU
 #endif
         end if
@@ -812,7 +812,7 @@
 !                                                                      *
 !***********************************************************************
            if (okpuly .and. makea .and. iredy>1) then
-#if GPU
+#ifdef GPU
               if (lgpu) then
                  call pulay_for_gpu (f, pa, norbs, pold, pold2, pold3, &
                  & jalp, ialp, npulay*mpack, frst, pl)
@@ -820,7 +820,7 @@
 #endif
                  call pulay (f, pa, norbs, pold, pold2, pold3, &
                  & jalp, ialp, npulay*mpack, frst, pl)
-#if GPU
+#ifdef GPU
               end if
 #endif
           end if
@@ -925,7 +925,7 @@
 !                                                                      *
 !***********************************************************************
             if (okpuly .and. makeb .and. iredy>1) then
-#if GPU
+#ifdef GPU
               if (lgpu) then
                  call pulay_for_gpu (fb, pb, norbs, pbold, pbold2, pbold3, &
                  & jbet, ibet, npulay*mpack, bfrst, plb)
@@ -933,7 +933,7 @@
 #endif
                 call pulay (fb, pb, norbs, pbold, pbold2, pbold3, &
                  & jbet, ibet, npulay*mpack, bfrst, plb)
-#if GPU
+#ifdef GPU
               end if
 #endif
           end if
