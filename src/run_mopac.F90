@@ -54,7 +54,7 @@
 !
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
-#if GPU
+#ifdef GPU
       Use iso_c_binding 
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
       Use gpu_info
@@ -70,7 +70,7 @@
       integer :: num_threads
       integer, external :: mkl_get_max_threads
 #endif
-#if GPU
+#ifdef GPU
       logical :: lgpu_ref
       logical(c_bool)    :: hasGpu = .false.
       logical(c_bool)    :: lstat = .false.
@@ -229,7 +229,7 @@
         end if
         call mkl_set_num_threads(num_threads)
 #endif
-#if GPU
+#ifdef GPU
         gpuName(1:6) = '' ; name_size(1:6) = 0 ; totalMem(1:6) = 0 ; clockRate(1:6) = 0
         hasDouble(1:6) = .false. ; gpu_ok(1:6) = .false.
         clockRate(1:6) = 0 ; major(1:6) = 0 ; minor(1:6) = 0; on_off(1:6) = 'OFF'

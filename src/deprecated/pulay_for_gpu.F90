@@ -18,7 +18,7 @@
                         & lfock, nfock, msize, start, pl) 
       use chanel_C, only : iw
       use molkst_C, only : numcal, keywrd, mpack
-#if GPU
+#ifdef GPU
       Use mult_symm_ab_I 
       Use mod_vars_cuda, only: real_cuda, prec, ngpus
 #endif      
@@ -40,7 +40,7 @@
       double precision, dimension(20) :: coeffs 
       double precision :: const, d, sum 
       logical :: debug  
-#if GPU
+#ifdef GPU
       integer :: igrid, iblock
 #endif        
       double precision, external :: ddot       

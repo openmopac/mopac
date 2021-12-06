@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp, iopc)
-#if GPU
+#ifdef GPU
       Use mod_vars_cuda, only: real_cuda, prec, nthreads_gpu, nblocks_gpu
       Use iso_c_binding    
       Use density_cuda_i
@@ -28,7 +28,7 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
       double precision,allocatable :: xmat(:,:)
       double precision :: c(norbs,norbs), pp(mpack)
       double precision :: cst, sign, fract, frac, occ, sum1, sum2
-#if GPU
+#ifdef GPU
       double precision, allocatable :: pdens(:)
 #endif
       if (ndubl /= 0 .and. nsingl > (norbs/2) .and. mode /= 2) then
@@ -56,7 +56,7 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
       end if
       Select case (iopc)
         case(2)   ! Option to use dgemm from CUBLAS
-#if GPU
+#ifdef GPU
 
           nl21 = Min (norbs, nl2)
           nl11 = Min (norbs, nl1)
@@ -92,7 +92,7 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
 
           deallocate (xmat,stat=i)
         case(4)   ! Option to use dsyrk from CUBLAS 
-#if GPU
+#ifdef GPU
           allocate(xmat(norbs,norbs),stat = i)
           forall (j = 1:norbs, i=1:norbs) xmat(i, j) = 0.d0
           call syrk_cublas ('U','N',norbs,ndubl, &
