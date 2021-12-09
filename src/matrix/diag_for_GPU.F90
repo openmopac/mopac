@@ -18,7 +18,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
 #ifdef MKL
     use molkst_C, only: num_threads
 #endif
-#if GPU
+#ifdef GPU
     Use mod_vars_cuda, only: lgpu, prec, ngpus
     Use iso_c_binding
     use call_rot_cuda
@@ -34,7 +34,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
     double precision :: bigeps = 1.5d-007
     double precision :: a, alpha, b, beta, d, e, tiny, x
     double precision, allocatable, dimension(:,:)  :: fck
-#if GPU
+#ifdef GPU
     double precision, allocatable, dimension(:,:)  :: ci0,ca0 ! alp,bet
 #endif
     integer :: kk      
@@ -113,7 +113,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
       end do
     end do
 ! here, performs matrix multiplications to form FMO
-#if GPU
+#ifdef GPU
     if (lgpu) then
   !  PERFORMS BOTH MULTIPLICATIONS USING CUBLAS	
       if (nocc < nvirt) then
@@ -143,7 +143,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
         call dgemm ("T", "N", nvirt, nocc, n, 1.d0, fck, norbs, vector, mdim, &
         & 0.d0, fmo, nvirt)
       end if
-#if GPU
+#ifdef GPU
     end if
 #endif
     i = idamax (nocc*nvirt, fmo, 1)
@@ -154,7 +154,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
 !
 !***********************************************************************
     kk = 1
-#if GPU
+#ifdef GPU
     if (lgpu) then
       kk = 2
     end if
@@ -209,7 +209,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
 
        case (2)
 
-#if GPU
+#ifdef GPU
          allocate (ci0(n,nocc),ca0(n,nvirt),stat=i)
 
          ci0 = vector(1:n,1:nocc)

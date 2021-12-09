@@ -19,7 +19,7 @@
 
 !        Use mod_vars_cuda, only: ngpus
         Use iso_c_binding
-#if GPU
+#ifdef GPU
         Use call_gemm_cublas
         Use mamult_cuda_i 
         use common_arrays_C, only : ifact
@@ -27,7 +27,7 @@
         implicit none
         Integer :: iopc,ndim,mdim           
         Integer :: i
-#if GPU
+#ifdef GPU
         integer :: igrid, iblock
         real :: tt      
 #endif
@@ -48,8 +48,8 @@
         
           case (1) ! mamult
             call mamult (a, b, c, ndim, beta)      
+#ifdef GPU
           case (2) ! mamult_gpu
-#if GPU
             igrid = 512 ; iblock = 512 
             tt = 0.0
             call mamult_gpu(a, b, c, ndim, mdim, ifact, beta, igrid, iblock, tt, 0)
@@ -90,7 +90,9 @@
 
             call dtrttp('u', ndim, xc, ndim, c, i )
             
-            deallocate (xa,xb,xc,stat=i)         
+            deallocate (xa,xb,xc,stat=i)
+
+#ifdef GPU
           case (4) ! dgemm_gpu
 
             allocate (xa(ndim,ndim), xb(ndim,ndim), xc(ndim,ndim),stat=i)
@@ -137,6 +139,7 @@
             call dtrttp('u', ndim, xc, ndim, c, i )
             
             deallocate (xa,xb,xc,stat=i) 
+#endif
         end select
                   
         continue

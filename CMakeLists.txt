@@ -30,6 +30,11 @@ add_executable(param)
 target_link_libraries(mopac mopac-all)
 target_link_libraries(param mopac-all)
 
+# Install the executables and library
+install (TARGETS mopac DESTINATION bin)
+install (TARGETS param DESTINATION bin)
+install (TARGETS mopac-all DESTINATION lib${LIB_SUFFIX})
+
 # Pass OS information to MOPAC's Fortran source using preprocessor variables
 if(APPLE)
   add_definitions(-DMOPAC_OS='M')
@@ -73,6 +78,12 @@ option(MDI "MDI build flag" OFF)
 if(MDI)
   include(MDI)
 endif(MDI)
+
+# GPU functionality
+option(GPU "GPU build flag" OFF)
+if(GPU)
+  add_definitions(-DGPU)
+endif(GPU)
 
 # Add tests
 enable_testing()

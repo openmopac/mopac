@@ -16,7 +16,7 @@
 
     Subroutine eigenvectors_LAPACK(eigenvecs, xmat, eigvals, ndim)  
       USE chanel_C, only : iw
-#if GPU
+#ifdef GPU
       Use mod_vars_cuda, only: lgpu, ngpus, prec
 #endif
 #if (MAGMA)
@@ -56,7 +56,7 @@
       call dtpttr( 'u', ndim, xmat, eigenvecs, ndim, i )
     
 #ifdef MKL
-#if GPU
+#ifdef GPU
 if (lgpu .and. (ngpus > 1 .and. ndim > 100)) then
       call mkl_dimatcopy('C', 'T' , ndim, ndim, 1.0d0, eigenvecs, ndim, ndim)
 end if
