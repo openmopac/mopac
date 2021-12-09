@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac-all PRIVATE
+target_sources(mopac-common PRIVATE
 # modules
         ${CMAKE_CURRENT_SOURCE_DIR}/mndod_C.F90
 # source

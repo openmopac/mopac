@@ -23,17 +23,21 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # Specify project name & programming language (C is only needed for auto-detection of MKL by find_package)
 project(openmopac LANGUAGES Fortran C)
 
-# Define a combined library and executables for MOPAC & PARAM
-add_library(mopac-all)
+# Define a common library and executables for MOPAC & PARAM
+add_library(mopac-common SHARED)
 add_executable(mopac)
 add_executable(param)
-target_link_libraries(mopac mopac-all)
-target_link_libraries(param mopac-all)
+target_link_libraries(mopac mopac-common)
+target_link_libraries(param mopac-common)
+
+# MOPAC shared library ABI compatibility version
+set_target_properties(mopac-common PROPERTIES SOVERSION 1)
 
 # Install the executables and library
-install (TARGETS mopac DESTINATION bin)
-install (TARGETS param DESTINATION bin)
-install (TARGETS mopac-all DESTINATION lib${LIB_SUFFIX})
+option(LIB_SUFFIX "Suffix for library directory (lib)" "")
+install(TARGETS mopac DESTINATION bin)
+install(TARGETS param DESTINATION bin)
+install(TARGETS mopac-common DESTINATION lib${LIB_SUFFIX})
 
 # Pass OS information to MOPAC's Fortran source using preprocessor variables
 if(APPLE)
@@ -53,21 +57,21 @@ if(AUTO_BLAS)
   find_package(LAPACK)
 
   if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
-    message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust system paths/variables (e.g. MKLROOT) or set AUTO_BLAS=OFF & manually define a link line with MATH_LINK")
+    message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust system paths/variables (e.g. MKLROOT) or set AUTO_BLAS=OFF & manually define a link line with MOPAC_LINK")
   endif()
 
   # Use BLAS/LAPACK information provided by CMake's find_package system
-  target_link_libraries(mopac ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-  target_link_libraries(param ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+  target_link_libraries(mopac-common PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
   target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
   target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 else()
-  if(DEFINED MATH_LINK)
-    target_link_libraries(mopac ${MATH_LINK})
-    target_link_libraries(param ${MATH_LINK})
-  else()
-    message(FATAL_ERROR "define MATH_LINK as a link line for BLAS & LAPACK libraries")
-  endif()
+  message("Since AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define MOPAC_LINK)")
+endif()
+
+# Additional link line
+option(MOPAC_LINK "Extra link line for MOPAC library" OFF)
+if(MOPAC_LINK)
+  target_link_libraries(mopac-common PUBLIC ${MOPAC_LINK})
 endif()
 
 # Add list of source files from src directory
@@ -77,13 +81,13 @@ add_subdirectory(src)
 option(MDI "MDI build flag" OFF)
 if(MDI)
   include(MDI)
-endif(MDI)
+endif()
 
-# GPU functionality
+# GPU functionality (not functional at the moment)
 option(GPU "GPU build flag" OFF)
 if(GPU)
   add_definitions(-DGPU)
-endif(GPU)
+endif()
 
 # Add tests
 enable_testing()

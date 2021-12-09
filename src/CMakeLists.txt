@@ -44,7 +44,7 @@ add_subdirectory(symmetry)
 add_subdirectory(utilities)
 
 # source files for the library
-target_sources(mopac-all PRIVATE
+target_sources(mopac-common PRIVATE
 # modules
         ${CMAKE_CURRENT_SOURCE_DIR}/Common_arrays_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/chanel_C.F90
