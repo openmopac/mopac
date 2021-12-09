@@ -16,7 +16,7 @@
 
   subroutine site(neutral, chain, res, alt, charge, nres, max_sites, allkey)
   use common_arrays_C, only : geo, coord, labels, nat, nbonds, ibonds, &
-    atmass, txtatm, tvec
+    atmass, txtatm, tvec, lopt
   use parameters_C, only : ams
   use chanel_C, only : iw, job_fn
   use elemts_C, only : elemnt
@@ -57,6 +57,7 @@
   nadd = 0
   ndel = 0
   ncarbon = 0
+  lopt(:,natoms + 1:) = 1
   geo(:,:natoms) = coord(:,:natoms)
   i_charge = 100
   do i_atom = 1, numat
@@ -811,9 +812,19 @@
           return
         end if
         j = ibonds(1,i)
+!
+! Need to jump over any atoms that were hydrogen atoms.  
+! At this point, hydrogen atoms have ibonds(a,b) = 0, so they are easily identified.
+!
+        m = 0
         do l = 1, nbonds(i)
-          k = ibonds(l,i)
-          if (k > 0 .and. k /= i .and. k /= j) exit
+          m = m + 1
+          do n = 1, 6
+            k = ibonds(m,i)          
+            if (k /= 0) exit
+            m = m + 1
+          end do          
+          if (k /= i .and. k /= j) exit
         end do
         bond_length = 1.09d0
         select case (i_charge)
@@ -1077,10 +1088,10 @@
           end if 
         case (2)
           if (i_charge == -1) then
-            do j = 1, 2
+            do j = 1, nbonds(i)
               if (nat(ibonds(j,i)) == 1) exit
             end do
-            if (j > 2) then
+            if (j > nbonds(i)) then
               num = char(ichar("1") + int(log10(i*1.001))) 
               write(iw,'(/1x,a,i'//num//',a,/)')"  Oxygen atom ",i, " defined by keyword SITE is not bonded to any hydrogen atoms."
               write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
@@ -1119,7 +1130,7 @@
               nat(ibonds(j,i)) = 99
               nbonds(i) = 2
               if (j == 2) ibonds(2,i) = ibonds(3,i)
-              goto 99
+              if (i_charge == -1) goto 99
             end if
           else
             write(iw,'(/1x,a,/)')" An oxygen atom defined by keyword SITE is already bonded to three atoms."
@@ -1207,6 +1218,7 @@
       nat(j) = nat(i)
       atmass(j) = ams(nat(i))
       txtatm(j) = txtatm(i)
+      lopt(:,j) = lopt(:,i)
     end if
   end do
   numat = j

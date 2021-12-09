@@ -225,7 +225,7 @@ subroutine geochk ()
 !  10:    PO4(=)
 !
     
-    i = index(keywrd," SITE=")
+    i = index(keywrd," SITE=(")
     if (i /= 0 .and. index (keywrd, " ADD-H") == 0) then
 !
 !  Quick check that obvious structures are present
@@ -393,11 +393,17 @@ subroutine geochk ()
           end if      
           lsite = .true.
           call update_txtatm(.true., .true.)
+          do j = 1, id
+            nat(numat + j) = 107
+          end do
           i = numat
-          if (index(keywrd, " NOSITE") == 0 .or. index(keywrd, " CVB") == 0) &
+          if (index(keywrd, " NOSITE") == 0 .or. index(keywrd, " CVB") == 0) then
+            call store_and_restore_Tv("STORE")
             call site(neutral, new_chain, new_res, new_alt, charge, m, max_sites, allkey)
+            call store_and_restore_Tv("RESTORE")
+          end if
           if (moperr) return
-          l_atom(i:numat) = .true.
+          l_atom(i:natoms) = .true.
           call update_txtatm(.true., .true.)
           if (index(keywrd, " LET") /= 0) moperr = .false.
           if (moperr) return
@@ -449,9 +455,6 @@ subroutine geochk ()
       large = 20
     end if
     nnumat = numat
-    if (id == 3) then
-      if (labels(natoms - 2) /= 107) numat = numat - 3
-    end if
 !
 !   WORK OUT WHAT ATOMS ARE BONDED TO EACH OTHER.
 !
@@ -676,6 +679,15 @@ subroutine geochk ()
           end do          
         end if
       end do
+      do j = numat + 1, numat + id
+        do k = 1,3
+          if (lopt(k,j) == 1) then
+            nvar = nvar + 1
+            loc(1,nvar) = j
+            loc(2,nvar) = k
+          end if
+        end do
+      end do       
     end if 
 !
 !   Use the following block to debug the construction of the Lewis structure
@@ -904,7 +916,7 @@ subroutine geochk ()
           if (j > 1) write(txtatm(i)(15:15),'(i1)')1
         end if 
       end do
-      do i = 1, natoms
+      do i = 1, natoms 
         if (txtatm(i)(1:6) /= "HETATM" .and. txtatm(i)(1:6) /= "ATOM  ") then
 !
 !  Catch all atoms that have still not been identified
@@ -1212,7 +1224,7 @@ subroutine geochk ()
         if (nat(i) == 16 .and. txtatm(i)(18:20) == "SO4") then
           k = 2
           ions(i) = 0
-          do j = 1,4
+          do j = 1, nbonds(i)
             l = ibonds(j,i)
             if (ions(l) == -1) then
               ions(l) = 0
@@ -1224,7 +1236,7 @@ subroutine geochk ()
         if (nat(i) == 15 .and. txtatm(i)(18:20) == "PO4") then
           k = 1
           ions(i) = 0
-          do j = 1,4
+          do j = 1, nbonds(i)
             l = ibonds(j,i)
             if (ions(l) == -1) then
               ions(l) = 0
@@ -1243,7 +1255,9 @@ subroutine geochk ()
     do j = 1,6
       i = i + num_ions(j) + num_ions(-j)
     end do
-    if (i > 0) then
+    if (i == 0) then
+      write(iw,'(/10x, a)')"NO CHARGES FOUND."
+    else      
       if (index(keywrd," LEWIS") > 0) then
         write (iw,*)
         write (iw,"(a,/)") "          Type           Number of charged sites identified"
@@ -1599,6 +1613,13 @@ subroutine geochk ()
             if (.not. charges) write (iw, "(SP/3x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM = ", ichrge, &
             ". THIS AGREES WITH THE CHARGE IN THE DATA-SET."             
           end if
+          archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
+          inquire(unit=iarc, opened=opend) 
+          if (opend) close(iarc, status = 'keep', iostat=i)  
+          open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
+          rewind iarc 
+          if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
+          call geout (iarc)
           call mopend ("JOB STOPPED HERE BECAUSE KEYWORD ""CHARGES"" WAS USED")
         end if
         call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
@@ -1614,18 +1635,14 @@ subroutine geochk ()
         if (j /= 0) then
           if (index(keywrd, " Move") /= 0) then
             call mopend("WHEN HYDROGEN ATOMS ARE ADDED OR DELETED, ALL ATOMS MUST BE IN CARTESIAN COORDINATES")
-           if (j < 5) then
-             write(iw,'(/10x,a)')'(When only a small number of atoms are in internal coordinates, and the connectivity'
-             write(iw,'(10x,a)')' is in PDB or Jmol format, a useful strategy would be to convert those atoms into'
-             write(iw,'(10x,a)')' Cartesian coordinates, then after the job has run, replace the atoms in the ARC file'
-             write(iw,'(10x,a)')' with the atoms in the original internal coordinates)'
-             return
-           end if
+            return
           else if (index(keywrd, "GEO-OK") == 0) then
             call mopend("WHEN SYSTEM IS RESEQENCED, EITHER ADD ""GEO-OK"" OR ALL ATOMS MUST BE IN CARTESIAN COORDINATES")
           end if
         end if
+        call store_and_restore_Tv("STORE")
         call move_hydrogen_atoms
+        call store_and_restore_Tv("RESTORE")
         call lewis(.false.)
         if (index(keywrd, " ADD-H") > 0) then
           call mopend("ADD-H: SYSTEM HAS BEEN HYDROGENATED")

@@ -76,6 +76,8 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
 
       MOLECULAR POINT GROUP   :   Cs  
 
+          NO CHARGES FOUND.
+
           COMPUTED CHARGE ON SYSTEM: +0
 
  Set 1: Atoms involved in covalent bond-breaking and bond-making                  Connectivity of atoms
@@ -96,7 +98,7 @@ geo-ok locate-ts(C:30,60,120,120;SET:1) opt xyz HTML
    6    Atom:   C     4  PDB Label: (HETATM    4  C   HET A   1)
    7    Atom:   H     9  PDB Label: (HETATM    9  H   HET A   1)
 
-          Set 1 selected by keywork 'SET' within keyword 'LOCATE-TS'
+          Set 1 selected by keyword 'SET' within keyword 'LOCATE-TS'
 
           Current value of GEO_REF constraint:                 30.00  Kcal/mol/Angstrom^2
           Distance between the geometries:                      5.84  Angstroms

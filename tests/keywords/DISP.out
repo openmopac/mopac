@@ -85,13 +85,13 @@ PM6-D3H4 DISP 1SCF
 
           FINAL HEAT OF FORMATION =       -192.38220 KCAL/MOL =    -804.92711 KJ/MOL
 
-          TOTAL ENERGY            =     -33809.56058 KCAL/MOL
+          TOTAL ENERGY            =     -33809.56058 KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION
           ENERGY OF ATOMS         =      33624.30811 KCAL/MOL
                               SUM =       -185.25248 KCAL/MOL
           DISPERSION ENERGY       =         -0.93349 KCAL/MOL
           H-BOND ENERGY           =         -6.30538 KCAL/MOL
           H - H CORRECTION ENERGY =          0.10916 KCAL/MOL
-                              SUM =       -192.38220 KCAL/MOL
+                              SUM =       -192.38220 KCAL/MOL = FINAL HEAT OF FORMATION
 
           No. OF HYDROGEN BONDS   =          2       (H-bond Energy < -1.0 Kcal/mol)
 
@@ -284,13 +284,13 @@ PM6-D3H4 DISP(1.0) 1SCF
 
           FINAL HEAT OF FORMATION =       -192.38220 KCAL/MOL =    -804.92711 KJ/MOL
 
-          TOTAL ENERGY            =     -33809.56058 KCAL/MOL
+          TOTAL ENERGY            =     -33809.56058 KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION
           ENERGY OF ATOMS         =      33624.30811 KCAL/MOL
                               SUM =       -185.25248 KCAL/MOL
           DISPERSION ENERGY       =         -0.93349 KCAL/MOL
           H-BOND ENERGY           =         -6.30538 KCAL/MOL
           H - H CORRECTION ENERGY =          0.10916 KCAL/MOL
-                              SUM =       -192.38220 KCAL/MOL
+                              SUM =       -192.38220 KCAL/MOL = FINAL HEAT OF FORMATION
 
           No. OF HYDROGEN BONDS   =          2       (H-bond Energy < -1.0 Kcal/mol)
 

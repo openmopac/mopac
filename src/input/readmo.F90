@@ -583,12 +583,12 @@
             if (index(keywrd," ADD-H") + index(keywrd," SITE=") /= 0) then
               if (index(keywrd," ADD-H") /= 0) then
                 call mopend("KEYWORD ""ADD-H"" CANNOT BE USED WHEN PDB DATA ARE NOT"// &
-                  "PRESENT AND KEYWORDS THAT USE PDB DATA ARE PRESENT")
+                  " PRESENT AND KEYWORDS THAT USE PDB DATA ARE PRESENT")
               else
                 call mopend("KEYWORD ""SITE"" CANNOT BE USED WHEN PDB DATA ARE NOT "// &
                   "PRESENT AND KEYWORDS THAT USE PDB DATA ARE PRESENT")
               end if
-              write(iw,'(10x, a)')"This fault can be corrected by using two jobs:"
+              write(iw,'(10x, a)')"If the geometry is correct, this fault might be corrected by using two jobs:"
               write(iw,'(10x, a)')"Job-1 uses keywords ""0SCF RESIDUES"" - that adds PDB data to the ARC file."
               write(iw,'(10x, a)')"Job-2 uses that data when adding or deleting hydrogen atoms"
               return
@@ -811,18 +811,6 @@
 !
       call l_control("GEO_DAT", len_trim("GEO_DAT"), -1) 
       call l_control("GEO_REF", len_trim("GEO_REF"), -1)  
-      ch = '"'
-      l = len_trim(line_1)
-      j = 0
-      do i = 1, l
-        if (keywrd(i:i) == ch) then
-          j = -j + 1
-        end if
-      end do     
-      if (j == 1) then
-        call mopend("NUMBER OF QUOTATION MARKS, '""', IN KEYWORDS IS ODD. THIS NUMBER MUST BE EVEN.")
-        return
-      end if
       keywrd = trim(line_1)
       if (index(keywrd, " HTML(NORES)") /= 0) call l_control("HTML NORJSMOL", len_trim("HTML NORJSMOL"), 1)  
 !
@@ -1803,8 +1791,12 @@
          write(iw,'(/15x,a)')"Keyword SETPI used, pi-bonds specified are:"
          write(iw,'(/12x,a)')"   Bond No.                   Atom               to              Atom"
          do i = 1, l
+           if (maxtxt == 26) then
            write(iw,'(12x,i7,12x,a,a,a)')i, &
            '"'//txtatm(pibonds(i,1))(:maxtxt)//'"', "   -   ", '"'//txtatm(pibonds(i,2))(:maxtxt)//'"'
+           else
+             write(iw,'(1x,i18,22x,i5,13x, a,i15)')i,pibonds(i,1), "   -   ", pibonds(i,2)
+           end if
          end do
         end if
         if (ir_temp == 27) close(ir_temp)

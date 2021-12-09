@@ -72,6 +72,8 @@ geo_dat="Neutral.mop"  OUTPUT   site=(ionize) HTML
 
           Change in net ionization: -14
 
+          NO CHARGES FOUND.
+
           CHARGES MODIFIED BY SITE COMMAND
 
           HYDROGEN ATOMS ADDED OR DELETED

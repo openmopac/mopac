@@ -203,7 +203,7 @@
       end if
       if (index(keywrd," DISP") /= 0) then
         write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-          (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL"
+          (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION"
         write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         write(iw,'(10x,"                    SUM =",f17.5,a)') &
         (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
@@ -217,7 +217,7 @@
         if (abs(sum_dihed) > 1.d-5)   write(iw,'(10x,"MM CORR. FOR -CO-NH-    =",f17.5,a)') sum_dihed, " KCAL/MOL"
         sum = (elect + enuclr)*fpc_9 + atheat + hpress + solv_energy*fpc_9 + nsp2_corr + Si_O_H_corr + sum_dihed + &
           e_disp + e_hb + e_hh
-        write(iw,'(30x,"SUM =",f17.5,a,/)') sum, " KCAL/MOL"
+        write(iw,'(30x,"SUM =",f17.5,a,/)') sum, " KCAL/MOL = FINAL HEAT OF FORMATION"
         if (abs(sum - escf + stress) > 1.d-3*numat) then
           write(iw,'(5x,"*",4x,a,/)')"WARNING - An energy term is incorrect or missing!"
           write(iw, '(5x,"*",4x,''FINAL HEAT OF FORMATION     ='',F13.5,'' KCAL/MOL'')') escf - stress
@@ -1005,7 +1005,7 @@
       end if
       if (index(keywrd," DISP") /= 0) then
         write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-          (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL"
+          (elect + enuclr + solv_energy)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION"
         write(iwrite,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         write(iwrite,'(10x,"                    SUM =",f17.5,a)') &
         (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
@@ -1018,7 +1018,7 @@
         if (abs(sum_dihed) > 1.d-5)   write(iwrite,'(10x,"MM CORR. FOR -CO-NH-    =",f17.5,a)') sum_dihed, " KCAL/MOL"
         sum = (elect + enuclr)*fpc_9 + atheat + hpress + solv_energy*fpc_9 + nsp2_corr + Si_O_H_corr + sum_dihed + &
           e_disp + e_hb + e_hh
-        write(iwrite,'(30x,"SUM =",f17.5,a,/)') sum, " KCAL/MOL"
+        write(iwrite,'(30x,"SUM =",f17.5,a,/)') sum, " KCAL/MOL = FINAL HEAT OF FORMATION"
         if (abs(sum - escf + stress) > 1.d-3*numat) then
           write(iwrite,'(5x,"*",4x,a,/)')"WARNING - An energy term is incorrect or missing!"
           write(iwrite,'(5x,"*",4x,''FINAL HEAT OF FORMATION     ='',F13.5,'' KCAL/MOL'')') escf - stress

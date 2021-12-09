@@ -530,8 +530,10 @@
             if (index(keywrd, " RESEQ") == 0 ) call l_control("Move", len("Move"), 1)
             moperr = .false.
             if (index(keywrd, " ADD-H") /= 0) then
+              call store_and_restore_Tv("STORE")
               call add_hydrogen_atoms()
               call move_hydrogen_atoms
+              call store_and_restore_Tv("RESTORE")
               call lewis(.false.)
               if (moperr) then
                 inquire(unit=iarc, opened=opend) 
@@ -598,7 +600,9 @@
           end if
         else
           if (index(keywrd, " ADD-H") /= 0) then
+            call store_and_restore_Tv("STORE")
             call add_hydrogen_atoms()
+            call store_and_restore_Tv("RESTORE")
           end if
           inquire(unit=iarc, opened=opend)
           if (opend) close (iarc)

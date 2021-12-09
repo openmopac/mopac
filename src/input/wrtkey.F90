@@ -726,7 +726,7 @@ subroutine wrtcon (allkey)
   use chanel_C, only: iw, job_fn
   use meci_C, only : nmos
   use conref_C, only : fpcref
-  use common_arrays_C, only :  lopt
+  use common_arrays_C, only :  lopt, na, txtatm
   implicit none
   character (len=3000), intent (out) :: allkey
   double precision :: epsi, sum
@@ -747,7 +747,7 @@ subroutine wrtcon (allkey)
   if (i /= 0) keywrd(i:i + 9) = " LOCATE-TS"
   l_temp = (index(keywrd," MOZ") + index(keywrd," LEWIS") + index(keywrd," LOCATE-TS") + &
     index(keywrd, " RESEQ") + index(keywrd, " CHARGES") + &
-    index(keywrd, " RAPID") + index(keywrd, " SITE=") + index(keywrd, " SITE(")  /= 0)   
+    index(keywrd, " RAPID") + index(keywrd, " SITE=(") /= 0)   
   mozyme = (l_temp .or. index(keywrd, " PDBOUT") /= 0)   
   if (index(keywrd, "CHARGE=") == 0 .and. old_chrge /= 0 .and. index(keywrd, " OLDGEO") /= 0) then
 !
@@ -1005,8 +1005,7 @@ subroutine wrtcon (allkey)
         call mopend("Keyword RESIDUES0 cannot be used when a keyword that changes the geometry is present")
         if (index(keywrd," ADD-H") /= 0) write(iw,'(10x,a)')"Keyword ADD-H changes the geometry."
         if (index(keywrd," RESEQ") /= 0) write(iw,'(10x,a)')"Keyword RESEQ changes the geometry."
-        if (index(keywrd," SITE=") /= 0) write(iw,'(10x,a)')"Keyword SITE changes the geometry."
-        if (index(keywrd," SITE(") /= 0) write(iw,'(10x,a)')"Keyword SITE changes the geometry."
+        if (index(keywrd," SITE=(") /= 0) write(iw,'(10x,a)')"Keyword SITE changes the geometry."
         call web_message(iw,"Residues.html")
       end if
     end if
@@ -1017,16 +1016,27 @@ subroutine wrtcon (allkey)
   end if
   if (myword(allkey, " NORES"))  &
     write (iw, '(" *  NORES      - THIS IS THE DEFAULT.  USE ""RESIDUES"" IF RESIDUES ARE TO BE CALCULATED")')
-  i = index(keywrd," SITE(")
-  if (i > 0) keywrd(i:) = " SITE="//keywrd(i + 5:)
-  if (myword(allkey, " SITE=") .or. myword(allkey, " SITE(") )   then
+  if (myword(allkey, " SITE=("))   then
     write (iw, '(" *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES ")')
+    k = 0
+    do i = 1, natoms
+      if (na(i) /= 0) then
+        k = k + 1
+        if (k == 1) then
+          call mopend("KEYWORD ""SITE"" REQUIRES ALL ATOMS TO BE IN CARTESIAN COORDINATES")
+          write(iw,'(/10x,a)') "Atoms in internal coordinates:"
+        end if
+        write(iw,'(12x, a)') txtatm(i)
+      end if
+    end do
+    if (k > 0) write(iw,'(/10x,a)') "(Keyword ""XYZ"" converts internal coordinates to Cartesian coordinates.)"
+    if (k > 5) write(iw,'(/10x,a)') "Remaining errors suppressed"
     if (index(keywrd, " RESIDU") /= 0) then
       call mopend("THE PRESENCE OF KEYWORD ""RESIDUES"" PREVENTS KEYWORD ""SITE"" FROM WORKING CORRECTLY")
       write(iw,*)
       return
     end if
-    i = index(keywrd, " SITE=")
+    i = index(keywrd, " SITE=(")
     do j = i, len_trim(keywrd)
       if (keywrd(j:j + 1) == ") ") exit
     end do
@@ -1556,7 +1566,7 @@ subroutine wrtout (allkey)
         call mopend("KEYWORD ""FORCE"" PRESENT BUT KEYWORD ""OUTPUT"" SUPPRESSES RESULTS OF ""FORCE"" CALCULATION")
         write (iw,'(10x, "(Either add ""GEO-OK"" or ""ISOTOPE"", remove ""OUTPUT"", or use ""OUTPUT(F)"")")')
       end if
-    end if
+    end if      
   else
     prt_coords        = .TRUE.
     prt_gradients     = .TRUE.
@@ -1963,7 +1973,7 @@ subroutine wrtwor (allkey)
       call mopend("DUMMY ATOMS CANNOT BE PRESENT WHEN GEOMETRY IS BEING CHANGED")
       if (index(keywrd, " RESEQ") /= 0) write(iw,'(10x,a)')"Geometry is changed by keywrd: RESEQ"
       if (index(keywrd, " ADD-H") /= 0) write(iw,'(10x,a)')"Geometry is changed by keywrd: ADD-H"
-      if (index(keywrd, " SITE")  /= 0) write(iw,'(10x,a)')"Geometry is changed by keywrd: SITE"
+      if (index(keywrd, " SITE=(")  /= 0) write(iw,'(10x,a)')"Geometry is changed by keywrd: SITE"
       write(iw,'(10x,a)')"(A simple way to remove dummy atoms is to add keyword ""XYZ"")"
     end if
   end if

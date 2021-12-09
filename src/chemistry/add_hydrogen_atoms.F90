@@ -114,7 +114,7 @@
 ! Remove any hydrogen atoms present
 !
     j = 0
-    do i = 1, numat
+    do i = 1, natoms
       if (nat(i) /= 1) then
         j = j + 1
         store_nat(j) = nat(i)
@@ -138,8 +138,8 @@
         store_labels(k) = labels(i)
       end if
     end do
-    numat = j
-    natoms = numat + id
+    numat = j - id
+    natoms = j
     nmetals = 0
     store_atom_radius_covalent = atom_radius_covalent
     do i = 1, numat
@@ -168,11 +168,11 @@
     txtatm1 = " "
     txtatm1(:numat) = store_txtatm1(:numat)
     coord(:,:numat) = store_coord(:,:numat)
-    labels(:numat) = store_labels(:numat)
+    labels(:natoms) = store_labels(:natoms)
     atmass(:numat) = store_atmass(:numat)
     lopt(:,:numat) = store_lopt(:,:numat)
     l_atom(:numat) = store_l_atom(:numat)
-    deallocate (store_nat, store_coord, store_labels, store_atmass, store_lopt, store_l_atom, &
+    deallocate (store_nat, store_coord, store_labels, store_atmass, store_l_atom, &
     store_txtatm, store_txtatm1)
     store_numat = numat
 !
@@ -426,17 +426,22 @@
 !
 !  and fill arrays that might be used by PDBOUT
 !
-    natoms = max(numat, natoms)
+    natoms = max(numat + id, natoms)
+    labels(numat + 1: numat + id) = 107
     geo(:,:numat) = coord(:,:numat)
     lopt(:,store_numat + 1: numat) = 1
+    do i = 1, id
+      lopt(:, numat + id) = store_lopt(:,store_numat + id)
+    end do
+    deallocate (store_lopt)
     l_atom(store_numat + 1: numat + id) = .true.
     na(:numat) = 0
     atom_radius_covalent = store_atom_radius_covalent
 !
 ! At this point it's necessary to re-calculate nbonds and ibonds
 !
-    call set_up_dentate()
-    call geochk()
+    call set_up_dentate()   
+    call geochk()           
     if (index(keywrd, "SITE") /= 0) call geochk()
     call l_control("NOSITE", len("NOSITE"), 1)
     call reset_breaks()
@@ -446,8 +451,6 @@
       geo(:,i)  = tvec(:, i - numat)
       coord(:,i)  = tvec(:, i - numat)
     end do
-    natoms = natoms + id
-    numat = numat + id
     call delete_ref_key("ADD-H", len_trim("ADD-H"), ' ', 1)
     return
   end subroutine add_hydrogen_atoms
@@ -1541,7 +1544,7 @@
                     ii = jj  ! ii is the C in N-C-N
                     jj = k   ! C(jj) - N(icc) - C(ii) - N(kk) 
                   end if
-                  kk = j   ! kk id the distant N
+                  kk = j   ! kk is the distant N
                 end if
               end do
             end if
@@ -2472,7 +2475,7 @@
     do i = 1, numat
       if (nat(i) /= 1) cycle
       bond_length = 10.d0
-      bond_length_2 = 10.d0
+      bond_length_2 = 10.d0 
       nchain2 = 1
       l = 0
       k = 0

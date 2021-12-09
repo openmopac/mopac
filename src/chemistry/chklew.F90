@@ -25,7 +25,7 @@ subroutine chklew (mb, numbon, l, large, debug)
 !            NUMBON(3):  Number of pi-bonds.
 !
 !***********************************************************************
-    use molkst_C, only: natoms, numat, keywrd, norbs, line
+    use molkst_C, only: natoms, numat, keywrd, norbs, line, maxtxt
     use chanel_C, only: iw
     use elemts_C, only: elemnt
     use parameters_C, only: tore, ndelec, natorb
@@ -180,10 +180,26 @@ subroutine chklew (mb, numbon, l, large, debug)
 !
 !  The user has supplied some pi bonds.
 !
+      j = 0
       do loop = 1, numat
         ii = pibonds(loop,1)
         if (ii == 0) exit
-        jj = pibonds(loop,2)       
+        jj = pibonds(loop,2) 
+        do i = 1, nbonds(ii)
+          if (ibonds(i, ii) == jj) exit
+        end do
+        if (i > nbonds(ii)) then
+          if (j == 0) write(iw, '(/10x, a)') &
+            "Using ""SETPI"" a pi-bond has been defined between two atoms that are not bonded together" 
+          if (maxtxt == 26) then
+            if (j == 0) write(iw,'(/27x, a, 27x, a)')"Atom-1", "Atom-2"
+            write(iw,'(17x, a, 5x, a)')'"'//txtatm(ii)(:26)//'"', '"'//txtatm(jj)(:26)//'"'
+          else
+            if (j == 0) write(iw,'(/15x, a, 15x, a)')"Atom-1", "Atom-2"
+            write(iw,'(14x,a2,i5, 14x,a2,i5)')elemnt(nat(ii)), ii, elemnt(nat(jj)), jj
+          end if
+          j = 1            
+        end if
         call add_Lewis_element(ii,jj,0, numbon(3))
         if (ib(ii) < 0 .or. ib(jj) < 0) then
          if (Index (keywrd, " RESEQ")+Index (keywrd, " SITE=")+Index (keywrd, " 0SCF") == 0) then
@@ -198,6 +214,10 @@ subroutine chklew (mb, numbon, l, large, debug)
         end if
       end do
     end if
+    if (j == 1) then
+      call mopend("AN ERROR IN ASSIGNING PI-BONDS USING ""SETPI"" HAS BEEN DETECTED")
+      return
+    end if      
 !
 !   Second set: Assign all lone-pairs
 !

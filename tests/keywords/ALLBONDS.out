@@ -56,6 +56,8 @@ MOZYME
 
       MOLECULAR POINT GROUP   :   D3d 
 
+          NO CHARGES FOUND.
+
           COMPUTED CHARGE ON SYSTEM: +0
 
           Geometry optimization using EF
@@ -219,6 +221,8 @@ MOZYME BONDS
 
 
       MOLECULAR POINT GROUP   :   D3d 
+
+          NO CHARGES FOUND.
 
           COMPUTED CHARGE ON SYSTEM: +0
 
@@ -391,6 +395,8 @@ MOZYME ALLBONDS
 
 
       MOLECULAR POINT GROUP   :   D3d 
+
+          NO CHARGES FOUND.
 
           COMPUTED CHARGE ON SYSTEM: +0
 

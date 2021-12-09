@@ -59,7 +59,7 @@
 !
   use polar_C, only : omega, alpavg
 !
-  use molkst_C, only : numat, norbs, escf, nelecs, nclose, nopen, elect, enuclr, verson, &
+  use molkst_C, only : numat, norbs, escf, nelecs, nclose, nopen, verson, &
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
   method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, &
   uhf, nalpha, nbeta,  gnorm, mozyme, mol_weight, ilim, &

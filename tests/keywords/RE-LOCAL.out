@@ -1,5 +1,5 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.329M, James J. P. Stewart,   **
  **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
@@ -10,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 15:09:22 2021  *
+ *  CALCULATION DONE:                                Thu Dec  9 02:43:49 2021  *
  *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -21,7 +21,7 @@ MOZYME ALLVEC
  comment2
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       H         -0.42216732  *  -0.00071395  *  -0.00131452  *
      2       C          0.60742800  *   0.00121115  *  -0.00266298  *
      3       C          1.82265400  *   0.00159233  *   0.00493786  *
@@ -36,7 +36,7 @@ MOZYME ALLVEC
     12       C         13.47703197  *   0.00238485  *   0.00472792  *
     13       C         14.69189272  *  -0.00067906  *  -0.00161486  *
     14       H         15.72242530  *  -0.00214550  *  -0.00046315  *
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -69,37 +69,39 @@ MOZYME ALLVEC
 
       MOLECULAR POINT GROUP   :   D2h 
 
+          NO CHARGES FOUND.
+
           COMPUTED CHARGE ON SYSTEM: +0
 
           Geometry optimization using EF
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.100 HEAT:  332.6589
- CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     7.546 HEAT:  332.6585
- CYCLE:     3 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.087 HEAT:  332.6577
- CYCLE:     4 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     8.751 HEAT:  332.6565
- CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.557 HEAT:  332.6550
- CYCLE:     6 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     3.858 HEAT:  332.6485
- CYCLE:     7 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.913 HEAT:  332.6563
- CYCLE:     8 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     3.910 HEAT:  332.6480
- CYCLE:     9 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.060 HEAT:  332.6533
- CYCLE:    10 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     5.650 HEAT:  332.6488
- CYCLE:    11 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.353 HEAT:  332.6544
- CYCLE:    12 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     5.528 HEAT:  332.6493
- CYCLE:    13 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     6.200 HEAT:  332.6506
- CYCLE:    14 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     7.547 HEAT:  332.6559
- CYCLE:    15 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     4.144 HEAT:  332.6482
- CYCLE:    16 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    10.348 HEAT:  332.6574
- CYCLE:    17 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     8.859 HEAT:  332.6606
- CYCLE:    18 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.533 HEAT:  332.6585
- CYCLE:    19 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     2.757 HEAT:  332.6493
- CYCLE:    20 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     6.735 HEAT:  332.6545
- CYCLE:    21 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     2.660 HEAT:  332.6510
- CYCLE:    22 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     9.293 HEAT:  332.6580
- CYCLE:    23 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     1.405 HEAT:  332.6481
- CYCLE:    24 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     2.643 HEAT:  332.6492
- CYCLE:    25 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     2.040 HEAT:  332.6481
+ CYCLE:     1 TIME:   0.022 TIME LEFT:  2.00D  GRAD.:     4.100 HEAT:  332.6589
+ CYCLE:     2 TIME:   0.035 TIME LEFT:  2.00D  GRAD.:     7.546 HEAT:  332.6585
+ CYCLE:     3 TIME:   0.029 TIME LEFT:  2.00D  GRAD.:     7.087 HEAT:  332.6577
+ CYCLE:     4 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     8.751 HEAT:  332.6565
+ CYCLE:     5 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     7.557 HEAT:  332.6550
+ CYCLE:     6 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     3.858 HEAT:  332.6485
+ CYCLE:     7 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:    10.913 HEAT:  332.6563
+ CYCLE:     8 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:     3.910 HEAT:  332.6480
+ CYCLE:     9 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:    10.060 HEAT:  332.6533
+ CYCLE:    10 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     5.650 HEAT:  332.6488
+ CYCLE:    11 TIME:   0.010 TIME LEFT:  2.00D  GRAD.:    10.353 HEAT:  332.6544
+ CYCLE:    12 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     5.528 HEAT:  332.6493
+ CYCLE:    13 TIME:   0.037 TIME LEFT:  2.00D  GRAD.:     6.200 HEAT:  332.6506
+ CYCLE:    14 TIME:   0.010 TIME LEFT:  2.00D  GRAD.:     7.547 HEAT:  332.6559
+ CYCLE:    15 TIME:   0.013 TIME LEFT:  2.00D  GRAD.:     4.144 HEAT:  332.6482
+ CYCLE:    16 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:    10.348 HEAT:  332.6574
+ CYCLE:    17 TIME:   0.026 TIME LEFT:  2.00D  GRAD.:     8.859 HEAT:  332.6606
+ CYCLE:    18 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     9.533 HEAT:  332.6585
+ CYCLE:    19 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.757 HEAT:  332.6493
+ CYCLE:    20 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     6.735 HEAT:  332.6545
+ CYCLE:    21 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.660 HEAT:  332.6510
+ CYCLE:    22 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     9.293 HEAT:  332.6580
+ CYCLE:    23 TIME:   0.013 TIME LEFT:  2.00D  GRAD.:     1.405 HEAT:  332.6481
+ CYCLE:    24 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:     2.644 HEAT:  332.6492
+ CYCLE:    25 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.040 HEAT:  332.6481
 
 
  HEAT OF FORMATION IS ESSENTIALLY STATIONARY
@@ -115,8 +117,8 @@ MOZYME ALLVEC
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.298M)
-                                                       Fri Oct 29 15:09:22 2021
+                                                       MOPAC2016 (Version: 21.329M)
+                                                       Thu Dec  9 02:43:49 2021
 
 
 
@@ -125,7 +127,7 @@ MOZYME ALLVEC
 
 
 
-          GRADIENT NORM           =          2.04000          =       0.54521 PER ATOM
+          GRADIENT NORM           =          2.04012          =       0.54525 PER ATOM
           NO. OF FILLED LEVELS    =         25
           MOLECULAR WEIGHT        =        146.1478         POINT GROUP:  D2h 
 
@@ -138,9 +140,9 @@ MOZYME ALLVEC
 
 
           SCF CALCULATIONS        =         36
- 
-          WALL-CLOCK TIME         =          0.145 SECONDS
-          COMPUTATION TIME        =          0.530 SECONDS
+
+          WALL-CLOCK TIME         =          0.410 SECONDS
+          COMPUTATION TIME        =          1.517 SECONDS
 
 
 
@@ -148,7 +150,7 @@ MOZYME ALLVEC
 
              Cartesian Gradients         Cartesian Coordinates          |Gradient|
   Atom       X        Y        Z        X          Y          Z
- 
+
     2  C    0.159    0.053   -0.406    0.60805   -0.00040    0.00179       0.440
     3  C    0.095   -0.031    0.577    1.82288    0.00018    0.00043       0.585
     4  C   -0.272   -0.069   -0.190    3.17923   -0.00038   -0.00121       0.339
@@ -157,49 +159,49 @@ MOZYME ALLVEC
     7  C    0.223    0.475   -0.421    6.97429    0.00213   -0.00313       0.672
     8  C   -0.126   -0.439   -0.401    8.32573    0.00168   -0.00255       0.608
     9  C   -0.373    0.468    0.413    9.54758    0.00104    0.00152       0.727
-   10  C    0.298   -0.387    0.403   10.89981   -0.00052    0.00251       0.633
+   10  C    0.298   -0.387    0.403   10.89981   -0.00052    0.00251       0.634
    11  C    0.112    0.273   -0.603   12.12073    0.00061    0.00029       0.671
    12  C   -0.127   -0.103    0.698   13.47712   -0.00014    0.00047       0.717
-   13  C   -0.039    0.028   -0.532   14.69198   -0.00117   -0.00013       0.534
- 
+   13  C   -0.039    0.028   -0.532   14.69198   -0.00117   -0.00013       0.535
+
 
 
 
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
-     1       H         -0.42237623  *  -0.00051694  *   0.00298453  *
-     2       C          0.60805253  *  -0.00040464  *   0.00178776  *
-     3       C          1.82287878  *   0.00018073  *   0.00042758  *
-     4       C          3.17923167  *  -0.00037541  *  -0.00121483  *
-     5       C          4.40018557  *  -0.00139809  *  -0.00001724  *
-     6       C          5.75240608  *  -0.00090793  *  -0.00087733  *
-     7       C          6.97429282  *   0.00212739  *  -0.00312630  *
-     8       C          8.32573344  *   0.00168258  *  -0.00254674  *
-     9       C          9.54758190  *   0.00103786  *   0.00151613  *
-    10       C         10.89981293  *  -0.00052258  *   0.00250802  *
-    11       C         12.12072997  *   0.00060526  *   0.00029365  *
-    12       C         13.47712105  *  -0.00013969  *   0.00047298  *
-    13       C         14.69197885  *  -0.00116533  *  -0.00012793  *
-    14       H         15.72235708  *  -0.00196909  *   0.00013702  *
+
+     1       H         -0.42237623  *  -0.00051692  *   0.00298452  *
+     2       C          0.60805253  *  -0.00040463  *   0.00178782  *
+     3       C          1.82287878  *   0.00018074  *   0.00042756  *
+     4       C          3.17923166  *  -0.00037545  *  -0.00121488  *
+     5       C          4.40018555  *  -0.00139807  *  -0.00001721  *
+     6       C          5.75240609  *  -0.00090792  *  -0.00087735  *
+     7       C          6.97429283  *   0.00212730  *  -0.00312633  *
+     8       C          8.32573343  *   0.00168254  *  -0.00254674  *
+     9       C          9.54758189  *   0.00103800  *   0.00151613  *
+    10       C         10.89981293  *  -0.00052253  *   0.00250808  *
+    11       C         12.12072998  *   0.00060521  *   0.00029361  *
+    12       C         13.47712105  *  -0.00013970  *   0.00047299  *
+    13       C         14.69197885  *  -0.00116535  *  -0.00012793  *
+    14       H         15.72235708  *  -0.00196909  *   0.00013704  *
 
                              CARTESIAN COORDINATES
 
-   1    H       -0.422376232    -0.000516943     0.002984527
-   2    C        0.608052526    -0.000404638     0.001787763
-   3    C        1.822878775     0.000180726     0.000427576
-   4    C        3.179231665    -0.000375406    -0.001214834
-   5    C        4.400185565    -0.001398086    -0.000017244
-   6    C        5.752406082    -0.000907927    -0.000877329
-   7    C        6.974292819     0.002127389    -0.003126300
-   8    C        8.325733439     0.001682583    -0.002546744
-   9    C        9.547581901     0.001037856     0.001516132
-  10    C       10.899812926    -0.000522577     0.002508025
-  11    C       12.120729972     0.000605260     0.000293654
-  12    C       13.477121052    -0.000139692     0.000472976
-  13    C       14.691978853    -0.001165335    -0.000127926
-  14    H       15.722357076    -0.001969093     0.000137022
+   1    H       -0.422376234    -0.000516925     0.002984524
+   2    C        0.608052534    -0.000404630     0.001787818
+   3    C        1.822878777     0.000180744     0.000427555
+   4    C        3.179231658    -0.000375448    -0.001214876
+   5    C        4.400185554    -0.001398069    -0.000017214
+   6    C        5.752406087    -0.000907921    -0.000877348
+   7    C        6.974292834     0.002127304    -0.003126333
+   8    C        8.325733431     0.001682541    -0.002546744
+   9    C        9.547581891     0.001037998     0.001516130
+  10    C       10.899812929    -0.000522535     0.002508078
+  11    C       12.120729980     0.000605207     0.000293614
+  12    C       13.477121051    -0.000139699     0.000472990
+  13    C       14.691978849    -0.001165347    -0.000127925
+  14    H       15.722357077    -0.001969087     0.000137036
 
 
            Empirical Formula: C12 H2  =    14 atoms
@@ -310,7 +312,7 @@ MOZYME ALLVEC
    13  C   1.14296   1.03041   0.97150   0.97150
    14  H   0.80717
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.329M, James J. P. Stewart,   **
  **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
@@ -321,7 +323,7 @@ MOZYME ALLVEC
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 15:09:22 2021  *
+ *  CALCULATION DONE:                                Thu Dec  9 02:43:49 2021  *
  *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
  *  RE-LOCAL   - RE-LOCALIZE LMOs AT END OF CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -333,7 +335,7 @@ MOZYME RE-LOCAL ALLVEC
  comment2
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       H         -0.42216732  *  -0.00071395  *  -0.00131452  *
      2       C          0.60742800  *   0.00121115  *  -0.00266298  *
      3       C          1.82265400  *   0.00159233  *   0.00493786  *
@@ -348,7 +350,7 @@ MOZYME RE-LOCAL ALLVEC
     12       C         13.47703197  *   0.00238485  *   0.00472792  *
     13       C         14.69189272  *  -0.00067906  *  -0.00161486  *
     14       H         15.72242530  *  -0.00214550  *  -0.00046315  *
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -381,37 +383,39 @@ MOZYME RE-LOCAL ALLVEC
 
       MOLECULAR POINT GROUP   :   D2h 
 
+          NO CHARGES FOUND.
+
           COMPUTED CHARGE ON SYSTEM: +0
 
           Geometry optimization using EF
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.100 HEAT:  332.6589
- CYCLE:     2 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     7.546 HEAT:  332.6585
- CYCLE:     3 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.087 HEAT:  332.6577
- CYCLE:     4 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     8.751 HEAT:  332.6565
- CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.557 HEAT:  332.6550
- CYCLE:     6 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     3.858 HEAT:  332.6485
- CYCLE:     7 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.913 HEAT:  332.6563
- CYCLE:     8 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     3.910 HEAT:  332.6480
- CYCLE:     9 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.060 HEAT:  332.6533
- CYCLE:    10 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     5.650 HEAT:  332.6488
- CYCLE:    11 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.353 HEAT:  332.6544
- CYCLE:    12 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     5.528 HEAT:  332.6493
- CYCLE:    13 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     6.200 HEAT:  332.6506
- CYCLE:    14 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     7.547 HEAT:  332.6559
- CYCLE:    15 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     4.144 HEAT:  332.6482
- CYCLE:    16 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    10.348 HEAT:  332.6574
- CYCLE:    17 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     8.859 HEAT:  332.6606
- CYCLE:    18 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     9.533 HEAT:  332.6585
- CYCLE:    19 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     2.757 HEAT:  332.6493
- CYCLE:    20 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     6.735 HEAT:  332.6545
- CYCLE:    21 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     2.660 HEAT:  332.6510
- CYCLE:    22 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     9.293 HEAT:  332.6580
- CYCLE:    23 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     1.405 HEAT:  332.6481
- CYCLE:    24 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     2.643 HEAT:  332.6492
- CYCLE:    25 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.040 HEAT:  332.6481
+ CYCLE:     1 TIME:   0.025 TIME LEFT:  2.00D  GRAD.:     4.100 HEAT:  332.6589
+ CYCLE:     2 TIME:   0.038 TIME LEFT:  2.00D  GRAD.:     7.546 HEAT:  332.6585
+ CYCLE:     3 TIME:   0.028 TIME LEFT:  2.00D  GRAD.:     7.087 HEAT:  332.6577
+ CYCLE:     4 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:     8.751 HEAT:  332.6565
+ CYCLE:     5 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     7.557 HEAT:  332.6550
+ CYCLE:     6 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:     3.858 HEAT:  332.6485
+ CYCLE:     7 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:    10.913 HEAT:  332.6563
+ CYCLE:     8 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     3.910 HEAT:  332.6480
+ CYCLE:     9 TIME:   0.010 TIME LEFT:  2.00D  GRAD.:    10.060 HEAT:  332.6533
+ CYCLE:    10 TIME:   0.010 TIME LEFT:  2.00D  GRAD.:     5.650 HEAT:  332.6488
+ CYCLE:    11 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:    10.353 HEAT:  332.6544
+ CYCLE:    12 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:     5.528 HEAT:  332.6493
+ CYCLE:    13 TIME:   0.036 TIME LEFT:  2.00D  GRAD.:     6.200 HEAT:  332.6506
+ CYCLE:    14 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:     7.547 HEAT:  332.6559
+ CYCLE:    15 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     4.144 HEAT:  332.6482
+ CYCLE:    16 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    10.348 HEAT:  332.6574
+ CYCLE:    17 TIME:   0.026 TIME LEFT:  2.00D  GRAD.:     8.859 HEAT:  332.6606
+ CYCLE:    18 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     9.533 HEAT:  332.6585
+ CYCLE:    19 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.757 HEAT:  332.6493
+ CYCLE:    20 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     6.735 HEAT:  332.6545
+ CYCLE:    21 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.660 HEAT:  332.6510
+ CYCLE:    22 TIME:   0.011 TIME LEFT:  2.00D  GRAD.:     9.293 HEAT:  332.6580
+ CYCLE:    23 TIME:   0.013 TIME LEFT:  2.00D  GRAD.:     1.405 HEAT:  332.6481
+ CYCLE:    24 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:     2.644 HEAT:  332.6492
+ CYCLE:    25 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:     2.040 HEAT:  332.6481
 
 
  HEAT OF FORMATION IS ESSENTIALLY STATIONARY
@@ -427,8 +431,8 @@ MOZYME RE-LOCAL ALLVEC
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.298M)
-                                                       Fri Oct 29 15:09:22 2021
+                                                       MOPAC2016 (Version: 21.329M)
+                                                       Thu Dec  9 02:43:49 2021
 
 
 
@@ -437,7 +441,7 @@ MOZYME RE-LOCAL ALLVEC
 
 
 
-          GRADIENT NORM           =          2.04000          =       0.54521 PER ATOM
+          GRADIENT NORM           =          2.04012          =       0.54525 PER ATOM
           NO. OF FILLED LEVELS    =         25
           MOLECULAR WEIGHT        =        146.1478         POINT GROUP:  D2h 
 
@@ -450,9 +454,9 @@ MOZYME RE-LOCAL ALLVEC
 
 
           SCF CALCULATIONS        =         36
- 
-          WALL-CLOCK TIME         =          0.293 SECONDS
-          COMPUTATION TIME        =          1.123 SECONDS
+
+          WALL-CLOCK TIME         =          0.817 SECONDS
+          COMPUTATION TIME        =          3.136 SECONDS
 
 
 
@@ -460,7 +464,7 @@ MOZYME RE-LOCAL ALLVEC
 
              Cartesian Gradients         Cartesian Coordinates          |Gradient|
   Atom       X        Y        Z        X          Y          Z
- 
+
     2  C    0.159    0.053   -0.406    0.60805   -0.00040    0.00179       0.440
     3  C    0.095   -0.031    0.577    1.82288    0.00018    0.00043       0.585
     4  C   -0.272   -0.069   -0.190    3.17923   -0.00038   -0.00121       0.339
@@ -469,49 +473,49 @@ MOZYME RE-LOCAL ALLVEC
     7  C    0.223    0.475   -0.421    6.97429    0.00213   -0.00313       0.672
     8  C   -0.126   -0.439   -0.401    8.32573    0.00168   -0.00255       0.608
     9  C   -0.373    0.468    0.413    9.54758    0.00104    0.00152       0.727
-   10  C    0.298   -0.387    0.403   10.89981   -0.00052    0.00251       0.633
+   10  C    0.298   -0.387    0.403   10.89981   -0.00052    0.00251       0.634
    11  C    0.112    0.273   -0.603   12.12073    0.00061    0.00029       0.671
    12  C   -0.127   -0.103    0.698   13.47712   -0.00014    0.00047       0.717
-   13  C   -0.039    0.028   -0.532   14.69198   -0.00117   -0.00013       0.534
- 
+   13  C   -0.039    0.028   -0.532   14.69198   -0.00117   -0.00013       0.535
+
 
 
 
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
-     1       H         -0.42237623  *  -0.00051694  *   0.00298453  *
-     2       C          0.60805253  *  -0.00040464  *   0.00178776  *
-     3       C          1.82287878  *   0.00018073  *   0.00042758  *
-     4       C          3.17923167  *  -0.00037541  *  -0.00121483  *
-     5       C          4.40018557  *  -0.00139809  *  -0.00001724  *
-     6       C          5.75240608  *  -0.00090793  *  -0.00087733  *
-     7       C          6.97429282  *   0.00212739  *  -0.00312630  *
-     8       C          8.32573344  *   0.00168258  *  -0.00254674  *
-     9       C          9.54758190  *   0.00103786  *   0.00151613  *
-    10       C         10.89981293  *  -0.00052258  *   0.00250802  *
-    11       C         12.12072997  *   0.00060526  *   0.00029365  *
-    12       C         13.47712105  *  -0.00013969  *   0.00047298  *
-    13       C         14.69197885  *  -0.00116533  *  -0.00012793  *
-    14       H         15.72235708  *  -0.00196909  *   0.00013702  *
+
+     1       H         -0.42237623  *  -0.00051692  *   0.00298452  *
+     2       C          0.60805253  *  -0.00040463  *   0.00178782  *
+     3       C          1.82287878  *   0.00018074  *   0.00042756  *
+     4       C          3.17923166  *  -0.00037545  *  -0.00121488  *
+     5       C          4.40018555  *  -0.00139807  *  -0.00001721  *
+     6       C          5.75240609  *  -0.00090792  *  -0.00087735  *
+     7       C          6.97429283  *   0.00212730  *  -0.00312633  *
+     8       C          8.32573343  *   0.00168254  *  -0.00254674  *
+     9       C          9.54758189  *   0.00103800  *   0.00151613  *
+    10       C         10.89981293  *  -0.00052253  *   0.00250808  *
+    11       C         12.12072998  *   0.00060521  *   0.00029361  *
+    12       C         13.47712105  *  -0.00013970  *   0.00047299  *
+    13       C         14.69197885  *  -0.00116535  *  -0.00012793  *
+    14       H         15.72235708  *  -0.00196909  *   0.00013704  *
 
                              CARTESIAN COORDINATES
 
-   1    H       -0.422376232    -0.000516943     0.002984527
-   2    C        0.608052526    -0.000404638     0.001787763
-   3    C        1.822878775     0.000180726     0.000427576
-   4    C        3.179231665    -0.000375406    -0.001214834
-   5    C        4.400185565    -0.001398086    -0.000017244
-   6    C        5.752406082    -0.000907927    -0.000877329
-   7    C        6.974292819     0.002127389    -0.003126300
-   8    C        8.325733439     0.001682583    -0.002546744
-   9    C        9.547581901     0.001037856     0.001516132
-  10    C       10.899812926    -0.000522577     0.002508025
-  11    C       12.120729972     0.000605260     0.000293654
-  12    C       13.477121052    -0.000139692     0.000472976
-  13    C       14.691978853    -0.001165335    -0.000127926
-  14    H       15.722357076    -0.001969093     0.000137022
+   1    H       -0.422376234    -0.000516925     0.002984524
+   2    C        0.608052534    -0.000404630     0.001787818
+   3    C        1.822878777     0.000180744     0.000427555
+   4    C        3.179231658    -0.000375448    -0.001214876
+   5    C        4.400185554    -0.001398069    -0.000017214
+   6    C        5.752406087    -0.000907921    -0.000877348
+   7    C        6.974292834     0.002127304    -0.003126333
+   8    C        8.325733431     0.001682541    -0.002546744
+   9    C        9.547581891     0.001037998     0.001516130
+  10    C       10.899812929    -0.000522535     0.002508078
+  11    C       12.120729980     0.000605207     0.000293614
+  12    C       13.477121051    -0.000139699     0.000472990
+  13    C       14.691978849    -0.001165347    -0.000127925
+  14    H       15.722357077    -0.001969087     0.000137036
 
 
            Empirical Formula: C12 H2  =    14 atoms
@@ -519,7 +523,7 @@ MOZYME RE-LOCAL ALLVEC
             LMOs being Re-Localized
 
           NUMBER OF ITERATIONS =  15
-          LOCALIZATION VALUE =  12.111483595
+          LOCALIZATION VALUE =  12.111483591
 
           LOCALIZED MOLECULAR ORBITALS
 
@@ -627,7 +631,7 @@ MOZYME RE-LOCAL ALLVEC
    13  C   1.14296   1.03041   0.97150   0.97150
    14  H   0.80717
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.329M, James J. P. Stewart,   **
  **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
@@ -638,7 +642,7 @@ MOZYME RE-LOCAL ALLVEC
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 15:09:22 2021  *
+ *  CALCULATION DONE:                                Thu Dec  9 02:43:49 2021  *
  *  MOZYME     - USE LOCALIZED M.O.s IN SOLVING THE SCF EQUATIONS
  *  RE-LOCAL   - RE-LOCALIZE LMOs AT END OF CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -650,7 +654,7 @@ MOZYME RE-LOCAL=4 ALLVEC
  comment2
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       H         -0.42216732  *  -0.00071395  *  -0.00131452  *
      2       C          0.60742800  *   0.00121115  *  -0.00266298  *
      3       C          1.82265400  *   0.00159233  *   0.00493786  *
@@ -665,7 +669,7 @@ MOZYME RE-LOCAL=4 ALLVEC
     12       C         13.47703197  *   0.00238485  *   0.00472792  *
     13       C         14.69189272  *  -0.00067906  *  -0.00161486  *
     14       H         15.72242530  *  -0.00214550  *  -0.00046315  *
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -698,100 +702,123 @@ MOZYME RE-LOCAL=4 ALLVEC
 
       MOLECULAR POINT GROUP   :   D2h 
 
+          NO CHARGES FOUND.
+
           COMPUTED CHARGE ON SYSTEM: +0
 
           Geometry optimization using EF
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     4.100 HEAT:  332.6589
+ CYCLE:     1 TIME:   0.024 TIME LEFT:  2.00D  GRAD.:     4.100 HEAT:  332.6589
 
             LMOs being Re-Localized
 
           NUMBER OF ITERATIONS =  18
           LOCALIZATION VALUE =  12.114725990
 
- CYCLE:     2 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     7.548 HEAT:  332.6585
- CYCLE:     3 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.192 HEAT:  332.6579
- CYCLE:     4 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     8.688 HEAT:  332.6563
+ CYCLE:     2 TIME:   0.041 TIME LEFT:  2.00D  GRAD.:     7.548 HEAT:  332.6585
+ CYCLE:     3 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:     7.192 HEAT:  332.6579
+ CYCLE:     4 TIME:   0.013 TIME LEFT:  2.00D  GRAD.:     8.688 HEAT:  332.6563
 
             LMOs being Re-Localized
 
           NUMBER OF ITERATIONS =  48
-          LOCALIZATION VALUE =  12.112568913
+          LOCALIZATION VALUE =  12.112568911
 
- CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.703 HEAT:  332.6552
- CYCLE:     6 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     3.913 HEAT:  332.6486
- CYCLE:     7 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    11.121 HEAT:  332.6567
-
-            LMOs being Re-Localized
-
-          NUMBER OF ITERATIONS = 101
-          LOCALIZATION VALUE =  12.111920337
-
- CYCLE:     8 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     3.944 HEAT:  332.6480
- CYCLE:     9 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.133 HEAT:  332.6533
- CYCLE:    10 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     5.682 HEAT:  332.6488
- CYCLE:    11 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    10.457 HEAT:  332.6546
+ CYCLE:     5 TIME:   0.032 TIME LEFT:  2.00D  GRAD.:     7.707 HEAT:  332.6552
+ CYCLE:     6 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     3.912 HEAT:  332.6486
+ CYCLE:     7 TIME:   0.010 TIME LEFT:  2.00D  GRAD.:    11.090 HEAT:  332.6566
 
             LMOs being Re-Localized
 
           NUMBER OF ITERATIONS = 101
-          LOCALIZATION VALUE =  12.111952665
+          LOCALIZATION VALUE =  12.111921025
 
- CYCLE:    12 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     4.836 HEAT:  332.6491
- CYCLE:    13 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     7.656 HEAT:  332.6524
-
-            LMOs being Re-Localized
-
-          NUMBER OF ITERATIONS =  13
-          LOCALIZATION VALUE =  12.110268362
-
- CYCLE:    14 TIME:   0.027 TIME LEFT:  2.00D  GRAD.:     4.236 HEAT:  332.6536
-
-            LMOs being Re-Localized
-
-          NUMBER OF ITERATIONS =  29
-          LOCALIZATION VALUE =  12.111077253
-
- CYCLE:    15 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     5.294 HEAT:  332.6549
- CYCLE:    16 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:    11.331 HEAT:  332.6584
-
-            LMOs being Re-Localized
-
-          NUMBER OF ITERATIONS = 101
-          LOCALIZATION VALUE =  12.112980647
-
- CYCLE:    17 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:    11.347 HEAT:  332.6581
- CYCLE:    18 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     9.499 HEAT:  332.6533
- CYCLE:    19 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     4.377 HEAT:  332.6489
+ CYCLE:     8 TIME:   0.026 TIME LEFT:  2.00D  GRAD.:     3.927 HEAT:  332.6480
+ CYCLE:     9 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:    10.074 HEAT:  332.6533
+ CYCLE:    10 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:     5.627 HEAT:  332.6488
+ CYCLE:    11 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     9.804 HEAT:  332.6538
 
             LMOs being Re-Localized
 
           NUMBER OF ITERATIONS =   6
-          LOCALIZATION VALUE =  12.111144714
+          LOCALIZATION VALUE =  12.112271076
 
- CYCLE:    20 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     3.376 HEAT:  332.6489
- CYCLE:    21 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     5.825 HEAT:  332.6528
-
-            LMOs being Re-Localized
-
-          NUMBER OF ITERATIONS = 101
-          LOCALIZATION VALUE =  12.110098611
-
- CYCLE:    22 TIME:   0.020 TIME LEFT:  2.00D  GRAD.:     9.409 HEAT:  332.6620
- CYCLE:    23 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.915 HEAT:  332.6598
+ CYCLE:    12 TIME:   0.028 TIME LEFT:  2.00D  GRAD.:     6.276 HEAT:  332.6516
 
             LMOs being Re-Localized
 
           NUMBER OF ITERATIONS = 101
-          LOCALIZATION VALUE =  12.111601210
+          LOCALIZATION VALUE =  12.109963391
 
- CYCLE:    24 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.476 HEAT:  332.6580
- CYCLE:    25 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     5.816 HEAT:  332.6518
+ CYCLE:    13 TIME:   0.087 TIME LEFT:  2.00D  GRAD.:     4.992 HEAT:  332.6485
+ CYCLE:    14 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     8.125 HEAT:  332.6531
+ CYCLE:    15 TIME:   0.013 TIME LEFT:  2.00D  GRAD.:     8.374 HEAT:  332.6546
+
+            LMOs being Re-Localized
+
+          NUMBER OF ITERATIONS =  84
+          LOCALIZATION VALUE =  12.112361077
 
 
- HEAT OF FORMATION IS ESSENTIALLY STATIONARY
+            LMOs being Re-Localized
+
+          NUMBER OF ITERATIONS =  12
+          LOCALIZATION VALUE =  12.110781482
+
+ CYCLE:    16 TIME:   0.116 TIME LEFT:  2.00D  GRAD.:     5.056 HEAT:  332.6504
+ CYCLE:    17 TIME:   0.010 TIME LEFT:  2.00D  GRAD.:     1.948 HEAT:  332.6469
+ CYCLE:    18 TIME:   0.007 TIME LEFT:  2.00D  GRAD.:     6.390 HEAT:  332.6511
+ CYCLE:    19 TIME:   0.012 TIME LEFT:  2.00D  GRAD.:     8.394 HEAT:  332.6534
+
+            LMOs being Re-Localized
+
+          NUMBER OF ITERATIONS =  10
+          LOCALIZATION VALUE =  12.111395401
+
+ CYCLE:    20 TIME:   0.041 TIME LEFT:  2.00D  GRAD.:     7.826 HEAT:  332.6527
+ CYCLE:    21 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.157 HEAT:  332.6473
+
+            LMOs being Re-Localized
+
+          NUMBER OF ITERATIONS =  17
+          LOCALIZATION VALUE =  12.111221480
+
+ CYCLE:    22 TIME:   0.014 TIME LEFT:  2.00D  GRAD.:     6.084 HEAT:  332.6510
+ CYCLE:    23 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.151 HEAT:  332.6475
+ CYCLE:    24 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     4.327 HEAT:  332.6499
+ CYCLE:    25 TIME:   0.009 TIME LEFT:  2.00D  GRAD.:     1.746 HEAT:  332.6473
+
+            LMOs being Re-Localized
+
+          NUMBER OF ITERATIONS =   8
+          LOCALIZATION VALUE =  12.111389935
+
+ CYCLE:    26 TIME:   0.015 TIME LEFT:  2.00D  GRAD.:     4.335 HEAT:  332.6497
+ CYCLE:    27 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     1.936 HEAT:  332.6475
+ CYCLE:    28 TIME:   0.010 TIME LEFT:  2.00D  GRAD.:     4.397 HEAT:  332.6504
+ CYCLE:    29 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     1.441 HEAT:  332.6470
+
+            LMOs being Re-Localized
+
+          NUMBER OF ITERATIONS =   7
+          LOCALIZATION VALUE =  12.111409802
+
+ CYCLE:    30 TIME:   0.021 TIME LEFT:  2.00D  GRAD.:     2.736 HEAT:  332.6480
+ CYCLE:    31 TIME:   0.007 TIME LEFT:  2.00D  GRAD.:     1.156 HEAT:  332.6466
+ CYCLE:    32 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     1.301 HEAT:  332.6467
+ CYCLE:    33 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     0.766 HEAT:  332.6463
+
+     GRADIENT =  0.76598 IS LESS THAN CUTOFF =  1.00000
+
+
+
+            LMOs being Re-Localized
+
+          NUMBER OF ITERATIONS =   8
+          LOCALIZATION VALUE =  12.111426503
+
 
  -------------------------------------------------------------------------------
  MOZYME RE-LOCAL=4 ALLVEC
@@ -804,101 +831,78 @@ MOZYME RE-LOCAL=4 ALLVEC
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.298M)
-                                                       Fri Oct 29 15:09:22 2021
+                                                       MOPAC2016 (Version: 21.329M)
+                                                       Thu Dec  9 02:43:50 2021
 
 
 
 
-          FINAL HEAT OF FORMATION =        332.65157 KCAL/MOL =    1391.81416 KJ/MOL
+          FINAL HEAT OF FORMATION =        332.64621 KCAL/MOL =    1391.79173 KJ/MOL
 
 
 
-          GRADIENT NORM           =          5.81558          =       1.55428 PER ATOM
+          GRADIENT NORM           =          0.76598          =       0.20472 PER ATOM
           NO. OF FILLED LEVELS    =         25
           MOLECULAR WEIGHT        =        146.1478         POINT GROUP:  D2h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
             Atom       Atom       Distance
-            H    14    H     1    16.14470
-            C    10    C     7     0.00624
-            C    12    C     6     0.00649
+            H    14    H     1    16.14465
+            C     7    H     1     0.00633
+            C     5    C    11     0.00377
 
 
-          SCF CALCULATIONS        =         42
- 
-          WALL-CLOCK TIME         =          0.547 SECONDS
-          COMPUTATION TIME        =          2.126 SECONDS
+          SCF CALCULATIONS        =         48
 
-
-
-       FINAL  POINT  AND  DERIVATIVES
-
-             Cartesian Gradients         Cartesian Coordinates          |Gradient|
-  Atom       X        Y        Z        X          Y          Z
- 
-    1  H   -0.215    0.034   -0.041   -0.42237    0.00219    0.00073       0.222
-    2  C    1.242   -0.127    0.110    0.60835    0.00067    0.00006       1.253
-    3  C   -0.820    0.139   -0.123    1.82285   -0.00020   -0.00267       0.841
-    4  C   -0.145   -0.121    0.075    3.17923   -0.00068   -0.00167       0.203
-    5  C   -0.097    0.111   -0.082    4.40013    0.00176    0.00227       0.169
-    6  C   -1.187    0.003    0.244    5.75220    0.00065    0.00327       1.212
-    7  C    1.267   -0.002   -0.282    6.97450   -0.00334    0.00000       1.298
-    8  C    2.064   -0.097    0.269    8.32608   -0.00349    0.00018       2.084
-    9  C   -2.105    0.032   -0.250    9.54724    0.00123    0.00052       2.120
-   10  C   -2.700    0.071    0.114   10.89927    0.00245    0.00067       2.704
-   11  C    3.165   -0.097    0.039   12.12115   -0.00003   -0.00224       3.167
-   12  C    0.647    0.092   -0.261   13.47727    0.00000   -0.00238       0.704
-   13  C   -1.238   -0.027    0.227   14.69176    0.00025    0.00106       1.259
-   14  H    0.122   -0.012   -0.037   15.72233    0.00035    0.00246       0.128
- 
+          WALL-CLOCK TIME         =          1.499 SECONDS
+          COMPUTATION TIME        =          5.852 SECONDS
 
 
 
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
-     1       H         -0.42237079  *   0.00218793  *   0.00073129  *
-     2       C          0.60834553  *   0.00067386  *   0.00005523  *
-     3       C          1.82284722  *  -0.00020221  *  -0.00267396  *
-     4       C          3.17923400  *  -0.00067963  *  -0.00167308  *
-     5       C          4.40013312  *   0.00176393  *   0.00227492  *
-     6       C          5.75219924  *   0.00064768  *   0.00327444  *
-     7       C          6.97449969  *  -0.00334133  *   0.00000217  *
-     8       C          8.32607670  *  -0.00349246  *   0.00018360  *
-     9       C          9.54723590  *   0.00122913  *   0.00051867  *
-    10       C         10.89926843  *   0.00244577  *   0.00067110  *
-    11       C         12.12114536  *  -0.00002682  *  -0.00223700  *
-    12       C         13.47726587  *   0.00000010  *  -0.00238445  *
-    13       C         14.69175994  *   0.00024751  *   0.00106360  *
-    14       H         15.72233288  *   0.00034749  *   0.00246107  *
+
+     1       H         -0.42232905  *   0.00004924  *   0.00336056  *
+     2       C          0.60800860  *  -0.00017239  *   0.00262225  *
+     3       C          1.82286369  *   0.00029828  *   0.00119596  *
+     4       C          3.17934869  *  -0.00034063  *   0.00027344  *
+     5       C          4.40029992  *  -0.00129334  *  -0.00096968  *
+     6       C          5.75227342  *  -0.00087114  *  -0.00178824  *
+     7       C          6.97419745  *   0.00057867  *  -0.00367752  *
+     8       C          8.32581621  *   0.00131038  *  -0.00279573  *
+     9       C          9.54771829  *   0.00092179  *  -0.00089429  *
+    10       C         10.89969826  *   0.00087552  *   0.00051148  *
+    11       C         12.12061874  *   0.00061795  *   0.00132944  *
+    12       C         13.47713369  *   0.00018017  *   0.00132610  *
+    13       C         14.69202653  *  -0.00145108  *   0.00150097  *
+    14       H         15.72231711  *  -0.00230752  *   0.00135441  *
 
                              CARTESIAN COORDINATES
 
-   1    H       -0.422370793     0.002187926     0.000731289
-   2    C        0.608345530     0.000673858     0.000055228
-   3    C        1.822847221    -0.000202213    -0.002673965
-   4    C        3.179234002    -0.000679634    -0.001673084
-   5    C        4.400133119     0.001763933     0.002274922
-   6    C        5.752199239     0.000647682     0.003274443
-   7    C        6.974499691    -0.003341327     0.000002172
-   8    C        8.326076703    -0.003492462     0.000183595
-   9    C        9.547235895     0.001229126     0.000518673
-  10    C       10.899268434     0.002445774     0.000671099
-  11    C       12.121145360    -0.000026819    -0.002237001
-  12    C       13.477265872     0.000000105    -0.002384450
-  13    C       14.691759942     0.000247514     0.001063605
-  14    H       15.722332884     0.000347489     0.002461071
+   1    H       -0.422329046     0.000049240     0.003360563
+   2    C        0.608008595    -0.000172391     0.002622249
+   3    C        1.822863688     0.000298282     0.001195958
+   4    C        3.179348695    -0.000340626     0.000273443
+   5    C        4.400299919    -0.001293339    -0.000969684
+   6    C        5.752273416    -0.000871138    -0.001788243
+   7    C        6.974197452     0.000578668    -0.003677523
+   8    C        8.325816208     0.001310379    -0.002795730
+   9    C        9.547718286     0.000921791    -0.000894291
+  10    C       10.899698263     0.000875517     0.000511476
+  11    C       12.120618736     0.000617952     0.001329441
+  12    C       13.477133694     0.000180166     0.001326099
+  13    C       14.692026531    -0.001451083     0.001500970
+  14    H       15.722317110    -0.002307520     0.001354413
 
 
            Empirical Formula: C12 H2  =    14 atoms
 
             LMOs being Re-Localized
 
-          NUMBER OF ITERATIONS =  11
-          LOCALIZATION VALUE =  12.111331600
+          NUMBER OF ITERATIONS =   5
+          LOCALIZATION VALUE =  12.111408049
 
           LOCALIZED MOLECULAR ORBITALS
 
@@ -907,104 +911,104 @@ MOZYME RE-LOCAL=4 ALLVEC
   NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS 
                                     (AS PERCENT OF THE LMO)
 
-   1    2.0068        -24.88531    C  9 50.01    C  8 49.82
-   2    2.0072        -24.86847    C  6 50.00    C  7 49.82
-   3    2.0072        -24.85695    C  4 49.98    C  5 49.84
-   4    2.0072        -24.84200    C 11 49.98    C 10 49.84
-   5    2.0061        -24.63978    C 12 50.87    C 13 48.96
-   6    2.0061        -24.63961    C  3 50.87    C  2 48.96
-   7    2.0121        -22.65730    C  8 49.85    C  7 49.85
-   8    2.0116        -22.62706    C 10 49.97    C  9 49.74
-   9    2.0120        -22.62679    C  5 49.96    C  6 49.74
-  10    2.0112        -22.48811    C 11 50.13    C 12 49.59
-  11    2.0108        -22.48638    C  4 50.13    C  3 49.60
-  12    1.9337        -19.56308    C 13 59.62    H 14 40.21
-  13    1.9342        -19.55924    C  2 59.61    H  1 40.21
-  14    2.1795        -12.39768    C  8 48.04    C  9 47.73    C  7  1.08    C 10  1.02
-  15    2.1790        -12.39728    C  8 48.04    C  9 47.74    C  7  1.08    C 10  1.02
-  16    2.1674        -12.38909    C  5 48.65    C  4 47.39    C  6  1.09
-  17    2.1674        -12.38870    C  5 48.65    C  4 47.39    C  6  1.09
-  18    2.1791        -12.38743    C  7 48.01    C  6 47.77    C  8  1.06    C  5  1.03
-  19    2.1791        -12.38742    C  7 48.01    C  6 47.77    C  8  1.06    C  5  1.03
-  20    2.1674        -12.38300    C 10 48.67    C 11 47.37    C  9  1.10
-  21    2.1678        -12.38265    C 10 48.66    C 11 47.37    C  9  1.10
-  22    2.0877        -12.20412    C 12 50.25    C 13 47.58    C 11  1.07
-  23    2.0877        -12.20399    C 12 50.25    C 13 47.58    C 11  1.07
-  24    2.0877        -12.20252    C  3 50.25    C  2 47.58    C  4  1.06
-  25    2.0872        -12.20217    C  3 50.25    C  2 47.59    C  4  1.06
+   1    2.0068        -24.87465    C  9 50.01    C  8 49.82
+   2    2.0072        -24.87432    C  6 50.00    C  7 49.82
+   3    2.0072        -24.85696    C 11 49.98    C 10 49.84
+   4    2.0072        -24.85692    C  4 49.98    C  5 49.84
+   5    2.0061        -24.63485    C  3 50.87    C  2 48.96
+   6    2.0061        -24.63423    C 12 50.87    C 13 48.96
+   7    2.0121        -22.65700    C  8 49.85    C  7 49.85
+   8    2.0116        -22.62865    C  5 49.97    C  6 49.74
+   9    2.0116        -22.62788    C 10 49.97    C  9 49.74
+  10    2.0112        -22.48484    C  4 50.12    C  3 49.60
+  11    2.0112        -22.48268    C 11 50.13    C 12 49.59
+  12    1.9342        -19.56614    C 13 59.61    H 14 40.21
+  13    1.9339        -19.56345    C  2 59.61    H  1 40.22
+  14    2.1790        -12.39266    C  8 48.04    C  9 47.74    C  7  1.08    C 10  1.02
+  15    2.1795        -12.39262    C  8 48.04    C  9 47.73    C  7  1.08    C 10  1.02
+  16    2.1795        -12.39036    C  7 48.00    C  6 47.77    C  8  1.06    C  5  1.03
+  17    2.1791        -12.39012    C  7 48.01    C  6 47.77    C  8  1.06    C  5  1.03
+  18    2.1674        -12.38927    C 10 48.67    C 11 47.37    C  9  1.10
+  19    2.1669        -12.38888    C 10 48.67    C 11 47.38    C  9  1.10
+  20    2.1674        -12.38851    C  5 48.65    C  4 47.39    C  6  1.09
+  21    2.1674        -12.38829    C  5 48.65    C  4 47.39    C  6  1.08
+  22    2.0877        -12.20093    C 12 50.25    C 13 47.58    C 11  1.06
+  23    2.0877        -12.20089    C 12 50.25    C 13 47.58    C 11  1.06
+  24    2.0877        -12.20018    C  3 50.25    C  2 47.58    C  4  1.06
+  25    2.0872        -12.19982    C  3 50.25    C  2 47.59    C  4  1.06
 
            Virtual Set (NOT re-localized!)
 
   NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS 
                                     (AS PERCENT OF THE LMO)
 
-  26    2.1849          0.97686    C  6 47.96    C  7 47.69    C  5  1.09    C  8  1.08
-  27    2.1849          0.97692    C  6 47.96    C  7 47.69    C  5  1.09    C  8  1.08
-  28    2.1849          0.98394    C  9 47.97    C  8 47.68    C 10  1.10    C  7  1.08
-  29    2.1849          0.98403    C  9 47.97    C  8 47.68    C 10  1.10    C  7  1.08
-  30    2.1742          0.99035    C 11 48.52    C 10 47.36    C  9  1.05    C 12  1.02
-  31    2.1742          0.99049    C 11 48.52    C 10 47.36    C  9  1.05    C 12  1.02
-  32    2.1738          0.99516    C  4 48.51    C  5 47.38    C  6  1.06    C  3  1.01
-  33    2.1738          0.99530    C  4 48.51    C  5 47.38    C  6  1.06    C  3  1.01
-  34    2.0764          1.05287    C 13 50.31    C 12 47.80
-  35    2.0764          1.05287    C 13 50.31    C 12 47.80
-  36    2.0760          1.05405    C  2 50.31    C  3 47.81
-  37    2.0760          1.05412    C  2 50.31    C  3 47.81
-  38    2.0121          4.45385    C  7 49.85    C  8 49.85
-  39    2.0116          4.46989    C  6 49.97    C  5 49.74
-  40    2.0120          4.47013    C  9 49.96    C 10 49.74
-  41    2.0132          4.49135    C  3 50.09    C  4 49.58
-  42    2.0132          4.49525    C 12 50.10    C 11 49.57
-  43    1.9346          5.54565    H 14 59.56    C 13 40.27
-  44    1.9343          5.54668    H  1 59.56    C  2 40.28
-  45    2.0072          5.59080    C  7 50.00    C  6 49.82
-  46    2.0072          5.59792    C  8 50.00    C  9 49.82
-  47    2.0076          5.62780    C 10 49.97    C 11 49.84
-  48    2.0072          5.63374    C  5 49.98    C  4 49.84
-  49    2.0037          5.92236    C 13 50.90    C 12 48.99
-  50    2.0033          5.92303    C  2 50.90    C  3 49.00
+  26    2.1849          0.97818    C  6 47.96    C  7 47.69    C  5  1.09    C  8  1.08
+  27    2.1849          0.97820    C  6 47.96    C  7 47.69    C  5  1.09    C  8  1.08
+  28    2.1854          0.98105    C  9 47.96    C  8 47.68    C 10  1.10    C  7  1.08
+  29    2.1849          0.98105    C  9 47.97    C  8 47.68    C 10  1.10    C  7  1.08
+  30    2.1738          0.99375    C 11 48.53    C 10 47.36    C  9  1.05    C 12  1.01
+  31    2.1733          0.99394    C 11 48.53    C 10 47.37    C  9  1.05    C 12  1.01
+  32    2.1738          0.99477    C  4 48.51    C  5 47.38    C  6  1.06    C  3  1.01
+  33    2.1738          0.99482    C  4 48.51    C  5 47.38    C  6  1.06    C  3  1.01
+  34    2.0764          1.05120    C 13 50.31    C 12 47.80
+  35    2.0764          1.05123    C 13 50.31    C 12 47.80
+  36    2.0760          1.05224    C  2 50.31    C  3 47.81
+  37    2.0760          1.05235    C  2 50.31    C  3 47.81
+  38    2.0121          4.45354    C  8 49.85    C  7 49.85
+  39    2.0116          4.47033    C  9 49.97    C 10 49.74
+  40    2.0116          4.47033    C  6 49.97    C  5 49.74
+  41    2.0132          4.49060    C  3 50.09    C  4 49.58
+  42    2.0132          4.49186    C 12 50.10    C 11 49.57
+  43    1.9346          5.54804    H 14 59.56    C 13 40.27
+  44    1.9347          5.54949    H  1 59.55    C  2 40.28
+  45    2.0072          5.59311    C  7 50.00    C  6 49.82
+  46    2.0072          5.59317    C  8 50.00    C  9 49.82
+  47    2.0072          5.63356    C  5 49.98    C  4 49.84
+  48    2.0072          5.63404    C 10 49.97    C 11 49.85
+  49    2.0037          5.91993    C 13 50.90    C 12 48.99
+  50    2.0033          5.92043    C  2 50.90    C  3 49.00
 
 
               NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
 
   ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
-    1          H           0.192909        0.8071     0.80709
-    2          C          -0.116446        4.1164     1.14296     2.97349
-    3          C          -0.059485        4.0595     1.05965     2.99984
-    4          C           0.013600        3.9864     1.06000     2.92640
-    5          C          -0.027748        4.0277     1.05372     2.97403
-    6          C           0.003330        3.9967     1.05523     2.94144
-    7          C          -0.006150        4.0062     1.05373     2.95242
-    8          C          -0.006170        4.0062     1.05353     2.95264
-    9          C           0.003316        3.9967     1.05502     2.94167
-   10          C          -0.027726        4.0277     1.05388     2.97384
-   11          C           0.013587        3.9864     1.06013     2.92628
-   12          C          -0.059519        4.0595     1.05960     2.99992
-   13          C          -0.116373        4.1164     1.14292     2.97345
-   14          H           0.192874        0.8071     0.80713
+    1          H           0.192820        0.8072     0.80718
+    2          C          -0.116371        4.1164     1.14296     2.97341
+    3          C          -0.059477        4.0595     1.05973     2.99974
+    4          C           0.013619        3.9864     1.06002     2.92636
+    5          C          -0.027758        4.0278     1.05371     2.97405
+    6          C           0.003319        3.9967     1.05514     2.94154
+    7          C          -0.006150        4.0062     1.05367     2.95248
+    8          C          -0.006148        4.0061     1.05367     2.95248
+    9          C           0.003317        3.9967     1.05513     2.94155
+   10          C          -0.027756        4.0278     1.05371     2.97405
+   11          C           0.013619        3.9864     1.06002     2.92636
+   12          C          -0.059474        4.0595     1.05974     2.99973
+   13          C          -0.116369        4.1164     1.14296     2.97341
+   14          H           0.192809        0.8072     0.80719
  DIPOLE           X         Y         Z       TOTAL
- POINT-CHG.     0.000     0.002     0.003     0.004
- HYBRID         0.000    -0.000    -0.001     0.001
- SUM            0.000     0.001     0.002     0.002
+ POINT-CHG.    -0.000    -0.001     0.002     0.002
+ HYBRID         0.000     0.000    -0.000     0.000
+ SUM           -0.000    -0.001     0.001     0.002
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
 
      Atom    s        px        py        pz   
-    1  H   0.80709
-    2  C   1.14296   1.03052   0.97149   0.97149
-    3  C   1.05965   0.95393   1.02295   1.02295
-    4  C   1.06000   0.94711   0.98964   0.98965
-    5  C   1.05372   0.94724   1.01340   1.01339
-    6  C   1.05523   0.94442   0.99851   0.99851
-    7  C   1.05373   0.94443   1.00399   1.00399
-    8  C   1.05353   0.94462   1.00401   1.00401
-    9  C   1.05502   0.94461   0.99853   0.99853
-   10  C   1.05388   0.94709   1.01338   1.01338
-   11  C   1.06013   0.94698   0.98965   0.98965
-   12  C   1.05960   0.95398   1.02297   1.02297
-   13  C   1.14292   1.03051   0.97147   0.97147
-   14  H   0.80713
+    1  H   0.80718
+    2  C   1.14296   1.03041   0.97150   0.97150
+    3  C   1.05973   0.95387   1.02294   1.02294
+    4  C   1.06002   0.94709   0.98964   0.98964
+    5  C   1.05371   0.94724   1.01340   1.01340
+    6  C   1.05514   0.94450   0.99853   0.99852
+    7  C   1.05367   0.94449   1.00399   1.00399
+    8  C   1.05367   0.94449   1.00400   1.00399
+    9  C   1.05513   0.94450   0.99852   0.99853
+   10  C   1.05371   0.94725   1.01340   1.01340
+   11  C   1.06002   0.94709   0.98964   0.98964
+   12  C   1.05974   0.95386   1.02293   1.02294
+   13  C   1.14296   1.03040   0.97151   0.97151
+   14  H   0.80719
 
  **********************
  *                    *
@@ -1014,6 +1018,6 @@ MOZYME RE-LOCAL=4 ALLVEC
 
 
 
- TOTAL JOB TIME:             0.99 SECONDS
+ TOTAL JOB TIME:             2.73 SECONDS
 
  == MOPAC DONE ==

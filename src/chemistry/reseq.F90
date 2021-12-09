@@ -363,110 +363,214 @@ subroutine reseq (iopt, lused, n1, new, io)
     return
   end subroutine reseq
 subroutine move_hydrogen_atoms
-  !
-  ! At this point, some hydrogen atoms might not be in their correct location in the list of atoms
-  ! so move the hydrogen atoms to their correct place.
-  !
-  !  This operation assumes that the geometry had PDB labels in "txtatm"
-  ! 
-   use common_arrays_C, only : coord, txtatm, nat, atmass, labels, geo
-   USE molkst_C, only : natoms
-   USE chanel_C, only : iw
-   use elemts_C, only : elemnt
-   implicit none
-   integer :: i, j, k, l, n_res, n_heavy, n_hydrogens
-   integer, allocatable :: res_end(:), new_nat(:)
-   double precision, allocatable :: not_H_coord(:,:), H_coord(:,:), new_coord(:,:), new_atmass(:), &
-     H_atmass(:), not_H_atmass(:)
-   character*27, allocatable :: not_H_txtatm(:), H_txtatm(:), new_txtatm(:)
-   logical :: l_debug
-   l_debug = .false.
-  !
-  ! Separate all the atoms into two sets, one set consisting of the hydrogen atoms, the other set 
-  ! consisting of the non-hydrogen atoms.
-  !
-  ! "res_end" = Atom number of the last atom in residue in the set "not_H_txtatm" 
-  !
-   allocate(not_H_txtatm(natoms), H_txtatm(natoms), not_H_coord(3,natoms), H_coord(3,natoms), not_H_atmass(natoms), &
-     H_atmass(natoms))
-   allocate(res_end(natoms), new_txtatm(natoms), new_coord(3,natoms), new_nat(natoms), new_atmass(natoms))
-   n_heavy = 0
-   n_hydrogens = 0
-   n_res = 0
-   do i = 1, natoms
-     if (txtatm(i)(14:14) == "H") then
-       n_hydrogens = n_hydrogens + 1
-       H_coord(:,n_hydrogens) = coord(:,i)
-       H_txtatm(n_hydrogens) = txtatm(i)
-       H_atmass(n_hydrogens) = atmass(i)
-     else
-       n_heavy = n_heavy + 1
-       not_H_coord(:,n_heavy) = coord(:,i)
-       not_H_txtatm(n_heavy) = txtatm(i)
-       nat(n_heavy) = nat(i)
-       not_H_atmass(n_heavy) = atmass(i)
-      if (n_heavy > 1) then
-         if (not_H_txtatm(n_heavy)(17:26) /= not_H_txtatm(n_heavy - 1)(17:26)) then
-           n_res = n_res + 1
-           res_end(n_res) = n_heavy - 1
-         end if 
-       end if
+!
+! At this point, some hydrogen atoms might not be in their correct location in the list of atoms
+! so move the hydrogen atoms to their correct place.
+!
+!  This operation assumes that the geometry had PDB labels in "txtatm"
+! 
+ use common_arrays_C, only : coord, txtatm, nat, atmass, labels, geo, loc, lopt
+ USE molkst_C, only : natoms, numat, id
+ USE chanel_C, only : iw
+ use elemts_C, only : elemnt
+ implicit none
+ integer :: i, j, k, l, n_res, n_heavy, n_hydrogens
+ integer, allocatable :: res_end(:), new_nat(:), new_lopt(:,:), H_lopt(:,:), not_H_lopt(:,:)
+ double precision, allocatable :: not_H_coord(:,:), H_coord(:,:), new_coord(:,:), new_atmass(:), &
+   H_atmass(:), not_H_atmass(:)
+ character*27, allocatable :: not_H_txtatm(:), H_txtatm(:), new_txtatm(:)
+ logical :: l_debug
+ l_debug = .false.
+!
+! Separate all the atoms into two sets, one set consisting of the hydrogen atoms, the other set 
+! consisting of the non-hydrogen atoms.
+!
+! "res_end" = Atom number of the last atom in residue in the set "not_H_txtatm" 
+!
+ allocate(not_H_txtatm(natoms), H_txtatm(natoms), not_H_coord(3,natoms), H_coord(3,natoms), not_H_atmass(natoms), &
+   H_atmass(natoms), H_lopt(3,natoms), not_H_lopt(3,natoms))
+ allocate(res_end(natoms), new_txtatm(natoms), new_coord(3,natoms + id), new_nat(natoms + id), new_atmass(natoms), &
+   new_lopt(3,natoms))
+ n_heavy = 0
+ n_hydrogens = 0
+ n_res = 0
+ do i = 1, numat
+   if (txtatm(i)(14:14) == "H") then
+     n_hydrogens = n_hydrogens + 1
+     H_coord(:,n_hydrogens) = coord(:,i)
+     H_txtatm(n_hydrogens) = txtatm(i)
+     H_atmass(n_hydrogens) = atmass(i)
+     H_lopt(:,n_hydrogens) = lopt(:,i)
+   else
+     n_heavy = n_heavy + 1
+     not_H_coord(:,n_heavy) = coord(:,i)
+     not_H_txtatm(n_heavy) = txtatm(i)
+     nat(n_heavy) = nat(i)
+     not_H_atmass(n_heavy) = atmass(i)
+     not_H_lopt(:,n_heavy) = lopt(:,i)
+    if (n_heavy > 1) then
+       if (not_H_txtatm(n_heavy)(17:26) /= not_H_txtatm(n_heavy - 1)(17:26)) then
+         n_res = n_res + 1
+         res_end(n_res) = n_heavy - 1
+       end if 
+     end if
+   end if
+ end do
+ n_res = n_res + 1
+ res_end(n_res) = n_heavy 
+ if (l_debug) then
+   write(iw,'(10x,a)')"Heavy atoms"
+   write(iw,'(i5,3x,a)')(i, not_H_txtatm(i), i = 1, n_heavy)
+   write(iw,'(10x,a)')"Hydrogen atoms"
+   write(iw,'(i5,3x,a)')(i, H_txtatm(i), i = 1, n_hydrogens)
+   write(iw,'(10x,a)')"Number of the last atom in residues"
+   write(iw,'(20i5)')res_end(1:n_res)
+ end if
+!
+! Start the merge of hydrogen atoms into their correct locations
+! 
+! l = atom number in merged set
+! j = atom number in non-hydrogen atom set
+!
+ l = 0 
+ j = 0
+ do i = 1, n_res
+   do
+     l = l + 1
+     j = j + 1
+     new_coord(:,l) = not_H_coord(:,j)
+     new_txtatm(l) = not_H_txtatm(j)
+     write(new_txtatm(l)(7:12),'(i5)') l
+     new_nat(l) = nat(j)
+     new_atmass(l)= not_H_atmass(j)
+     new_lopt(:,l) = not_H_lopt(:,j)
+     if (j == res_end(i)) then
+       do k = 1, n_hydrogens
+         if (H_txtatm(k)(17:26) == not_H_txtatm(j)(17:26)) then
+           l = l + 1
+           new_coord(:,l) = H_coord(:,k)
+           new_txtatm(l) = H_txtatm(k)
+           H_txtatm(k)(17:26) = "Used"
+           new_nat(l) = 1
+           new_atmass(l)= H_atmass(k)
+           write(new_txtatm(l)(7:12),'(i5)') l
+           new_lopt(:,l) = H_lopt(:,k)
+         end if
+       end do
+       continue
+       exit
      end if
    end do
-   n_res = n_res + 1
-   res_end(n_res) = n_heavy 
-   if (l_debug) then
-     write(iw,'(10x,a)')"Heavy atoms"
-     write(iw,'(i5,3x,a)')(i, not_H_txtatm(i), i = 1, n_heavy)
-     write(iw,'(10x,a)')"Hydrogen atoms"
-     write(iw,'(i5,3x,a)')(i, H_txtatm(i), i = 1, n_hydrogens)
-     write(iw,'(10x,a)')"Number of the last atom in residues"
-     write(iw,'(20i5)')res_end(1:n_res)
-   end if
-  !
-  ! Start the merge of hydrogen atoms into their correct locations
-  ! 
-  ! l = atom number in merged set
-  ! j = atom number in non-hydrogen atom set
-  !
-   l = 0 
+ end do  
+!
+! Fill "loc" with the new values 
+!
+ k = 0
+ do i = 1, l
+   do j = 1,3
+     if (new_lopt(j,i) == 1) then
+       k = k + 1
+       loc(1,k) = i
+       loc(2,k) = j
+     end if
+   end do
+ end do
+
+ do i = 1, id
+   l = l + 1
+   new_coord(:,l) = coord(:, numat + i)
+   new_nat(l) = 107
+ end do
+ if (l_debug) then
+   write(iw,*)" New sequence of atoms"
+   do i = 1,l
+     write(iw, '(1x, a,a, 3(f13.8, a3))')elemnt(new_nat(i)), "("//new_txtatm(i)//")", (new_coord(j,i), " +1", j=1,3)
+   end do
+ end if
+ nat(:natoms) = new_nat(:natoms)
+ labels(:natoms) = nat(:natoms)
+ atmass(:natoms) = new_atmass(:natoms)
+ coord(:,:natoms) = new_coord(:,:natoms)
+ geo(:,:natoms) = coord(:,:natoms)
+ txtatm(:natoms) = new_txtatm(:natoms)
+ return
+ end subroutine move_hydrogen_atoms
+ subroutine store_and_restore_Tv(mode)
+!
+! "Protect" information on the translation vectors during operations where the number or sequence of atoms
+! is changed.
+!
+ use molkst_C, only : numat, natoms, id
+ use common_arrays_C, only : coord, geo, nat, txtatm, tvec, labels, loc, lopt, l_atom
+ implicit none
+ character, intent(in) :: mode*(5)
+!
+! Local storage, all arrays here have to be save'd
+!
+ integer :: i, j, tv_id = 0, tv_loc(2,9), tv_lopt(3,3), tv_old_natoms
+ logical :: first = .true.
+ save 
+ if (mode == "STORE") then
+   if (id == 0) return
+   natoms = natoms - id
+   if (.not. first) return
+   first = .false.
+!
+!  Store data on Tv here
+!
+   tv_id = id  
+   tv_old_natoms = natoms
+   do i = 1, 3*natoms
+     if (loc(1,i) > natoms) exit
+   end do
    j = 0
-   do i = 1, n_res
-     do
-       l = l + 1
-       j = j + 1
-       new_coord(:,l) = not_H_coord(:,j)
-       new_txtatm(l) = not_H_txtatm(j)
-       write(new_txtatm(l)(7:12),'(i5)') l
-       new_nat(l) = nat(j)
-       new_atmass(l)= not_H_atmass(j)
-       if (j == res_end(i)) then
-         do k = 1, n_hydrogens
-           if (H_txtatm(k)(17:26) == not_H_txtatm(j)(17:26)) then
-             l = l + 1
-             new_coord(:,l) = H_coord(:,k)
-             new_txtatm(l) = H_txtatm(k)
-             H_txtatm(k)(17:26) = "Used"
-             new_nat(l) = 1
-             new_atmass(l)= H_atmass(k)
-             write(new_txtatm(l)(7:12),'(i5)') l
-           end if
-         end do
-         exit
-       end if
-     end do
-   end do  
-   if (l_debug) then
-     write(iw,*)" New sequence of atoms"
-     do i = 1,l
-       write(iw, '(1x, a,a, 3(f13.8, a3))')elemnt(new_nat(i)), "("//new_txtatm(i)//")", (new_coord(j,i), " +1", j=1,3)
-     end do
-   end if
-   nat(:natoms) = new_nat(:natoms)
-   labels(:natoms) = nat(:natoms)
-   atmass(:natoms) = new_atmass(:natoms)
-   coord(:,:natoms) = new_coord(:,:natoms)
-   geo(:,:natoms) = coord(:,:natoms)
-   txtatm(:natoms) = new_txtatm(:natoms)
-   return
-  end subroutine move_hydrogen_atoms
+   do i = i, i + 3*id - 1
+     j = j + 1
+     tv_loc(:,j) = loc(:,i)
+   end do
+   j = 0
+   do i = natoms + 1, natoms + id
+     j = j + 1
+     tv_lopt(:,j) = lopt(:,i)
+   end do
+   id = 0
+ else
+!
+!  Restore data on Tv here
+!
+   id = tv_id
+   do i = 1, id
+     coord(:,numat + i) = tvec(:,i) 
+     geo(:,numat + i) = tvec(:,i)
+   end do
+   nat(numat + 1:numat + id) = 107
+   labels(numat + 1:numat + id) = 107
+  
+   do i = 1, 3*natoms
+     if (loc(1,i) > natoms .or. loc(1,i) == 0) exit
+   end do
+   j = 0
+   do i = i, i + 3*id - 1
+     j = j + 1
+     loc(1,i) = tv_loc(1,j) + natoms - tv_old_natoms
+     loc(2,i) = tv_loc(2,j)
+   end do
+   j = 0
+   do i = natoms + 1, natoms + id
+     j = j + 1
+     lopt(:,i) = tv_lopt(:,j)
+   end do
+   do i = numat + 1, numat + id
+     write(txtatm(i), '(i11, 1x, a)') i,"Tv"
+   end do
+   natoms = natoms + id
+   l_atom(:natoms) = .true.
+   continue
+ end if
+ return
+ end subroutine store_and_restore_Tv
+  
+  
+  
+  
+

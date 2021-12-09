@@ -1,5 +1,5 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ ** Cite this program as: MOPAC2016, Version: 21.329M, James J. P. Stewart,   **
  **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
@@ -10,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:39 2021  *
+ *  CALCULATION DONE:                                Thu Dec  9 02:11:10 2021  *
  *  RESEQ      - RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(40, 50, 60) 
@@ -27,7 +27,7 @@
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N          0.00000000  *   0.00000000  *   0.00000000  *
      2       C          1.46300000  *   0.00000000  *   0.00000000  *
      3       C          2.06000000  *   1.42400000  *   0.00000000  *
@@ -238,7 +238,7 @@
    208       H         -0.32500000  *  11.53600000  *  20.24500000  *
    209       H          1.33300000  *  15.11900000  *  21.21100000  *
    210       H         -1.30200000  *  13.36800000  *  16.75100000  *
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -484,6 +484,8 @@
 
        40           F QLD
 
+          NO CHARGES FOUND.
+
 
            GEOMETRY AFTER RE-SEQUENCING
 
@@ -704,7 +706,7 @@
   O(HETATM  212  O   HOH B  62)   7.27100000 +1  17.15300000 +1  31.38800000 +1
   H(HETATM  213 1H   HOH B  62)   8.22800000 +1  17.15300000 +1  31.38800000 +1
   H(HETATM  214 2H   HOH B  62)   7.03300000 +1  17.66800000 +1  32.15900000 +1
- 
+
 HEADER  data-set: moieties
 REMARK  MOPAC 2012, Version: 15.338W Date: Dec 04 2015 12:40
 REMARK   3 PO4 = Phosphate res:   61
@@ -937,6 +939,6 @@ END
 
 
 
- TOTAL JOB TIME:             0.04 SECONDS
+ TOTAL JOB TIME:             0.02 SECONDS
 
  == MOPAC DONE ==

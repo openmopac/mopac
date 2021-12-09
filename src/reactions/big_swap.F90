@@ -118,14 +118,18 @@ subroutine Locate_TS
       stresses(5) = 30.d0
       nloop = 5
     end if  
-    i = index(keywrd,  " LOCATE-TS") + 11
-    do j = i + 1, len_trim(keywrd)
-      if (keywrd(j:j) == " ") exit
-    end do
-    k = index(keywrd(i:j), "SET")
+    if (index(keywrd, " LOCATE-TS ") /= 0) then
+      k = 1
+    else    
+      i = index(keywrd,  " LOCATE-TS") + 11
+      do j = i + 1, len_trim(keywrd)
+        if (keywrd(j:j) == " ") exit
+      end do
+      k = index(keywrd(i:j), "SET:")
+    end if
     if (k /= 0) then
       nset = nint(reada(keywrd, i + k + 3))
-      write(iw,'(/10x, a, i2, a)')"Set", nset, " selected by keywork 'SET' within keyword 'LOCATE-TS'"
+      write(iw,'(/10x, a, i2, a)')"Set", nset, " selected by keyword 'SET' within keyword 'LOCATE-TS'"
       if (nset > 2) then
         write(iw,'(/10x, a)')"(This is greater than 2, so re-set to 2)"
         nset = 2

@@ -1505,6 +1505,8 @@ MOZYME
 
       MOLECULAR POINT GROUP   :   C2v 
 
+          NO CHARGES FOUND.
+
           COMPUTED CHARGE ON SYSTEM: +0
 
           Geometry optimization using EF
@@ -1686,6 +1688,8 @@ VECTORS MOZYME
 
 
       MOLECULAR POINT GROUP   :   C2v 
+
+          NO CHARGES FOUND.
 
           COMPUTED CHARGE ON SYSTEM: +0
 
@@ -1888,6 +1892,8 @@ VECTORS=(2,2) MOZYME
 
 
       MOLECULAR POINT GROUP   :   C2v 
+
+          NO CHARGES FOUND.
 
           COMPUTED CHARGE ON SYSTEM: +0
 

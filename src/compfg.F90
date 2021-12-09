@@ -377,6 +377,7 @@
           Si_o_H_corr = Si_O_H_correction()
           atheat = atheat + Si_O_H_corr
         end if
+        call setup_nhco(i)
         sum_dihed = 0.d0
         do i = 1, nnhco 
           call dihed (coord, nhco(1,i), nhco(2,i), nhco(3,i), nhco(4,i), angle) 

@@ -22,11 +22,10 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, j, k, l, ipath
-      character :: filen*300, oldkey*3000, line1*3000, path*240, ch*1, geo_xxx(2)*3
+      integer :: i, j, k, l, m, n, ipath
+      character :: filen*300, oldkey*3000, line1*3000, path*240, ch*1
       logical :: aux, exists, setup_present, zero_scf, l_quote
       character (len = 300), external :: get_text
-      data geo_xxx /"DAT", "REF"/
 !-----------------------------------------------
       koment = " "
       title = " "
@@ -310,6 +309,8 @@
           keywrd(i:i + 1) = " "
           i = len_trim(keywrd)
           keywrd(i + 2:) = refkey(3)(:1001 - i)
+          i = len_trim(oldkey)
+          oldkey(i:) = trim(refkey(3))
           call upcase (keywrd, len_trim(keywrd)) 
         end if 
 !
@@ -388,21 +389,33 @@
       end if
 !
 !  The following code is specific to very case-sensitive operating systems
-!  such as Red Hat Enterprise Linux.  It is not very robust or flexible.
+!  such as Red Hat Enterprise Linux.  
 !
-!  Preserve case of GEO_DAT and GEO_REF files
-!  Original case is in oldkey
+!  Preserve case of files that start and end with a quotation mark
+!  The original case is in oldkey.  Allow for keywrd and oldkey to have other differences.
 !
       line = trim(oldkey)
-      do l = 1,2
-        i = index(keywrd, "GEO_"//geo_xxx(l)) 
+      k = 1
+      n = 1
+      do 
+        i = index(keywrd(k:), '"')
         if (i /= 0) then
-          call upcase(line, len_trim(line))
-          j = index(line, "GEO_"//geo_xxx(l)) + index(line, "GEO-"//geo_xxx(l))
-          if (j /= 0) then
-            k = index(keywrd(i + 9:), '"')
-            keywrd(i + 9: i + 9 + k) = oldkey(j + 9: j + 9 + k)
+!
+! Find closing quotation mark
+!
+          i = i + k - 1
+          j = index(keywrd(i + 1:), '"') + i
+          if (j == i) then
+            call mopend("NUMBER OF QUOTATION MARKS, '""', IN KEYWORDS IS ODD. THIS NUMBER MUST BE EVEN.")
+            return
           end if
+          l = index(oldkey(n:), '"') + n - 1
+          m = index(oldkey(l + 1:), '"') + l          
+          keywrd(i:j) = oldkey(l:m)
+          k = j + 1
+          n = m + 1
+        else
+          exit
         end if
       end do
 !

@@ -16,7 +16,7 @@
 
  subroutine GetDateStamp(date_time, version)
    character :: date_time*24, version*7
-   date_time = "Mon Oct 25 17:41:30 2021"
-   version = "21.298"
+   date_time = "Thu Nov 25 11:08:05 2021"
+   version = "21.329"
    return
  end subroutine GetDateStamp
