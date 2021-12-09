@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Aug  9 23:22:21 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:10 2021  *
  *  AUTOSYM    - SYMMETRY TO BE IMPOSED AUTOMATICALLY
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -74,11 +72,11 @@ AUTOSYM
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.039 TIME LEFT:  2.00D  GRAD.:    38.431 HEAT:  23.03742
- CYCLE:     2 TIME:   0.039 TIME LEFT:  2.00D  GRAD.:    11.001 HEAT:  22.96498
- CYCLE:     3 TIME:   0.023 TIME LEFT:  2.00D  GRAD.:     2.699 HEAT:  22.95751
- CYCLE:     4 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     1.363 HEAT:  22.95662
- CYCLE:     5 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     0.239 HEAT:  22.95650
+ CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    38.431 HEAT:  23.03742
+ CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:    11.001 HEAT:  22.96498
+ CYCLE:     3 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     2.699 HEAT:  22.95751
+ CYCLE:     4 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     1.363 HEAT:  22.95662
+ CYCLE:     5 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.239 HEAT:  22.95650
 
      GRADIENT =  0.23902 IS LESS THAN CUTOFF =  1.00000
 
@@ -95,8 +93,8 @@ AUTOSYM
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Mon Aug  9 23:22:21 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:10 2021
 
 
 
@@ -104,30 +102,27 @@ AUTOSYM
           FINAL HEAT OF FORMATION =         22.95650 KCAL/MOL =      96.05001 KJ/MOL
 
 
-          TOTAL ENERGY            =       -817.56195 EV
-          ELECTRONIC ENERGY       =      -3251.12112 EV  POINT GROUP:     D6h 
-          CORE-CORE REPULSION     =       2433.55916 EV
           COSMO AREA              =        119.70 SQUARE ANGSTROMS
           COSMO VOLUME            =        108.31 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.23902 = 0.06900 PER ATOM
+          GRADIENT NORM           =          0.23902          =       0.06900 PER ATOM
           IONIZATION POTENTIAL    =          9.823970 EV
           HOMO LUMO ENERGIES (EV) =         -9.824  0.236
           NO. OF FILLED LEVELS    =         15
-          MOLECULAR WEIGHT        =         78.1134
+          MOLECULAR WEIGHT        =         78.1134         POINT GROUP:  D6h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
             Atom       Atom       Distance
-            H    11    H     8     4.96380
-            H     9    H     7     4.29878
-            C     1    H     7     0.00000
+            H    10    H     7     4.96380
+            H    11    H     8     4.29878
+            H     7    C     1     0.00000
 
 
           SCF CALCULATIONS        =         10
  
-          WALL-CLOCK TIME         =          0.211 SECONDS
-          COMPUTATION TIME        =          0.596 SECONDS
+          WALL-CLOCK TIME         =          0.027 SECONDS
+          COMPUTATION TIME        =          0.074 SECONDS
 
 
 
@@ -223,6 +218,6 @@ AUTOSYM
 
 
 
- TOTAL JOB TIME:             0.21 SECONDS
+ TOTAL JOB TIME:             0.04 SECONDS
 
  == MOPAC DONE ==

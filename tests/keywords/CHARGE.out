@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 17:58:57 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:14 2021  *
  *
  *
  *
@@ -71,8 +69,8 @@ CHARGE=0
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 17:58:57 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:14 2021
 
 
 
@@ -80,22 +78,19 @@ CHARGE=0
           FINAL HEAT OF FORMATION =        207.78897 KCAL/MOL =     869.38904 KJ/MOL
 
 
-          TOTAL ENERGY            =       -114.09060 EV
-          ELECTRONIC ENERGY       =       -114.09060 EV  POINT GROUP:     R3  
-          CORE-CORE REPULSION     =          0.00000 EV
           COSMO AREA              =         50.27 SQUARE ANGSTROMS
           COSMO VOLUME            =         33.51 CUBIC ANGSTROMS
 
           IONIZATION POTENTIAL    =          6.620227 EV
           HOMO LUMO ENERGIES (EV) =         -6.620  1.165
           NO. OF FILLED LEVELS    =          2
-          MOLECULAR WEIGHT        =         12.0110
+          MOLECULAR WEIGHT        =         12.0110         POINT GROUP:  R3  
 
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.031 SECONDS
-          COMPUTATION TIME        =          0.025 SECONDS
+          WALL-CLOCK TIME         =          0.008 SECONDS
+          COMPUTATION TIME        =          0.008 SECONDS
 
 
 
@@ -136,10 +131,8 @@ CHARGE=0
      Atom    s        px        py        pz   
     1  C   2.00000   2.00000   0.00000   0.00000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -149,7 +142,7 @@ CHARGE=0
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 17:58:57 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:14 2021  *
  *
  *
  *
@@ -208,8 +201,8 @@ CHARGE=1
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 17:58:57 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:14 2021
 
 
 
@@ -217,9 +210,6 @@ CHARGE=1
           FINAL HEAT OF FORMATION =        360.45490 KCAL/MOL =    1508.14332 KJ/MOL
 
 
-          TOTAL ENERGY            =       -107.47037 EV
-          ELECTRONIC ENERGY       =       -107.47037 EV  POINT GROUP:     R3  
-          CORE-CORE REPULSION     =          0.00000 EV
           COSMO AREA              =         50.27 SQUARE ANGSTROMS
           COSMO VOLUME            =         33.51 CUBIC ANGSTROMS
 
@@ -228,13 +218,13 @@ CHARGE=1
           BETA  SOMO LUMO (EV)    =        -27.092 -7.687
           NO. OF ALPHA ELECTRONS  =          2
           NO. OF BETA  ELECTRONS  =          1
-          MOLECULAR WEIGHT        =         12.0110
+          MOLECULAR WEIGHT        =         12.0110         POINT GROUP:  R3  
 
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.055 SECONDS
-          COMPUTATION TIME        =          0.047 SECONDS
+          WALL-CLOCK TIME         =          0.016 SECONDS
+          COMPUTATION TIME        =          0.016 SECONDS
 
 
 
@@ -288,12 +278,10 @@ CHARGE=1
 
     Atom   Total    s     px     py     pz   
          Atomic
-    1  C  1.0000  0.000  1.000  0.000  0.000
+    1  C  1.0000 -0.000  1.000  0.000  0.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -303,7 +291,7 @@ CHARGE=1
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 17:58:58 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:14 2021  *
  *
  *
  *
@@ -362,8 +350,8 @@ CHARGE=-1
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 17:58:58 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:14 2021
 
 
 
@@ -371,9 +359,6 @@ CHARGE=-1
           FINAL HEAT OF FORMATION =        234.65861 KCAL/MOL =     981.81163 KJ/MOL
 
 
-          TOTAL ENERGY            =       -112.92542 EV
-          ELECTRONIC ENERGY       =       -112.92542 EV  POINT GROUP:     R3  
-          CORE-CORE REPULSION     =          0.00000 EV
           COSMO AREA              =         50.27 SQUARE ANGSTROMS
           COSMO VOLUME            =         33.51 CUBIC ANGSTROMS
 
@@ -382,13 +367,13 @@ CHARGE=-1
           BETA  SOMO LUMO (EV)    =          2.765 10.551
           NO. OF ALPHA ELECTRONS  =          3
           NO. OF BETA  ELECTRONS  =          2
-          MOLECULAR WEIGHT        =         12.0110
+          MOLECULAR WEIGHT        =         12.0110         POINT GROUP:  R3  
 
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.078 SECONDS
-          COMPUTATION TIME        =          0.070 SECONDS
+          WALL-CLOCK TIME         =          0.023 SECONDS
+          COMPUTATION TIME        =          0.023 SECONDS
 
 
 
@@ -424,8 +409,8 @@ CHARGE=-1
     1          C          -1.000000        5.0000     2.00000     3.00000
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.     0.000     0.000     0.000     0.000
- HYBRID         0.000     0.000     0.000     0.000
- SUM            0.000     0.000     0.000     0.000
+ HYBRID         0.000    -0.000     0.000     0.000
+ SUM            0.000    -0.000     0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -452,6 +437,6 @@ CHARGE=-1
 
 
 
- TOTAL JOB TIME:             0.17 SECONDS
+ TOTAL JOB TIME:             0.05 SECONDS
 
  == MOPAC DONE ==

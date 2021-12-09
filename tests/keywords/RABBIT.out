@@ -1,0 +1,364 @@
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:42 2021  *
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  LOCALIZE   - LOCALIZED ORBITALS TO BE PRINTED
+ *******************************************************************************
+LOCAL
+ comment1
+ comment2
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       O          0.00000000       0.0000000       0.0000000        0     0     0
+     2       H          0.96000000       0.0000000       0.0000000        1     0     0
+     3       H          0.96000000     104.5000000       0.0000000        1     2     0
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         O          0.0000      0.0000      0.0000
+     2         H          0.9600      0.0000      0.0000
+     3         H         -0.2404      0.9294      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: H2 O  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2v 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+ -------------------------------------------------------------------------------
+ LOCAL
+ comment1
+ comment2
+
+
+     NO PARAMETERS MARKED FOR OPTIMIZATION, SO 1SCF WAS USED  
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:42 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -57.78359 KCAL/MOL =    -241.76655 KJ/MOL
+
+
+          COSMO AREA              =         42.45 SQUARE ANGSTROMS
+          COSMO VOLUME            =         25.18 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         12.083209 EV
+          HOMO LUMO ENERGIES (EV) =        -12.083  4.027
+          NO. OF FILLED LEVELS    =          4
+          MOLECULAR WEIGHT        =         18.0152         POINT GROUP:  C2v 
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     3    H     2     1.51812
+            O     1    H     3     0.58773
+            O     1    H     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.009 SECONDS
+
+
+
+
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       O          0.00000000       0.0000000       0.0000000        0     0     0
+     2       H          0.96000000       0.0000000       0.0000000        1     0     0
+     3       H          0.96000000     104.5000000       0.0000000        1     2     0
+
+                             CARTESIAN COORDINATES
+
+   1    O        0.000000000     0.000000000     0.000000000
+   2    H        0.960000000     0.000000000     0.000000000
+   3    H       -0.240364804     0.929421735     0.000000000
+
+
+           Empirical Formula: H2 O  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2v 
+
+
+                  EIGENVALUES  
+ -29.54863 -17.73712 -14.24737 -12.08321   4.02675   6.28975
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          O          -0.645331        6.6453     1.81866     4.82667
+    2          H           0.322666        0.6773     0.67733
+    3          H           0.322666        0.6773     0.67733
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     1.115     1.440     0.000     1.822
+ HYBRID         0.197     0.254     0.000     0.322
+ SUM            1.312     1.695     0.000     2.144
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  O   1.81866   1.39792   1.42874   2.00000
+    2  H   0.67733
+    3  H   0.67733
+
+          NUMBER OF ITERATIONS =   3
+          LOCALIZATION VALUE =   3.103896126
+
+ NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS 
+                                   (AS PERCENT OF THE LMO)
+
+  1    1.8118        -20.73320   O 1 66.13   H 3 33.85
+  2    1.8118        -20.73320   O 1 66.13   H 2 33.85
+  3    1.0000        -20.06670   O 1 100.0
+  4    1.0000        -12.08321   O 1 100.0
+
+
+                     LOCALIZED ORBITALS 
+
+
+
+
+
+
+    ROOT NO.    1           2           3           4
+
+           -20.73320   -20.73320   -20.06670   -12.08321
+  
+  
+  S  O   1   0.28809     0.28809     0.86217    -0.00000
+ PX  O   1  -0.15949     0.75982    -0.31016     0.00000
+ PY  O   1   0.74357     0.03176    -0.40058     0.00000
+ PZ  O   1  -0.00000     0.00000     0.00000     1.00000
+  
+  S  H   2   0.01252     0.58182     0.00000    -0.00000
+  
+  S  H   3   0.58182     0.01252    -0.00000     0.00000
+
+          BONDING CONTRIBUTION OF EACH M.O.
+
+  1.7909  1.7909  0.0000  0.0000 -1.7900 -1.7919
+ *******************************************************************************
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
+ *******************************************************************************
+ **                                                                           **
+ **                                MOPAC2016                                  **
+ **                                                                           **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:42 2021  *
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  RABBIT     - MAKE LOCALIZED ORBITALS WITH RABBIT EARS
+ *******************************************************************************
+RABBIT
+ comment1
+ comment2
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       O          0.00000000       0.0000000       0.0000000        0     0     0
+     2       H          0.96000000       0.0000000       0.0000000        1     0     0
+     3       H          0.96000000     104.5000000       0.0000000        1     2     0
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         O          0.0000      0.0000      0.0000
+     2         H          0.9600      0.0000      0.0000
+     3         H         -0.2404      0.9294      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: H2 O  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2v 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+ -------------------------------------------------------------------------------
+ RABBIT
+ comment1
+ comment2
+
+
+     NO PARAMETERS MARKED FOR OPTIMIZATION, SO 1SCF WAS USED  
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:42 2021
+
+
+
+
+          FINAL HEAT OF FORMATION =        -57.78359 KCAL/MOL =    -241.76655 KJ/MOL
+
+
+          COSMO AREA              =         42.45 SQUARE ANGSTROMS
+          COSMO VOLUME            =         25.18 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         12.083209 EV
+          HOMO LUMO ENERGIES (EV) =        -12.083  4.027
+          NO. OF FILLED LEVELS    =          4
+          MOLECULAR WEIGHT        =         18.0152         POINT GROUP:  C2v 
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     3    H     2     1.51812
+            O     1    H     3     0.58773
+            O     1    H     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =          0.020 SECONDS
+          COMPUTATION TIME        =          0.017 SECONDS
+
+
+
+
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1       O          0.00000000       0.0000000       0.0000000        0     0     0
+     2       H          0.96000000       0.0000000       0.0000000        1     0     0
+     3       H          0.96000000     104.5000000       0.0000000        1     2     0
+
+                             CARTESIAN COORDINATES
+
+   1    O        0.000000000     0.000000000     0.000000000
+   2    H        0.960000000     0.000000000     0.000000000
+   3    H       -0.240364804     0.929421735     0.000000000
+
+
+           Empirical Formula: H2 O  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2v 
+
+
+                  EIGENVALUES  
+ -29.54863 -17.73712 -14.24737 -12.08321   4.02675   6.28975
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          O          -0.645331        6.6453     1.81866     4.82667
+    2          H           0.322666        0.6773     0.67733
+    3          H           0.322666        0.6773     0.67733
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     1.115     1.440     0.000     1.822
+ HYBRID         0.197     0.254     0.000     0.322
+ SUM            1.312     1.695     0.000     2.144
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  O   1.81866   1.39792   1.42874   2.00000
+    2  H   0.67733
+    3  H   0.67733
+
+          NUMBER OF ITERATIONS =   3
+          LOCALIZATION VALUE =   3.103896126
+
+ NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS 
+                                   (AS PERCENT OF THE LMO)
+
+  1    1.8118        -20.73320   O 1 66.13   H 3 33.85
+  2    1.8118        -20.73320   O 1 66.13   H 2 33.85
+  3    1.0000        -16.07496   O 1 100.0
+  4    1.0000        -16.07496   O 1 100.0
+
+
+                     LOCALIZED ORBITALS 
+
+
+
+
+
+
+    ROOT NO.    1           2           3           4
+
+           -20.73320   -20.73320   -16.07496   -16.07496
+  
+  
+  S  O   1   0.28809     0.28809    -0.60965     0.60965
+ PX  O   1  -0.15949     0.75982     0.21932    -0.21932
+ PY  O   1   0.74357     0.03176     0.28325    -0.28325
+ PZ  O   1  -0.00000     0.00000     0.70711     0.70711
+  
+  S  H   2   0.01252     0.58182    -0.00000     0.00000
+  
+  S  H   3   0.58182     0.01252     0.00000    -0.00000
+
+          BONDING CONTRIBUTION OF EACH M.O.
+
+  1.7909  1.7909  0.0000  0.0000 -1.7900 -1.7919
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.04 SECONDS
+
+ == MOPAC DONE ==

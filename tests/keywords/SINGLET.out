@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,9 +10,9 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:53 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
- *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
+ *  C.I.=2     - 2 M.O.S TO BE USED IN C.I.
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  MECI       - M.E.C.I. WORKING TO BE PRINTED
@@ -58,9 +56,9 @@ RHF C.I.=2 MECI
 
  CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:   471.259 HEAT:  10.91828
  CYCLE:     2 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:   258.057 HEAT:  7.005458
- CYCLE:     3 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:   109.437 HEAT: -6.463654
- CYCLE:     4 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    60.744 HEAT: -8.006031
- CYCLE:     5 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     7.355 HEAT: -8.488418
+ CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:   109.437 HEAT: -6.463654
+ CYCLE:     4 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    60.744 HEAT: -8.006031
+ CYCLE:     5 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     7.355 HEAT: -8.488418
  CYCLE:     6 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.428 HEAT: -8.496260
 
      GRADIENT =  0.42835 IS LESS THAN CUTOFF =  1.00000
@@ -78,8 +76,8 @@ RHF C.I.=2 MECI
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Fri Jul 30 14:25:54 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:53 2021
 
 
 
@@ -87,17 +85,14 @@ RHF C.I.=2 MECI
           FINAL HEAT OF FORMATION =         -8.49626 KCAL/MOL =     -35.54835 KJ/MOL
 
 
-          TOTAL ENERGY            =       -587.39639 EV  STATE:   1 TRIPLET Sig-
-          ELECTRONIC ENERGY       =       -951.17521 EV  POINT GROUP:     D*h 
-          CORE-CORE REPULSION     =        363.77882 EV
           COSMO AREA              =         49.05 SQUARE ANGSTROMS
           COSMO VOLUME            =         31.36 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.42835 = 0.30289 PER ATOM
-          IONIZATION POTENTIAL    =          9.158148 EV
+          GRADIENT NORM           =          0.42835          =       0.30289 PER ATOM
+          IONIZATION POTENTIAL    =          9.158148 EV          STATE:   1 TRIPLET Sig-
           HOMO LUMO ENERGIES (EV) =         -9.158 -0.903
           NO. OF FILLED LEVELS    =          6
-          MOLECULAR WEIGHT        =         31.9988
+          MOLECULAR WEIGHT        =         31.9988         POINT GROUP:  D*h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -109,8 +104,8 @@ RHF C.I.=2 MECI
 
           SCF CALCULATIONS        =          7
  
-          WALL-CLOCK TIME         =          0.043 SECONDS
-          COMPUTATION TIME        =          0.043 SECONDS
+          WALL-CLOCK TIME         =          0.016 SECONDS
+          COMPUTATION TIME        =          0.014 SECONDS
 
 
 
@@ -144,9 +139,9 @@ RHF C.I.=2 MECI
     1          O          -0.000000        6.0000     1.95052     4.04948
     2          O           0.000000        6.0000     1.95052     4.04948
  DIPOLE           X         Y         Z       TOTAL
- POINT-CHG.     0.000    -0.000    -0.000     0.000
- HYBRID        -0.000    -0.000     0.000     0.000
- SUM            0.000    -0.000     0.000     0.000
+ POINT-CHG.     0.000     0.000    -0.000     0.000
+ HYBRID        -0.000     0.000     0.000     0.000
+ SUM            0.000     0.000     0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -188,10 +183,8 @@ RHF C.I.=2 MECI
     4     0.493950    1.975799     1   SINGLET     Sig 
            The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -201,10 +194,10 @@ RHF C.I.=2 MECI
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Jul 30 14:25:54 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:53 2021  *
  *  SINGLET    - SPIN STATE DEFINED AS A SINGLET
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
- *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
+ *  C.I.=2     - 2 M.O.S TO BE USED IN C.I.
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  MECI       - M.E.C.I. WORKING TO BE PRINTED
@@ -249,12 +242,12 @@ RHF SINGLET C.I.=2 MECI
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:   475.888 HEAT:  34.05957
+ CYCLE:     1 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:   475.888 HEAT:  34.05957
  CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:   256.018 HEAT:  29.51584
  CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:   108.899 HEAT:  16.30095
- CYCLE:     4 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    59.687 HEAT:  14.75941
+ CYCLE:     4 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    59.687 HEAT:  14.75941
  CYCLE:     5 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     7.203 HEAT:  14.29174
- CYCLE:     6 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     0.413 HEAT:  14.28419
+ CYCLE:     6 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.413 HEAT:  14.28419
 
      GRADIENT =  0.41287 IS LESS THAN CUTOFF =  1.00000
 
@@ -271,8 +264,8 @@ RHF SINGLET C.I.=2 MECI
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Fri Jul 30 14:25:54 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:53 2021
 
 
 
@@ -280,17 +273,14 @@ RHF SINGLET C.I.=2 MECI
           FINAL HEAT OF FORMATION =         14.28419 KCAL/MOL =      59.76507 KJ/MOL
 
 
-          TOTAL ENERGY            =       -586.40854 EV  STATE:   1 SINGLET Delg
-          ELECTRONIC ENERGY       =       -949.90023 EV  POINT GROUP:     D*h 
-          CORE-CORE REPULSION     =        363.49169 EV
           COSMO AREA              =         49.06 SQUARE ANGSTROMS
           COSMO VOLUME            =         31.37 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.41287 = 0.29194 PER ATOM
-          IONIZATION POTENTIAL    =          9.165367 EV
+          GRADIENT NORM           =          0.41287          =       0.29194 PER ATOM
+          IONIZATION POTENTIAL    =          9.165367 EV          STATE:   1 SINGLET Delg
           HOMO LUMO ENERGIES (EV) =         -9.165 -0.912
           NO. OF FILLED LEVELS    =          6
-          MOLECULAR WEIGHT        =         31.9988
+          MOLECULAR WEIGHT        =         31.9988         POINT GROUP:  D*h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -302,8 +292,8 @@ RHF SINGLET C.I.=2 MECI
 
           SCF CALCULATIONS        =          7
  
-          WALL-CLOCK TIME         =          0.082 SECONDS
-          COMPUTATION TIME        =          0.080 SECONDS
+          WALL-CLOCK TIME         =          0.031 SECONDS
+          COMPUTATION TIME        =          0.027 SECONDS
 
 
 
@@ -338,8 +328,8 @@ RHF SINGLET C.I.=2 MECI
     2          O           0.000000        6.0000     1.95086     4.04914
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.     0.000    -0.000     0.000     0.000
- HYBRID        -0.000     0.000     0.000     0.000
- SUM            0.000     0.000     0.000     0.000
+ HYBRID        -0.000    -0.000     0.000     0.000
+ SUM            0.000    -0.000     0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -389,6 +379,6 @@ RHF SINGLET C.I.=2 MECI
 
 
 
- TOTAL JOB TIME:             0.13 SECONDS
+ TOTAL JOB TIME:             0.05 SECONDS
 
  == MOPAC DONE ==

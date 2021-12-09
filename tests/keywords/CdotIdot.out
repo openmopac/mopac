@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 20 21:02:04 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:13 2021  *
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -69,8 +67,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 20 21:02:04 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:13 2021
 
 
 
@@ -78,16 +76,13 @@
           FINAL HEAT OF FORMATION =         14.66380 KCAL/MOL =      61.35332 KJ/MOL
 
 
-          TOTAL ENERGY            =       -298.88282 EV
-          ELECTRONIC ENERGY       =       -738.13942 EV  POINT GROUP:     D2h 
-          CORE-CORE REPULSION     =        439.25660 EV
           COSMO AREA              =         71.45 SQUARE ANGSTROMS
           COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
 
           IONIZATION POTENTIAL    =         10.684421 EV
           HOMO LUMO ENERGIES (EV) =        -10.684  0.976
           NO. OF FILLED LEVELS    =          6
-          MOLECULAR WEIGHT        =         28.0536
+          MOLECULAR WEIGHT        =         28.0536         POINT GROUP:  D2h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -99,8 +94,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.039 SECONDS
-          COMPUTATION TIME        =          0.036 SECONDS
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.010 SECONDS
 
 
 
@@ -162,10 +157,8 @@
     5  H   0.85817
     6  H   0.85817
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -175,8 +168,8 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 20 21:02:04 2021  *
- *  C.I.=2     -  2 M.O.S TO BE USED IN C.I.
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:13 2021  *
+ *  C.I.=2     - 2 M.O.S TO BE USED IN C.I.
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -233,8 +226,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 20 21:02:04 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:13 2021
 
 
 
@@ -242,16 +235,13 @@
           FINAL HEAT OF FORMATION =          8.74306 KCAL/MOL =      36.58098 KJ/MOL
 
 
-          TOTAL ENERGY            =       -299.13957 EV  STATE:   1 SINGLET Ag  
-          ELECTRONIC ENERGY       =       -738.39616 EV  POINT GROUP:     D2h 
-          CORE-CORE REPULSION     =        439.25660 EV
           COSMO AREA              =         71.45 SQUARE ANGSTROMS
           COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
 
-          IONIZATION POTENTIAL    =         10.684421 EV
+          IONIZATION POTENTIAL    =         10.684421 EV          STATE:   1 SINGLET Ag
           HOMO LUMO ENERGIES (EV) =        -10.684  0.976
           NO. OF FILLED LEVELS    =          6
-          MOLECULAR WEIGHT        =         28.0536
+          MOLECULAR WEIGHT        =         28.0536         POINT GROUP:  D2h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -263,8 +253,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.070 SECONDS
-          COMPUTATION TIME        =          0.070 SECONDS
+          WALL-CLOCK TIME         =          0.020 SECONDS
+          COMPUTATION TIME        =          0.019 SECONDS
 
 
 
@@ -326,10 +316,8 @@
     5  H   0.85817
     6  H   0.85817
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -339,7 +327,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jul 20 21:02:04 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:13 2021  *
  *  C.I.=(N,M) - 1 DOUBLY FILLED LEVELS USED IN A C.I. INVOLVING 2 M.O.'S
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -397,8 +385,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Tue Jul 20 21:02:04 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:13 2021
 
 
 
@@ -406,16 +394,13 @@
           FINAL HEAT OF FORMATION =          8.74306 KCAL/MOL =      36.58098 KJ/MOL
 
 
-          TOTAL ENERGY            =       -299.13957 EV  STATE:   1 SINGLET Ag  
-          ELECTRONIC ENERGY       =       -738.39616 EV  POINT GROUP:     D2h 
-          CORE-CORE REPULSION     =        439.25660 EV
           COSMO AREA              =         71.45 SQUARE ANGSTROMS
           COSMO VOLUME            =         53.18 CUBIC ANGSTROMS
 
-          IONIZATION POTENTIAL    =         10.684421 EV
+          IONIZATION POTENTIAL    =         10.684421 EV          STATE:   1 SINGLET Ag
           HOMO LUMO ENERGIES (EV) =        -10.684  0.976
           NO. OF FILLED LEVELS    =          6
-          MOLECULAR WEIGHT        =         28.0536
+          MOLECULAR WEIGHT        =         28.0536         POINT GROUP:  D2h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -427,8 +412,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.109 SECONDS
-          COMPUTATION TIME        =          0.102 SECONDS
+          WALL-CLOCK TIME         =          0.027 SECONDS
+          COMPUTATION TIME        =          0.028 SECONDS
 
 
 
@@ -498,6 +483,6 @@
 
 
 
- TOTAL JOB TIME:             0.19 SECONDS
+ TOTAL JOB TIME:             0.06 SECONDS
 
  == MOPAC DONE ==

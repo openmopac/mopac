@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.145M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               MNDO CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Jun  7 15:20:23 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:33 2021  *
  *  MNDO       - The MNDO Hamiltonian to be used
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -74,8 +72,8 @@ MNDO
 
 
                               MNDO CALCULATION
-                                                       MOPAC2016 (Version: 21.145M)
-                                                       Mon Jun  7 15:20:23 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:33 2021
 
 
 
@@ -83,17 +81,14 @@ MNDO
           FINAL HEAT OF FORMATION =        -75.10973 KCAL/MOL =    -314.25912 KJ/MOL
 
 
-          TOTAL ENERGY            =       -772.07063 EV
-          ELECTRONIC ENERGY       =      -1442.41298 EV  POINT GROUP:     D*h 
-          CORE-CORE REPULSION     =        670.34235 EV
           COSMO AREA              =         65.84 SQUARE ANGSTROMS
           COSMO VOLUME            =         47.52 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.40576 = 0.23426 PER ATOM
+          GRADIENT NORM           =          0.40576          =       0.23426 PER ATOM
           IONIZATION POTENTIAL    =         12.793643 EV
           HOMO LUMO ENERGIES (EV) =        -12.794  0.850
           NO. OF FILLED LEVELS    =          8
-          MOLECULAR WEIGHT        =         44.0098
+          MOLECULAR WEIGHT        =         44.0098         POINT GROUP:  D*h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -105,8 +100,8 @@ MNDO
 
           SCF CALCULATIONS        =          6
  
-          WALL-CLOCK TIME         =          0.039 SECONDS
-          COMPUTATION TIME        =          0.035 SECONDS
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.012 SECONDS
 
 
 
@@ -114,15 +109,15 @@ MNDO
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
  
-     1       C         -0.00000000  *  -0.00000000  *   0.00000000  *
-     2       O          1.18612842  *   0.00000000  *  -0.00000000  *
-     3       O         -1.18612842  *   0.00000000  *  -0.00000000  *
+     1       C         -0.00000000  *  -0.00000000  *  -0.00000000  *
+     2       O          1.18612842  *   0.00000000  *   0.00000000  *
+     3       O         -1.18612842  *   0.00000000  *   0.00000000  *
 
                              CARTESIAN COORDINATES
 
-   1    C       -0.000000000    -0.000000000     0.000000000
-   2    O        1.186128425     0.000000000    -0.000000000
-   3    O       -1.186128424     0.000000000    -0.000000000
+   1    C       -0.000000001    -0.000000000    -0.000000000
+   2    O        1.186128425     0.000000000     0.000000000
+   3    O       -1.186128424     0.000000000     0.000000000
 
 
            Empirical Formula: C O2  =     3 atoms
@@ -144,9 +139,9 @@ MNDO
     2          O          -0.223999        6.2240     1.88135     4.34265
     3          O          -0.223999        6.2240     1.88135     4.34265
  DIPOLE           X         Y         Z       TOTAL
- POINT-CHG.    -0.000    -0.000     0.000     0.000
- HYBRID        -0.000    -0.000     0.000     0.000
- SUM           -0.000    -0.000     0.000     0.000
+ POINT-CHG.    -0.000    -0.000    -0.000     0.000
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM           -0.000    -0.000    -0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -164,6 +159,6 @@ MNDO
 
 
 
- TOTAL JOB TIME:             0.04 SECONDS
+ TOTAL JOB TIME:             0.02 SECONDS
 
  == MOPAC DONE ==

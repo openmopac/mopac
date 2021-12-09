@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Jul 12 15:14:38 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:55 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -55,7 +53,7 @@ UHF
           DIAGONAL MATRIX USED AS START HESSIAN
 
  CYCLE:     1 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    25.143 HEAT: -61.80619
- CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     6.344 HEAT: -61.92783
+ CYCLE:     2 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     6.344 HEAT: -61.92783
  CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.256 HEAT: -61.93555
 
      GRADIENT =  0.25561 IS LESS THAN CUTOFF =  1.00000
@@ -73,8 +71,8 @@ UHF
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Mon Jul 12 15:14:38 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:55 2021
 
 
 
@@ -82,19 +80,16 @@ UHF
           FINAL HEAT OF FORMATION =        -61.93555 KCAL/MOL =    -259.13836 KJ/MOL
 
 
-          TOTAL ENERGY            =       -479.53039 EV
-          ELECTRONIC ENERGY       =       -560.04638 EV  POINT GROUP:     C*v 
-          CORE-CORE REPULSION     =         80.51599 EV
           COSMO AREA              =         39.28 SQUARE ANGSTROMS
           COSMO VOLUME            =         22.93 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.25561 = 0.18074 PER ATOM
+          GRADIENT NORM           =          0.25561          =       0.18074 PER ATOM
           IONIZATION POTENTIAL    =         15.795269 EV
           ALPHA SOMO LUMO (EV)    =        -15.795  4.728
           BETA  SOMO LUMO (EV)    =        -15.795  4.728
           NO. OF ALPHA ELECTRONS  =          4
           NO. OF BETA  ELECTRONS  =          4
-          MOLECULAR WEIGHT        =         20.0063
+          MOLECULAR WEIGHT        =         20.0063         POINT GROUP:  C*v 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -106,8 +101,8 @@ UHF
 
           SCF CALCULATIONS        =          5
  
-          WALL-CLOCK TIME         =          0.035 SECONDS
-          COMPUTATION TIME        =          0.032 SECONDS
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.010 SECONDS
 
 
 
@@ -146,8 +141,8 @@ UHF
     2          F          -0.290335        7.2903     1.95452     5.33582
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.    -1.249     0.000     0.000     1.249
- HYBRID        -0.205     0.000    -0.000     0.205
- SUM           -1.454     0.000    -0.000     1.454
+ HYBRID        -0.205    -0.000    -0.000     0.205
+ SUM           -1.454    -0.000    -0.000     1.454
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -166,12 +161,10 @@ UHF
     Atom   Total    s     px     py     pz   
          Atomic
     1  H  0.0000  0.000
-    2  F -0.0000  0.000 -0.000  0.000  0.000
+    2  F -0.0000  0.000 -0.000 -0.000  0.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -181,7 +174,7 @@ UHF
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Jul 12 15:14:38 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:55 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -223,7 +216,7 @@ UHF
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     6.012 HEAT:  7.270196
+ CYCLE:     1 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     6.012 HEAT:  7.270196
  CYCLE:     2 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     2.152 HEAT:  7.258719
  CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.025 HEAT:  7.256987
 
@@ -242,8 +235,8 @@ UHF
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Mon Jul 12 15:14:38 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:55 2021
 
 
 
@@ -251,19 +244,16 @@ UHF
           FINAL HEAT OF FORMATION =          7.25699 KCAL/MOL =      30.36323 KJ/MOL
 
 
-          TOTAL ENERGY            =       -306.52874 EV
-          ELECTRONIC ENERGY       =       -375.17204 EV  POINT GROUP:     C*v 
-          CORE-CORE REPULSION     =         68.64330 EV
           COSMO AREA              =         39.77 SQUARE ANGSTROMS
           COSMO VOLUME            =         23.30 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.02504 = 0.01771 PER ATOM
+          GRADIENT NORM           =          0.02504          =       0.01771 PER ATOM
           IONIZATION POTENTIAL    =         11.176948 EV
           ALPHA SOMO LUMO (EV)    =        -12.236  4.530
           BETA  SOMO LUMO (EV)    =        -11.177 -1.629
           NO. OF ALPHA ELECTRONS  =          4
           NO. OF BETA  ELECTRONS  =          3
-          MOLECULAR WEIGHT        =         17.0073
+          MOLECULAR WEIGHT        =         17.0073         POINT GROUP:  C*v 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -275,8 +265,8 @@ UHF
 
           SCF CALCULATIONS        =          4
  
-          WALL-CLOCK TIME         =          0.062 SECONDS
-          COMPUTATION TIME        =          0.060 SECONDS
+          WALL-CLOCK TIME         =          0.020 SECONDS
+          COMPUTATION TIME        =          0.019 SECONDS
 
 
 
@@ -345,6 +335,6 @@ UHF
 
 
 
- TOTAL JOB TIME:             0.10 SECONDS
+ TOTAL JOB TIME:             0.03 SECONDS
 
  == MOPAC DONE ==

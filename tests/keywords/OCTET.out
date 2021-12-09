@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,9 +10,9 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
- *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 3.5
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =  3.5
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *******************************************************************************
@@ -66,8 +64,8 @@ UHF MS=3.5
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Fri Jul 30 14:25:51 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -75,9 +73,6 @@ UHF MS=3.5
           FINAL HEAT OF FORMATION =       2654.15927 KCAL/MOL =   11105.00240 KJ/MOL
 
 
-          TOTAL ENERGY            =       -287.71626 EV
-          ELECTRONIC ENERGY       =       -287.71626 EV  POINT GROUP:     R3  
-          CORE-CORE REPULSION     =          0.00000 EV
           COSMO AREA              =         72.38 SQUARE ANGSTROMS
           COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
 
@@ -86,13 +81,13 @@ UHF MS=3.5
           BETA  SOMO LUMO (EV)    =        -14.635 -5.167
           NO. OF ALPHA ELECTRONS  =          8
           NO. OF BETA  ELECTRONS  =          1
-          MOLECULAR WEIGHT        =         58.9332
+          MOLECULAR WEIGHT        =         58.9332         POINT GROUP:  R3  
 
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.020 SECONDS
-          COMPUTATION TIME        =          0.020 SECONDS
+          WALL-CLOCK TIME         =          0.008 SECONDS
+          COMPUTATION TIME        =          0.009 SECONDS
 
 
 
@@ -130,8 +125,8 @@ UHF MS=3.5
     1         Co           0.000000        9.0000     1.00000     2.00000     6.00000
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.     0.000     0.000     0.000     0.000
- HYBRID         0.000    -0.000     0.000     0.000
- SUM            0.000    -0.000     0.000     0.000
+ HYBRID        -0.000     0.000     0.000     0.000
+ SUM           -0.000     0.000     0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -150,10 +145,8 @@ UHF MS=3.5
          Atomic
     1 Co  7.0000  1.000  1.000  1.000  0.000  0.000  1.000  1.000  1.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -163,7 +156,7 @@ UHF MS=3.5
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  OCTET      - SPIN STATE DEFINED AS A OCTET
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -220,8 +213,8 @@ UHF OCTET
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Fri Jul 30 14:25:51 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -229,9 +222,6 @@ UHF OCTET
           FINAL HEAT OF FORMATION =       2654.15927 KCAL/MOL =   11105.00240 KJ/MOL
 
 
-          TOTAL ENERGY            =       -287.71626 EV
-          ELECTRONIC ENERGY       =       -287.71626 EV  POINT GROUP:     R3  
-          CORE-CORE REPULSION     =          0.00000 EV
           COSMO AREA              =         72.38 SQUARE ANGSTROMS
           COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
 
@@ -240,13 +230,13 @@ UHF OCTET
           BETA  SOMO LUMO (EV)    =        -14.635 -5.167
           NO. OF ALPHA ELECTRONS  =          8
           NO. OF BETA  ELECTRONS  =          1
-          MOLECULAR WEIGHT        =         58.9332
+          MOLECULAR WEIGHT        =         58.9332         POINT GROUP:  R3  
 
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.039 SECONDS
-          COMPUTATION TIME        =          0.039 SECONDS
+          WALL-CLOCK TIME         =          0.016 SECONDS
+          COMPUTATION TIME        =          0.017 SECONDS
 
 
 
@@ -284,8 +274,8 @@ UHF OCTET
     1         Co           0.000000        9.0000     1.00000     2.00000     6.00000
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.     0.000     0.000     0.000     0.000
- HYBRID         0.000    -0.000     0.000     0.000
- SUM            0.000    -0.000     0.000     0.000
+ HYBRID        -0.000     0.000     0.000     0.000
+ SUM           -0.000     0.000     0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -304,10 +294,8 @@ UHF OCTET
          Atomic
     1 Co  7.0000  1.000  1.000  1.000  0.000  0.000  1.000  1.000  1.000  1.000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -317,10 +305,10 @@ UHF OCTET
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 7 ELECTRONS IN 7 LEVELS
- *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = 3.5
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =  3.5
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  MECI       - M.E.C.I. WORKING TO BE PRINTED
@@ -377,8 +365,8 @@ RHF MS=3.5 MECI OPEN(7,7)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Fri Jul 30 14:25:51 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -386,21 +374,18 @@ RHF MS=3.5 MECI OPEN(7,7)
           FINAL HEAT OF FORMATION =       2654.15927 KCAL/MOL =   11105.00240 KJ/MOL
 
 
-          TOTAL ENERGY            =       -287.71626 EV  STATE:   1 OCTET   ????
-          ELECTRONIC ENERGY       =       -287.71626 EV  POINT GROUP:     R3  
-          CORE-CORE REPULSION     =          0.00000 EV
           COSMO AREA              =         72.38 SQUARE ANGSTROMS
           COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
 
           NO. OF FILLED LEVELS    =          1
           AND NO. OF OPEN LEVELS  =          7
-          MOLECULAR WEIGHT        =         58.9332
+          MOLECULAR WEIGHT        =         58.9332         POINT GROUP:  R3  
 
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.062 SECONDS
-          COMPUTATION TIME        =          0.059 SECONDS
+          WALL-CLOCK TIME         =          0.023 SECONDS
+          COMPUTATION TIME        =          0.024 SECONDS
 
 
 
@@ -423,7 +408,7 @@ RHF MS=3.5 MECI OPEN(7,7)
 
 
                   EIGENVALUES  
- -16.14521 -12.01664 -11.74648 -11.74645 -11.01236  -3.94380  49.09314  49.09315
+ -16.14521 -12.01664 -11.74647 -11.74645 -11.01236  -3.94380  49.09314  49.09315
   50.83631
 
 
@@ -433,8 +418,8 @@ RHF MS=3.5 MECI OPEN(7,7)
     1         Co          -0.000000        9.0000     1.00000     2.00000     6.00000
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.     0.000     0.000     0.000     0.000
- HYBRID        -0.000    -0.000    -0.000     0.000
- SUM           -0.000    -0.000    -0.000     0.000
+ HYBRID         0.000     0.000    -0.000     0.000
+ SUM            0.000     0.000    -0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -467,10 +452,8 @@ RHF MS=3.5 MECI OPEN(7,7)
            This may or may not be the ground state.
            The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -480,7 +463,7 @@ RHF MS=3.5 MECI OPEN(7,7)
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Jul 30 14:25:51 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  OCTET      - SPIN STATE DEFINED AS A OCTET
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  OPEN(M,N)  - THERE ARE 7 ELECTRONS IN 7 LEVELS
@@ -543,8 +526,8 @@ RHF OCTET MECI OPEN(7,7)
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Fri Jul 30 14:25:51 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -552,21 +535,18 @@ RHF OCTET MECI OPEN(7,7)
           FINAL HEAT OF FORMATION =       2654.15927 KCAL/MOL =   11105.00240 KJ/MOL
 
 
-          TOTAL ENERGY            =       -287.71626 EV  STATE:   1 OCTET   ????
-          ELECTRONIC ENERGY       =       -287.71626 EV  POINT GROUP:     R3  
-          CORE-CORE REPULSION     =          0.00000 EV
           COSMO AREA              =         72.38 SQUARE ANGSTROMS
           COSMO VOLUME            =         57.91 CUBIC ANGSTROMS
 
           NO. OF FILLED LEVELS    =          1
           AND NO. OF OPEN LEVELS  =          7
-          MOLECULAR WEIGHT        =         58.9332
+          MOLECULAR WEIGHT        =         58.9332         POINT GROUP:  R3  
 
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.082 SECONDS
-          COMPUTATION TIME        =          0.082 SECONDS
+          WALL-CLOCK TIME         =          0.031 SECONDS
+          COMPUTATION TIME        =          0.032 SECONDS
 
 
 
@@ -589,7 +569,7 @@ RHF OCTET MECI OPEN(7,7)
 
 
                   EIGENVALUES  
- -16.14521 -12.01664 -11.74648 -11.74645 -11.01236  -3.94380  49.09314  49.09315
+ -16.14521 -12.01664 -11.74647 -11.74645 -11.01236  -3.94380  49.09314  49.09315
   50.83631
 
 
@@ -599,8 +579,8 @@ RHF OCTET MECI OPEN(7,7)
     1         Co          -0.000000        9.0000     1.00000     2.00000     6.00000
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.     0.000     0.000     0.000     0.000
- HYBRID        -0.000    -0.000    -0.000     0.000
- SUM           -0.000    -0.000    -0.000     0.000
+ HYBRID         0.000     0.000    -0.000     0.000
+ SUM            0.000     0.000    -0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -641,6 +621,6 @@ RHF OCTET MECI OPEN(7,7)
 
 
 
- TOTAL JOB TIME:             0.21 SECONDS
+ TOTAL JOB TIME:             0.09 SECONDS
 
  == MOPAC DONE ==

@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Jul 25 21:41:33 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:35 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -58,8 +56,8 @@ RHF
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.016 TIME LEFT:  2.00D  GRAD.:     7.100 HEAT:  7.888059
- CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.624 HEAT:  7.872335
+ CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     7.100 HEAT:  7.888059
+ CYCLE:     2 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     2.624 HEAT:  7.872335
  CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.021 HEAT:  7.869798
 
      GRADIENT =  0.02086 IS LESS THAN CUTOFF =  1.00000
@@ -77,8 +75,8 @@ RHF
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Sun Jul 25 21:41:33 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:35 2021
 
 
 
@@ -86,18 +84,15 @@ RHF
           FINAL HEAT OF FORMATION =          7.86980 KCAL/MOL =      32.92723 KJ/MOL
 
 
-          TOTAL ENERGY            =       -306.50217 EV  STATE:   1 DOUBLET ????
-          ELECTRONIC ENERGY       =       -375.09213 EV  POINT GROUP:     C*v 
-          CORE-CORE REPULSION     =         68.58996 EV
           COSMO AREA              =         39.78 SQUARE ANGSTROMS
           COSMO VOLUME            =         23.30 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.02086 = 0.01475 PER ATOM
-          IONIZATION POTENTIAL    =         14.075162 EV
+          GRADIENT NORM           =          0.02086          =       0.01475 PER ATOM
+          IONIZATION POTENTIAL    =         14.075162 EV          STATE:   1 DOUBLET ????
           HOMO (SOMO) LUMO (EV)   =      -11.696 ( -7.873)  4.777
           NO. OF FILLED LEVELS    =          3
           AND NO. OF OPEN LEVELS  =          1
-          MOLECULAR WEIGHT        =         17.0073
+          MOLECULAR WEIGHT        =         17.0073         POINT GROUP:  C*v 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -109,8 +104,8 @@ RHF
 
           SCF CALCULATIONS        =          4
  
-          WALL-CLOCK TIME         =          0.086 SECONDS
-          COMPUTATION TIME        =          0.050 SECONDS
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.011 SECONDS
 
 
 
@@ -155,10 +150,8 @@ RHF
     1  H   0.74847
     2  O   1.93396   1.31757   2.00000   1.00000
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.178M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.178M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -168,7 +161,7 @@ RHF
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Jul 25 21:41:33 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:35 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *  NOANCI     - DO NOT USE ANALYTICAL C.I. DERIVATIVES
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -215,8 +208,8 @@ RHF NOANCI
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     7.085 HEAT:  7.888059
- CYCLE:     2 TIME:   0.008 TIME LEFT:  2.00D  GRAD.:     2.597 HEAT:  7.872293
+ CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     7.085 HEAT:  7.888059
+ CYCLE:     2 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     2.597 HEAT:  7.872293
  CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.100 HEAT:  7.869798
 
      GRADIENT =  0.09951 IS LESS THAN CUTOFF =  1.00000
@@ -234,8 +227,8 @@ RHF NOANCI
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.178M)
-                                                       Sun Jul 25 21:41:33 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:35 2021
 
 
 
@@ -243,18 +236,15 @@ RHF NOANCI
           FINAL HEAT OF FORMATION =          7.86980 KCAL/MOL =      32.92723 KJ/MOL
 
 
-          TOTAL ENERGY            =       -306.50217 EV  STATE:   1 DOUBLET ????
-          ELECTRONIC ENERGY       =       -375.09200 EV  POINT GROUP:     C*v 
-          CORE-CORE REPULSION     =         68.58983 EV
           COSMO AREA              =         39.78 SQUARE ANGSTROMS
           COSMO VOLUME            =         23.30 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.09951 = 0.07036 PER ATOM
-          IONIZATION POTENTIAL    =         14.075157 EV
+          GRADIENT NORM           =          0.09951          =       0.07036 PER ATOM
+          IONIZATION POTENTIAL    =         14.075157 EV          STATE:   1 DOUBLET ????
           HOMO (SOMO) LUMO (EV)   =      -11.696 ( -7.873)  4.777
           NO. OF FILLED LEVELS    =          3
           AND NO. OF OPEN LEVELS  =          1
-          MOLECULAR WEIGHT        =         17.0073
+          MOLECULAR WEIGHT        =         17.0073         POINT GROUP:  C*v 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -266,8 +256,8 @@ RHF NOANCI
 
           SCF CALCULATIONS        =         25
  
-          WALL-CLOCK TIME         =          0.133 SECONDS
-          COMPUTATION TIME        =          0.091 SECONDS
+          WALL-CLOCK TIME         =          0.023 SECONDS
+          COMPUTATION TIME        =          0.023 SECONDS
 
 
 
@@ -320,6 +310,6 @@ RHF NOANCI
 
 
 
- TOTAL JOB TIME:             0.23 SECONDS
+ TOTAL JOB TIME:             0.04 SECONDS
 
  == MOPAC DONE ==

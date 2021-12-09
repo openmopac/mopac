@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.145M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM6-DH+ CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Jun  7 15:23:06 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:39 2021  *
  *  PM6-DH+    - CORRECT DISPERSION AND HYDROGEN BOND TERMS USING PM6-DH+
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -61,8 +59,8 @@ PM6-DH+
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    38.342 HEAT: -84.54253
- CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    12.000 HEAT: -84.78908
+ CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    38.342 HEAT: -84.54253
+ CYCLE:     2 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    12.000 HEAT: -84.78908
  CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.337 HEAT: -84.81729
 
      GRADIENT =  0.33655 IS LESS THAN CUTOFF =  1.00000
@@ -80,8 +78,8 @@ PM6-DH+
 
 
                               PM6-DH+ CALCULATION
-                                                       MOPAC2016 (Version: 21.145M)
-                                                       Mon Jun  7 15:23:06 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:39 2021
 
 
 
@@ -89,17 +87,14 @@ PM6-DH+
           FINAL HEAT OF FORMATION =        -84.81729 KCAL/MOL =    -354.87556 KJ/MOL
 
 
-          TOTAL ENERGY            =       -705.70976 EV
-          ELECTRONIC ENERGY       =      -1346.43353 EV  POINT GROUP:     D*h 
-          CORE-CORE REPULSION     =        640.72377 EV
           COSMO AREA              =         65.58 SQUARE ANGSTROMS
           COSMO VOLUME            =         47.27 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.33655 = 0.19431 PER ATOM
+          GRADIENT NORM           =          0.33655          =       0.19431 PER ATOM
           IONIZATION POTENTIAL    =         12.991647 EV
           HOMO LUMO ENERGIES (EV) =        -12.992  0.249
           NO. OF FILLED LEVELS    =          8
-          MOLECULAR WEIGHT        =         44.0098
+          MOLECULAR WEIGHT        =         44.0098         POINT GROUP:  D*h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -111,8 +106,8 @@ PM6-DH+
 
           SCF CALCULATIONS        =          5
  
-          WALL-CLOCK TIME         =          0.031 SECONDS
-          COMPUTATION TIME        =          0.034 SECONDS
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.012 SECONDS
 
 
 
@@ -120,15 +115,15 @@ PM6-DH+
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
  
-     1       C          0.00000000  *   0.00000000  *   0.00000000  *
-     2       O          1.17032461  *  -0.00000000  *  -0.00000000  *
-     3       O         -1.17032461  *  -0.00000000  *  -0.00000000  *
+     1       C         -0.00000000  *  -0.00000000  *  -0.00000000  *
+     2       O          1.17032461  *   0.00000000  *   0.00000000  *
+     3       O         -1.17032461  *   0.00000000  *   0.00000000  *
 
                              CARTESIAN COORDINATES
 
-   1    C        0.000000000     0.000000000     0.000000001
-   2    O        1.170324611    -0.000000000    -0.000000000
-   3    O       -1.170324611    -0.000000000    -0.000000000
+   1    C       -0.000000000    -0.000000001    -0.000000001
+   2    O        1.170324611     0.000000000     0.000000001
+   3    O       -1.170324611     0.000000000     0.000000001
 
 
            Empirical Formula: C O2  =     3 atoms
@@ -150,9 +145,9 @@ PM6-DH+
     2          O          -0.319697        6.3197     1.84872     4.47098
     3          O          -0.319697        6.3197     1.84872     4.47098
  DIPOLE           X         Y         Z       TOTAL
- POINT-CHG.     0.000     0.000     0.000     0.000
- HYBRID         0.000     0.000     0.000     0.000
- SUM            0.000     0.000     0.000     0.000
+ POINT-CHG.    -0.000    -0.000    -0.000     0.000
+ HYBRID         0.000    -0.000    -0.000     0.000
+ SUM           -0.000    -0.000    -0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -170,6 +165,6 @@ PM6-DH+
 
 
 
- TOTAL JOB TIME:             0.03 SECONDS
+ TOTAL JOB TIME:             0.02 SECONDS
 
  == MOPAC DONE ==

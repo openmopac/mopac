@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.145M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.145M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               RM1 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Jun  7 15:21:00 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:44 2021  *
  *  RM1        - The RM1 Hamiltonian to be used
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -54,7 +52,7 @@ RM1
 
           DIAGONAL MATRIX USED AS START HESSIAN
 
- CYCLE:     1 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    51.102 HEAT: -81.09054
+ CYCLE:     1 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    51.102 HEAT: -81.09054
  CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:    19.328 HEAT: -81.48403
  CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.581 HEAT: -81.55398
 
@@ -73,8 +71,8 @@ RM1
 
 
                               RM1 CALCULATION
-                                                       MOPAC2016 (Version: 21.145M)
-                                                       Mon Jun  7 15:21:00 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:44 2021
 
 
 
@@ -82,17 +80,14 @@ RM1
           FINAL HEAT OF FORMATION =        -81.55398 KCAL/MOL =    -341.22185 KJ/MOL
 
 
-          TOTAL ENERGY            =       -758.06052 EV
-          ELECTRONIC ENERGY       =      -1427.02347 EV  POINT GROUP:     D*h 
-          CORE-CORE REPULSION     =        668.96295 EV
           COSMO AREA              =         65.58 SQUARE ANGSTROMS
           COSMO VOLUME            =         47.28 CUBIC ANGSTROMS
 
-          GRADIENT NORM           =          0.58121 = 0.33556 PER ATOM
+          GRADIENT NORM           =          0.58121          =       0.33556 PER ATOM
           IONIZATION POTENTIAL    =         12.913991 EV
           HOMO LUMO ENERGIES (EV) =        -12.914  0.990
           NO. OF FILLED LEVELS    =          8
-          MOLECULAR WEIGHT        =         44.0098
+          MOLECULAR WEIGHT        =         44.0098         POINT GROUP:  D*h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -104,8 +99,8 @@ RM1
 
           SCF CALCULATIONS        =          5
  
-          WALL-CLOCK TIME         =          0.035 SECONDS
-          COMPUTATION TIME        =          0.036 SECONDS
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.011 SECONDS
 
 
 
@@ -113,15 +108,15 @@ RM1
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
  
-     1       C         -0.00000000  *   0.00000000  *   0.00000000  *
-     2       O          1.17310920  *  -0.00000000  *  -0.00000000  *
-     3       O         -1.17310920  *  -0.00000000  *  -0.00000000  *
+     1       C         -0.00000000  *  -0.00000000  *  -0.00000000  *
+     2       O          1.17310920  *   0.00000000  *   0.00000000  *
+     3       O         -1.17310920  *   0.00000000  *   0.00000000  *
 
                              CARTESIAN COORDINATES
 
-   1    C       -0.000000000     0.000000000     0.000000000
-   2    O        1.173109199    -0.000000000    -0.000000000
-   3    O       -1.173109199    -0.000000000    -0.000000000
+   1    C       -0.000000000    -0.000000000    -0.000000000
+   2    O        1.173109199     0.000000000     0.000000000
+   3    O       -1.173109199     0.000000000     0.000000000
 
 
            Empirical Formula: C O2  =     3 atoms
@@ -143,9 +138,9 @@ RM1
     2          O          -0.220879        6.2209     1.90293     4.31795
     3          O          -0.220879        6.2209     1.90293     4.31795
  DIPOLE           X         Y         Z       TOTAL
- POINT-CHG.    -0.000     0.000     0.000     0.000
- HYBRID        -0.000     0.000     0.000     0.000
- SUM           -0.000     0.000     0.000     0.000
+ POINT-CHG.    -0.000    -0.000    -0.000     0.000
+ HYBRID        -0.000    -0.000    -0.000     0.000
+ SUM           -0.000    -0.000    -0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -163,6 +158,6 @@ RM1
 
 
 
- TOTAL JOB TIME:             0.04 SECONDS
+ TOTAL JOB TIME:             0.02 SECONDS
 
  == MOPAC DONE ==

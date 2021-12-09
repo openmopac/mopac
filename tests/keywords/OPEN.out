@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 12:56:37 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *
  *
@@ -81,8 +79,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 12:56:37 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -90,15 +88,12 @@
           FINAL HEAT OF FORMATION =        298.78277 KCAL/MOL =    1250.10713 KJ/MOL
 
 
-          TOTAL ENERGY            =       -163.46214 EV  STATE:   1 DOUBLET T2  
-          ELECTRONIC ENERGY       =       -376.34903 EV  POINT GROUP:     Td  
-          CORE-CORE REPULSION     =        212.88689 EV
           COSMO AREA              =         54.91 SQUARE ANGSTROMS
           COSMO VOLUME            =         37.13 CUBIC ANGSTROMS
 
           NO. OF FILLED LEVELS    =          1
           AND NO. OF OPEN LEVELS  =          3
-          MOLECULAR WEIGHT        =         16.0426
+          MOLECULAR WEIGHT        =         16.0426         POINT GROUP:  Td  
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -110,8 +105,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.035 SECONDS
-          COMPUTATION TIME        =          0.034 SECONDS
+          WALL-CLOCK TIME         =          0.008 SECONDS
+          COMPUTATION TIME        =          0.009 SECONDS
 
 
 
@@ -199,10 +194,8 @@
            This may or may not be the ground state.
            The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -212,7 +205,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 12:56:37 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *
  *
@@ -282,8 +275,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 12:56:37 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -291,15 +284,12 @@
           FINAL HEAT OF FORMATION =        297.79469 KCAL/MOL =    1245.97296 KJ/MOL
 
 
-          TOTAL ENERGY            =       -163.50499 EV  STATE:   1 DOUBLET T2  
-          ELECTRONIC ENERGY       =       -376.39188 EV  POINT GROUP:     Td  
-          CORE-CORE REPULSION     =        212.88689 EV
           COSMO AREA              =         54.91 SQUARE ANGSTROMS
           COSMO VOLUME            =         37.13 CUBIC ANGSTROMS
 
           NO. OF FILLED LEVELS    =          1
           AND NO. OF OPEN LEVELS  =          3
-          MOLECULAR WEIGHT        =         16.0426
+          MOLECULAR WEIGHT        =         16.0426         POINT GROUP:  Td  
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -311,8 +301,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.090 SECONDS
-          COMPUTATION TIME        =          0.218 SECONDS
+          WALL-CLOCK TIME         =          0.027 SECONDS
+          COMPUTATION TIME        =          0.051 SECONDS
 
 
 
@@ -590,10 +580,8 @@
            This may or may not be the ground state.
            The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -603,7 +591,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 12:56:37 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION
  *
  *
@@ -612,7 +600,7 @@
  *
  *
  *
- *  C.I.=3     -  3 M.O.S TO BE USED IN C.I.
+ *  C.I.=3     - 3 M.O.S TO BE USED IN C.I.
  *  OPEN(M,N)  - THERE ARE 5 ELECTRONS IN 3 LEVELS
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -673,8 +661,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 12:56:37 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -682,15 +670,12 @@
           FINAL HEAT OF FORMATION =        298.78277 KCAL/MOL =    1250.10713 KJ/MOL
 
 
-          TOTAL ENERGY            =       -163.46214 EV  STATE:   1 DOUBLET T2  
-          ELECTRONIC ENERGY       =       -376.34903 EV  POINT GROUP:     Td  
-          CORE-CORE REPULSION     =        212.88689 EV
           COSMO AREA              =         54.91 SQUARE ANGSTROMS
           COSMO VOLUME            =         37.13 CUBIC ANGSTROMS
 
           NO. OF FILLED LEVELS    =          1
           AND NO. OF OPEN LEVELS  =          3
-          MOLECULAR WEIGHT        =         16.0426
+          MOLECULAR WEIGHT        =         16.0426         POINT GROUP:  Td  
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -702,8 +687,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.156 SECONDS
-          COMPUTATION TIME        =          0.477 SECONDS
+          WALL-CLOCK TIME         =          0.047 SECONDS
+          COMPUTATION TIME        =          0.126 SECONDS
 
 
 
@@ -791,10 +776,8 @@
            This may or may not be the ground state.
            The "+" symbol indicates the root used.
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -804,7 +787,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 12:56:37 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *
  *
@@ -814,7 +797,7 @@
  *
  *
  *  OPEN(M,N)  - THERE ARE 2 ELECTRONS IN 3 LEVELS
- *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =-0.5
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = -0.5
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -869,8 +852,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 12:56:37 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -878,9 +861,6 @@
           FINAL HEAT OF FORMATION =        364.39942 KCAL/MOL =    1524.64718 KJ/MOL
 
 
-          TOTAL ENERGY            =       -160.61673 EV
-          ELECTRONIC ENERGY       =       -373.50362 EV  POINT GROUP:     Td  
-          CORE-CORE REPULSION     =        212.88689 EV
           COSMO AREA              =         54.91 SQUARE ANGSTROMS
           COSMO VOLUME            =         37.13 CUBIC ANGSTROMS
 
@@ -889,7 +869,7 @@
           BETA  SOMO LUMO (EV)    =        -22.747 -3.056
           NO. OF ALPHA ELECTRONS  =          3
           NO. OF BETA  ELECTRONS  =          4
-          MOLECULAR WEIGHT        =         16.0426
+          MOLECULAR WEIGHT        =         16.0426         POINT GROUP:  Td  
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -901,8 +881,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.188 SECONDS
-          COMPUTATION TIME        =          0.596 SECONDS
+          WALL-CLOCK TIME         =          0.055 SECONDS
+          COMPUTATION TIME        =          0.167 SECONDS
 
 
 
@@ -978,10 +958,8 @@
     4  H -0.0976 -0.098
     5  H -0.0976 -0.098
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.207M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.207M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -991,7 +969,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Aug  3 12:56:37 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:36 2021  *
  *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION
  *
  *
@@ -1000,7 +978,7 @@
  *
  *
  *
- *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN =-0.5
+ *  MS=        - IN MECI, MAGNETIC COMPONENT OF SPIN = -0.5
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
@@ -1055,8 +1033,8 @@
 
 
                               PM7 CALCULATION
-                                                       MOPAC2016 (Version: 21.207M)
-                                                       Tue Aug  3 12:56:37 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:36 2021
 
 
 
@@ -1064,9 +1042,6 @@
           FINAL HEAT OF FORMATION =        298.15353 KCAL/MOL =    1247.47435 KJ/MOL
 
 
-          TOTAL ENERGY            =       -163.48943 EV
-          ELECTRONIC ENERGY       =       -376.37632 EV  POINT GROUP:     Td  
-          CORE-CORE REPULSION     =        212.88689 EV
           COSMO AREA              =         54.91 SQUARE ANGSTROMS
           COSMO VOLUME            =         37.13 CUBIC ANGSTROMS
 
@@ -1075,7 +1050,7 @@
           BETA  SOMO LUMO (EV)    =        -22.206 -3.810
           NO. OF ALPHA ELECTRONS  =          3
           NO. OF BETA  ELECTRONS  =          4
-          MOLECULAR WEIGHT        =         16.0426
+          MOLECULAR WEIGHT        =         16.0426         POINT GROUP:  Td  
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -1087,8 +1062,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.215 SECONDS
-          COMPUTATION TIME        =          0.712 SECONDS
+          WALL-CLOCK TIME         =          0.062 SECONDS
+          COMPUTATION TIME        =          0.201 SECONDS
 
 
 
@@ -1172,6 +1147,6 @@
 
 
 
- TOTAL JOB TIME:             0.41 SECONDS
+ TOTAL JOB TIME:             0.13 SECONDS
 
  == MOPAC DONE ==

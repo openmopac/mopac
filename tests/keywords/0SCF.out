@@ -1,8 +1,6 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.121M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.121M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -12,7 +10,7 @@
                               AM1 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun May 23 21:37:44 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:08 2021  *
  *  AM1        - The AM1 Hamiltonian to be used
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -62,8 +60,8 @@
 
 
                               AM1 CALCULATION
-                                                       MOPAC2016 (Version: 21.121M)
-                                                       Sun May 23 21:37:44 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:08 2021
 
 
 
@@ -71,16 +69,13 @@
           FINAL HEAT OF FORMATION =        -77.16706 KCAL/MOL =    -322.86699 KJ/MOL
 
 
-          TOTAL ENERGY            =       -768.93706 EV
-          ELECTRONIC ENERGY       =      -1449.24884 EV  POINT GROUP:     D*h 
-          CORE-CORE REPULSION     =        680.31177 EV
           COSMO AREA              =         65.42 SQUARE ANGSTROMS
           COSMO VOLUME            =         47.12 CUBIC ANGSTROMS
 
           IONIZATION POTENTIAL    =         13.311275 EV
           HOMO LUMO ENERGIES (EV) =        -13.311  1.142
           NO. OF FILLED LEVELS    =          8
-          MOLECULAR WEIGHT        =         44.0098
+          MOLECULAR WEIGHT        =         44.0098         POINT GROUP:  D*h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -92,8 +87,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.023 SECONDS
-          COMPUTATION TIME        =          0.026 SECONDS
+          WALL-CLOCK TIME         =          0.012 SECONDS
+          COMPUTATION TIME        =          0.008 SECONDS
 
 
 
@@ -132,8 +127,8 @@
     3          O          -0.205143        6.2051     1.90097     4.30417
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.    -0.000     0.000     0.000     0.000
- HYBRID         0.000     0.000     0.000     0.000
- SUM           -0.000     0.000     0.000     0.000
+ HYBRID         0.000    -0.000     0.000     0.000
+ SUM           -0.000    -0.000     0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -143,10 +138,8 @@
     2  O   1.90097   1.05301   1.62558   1.62558
     3  O   1.90097   1.05301   1.62558   1.62558
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.121M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.121M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -156,7 +149,7 @@
                               AM1 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun May 23 21:37:44 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:08 2021  *
  *  AM1        - The AM1 Hamiltonian to be used
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  0SCF       - AFTER READING AND PRINTING DATA, STOP
@@ -191,10 +184,6 @@
 
 
       MOLECULAR POINT GROUP   :   D*h 
-
-
-      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 8
-
  GEOMETRY OF SYSTEM SUPPLIED
  1SCF AM1 0SCF
  comment1
@@ -204,10 +193,8 @@
   O    -1.16000000 +1   0.00000000 +1   0.00000000 +1
  
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.121M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.121M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -217,7 +204,7 @@
                               AM1 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun May 23 21:37:44 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:08 2021  *
  *  AM1        - The AM1 Hamiltonian to be used
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
@@ -268,8 +255,8 @@
 
 
                               AM1 CALCULATION
-                                                       MOPAC2016 (Version: 21.121M)
-                                                       Sun May 23 21:37:44 2021
+                                                       MOPAC2016 (Version: 21.298M)
+                                                       Fri Oct 29 13:45:08 2021
 
 
 
@@ -277,16 +264,13 @@
           FINAL HEAT OF FORMATION =        -77.16706 KCAL/MOL =    -322.86699 KJ/MOL
 
 
-          TOTAL ENERGY            =       -768.93706 EV
-          ELECTRONIC ENERGY       =      -1449.24884 EV  POINT GROUP:     D*h 
-          CORE-CORE REPULSION     =        680.31177 EV
           COSMO AREA              =         65.42 SQUARE ANGSTROMS
           COSMO VOLUME            =         47.12 CUBIC ANGSTROMS
 
           IONIZATION POTENTIAL    =         13.311275 EV
           HOMO LUMO ENERGIES (EV) =        -13.311  1.142
           NO. OF FILLED LEVELS    =          8
-          MOLECULAR WEIGHT        =         44.0098
+          MOLECULAR WEIGHT        =         44.0098         POINT GROUP:  D*h 
 
           MOLECULAR DIMENSIONS (Angstroms)
 
@@ -298,8 +282,8 @@
 
           SCF CALCULATIONS        =          1
  
-          WALL-CLOCK TIME         =          0.055 SECONDS
-          COMPUTATION TIME        =          0.056 SECONDS
+          WALL-CLOCK TIME         =          0.023 SECONDS
+          COMPUTATION TIME        =          0.019 SECONDS
 
 
 
@@ -338,8 +322,8 @@
     3          O          -0.205143        6.2051     1.90097     4.30417
  DIPOLE           X         Y         Z       TOTAL
  POINT-CHG.    -0.000     0.000     0.000     0.000
- HYBRID         0.000     0.000     0.000     0.000
- SUM           -0.000     0.000     0.000     0.000
+ HYBRID         0.000    -0.000     0.000     0.000
+ SUM           -0.000    -0.000     0.000     0.000
 
 
           ATOMIC ORBITAL ELECTRON POPULATIONS
@@ -349,10 +333,8 @@
     2  O   1.90097   1.05301   1.62558   1.62558
     3  O   1.90097   1.05301   1.62558   1.62558
  *******************************************************************************
- ** Site#:    0         For non-commercial use only           Version 21.121M **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.121M, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
+ ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
+ **                           web-site: HTTP://OpenMOPAC.net.                 **
  *******************************************************************************
  **                                                                           **
  **                                MOPAC2016                                  **
@@ -362,7 +344,7 @@
                               AM1 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun May 23 21:37:44 2021  *
+ *  CALCULATION DONE:                                Fri Oct 29 13:45:08 2021  *
  *  AM1        - The AM1 Hamiltonian to be used
  *  1SCF       - DO 1 SCF AND THEN STOP 
  *  0SCF       - AFTER READING AND PRINTING DATA, STOP
@@ -398,10 +380,6 @@
 
 
       MOLECULAR POINT GROUP   :   D*h 
-
-
-      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 8
-
  GEOMETRY OF SYSTEM SUPPLIED
  1SCF AM1 0SCF AIGOUT
  comment1
@@ -432,6 +410,6 @@
 
 
 
- TOTAL JOB TIME:             0.16 SECONDS
+ TOTAL JOB TIME:             0.07 SECONDS
 
  == MOPAC DONE ==
