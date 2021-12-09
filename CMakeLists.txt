@@ -24,20 +24,24 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 project(openmopac LANGUAGES Fortran C)
 
 # Define a common library and executables for MOPAC & PARAM
-add_library(mopac-common SHARED)
+add_library(mopac_core SHARED)
 add_executable(mopac)
 add_executable(param)
-target_link_libraries(mopac mopac-common)
-target_link_libraries(param mopac-common)
+target_link_libraries(mopac mopac_core)
+target_link_libraries(param mopac_core)
 
 # MOPAC shared library ABI compatibility version
-set_target_properties(mopac-common PROPERTIES SOVERSION 1)
+set_target_properties(mopac_core PROPERTIES SOVERSION 1)
 
 # Install the executables and library
 option(LIB_SUFFIX "Suffix for library directory (lib)" "")
 install(TARGETS mopac DESTINATION bin)
 install(TARGETS param DESTINATION bin)
-install(TARGETS mopac-common DESTINATION lib${LIB_SUFFIX})
+if(LIB_SUFFIX)
+  install(TARGETS mopac_core DESTINATION lib${LIB_SUFFIX})
+else()
+  install(TARGETS mopac_core DESTINATION lib)
+endif()
 
 # Pass OS information to MOPAC's Fortran source using preprocessor variables
 if(APPLE)
@@ -61,7 +65,7 @@ if(AUTO_BLAS)
   endif()
 
   # Use BLAS/LAPACK information provided by CMake's find_package system
-  target_link_libraries(mopac-common PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+  target_link_libraries(mopac_core PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
   target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
   target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 else()
@@ -71,7 +75,7 @@ endif()
 # Additional link line
 option(MOPAC_LINK "Extra link line for MOPAC library" OFF)
 if(MOPAC_LINK)
-  target_link_libraries(mopac-common PUBLIC ${MOPAC_LINK})
+  target_link_libraries(mopac_core PUBLIC ${MOPAC_LINK})
 endif()
 
 # Add list of source files from src directory

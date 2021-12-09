@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac-common PRIVATE
+target_sources(mopac_core PRIVATE
 # modules
         ${CMAKE_CURRENT_SOURCE_DIR}/afmm_C.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/cosmo_C.F90

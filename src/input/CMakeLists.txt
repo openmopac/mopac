@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac-common PRIVATE
+target_sources(mopac_core PRIVATE
 # source
         ${CMAKE_CURRENT_SOURCE_DIR}/datin.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/digit.F90
