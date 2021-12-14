@@ -21,6 +21,7 @@ jobs:
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
           conda install -c intel mkl-static
+          ls $CONDA/lib
 
       - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
@@ -68,6 +69,7 @@ jobs:
       - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
           cmake -S math -B build_math \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_LIBRARY_PATH="$CONDA/lib"
           cmake --build build_math
@@ -76,7 +78,6 @@ jobs:
         run: |
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
-            -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran-11 \
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
@@ -89,7 +90,7 @@ jobs:
           zip -j mopac.zip build/libmopac_core*.dylib
           zip -j mopac.zip build_math/libmopac_math*.dylib
           zip -j mopac.zip $CONDA/lib/libiomp5.dylib
-          ls /usr/local/lib
+          ls /usr/local/lib/gcc
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -118,7 +119,7 @@ jobs:
         shell: bash
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
-          echo "MKLROOT=$CONDA\Library" >> $GITHUB_ENV
+          ls $CONDA
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
