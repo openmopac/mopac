@@ -39,16 +39,16 @@ jobs:
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build --config Release
 
-      - name: Zip executable to preserve permissions
+      - name: Zip executable & shared libraries (including system libraries)
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core.so*
           zip -j mopac.zip build_math/libmopac_math.so*
           zip -j mopac.zip $CONDA/lib/libiomp5.so*
-          ls /usr/local/lib
-          echo "gcc"
-          ls /usr/local/lib/gcc
+          ls /usr/lib
+          echo "gcc:"
+          ls /usr/lib/gcc
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -84,14 +84,14 @@ jobs:
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build --config Release
 
-      - name: Zip executable to preserve permissions
+      - name: Zip executable & shared libraries (including system libraries)
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core*.dylib
           zip -j mopac.zip build_math/libmopac_math*.dylib
-          zip -j mopac.zip $CONDA/lib/libiomp5*.dylib
-          ls /usr/local/lib/gcc
+          zip -j mopac.zip $CONDA/lib/libiomp5.dylib
+          ls /usr/local/lib/gcc/11
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -127,6 +127,12 @@ jobs:
           ls $CONDA/Lib
           echo "Library:"
           ls $CONDA/Library
+          echo "Library/bin:"
+          ls $CONDA/Library/bin
+          echo "Library/lib:"
+          ls $CONDA/Library/lib
+          echo "libs:"
+          ls $CONDA/libs
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
@@ -146,7 +152,7 @@ jobs:
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build --config Release
 
-      - name: Zip executable to preserve permissions
+      - name: Zip executable & shared libraries (including system libraries)
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
