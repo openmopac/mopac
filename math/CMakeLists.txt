@@ -35,10 +35,19 @@ else()
 endif()
 
 # Look for static libraries of Intel MKL
-find_library(MKL_LP64 libmkl_intel_lp64.a NAMES mkl_intel_lp64.lib)
-find_library(MKL_THREAD libmkl_intel_thread.a NAMES mkl_intel_thread.lib)
-find_library(MKL_CORE libmkl_core.a NAMES mkl_core.lib)
-find_library(INTEL_OMP iomp5 NAMES libiomp5md.dll)
+if(UNIX)
+  find_library(MKL_LP64 libmkl_intel_lp64.a)
+  find_library(MKL_THREAD libmkl_intel_thread.a)
+  find_library(MKL_CORE libmkl_core.a)
+  find_library(INTEL_OMP iomp5)
+elseif(WIN32)
+  find_library(MKL_LP64 mkl_intel_lp64.lib)
+  find_library(MKL_THREAD mkl_intel_thread.lib)
+  find_library(MKL_CORE mkl_core.lib)
+  find_library(INTEL_OMP libiomp5md.dll)
+else()
+  message(FATAL_ERROR "Unknown OS, failed to find static libraries for Intel MKL")
+endif()
 if(APPLE)
   target_link_libraries(mopac_math PUBLIC
     ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE}
@@ -55,6 +64,8 @@ elseif(UNIX)
     -Wl,--end-group
     ${INTEL_OMP}
     -lpthread -lm -ldl)
+else()
+  message(FATAL_ERROR "Unknown OS, failed to link static libraries for Intel MKL")
 endif()
 
 target_sources(mopac_math PRIVATE math_wrap.c)
