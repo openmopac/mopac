@@ -27,7 +27,7 @@ jobs:
         run: |
           cmake -S math -B build_math \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_C_FLAGS="-I $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h"
+            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h"
           cmake --build build_math
           cmake --install build_math
 
@@ -36,7 +36,7 @@ jobs:
           cmake -B build \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-I $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h"
+            -DCMAKE_Fortran_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h"
           cmake --build build
 
       - name: Tar executable to preserve permissions
