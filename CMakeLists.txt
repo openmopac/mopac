@@ -34,7 +34,7 @@ target_link_libraries(param mopac_core)
 set_target_properties(mopac_core PROPERTIES SOVERSION 1)
 
 # Install the executables and library
-option(LIB_SUFFIX "Suffix for library directory (lib)" "")
+option(LIB_SUFFIX "Suffix for library directory (lib)" OFF)
 install(TARGETS mopac DESTINATION bin)
 install(TARGETS param DESTINATION bin)
 if(LIB_SUFFIX)
@@ -64,7 +64,7 @@ if(AUTO_BLAS)
     find_package(LAPACK)
 
     if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
-      message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust system paths/variables (e.g. MKLROOT) or set AUTO_BLAS=OFF & manually define a link line with MOPAC_LINK")
+      message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust environment variables & system paths or set AUTO_BLAS=OFF & manually define a link line with MOPAC_LINK")
     endif()
 
     # Use BLAS/LAPACK information provided by CMake's find_package system
@@ -75,7 +75,7 @@ if(AUTO_BLAS)
     target_link_libraries(mopac_core PUBLIC ${MOPAC_MATH})
   endif()
 else()
-  message("Since AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define MOPAC_LINK)")
+  message("Since AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define compiler link line with MOPAC_LINK)")
 endif()
 
 # Additional link line

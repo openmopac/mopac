@@ -21,32 +21,30 @@ jobs:
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
           conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
-      - name: Configure, build, & install mopac_math with CMake
+      - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
           cmake -S math -B build_math \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h"
+            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
           cmake --build build_math
 
-      - name: Configure & build mopac_core with CMake
+      - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
           cmake -B build \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
+            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build
 
-      - name: Tar executable to preserve permissions
+      - name: Zip executable to preserve permissions
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
-          zip -j mopac.zip build/libmopac_core.so
-          zip -j mopac.zip build/libmopac_core.1.so
-          zip -j mopac.zip build_math/libmopac_math.so
-          zip -j mopac.zip build_math/libmopac_math.1.so
+          zip -j mopac.zip build/libmopac_core*.so
+          zip -j mopac.zip build_math/libmopac_math*.so
           zip -j mopac.zip $CONDA/lib/libiomp5.so
           ls /usr/local/lib
 
@@ -66,15 +64,15 @@ jobs:
         run: |
           sudo chown -R runner:staff $CONDA
           conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
-      - name: Configure, build, & install mopac_math with CMake
+      - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
           cmake -S math -B build_math \
-            -DCMAKE_C_COMPILER=gcc-11
+            -DCMAKE_C_COMPILER=gcc-11 \
+            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
           cmake --build build_math
 
-      - name: Configure & build mopac_core with CMake
+      - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
@@ -84,14 +82,12 @@ jobs:
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build
 
-      - name: Tar executable to preserve permissions
+      - name: Zip executable to preserve permissions
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
-          zip -j mopac.zip build/libmopac_core.dylib
-          zip -j mopac.zip build/libmopac_core.1.dylib
-          zip -j mopac.zip build_math/libmopac_math.dylib
-          zip -j mopac.zip build_math/libmopac_math.1.dylib
+          zip -j mopac.zip build/libmopac_core*.dylib
+          zip -j mopac.zip build_math/libmopac_math*.dylib
           zip -j mopac.zip $CONDA/lib/libiomp5.dylib
           ls /usr/local/lib
 
@@ -119,31 +115,42 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
+        shell: bash
         run: |
           $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA\Library" >> $GITHUB_ENV
 
-      - name: Configure, build, & install mopac_math with CMake
+      - name: Configure & build mopac_math with CMake & Microsoft compiler
+        shell: bash
         run: |
           cmake -S math -B build_math \
-            -DCMAKE_C_COMPILER=gcc
+            -G "Visual Studio 16 2019" \
+            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
           cmake --build build_math
-          cmake --install build_math
 
-      - name: Configure & build mopac_core with CMake
+      - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
           cmake -B build \
             -G "MSYS Makefiles" \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran \
-            -DCMAKE_C_COMPILER=gcc
+            -DCMAKE_C_COMPILER=gcc \
+            -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build
+
+      - name: Zip executable to preserve permissions
+        run: |
+          zip -j mopac.zip build/mopac
+          zip -j mopac.zip build/param
+          zip -j mopac.zip build/mopac_core*.dll
+          zip -j mopac.zip build_math/mopac_math*.dll
+          zip -j mopac.zip $CONDA/lib/libiomp5md.dll
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: windows
-          path: build/mopac.exe
+          path: mopac.zip
 
   continuous-deployment:
     runs-on: ubuntu-latest
@@ -208,5 +215,5 @@ jobs:
           github-release upload \
             --tag continuous \
             --replace \
-            --name mopac-windows-continuous.exe \
-            --file windows/mopac.exe
+            --name mopac-windows-continuous.zip \
+            --file windows/mopac.zip

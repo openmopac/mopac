@@ -34,33 +34,27 @@ else()
   install(TARGETS mopac_math DESTINATION lib)
 endif()
 
-# Check for MKLROOT environment variable
-if(NOT DEFINED ENV{MKLROOT})
-  message(FATAL_ERROR "Define the MKLROOT environment variable as the path to the Intel MKL library")
-endif()
-
-# Use hard-coded system-specific MKL link lines from the Link Line Advisor (& adjustments for alternate Anaconda paths)
+# Look for static libraries of Intel MKL
+find_library(MKL_LP64 libmkl_intel_lp64.a mkl_intel_lp64.lib)
+find_library(MKL_THREAD libmkl_intel_thread.a mkl_intel_thread.lib)
+find_library(MKL_CORE libmkl_core.a mkl_core.lib)
+find_library(INTEL_OMP iomp5 libiomp5md)
 if(APPLE)
   target_link_libraries(mopac_math PUBLIC
-    $ENV{MKLROOT}/lib/libmkl_intel_lp64.a
-    $ENV{MKLROOT}/lib/libmkl_intel_thread.a
-    $ENV{MKLROOT}/lib/libmkl_core.a
-    -liomp5 -lpthread -lm -ldl)
+    ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE}
+    ${INTEL_OMP}
+    -lpthread -lm -ldl)
 elseif(WIN32)
   target_link_libraries(mopac_math PUBLIC
-    mkl_intel_lp64.lib
-    mkl_intel_thread.lib
-    mkl_core.lib
-    libiomp5md.lib)
+    ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE}
+    ${INTEL_OMP})
 elseif(UNIX)
-  find_library(MKL_LP64 libmkl_intel_lp64.a PATHS $ENV{MKLROOT}/lib $ENV{MKLROOT}/lib/intel64)
-  find_library(MKL_THREAD libmkl_intel_thread.a PATHS $ENV{MKLROOT}/lib $ENV{MKLROOT}/lib/intel64)
-  find_library(MKL_CORE libmkl_core.a PATHS $ENV{MKLROOT}/lib $ENV{MKLROOT}/lib/intel64)
   target_link_libraries(mopac_math PUBLIC
     -Wl,--start-group
     ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE}
     -Wl,--end-group
-    -liomp5 -lpthread -lm -ldl)
+    ${INTEL_OMP}
+    -lpthread -lm -ldl)
 endif()
 
 target_sources(mopac_math PRIVATE math_wrap.c)
