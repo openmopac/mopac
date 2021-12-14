@@ -19,8 +19,7 @@ jobs:
           path: glibc
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
-        run: |
-          conda install -c intel mkl-static
+        run: conda install -c intel mkl-static
 
       - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
@@ -46,10 +45,10 @@ jobs:
           zip -j mopac.zip build/libmopac_core.so*
           zip -j mopac.zip build_math/libmopac_math.so*
           zip -j mopac.zip $CONDA/lib/libiomp5.so*
-          ls /usr/lib/gcc/x86_64-linux-gnu
-          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9.3.0/libgfortran.so*
-          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9.3.0/libgcc_s.so*
-          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9.3.0/libquadmath.so*
+          ls /usr/lib/gcc/x86_64-linux-gnu/9
+          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9/libgfortran.so*
+          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9/libgcc_s.so*
+          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9/libquadmath.so*
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -73,7 +72,7 @@ jobs:
           cmake -S math -B build_math \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_C_COMPILER=gcc-11 \
-            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin"
+            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
           cmake --build build_math --config Release
 
       - name: Configure & build mopac_core with CMake & GNU compilers
@@ -128,7 +127,7 @@ jobs:
         run: |
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
-            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
+            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin"
           cmake --build build_math --config Release
 
       - name: Configure & build mopac_core with CMake & GNU compilers
