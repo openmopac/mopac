@@ -34,7 +34,7 @@ else()
   install(TARGETS mopac_math DESTINATION lib)
 endif()
 
-# Look for static libraries of Intel MKL
+# Look for static libraries of Intel MKL & OpenMP
 if(UNIX)
   find_library(MKL_LP64 libmkl_intel_lp64.a)
   find_library(MKL_THREAD libmkl_intel_thread.a)
@@ -44,10 +44,13 @@ elseif(WIN32)
   find_library(MKL_LP64 mkl_intel_lp64.lib)
   find_library(MKL_THREAD mkl_intel_thread.lib)
   find_library(MKL_CORE mkl_core.lib)
-  find_file(INTEL_OMP libomp-fallback-cstring.obj)
+  find_library(INTEL_OMP iomp5md)
+  find_file(INTEL_OMP_OBJ libomp-fallback-cstring.obj PATHS ${CMAKE_LIBRARY_PATH})
 else()
   message(FATAL_ERROR "Unknown OS, failed to find static libraries for Intel MKL")
 endif()
+
+# Link libraries for Intel MKL & OpenMP
 if(APPLE)
   target_link_libraries(mopac_math PUBLIC
     ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE}
@@ -55,9 +58,15 @@ if(APPLE)
     -lpthread -lm -ldl)
 elseif(WIN32)
   target_link_libraries(mopac_math PUBLIC ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE})
-  add_library(openmp_obj OBJECT IMPORTED GLOBAL)
-  set_property(TARGET openmp_obj PROPERTY IMPORTED_OBJECTS ${INTEL_OMP})
-  target_sources(mopac_math PRIVATE $<TARGET_OBJECTS:openmp_obj>)
+  if(INTEL_OMP)
+    target_link_libraries(mopac_math PUBLIC ${INTEL_OMP})
+  elseif(INTEL_OMP_OBJ)
+    add_library(openmp_obj OBJECT IMPORTED GLOBAL)
+    set_property(TARGET openmp_obj PROPERTY IMPORTED_OBJECTS ${INTEL_OMP_OBJ})
+    target_sources(mopac_math PRIVATE $<TARGET_OBJECTS:openmp_obj>)
+  else()
+    message(FATAL_ERROR "Could not find a library or object file to link Intel OpenMP")
+  endif()
 elseif(UNIX)
   target_link_libraries(mopac_math PUBLIC
     -Wl,--start-group
