@@ -46,7 +46,7 @@ if(APPLE)
     $ENV{MKLROOT}/lib/libmkl_intel_thread.a
     $ENV{MKLROOT}/lib/libmkl_core.a
     -liomp5 -lpthread -lm -ldl)
-elsseif(WIN32)
+elseif(WIN32)
   target_link_libraries(mopac_math PUBLIC
     mkl_intel_lp64.lib
     mkl_intel_thread.lib
