@@ -46,9 +46,10 @@ jobs:
           zip -j mopac.zip build/libmopac_core.so*
           zip -j mopac.zip build_math/libmopac_math.so*
           zip -j mopac.zip $CONDA/lib/libiomp5.so*
-          ls /usr/lib
-          echo "gcc:"
-          ls /usr/lib/gcc
+          ls /usr/lib/gcc/x86_64-linux-gnu
+          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9.3.0/libgfortran.so*
+          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9.3.0/libgcc_s.so*
+          zip -j mopac.zip /usr/local/lib/gcc/x86_64-linux-gnu/9.3.0/libquadmath.so*
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -72,7 +73,7 @@ jobs:
           cmake -S math -B build_math \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_C_COMPILER=gcc-11 \
-            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
+            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin"
           cmake --build build_math --config Release
 
       - name: Configure & build mopac_core with CMake & GNU compilers
@@ -91,7 +92,9 @@ jobs:
           zip -j mopac.zip build/libmopac_core*.dylib
           zip -j mopac.zip build_math/libmopac_math*.dylib
           zip -j mopac.zip $CONDA/lib/libiomp5.dylib
-          ls /usr/local/lib/gcc/11
+          zip -j mopac.zip /usr/local/lib/gcc/11/libgfortran*.dylib
+          zip -j mopac.zip /usr/local/lib/gcc/11/libgcc_s*.dylib
+          zip -j mopac.zip /usr/local/lib/gcc/11/libquadmath*.dylib
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -118,21 +121,7 @@ jobs:
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         shell: bash
-        run: |
-          $CONDA/Scripts/conda.exe install -c intel mkl-static
-          ls $CONDA
-          echo "DLLs:"
-          ls $CONDA/DLLs
-          echo "Lib:"
-          ls $CONDA/Lib
-          echo "Library:"
-          ls $CONDA/Library
-          echo "Library/bin:"
-          ls $CONDA/Library/bin
-          echo "Library/lib:"
-          ls $CONDA/Library/lib
-          echo "libs:"
-          ls $CONDA/libs
+        run: $CONDA/Scripts/conda.exe install -c intel mkl-static
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
