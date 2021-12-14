@@ -57,17 +57,23 @@ endif()
 # Try to use CMake's system of finding BLAS & LAPACK libraries
 option(AUTO_BLAS "Use find_package to detect BLAS & LAPACK libraries" ON)
 if(AUTO_BLAS)
-  find_package(BLAS)
-  find_package(LAPACK)
+  find_library(MOPAC_MATH mopac_math)
+  if(MOPAC_MATH-NOTFOUND)
+    message("Library mopac_math not found, looking for BLAS & LAPACK with find_package")
+    find_package(BLAS)
+    find_package(LAPACK)
 
-  if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
-    message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust system paths/variables (e.g. MKLROOT) or set AUTO_BLAS=OFF & manually define a link line with MOPAC_LINK")
+    if((NOT BLAS_FOUND) OR (NOT LAPACK_FOUND))
+      message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust system paths/variables (e.g. MKLROOT) or set AUTO_BLAS=OFF & manually define a link line with MOPAC_LINK")
+    endif()
+
+    # Use BLAS/LAPACK information provided by CMake's find_package system
+    target_link_libraries(mopac_core PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+    target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+    target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+  else()
+    target_link_libraries(mopac_core PUBLIC ${MOPAC_MATH})
   endif()
-
-  # Use BLAS/LAPACK information provided by CMake's find_package system
-  target_link_libraries(mopac_core PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-  target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
-  target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 else()
   message("Since AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define MOPAC_LINK)")
 endif()
@@ -81,7 +87,7 @@ endif()
 # Add list of source files from src directory
 add_subdirectory(src)
 
-# MDI functionality
+# MDI functionality (in development)
 option(MDI "MDI build flag" OFF)
 if(MDI)
   include(MDI)

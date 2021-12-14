@@ -23,29 +23,38 @@ jobs:
           conda install -c intel mkl-static
           echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
-      - name: Configure with CMake
+      - name: Configure, build, & install mopac_math with CMake
+        run: |
+          cmake -S math -B build_math \
+            -DCMAKE_C_COMPILER=gcc \
+            -DCMAKE_C_FLAGS="-I $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h"
+          cmake --build build_math
+          cmake --install build_math
+
+      - name: Configure & build mopac_core with CMake
         run: |
           cmake -B build \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
-            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
-            -DBLA_STATIC=ON \
-            -DBLA_VENDOR=Intel10_64lp
-
-      - name: Build with Make
-        run: cmake --build build
+            -DCMAKE_Fortran_FLAGS="-I $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h"
+          cmake --build build
 
       - name: Tar executable to preserve permissions
         run: |
-          tar -cvf mopac.tar -C build mopac
-          tar -rf mopac.tar -C $CONDA/lib libiomp5.so
+          zip -j mopac.zip build/mopac
+          zip -j mopac.zip build/param
+          zip -j mopac.zip build/libmopac_core.so
+          zip -j mopac.zip build/libmopac_core.1.so
+          zip -j mopac.zip build_math/libmopac_math.so
+          zip -j mopac.zip build_math/libmopac_math.1.so
+          zip -j mopac.zip $CONDA/lib/libiomp5.so
+          ls /usr/local/lib
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: linux
-          path: mopac.tar
+          path: mopac.zip
 
   mac-build:
     runs-on: macos-latest
@@ -59,33 +68,38 @@ jobs:
           conda install -c intel mkl-static
           echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
-      - name: Configure with CMake
+      - name: Configure, build, & install mopac_math with CMake
+        run: |
+          cmake -S math -B build_math \
+            -DCMAKE_C_COMPILER=gcc-11
+          cmake --build build_math
+          cmake --install build_math
+
+      - name: Configure & build mopac_core with CMake
         run: |
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran-11 \
-            -DCMAKE_C_COMPILER=gcc-11 \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc" \
-            -DAUTO_BLAS=OFF \
-            -DMATH_LINK="-L $MKLROOT/lib -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl"
-
-      - name: Build with Make (static libquadmath workaround)
-        run: |
-          mv /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib renaming_workaround
+            -DCMAKE_C_COMPILER=gcc-11
           cmake --build build
-          mv renaming_workaround /usr/local/opt/gcc/lib/gcc/11/libquadmath.0.dylib
 
       - name: Tar executable to preserve permissions
         run: |
-          tar -cvf mopac.tar -C build mopac
-          tar -rf mopac.tar -C $CONDA/lib libiomp5.dylib
+          zip -j mopac.zip build/mopac
+          zip -j mopac.zip build/param
+          zip -j mopac.zip build/libmopac_core.dylib
+          zip -j mopac.zip build/libmopac_core.1.dylib
+          zip -j mopac.zip build_math/libmopac_math.dylib
+          zip -j mopac.zip build_math/libmopac_math.1.dylib
+          zip -j mopac.zip $CONDA/lib/libiomp5.dylib
+          ls /usr/local/lib
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: mac
-          path: mopac.tar
+          path: mopac.zip
 
   windows-build:
     runs-on: windows-latest
@@ -106,22 +120,24 @@ jobs:
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         run: |
-          $CONDA/Scripts/conda.exe install -c intel mkl
+          $CONDA/Scripts/conda.exe install -c intel mkl-static
           echo "MKLROOT=$CONDA\Library" >> $GITHUB_ENV
 
-      - name: Configure with CMake
+      - name: Configure, build, & install mopac_math with CMake
+        run: |
+          cmake -S math -B build_math \
+            -DCMAKE_C_COMPILER=gcc
+          cmake --build build_math
+          cmake --install build_math
+
+      - name: Configure & build mopac_core with CMake
         run: |
           cmake -B build \
             -G "MSYS Makefiles" \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran \
-            -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_Fortran_FLAGS="-static-libgfortran -static-libgcc -l:libquadmath.a" \
-            -DAUTO_BLAS=OFF \
-            -DMATH_LINK="-L /C/Miniconda/Library/bin -lmkl_rt.1"
-
-      - name: Build with Make
-        run: cmake --build build
+            -DCMAKE_C_COMPILER=gcc
+          cmake --build build
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -182,13 +198,13 @@ jobs:
           github-release upload \
             --tag continuous \
             --replace \
-            --name mopac-linux-continuous.tar \
-            --file linux/mopac.tar
+            --name mopac-linux-continuous.zip \
+            --file linux/mopac.zip
           github-release upload \
             --tag continuous \
             --replace \
-            --name mopac-mac-continuous.tar \
-            --file mac/mopac.tar
+            --name mopac-mac-continuous.zip \
+            --file mac/mopac.zip
           github-release upload \
             --tag continuous \
             --replace \
