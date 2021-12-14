@@ -119,7 +119,8 @@ jobs:
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
         shell: bash
-        run: $CONDA/Scripts/conda.exe install -c intel mkl-static
+        run: |
+          $CONDA/Scripts/conda.exe install -c intel mkl-static
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
@@ -131,7 +132,7 @@ jobs:
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
             -DCMAKE_FIND_DEBUG_MODE=true \
-            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin"
+            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib"
           cmake --build build_math --config Release
 
       - name: Configure & build mopac_core with CMake & GNU compilers

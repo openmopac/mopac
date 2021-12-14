@@ -44,7 +44,7 @@ elseif(WIN32)
   find_library(MKL_LP64 mkl_intel_lp64.lib)
   find_library(MKL_THREAD mkl_intel_thread.lib)
   find_library(MKL_CORE mkl_core.lib)
-#  find_library(INTEL_OMP libiomp5md.dll)
+  find_file(INTEL_OMP libomp-fallback-cstring.obj)
 else()
   message(FATAL_ERROR "Unknown OS, failed to find static libraries for Intel MKL")
 endif()
@@ -54,10 +54,10 @@ if(APPLE)
     ${INTEL_OMP}
     -lpthread -lm -ldl)
 elseif(WIN32)
-  target_link_libraries(mopac_math PUBLIC
-    ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE}
-    )
-#    ${INTEL_OMP})
+  target_link_libraries(mopac_math PUBLIC ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE})
+  add_library(openmp_obj OBJECT IMPORTED GLOBAL)
+  set_property(TARGET openmp_obj PROPERTY IMPORTED_OBJECTS ${INTEL_OMP})
+  target_sources(mopac_math PRIVATE $<TARGET_OBJECTS:openmp_obj>)
 elseif(UNIX)
   target_link_libraries(mopac_math PUBLIC
     -Wl,--start-group
