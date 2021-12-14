@@ -131,7 +131,6 @@ jobs:
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
             -DCMAKE_FIND_DEBUG_MODE=true \
-            -DCMAKE_FIND_LIBRARY_PREFIXES="" \
             -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin"
           cmake --build build_math --config Release
 

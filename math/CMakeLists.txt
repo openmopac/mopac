@@ -35,10 +35,10 @@ else()
 endif()
 
 # Look for static libraries of Intel MKL
-find_library(MKL_LP64 libmkl_intel_lp64.a mkl_intel_lp64.lib)
-find_library(MKL_THREAD libmkl_intel_thread.a mkl_intel_thread.lib)
-find_library(MKL_CORE libmkl_core.a mkl_core.lib)
-find_library(INTEL_OMP iomp5 libiomp5md.dll)
+find_library(MKL_LP64 libmkl_intel_lp64.a NAMES mkl_intel_lp64.lib)
+find_library(MKL_THREAD libmkl_intel_thread.a NAMES mkl_intel_thread.lib)
+find_library(MKL_CORE libmkl_core.a NAMES mkl_core.lib)
+find_library(INTEL_OMP iomp5 NAMES libiomp5md.dll)
 if(APPLE)
   target_link_libraries(mopac_math PUBLIC
     ${MKL_LP64} ${MKL_THREAD} ${MKL_CORE}
