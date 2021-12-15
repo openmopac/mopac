@@ -140,12 +140,16 @@ jobs:
         run: |
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
+            -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON \
             -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$GITHUB_WORKSPACE/local_omp"
           cmake --build build_math --config Release
 
       - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
           cd build_math/Release
+          echo "build_math:"
+          ls -l ..
+          echo "build_math/Release:"
           ls -l
           gendef mopac_math.dll
           genlib mopac_math.def -a x86
