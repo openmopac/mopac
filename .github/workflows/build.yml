@@ -123,14 +123,14 @@ jobs:
 
       - name: Create .lib file from .dll for Intel OpenMP
         env:
-          VS_ROOT: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
+          MSVC_BIN: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC
         run: |
           mkdir local_omp
           cp $CONDA/Library/bin/libiomp5md.dll local_omp
           cd local_omp
           gendef libiomp5md.dll
-          find "$VS_ROOT" -name lib.exe -print 2>/dev/null
-          lib /def:libiomp5md.def
+          ls "$MSVC_BIN"
+          "$MSVC_BIN/lib" /def:libiomp5md.def
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
