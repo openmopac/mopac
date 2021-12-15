@@ -145,16 +145,16 @@ jobs:
 
       - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
-          cd build_math
+          cd build_math/Release
           gendef mopac_math.dll
           genlib mopac_math.def -a x86
-          cd ..
+          cd ../..
           cmake -B build \
             -G "MSYS Makefiles" \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=gfortran \
             -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
+            -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math/Release"
           cmake --build build --config Release
 
       - name: Zip executable & shared libraries (including system libraries)
