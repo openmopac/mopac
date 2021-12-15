@@ -39,15 +39,17 @@ jobs:
           cmake --build build --config Release
 
       - name: Zip executable & shared libraries (including system libraries)
+        env:
+          GCC_LIB: /usr/lib/gcc/x86_64-linux-gnu/9
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core.so*
           zip -j mopac.zip build_math/libmopac_math.so*
           zip -j mopac.zip $CONDA/lib/libiomp5.so*
-          zip -j mopac.zip /usr/lib/gcc/x86_64-linux-gnu/9/libgfortran.so*
-          zip -j mopac.zip /usr/lib/gcc/x86_64-linux-gnu/9/libgcc_s.so*
-          zip -j mopac.zip /usr/lib/gcc/x86_64-linux-gnu/9/libquadmath.so*
+          zip -j mopac.zip $GCC_LIB/libgfortran.so*
+          zip -j mopac.zip $GCC_LIB/libgcc_s.so*
+          zip -j mopac.zip $GCC_LIB/libquadmath.so*
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -84,15 +86,17 @@ jobs:
           cmake --build build --config Release
 
       - name: Zip executable & shared libraries (including system libraries)
+        env:
+          GCC_LIB: /usr/local/lib/gcc/11
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core*.dylib
           zip -j mopac.zip build_math/libmopac_math*.dylib
           zip -j mopac.zip $CONDA/lib/libiomp5.dylib
-          zip -j mopac.zip /usr/local/lib/gcc/11/libgfortran*.dylib
-          zip -j mopac.zip /usr/local/lib/gcc/11/libgcc_s*.dylib
-          zip -j mopac.zip /usr/local/lib/gcc/11/libquadmath*.dylib
+          zip -j mopac.zip $GCC_LIB/libgfortran*.dylib
+          zip -j mopac.zip $GCC_LIB/libgcc_s*.dylib
+          zip -j mopac.zip $GCC_LIB/libquadmath*.dylib
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -129,27 +133,21 @@ jobs:
           cp $CONDA/Library/bin/libiomp5md.dll local_omp
           cd local_omp
           gendef libiomp5md.dll
-          "$MSVC_BIN/lib" /def:libiomp5md.def
+          "$MSVC_BIN/lib" /def:libiomp5md.def /machine:x64
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
         run: |
-          echo "$CONDA/Library/lib"
-          ls $CONDA/Library/lib
-          echo "$CONDA/Library/bin"
-          ls $CONDA/Library/bin
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
-            -DCMAKE_FIND_DEBUG_MODE=true \
             -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$GITHUB_WORKSPACE/local_omp"
           cmake --build build_math --config Release
-          
 
       - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
           cd build_math
           gendef mopac_math.dll
-          genlib mopac_math.def
+          genlib mopac_math.def -a x86
           cd ..
           cmake -B build \
             -G "MSYS Makefiles" \
