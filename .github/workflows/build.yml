@@ -102,8 +102,6 @@ jobs:
 
   windows-build:
     runs-on: windows-latest
-    env:
-      VS_ROOT: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
     defaults:
       run:
         shell: msys2 {0}
@@ -124,12 +122,14 @@ jobs:
         run: $CONDA/Scripts/conda install -c intel mkl-static
 
       - name: Create .lib file from .dll for Intel OpenMP
+        env:
+          VS_ROOT: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise
         run: |
           mkdir local_omp
           cp $CONDA/Library/bin/libiomp5md.dll local_omp
           cd local_omp
           gendef libiomp5md.dll
-          find $VS_ROOT -name lib.exe -print 2>/dev/null
+          find "$VS_ROOT" -name lib.exe -print 2>/dev/null
           lib /def:libiomp5md.def
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
