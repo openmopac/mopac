@@ -148,6 +148,8 @@ jobs:
           cd build_math/Release
           gendef mopac_math.dll
           ls
+          ls ..
+          ls ../release
           genlib mopac_math.def -a x86
           cd ../..
           cmake -B build \
