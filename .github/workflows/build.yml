@@ -137,21 +137,22 @@ jobs:
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
+        env:
+          MSVC_BIN: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64
         run: |
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
             -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON \
             -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$GITHUB_WORKSPACE/local_omp"
           cmake --build build_math --config Release
+          "$MSVC_BIN/dumpbin" /nologo /exports build_math/Release/build_math.dll > build_math/Release/exports.txt
+          echo "EXPORTS" > build_math/Release/build_math.def
+          tail -n +17 exports.txt | awk '{ $1=""; $2=""; $3=""; print $0 }' | sed -r 's/\s*(.*?)\s*$/\1/' | sed '/^$/d' >> build_math/Release/build_math.def
+          cat build_math/Release/build_math.def
 
       - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
           cd build_math/Release
-          echo "build_math:"
-          ls -l ..
-          echo "build_math/Release:"
-          ls -l
-          gendef mopac_math.dll
           genlib mopac_math.def -a x86
           cd ../..
           cmake -B build \
