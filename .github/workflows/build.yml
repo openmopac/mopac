@@ -114,7 +114,7 @@ jobs:
             make
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-gcc-fortran
-            mingw-w64-tools-git
+            mingw-w64-x86_64-tools-git
 
       - uses: actions/checkout@v2
 
