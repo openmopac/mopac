@@ -143,9 +143,14 @@ jobs:
             -DCMAKE_FIND_DEBUG_MODE=true \
             -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$GITHUB_WORKSPACE/local_omp"
           cmake --build build_math --config Release
+          
 
       - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
+          cd build_math
+          gendef mopac_math.dll
+          genlib mopac_math.def
+          cd ..
           cmake -B build \
             -G "MSYS Makefiles" \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
