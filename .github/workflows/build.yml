@@ -146,10 +146,8 @@ jobs:
       - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
           cd build_math/Release
-          gendef mopac_math.dll
-          ls
-          ls ..
-          ls ../release
+          gendef mopac_math.dll -
+          gendef mopac_math.dll -> mopac_math.def
           genlib mopac_math.def -a x86
           cd ../..
           cmake -B build \
