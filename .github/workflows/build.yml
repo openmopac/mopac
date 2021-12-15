@@ -114,13 +114,20 @@ jobs:
             make
             mingw-w64-x86_64-cmake
             mingw-w64-x86_64-gcc-fortran
+            mingw-w64-tools-git
 
       - uses: actions/checkout@v2
 
       - name: Install static MKL (BLAS & LAPACK) with Anaconda
-        shell: bash
+        run: $CONDA/Scripts/conda install -c intel mkl-static
+
+      - name: Create .lib file from .dll for Intel OpenMP
         run: |
-          $CONDA/Scripts/conda.exe install -c intel mkl-static
+          mkdir local_omp
+          cp $CONDA/Library/bin/libiomp5md.dll local_omp
+          cd local_omp
+          gendef libiomp5md.dll
+          lib /def:libiomp5md.def
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
         shell: bash
@@ -132,7 +139,7 @@ jobs:
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
             -DCMAKE_FIND_DEBUG_MODE=true \
-            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib"
+            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$GITHUB_WORKSPACE/local_omp"
           cmake --build build_math --config Release
 
       - name: Configure & build mopac_core with CMake & GNU compilers
@@ -151,7 +158,7 @@ jobs:
           zip -j mopac.zip build/param
           zip -j mopac.zip build/mopac_core*.dll
           zip -j mopac.zip build_math/mopac_math*.dll
-          zip -j mopac.zip $CONDA/lib/libiomp5md.dll
+          zip -j mopac.zip $CONDA/Library/bin/libiomp5md.dll
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
