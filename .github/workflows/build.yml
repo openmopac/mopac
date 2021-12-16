@@ -18,8 +18,10 @@ jobs:
           repository: wheybags/glibc_version_header
           path: glibc
 
-      - name: Install static MKL (BLAS & LAPACK) with Anaconda
-        run: conda install -c intel mkl-static
+      - name: Install dependencies with Anaconda
+        run: |
+          conda install -c intel mkl-static
+          conda install numpy
 
       - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
@@ -65,10 +67,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install static MKL (BLAS & LAPACK) with Anaconda
+      - name: Install dependencies with Anaconda
         run: |
           sudo chown -R runner:staff $CONDA
           conda install -c intel mkl-static
+          conda install numpy
 
       - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
@@ -126,8 +129,10 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - name: Install static MKL (BLAS & LAPACK) with Anaconda
-        run: $CONDA/Scripts/conda install -c intel mkl-static
+      - name: Install dependencies with Anaconda
+        run: |
+          $CONDA/Scripts/conda install -c intel mkl-static
+          $CONDA/Scripts/conda install numpy
 
       - name: Create .lib file from .dll for Intel OpenMP
         env:
