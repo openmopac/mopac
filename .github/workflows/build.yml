@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: Clone glibc compatibility library
         uses: actions/checkout@v2
         with:
@@ -67,6 +71,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Install dependencies with PyPI
         run: pip install numpy
@@ -131,6 +139,10 @@ jobs:
             mingw-w64-x86_64-tools-git
 
       - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Install dependencies with PyPI
         run: pip install numpy
