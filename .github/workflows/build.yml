@@ -37,6 +37,8 @@ jobs:
             -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build --config Release
+          cd build
+          ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
         env:
@@ -84,6 +86,8 @@ jobs:
             -DCMAKE_C_COMPILER=gcc-11 \
             -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
           cmake --build build --config Release
+          cd build
+          ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
         env:
@@ -142,7 +146,6 @@ jobs:
         run: |
           cmake -S math -B build_math \
             -G "Visual Studio 16 2019" \
-            -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON \
             -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$GITHUB_WORKSPACE/local_omp"
           cmake --build build_math --config Release
           "$MSVC_BIN/dumpbin" /nologo /exports build_math/Release/build_math.dll > build_math/Release/exports.txt
