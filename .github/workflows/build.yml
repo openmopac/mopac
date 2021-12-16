@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: Clone glibc compatibility library
         uses: actions/checkout@v2
         with:
@@ -66,6 +70,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Install dependencies with Anaconda
         run: |
