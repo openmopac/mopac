@@ -152,10 +152,11 @@ jobs:
         run: curl $IFORT_MAC_URL --output ifort_download.exe
 
       - name: Install Intel Fortran compiler
-        shell: cmd
+        shell: bash
         run: |
-          start /b /wait ifort_download.exe -s -x -f ifort_extract
-          ifort_extract/bootstrapper.exe --silent --eula accept
+          echo "start /b /wait ifort_download.exe -s -x -f ifort_extract" > ifort_script.bat
+          echo "ifort_extract/bootstrapper.exe --silent --eula accept --components=intel.oneapi.win.ifort-compiler" >> ifort_script.bat
+          ifort_script.bat
 
       - uses: msys2/setup-msys2@v2
         with:
