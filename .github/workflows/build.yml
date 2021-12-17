@@ -161,12 +161,10 @@ jobs:
           python-version: '3.x'
 
       - name: Install Intel Fortran compiler
+        shell: pwsh
         run: |
-          curl $IFORT_WINDOWS_URL --output ifort_download.exe
-          ls -l
-          chmod 755 ifort_download.exe
-          ls -l
-          ./ifort_download.exe -a --silent --eula accept
+          Invoke-WebRequest -Uri $IFORT_WINDOWS_URL -OutFile ifort_download.exe
+          ifort_download.exe -a --silent --eula accept
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
@@ -185,7 +183,6 @@ jobs:
           "$MSVC_BIN/lib" /def:libiomp5md.def /machine:x64
 
       - name: Configure & build mopac_math with CMake & Microsoft compiler
-        shell: bash
         env:
           MSVC_BIN: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64
         run: |
