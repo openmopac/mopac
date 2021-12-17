@@ -8,8 +8,8 @@ on:
 env:
   IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18210/l_fortran-compiler_p_2021.4.0.3224.sh
   IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63.dmg
-  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18414/w_onemkl_p_2022.0.0.115.exe
-  FAILING: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77.exe
+  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77.exe
+  ALT: https://registrationcenter-download.intel.com/akdlm/irc_nas/18414/w_onemkl_p_2022.0.0.115.exe
 
 jobs:
   linux-build:
@@ -140,7 +140,7 @@ jobs:
           path: mopac.zip
 
   windows-build:
-    runs-on: windows-2022
+    runs-on: windows-latest
     defaults:
       run:
         shell: msys2 {0}
@@ -166,7 +166,9 @@ jobs:
 
       - name: Install Intel Fortran compiler
         shell: cmd
-        run: ifort_download.exe -a --silent --eula accept
+        run: |
+          start /b /wait ifort_download.exe -s -x -f ifort_extract
+          ifort_extract/bootstrapper.exe --silent --eula accept
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
