@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Intel Fortran compiler
+      - name: Download & install Intel Fortran compiler
         run: |
           curl $IFORT_LINUX_URL --output ifort_download.sh
           sudo sh ifort_download.sh -a --silent --eula accept
@@ -86,7 +86,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Intel Fortran compiler
+      - name: Download & install Intel Fortran compiler
         run: |
           curl $IFORT_MAC_URL --output ifort_download.dmg
           hdiutil attach ifort_download.dmg
@@ -160,11 +160,12 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Download Intel Fortran compiler
+        run: curl $IFORT_MAC_URL --output ifort_download.exe
+
       - name: Install Intel Fortran compiler
-        shell: pwsh
-        run: |
-          Invoke-WebRequest -Uri $IFORT_WINDOWS_URL -OutFile ifort_download.exe
-          ifort_download.exe -a --silent --eula accept
+        shell: cmd
+        run: ifort_download.exe -a --silent --eula accept
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
