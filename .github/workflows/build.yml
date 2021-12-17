@@ -152,7 +152,7 @@ jobs:
         shell: cmd
         run: |
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
-          ifort_download -s -f ifort_unpack
+          ifort_download -s -x -f ifort_unpack
           dir ifort_unpack
           ifort_unupack/bootstrapper --silent --eula accept --components=intel.oneapi.win.ifort-compiler
 
