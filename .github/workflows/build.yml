@@ -154,7 +154,7 @@ jobs:
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
           ifort_download -s -x -f ifort_unpack
           dir ifort_unpack
-          ifort_unpack/bootstrapper --silent --eula accept --components=intel.oneapi.win.ifort-compiler
+          ifort_unpack\bootstrapper --silent --eula accept --components=intel.oneapi.win.ifort-compiler
 
       - uses: msys2/setup-msys2@v2
         with:
