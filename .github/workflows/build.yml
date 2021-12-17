@@ -165,7 +165,7 @@ jobs:
         run: curl $IFORT_MAC_URL --output ifort_download.exe
 
       - name: Install Intel Fortran compiler
-        shell: cmd
+        shell: bash
         run: |
           start /b /wait ifort_download.exe -s -x -f ifort_extract
           ifort_extract/bootstrapper.exe --silent --eula accept
