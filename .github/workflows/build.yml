@@ -156,6 +156,7 @@ jobs:
         run: |
           echo "start /b /wait ifort_download.exe -s -x -f ifort_extract" > ifort_script.bat
           echo "ifort_extract/bootstrapper.exe --silent --eula accept --components=intel.oneapi.win.ifort-compiler" >> ifort_script.bat
+          chmod 755 ifort_script.bat
           ifort_script.bat
 
       - uses: msys2/setup-msys2@v2
