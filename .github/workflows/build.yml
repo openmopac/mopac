@@ -7,7 +7,7 @@ on:
 
 env:
   IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18210/l_fortran-compiler_p_2021.4.0.3224.sh
-  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63_offline.dmg
+  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63.dmg
   IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77.exe
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
       - name: Install Intel Fortran compiler
         run: |
           curl $IFORT_LINUX_URL --output ifort_download.sh
-          sh ifort_download.sh -a --silent --eula accept
+          sudo sh ifort_download.sh -a --silent --eula accept
 
       - name: Clone glibc compatibility library
         uses: actions/checkout@v2
@@ -90,7 +90,7 @@ jobs:
         run: |
           curl $IFORT_MAC_URL --output ifort_download.dmg
           hdiutil attach ifort_download.dmg
-          /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
+          sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
