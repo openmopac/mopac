@@ -152,7 +152,9 @@ jobs:
         shell: cmd
         run: |
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
-          ifort_download -a --silent --eula accept
+          ifort_download -s -f ifort_expand
+          dir ifort_expand
+          ifort_expand/bootstrapper --silent --eula accept
 
       - uses: msys2/setup-msys2@v2
         with:
