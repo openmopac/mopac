@@ -147,6 +147,16 @@ jobs:
         shell: msys2 {0}
 
     steps:
+      - name: Download Intel Fortran compiler
+        shell: bash
+        run: curl $IFORT_MAC_URL --output ifort_download.exe
+
+      - name: Install Intel Fortran compiler
+        shell: cmd
+        run: |
+          start /b /wait ifort_download.exe -s -x -f ifort_extract
+          ifort_extract/bootstrapper.exe --silent --eula accept
+
       - uses: msys2/setup-msys2@v2
         with:
           install: >-
@@ -161,15 +171,6 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-
-      - name: Download Intel Fortran compiler
-        run: curl $IFORT_MAC_URL --output ifort_download.exe
-
-      - name: Install Intel Fortran compiler
-        shell: bash
-        run: |
-          start /b /wait ifort_download.exe -s -x -f ifort_extract
-          ifort_extract/bootstrapper.exe --silent --eula accept
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
