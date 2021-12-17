@@ -151,7 +151,7 @@ jobs:
       - name: Download & install Intel Fortran compiler
         shell: cmd
         run: |
-          curl $IFORT_WINDOWS_URL --output ifort_download.exe
+          curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
           ifort_download -a --silent --eula accept
 
       - uses: msys2/setup-msys2@v2
