@@ -8,7 +8,8 @@ on:
 env:
   IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18210/l_fortran-compiler_p_2021.4.0.3224.sh
   IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63.dmg
-  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18247/w_HPCKit_p_2021.4.0.3340.exe
+  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77.exe
+  ALT3: https://registrationcenter-download.intel.com/akdlm/irc_nas/18247/w_HPCKit_p_2021.4.0.3340.exe
   ALT2: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77.exe
   ALT: https://registrationcenter-download.intel.com/akdlm/irc_nas/18414/w_onemkl_p_2022.0.0.115.exe
 
@@ -17,16 +18,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Download & install Intel Fortran compiler
+        run: |
+          curl $IFORT_LINUX_URL --output ifort_download.sh
+          sudo sh ifort_download.sh -a --silent --eula accept
+
       - uses: actions/checkout@v2
 
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-
-      - name: Download & install Intel Fortran compiler
-        run: |
-          curl $IFORT_LINUX_URL --output ifort_download.sh
-          sudo sh ifort_download.sh -a --silent --eula accept
 
       - name: Clone glibc compatibility library
         uses: actions/checkout@v2
@@ -82,17 +83,17 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
       - name: Download & install Intel Fortran compiler
         run: |
           curl $IFORT_MAC_URL --output ifort_download.dmg
           hdiutil attach ifort_download.dmg
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
+
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
@@ -148,14 +149,10 @@ jobs:
 
     steps:
       - name: Download & install Intel Fortran compiler
-        shell: bash
+        shell: cmd
         run: |
-          echo "curl $IFORT_MAC_URL --output ifort_download.exe" > ifort_script.bat
-          echo "start /b /wait ifort_download.exe -s -x -f ifort_extract" >> ifort_script.bat
-          echo "ifort_extract/bootstrapper.exe --silent --eula accept --components=intel.oneapi.win.ifort-compiler" >> ifort_script.bat
-          chmod 755 ifort_script.bat
-          ls -l
-          ./ifort_script.bat
+          curl $IFORT_WINDOWS_URL --output ifort_download.exe
+          ifort_download -a --silent --eula accept
 
       - uses: msys2/setup-msys2@v2
         with:
