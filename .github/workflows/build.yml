@@ -36,39 +36,31 @@ jobs:
         run: python -m pip install numpy
 
       - name: Install dependencies with Anaconda
-        run: conda install -c intel mkl-static
-
-      - name: Configure & build mopac_math with CMake & GNU compilers
         run: |
-          cmake -S math -B build_math \
-            -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
-            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
-          cmake --build build_math --config Release
+          conda install -c intel mkl-static
+          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
-      - name: Configure & build mopac_core with CMake & GNU compilers
+      - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
-            -DCMAKE_Fortran_COMPILER=gfortran \
+            -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
-            -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
-          cmake --build build --config Release
-          cd build
-          ctest --verbose
+            -DBLA_STATIC=ON \
+            -DBLA_VENDOR=Intel10_64lp
+
+      - name: Build MOPAC with Make
+        run: cmake --build build
+
+      - name: Test MOPAC with CTest
+        run: ctest --verbose --build-run-dir build
 
       - name: Zip executable & shared libraries (including system libraries)
-        env:
-          GCC_LIB: /usr/lib/gcc/x86_64-linux-gnu/9
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core.so*
-          zip -j mopac.zip build_math/libmopac_math.so*
           zip -j mopac.zip $CONDA/lib/libiomp5.so*
-          zip -j mopac.zip $GCC_LIB/libgfortran.so*
-          zip -j mopac.zip $GCC_LIB/libgcc_s.so*
-          zip -j mopac.zip $GCC_LIB/libquadmath.so*
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -99,38 +91,29 @@ jobs:
         run: |
           sudo chown -R runner:staff $CONDA
           conda install -c intel mkl-static
+          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
-      - name: Configure & build mopac_math with CMake & GNU compilers
-        run: |
-          cmake -S math -B build_math \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
-            -DCMAKE_C_COMPILER=gcc-11 \
-            -DCMAKE_LIBRARY_PATH="$CONDA/lib"
-          cmake --build build_math --config Release
-
-      - name: Configure & build mopac_core with CMake & GNU compilers
+      - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
-            -DCMAKE_Fortran_COMPILER=gfortran-11 \
-            -DCMAKE_C_COMPILER=gcc-11 \
-            -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math"
-          cmake --build build --config Release
-          cd build
-          ctest --verbose
+            -DCMAKE_Fortran_COMPILER=ifort \
+            -DCMAKE_C_COMPILER=gcc \
+            -DBLA_STATIC=ON \
+            -DBLA_VENDOR=Intel10_64lp
+
+      - name: Build MOPAC with Make
+        run: cmake --build build
+
+      - name: Test MOPAC with CTest
+        run: ctest --verbose --build-run-dir build
 
       - name: Zip executable & shared libraries (including system libraries)
-        env:
-          GCC_LIB: /usr/local/lib/gcc/11
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core*.dylib
-          zip -j mopac.zip build_math/libmopac_math*.dylib
           zip -j mopac.zip $CONDA/lib/libiomp5.dylib
-          zip -j mopac.zip $GCC_LIB/libgfortran*.dylib
-          zip -j mopac.zip $GCC_LIB/libgcc_s*.dylib
-          zip -j mopac.zip $GCC_LIB/libquadmath*.dylib
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
