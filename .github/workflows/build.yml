@@ -20,6 +20,7 @@ jobs:
           curl $IFORT_LINUX_URL --output ifort_download.sh
           sudo sh ifort_download.sh -a --silent --eula accept
           echo "/opt/intel/oneapi/compiler/latest/linux/bin/intel64" >> $GITHUB_PATH
+          echo "/opt/intel/oneapi/compiler/latest/linux/compiler/lib" >> $GITHUB_PATH
 
       - uses: actions/checkout@v2
 
@@ -79,6 +80,7 @@ jobs:
           hdiutil attach ifort_download.dmg
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
           echo "/opt/intel/oneapi/compiler/latest/mac/bin/intel64" >> $GITHUB_PATH
+          echo "/opt/intel/oneapi/compiler/latest/mac/compiler/lib" >> $GITHUB_PATH
 
       - uses: actions/checkout@v2
 
