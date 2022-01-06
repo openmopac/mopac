@@ -19,8 +19,6 @@ jobs:
         run: |
           curl $IFORT_LINUX_URL --output ifort_download.sh
           sudo sh ifort_download.sh -a --silent --eula accept
-          echo "/opt/intel/oneapi/compiler/latest/linux/bin/intel64" >> $GITHUB_PATH
-          echo "LD_LIBRARY_PATH=/opt/intel/oneapi/compiler/latest/linux/compiler/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
 
@@ -44,6 +42,7 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
+          /opt/intel/oneapi/setvars.sh
           cmake -B build \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_C_COMPILER=gcc \
@@ -79,8 +78,6 @@ jobs:
           curl $IFORT_MAC_URL --output ifort_download.dmg
           hdiutil attach ifort_download.dmg
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
-          echo "/opt/intel/oneapi/compiler/latest/mac/bin/intel64" >> $GITHUB_PATH
-          echo "DYLD_LIBRARY_PATH=/opt/intel/oneapi/compiler/latest/mac/compiler/lib:$DYLD_LIBRARY_PATH" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
 
@@ -99,6 +96,7 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
+          /opt/intel/oneapi/setvars.sh
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_Fortran_COMPILER=ifort \
