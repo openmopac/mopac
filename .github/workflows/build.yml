@@ -42,7 +42,7 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
-          /opt/intel/oneapi/setvars.sh
+          source /opt/intel/oneapi/setvars.sh
           cmake -B build \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_C_COMPILER=gcc \
@@ -96,7 +96,7 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
-          /opt/intel/oneapi/setvars.sh
+          source /opt/intel/oneapi/setvars.sh
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_Fortran_COMPILER=ifort \
