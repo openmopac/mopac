@@ -56,6 +56,7 @@ jobs:
         run: |
           cd build
           ctest --verbose
+          grep "setup.iter" tests/port.out -B 100 -A 100
 
       - name: Zip executable & shared libraries (including system libraries)
         run: |
