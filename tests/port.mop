@@ -4177,14 +4177,14 @@ oldgeo nllsq restart dump=0.1
 
 
   am1  1scf  large UHF  geo-ok triplet gradients + bonds
-shift=10 debug eigs vectors density iter pl denout setup=setup.iter
+shift=10 debug eigs vectors density iter pl denout setup="setup.iter"
 H-N, test of ITER
 
 h
 N 1.2 1
 
 niter=20  1electron  times  scfcrt=1.D-6 oldgeo oldens uhf  &
-fock  debug  iter gradients cutoff1=6 cutoff2=20 hcore setup=setup.iter
+fock  debug  iter gradients cutoff1=6 cutoff2=20 hcore setup="setup.iter"
  Third line 
  SETUP C.I.=2
 H2

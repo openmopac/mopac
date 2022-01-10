@@ -14,7 +14,7 @@
  *  RESEQ      - RESEQUENCE Z-MATRIX INTO NORMAL PDB FORMAT
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(40, 50, 60) 
- *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "check_ters.pdb"
+ *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Check_TERs.pdb"
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
  *  Keyword:     CHAINS=(B) 
  *  RESIDUES   - DETERMINE THE SEQUENCE OF RESIDUES
@@ -22,7 +22,7 @@
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
  *  HTML       - WRITE HTML SCRIPT TO READ PDB FILE USING JSMOL
  *******************************************************************************
- geo_dat="check_ters.pdb" start_res=(40, 50, 60) chains=(B) residues reseq HTML
+ geo_dat="Check_TERs.pdb" start_res=(40, 50, 60) chains=(B) residues reseq HTML
  Test to show that PDB files are correctly manipulated
 
    ATOM   CHEMICAL          X               Y               Z

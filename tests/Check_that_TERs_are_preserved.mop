@@ -14,5 +14,5 @@
 * (D) A residue, mis-labeled as "XXX" is (correctly) re-labeled as "PRO"
 *
 *                 
- geo_dat="check_ters.pdb" start_res=(40, 50, 60) chains=(B) residues reseq HTML
+ geo_dat="Check_TERs.pdb" start_res=(40, 50, 60) chains=(B) residues reseq HTML
  Test to show that PDB files are correctly manipulated
