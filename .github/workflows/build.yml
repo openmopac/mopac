@@ -45,6 +45,7 @@ jobs:
           source /opt/intel/oneapi/setvars.sh
           cmake -B build \
             -DCMAKE_Fortran_COMPILER=ifort \
+            -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
             -DBLA_STATIC=ON \
@@ -100,6 +101,7 @@ jobs:
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_Fortran_COMPILER=ifort \
+            -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
             -DAUTO_BLAS=OFF \
             -DMOPAC_LINK="-L $MKLROOT/lib -lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl"
