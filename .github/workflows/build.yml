@@ -57,7 +57,12 @@ jobs:
         run: |
           cd build
           ctest --verbose
-          grep "setup.iter" tests/port.out -B 100 -A 100
+
+      - name: Save debug log
+        uses: actions/upload-artifact@v2
+        with:
+          name: port.out
+          path: build/tests/port.out
 
       - name: Zip executable & shared libraries (including system libraries)
         run: |
