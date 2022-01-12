@@ -44,6 +44,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
@@ -107,6 +108,7 @@ jobs:
           source /opt/intel/oneapi/setvars.sh
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
+            -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
@@ -133,9 +135,6 @@ jobs:
 
   windows-build:
     runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
 
     steps:
       - name: Download & install Intel Fortran compiler
@@ -145,15 +144,6 @@ jobs:
           ifort_download -s -x -f ifort_unpack
           dir ifort_unpack
           ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
-
-      - uses: msys2/setup-msys2@v2
-        with:
-          install: >-
-            git
-            make
-            mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-gcc-fortran
-            mingw-w64-x86_64-tools-git
 
       - uses: actions/checkout@v2
 
@@ -165,50 +155,26 @@ jobs:
         run: python -m pip install numpy
 
       - name: Install dependencies with Anaconda
-        run: $CONDA/Scripts/conda install -c intel mkl-static
-
-      - name: Create .lib file from .dll for Intel OpenMP
-        env:
-          MSVC_BIN: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64
         run: |
-          mkdir local_omp
-          cp $CONDA/Library/bin/libiomp5md.dll local_omp
-          cd local_omp
-          gendef libiomp5md.dll
-          "$MSVC_BIN/lib" /def:libiomp5md.def /machine:x64
-
-      - name: Configure & build mopac_math with CMake & Microsoft compiler
-        env:
-          MSVC_BIN: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64
-        run: |
-          cmake -S math -B build_math \
-            -G "Visual Studio 16 2019" \
-            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$GITHUB_WORKSPACE/local_omp"
-          cmake --build build_math --config Release
-          "$MSVC_BIN/dumpbin" /nologo /exports build_math/Release/build_math.dll > build_math/Release/exports.txt
-          echo "EXPORTS" > build_math/Release/build_math.def
-          tail -n +17 exports.txt | awk '{ $1=""; $2=""; $3=""; print $0 }' | sed -r 's/\s*(.*?)\s*$/\1/' | sed '/^$/d' >> build_math/Release/build_math.def
-          cat build_math/Release/build_math.def
+          $CONDA/Scripts/conda install -c intel mkl-static
+          echo "MKLROOT=$CONDA/Liibrary/lib" >> $GITHUB_ENV
 
       - name: Configure & build mopac_core with CMake & GNU compilers
         run: |
-          cd build_math/Release
-          genlib mopac_math.def -a x86
-          cd ../..
           cmake -B build \
-            -G "MSYS Makefiles" \
+            -G "Visual Studio 16 2019" \
+            -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
-            -DCMAKE_Fortran_COMPILER=gfortran \
-            -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_LIBRARY_PATH="$GITHUB_WORKSPACE/build_math/Release"
-          cmake --build build --config Release
+            -DCMAKE_Fortran_COMPILER=ifort \
+            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin" \
+            -DBLA_VENDOR=Intel10_64lp
+          cmake --build build
 
       - name: Zip executable & shared libraries (including system libraries)
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/mopac_core.dll
-          zip -j mopac.zip build_math/Release/mopac_math.dll
           zip -j mopac.zip $CONDA/Library/bin/libiomp5md.dll
 
       - name: Save executable as an artifact
