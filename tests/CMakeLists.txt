@@ -19,7 +19,7 @@
 add_subdirectory(keywords)
 
 add_test(NAME port COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
-         port.mop port.parameters setup.iter try.txt aa.txt mol.in SETUP)
+         port.mop port.parameters try.txt aa.txt mol.in SETUP)
 
 add_test(NAME crambin COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ../mopac
          Crambin_1SCF.mop Crambin_1SCF.den)
