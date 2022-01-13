@@ -166,7 +166,7 @@ jobs:
             -G"Visual Studio 16 2019" ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DCMAKE_VERBOSE_MAKEFILE=ON ^
-            -DCMAKE_Fortran_COMPILER="C:/Program Files (x86)/Intel/oneAPI/compiler/2022.0.0/windows/bin/intel64/ifort" ^
+            -DCMAKE_Fortran_COMPILER="C:/Program Files (x86)/Intel/oneAPI/compiler/2022.0.0/windows/bin/intel64/ifort.exe" ^
             -DCMAKE_LIBRARY_PATH="%CONDA%/Library/lib;%CONDA%/Library/bin" ^
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
