@@ -157,12 +157,12 @@ jobs:
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-          cmake -Bbuild \
-            -G"Visual Studio 16 2019" \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_VERBOSE_MAKEFILE=ON \
-            -DCMAKE_Fortran_COMPILER=ifort \
-            -DCMAKE_LIBRARY_PATH="${{ env.CONDA }}\Library\lib;${{ env.CONDA }}\Library\bin" \
+          cmake -Bbuild ^
+            -G"Visual Studio 16 2019" ^
+            -DCMAKE_BUILD_TYPE=Release ^
+            -DCMAKE_VERBOSE_MAKEFILE=ON ^
+            -DCMAKE_Fortran_COMPILER=ifort ^
+            -DCMAKE_LIBRARY_PATH="${{ env.CONDA }}\Library\lib;${{ env.CONDA }}\Library\bin" ^
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
 
