@@ -160,7 +160,6 @@ jobs:
           ifort \help
           cmake -Bbuild ^
             -G"Visual Studio 16 2019" ^
-#            -G"NMake Makefiles" ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DCMAKE_VERBOSE_MAKEFILE=ON ^
             -DCMAKE_Fortran_COMPILER="C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64\ifort" ^
