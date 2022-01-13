@@ -11,127 +11,120 @@ env:
   IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77.exe
 
 jobs:
-  linux-build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download & install Intel Fortran compiler
-        run: |
-          curl $IFORT_LINUX_URL --output ifort_download.sh
-          sudo sh ifort_download.sh -a --silent --eula accept
-
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Clone glibc compatibility library
-        uses: actions/checkout@v2
-        with:
-          repository: wheybags/glibc_version_header
-          path: glibc
-
-      - name: Install dependencies with PyPI
-        run: python -m pip install numpy
-
-      - name: Install dependencies with Anaconda
-        run: |
-          conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
-
-      - name: Configure & build MOPAC with CMake
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cmake -B build \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_Fortran_COMPILER=ifort \
-            -DCMAKE_Fortran_FLAGS="-static-intel" \
-            -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
-            -DBLA_STATIC=ON \
-            -DBLA_VENDOR=Intel10_64lp
-          cmake --build build
-
-      - name: Test MOPAC with CTest
-        continue-on-error: true
-        run: |
-          cd build
-          ctest --verbose
-
-      - name: Save debug log
-        uses: actions/upload-artifact@v2
-        with:
-          name: port.out
-          path: build/tests/port.out
-
-      - name: Zip executable & shared libraries (including system libraries)
-        run: |
-          zip -j mopac.zip build/mopac
-          zip -j mopac.zip build/param
-          zip -j mopac.zip build/libmopac_core.so*
-          zip -j mopac.zip $CONDA/lib/libiomp5.so*
-
-      - name: Save executable as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux
-          path: mopac.zip
-
-  mac-build:
-    runs-on: macos-latest
-
-    steps:
-      - name: Download & install Intel Fortran compiler
-        run: |
-          curl $IFORT_MAC_URL --output ifort_download.dmg
-          hdiutil attach ifort_download.dmg
-          sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
-
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies with PyPI
-        run: python -m pip install numpy
-
-      - name: Install dependencies with Anaconda
-        run: |
-          sudo chown -R runner:staff $CONDA
-          conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
-
-      - name: Configure & build MOPAC with CMake
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cmake -B build \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_Fortran_COMPILER=ifort \
-            -DCMAKE_Fortran_FLAGS="-static-intel" \
-            -DCMAKE_C_COMPILER=gcc \
-            -DBLA_VENDOR=Intel10_64lp
-          cmake --build build
-
-      - name: Test MOPAC with CTest
-        run: |
-          cd build
-          ctest --verbose
-
-      - name: Zip executable & shared libraries (including system libraries)
-        run: |
-          zip -j mopac.zip build/mopac
-          zip -j mopac.zip build/param
-          zip -j mopac.zip build/libmopac_core*.dylib
-          zip -j mopac.zip $CONDA/lib/libiomp5.dylib
-
-      - name: Save executable as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: mac
-          path: mopac.zip
+#  linux-build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Download & install Intel Fortran compiler
+#        run: |
+#          curl $IFORT_LINUX_URL --output ifort_download.sh
+#          sudo sh ifort_download.sh -a --silent --eula accept
+#
+#      - uses: actions/checkout@v2
+#
+#      - uses: actions/setup-python@v2
+#        with:
+#          python-version: '3.x'
+#
+#      - name: Clone glibc compatibility library
+#        uses: actions/checkout@v2
+#        with:
+#          repository: wheybags/glibc_version_header
+#          path: glibc
+#
+#      - name: Install dependencies with PyPI
+#        run: python -m pip install numpy
+#
+#      - name: Install dependencies with Anaconda
+#        run: |
+#          conda install -c intel mkl-static
+#          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
+#
+#      - name: Configure & build MOPAC with CMake
+#        run: |
+#          source /opt/intel/oneapi/setvars.sh
+#          cmake -B build \
+#            -DCMAKE_BUILD_TYPE=Release \
+#            -DCMAKE_Fortran_COMPILER=ifort \
+#            -DCMAKE_Fortran_FLAGS="-static-intel" \
+#            -DCMAKE_C_COMPILER=gcc \
+#            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
+#            -DBLA_STATIC=ON \
+#            -DBLA_VENDOR=Intel10_64lp
+#          cmake --build build
+#
+#      - name: Test MOPAC with CTest
+#        run: |
+#          cd build
+#          ctest --verbose
+#
+#      - name: Zip executable & shared libraries (including system libraries)
+#        run: |
+#          zip -j mopac.zip build/mopac
+#          zip -j mopac.zip build/param
+#          zip -j mopac.zip build/libmopac_core.so*
+#          zip -j mopac.zip $CONDA/lib/libiomp5.so*
+#
+#      - name: Save executable as an artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: linux
+#          path: mopac.zip
+#
+#  mac-build:
+#    runs-on: macos-latest
+#
+#    steps:
+#      - name: Download & install Intel Fortran compiler
+#        run: |
+#          curl $IFORT_MAC_URL --output ifort_download.dmg
+#          hdiutil attach ifort_download.dmg
+#          sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
+#
+#      - uses: actions/checkout@v2
+#
+#      - uses: actions/setup-python@v2
+#        with:
+#          python-version: '3.x'
+#
+#      - name: Install dependencies with PyPI
+#        run: python -m pip install numpy
+#
+#      - name: Install dependencies with Anaconda
+#        run: |
+#          sudo chown -R runner:staff $CONDA
+#          conda install -c intel mkl-static
+#          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
+#
+#      - name: Configure & build MOPAC with CMake
+#        run: |
+#          source /opt/intel/oneapi/setvars.sh
+#          cmake -B build \
+#            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
+#            -DCMAKE_BUILD_TYPE=Release \
+#            -DCMAKE_Fortran_COMPILER=ifort \
+#            -DCMAKE_Fortran_FLAGS="-static-intel" \
+#            -DCMAKE_C_COMPILER=gcc \
+#            -DBLA_VENDOR=Intel10_64lp
+#          cmake --build build
+#
+#      - name: Test MOPAC with CTest
+#        run: |
+#          cd build
+#          ctest --verbose
+#
+#      - name: Zip executable & shared libraries (including system libraries)
+#        run: |
+#          zip -j mopac.zip build/mopac
+#          zip -j mopac.zip build/param
+#          zip -j mopac.zip build/libmopac_core*.dylib
+#          zip -j mopac.zip $CONDA/lib/libiomp5.dylib
+#
+#      - name: Save executable as an artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: mac
+#          path: mopac.zip
 
   windows-build:
     runs-on: windows-latest
@@ -155,11 +148,13 @@ jobs:
         run: python -m pip install numpy
 
       - name: Install dependencies with Anaconda
+        shell: bash
         run: |
           $CONDA/Scripts/conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA/Liibrary/lib" >> $GITHUB_ENV
+          echo "MKLROOT=$CONDA/Library/lib" >> $GITHUB_ENV
 
-      - name: Configure & build mopac_core with CMake & GNU compilers
+      - name: Configure & build MOPAC with CMake
+        shell: bash
         run: |
           cmake -B build \
             -G "Visual Studio 16 2019" \
@@ -169,6 +164,12 @@ jobs:
             -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin" \
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
+
+      - name: Test MOPAC with CTest
+        shell: bash
+        run: |
+          cd build
+          ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
         run: |
