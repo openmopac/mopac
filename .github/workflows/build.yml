@@ -158,15 +158,15 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.5.0"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.5.0\windows"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.5.0\windows\bin"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2021.5.0\windows\bin\intel64"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.0"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.0\windows"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.0\windows\bin"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.0\windows\bin\intel64"
           cmake -Bbuild ^
             -G"Visual Studio 16 2019" ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DCMAKE_VERBOSE_MAKEFILE=ON ^
-            -DCMAKE_Fortran_COMPILER="C:/Program Files (x86)/Intel/oneAPI/compiler/2021.5.0/windows/bin/intel64/ifort" ^
+            -DCMAKE_Fortran_COMPILER="C:/Program Files (x86)/Intel/oneAPI/compiler/2022.0.0/windows/bin/intel64/ifort" ^
             -DCMAKE_LIBRARY_PATH="%CONDA%/Library/lib;%CONDA%/Library/bin" ^
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
