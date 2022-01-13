@@ -154,14 +154,15 @@ jobs:
           echo "MKLROOT=$CONDA/Library/lib" >> $GITHUB_ENV
 
       - name: Configure & build MOPAC with CMake
-        shell: bash
+        shell: cmd
         run: |
+          "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           cmake -B build \
             -G "Visual Studio 16 2019" \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=ifort \
-            -DCMAKE_LIBRARY_PATH="$CONDA/Library/lib;$CONDA/Library/bin" \
+            -DCMAKE_LIBRARY_PATH="${{ env.CONDA }}\Library\lib;${{ env.CONDA }}\Library\bin" \
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
 
@@ -172,6 +173,7 @@ jobs:
           ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
+        shell: bash
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
