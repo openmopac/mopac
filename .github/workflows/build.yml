@@ -156,7 +156,7 @@ jobs:
       - name: Configure & build MOPAC with CMake
         shell: cmd
         run: |
-          "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
+          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           cmake -B build \
             -G "Visual Studio 16 2019" \
             -DCMAKE_BUILD_TYPE=Release \
