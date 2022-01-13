@@ -157,8 +157,8 @@ jobs:
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-          cmake -B build \
-            -G "Visual Studio 16 2019" \
+          cmake -Bbuild \
+            -G"Visual Studio 16 2019" \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_VERBOSE_MAKEFILE=ON \
             -DCMAKE_Fortran_COMPILER=ifort \
