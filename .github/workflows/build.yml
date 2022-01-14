@@ -135,7 +135,6 @@ jobs:
         run: |
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
           ifort_download -s -x -f ifort_unpack
-          dir ifort_unpack
           ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
 
       - uses: actions/checkout@v2
