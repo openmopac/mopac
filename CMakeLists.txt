@@ -54,6 +54,11 @@ else()
   add_definitions(-DMOPAC_OS='X')
 endif()
 
+# Extra flags to export shared library symbols on Windows
+if(WIN32)
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+endif()
+
 # Try to use CMake's system of finding BLAS & LAPACK libraries
 option(AUTO_BLAS "Use find_package to detect BLAS & LAPACK libraries" ON)
 if(AUTO_BLAS)
