@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
   subroutine run_mopac
-  !dec$ attributes dllexport :: run_mopac
+  !dec$ attributes dllexport, alias:'run_mopac' :: run_mopac
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
