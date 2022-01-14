@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 module molkst_C
+!dec$ attributes dllexport :: molkst_C
 !
 !  This module contains all the scalars relating to the system being calculated. 
 !  Every entry is unique, and has the same meaning in every subroutine.

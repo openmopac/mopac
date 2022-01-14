@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
       module chanel_C 
+      !dec$ attributes dllexport :: chanel_C
       integer :: &
      & iw0       = -1, & !    Abbrev. output, for GUI (By default, not used)
      & ifiles_1  =  1, &

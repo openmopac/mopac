@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
  subroutine run_param
+ !dec$ attributes dllexport :: run_param
     use param_global_C, only : numvar, large, power, ifiles_8, &
     & contrl, fnsnew, nfns, xparamp, diffns, fns, penalty, &
     save_parameters
