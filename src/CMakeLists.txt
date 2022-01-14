@@ -60,5 +60,6 @@ target_sources(mopac_core PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/moldat.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/mopend.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/run_mopac.F90
+        ${CMAKE_CURRENT_SOURCE_DIR}/run_param.F90
         ${CMAKE_CURRENT_SOURCE_DIR}/setup_mopac_arrays.F90
 )
