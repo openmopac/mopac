@@ -15,7 +15,6 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 module molkst_C
-!dec$ attributes dllexport :: molkst_C
 !
 !  This module contains all the scalars relating to the system being calculated. 
 !  Every entry is unique, and has the same meaning in every subroutine.
@@ -256,12 +255,14 @@ module molkst_C
                      !  Definition    Type and number count of each element in the system
                      !  Units         Text
  &verson*7= "00.000X"!  Term         Version number
+ !dec$ attributes dllexport :: verson
                      !  Definition   Version number for this copy of MOPAC
                      !  Pattern      "\d\.\d\d\d[X|W|L|M]"
                      !  Description  Year.Julian date. Operating System [X = placeholder]
   character ::     &
   & jobnam*240 = ' ', &!
   & line*3000         !
+  !dec$ attributes dllexport :: line
   character :: backslash = achar(92) ! portable way of representing the backslash character
   character :: keywrd*3000, koment*200, title*200, refkey(6)*3000, geo_ref_name*241, geo_dat_name*241, &
     allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000 
@@ -281,6 +282,7 @@ module molkst_C
                           !  if the energy changes a lot (useful in geometry optimization)
                           !  if FALSE, then converge the SCF to the default criterion
      gui = .true.,      & !  By default, output information for a Graphical User Interface
+     !dec$ attributes dllexport :: gui
      lxfac,             & !  TRUE if a diatomic is being used to define the values of XFAC and ALPB
      units,             & !  TRUE if units for input geometry are defined (Angstroms or A0), FALSE otherwise
      Angstroms,         & !  TRUE if units for input geometry must be in Angstroms, if FALSE then A0, see also units
