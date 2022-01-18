@@ -218,7 +218,7 @@ for file in argv[3:]:
 # run MOPAC in the local directory
 try:
     subprocess.run([argv[2],argv[3]], check=True)
-except CalledProcessError as err:
+except subprocess.CalledProcessError as err:
     print("In attempting to run: ", err.cmd)
     print("stdout: ", err.stdout)
     print("stderr: ", err.stderr)

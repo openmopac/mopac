@@ -177,6 +177,7 @@ jobs:
             -DBLA_STATIC=ON ^
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
+          cp $CONDA/Library/bin/libiomp5md.dll build
 
       - name: Test MOPAC with CTest
         shell: cmd
@@ -190,7 +191,7 @@ jobs:
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/mopac_core.dll
-          zip -j mopac.zip $CONDA/Library/bin/libiomp5md.dll
+          zip -j mopac.zip build/libiomp5md.dll
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
