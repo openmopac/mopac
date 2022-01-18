@@ -216,7 +216,12 @@ for file in argv[3:]:
    copyfile(os.path.join(argv[1],file),file)
 
 # run MOPAC in the local directory
-subprocess.run([argv[2],argv[3]], check=True)
+try:
+    subprocess.run([argv[2],argv[3]], check=True)
+except CalledProcessError as err:
+    print("In attempting to run: ", err.cmd)
+    print("stdout: ", err.stdout)
+    print("stderr: ", err.stderr)
 
 # only compare ".out" output files that have the same name as ".mop" or ".ent" input files
 out_name = argv[3][:-3]+'out'
