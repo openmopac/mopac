@@ -177,7 +177,7 @@ jobs:
             -DBLA_STATIC=ON ^
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
-          cp $CONDA/Library/bin/libiomp5md.dll build
+          cp %CONDA%/Library/bin/libiomp5md.dll build
 
       - name: Test MOPAC with CTest
         shell: cmd
