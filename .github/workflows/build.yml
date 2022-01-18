@@ -12,6 +12,8 @@ env:
 
 jobs:
   linux-build:
+    if: ${{ false }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -72,6 +74,8 @@ jobs:
           path: mopac.zip
 
   mac-build:
+    if: ${{ false }}
+
     runs-on: macos-latest
 
     steps:
@@ -180,9 +184,12 @@ jobs:
           cp %CONDA%/Library/bin/libiomp5md.dll build
 
       - name: Test MOPAC with CTest
-        shell: cmd
+        shell: bash
         run: |
           cd build
+          cp ../tests/port.mop .
+          mopac port.mop
+          tail -100 port.out
           ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
