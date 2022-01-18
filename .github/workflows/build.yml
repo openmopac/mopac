@@ -184,12 +184,9 @@ jobs:
           cp %CONDA%/Library/bin/libiomp5md.dll build
 
       - name: Test MOPAC with CTest
-        shell: bash
         run: |
           cd build
-          cp ../tests/port.mop .
-          mopac port.mop
-          tail -100 port.out
+          dir -r
           ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
