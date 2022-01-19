@@ -12,8 +12,6 @@ env:
 
 jobs:
   linux-build:
-    if: ${{ false }}
-
     runs-on: ubuntu-latest
 
     steps:
@@ -73,8 +71,6 @@ jobs:
           path: mopac.zip
 
   mac-build:
-    if: ${{ false }}
-
     runs-on: macos-latest
 
     steps:
@@ -189,7 +185,6 @@ jobs:
 
       - name: Zip executable & shared libraries (including system libraries)
         run: |
-          cd build
           Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
           Compress-Archive -Update -Path build/mopac_core.dll -DestinationPath mopac.zip
           Compress-Archive -Update -Path build/libiomp5md.dll -DestinationPath mopac.zip
