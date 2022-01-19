@@ -183,8 +183,14 @@ jobs:
           cmake --build build
 
       - name: Test MOPAC with CTest
+        shell: bash
         run: |
           cd build
+          cp ../tests/port.mop .
+          mopac port.mop
+          ./mopac port.mop
+          mopac.exe port.mop
+          ./mopac.exe port.mop
           ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
