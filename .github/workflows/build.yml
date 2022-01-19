@@ -63,7 +63,6 @@ jobs:
       - name: Zip executable & shared libraries (including system libraries)
         run: |
           zip -j mopac.zip build/mopac
-          zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core.so*
           zip -j mopac.zip $CONDA/lib/libiomp5.so*
 
@@ -134,7 +133,6 @@ jobs:
       - name: Zip executable & shared libraries (including system libraries)
         run: |
           zip -j mopac.zip build/mopac
-          zip -j mopac.zip build/param
           zip -j mopac.zip build/libmopac_core*.dylib
           zip -j mopac.zip $CONDA/lib/libiomp5.dylib
 
@@ -185,21 +183,16 @@ jobs:
           cp %CONDA%/Library/bin/libiomp5md.dll build
 
       - name: Test MOPAC with CTest
-        shell: bash
         run: |
           cd build
-          cp ../tests/port.mop .
-          ls -l
-          ./mopac.exe port.mop
           ctest --verbose
 
       - name: Zip executable & shared libraries (including system libraries)
-        shell: bash
         run: |
-          zip -j mopac.zip build/mopac
-          zip -j mopac.zip build/param
-          zip -j mopac.zip build/mopac_core.dll
-          zip -j mopac.zip build/libiomp5md.dll
+          cd build
+          Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
+          Compress-Archive -Update -Path build/mopac_core.dll -DestinationPath mopac.zip
+          Compress-Archive -Update -Path build/libiomp5md.dll -DestinationPath mopac.zip
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
