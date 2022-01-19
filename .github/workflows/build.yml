@@ -176,11 +176,13 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           cmake -Bbuild ^
             -G"NMake Makefiles" ^
+            -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DCMAKE_LIBRARY_PATH="%CONDA%/Library/lib;%CONDA%/Library/bin" ^
             -DBLA_STATIC=ON ^
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
+          cp %CONDA%/Library/bin/libiomp5md.dll build
 
       - name: Test MOPAC with CTest
         shell: bash
@@ -197,7 +199,7 @@ jobs:
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/param
           zip -j mopac.zip build/mopac_core.dll
-          zip -j mopac.zip $CONDA/Library/bin/libiomp5md.dll
+          zip -j mopac.zip build/libiomp5md.dll
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
