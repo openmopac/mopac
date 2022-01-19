@@ -187,9 +187,7 @@ jobs:
         run: |
           cd build
           cp ../tests/port.mop .
-          mopac port.mop
-          ./mopac port.mop
-          mopac.exe port.mop
+          ls -l
           ./mopac.exe port.mop
           ctest --verbose
 
