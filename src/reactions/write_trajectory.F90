@@ -123,7 +123,11 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
   end if
   if (index(keywrd, " PDBOUT") /= 0) then
     imodel = imodel + 1
-    write(ipdb,'(a,i7)')"MODEL",imodel 
+    write(line,'(F13.5)') escf
+    do i = 1, 12
+      if (line(i:i) /= " ") exit
+    end do
+    write(ipdb,'(a, i9, 2x, a)')"MODEL",imodel, trim(line(i:))
     call pdbout(ipdb)
     write(ipdb,'(a)')"ENDMDL"
   end if
@@ -225,7 +229,11 @@ subroutine reverse_trajectory(mode)
     jloop = i - 1
     do i = jloop, 2, -1! Exclude the first point - it's common to both paths
       imodel = imodel + 1
-      write(ipdb,"(a,i6)") "MODEL ", imodel
+      line = store_hofs(i)(33:43)
+      do k = 1, 12
+        if (line(k:k) /= " ") exit
+      end do
+      write(ipdb,'(a, i9, 2x, a)')"MODEL",imodel, trim(line(k:))
       do k = 1, npdb
         write(ipdb,"(a)") trim(store_path(k,i))
       end do

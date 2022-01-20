@@ -166,12 +166,27 @@
           do
             i = index(refkey(2), " -")
             if (i == 0) exit
+!
+! Is the minus sign inside a quoted text
+!
+            j = 0
+            do k = i, len_trim(refkey(2))
+              if (refkey(2)(k:k) == '"') j = j + 1
+            end do
+            if (mod(j,2) == 1) then
+!
+!  Yes, it's inside a quoted string, so protect it and carry on
+!
+              refkey(2)(i:i) = "*"
+              cycle
+            end if
             j = index(refkey(2)(i + 2:), " ") + i + 1
             do 
               k = index(" "//keywrd, " "//refkey(2)(i + 2: j - 1))
               if (k == 0) exit
               l = index(keywrd(k + 1:)," ") + k + 1
               keywrd(k:) = keywrd(l:)
+              if (keywrd == " ") exit
             end do
             refkey(2)(i:) = refkey(2)(j:)
           end do
@@ -212,6 +227,22 @@
           do
             i = index(keywrd, " -")
             if (i == 0) exit
+            i = index(keywrd, " -")
+            if (i == 0) exit
+!
+! Is the minus sign inside a quoted text
+!
+            j = 0
+            do k = i, len_trim(keywrd)
+              if (keywrd(k:k) == '"') j = j + 1
+            end do
+            if (mod(j,2) == 1) then
+!
+!  Yes, it's inside a quoted string, so protect it and carry on
+!
+              refkey(2)(i:i) = "*"
+              cycle
+            end if
             j = index(keywrd(i + 2:), " ") + i + 1
             do 
               k = index(" "//refkey(2), " "//keywrd(i + 2: j - 1))
@@ -421,6 +452,11 @@
 !
 ! End of UNIX-specific code
 !
+      do
+        i = index(refkey(1), "*-")
+        if (i == 0) exit
+        refkey(1)(i:i) = " "
+      end do
       if (len_trim(keywrd) == len_trim(oldkey)) then
         l_quote = .false.
         do i = 1, len_trim(oldkey)

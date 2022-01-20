@@ -1045,6 +1045,13 @@
       case (8, 16)! Select for Oxygen in different coordination numbers
   99    continue
         select case (nbonds(i))
+        case (0)
+          if (i_charge == 0 .or. i_charge == 1) then
+            line = "An attempt has been made to change the number of hydrogen atoms attached to an isolated oxygen atom"
+            call mopend(trim(line))
+            write(iw, '(10x,a)')"(Either use CVB to make a bond to the oxygen, or make this change outside MOPAC)"
+            return
+          end if
         case (1)
           if (i_charge == 0 .or. i_charge == 1) then
             j = ibonds(1,i)

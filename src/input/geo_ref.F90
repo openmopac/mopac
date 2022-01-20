@@ -286,6 +286,14 @@
         call mopend("NO ATOMS DETECTED IN GEO_REF FILE")
         return
       end if
+      if (numat > ii) then
+!
+! Increase the size of arrays
+!
+        deallocate (nat)
+        allocate (nat(numat + 10))
+        nat(:ii) = atom_no(:ii)
+      end if
       if (index(keywrd, " OPT ") /= 0) lopt = 1
       deallocate(c)
       maxtxt = j
@@ -375,8 +383,6 @@
         end if
         ok = .false.
         same = .false.
-        k = 0
-        l = 0
 !
 ! Put atoms in the GEO_REF file into the same order as those in the data-set
 !
@@ -387,6 +393,37 @@
 !  In the second pass, hydrogen atoms that might be mis-labeled within a residue are assigned.
 !  In the third pass, any remaining hydrogen atoms are assigned.
 !
+! If deuterium atoms are used, the PDB name will have "D" instead of "H" 
+! so convert the "D"'s to "H"'s for the purpose of ordering the atoms.
+!
+        do i = 1, numat
+          if (labels(i) == 1 .and. (index(txtatm(i)(:17), " D") /= 0)) then
+            j = index(txtatm(i), " D")
+            if (txtatm(i)(j + 1:j + 2) /= "DH") exit
+          end if
+        end do
+        do j = 1, numat
+          if (labels(j) == 1 .and. (index(txtatm1(j)(:17), " D") /= 0)) then
+            k = index(txtatm1(j), " D")
+            if (txtatm1(j)(k + 1:k + 2) /= "DH") exit
+          end if
+        end do
+        if ((i > numat .and. j <= numat) .or. (i <= numat .and. j > numat)) then
+          do i = 1, numat
+            if (labels(i) == 1) then
+              j = index(txtatm(i)(:17), " D")
+              if (j /= 0) then
+                txtatm(i)(j + 1:j + 1) = "H"
+              end if
+              j = index(txtatm1(i)(:17), " D")
+              if (j /= 0) then
+                txtatm1(i)(j + 1:j + 1) = "H"
+              end if
+            end if          
+          end do
+        end if
+        k = 0
+        l = 0
         do j = 1, ii
           j4 = 0
 !

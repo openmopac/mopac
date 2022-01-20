@@ -17,7 +17,7 @@
  subroutine GetDateStamp(date_time, version)
  !dec$ attributes dllexport :: getdatestamp
    character :: date_time*24, version*7
-   date_time = "Thu Nov 25 11:08:05 2021"
-   version = "21.329"
+   date_time = "Mon Dec 27 03:33:39 2021"
+   version = "21.361"
    return
  end subroutine GetDateStamp

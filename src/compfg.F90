@@ -37,7 +37,7 @@
       atheat, id, pressure, method_pm6, density, stress, N_3_present, Si_O_H_present, &
       use_ref_geo, hpress, nsp2_corr, Si_O_H_corr, sum_dihed, method_PM6_D3H4X, method_PM6_D3H4, &
       method_PM6_D3, method_pm7_minus, method_pm6_dh_plus, method_pm7_hh, method_pm8, &
-      method_indo, mpack
+      method_indo, mpack, e_disp
 !
       use cosmo_C, only : iseps, useps, noeps, solv_energy
 !
@@ -65,7 +65,7 @@
 !-----------------------------------------------
       integer :: icalcn, i, j, k, l
       double precision, dimension(3) :: degree 
-      double precision :: angle, atheat_store, sum
+      double precision :: angle, atheat_store, sum, store_e_disp
       double precision, external ::  nsp2_correction, Si_O_H_correction
       double precision, external :: helecz
       logical :: debug, print, large, usedci, force, times, aider, &
@@ -451,10 +451,12 @@
 ! FIND DERIVATIVES IF DESIRED
 !
       if (lgrad) then 
+        store_e_disp = e_disp
         if (times) call timer ('Before DERIV') 
         if (nelecs > 0) call deriv (geo, grad) 
         if (moperr) return  
         if (times) call timer ('AFTER  DERIV')  
+        e_disp = store_e_disp
       end if 
       if (aider) then 
 !

@@ -28,7 +28,7 @@
         escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
         time0, atheat, errtxt, isok, mpack, gui, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
-        MM_corrections, lxfac, trunc_1, trunc_2, &
+        MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash
@@ -177,9 +177,11 @@
       cell_ijk = 0
       uni_res = 0
       id = 0
+      iflepo = 0
       time0 = seconds(1)
       MM_corrections = .false.
       pdb_label = .false.
+      l_normal_html = .true.
       state_Irred_Rep = " "
       if (job_no > 1) then
         i = index(keywrd, " BIGCYCL")
@@ -790,7 +792,10 @@
           allocate(react(3*numat))
           react = 0.d0
         end if
-        if (index(keywrd, " HTML") /= 0) call write_path_html(1)
+        if (index(keywrd, " HTML") /= 0) then
+          call write_path_html(1)
+          l_normal_html = .false.
+        end if
         call drc (react, react)
         iflepo = -1
       else if (index(keywrd, " LOCATE-TS") /= 0) then

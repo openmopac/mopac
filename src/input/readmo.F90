@@ -534,6 +534,9 @@
               coorda(:,:numat) = coord(:,:numat)
               numat_old = numat
             end if
+            if (keywrd(1:1) /= space) keywrd = " "//trim(keywrd) 
+            if (koment(1:1) /= space) koment = " "//trim(koment)
+            if (title(1:1) /= space)  title  = " "//trim(title)
           end if
 !
 !  Convert any "SELF" into file-names
@@ -549,6 +552,10 @@
         do l = i, 1, -1
           if (keywrd(l:l) == '"') exit
         end do
+        if (l == 0) then
+          call mopend(" KEYWORD OPTION ""SELF"" FOUND, BUT IT WAS NOT IN DOUBLE QUOTATION MARKS")
+          return
+        end if
         line_2 = keywrd(l + 1:i - 1)
 !
 ! If "SELF" without a suffix, use the name of the job.

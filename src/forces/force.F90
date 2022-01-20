@@ -19,7 +19,7 @@
       use molkst_C, only : natoms, ndep,  nvar, gnorm, iflepo, keywrd, &
       & last, numat, escf, id, jloop => itemp_1, numcal, n_trivial => itemp_2, &
       moperr, this_point => itemp_2, zpe, mozyme, uhf, prt_force, prt_normal_coords, &
-      prt_orientation, maxtxt
+      prt_orientation, maxtxt, l_normal_html
 !
       use common_arrays_C, only : xparam, na, nb, nc, geo, geoa, ca => c, cb, eigs, eigb, &
       & labels, coord, loc, grad, errfn, na_store, nat, lopt, fmatrx, p, q, txtatm
@@ -30,7 +30,7 @@
       USE elemts_C, only : elemnt  
       USE funcon_C, only : fpc_10, fpc_6, fpc_8, a0, ev, fpc_9
       use to_screen_C, only : dipt, travel, freq, redmas, cnorml, force_const
-      USE chanel_C, only : iw
+      USE chanel_C, only : iw, ixyz
       implicit none
 !
       integer , dimension(60) :: irot 
@@ -536,6 +536,7 @@
           if (.not. allocated(velocity)) &
             allocate(velocity(3*numat))
           velocity(:3*numat) = cnorml(:3*numat)
+          l_normal_html = .false.
           call drc (cnorml, freq) 
           cnorml(:3*numat) = velocity(:3*numat)
         end if
@@ -586,6 +587,7 @@
           nvar = 0 
           geo(:,:natoms) = geoa(:,:natoms) 
         end if
+        if (index(keywrd, " PDBOUT") /= 0) close(ixyz, status = 'delete', iostat=i)
         goto 99  
       end if 
       call freqcy (fmatrx, freq, deldip, force_const, .FALSE., deldip, ff, oldf, ts) 

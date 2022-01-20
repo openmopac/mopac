@@ -45,7 +45,7 @@
       double precision :: step, degree, c1, cputot, cpu1, cpu2, cpu3, stepc1, factor, dip, &
         dipvec(3), xdfp(20),  gd(3*numat), xlast(3*numat) 
       logical :: use_lbfgs, opend, scale, debug, l_dipole
-      character :: num1*1, num2*1, num3*1
+      character :: num1*1, num2*1
       double precision, external :: dipole, reada, seconds
 !-----------------------------------------------
       imodel = 0
@@ -217,9 +217,8 @@
         write(ixyz,"(i6,a)") nl_atoms," "
         num1 = char(ichar("1") + int(log10(iloop*1.01)))
         factor = abs(escf)
-        num2 = char(max(ichar("0"), ichar("0") + min(9, int(log10(factor)) - 1)))
-        num3 = char(max(ichar("0"), ichar("0") + min(9, int(log10(4.184d0*factor)) - 1)))        
-        write(ixyz,'(a, i'//num1//', a, f1'//num2//'.3, a, f1'//num3//'.3, a)')"Profile.", iloop, &
+        num2 = char(max(ichar("0"), ichar("0") + min(9, int(log10(factor)))))      
+        write(ixyz,'(a, i'//num1//', a, f1'//num2//'.5, a)')"Profile.", iloop, &
         " HEAT OF FORMATION =", escf, " KCAL "
         do i = 1, numat
           if (l_atom(i)) write(ixyz,"(3x,a2,3f15.5)")elemnt(nat(i)), (coord(l,i),l=1,3)
@@ -229,7 +228,7 @@
           q(:numat) = tore(labels(:numat)) - q(:numat)           
           dip = dipole(p, coord, dipvec,0)
           write(ixyz1,"(i6,a)") nl_atoms," "
-          write(ixyz1,'(a, i'//num1//', a, f1'//num2//'.4, a)')"Profile.", iloop, &
+          write(ixyz1,'(a, i'//num1//', a, f1'//num2//'.5, a)')"Profile.", iloop, &
           " DIPOLE =", dip, " DEBYE"
           do i = 1, numat
             if (l_atom(i)) write(ixyz1,"(3x,a2,3f15.5)")elemnt(nat(i)), (coord(l,i),l=1,3)
@@ -282,12 +281,13 @@
   end subroutine pathk 
   subroutine write_path_html(mode)
     use chanel_C, only: input_fn
-    use molkst_C, only : line, koment, escf, title, backslash
+    use molkst_C, only : line, koment, escf, title, backslash, keywrd
     implicit none
     integer, intent (in) :: mode
-    logical :: exists
+    logical :: exists, l_pdb
     integer :: iprt=27, i, j
     double precision :: store_escf
+    character :: suffix*3
     if (mode == 1) then
       line = input_fn(:len_trim(input_fn) - 4)//"html"
     else
@@ -333,10 +333,13 @@
     write(iprt,"(a)")"return neg+xs"
     write(iprt,"(a)")"}"
     write(iprt,"(a)")""
+    suffix = "xyz"
+    l_pdb = (index(keywrd, " PDBOUT") /= 0)
+    if (l_pdb) suffix = "pdb"
     if (mode == 1) then
-      line = input_fn(:len_trim(input_fn) - 4)//"xyz"
+      line = input_fn(:len_trim(input_fn) - 4)//suffix
     else
-      line = input_fn(:len_trim(input_fn) - 5)//" for dipole.xyz"
+      line = input_fn(:len_trim(input_fn) - 5)//" for dipole."//suffix
     end if
     do i = len_trim(line), 1, -1
       if (line(i:i) == "/" .or. line(i:i) == backslash) exit
@@ -374,12 +377,20 @@
     write(iprt,"(a)")"//   Note that Flot allows additional element data other than just x and y -- we use this in the callback."
     write(iprt,"(a)")"//   We build an array: [x,y,modelnumber,label]."
     write(iprt,"(a)")""
+    if (l_pdb) then
+      write(iprt,"(a)")"var x = Jmol.evaluateVar(jmolApplet0, ""show('file').lines.find('MODEL')"");"
+      write(iprt,"(a)")"var e = []; for (var i = 0;i < x.length; i++){e.push(+x[i].substring(16))};"
+    end if
     write(iprt,"(a)")"for (var i = 0; i < modelCount; i++) {"
     write(iprt,"(a)")"  var modelnumber = 0 + Info[i].modelNumber"
     write(iprt,"(a)")"  var name = Info[i].name"
     write(iprt,"(a)")"  var Properties = Info[i].modelProperties"
-    write(iprt,"(a)")"  var energy =  parseFloat(name.substring((name.toLowerCase() + "" kc"")."// &
-      "split(""kc"")[0].lastIndexOf(""="") + 1)); //parse the name to pull out the energy"
+    if (l_pdb) then
+      write(iprt,"(a)")"  var energy =  e[i]"
+    else      
+      write(iprt,"(a)")"  var energy =  parseFloat(name.substring((name.toLowerCase() + "" kc"")."// &
+       "split(""kc"")[0].lastIndexOf(""="") + 1)); //parse the name to pull out the energy"
+    end if    
     if (mode == 2) then
       write(iprt,"(a)")"  var label =  'Model = ' + modelnumber + ', Dipole = ' + roundoff(energy,3) + ' Debye'"
     else

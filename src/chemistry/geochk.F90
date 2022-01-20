@@ -199,6 +199,15 @@ subroutine geochk ()
       end if
     end do
 !
+! Use SITE to update hydrogen atom PDB labels
+!
+    i =  index(keywrd," SITE=()")
+    if (i /= 0) then
+      call update_txtatm(.true., .true.)
+      call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
+      goto 1100
+    end if
+!
 !   Add or remove hydrogen atoms, as necessary.
 !
     i =  index(keywrd," SITE=(IONIZE)")

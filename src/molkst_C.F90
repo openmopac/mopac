@@ -302,6 +302,7 @@ module molkst_C
      prt_orientation,   & ! TRUE if orientation in a FORCE matrix calculation to be printed
      prt_velocity,      & ! TRUE if velocity vector in IRC/DRC to be printed
      dummy_present,     & !
+     l_normal_html,     & ! TRUE if a normal HTML file is to be generated. After it's generated, set FALSE 
      is_PARAM=.false.     !  This will be set "TRUE" in a PARAM run
   equivalence  &
     (MM_corrections(1), N_3_present),    & ! TRUE if the system contains at least one N bonded to three ligands

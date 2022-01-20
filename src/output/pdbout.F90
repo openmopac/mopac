@@ -16,7 +16,7 @@
 
 subroutine pdbout (mode1)
     use molkst_C, only: numat, natoms, ncomments, verson, line, nbreaks, id, &
-      maxtxt, keywrd, nelecs, escf, stress, backslash
+      maxtxt, keywrd, nelecs, escf, stress, backslash, l_normal_html
     use chanel_C, only: iw, input_fn
     use elemts_C, only: elemnt
     use common_arrays_C, only: txtatm, nat, all_comments, p, labels, &
@@ -27,13 +27,14 @@ subroutine pdbout (mode1)
 !
     character :: ele_pdb*2, idate*24, num*1, x*1
     integer :: i, i1, i2, iprt, k, nline
-    logical :: ter, html, ter_ok
+    logical :: ter, html, ter_ok, l_irc_drc
     double precision :: sum
     intrinsic Abs, Char, Ichar
     double precision, allocatable :: q2(:), coord(:,:)
 !
     html = (index(keywrd, " HTML") /= 0)
     ter_ok = (index(keywrd, " NOTER") == 0)
+    l_irc_drc = (index(keywrd, " IRC") + index(keywrd, " DRC") /= 0)
     ter = .false.
     allocate (q2(numat), coord(3, natoms))
     if (allocated(p)) then
@@ -121,7 +122,7 @@ subroutine pdbout (mode1)
       write (iprt, "(A)") trim(line)
       line = "REMARK  Date: "//idate(5:11)//idate(21:)//idate(11:16)
       write (iprt, "(A)") trim(line)
-      line = "REMARK  Heat of Formation ="  
+      if (.not. l_irc_drc) line = "REMARK  Heat of Formation ="  
       sum = escf - stress
       if (abs(sum) > 4.99999d-4) then
         i = max(int(log10(abs(sum))), 0)
@@ -183,7 +184,12 @@ subroutine pdbout (mode1)
       end if
     end do
     write(iprt, "(a)")"END" 
-    if (html) call write_html
+    if (html) then
+      if (l_normal_html) then
+        l_normal_html = .false.
+        call write_html
+      end if
+    end if
   end subroutine pdbout
   subroutine write_html
     use chanel_C, only: input_fn
