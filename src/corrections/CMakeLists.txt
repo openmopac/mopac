@@ -14,21 +14,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_EC_plus_ER.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_EH_plus.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_PM6_DH_Dispersion.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_PM6_DH_type.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/H_bond_correction_bits.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/H_bonds4.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/Hydrogen_bond_corrections.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/copyc6.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dftd3.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dftd3_bits.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/disp_DnX.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/gdisp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/post_scf_corrections.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/set_up_dentate.F90
-)
+# create a list of source files (src_list) with the .F90 extension
+FILE(GLOB src_list *.F90)
+
+# macro that adds all sources in the list to the target object
+# through using target_sources() function.
+multi_src_target(mopac_core PRIVATE src_list)

@@ -14,22 +14,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/datin.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/digit.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/geo_ref.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getdat.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getgeg.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getgeo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getpdb.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getsym.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/gettxt.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getval.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/init_filenames.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/myword.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/nuchar.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/readmo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/wrt_diffs.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/wrtkey.F90
-)
+# create a list of source files (src_list) with the .F90 extension
+FILE(GLOB src_list *.F90)
+
+# macro that adds all sources in the list to the target object
+# through using target_sources() function.
+multi_src_target(mopac_core PRIVATE src_list)

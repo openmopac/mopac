@@ -14,22 +14,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/ef_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/maps_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/big_swap.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/drc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/drcout.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/ef.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/grid.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pathk.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/paths.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/picopt.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/prtdrc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/quadr.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/react1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/set_up_RAPID.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/write_trajectory.F90
-)
+# create a list of source files (src_list) with the .F90 extension
+FILE(GLOB src_list *.F90)
+
+# macro that adds all sources in the list to the target object
+# through using target_sources() function.
+multi_src_target(mopac_core PRIVATE src_list)

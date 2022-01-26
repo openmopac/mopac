@@ -14,23 +14,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/meci_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/aababc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/aabacd.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/aabbcd.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/babbbc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/babbcd.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/ciosci.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/diagi.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/formxy.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/ijkl.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/meci.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mecid.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mecih.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mecip.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/partxy.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/perm.F90
-)
+# create a list of source files (src_list) with the .F90 extension
+FILE(GLOB src_list *.F90)
+
+# macro that adds all sources in the list to the target object
+# through using target_sources() function.
+multi_src_target(mopac_core PRIVATE src_list)

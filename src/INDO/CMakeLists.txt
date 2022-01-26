@@ -14,18 +14,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/reimers_C.F90
-# interfaces
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/ci.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/cosci.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/excite.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/input.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/integral.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/ovlp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rci.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/scf.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/subs.F90
-)
+# create a list of source files (src_list) with the .F90 extension
+FILE(GLOB src_list *.F90)
+
+# macro that adds all sources in the list to the target object
+# through using target_sources() function.
+multi_src_target(mopac_core PRIVATE src_list)
