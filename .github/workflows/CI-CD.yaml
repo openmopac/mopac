@@ -8,7 +8,7 @@ on:
     branches:
       - master
   schedule:
-    - cron: "0 0 0 * *"
+    - cron: "0 0 * * 0"
 
 # Download links (not yet available in package managers) for the Intel Fortran compiler from:
 # https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html
@@ -108,13 +108,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           mkdir xcode_hack
-          echo "#!/bin/bash" > xcode_hack/xcodebuild
-          echo "case \"\$4\" in" >> xcode_hack/xcodebuild
-          echo "    \"\")" >> xcode_hack/xcodebuild
-          echo "      echo \$INTEL_OSXSDK_VER;;" >> xcode_hack/xcodebuild
-          echo "     *)" >> xcode_hack/xcodebuild
-          echo "      echo \$INTEL_OSXSDK_PATH;;" >> xcode_hack/xcodebuild
-          echo "esac" >> xcode_hack/xcodebuild
+          echo "#!/bin/bash\ncase \"\$4\\n    \"\")\n      echo \$INTEL_OSXSDK_VER;;\n     *)\n      echo \$INTEL_OSXSDK_PATH;;\nesac" > xcode_hack/xcodebuild
           chmod 755 xcode_hack/xcodebuild
           export INTEL_OSXSDK_VER=`xcodebuild -sdk macosx -version | grep SDKVersion`
           export INTEL_OSXSDK_PATH=`xcodebuild -sdk macosx -version Path`
