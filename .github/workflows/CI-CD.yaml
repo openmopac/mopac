@@ -64,6 +64,14 @@ jobs:
         run: |
           cd build
           ctest --verbose
+          exit 1
+
+      - name: Save test results as an artifact (on failure)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: linux-test-output
+          path: build/tests
 
       - name: Zip executable & shared libraries (including system libraries)
         run: |
@@ -74,7 +82,7 @@ jobs:
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: linux
+          name: linux-dist
           path: mopac.zip
 
   mac-build:
@@ -108,8 +116,9 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           mkdir xcode_hack
-          echo "#!/bin/bash\ncase \"\$4\\n    \"\")\n      echo \$INTEL_OSXSDK_VER;;\n     *)\n      echo \$INTEL_OSXSDK_PATH;;\nesac" > xcode_hack/xcodebuild
+          echo -ne '#!/bin/bash\ncase "$4" in\n    "")\n      echo $INTEL_OSXSDK_VER;;\n     *)\n      echo $INTEL_OSXSDK_PATH;;\nesac\n' > xcode_hack/xcodebuild
           chmod 755 xcode_hack/xcodebuild
+          cat xcode_hack/xcodebuild
           export INTEL_OSXSDK_VER=`xcodebuild -sdk macosx -version | grep SDKVersion`
           export INTEL_OSXSDK_PATH=`xcodebuild -sdk macosx -version Path`
           export PATH=$GITHUB_WORKSPACE/xcode_hack:${PATH}
@@ -127,6 +136,13 @@ jobs:
           cd build
           ctest --verbose
 
+      - name: Save test results as an artifact (on failure)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: mac-test-output
+          path: build/tests
+
       - name: Zip executable & shared libraries (including system libraries)
         run: |
           zip -j mopac.zip build/mopac
@@ -136,7 +152,7 @@ jobs:
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: mac
+          name: mac-dist
           path: mopac.zip
 
   windows-build:
@@ -184,6 +200,13 @@ jobs:
           cd build
           ctest --verbose
 
+      - name: Save test results as an artifact (on failure)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-test-output
+          path: build/tests
+
       - name: Zip executable & shared libraries (including system libraries)
         run: |
           Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
@@ -193,7 +216,7 @@ jobs:
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: windows
+          name: windows-dist
           path: mopac.zip
 
   continuous-deployment:
@@ -230,9 +253,9 @@ jobs:
           It is not an official release, and it is not intended for production work.
 
           GHA log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          mv linux/mopac.zip mopac-linux-continuous.zip
-          mv mac/mopac.zip mopac-mac-continuous.zip
-          mv windows/mopac.zip mopac-windows-continuous.zip
+          mv linux-dist/mopac.zip mopac-linux-continuous.zip
+          mv mac-dist/mopac.zip mopac-mac-continuous.zip
+          mv windows-dist/mopac.zip mopac-windows-continuous.zip
           gh release delete continuous --yes
           gh release create continuous --prerelease \
             --title "Continuous Build" \
