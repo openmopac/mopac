@@ -22,16 +22,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download & install Intel Fortran compiler
-        run: |
-          curl $IFORT_LINUX_URL --output ifort_download.sh
-          sudo sh ifort_download.sh -a --silent --eula accept
-
       - uses: actions/checkout@v2
+
+      - name: Cache dependencies & build directory
+        uses: actions/cache@v2
+        with:
+          path: |
+            build
+            $CONDA
+            key: linux-cache
 
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+
+      - name: Download & install Intel Fortran compiler
+        run: |
+          curl $IFORT_LINUX_URL --output ifort_download.sh
+          sudo sh ifort_download.sh -a --silent --eula accept
 
       - name: Clone glibc compatibility library
         uses: actions/checkout@v2
@@ -64,7 +72,6 @@ jobs:
         run: |
           cd build
           ctest --verbose
-          exit 1
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -89,17 +96,26 @@ jobs:
     runs-on: macos-latest
 
     steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies & build directory
+        uses: actions/cache@v2
+        with:
+          path: |
+            build
+            $CONDA
+            key: mac-cache
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: Download & install Intel Fortran compiler
         run: |
           curl $IFORT_MAC_URL --output ifort_download.dmg
           hdiutil attach ifort_download.dmg
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
-
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
@@ -118,7 +134,6 @@ jobs:
           mkdir xcode_hack
           echo -ne '#!/bin/bash\ncase "$4" in\n    "")\n      echo $INTEL_OSXSDK_VER;;\n     *)\n      echo $INTEL_OSXSDK_PATH;;\nesac\n' > xcode_hack/xcodebuild
           chmod 755 xcode_hack/xcodebuild
-          cat xcode_hack/xcodebuild
           export INTEL_OSXSDK_VER=`xcodebuild -sdk macosx -version | grep SDKVersion`
           export INTEL_OSXSDK_PATH=`xcodebuild -sdk macosx -version Path`
           export PATH=$GITHUB_WORKSPACE/xcode_hack:${PATH}
@@ -159,18 +174,26 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache dependencies & build directory
+        uses: actions/cache@v2
+        with:
+          path: |
+            build
+            $CONDA
+            key: windows-cache
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: Download & install Intel Fortran compiler
         shell: cmd
         run: |
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
           ifort_download -s -x -f ifort_unpack
           ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
-
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
