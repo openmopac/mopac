@@ -1,10 +1,17 @@
-name: Build multi-platform executables
+name: CI/CD
 
 on:
   push:
     branches:    
       - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 0 * *"
 
+# Download links (not yet available in package managers) for the Intel Fortran compiler from:
+# https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html
 env:
   IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18436/l_fortran-compiler_p_2022.0.1.70.sh
   IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63.dmg
@@ -208,12 +215,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install GitHub Release
-        run: |
-          go get github.com/github-release/github-release
-          echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-
       - name: Move/Create continuous tag
         run: |
           git tag --force continuous ${{ github.sha }}
@@ -224,39 +225,24 @@ jobs:
           echo "GITHUB_USER=$( echo ${{ github.repository }} | cut -d/ -f1 )" >> $GITHUB_ENV
           echo "GITHUB_REPO=$( echo ${{ github.repository }} | cut -d/ -f2 )" >> $GITHUB_ENV
 
-      - name: Setup continuous release
-        run: |
-          DESCRIPTION="Triggered on $(date -u '+%Y/%m/%d, %H:%M') UTC by commit ${{ github.sha }} (@${{ github.actor }})
-
-          This is an automated build of the latest source in the master branch.
-          It is not an official release, and it is not intended for production work.
-
-          Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          github-release edit \
-            --tag continuous \
-            --name "Continuous Build" \
-            --description "$DESCRIPTION" \
-            --pre-release
-
       - name: Download all artifacts
         uses: actions/download-artifact@v2
         with:
           path: ${{ github.workspace }}
 
-      - name: Add executables to the continuous release
+      - name: Delete & recreate the continuous build
         run: |
-          github-release upload \
-            --tag continuous \
-            --replace \
-            --name mopac-linux-continuous.zip \
-            --file linux/mopac.zip
-          github-release upload \
-            --tag continuous \
-            --replace \
-            --name mopac-mac-continuous.zip \
-            --file mac/mopac.zip
-          github-release upload \
-            --tag continuous \
-            --replace \
-            --name mopac-windows-continuous.zip \
-            --file windows/mopac.zip
+          DESCRIPTION="This is an automated build of the latest source in the master branch.
+          It is not an official release, and it is not intended for production work.
+
+          GHA log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          mv linux/mopac.zip mopac-linux-continuous.zip
+          mv mac/mopac.zip mopac-mac-continuous.zip
+          mv windows/mopac.zip mopac-windows-continuous.zip
+          gh release delete continuous --yes
+          gh release create continuous --prerelease \
+            --title "Continuous Build" \
+            --notes "$DESCRIPTION" \
+            mopac-linux-continuous.zip
+            mopac-mac-continuous.zip
+            mopac-windows-continuous.zip
