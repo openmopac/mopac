@@ -30,7 +30,7 @@ jobs:
           path: |
             build
             $CONDA
-            key: linux-cache
+          key: linux-cache
 
       - uses: actions/setup-python@v2
         with:
@@ -105,7 +105,7 @@ jobs:
           path: |
             build
             $CONDA
-            key: mac-cache
+          key: mac-cache
 
       - uses: actions/setup-python@v2
         with:
@@ -182,7 +182,7 @@ jobs:
           path: |
             build
             $CONDA
-            key: windows-cache
+          key: windows-cache
 
       - uses: actions/setup-python@v2
         with:
