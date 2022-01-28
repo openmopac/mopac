@@ -283,6 +283,6 @@ jobs:
           gh release create continuous --prerelease \
             --title "Continuous Build" \
             --notes "$DESCRIPTION" \
-            mopac-linux-continuous.zip
-            mopac-mac-continuous.zip
+            mopac-linux-continuous.zip \
+            mopac-mac-continuous.zip \
             mopac-windows-continuous.zip
