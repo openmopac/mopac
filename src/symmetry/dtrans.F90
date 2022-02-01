@@ -31,6 +31,7 @@
       integer :: i, k 
       double precision, dimension(5,5,12) :: t1 
       double precision, dimension(3,3) :: s 
+      save t1
 !-----------------------------------------------
       if (first) then 
         first = .FALSE. 
