@@ -22,7 +22,6 @@ project(openmopac LANGUAGES Fortran C)
 
 # location for CMake modules (MDI)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(macros)
 
 # Define a common library and executables for MOPAC & PARAM
 add_library(mopac_core SHARED)
