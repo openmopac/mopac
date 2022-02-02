@@ -14,28 +14,33 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# This CMake file contains the list of source files, mostly for the library
-
+#===============================================
 # source files for the executable stubs
 target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
 target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
-
-file(GLOB main_src_list ${CMAKE_CURRENT_SOURCE_DIR} *.F90)
-
-list(REMOVE_ITEM
-     main_src_list
-     ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90
-     ${CMAKE_CURRENT_SOURCE_DIR}/param.F90
-    )
-
-multi_src_target(mopac_core PRIVATE main_src_list)
-
+#===============================================
+# Take a list of source file names
+set(main_src_list 
+    conref_C run_mopac funcon_C GetDateStamp
+    molkst_C setup_mopac_arrays overlaps_C 
+    molmec_C Common_arrays_C elemts_C run_param
+    mopend moldat chanel_C compfg
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS main_src_list)
+	target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================
+# Make a list of subdirectories to be added to the build structure  
 set(dir_list
     INDO MOZYME PARAM SCF chemistry corrections forces geometry
     input integrals matrix meci models optimization output
     potentials properties reactions solvation symmetry utilities
    )
-
+#-----------------------------------------------
+# Add the subdirectories to the build directory
 foreach(idx IN LISTS dir_list)
 	add_subdirectory(${idx})
 endforeach()
+#===============================================

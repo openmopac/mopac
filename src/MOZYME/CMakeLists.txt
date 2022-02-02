@@ -13,10 +13,22 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-# create a list of source files (src_list) with the .F90 extension
-FILE(GLOB src_list *.F90)
-
-# macro that adds all sources in the list to the target object
-# through using target_sources() function.
-multi_src_target(mopac_core PRIVATE src_list)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list
+    mbonds fillij check hbonds buildf add_more_interactions
+    isitsc setupk chrge_for_MOZYME reorth set_up_MOZYME_arrays
+    eimp vecprt_for_MOZYME outer2 compct cnvgz diagg
+    kab_for_MOZYME bonds_for_MOZYME prtlmo density_for_MOZYME
+    addhb dipole_for_MOZYME local_for_MOZYME fock2z local2
+    helecz scfcri MOZYME_C epseta iter_for_MOZYME
+    denrot_for_MOZYME fock1_for_MOZYME jab_for_MOZYME hybrid
+    hcore_for_MOZYME tidy makvec selmos diagg2 mlmo
+    convert_storage outer1 diagg1 adjvec MOZYME_eigs
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

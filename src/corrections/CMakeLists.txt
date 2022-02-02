@@ -14,9 +14,20 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# create a list of source files (src_list) with the .F90 extension
-FILE(GLOB src_list *.F90)
-
-# macro that adds all sources in the list to the target object
-# through using target_sources() function.
-multi_src_target(mopac_core PRIVATE src_list)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    dftd3_bits dftd3 H_bond_correction_EH_plus
+    H_bond_correction_bits H_bond_correction_EC_plus_ER
+    set_up_dentate gdisp disp_DnX
+    post_scf_corrections H_bonds4 copyc6
+    H_bond_correction_PM6_DH_Dispersion
+    H_bond_correction_PM6_DH_type
+    Hydrogen_bond_corrections
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================
