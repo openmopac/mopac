@@ -220,12 +220,13 @@ jobs:
         if: steps.cache-intel.outputs.cache-hit != 'true'
         shell: cmd
         run: |
-          curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
-          mkl_download -s -x -f mkl_unpack
-          mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
           ifort_download -s -x -f ifort_unpack
           ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
+          curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
+          mkl_download -s -x -f mkl_unpack
+          mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64"
 
       - name: Save install logs
         uses: actions/upload-artifact@v2
@@ -243,9 +244,11 @@ jobs:
           echo %PATH%
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           echo %PATH%
+          dir "C:\Program Files (x86)\Intel\oneAPI"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64"
           "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64\ifort.exe"
-          ifort
 #          cmake -Bbuild ^
 #            -GNinja ^
 #            -DCMAKE_Fortran_COMPILER=ifort ^
@@ -259,12 +262,12 @@ jobs:
 #          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
 #          cmake --build build -- -j$NUM_CORES
 
-      - name: Test MOPAC with CTest
-        shell: cmd
-        run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-          dir build
-          ctest --verbose -j$NUM_CORES
+#      - name: Test MOPAC with CTest
+#        shell: cmd
+#        run: |
+#          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
+#          dir build
+#          ctest --verbose -j$NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -273,16 +276,16 @@ jobs:
           name: windows-test-output
           path: build/tests
 
-      - name: Zip executable & shared libraries (dependencies broken until CPack)
-        run: |
-          Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
-          Compress-Archive -Update -Path build/mopac_core.dll -DestinationPath mopac.zip
+#      - name: Zip executable & shared libraries (dependencies broken until CPack)
+#        run: |
+#          Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
+#          Compress-Archive -Update -Path build/mopac_core.dll -DestinationPath mopac.zip
 
-      - name: Save executable as an artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: windows-dist
-          path: mopac.zip
+#      - name: Save executable as an artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: windows-dist
+#          path: mopac.zip
 
   continuous-deployment:
     runs-on: ubuntu-latest
