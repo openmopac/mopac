@@ -221,6 +221,7 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           cmake -Bbuild ^
             -G"NMake Makefiles" ^
+            -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^
             -DBLA_VENDOR=Intel10_64lp
