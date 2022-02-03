@@ -23,6 +23,7 @@ env:
 
 jobs:
   linux-build:
+    if: ${{ false }}
     runs-on: ubuntu-latest
 
     steps:
@@ -103,6 +104,7 @@ jobs:
           path: mopac.zip
 
   mac-build:
+    if: ${{ false }}
     runs-on: macos-latest
 
     steps:
@@ -226,7 +228,6 @@ jobs:
           curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
           mkl_download -s -x -f mkl_unpack
           mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64"
 
       - name: Save install logs
         uses: actions/upload-artifact@v2
