@@ -232,8 +232,7 @@ jobs:
         with:
           name: intel-install
           path: |
-            C:\Program Files (x86)\Intel\oneAPI\logs\installer.install.intel.oneapi.lin.fortran-compiler.product,v=2022.0.0-77.2022.02.03.06.03.38.045266.log
-            C:\Program Files (x86)\Intel\oneAPI\logs\installer.install.intel.oneapi.win.mkl.product,v=2022.0.2-130.2022.02.03.06.06.51.225859.log
+            C:\Program Files (x86)\Intel\oneAPI\logs\*.log
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
@@ -241,8 +240,9 @@ jobs:
       - name: Configure MOPAC with CMake
         shell: cmd
         run: |
+          echo %PATH%
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-          ifort
+          echo %PATH%
 #          cmake -Bbuild ^
 #            -GNinja ^
 #            -DCMAKE_Fortran_COMPILER=ifort ^
