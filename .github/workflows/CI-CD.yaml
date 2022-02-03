@@ -15,11 +15,13 @@ on:
 # (while MKL is available through several package managers, the compiler is not and we are grouping these dependencies for simplicity)
 env:
   IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18481/l_fortran-compiler_p_2022.0.2.83_offline.sh
-  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63_offline.dmg
-  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77_offline.exe
   MKL_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18483/l_onemkl_p_2022.0.2.136_offline.sh
+  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63_offline.dmg
   MKL_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18346/m_onemkl_p_2022.0.0.105_offline.dmg
+  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77_offline.exe
   MKL_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18495/w_onemkl_p_2022.0.2.130_offline.exe
+  IFORT_WINDOWS_VERSION: 2022.0.0
+  MKL_WINDOWS_VERSION: 2022.0.2
 
 jobs:
   linux-build:
@@ -135,12 +137,12 @@ jobs:
       - name: Download & install Intel Fortran compiler
         if: steps.cache-intel.outputs.cache-hit != 'true'
         run: |
-          curl $IFORT_MAC_URL --output ifort_download.dmg
-          hdiutil attach ifort_download.dmg
-          sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
           curl $MKL_MAC_URL --output mkl_download.dmg
           hdiutil attach mkl_download.dmg
           sudo /Volumes/m_onemkl*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
+          curl $IFORT_MAC_URL --output ifort_download.dmg
+          hdiutil attach ifort_download.dmg
+          sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
@@ -224,10 +226,10 @@ jobs:
         run: |
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
           ifort_download -s -x -f ifort_unpack
-          ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
+          ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2019_INTEGRATION=0
           curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
           mkl_download -s -x -f mkl_unpack
-          mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
+          mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2019_INTEGRATION=0
 
       - name: Save install logs
         uses: actions/upload-artifact@v2
@@ -242,38 +244,30 @@ jobs:
       - name: Configure MOPAC with CMake
         shell: cmd
         run: |
+          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{env.IFORT_WINDOWS_VERSION}}\env\vars.bat"
+          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{env.MKL_WINDOWS_VERSION}}\env\vars.bat"
           echo %PATH%
-          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-          echo %PATH%
-          dir "C:\Program Files (x86)\Intel\oneAPI"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows\bin"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64"
-          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows\bin\intel64"
-#          cmake -Bbuild ^
-#            -GNinja ^
-#            -DCMAKE_Fortran_COMPILER=ifort ^
-#            -DCMAKE_Fortran_FLAGS="/libs:static" ^
-#            -DBLA_STATIC=ON ^
-#            -DBLA_VENDOR=Intel10_64lp
+          cmake -Bbuild ^
+            -GNinja ^
+            -DCMAKE_Fortran_COMPILER=ifort ^
+            -DCMAKE_Fortran_FLAGS="/libs:static" ^
+            -DBLA_STATIC=ON ^
+            -DBLA_VENDOR=Intel10_64lp
 
-#      - name: Build MOPAC with CMake
-#        shell: cmd
-#        run: |
-#          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-#          cmake --build build -- -j$NUM_CORES
+      - name: Build MOPAC with CMake
+        shell: cmd
+        run: |
+          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{env.IFORT_WINDOWS_VERSION}}\env\vars.bat"
+          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{env.MKL_WINDOWS_VERSION}}\env\vars.bat"
+          cmake --build build -- -j$NUM_CORES
 
-#      - name: Test MOPAC with CTest
-#        shell: cmd
-#        run: |
-#          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-#          dir build
-#          ctest --verbose -j$NUM_CORES
+      - name: Test MOPAC with CTest
+        shell: cmd
+        run: |
+          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{env.IFORT_WINDOWS_VERSION}}\env\vars.bat"
+          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{env.MKL_WINDOWS_VERSION}}\env\vars.bat"
+          dir build
+          ctest --verbose -j$NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -282,16 +276,16 @@ jobs:
           name: windows-test-output
           path: build/tests
 
-#      - name: Zip executable & shared libraries (dependencies broken until CPack)
-#        run: |
-#          Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
-#          Compress-Archive -Update -Path build/mopac_core.dll -DestinationPath mopac.zip
+      - name: Zip executable & shared libraries (dependencies broken until CPack)
+        run: |
+          Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
+          Compress-Archive -Update -Path build/mopac_core.dll -DestinationPath mopac.zip
 
-#      - name: Save executable as an artifact
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: windows-dist
-#          path: mopac.zip
+      - name: Save executable as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-dist
+          path: mopac.zip
 
   continuous-deployment:
     runs-on: ubuntu-latest
