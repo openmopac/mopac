@@ -247,11 +247,14 @@ jobs:
           echo %PATH%
           dir "C:\Program Files (x86)\Intel\oneAPI"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows\bin"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64"
-          "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64\ifort.exe"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\2022.0.2\windows\bin\intel64"
 #          cmake -Bbuild ^
 #            -GNinja ^
 #            -DCMAKE_Fortran_COMPILER=ifort ^
