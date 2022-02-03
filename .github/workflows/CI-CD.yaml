@@ -114,6 +114,11 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Fix permissions for cache restore
+        run: |
+          sudo mkdir -p /opt/intel
+          sudo chown $USER /opt/intel
+
       - name: Cache Intel Fortran compiler
         id: cache-intel
         uses: actions/cache@v2
@@ -220,12 +225,12 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           cmake -Bbuild ^
-            -G"NMake Makefiles" ^
+            -GNinja ^
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^
             -DBLA_VENDOR=Intel10_64lp
-          cmake --build build
+          cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
         shell: cmd
