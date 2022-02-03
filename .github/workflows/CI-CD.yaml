@@ -62,7 +62,7 @@ jobs:
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
 
-      - name: Configure & build MOPAC with CMake
+      - name: Configure MOPAC with CMake
         run: |
           source /opt/intel/oneapi/setvars.sh
           cmake -B build \
@@ -72,6 +72,10 @@ jobs:
             -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
+
+      - name: Build MOPAC with CMake
+        run: |
+          source /opt/intel/oneapi/setvars.sh
           cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
@@ -139,10 +143,21 @@ jobs:
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
 
+      # AUTO_BLAS=OFF because find_package(BLAS) has a bug with static BLAS libraries on Mac
+      - name: Configure MOPAC with CMake
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cmake -B build \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
+            -DCMAKE_Fortran_COMPILER=ifort \
+            -DCMAKE_Fortran_FLAGS="-static-intel" \
+            -DCMAKE_C_COMPILER=gcc \
+            -DAUTO_BLAS=OFF \
+            -DMOPAC_LINK="${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_intel_thread.a ${MKLROOT}/lib/libmkl_core.a -liomp5 -lpthread -lm -ldl"
+
       # an Intel-suggested hack is temporarily circumventing excessively slow calls to xcodebuild hidden in ifort, taken from:
       # https://community.intel.com/t5/Intel-oneAPI-HPC-Toolkit/slow-execution-of-ifort-icpc-on-MacOSX-catalina/m-p/1203190
-      # AUTO_BLAS=OFF on Mac because find_package(BLAS) has a bug with static BLAS libraries on Mac
-      - name: Configure & build MOPAC with CMake
+      - name: Build MOPAC with CMake
         run: |
           source /opt/intel/oneapi/setvars.sh
           mkdir xcode_hack
@@ -151,13 +166,6 @@ jobs:
           export INTEL_OSXSDK_VER=`xcodebuild -sdk macosx -version | grep SDKVersion`
           export INTEL_OSXSDK_PATH=`xcodebuild -sdk macosx -version Path`
           export PATH=$GITHUB_WORKSPACE/xcode_hack:${PATH}
-          cmake -B build \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
-            -DCMAKE_Fortran_COMPILER=ifort \
-            -DCMAKE_Fortran_FLAGS="-static-intel" \
-            -DCMAKE_C_COMPILER=gcc \
-            -DAUTO_BLAS=OFF \
-            -DMOPAC_LINK="${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_intel_thread.a ${MKLROOT}/lib/libmkl_core.a -liomp5 -lpthread -lm -ldl"
           cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
@@ -212,27 +220,41 @@ jobs:
         if: steps.cache-intel.outputs.cache-hit != 'true'
         shell: cmd
         run: |
-          curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
-          ifort_download -s -x -f ifort_unpack
-          ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
           curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
           mkl_download -s -x -f mkl_unpack
           mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
+          curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
+          ifort_download -s -x -f ifort_unpack
+          ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
+
+      - name: Save install logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: intel-install
+          path: |
+            C:\Program Files (x86)\Intel\oneAPI\logs\installer.install.intel.oneapi.lin.fortran-compiler.product,v=2022.0.0-77.2022.02.03.06.03.38.045266.log
+            C:\Program Files (x86)\Intel\oneAPI\logs\installer.install.intel.oneapi.win.mkl.product,v=2022.0.2-130.2022.02.03.06.06.51.225859.log
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
 
-      - name: Configure & build MOPAC with CMake
+      - name: Configure MOPAC with CMake
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
-          cmake -Bbuild ^
-            -GNinja ^
-            -DCMAKE_Fortran_COMPILER=ifort ^
-            -DCMAKE_Fortran_FLAGS="/libs:static" ^
-            -DBLA_STATIC=ON ^
-            -DBLA_VENDOR=Intel10_64lp
-          cmake --build build -- -j$NUM_CORES
+          ifort
+#          cmake -Bbuild ^
+#            -GNinja ^
+#            -DCMAKE_Fortran_COMPILER=ifort ^
+#            -DCMAKE_Fortran_FLAGS="/libs:static" ^
+#            -DBLA_STATIC=ON ^
+#            -DBLA_VENDOR=Intel10_64lp
+
+#      - name: Build MOPAC with CMake
+#        shell: cmd
+#        run: |
+#          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
+#          cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
         shell: cmd
