@@ -248,6 +248,8 @@ jobs:
           dir "C:\Program Files (x86)\Intel\oneAPI"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows"
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin"
           dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64"
           "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64\ifort.exe"
 #          cmake -Bbuild ^
