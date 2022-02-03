@@ -243,8 +243,9 @@ jobs:
           echo %PATH%
           call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
           echo %PATH%
-          dir C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64
-          ifort.exe
+          dir "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64"
+          "C:\Program Files (x86)\Intel\oneAPI\compiler\latest\windows\bin\intel64\ifort.exe"
+          ifort
 #          cmake -Bbuild ^
 #            -GNinja ^
 #            -DCMAKE_Fortran_COMPILER=ifort ^
