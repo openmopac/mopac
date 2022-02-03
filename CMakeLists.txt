@@ -23,6 +23,12 @@ project(openmopac LANGUAGES Fortran C)
 # location for CMake modules (MDI)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+# Set a safe default build type
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+  message(STATUS "Setting default build type: ${CMAKE_BUILD_TYPE}")
+endif()
+
 # Define a common library and executables for MOPAC & PARAM
 add_library(mopac_core SHARED)
 add_executable(mopac)

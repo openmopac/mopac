@@ -3,41 +3,55 @@ name: CI/CD
 on:
   push:
     branches:    
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
   schedule:
     - cron: "0 0 * * 0"
 
-# Download links (not yet available in package managers) for the Intel Fortran compiler from:
+# Download links for the Intel MKL library & Fortran compiler from:
 # https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html
+# (while MKL is available through several package managers, the compiler is not and we are grouping these dependencies for simplicity)
 env:
-  IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18436/l_fortran-compiler_p_2022.0.1.70.sh
-  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63.dmg
-  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77.exe
+  IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18481/l_fortran-compiler_p_2022.0.2.83_offline.sh
+  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63_offline.dmg
+  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77_offline.exe
+  MKL_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18483/l_onemkl_p_2022.0.2.136_offline.sh
+  MKL_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18346/m_onemkl_p_2022.0.0.105_offline.dmg
+  MKL_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18495/w_onemkl_p_2022.0.2.130_offline.exe
 
 jobs:
   linux-build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Check number of cores
+        run: |
+          lscpu
+          lscpu | grep "CPU(s):" | awk '{print $2}' > num_cores
+          echo "NUM_CORES=$(echo num_cores)" >> $GITHUB_ENV
 
-      - name: Cache build directory
-        uses: actions/cache@v2
-        with:
-          path: build/**
-          key: linux-cache
+      - uses: actions/checkout@v2
 
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      - name: Download & install Intel Fortran compiler
+      - name: Cache Intel dependencies
+        id: cache-intel
+        uses: actions/cache@v2
+        with:
+          path: /opt/intel
+          key: cache-${{ env.IFORT_LINUX_URL }}-${{ env.MKL_LINUX_URL }}
+
+      - name: Download & install Intel dependencies
+        if: steps.cache-intel.outputs.cache-hit != 'true'
         run: |
           curl $IFORT_LINUX_URL --output ifort_download.sh
           sudo sh ifort_download.sh -a --silent --eula accept
+          curl $MKL_LINUX_URL --output mkl_download.sh
+          sudo sh mkl_download.sh -a --silent --eula accept
 
       - name: Clone glibc compatibility library
         uses: actions/checkout@v2
@@ -48,28 +62,22 @@ jobs:
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
 
-      - name: Install dependencies with Anaconda
-        run: |
-          conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
-
       - name: Configure & build MOPAC with CMake
         run: |
           source /opt/intel/oneapi/setvars.sh
           cmake -B build \
-            -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
-          cmake --build build
+          cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
         run: |
           cd build
-          ctest --verbose
+          ctest --verbose -j$NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -78,11 +86,10 @@ jobs:
           name: linux-test-output
           path: build/tests
 
-      - name: Zip executable & shared libraries (including system libraries)
+      - name: Zip executable & shared libraries (dependencies are temporarily broken until switch to CPack)
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/libmopac_core.so*
-          zip -j mopac.zip $CONDA/lib/libiomp5.so*
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -94,33 +101,37 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Check number of cores
+        run: |
+          system_profiler SPHardwareDataType
+          system_profiler SPHardwareDataType | grep "Total Number of Cores" | awk '{print $5}' > num_cores
+          echo "NUM_CORES=$(echo num_cores)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
-
-      - name: Cache build directory
-        uses: actions/cache@v2
-        with:
-          path: build/**
-          key: mac-cache
 
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
+      - name: Cache Intel Fortran compiler
+        id: cache-intel
+        uses: actions/cache@v2
+        with:
+          path: /opt/intel
+          key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}
+
       - name: Download & install Intel Fortran compiler
+        if: steps.cache-intel.outputs.cache-hit != 'true'
         run: |
           curl $IFORT_MAC_URL --output ifort_download.dmg
           hdiutil attach ifort_download.dmg
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
+          curl $IFORT_MAC_URL --output mkl_download.dmg
+          hdiutil attach mkl_download.dmg
+          sudo /Volumes/m_onemkl*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
-
-      - name: Install dependencies with Anaconda
-        run: |
-          sudo chown -R runner:staff $CONDA
-          conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA" >> $GITHUB_ENV
 
       # an Intel-suggested hack is temporarily circumventing excessively slow calls to xcodebuild hidden in ifort, taken from:
       # https://community.intel.com/t5/Intel-oneAPI-HPC-Toolkit/slow-execution-of-ifort-icpc-on-MacOSX-catalina/m-p/1203190
@@ -135,17 +146,16 @@ jobs:
           export PATH=$GITHUB_WORKSPACE/xcode_hack:${PATH}
           cmake -B build \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
-            -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
             -DBLA_VENDOR=Intel10_64lp
-          cmake --build build
+          cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
         run: |
           cd build
-          ctest --verbose
+          ctest --verbose -j$NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -154,11 +164,10 @@ jobs:
           name: mac-test-output
           path: build/tests
 
-      - name: Zip executable & shared libraries (including system libraries)
+      - name: Zip executable & shared libraries (dependencies broken until CPack is added)
         run: |
           zip -j mopac.zip build/mopac
           zip -j mopac.zip build/libmopac_core*.dylib
-          zip -j mopac.zip $CONDA/lib/libiomp5.dylib
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -170,33 +179,39 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Check number of cores
+        shell: bash
+        run: |
+          WMIC CPU Get -Format:List
+          WMIC CPU Get NumberOfLogicalProcessors | tail -1 > num_cores
+          echo "NUM_CORES=$(echo num_cores)" >> $GITHUB_ENV
 
-      - name: Cache build directory
-        uses: actions/cache@v2
-        with:
-          path: build/**
-          key: windows-cache
+      - uses: actions/checkout@v2
 
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
+      - name: Cache Intel Fortran compiler
+        id: cache-intel
+        uses: actions/cache@v2
+        with:
+          path: C:\Program Files (x86)\Intel
+          key: cache-${{ env.IFORT_WINDOWS_URL }}-${{ env.MKL_WINDOWS_URL }}
+
       - name: Download & install Intel Fortran compiler
+        if: steps.cache-intel.outputs.cache-hit != 'true'
         shell: cmd
         run: |
           curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
           ifort_download -s -x -f ifort_unpack
           ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
+          curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
+          mkl_download -s -x -f mkl_unpack
+          mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0
 
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
-
-      - name: Install dependencies with Anaconda
-        shell: bash
-        run: |
-          $CONDA/Scripts/conda install -c intel mkl-static
-          echo "MKLROOT=$CONDA/Library/lib" >> $GITHUB_ENV
 
       - name: Configure & build MOPAC with CMake
         shell: cmd
@@ -205,17 +220,16 @@ jobs:
           cmake -Bbuild ^
             -G"NMake Makefiles" ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
-            -DCMAKE_BUILD_TYPE=Release ^
-            -DCMAKE_LIBRARY_PATH="%CONDA%/Library/lib;%CONDA%/Library/bin" ^
             -DBLA_STATIC=ON ^
             -DBLA_VENDOR=Intel10_64lp
           cmake --build build
-          cp %CONDA%/Library/bin/libiomp5md.dll build
 
       - name: Test MOPAC with CTest
+        shell: cmd
         run: |
-          cd build
-          ctest --verbose
+          call "C:\Program Files (x86)\Intel\oneAPI\setvars.bat"
+          dir build
+          ctest --verbose -j$NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -224,11 +238,10 @@ jobs:
           name: windows-test-output
           path: build/tests
 
-      - name: Zip executable & shared libraries (including system libraries)
+      - name: Zip executable & shared libraries (dependencies broken until CPack)
         run: |
           Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
           Compress-Archive -Update -Path build/mopac_core.dll -DestinationPath mopac.zip
-          Compress-Archive -Update -Path build/libiomp5md.dll -DestinationPath mopac.zip
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -253,11 +266,6 @@ jobs:
         run: |
           git tag --force continuous ${{ github.sha }}
           git push --tags --force
-
-      - name: Assign GitHub user info for GitHub Release
-        run: |
-          echo "GITHUB_USER=$( echo ${{ github.repository }} | cut -d/ -f1 )" >> $GITHUB_ENV
-          echo "GITHUB_REPO=$( echo ${{ github.repository }} | cut -d/ -f2 )" >> $GITHUB_ENV
 
       - name: Download all artifacts
         uses: actions/download-artifact@v2
