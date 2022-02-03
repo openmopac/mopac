@@ -15,14 +15,14 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 module molkst_C
-!dec$ attributes dllexport :: verson, line, gui, MM_corrections, methods
+!dec$ attributes dllexport :: verson, line, gui
 !
 !  This module contains all the scalars relating to the system being calculated. 
 !  Every entry is unique, and has the same meaning in every subroutine.
 !
 !
 !  This module can also be regarded as a dictionary of the scalars relating to the system.
-!  Quantities which have only a one-line descriptionis are of no interest outside MOPAC.
+!  Quantities which have only a one-line description are of no interest outside MOPAC.
 !  The data-type for each quantity is given at the start of the statement
 !
   integer :: &
