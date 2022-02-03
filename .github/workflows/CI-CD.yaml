@@ -62,7 +62,9 @@ jobs:
           path: glibc
 
       - name: Install dependencies with PyPI
-        run: python -m pip install numpy
+        run: |
+          python -m pip install numpy
+          python -m pip install ninja
 
       - name: Configure MOPAC with CMake
         run: |
@@ -144,7 +146,9 @@ jobs:
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
 
       - name: Install dependencies with PyPI
-        run: python -m pip install numpy
+        run: |
+          python -m pip install numpy
+          python -m pip install ninja
 
       # AUTO_BLAS=OFF because find_package(BLAS) has a bug with static BLAS libraries on Mac
       - name: Configure MOPAC with CMake
@@ -249,7 +253,7 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{env.MKL_WINDOWS_VERSION}}\env\vars.bat"
           echo %PATH%
           cmake -Bbuild ^
-            -GNinja ^
+            -GNMake ^
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^
