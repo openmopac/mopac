@@ -30,7 +30,7 @@ jobs:
         run: |
           lscpu
           lscpu | grep "CPU(s):" | awk '{print $2}' > num_cores
-          echo "NUM_CORES=$(echo num_cores)" >> $GITHUB_ENV
+          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
 
@@ -105,7 +105,7 @@ jobs:
         run: |
           system_profiler SPHardwareDataType
           system_profiler SPHardwareDataType | grep "Total Number of Cores" | awk '{print $5}' > num_cores
-          echo "NUM_CORES=$(echo num_cores)" >> $GITHUB_ENV
+          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
 
@@ -126,7 +126,7 @@ jobs:
           curl $IFORT_MAC_URL --output ifort_download.dmg
           hdiutil attach ifort_download.dmg
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
-          curl $IFORT_MAC_URL --output mkl_download.dmg
+          curl $MKL_MAC_URL --output mkl_download.dmg
           hdiutil attach mkl_download.dmg
           sudo /Volumes/m_onemkl*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
 
@@ -184,7 +184,7 @@ jobs:
         run: |
           WMIC CPU Get -Format:List
           WMIC CPU Get NumberOfLogicalProcessors | tail -1 > num_cores
-          echo "NUM_CORES=$(echo num_cores)" >> $GITHUB_ENV
+          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
 
