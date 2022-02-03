@@ -14,32 +14,18 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/ddiag.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/densit.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/density_for_GPU.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/diag.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/diag_for_GPU.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dot.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/eigenvectors_LAPACK.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/esp_utilities.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/interp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/linpack.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mamult.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mat33.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/minv.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/molval.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mtxm.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mtxmc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mult.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mult_symm_AB.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mxm.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mxmt.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mxv.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/osinv.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rsp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/schmib.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/schmit.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/supdot.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    schmib linpack densit density_for_GPU mtxmc
+    mxmt mat33 interp mxv diag_for_GPU
+    eigenvectors_LAPACK mult_symm_AB mtxm supdot
+    molval schmit mxm diag rsp mult dot minv
+    mamult esp_utilities osinv ddiag
+    )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

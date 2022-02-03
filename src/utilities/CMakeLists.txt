@@ -14,14 +14,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/ijbo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/prtgra.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/prttim.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/reada.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/seconds.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/timer.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/upcase.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/vecprt.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/wrttxt.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    vecprt prttim wrttxt timer ijbo prtgra seconds
+    upcase reada
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

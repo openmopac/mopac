@@ -14,11 +14,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/afmm_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/cosmo_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/cosmo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/linear_cosmo.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    afmm_C cosmo cosmo_C linear_cosmo
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

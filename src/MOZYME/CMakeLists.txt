@@ -13,55 +13,22 @@
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/MOZYME_C.F90
-# interfaces
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/MOZYME_eigs.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/add_more_interactions.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/addhb.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/adjvec.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/bonds_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/buildf.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/check.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/chrge_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/cnvgz.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/compct.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/convert_storage.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/denrot_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/density_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/diagg.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/diagg1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/diagg2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dipole_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/eimp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/epseta.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/fillij.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/fock1_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/fock2z.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/hbonds.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/hcore_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/helecz.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/hybrid.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/isitsc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/iter_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/jab_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/kab_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/local_for_MOZYME.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/local2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/makvec.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mbonds.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mlmo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/outer1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/outer2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/prtlmo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/reorth.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/scfcri.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/selmos.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/set_up_MOZYME_arrays.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/setupk.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/tidy.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/vecprt_for_MOZYME.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list
+    mbonds fillij check hbonds buildf add_more_interactions
+    isitsc setupk chrge_for_MOZYME reorth set_up_MOZYME_arrays
+    eimp vecprt_for_MOZYME outer2 compct cnvgz diagg
+    kab_for_MOZYME bonds_for_MOZYME prtlmo density_for_MOZYME
+    addhb dipole_for_MOZYME local_for_MOZYME fock2z local2
+    helecz scfcri MOZYME_C epseta iter_for_MOZYME
+    denrot_for_MOZYME fock1_for_MOZYME jab_for_MOZYME hybrid
+    hcore_for_MOZYME tidy makvec selmos diagg2 mlmo
+    convert_storage outer1 diagg1 adjvec MOZYME_eigs
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

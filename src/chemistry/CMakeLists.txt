@@ -14,25 +14,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/atomradii_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/add_hydrogen_atoms.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/atomrs.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/chkion.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/chklew.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/findn1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/geochk.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/geochk_bits_1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/geochk_bits_2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/greek.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/lewis.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/ligand.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/lyse.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/names.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/nxtmer.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/orient_water.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/reseq.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/txtype.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    findn1 atomrs atomradii_C names reseq lewis
+    lyse geochk_bits_2 greek txtype 
+    add_hydrogen_atoms chklew nxtmer geochk_bits_1
+    chkion orient_water geochk ligand
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

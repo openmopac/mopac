@@ -14,22 +14,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/mndod_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/bfn.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/ccrep.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/coe.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/diat.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/h1elec.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/hcore.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/helect.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/jab.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/kab.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mndod.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rotate.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/set.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/solrot.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/sp_two_electron.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    set h1elec diat kab ccrep hcore jab mndod_C
+    rotate bfn mndod helect coe sp_two_electron
+    solrot
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

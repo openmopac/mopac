@@ -14,15 +14,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/axis.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/bangle.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dang.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dihed.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/gmetry.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/symtry.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/volume.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/xyzint.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    gmetry xyzint bangle symtry axis dang dihed volume
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

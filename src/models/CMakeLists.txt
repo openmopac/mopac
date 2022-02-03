@@ -14,32 +14,25 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/journal_references_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_AM1_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_AM1_Sparkles_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_INDO_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM3_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM3_Sparkles_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM6_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM6_Sparkles_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM7_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM7_Sparkles_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM7_TS_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_PM8_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_RM1_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_RM1_Sparkles_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_mndo_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parameters_for_mndod_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/alpb_and_xfac_am1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/alpb_and_xfac_mndo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/alpb_and_xfac_mndod.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/alpb_and_xfac_pm3.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/calpar.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/refer.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/switch.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/update.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    parameters_for_RM1_C parameters_for_PM3_Sparkles_C
+    parameters_for_PM7_C parameters_for_PM8_C
+    alpb_and_xfac_mndod refer alpb_and_xfac_mndo
+    calpar journal_references_C alpb_and_xfac_pm3
+    parameters_for_AM1_C parameters_for_PM7_Sparkles_C
+    parameters_for_AM1_Sparkles_C parameters_C
+    alpb_and_xfac_am1 parameters_for_mndo_C
+    parameters_for_PM6_Sparkles_C update
+    parameters_for_RM1_Sparkles_C
+    parameters_for_PM6_C parameters_for_INDO_C
+    parameters_for_mndod_C parameters_for_PM7_TS_C
+    parameters_for_PM3_C switch
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

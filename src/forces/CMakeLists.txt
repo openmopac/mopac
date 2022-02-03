@@ -14,33 +14,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/anavib.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dcart.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/delsta.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deri0.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deri1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deri2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deri21.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deri22.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deri23.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deritr.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/deriv.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dernvo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dfield.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dfock2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dhc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dhcore.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dijkl1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dijkl2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/fmat.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/force.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/forsav.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/frame.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/freqcy.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/intfc.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/jcarin.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/xyzcry.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    deriv deri1 freqcy jcarin dcart deri23 delsta
+    dfield dfock2 xyzcry forsav deri22 anavib
+    deri0 intfc dhcore dhc deri2 force dijkl1
+    dijkl2 dernvo deri21 fmat frame deritr
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

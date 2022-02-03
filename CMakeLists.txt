@@ -15,13 +15,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Using Cmake version 3.11 for better CUDA & Fortran support
-cmake_minimum_required(VERSION 3.11)
-
-# location for CMake modules (MDI)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
 # Specify project name & programming language (C is only needed for auto-detection of MKL by find_package)
 project(openmopac LANGUAGES Fortran C)
+
+# location for CMake modules (MDI)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Define a common library and executables for MOPAC & PARAM
 add_library(mopac_core SHARED)

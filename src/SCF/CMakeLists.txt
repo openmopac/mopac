@@ -14,17 +14,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/iter_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/capcor.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/cnvg.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/fock1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/fock2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/iter.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/local.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pulay.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/resolv.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/swap.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    cnvg resolv fock2 iter_C swap local fock1
+    capcor iter pulay
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

@@ -14,18 +14,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/polar_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/CPE_Energy.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/bonds.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/chrge.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dimens.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dipole.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mpcsyb.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mullik.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/polar.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/static_polarizability.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/thermo.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    polar dimens mpcsyb thermo mullik bonds polar_C
+    dipole static_polarizability CPE_Energy chrge
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

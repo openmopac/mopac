@@ -14,14 +14,15 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/dfpsav.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/exchng.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/flepo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/lbfgs.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/linmin.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/locmin.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/nllsq.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parsav.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/powsq.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    nllsq flepo linmin locmin parsav powsq dfpsav
+    exchng lbfgs
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

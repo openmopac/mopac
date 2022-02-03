@@ -14,33 +14,19 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/Param_global_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/chkpar.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/datinp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/depfn.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/direct.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/empire.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/extract_parameter.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/filusp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/finish.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getmol.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/getpar.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/optgeo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pardip.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parfg.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pargeo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parips.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/parkey.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/partab.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pparsav.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/psort.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rapid0.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rapid1.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rapid2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rapid3.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/resetp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/savgeo.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list
+    getpar partab extract_parameter pardip psort
+    rapid0 rapid1 rapid3 resetp getmol datinp
+    direct parkey rapid2 parfg Param_global_C
+    optgeo pparsav finish depfn savgeo pargeo
+    empire parips filusp chkpar
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================
+

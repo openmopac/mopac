@@ -14,25 +14,16 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/symmetry_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/bldsym.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/charmo.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/charst.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/charvi.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dtran2.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/dtrans.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/maksym.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/molsym.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/mult33.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rotmol.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/symh.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/symoir.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/symopr.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/sympop.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/symr.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/symt.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/symtrz.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    dtrans rotmol symh symopr symt bldsym mult33
+    molsym charst symtrz sympop dtran2 symmetry_C
+    symoir symr charvi maksym charmo
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================

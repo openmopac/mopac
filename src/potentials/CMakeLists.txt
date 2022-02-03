@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-target_sources(mopac_core PRIVATE
-# modules
-        ${CMAKE_CURRENT_SOURCE_DIR}/esp_C.F90
-# source
-        ${CMAKE_CURRENT_SOURCE_DIR}/esp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/genun.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/new_esp.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/pmep.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/rotate_C.F90
-        ${CMAKE_CURRENT_SOURCE_DIR}/setupg.F90
-)
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list 
+    genun setupg pmep new_esp esp rotate_C esp_C
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================
