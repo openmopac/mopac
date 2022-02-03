@@ -75,14 +75,13 @@ if(AUTO_BLAS)
   target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
   target_compile_options(param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 else()
-  message("Since AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define compiler link line with MOPAC_LINK)")
+  message(STATUS "AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define compiler link line with MOPAC_LINK)")
 endif()
 
 # Additional link line
-option(MOPAC_LINK "Extra link line for MOPAC library" OFF)
-if(MOPAC_LINK)
-  target_link_libraries(mopac_core PUBLIC ${MOPAC_LINK})
-endif()
+set(MOPAC_LINK "" CACHE STRING "Additional link line for MOPAC executable")
+separate_arguments(MOPAC_LINK)
+target_link_libraries(mopac_core PUBLIC ${MOPAC_LINK})
 
 # Add list of source files from src directory
 add_subdirectory(src)

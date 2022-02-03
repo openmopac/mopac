@@ -141,6 +141,7 @@ jobs:
 
       # an Intel-suggested hack is temporarily circumventing excessively slow calls to xcodebuild hidden in ifort, taken from:
       # https://community.intel.com/t5/Intel-oneAPI-HPC-Toolkit/slow-execution-of-ifort-icpc-on-MacOSX-catalina/m-p/1203190
+      # AUTO_BLAS=OFF on Mac because find_package(BLAS) has a bug with static BLAS libraries on Mac
       - name: Configure & build MOPAC with CMake
         run: |
           source /opt/intel/oneapi/setvars.sh
@@ -155,7 +156,8 @@ jobs:
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
-            -DBLA_VENDOR=Intel10_64lp
+            -DAUTO_BLAS=OFF \
+            -DMOPAC_LINK="${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_intel_thread.a ${MKLROOT}/lib/libmkl_core.a -liomp5 -lpthread -lm -ldl"
           cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
