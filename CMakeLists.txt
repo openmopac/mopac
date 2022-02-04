@@ -17,8 +17,8 @@
 # Using Cmake version 3.11 for better CUDA & Fortran support
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
-# Specify project name & programming language (C is only needed for auto-detection of MKL by find_package)
-project(openmopac LANGUAGES Fortran C)
+# Specify project name & programming language
+project(openmopac LANGUAGES Fortran)
 
 # location for CMake modules (MDI)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -58,6 +58,12 @@ elseif(UNIX)
   add_definitions(-DMOPAC_OS='L')
 else()
   add_definitions(-DMOPAC_OS='X')
+endif()
+
+# Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
+option(MKL "Turn on C language support for MKL" ON)
+if(MKL)
+  enable_language(C)
 endif()
 
 # Try to use CMake's system of finding BLAS & LAPACK libraries
