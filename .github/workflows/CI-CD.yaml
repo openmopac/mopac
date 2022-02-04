@@ -68,7 +68,6 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cmake -B build \
-            -G Ninja \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
@@ -151,7 +150,6 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cmake -B build \
-            -G Ninja \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
             -DCMAKE_Fortran_COMPILER=ifort \
             -DCMAKE_Fortran_FLAGS="-static-intel" \
