@@ -31,6 +31,7 @@ endif()
 
 # Define a common library and executables for MOPAC & PARAM
 add_library(mopac_core SHARED)
+set_target_properties(mopac_core PROPERTIES OUTPUT_NAME "mopac")
 add_executable(mopac)
 add_executable(param)
 target_link_libraries(mopac mopac_core)
