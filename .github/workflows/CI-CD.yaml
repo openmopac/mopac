@@ -62,9 +62,7 @@ jobs:
           path: glibc
 
       - name: Install dependencies with PyPI
-        run: |
-          python -m pip install numpy
-          python -m pip install ninja
+        run: python -m pip install numpy
 
       - name: Configure MOPAC with CMake
         run: |
@@ -78,10 +76,10 @@ jobs:
             -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
-      - name: Build MOPAC with Ninja
+      - name: Build MOPAC with Make
         run: |
           source /opt/intel/oneapi/setvars.sh
-          cmake --build build
+          cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
         run: |
@@ -146,9 +144,7 @@ jobs:
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
 
       - name: Install dependencies with PyPI
-        run: |
-          python -m pip install numpy
-          python -m pip install ninja
+        run: python -m pip install numpy
 
       # AUTO_BLAS=OFF because find_package(BLAS) has a bug with static BLAS libraries on Mac
       - name: Configure MOPAC with CMake
@@ -165,7 +161,7 @@ jobs:
 
       # an Intel-suggested hack is temporarily circumventing excessively slow calls to xcodebuild hidden in ifort, taken from:
       # https://community.intel.com/t5/Intel-oneAPI-HPC-Toolkit/slow-execution-of-ifort-icpc-on-MacOSX-catalina/m-p/1203190
-      - name: Build MOPAC with Ninja
+      - name: Build MOPAC with Make
         run: |
           source /opt/intel/oneapi/setvars.sh
           mkdir xcode_hack
@@ -174,7 +170,7 @@ jobs:
           export INTEL_OSXSDK_VER=`xcodebuild -sdk macosx -version | grep SDKVersion`
           export INTEL_OSXSDK_PATH=`xcodebuild -sdk macosx -version Path`
           export PATH=$GITHUB_WORKSPACE/xcode_hack:${PATH}
-          cmake --build build
+          cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
         run: |
@@ -253,7 +249,7 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{env.MKL_WINDOWS_VERSION}}\env\vars.bat"
           echo %PATH%
           cmake -Bbuild ^
-            -GNMake ^
+            -G"NMake Makefiles" ^
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^
