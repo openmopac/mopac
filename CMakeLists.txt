@@ -61,7 +61,7 @@ else()
 endif()
 
 # Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
-option(MKL "Turn on C language support for MKL" OFF)
+option(MKL "Turn on C language support for MKL" ON)
 if(MKL)
   enable_language(C)
 endif()
