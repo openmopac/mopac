@@ -84,7 +84,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          ctest --verbose -j$NUM_CORES
+          ctest -j$NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -174,7 +174,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          ctest --verbose -j$NUM_CORES
+          ctest -j$NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -265,8 +265,8 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
           call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
-          dir build
-          ctest --verbose -j%NUM_CORES%
+          cd build
+          ctest -j%NUM_CORES%
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
