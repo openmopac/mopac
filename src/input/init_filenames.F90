@@ -15,7 +15,8 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
  subroutine init_filenames
-    use molkst_C, only: jobnam, gui, line
+    use molkst_C, only: jobnam, line
+    use interface_C, only: gui
     use chanel_C, only : output_fn, restart_fn, brillouin_fn, &
      & density_fn, log_fn, end_fn, archive_fn, esp_fn, ump_fn, &
      mep_fn, pol_fn, gpt_fn, esr_fn, input_fn, xyz_fn, syb_fn, &

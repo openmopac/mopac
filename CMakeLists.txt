@@ -52,13 +52,11 @@ endif()
 
 # Pass OS information to MOPAC's Fortran source using preprocessor variables
 if(APPLE)
-  add_definitions(-DMOPAC_OS='M')
+  add_definitions(-DMOPAC_OS='Mac')
 elseif(WIN32)
-  add_definitions(-DMOPAC_OS='W')
+  add_definitions(-DMOPAC_OS='Windows')
 elseif(UNIX)
-  add_definitions(-DMOPAC_OS='L')
-else()
-  add_definitions(-DMOPAC_OS='X')
+  add_definitions(-DMOPAC_OS='Linux')
 endif()
 
 # Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)

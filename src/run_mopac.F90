@@ -26,7 +26,7 @@
 !
       USE molkst_C, only : gnorm, natoms, numat, nvar, numcal, job_no, nscf, id, &
         escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
-        time0, atheat, errtxt, isok, mpack, gui, line, na1, refkey, keywrd_txt, &
+        time0, atheat, errtxt, isok, mpack, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, &
@@ -55,6 +55,8 @@
 !
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
+
+      USE interface_C, only: gui
 #ifdef GPU
       Use iso_c_binding 
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id

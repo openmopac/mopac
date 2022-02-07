@@ -21,11 +21,13 @@
       & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, escf, &
       & keywrd, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
       jobnam, line, mers, uhf, method_indo, &
-      gui, density, formula, mozyme, mpack, stress, &
+      density, formula, mozyme, mpack, stress, &
       sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
       hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
       prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash
+!
+      use interface_C, only : gui, iw0
 !
       use MOZYME_C, only : icocc, icvir, ncocc, ncvir, nvirtual, noccupied, &
       & nnce, nncf, cocc, cvir, ncf, nce,  cocc_dim, &
@@ -50,7 +52,7 @@
 !
       use funcon_C, only : fpc_10, fpc_9
 !
-      use chanel_C, only : iw, iarc, ibrz, iw0, brillouin_fn, archive_fn, log
+      use chanel_C, only : iw, iarc, ibrz, brillouin_fn, archive_fn, log
 !-----------------------------------------------
       implicit none
 !-----------------------------------------------

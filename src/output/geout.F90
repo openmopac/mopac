@@ -21,8 +21,9 @@
       use common_arrays_C, only : labels, na, nb, nc, geo, nat, loc, txtatm, &
       & p, atmass, all_comments, pibonds_txt, l_atom
       USE parameters_C, only : tore, ams
-      USE molkst_C, ONLY: numat, natoms, ndep, keywrd, maxtxt, gui, line, &
+      USE molkst_C, ONLY: numat, natoms, ndep, keywrd, maxtxt, line, &
       & ncomments, moperr, nl_atoms
+      USE interface_C, only: gui
       USE symmetry_C, ONLY: depmul, locpar, idepfn, locdep 
       USE elemts_C, only : elemnt
       USE chanel_C, only : iw

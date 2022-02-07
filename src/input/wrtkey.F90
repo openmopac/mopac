@@ -1506,7 +1506,8 @@ end subroutine wrtcon
 subroutine wrtout (allkey)
   use molkst_C, only : keywrd, mozyme, maxtxt, line, prt_coords, prt_gradients, prt_cart, prt_charges, prt_pops, &
     prt_topo, prt_force, prt_normal_coords, prt_orientation, prt_velocity, backslash
-  use chanel_C, only: iw, iw0, log, input_fn
+  use chanel_C, only: iw, log, input_fn
+  use interface_C, only: iw0
   implicit none
   character (len=1000), intent (inout) :: allkey
   integer :: i, j

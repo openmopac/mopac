@@ -17,16 +17,13 @@
 program MOPAC_win 
   USE IFQWIN
   use dfport
-  use molkst_C, only: jobnam, gui, ijulian, program_name, verson, site_no, line
-  use chanel_C, only : iw0
+  use interface_C, only : iw0, gui
   implicit none
   INTEGER :: i4  
   integer i, j, k, loop
   character :: ch
     gui = .false.
     iw0 = 0
-    ijulian = 123
-    site_no = 88
     program_name = "Standalone MOPAC "
     OPEN(0, file='user', title='MOPAC 2016') 
     i4 = setbkcolor(15)
@@ -44,8 +41,6 @@ program MOPAC_win
       i = 0
       stop
     end if
-    call getdatestamp(line, verson)  
-    call password
     call run_mopac()  ! the user has supplied data sets as arguments
     i = SETEXITQQ(QWIN$EXITNOPERSIST)
   end program MOPAC_win

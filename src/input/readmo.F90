@@ -30,12 +30,14 @@
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
       & verson, is_PARAM, line, nl_atoms, l_feather, backslash, &
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
-      isok, gui, method_pm6_dh2, caltyp, &
+      isok, method_pm6_dh2, caltyp, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &   
       method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
       method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label
+!
+      use interface_C, only : gui
 !
       use meci_C, only : maxci
 !
@@ -718,7 +720,7 @@
       end if
       maxci = 16000          
       write (iw, '(1X,a)')"** Cite this program as: MOPAC2016, Version: "//verson//", James J. P. Stewart,   **"
-      write (iw, '(1X,a, a,a)')"**                           web-site: HTTP://OpenMOPAC.net.                 **"
+      write (iw, '(1X,a, a,a)')"**                           web-site: http://openmopac.net                  **"
       write (iw, '(1X,a)')"*******************************************************************************"
       write (iw, '(1X,a)')"**                                                                           **"
       write (iw,"(1x,a)") "**                                MOPAC2016                                  **"

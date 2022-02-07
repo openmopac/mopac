@@ -15,9 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
       module chanel_C 
-      !dec$ attributes dllexport :: iw0
       integer :: &
-     & iw0       = -1, & !    Abbrev. output, for GUI (By default, not used)
      & ifiles_1  =  1, &
      & input     =  2, & !    Input               <Filename>.dat         FORMATTED
      & iscr      =  3, & !    Scratch             <Filename>.scr         UNFORMATTED

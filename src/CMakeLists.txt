@@ -18,10 +18,13 @@
 # source files for the executable stubs
 target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
 target_sources(param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
+if(BUILD_WINMOPAC)
+   target_sources(winmopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/winmopac.F90)
+endif()
 #===============================================
 # Take a list of source file names
 set(main_src_list 
-    conref_C run_mopac funcon_C GetDateStamp
+    conref_C run_mopac funcon_C
     molkst_C setup_mopac_arrays overlaps_C 
     molmec_C Common_arrays_C elemts_C run_param
     mopend moldat chanel_C compfg
@@ -35,7 +38,7 @@ endforeach()
 # Make a list of subdirectories to be added to the build structure  
 set(dir_list
     INDO MOZYME PARAM SCF chemistry corrections forces geometry
-    input integrals matrix meci models optimization output
+    input integrals interface matrix meci models optimization output
     potentials properties reactions solvation symmetry utilities
    )
 #-----------------------------------------------

@@ -247,7 +247,7 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{env.MKL_WINDOWS_VERSION}}\env\vars.bat"
           echo %PATH%
           cmake -Bbuild ^
-            -G"NMake Makefiles" ^
+            -GNinja ^
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^

@@ -1094,7 +1094,8 @@ subroutine setcup
 end subroutine setcup
 subroutine write_cell(iprt)
   use molkst_C, only: mol_weight, escf, numat, keywrd, gnorm, &
-   line, mers, gui, density
+   line, mers, density
+  use interface_C, only: gui
   use funcon_C, only: fpc_10
   use common_arrays_C, only: nat, tvec
   use ef_C, only : nstep

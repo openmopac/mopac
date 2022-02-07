@@ -19,13 +19,15 @@
 !   M o d u l e s 
 !-----------------------------------------------
       use chanel_C, only : iw, iarc, ires, iump, archive_fn, ump_fn, &
-      restart_fn, iw0
+      restart_fn
 !
       use common_arrays_C, only : geo, xparam, geoa, &
       na, nb, nc, pa, pb, p
 !
       use molkst_C, only : nvar, keywrd, tleft, line, norbs, &
-      gui, natoms, moperr, uhf, numat, mpack
+      natoms, moperr, uhf, numat, mpack
+!
+      use interface_C, only : gui, iw0
 !
       use maps_C, only : rxn_coord1, rxn_coord2, ione, ijlp, ilp, jlp, jlp1, surf, &
       lpara1, latom1, lpara2, latom2

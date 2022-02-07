@@ -19,7 +19,8 @@
       &  nscf, tdump, nvar, iflepo, escf, line
       use funcon_C, only : a0
       use common_arrays_C, only : loc, grad, xparam, gnext1, gmin1
-      use chanel_C, only : iw, ilog, log, iw0
+      use chanel_C, only : iw, ilog, log
+      use interface_C, only : iw0
       implicit none
       double precision  :: hess(nvar,nvar) 
       double precision  :: bmat(nvar,nvar) 

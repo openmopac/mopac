@@ -23,9 +23,9 @@
     use molkst_C, only : tdump, maxatoms, is_PARAM, numat, jobnam, &
      moperr, &
      norbs, mpack, nvar, n2elec, keywrd, uhf, l123, run, method_pm6_d3, &
-     method_pm6, lm61, gui, tleft, &
+     method_pm6, lm61, tleft, &
      method_pm6_dh_plus, method_pm6_dh2, method_pm7, trunc_1, method_pm8, &
-     trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, verson, n_methods, methods, &
+     trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, n_methods, methods, &
      methods_keys, method_pm7_hh, method_pm7_minus, method_pm7_ts, method_pm6_dh2x, &
      method_pm6_d3h4x, backslash
     use cosmo_C, only : iseps, nspa
@@ -40,6 +40,7 @@
     use parameters_C, only: f0sd, g2sd, tore, ios, iop, iod, f0sd_store, g2sd_store, &
       zs, t_par
     USE journal_references_C, only : allref
+    USE interface_C, only : gui
     implicit none
     logical :: opend, exists, quotation_mark
     integer :: i, j, l, k, loop, maxcyc, n9, n4, n1
@@ -59,7 +60,6 @@
   ! ... Executable Statements ...
   !
   !
-    verson = "18.000W"
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
     t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."
     t_par(3)  = "Used in ccrep for scalar correction of O-H term."

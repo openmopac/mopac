@@ -15,15 +15,8 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 program mopac
-  use chanel_C, only : iw0
-  use molkst_C, only : gui, line, verson
+  use interface_C, only : iw0, gui
   implicit none
-  call getdatestamp(line, verson)
-#ifdef MOPAC_OS
-  verson(7:7) = MOPAC_OS
-#else
-  verson(7:7) = "X"
-#endif
   gui = .false.
   iw0 = -1
   call run_mopac 

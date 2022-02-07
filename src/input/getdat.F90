@@ -19,8 +19,9 @@
 !   M o d u l e s 
 !-----------------------------------------------
       use molkst_C, only : natoms, jobnam, run, backslash, &
-      gui, line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2
-      use chanel_C, only : iw0, job_fn, input_fn, iw
+      line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2
+      use interface_C, only : gui, iw0
+      use chanel_C, only : job_fn, input_fn, iw
       use common_arrays_C, only : all_comments
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s

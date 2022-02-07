@@ -17,7 +17,8 @@
      subroutine drc(startv, startk) 
       USE molkst_C, only : nvar, tleft, escf, gnorm, ndep, numat, keywrd, &
       line, nopen, nclose, moperr, jloop => itemp_1, prt_velocity
-      USE chanel_C, only : iw, ires, iscr, restart_fn, iw0
+      USE chanel_C, only : iw, ires, iscr, restart_fn
+      USE interface_C, only : iw0
       use common_arrays_C, only : geo, loc, grad, xparam, atmass, nat, &
       & errfn, coord, na, p, q, labels, geoa
       USE parameters_C, only : tore
