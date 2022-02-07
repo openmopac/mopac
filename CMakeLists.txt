@@ -17,17 +17,15 @@
 # Using Cmake version 3.11 for better CUDA & Fortran support
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
+# Set a safe default build type
+set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build.")
+message(STATUS "CMake build type set to: ${CMAKE_BUILD_TYPE}")
+
 # Specify project name & programming language
 project(openmopac LANGUAGES Fortran)
 
 # location for CMake modules (MDI)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
-# Set a safe default build type
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
-  message(STATUS "Setting default build type: ${CMAKE_BUILD_TYPE}")
-endif()
 
 # Define a common library and executables for MOPAC & PARAM
 add_library(mopac_core SHARED)
