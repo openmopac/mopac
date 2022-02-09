@@ -19,7 +19,7 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
 # Set a safe default build type
 set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build.")
-message(STATUS "CMake build type set to: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
 
 # Specify project name & programming language
 project(openmopac LANGUAGES Fortran)
@@ -34,6 +34,20 @@ add_executable(mopac)
 add_executable(param)
 target_link_libraries(mopac mopac_core)
 target_link_libraries(param mopac_core)
+
+# WinMOPAC build on Windows w/ the Intel Fortran compiler
+option(BUILD_WINMOPAC "Build MOPAC with QuickWin GUI (ifort required)" OFF)
+if(BUILD_WINMOPAC)
+  if(NOT (CMAKE_Fortran_COMPILER_ID STREQUAL "Intel"))
+    message(FATAL_ERROR "WinMOPAC compilation requires the Intel Fortran compiler (ifort)")
+  endif()
+  if(NOT WIN32)
+    message(FATAL_ERROR "WinMOPAC is only available on Windows")
+  endif()
+  add_executable(winmopac)
+  target_compile_options(winmopac PRIVATE /libs:qwin)
+  target_link_options(winmopac PRIVATE /subsystem:windows)
+endif()
 
 # MOPAC shared library ABI compatibility version
 set_target_properties(mopac_core PROPERTIES SOVERSION 1)
