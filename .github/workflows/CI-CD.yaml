@@ -248,6 +248,7 @@ jobs:
           echo %PATH%
           cmake -Bbuild ^
             -GNinja ^
+            -DBUILD_WINMOPAC=ON ^
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^
