@@ -24,7 +24,6 @@ program MOPAC_win
   character :: ch
     gui = .false.
     iw0 = 0
-    program_name = "Standalone MOPAC "
     OPEN(0, file='user', title='MOPAC 2016') 
     i4 = setbkcolor(15)
     i4 = settextcolor(0)
