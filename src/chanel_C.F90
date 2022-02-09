@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
       module chanel_C 
+!dec$ attributes dllexport :: iend, end_fun
       integer :: &
      & ifiles_1  =  1, &
      & input     =  2, & !    Input               <Filename>.dat         FORMATTED
