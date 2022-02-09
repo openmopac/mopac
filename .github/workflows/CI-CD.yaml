@@ -279,7 +279,7 @@ jobs:
       - name: Zip executable & shared libraries (dependencies broken until CPack)
         run: |
           Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
-          Compress-Archive -Path build/winmopac.exe -DestinationPath mopac.zip
+          Compress-Archive -Update build/winmopac.exe -DestinationPath mopac.zip
           Compress-Archive -Update -Path build/mopac.dll -DestinationPath mopac.zip
 
       - name: Save executable as an artifact
