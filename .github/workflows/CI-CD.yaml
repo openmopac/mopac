@@ -40,6 +40,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install lcov with Ubuntu package manager
+        run: sudo apt-get install lcov
+
       - name: Install dependencies with PyPI
         run: python -m pip install numpy
 
