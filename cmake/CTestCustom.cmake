@@ -1,0 +1,2 @@
+set( CTEST_CUSTOM_PRE_TEST "${LCOV_PATH} --gcov-tool ${GCOV_PATH} --zerocounters --directory ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}" )
+set( CTEST_CUSTOM_POST_TEST "${LCOV_PATH} --gcov-tool ${GCOV_PATH} --capture --directory ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY} --output-file ${CMAKE_CURRENT_BINARY_DIR}/coverage.info; genhtml ${CMAKE_CURRENT_BINARY_DIR}/coverage.info --output-directory ${CMAKE_CURRENT_BINARY_DIR}/coverage" )
