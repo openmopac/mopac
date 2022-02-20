@@ -17,14 +17,21 @@
 # Using Cmake version 3.11 for better CUDA & Fortran support
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
+# Code coverage option
+option(ENABLE_COVERAGE "Code coverage flag" OFF)
+
 # Set a safe default build type
-set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build.")
+if(ENABLE_COVERAGE)
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build.")
+else()
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build.")
+endif()
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
 
 # Specify project name & programming language
 project(openmopac LANGUAGES Fortran)
 
-# location for CMake modules (MDI)
+# location for CMake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Define a common library and executables for MOPAC & PARAM
@@ -103,6 +110,26 @@ target_link_libraries(mopac_core PUBLIC ${MOPAC_LINK})
 
 # Add list of source files from src directory
 add_subdirectory(src)
+
+# Set up code coverage
+set(GCOV_PROGRAM_NAME gcov CACHE STRING "Name of GNU code coverage analysis tool.")
+set(LCOV_PROGRAM_NAME lcov CACHE STRING "Name of GNU code coverage visualization tool.")
+if(ENABLE_COVERAGE)
+  if(NOT ("${CMAKE_Fortran_COMPILER_ID}" MATCHES "GNU"))
+    message(FATAL_ERROR "Code coverage requires the GNU Fortran compiler! Aborting...")
+  endif()
+  target_compile_options(mopac_core PUBLIC -fprofile-arcs -ftest-coverage -O0)
+  target_link_options(mopac_core PUBLIC -fprofile-arcs -ftest-coverage)
+  find_program(GCOV_PATH ${GCOV_PROGRAM_NAME})
+  find_program(LCOV_PATH ${LCOV_PROGRAM_NAME})
+  if(NOT GCOV_PATH)
+    message(FATAL_ERROR "${GCOV_PROGRAM_NAME} not found! Aborting...")
+  endif()
+  if(NOT LCOV_PATH)
+    message(FATAL_ERROR "${LCOV_PROGRAM_NAME} not found! Aborting...")
+  endif()
+  configure_file("cmake/CTestCustom.cmake" "${CMAKE_BINARY_DIR}/CTestCustom.cmake")
+endif()
 
 # MDI functionality (in development)
 option(MDI "MDI build flag" OFF)
