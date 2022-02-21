@@ -1,3 +1,4 @@
+![build](https://github.com/openmopac/mopac/actions/workflows/CI-CD.yaml/badge.svg)
 [![codecov](https://codecov.io/gh/openmopac/mopac/branch/main/graph/badge.svg?token=qM2KeRvw06)](https://codecov.io/gh/openmopac/mopac)
 
 The modern open-source version of the Molecular Orbital PACkage (MOPAC).
