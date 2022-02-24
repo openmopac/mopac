@@ -133,7 +133,7 @@
   320 d(1) = 0.0
       e(1) = 0.0
 !     ********** accumulation of transformation matrices **********
-      do 500 i = 1, n
+      do i = 1, n
          l = i - 1
          if (d(i)  ==  0.0) go to 380
 !
@@ -151,14 +151,14 @@
 !
   380    d(i) = z(i, i)
          z(i, i) = 1.d0
-         if (l  <  1) go to 500
+         if (l  >=  1) then
+            do j = 1, l
+               z(i, j) = 0.0
+               z(j, i) = 0.0
+            end do
+         endif
 !
-         do j = 1, l
-            z(i, j) = 0.0
-            z(j, i) = 0.0
-         end do
-!
-  500 continue
+      end do
 !
       return
 !     ********** last card of tred2 **********
