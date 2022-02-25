@@ -58,32 +58,33 @@
 !
 !    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 !
-      do 100 i = 1, n
-!
-         do 100 j = 1, i
+      do i = 1, n
+         do j = 1, i
             z(i, j) = a(i, j)
-  100 continue
+         end do
+      end do
 !
       if (n  ==  1) go to 320
 !     ********** for i = n step - 1 until 2 do - - **********
-      do 300 ii = 2, n
+      do ii = 2, n
          i = n + 2 - ii
          l = i - 1
          h = 0.0
          scale = 0.0
          if (l  <  2) go to 130
 !     ********** scale row (algol tol then not needed) **********
-         do 120 k = 1, l
-  120    scale = scale + abs(z(i, k))
+         do k = 1, l
+            scale = scale + abs(z(i, k))
+         end do
 !
          if (scale /= 0.0) go to 140
   130    e(i) = z(i, l)
          go to 290
 !
-  140    do 150 k = 1, l
+  140    do k = 1, l
             z(i, k) = z(i, k) / scale
             h = h + z(i, k) * z(i, k)
-  150    continue
+         end do
 !
          f = z(i, l)
          g = -sign(sqrt(h), f)
@@ -92,67 +93,72 @@
          z(i, l) = f - g
          f = 0.0
 !
-         do 240 j = 1, l
+         do j = 1, l
             z(j, i) = z(i, j) / (scale * h)
             g = 0.0
 !     ********** form element of a*u **********
-            do 180 k = 1, j
-  180       g = g + z(j, k) * z(i, k)
+            do k = 1, j
+               g = g + z(j, k) * z(i, k)
+            end do
 !
             jp1 = j + 1
             if (l  <  jp1) go to 220
 !
-            do 200 k = jp1, l
-  200       g = g + z(k, j) * z(i, k)
+            do k = jp1, l
+               g = g + z(k, j) * z(i, k)
+            end do
 !     ********** form element of p **********
   220       e(j) = g / h
             f = f + e(j) * z(i, j)
-  240    continue
+         end do
 !
          hh = f / (h + h)
 !     ********** form reduced a **********
-         do 260 j = 1, l
+         do j = 1, l
             f = z(i, j)
             g = e(j) - hh * f
             e(j) = g
-!
-            do 260 k = 1, j
+            do k = 1, j
                z(j, k) = z(j, k) - f * e(k) - g * z(i, k)
-  260    continue
+            end do
+         end do
 !
-         do 280 k = 1, l
-  280    z(i, k) = scale * z(i, k)
+         do k = 1, l
+            z(i, k) = scale * z(i, k)
+         end do
 !
   290    d(i) = h
-  300 continue
+      end do
 !
   320 d(1) = 0.0
       e(1) = 0.0
 !     ********** accumulation of transformation matrices **********
-      do 500 i = 1, n
+      do i = 1, n
          l = i - 1
          if (d(i)  ==  0.0) go to 380
 !
-         do 360 j = 1, l
+         do j = 1, l
             g = 0.0
 !
-            do 340 k = 1, l
-  340       g = g + z(i, k) * z(k, j)
+            do k = 1, l
+               g = g + z(i, k) * z(k, j)
+            end do
 !
-            do 360 k = 1, l
+            do k = 1, l
                z(k, j) = z(k, j) - g * z(k, i)
-  360    continue
+            end do
+         end do
 !
   380    d(i) = z(i, i)
          z(i, i) = 1.d0
-         if (l  <  1) go to 500
+         if (l  >=  1) then
+            do j = 1, l
+               z(i, j) = 0.0
+               z(j, i) = 0.0
+            end do
+         endif
 !
-         do 400 j = 1, l
-            z(i, j) = 0.0
-            z(j, i) = 0.0
-  400    continue
-!
-  500 continue
+      end do
 !
       return
 !     ********** last card of tred2 **********
@@ -228,8 +234,9 @@
       ierr = 0
       if (n  ==  1) go to 1001
 
-      do 100 i = 2, n
-  100 e(i - 1) = e(i)
+      do i = 2, n
+         e(i - 1) = e(i)
+      end do
 
       f = 0.0
       b = 0.0
@@ -254,8 +261,9 @@
          r = sqrt(p*p + 1.d0)
          h = d(l) - e(l) / (p + sign(r, p))
 
-         do 140 i = l, n
-  140    d(i) = d(i) - h
+         do i = l, n
+            d(i) = d(i) - h
+         end do
 
          f = f + h
 !     ********** ql transformation **********
