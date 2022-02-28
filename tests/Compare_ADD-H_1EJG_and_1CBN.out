@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ ** Cite this program as: MOPAC, Version: 22.0.0-  , James J. P. Stewart,     **
+ **                           web-site: http://openmopac.net                  **
  *******************************************************************************
  **                                                                           **
- **                                MOPAC2016                                  **
+ **                                   MOPAC                                   **
  **                                                                           **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:50 2021  *
+ *  CALCULATION DONE:                                Mon Feb 28 17:28:11 2022  *
  *  COMPARE    - Compare two geometries
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "PDB1EJG.arc"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "PDB1CBN.arc"
@@ -22,7 +22,7 @@
 geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
  Two PDB structures for Crambin (Atoms in PRO/SER 22, LEU/ILE 25, and others deleted)
 
- 
+
 
                             Differences in atoms sets
 
@@ -39,41 +39,42 @@ geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
    9   ATOM    313 1HB  PRO A  22              ATOM    313 1HB  SER A  22
   10   ATOM    314 2HB  PRO A  22              ATOM    314 2HB  SER A  22
   11   ATOM    315 1HG  PRO A  22              ATOM    315  HG  SER A  22
-  12   ATOM    316 2HG  PRO A  22              ATOM    342  N   ILE A  25
-  13   ATOM    317 1HD  PRO A  22              ATOM    343  CA  ILE A  25
-  14   ATOM    318 2HD  PRO A  22              ATOM    344  C   ILE A  25
-  15   ATOM    345  N   LEU A  25              ATOM    345  O   ILE A  25
-  16   ATOM    346  CA  LEU A  25              ATOM    346  CB  ILE A  25
-  17   ATOM    347  C   LEU A  25              ATOM    347  CG1 ILE A  25
-  18   ATOM    348  O   LEU A  25              ATOM    348  CG2 ILE A  25
-  19   ATOM    349  CB  LEU A  25              ATOM    349  CD1 ILE A  25
-  20   ATOM    350  CG  LEU A  25              ATOM    350  H   ILE A  25
-  21   ATOM    351  CD1 LEU A  25              ATOM    351  HA  ILE A  25
-  22   ATOM    352  CD2 LEU A  25              ATOM    352  HB  ILE A  25
-  23   ATOM    353  H   LEU A  25              ATOM    353 1HG1 ILE A  25
-  24   ATOM    354  HA  LEU A  25              ATOM    354 2HG1 ILE A  25
-  25   ATOM    355 1HB  LEU A  25              ATOM    355 1HG2 ILE A  25
-  26   ATOM    356 2HB  LEU A  25              ATOM    356 2HG2 ILE A  25
-  27   ATOM    357  HG  LEU A  25              ATOM    357 3HG2 ILE A  25
-  28   ATOM    358 1HD1 LEU A  25              ATOM    358 1HD1 ILE A  25
-  29   ATOM    359 2HD1 LEU A  25              ATOM    359 2HD1 ILE A  25
-  30   ATOM    360 3HD1 LEU A  25              ATOM    360 3HD1 ILE A  25
-  31   ATOM    361 1HD2 LEU A  25              HETATM  641  C1  EOH A  66
-  32   ATOM    362 2HD2 LEU A  25              HETATM  642  O   EOH A  66
-  33   ATOM    363 3HD2 LEU A  25              HETATM  643  C2  EOH A  66
-  34                                           HETATM  644  H   EOH A  66
-  35                                           HETATM  645 1H1  EOH A  66
-  36                                           HETATM  646 2H1  EOH A  66
-  37                                           HETATM  647 1H2  EOH A  66
-  38                                           HETATM  648 2H2  EOH A  66
-  39                                           HETATM  649 3H2  EOH A  66
+  12   ATOM    316 2HG  PRO A  22              ATOM    331  HE2 GLU A  23
+  13   ATOM    317 1HD  PRO A  22              ATOM    342  N   ILE A  25
+  14   ATOM    318 2HD  PRO A  22              ATOM    343  CA  ILE A  25
+  15   ATOM    334  HE1 GLU A  23              ATOM    344  C   ILE A  25
+  16   ATOM    345  N   LEU A  25              ATOM    345  O   ILE A  25
+  17   ATOM    346  CA  LEU A  25              ATOM    346  CB  ILE A  25
+  18   ATOM    347  C   LEU A  25              ATOM    347  CG1 ILE A  25
+  19   ATOM    348  O   LEU A  25              ATOM    348  CG2 ILE A  25
+  20   ATOM    349  CB  LEU A  25              ATOM    349  CD1 ILE A  25
+  21   ATOM    350  CG  LEU A  25              ATOM    350  H   ILE A  25
+  22   ATOM    351  CD1 LEU A  25              ATOM    351  HA  ILE A  25
+  23   ATOM    352  CD2 LEU A  25              ATOM    352  HB  ILE A  25
+  24   ATOM    353  H   LEU A  25              ATOM    353 1HG1 ILE A  25
+  25   ATOM    354  HA  LEU A  25              ATOM    354 2HG1 ILE A  25
+  26   ATOM    355 1HB  LEU A  25              ATOM    355 1HG2 ILE A  25
+  27   ATOM    356 2HB  LEU A  25              ATOM    356 2HG2 ILE A  25
+  28   ATOM    357  HG  LEU A  25              ATOM    357 3HG2 ILE A  25
+  29   ATOM    358 1HD1 LEU A  25              ATOM    358 1HD1 ILE A  25
+  30   ATOM    359 2HD1 LEU A  25              ATOM    359 2HD1 ILE A  25
+  31   ATOM    360 3HD1 LEU A  25              ATOM    360 3HD1 ILE A  25
+  32   ATOM    361 1HD2 LEU A  25              HETATM  641  C1  EOH A  66
+  33   ATOM    362 2HD2 LEU A  25              HETATM  642  O   EOH A  66
+  34   ATOM    363 3HD2 LEU A  25              HETATM  643  C2  EOH A  66
+  35                                           HETATM  644  H   EOH A  66
+  36                                           HETATM  645 1H1  EOH A  66
+  37                                           HETATM  646 2H1  EOH A  66
+  38                                           HETATM  647 1H2  EOH A  66
+  39                                           HETATM  648 2H2  EOH A  66
+  40                                           HETATM  649 3H2  EOH A  66
 
           Empirical formulae of data-set and GEO_REF are different
 
           Empirical formula of system in GEO_REF: C200 H319 N56 O67 S6  =   648 atoms
           Empirical formula of system in GEO_DAT: C202 H315 N55 O64 S6  =   642 atoms
 
-          Number of atoms common to both systems:  609
+          Number of atoms common to both systems:  608
 
 
                         After docking
@@ -82,43 +83,43 @@ geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
 
                      Atom Label             GEO_REF Coordinates       Movement    Integral
 
-            (ATOM     92 2HD1 ILE A   7)  10.757  -0.683  15.934        3.59         3.59
-            (ATOM    607 1HD2 ASN A  46)  11.403   3.861  16.203        2.53         6.13
+            (ATOM     92 2HD1 ILE A   7)  10.757  -0.683  15.934        3.60         3.60
+            (ATOM    607 1HD2 ASN A  46)  11.403   3.861  16.203        2.54         6.14
             (ATOM     87 2HG1 ILE A   7)  11.195   0.949  13.414        2.50         8.63
             (ATOM    608 2HD2 ASN A  46)  12.578   5.003  16.395        2.36        10.99
-            (ATOM    600  ND2 ASN A  46)  11.916   4.601  15.746        2.30        13.28
-            (ATOM    609  HE2 GLU A  23)  13.484  11.051   0.529        2.20        15.48
-            (ATOM    599  OD1 ASN A  46)  13.443   3.218  14.924        2.18        17.66
-            (ATOM     93 3HD1 ILE A   7)  11.247  -1.323  14.347        1.70        19.37
-            (ATOM     82  CD1 ILE A   7)  11.293  -0.460  15.011        1.67        21.03
-            (ATOM     91 1HD1 ILE A   7)  12.334  -0.233  15.241        1.28        22.31
-            (ATOM    515 1HG2 THR A  39)  24.001  13.400  13.356        1.01        23.33
-            (ATOM    561  HD2 ASP A  43)  12.483  15.777  18.818        1.01        24.34
-            (ATOM    556  OD2 ASP A  43)  12.244  14.902  19.239        0.93        25.27
-            (ATOM    517 3HG2 THR A  39)  23.483  11.849  12.654        0.92        26.19
-            (ATOM    516 2HG2 THR A  39)  22.288  12.921  13.423        0.82        27.01
-            (ATOM    510  CG2 THR A  39)  23.199  12.887  12.825        0.77        27.78
-            (ATOM    560 2HB  ASP A  43)  11.704  12.468  19.392        0.69        28.48
-            (ATOM    554  CG  ASP A  43)  13.083  14.013  18.900        0.66        29.13
-            (ATOM     90 3HG2 ILE A   7)   9.069  -1.372  13.432        0.63        29.76
-            (ATOM    559 1HB  ASP A  43)  13.091  12.607  20.499        0.63        30.39
-            (ATOM    555  OD1 ASP A  43)  14.052  14.180  18.165        0.62        31.01
-            (ATOM     80  CG1 ILE A   7)  10.659   0.726  14.337        0.59        31.60
-            (ATOM    509  OG1 THR A  39)  24.152  13.569  10.774        0.58        32.18
-            (ATOM     86 1HG1 ILE A   7)  10.705   1.589  15.001        0.53        32.70
-            (ATOM    166 1HD2 ASN A  12)   0.422   4.102   9.755        0.49        33.19
-            (ATOM    102  HA  VAL A   8)   5.334   1.282  11.688        0.49        33.68
-            (ATOM    553  CB  ASP A  43)  12.776  12.653  19.456        0.47        34.15
-            (ATOM    167 2HD2 ASN A  12)   1.788   3.528  10.480        0.43        34.58
-            (ATOM    161  ND2 ASN A  12)   1.432   4.110   9.735        0.40        34.99
-            (ATOM    513  HB  THR A  39)  22.749  14.628  11.666        0.39        35.38
+            (ATOM    600  ND2 ASN A  46)  11.916   4.601  15.746        2.30        13.29
+            (ATOM    599  OD1 ASN A  46)  13.443   3.218  14.924        2.18        15.47
+            (ATOM     93 3HD1 ILE A   7)  11.247  -1.323  14.347        1.71        17.18
+            (ATOM     82  CD1 ILE A   7)  11.293  -0.460  15.011        1.67        18.85
+            (ATOM     91 1HD1 ILE A   7)  12.334  -0.233  15.241        1.28        20.13
+            (ATOM    561  HD2 ASP A  43)  12.483  15.777  18.818        1.01        21.14
+            (ATOM    515 1HG2 THR A  39)  24.001  13.400  13.356        1.01        22.15
+            (ATOM    556  OD2 ASP A  43)  12.244  14.902  19.239        0.93        23.08
+            (ATOM    517 3HG2 THR A  39)  23.483  11.849  12.654        0.92        24.00
+            (ATOM    516 2HG2 THR A  39)  22.288  12.921  13.423        0.81        24.82
+            (ATOM    510  CG2 THR A  39)  23.199  12.887  12.825        0.76        25.58
+            (ATOM    560 2HB  ASP A  43)  11.704  12.468  19.392        0.69        26.27
+            (ATOM    554  CG  ASP A  43)  13.083  14.013  18.900        0.66        26.92
+            (ATOM    559 1HB  ASP A  43)  13.091  12.607  20.499        0.63        27.55
+            (ATOM     90 3HG2 ILE A   7)   9.069  -1.372  13.432        0.62        28.18
+            (ATOM    555  OD1 ASP A  43)  14.052  14.180  18.165        0.62        28.79
+            (ATOM     80  CG1 ILE A   7)  10.659   0.726  14.337        0.58        29.37
+            (ATOM    509  OG1 THR A  39)  24.152  13.569  10.774        0.57        29.95
+            (ATOM     86 1HG1 ILE A   7)  10.705   1.589  15.001        0.52        30.47
+            (ATOM    166 1HD2 ASN A  12)   0.422   4.102   9.755        0.49        30.96
+            (ATOM    102  HA  VAL A   8)   5.334   1.282  11.688        0.48        31.44
+            (ATOM    553  CB  ASP A  43)  12.776  12.653  19.456        0.47        31.91
+            (ATOM    167 2HD2 ASN A  12)   1.788   3.528  10.480        0.43        32.34
+            (ATOM    161  ND2 ASN A  12)   1.432   4.110   9.735        0.40        32.74
+            (ATOM    513  HB  THR A  39)  22.749  14.628  11.666        0.39        33.13
+            (ATOM     81  CG2 ILE A   7)   8.877  -0.425  12.927        0.39        33.52
 
      Residues that move a lot and their (Movement in Angstroms, per atom)
 
-    Ile   7( 0.80)    Asn  46( 0.63)    Asp  43( 0.43)    Thr  39( 0.41)    Glu  23( 0.25)
-    Asn  12( 0.22)    Gly  37( 0.17)    Val   8( 0.16)    Pro  36( 0.15)    Ala  38( 0.12)
+    Ile   7( 0.80)    Asn  46( 0.63)    Asp  43( 0.43)    Thr  39( 0.40)    Asn  12( 0.22)
+    Gly  37( 0.18)    Val   8( 0.16)    Pro  36( 0.15)    Ala  38( 0.12)    Glu  23( 0.12)
 
-   Difference between GEO_DAT and GEO_REF: 77.360 = total,  0.1270 = Average,  0.3333 = RMS, in Angstroms
+   Difference between GEO_DAT and GEO_REF: 74.871 = total,  0.1231 = Average,  0.3214 = RMS, in Angstroms
 
                              Differences between bond-lengths for the two geometries
 
@@ -156,9 +157,9 @@ geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
 
                     Analysis of Non-Covalent Interactions
 
-          Total non-covalent energy of GEO_DAT system:   -527.29 Kcal/mol
-          Total non-covalent energy of GEO_REF system:   -527.40 Kcal/mol
-                                           Difference:      0.11 Kcal/mol
+          Total non-covalent energy of GEO_DAT system:   -526.08 Kcal/mol
+          Total non-covalent energy of GEO_REF system:   -526.21 Kcal/mol
+                                           Difference:      0.13 Kcal/mol
 
           Number of hydrogen bonds common to both systems:   54
 

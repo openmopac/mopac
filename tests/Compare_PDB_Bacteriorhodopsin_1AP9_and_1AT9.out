@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ ** Cite this program as: MOPAC, Version: 22.0.0-  , James J. P. Stewart,     **
+ **                           web-site: http://openmopac.net                  **
  *******************************************************************************
  **                                                                           **
- **                                MOPAC2016                                  **
+ **                                   MOPAC                                   **
  **                                                                           **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:44 2021  *
+ *  CALCULATION DONE:                                Mon Feb 28 17:28:06 2022  *
  *  COMPARE    - Compare two geometries
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "ADD-H_Bacteriorhodopsin_1AP9.arc"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "ADD-H_Bacteriorhodopsin_1AT9.arc"
@@ -22,239 +22,249 @@
 geo_dat="ADD-H_Bacteriorhodopsin_1AP9.arc" geo_ref="ADD-H_Bacteriorhodopsin_1AT9.arc" Compare output
  Compare 1AP9 and 1AT9 Bacteriorhodopsin
 
- 
+
 
                             Differences in atoms sets
 
           Atoms in GEO_DAT only                   Atoms in GEO_REF only
 
-   1   ATOM      8 2H   ARG A   7              ATOM      1  N   ALA A   2
-   2   ATOM     14 3HG  ARG A   7              ATOM      2  CA  ALA A   2
-   3   HETATM 3292  C15 RET   300              ATOM      3  C   ALA A   2
-   4   HETATM 3293  C14 RET   300              ATOM      4  O   ALA A   2
-   5   HETATM 3294  C13 RET   300              ATOM      5  CB  ALA A   2
-   6   HETATM 3295  C12 RET   300              ATOM      6 1H   ALA A   2
-   7   HETATM 3296  C11 RET   300              ATOM      7 2H   ALA A   2
-   8   HETATM 3297  C10 RET   300              ATOM      8  HA  ALA A   2
-   9   HETATM 3298  C9  RET   300              ATOM      9 1HB  ALA A   2
-  10   HETATM 3299  C8  RET   300              ATOM     10 2HB  ALA A   2
-  11   HETATM 3300  C7  RET   300              ATOM     11 3HB  ALA A   2
-  12   HETATM 3301  C6  RET   300              ATOM     12  N   GLN A   3
-  13   HETATM 3302  C1  RET   300              ATOM     13  CA  GLN A   3
-  14   HETATM 3303  C2  RET   300              ATOM     14  C   GLN A   3
-  15   HETATM 3304  C3  RET   300              ATOM     15  O   GLN A   3
-  16   HETATM 3305  C4  RET   300              ATOM     16  CB  GLN A   3
-  17   HETATM 3306  C20 RET   300              ATOM     17  CG  GLN A   3
-  18   HETATM 3307  C5  RET   300              ATOM     18  CD  GLN A   3
-  19   HETATM 3308  C19 RET   300              ATOM     19  OE1 GLN A   3
-  20   HETATM 3309  C16 RET   300              ATOM     20  NE2 GLN A   3
-  21   HETATM 3310  C17 RET   300              ATOM     21  H   GLN A   3
-  22   HETATM 3311  C18 RET   300              ATOM     22  HA  GLN A   3
-  23   HETATM 3322  H15 RET   300              ATOM     23 1HB  GLN A   3
-  24   HETATM 3323  H14 RET   300              ATOM     24 2HB  GLN A   3
-  25   HETATM 3324  H12 RET   300              ATOM     25 1HG  GLN A   3
-  26   HETATM 3325  H11 RET   300              ATOM     26 2HG  GLN A   3
-  27   HETATM 3326  H10 RET   300              ATOM     27 1HE2 GLN A   3
-  28   HETATM 3327  H8  RET   300              ATOM     28 2HE2 GLN A   3
-  29   HETATM 3328  H7  RET   300              ATOM     29  N   ILE A   4
-  30   HETATM 3329 1H2  RET   300              ATOM     30  CA  ILE A   4
-  31   HETATM 3330 2H2  RET   300              ATOM     31  C   ILE A   4
-  32   HETATM 3331 1H3  RET   300              ATOM     32  O   ILE A   4
-  33   HETATM 3332 2H3  RET   300              ATOM     33  CB  ILE A   4
-  34   HETATM 3333 1H4  RET   300              ATOM     34  CG1 ILE A   4
-  35   HETATM 3334 2H4  RET   300              ATOM     35  CG2 ILE A   4
-  36   HETATM 3335 1H20 RET   300              ATOM     36  CD1 ILE A   4
-  37   HETATM 3336 2H20 RET   300              ATOM     37  H   ILE A   4
-  38   HETATM 3337 3H20 RET   300              ATOM     38  HA  ILE A   4
-  39   HETATM 3338 1H19 RET   300              ATOM     39  HB  ILE A   4
-  40   HETATM 3339 2H19 RET   300              ATOM     40 1HG1 ILE A   4
-  41   HETATM 3340 3H19 RET   300              ATOM     41 2HG1 ILE A   4
-  42   HETATM 3341 1H16 RET   300              ATOM     42 1HG2 ILE A   4
-  43   HETATM 3342 2H16 RET   300              ATOM     43 2HG2 ILE A   4
-  44   HETATM 3343 3H16 RET   300              ATOM     44 3HG2 ILE A   4
-  45   HETATM 3344 1H17 RET   300              ATOM     45 1HD1 ILE A   4
-  46   HETATM 3345 2H17 RET   300              ATOM     46 2HD1 ILE A   4
-  47   HETATM 3346 3H17 RET   300              ATOM     47 3HD1 ILE A   4
-  48   HETATM 3347 1H18 RET   300              ATOM     48  N   THR A   5
-  49   HETATM 3348 2H18 RET   300              ATOM     49  CA  THR A   5
-  50   HETATM 3349 3H18 RET   300              ATOM     50  C   THR A   5
-  51   ATOM   3498 1HXT ARG A 225              ATOM     51  O   THR A   5
-  52   ATOM   3499 2HXT ARG A 225              ATOM     52  CB  THR A   5
-  53   ATOM   3500 3HXT ARG A 225              ATOM     53  OG1 THR A   5
-  54   HETATM 3502  O   HOH   400              ATOM     54  CG2 THR A   5
-  55   HETATM 3503 1H   HOH   400              ATOM     55  H   THR A   5
-  56   HETATM 3504 2H   HOH   400              ATOM     56  HA  THR A   5
-  57   HETATM 3505  O   HOH   401              ATOM     57  HB  THR A   5
-  58   HETATM 3506 1H   HOH   401              ATOM     58  HG1 THR A   5
-  59   HETATM 3507 2H   HOH   401              ATOM     59 1HG2 THR A   5
-  60   HETATM 3508  O   HOH   402              ATOM     60 2HG2 THR A   5
-  61   HETATM 3509 1H   HOH   402              ATOM     61 3HG2 THR A   5
-  62   HETATM 3510 2H   HOH   402              ATOM     62  N   GLY A   6
-  63   HETATM 3511  O   HOH   403              ATOM     63  CA  GLY A   6
-  64   HETATM 3512 1H   HOH   403              ATOM     64  C   GLY A   6
-  65   HETATM 3513 2H   HOH   403              ATOM     65  O   GLY A   6
-  66   HETATM 3514  O   HOH   404              ATOM     66  H   GLY A   6
-  67   HETATM 3515 1H   HOH   404              ATOM     67 1HA  GLY A   6
-  68   HETATM 3516 2H   HOH   404              ATOM     68 2HA  GLY A   6
-  69   HETATM 3517  O   HOH   405              ATOM     75  CD  ARG A   7
-  70   HETATM 3518 1H   HOH   405              ATOM     76  NE  ARG A   7
-  71   HETATM 3519 2H   HOH   405              ATOM     77  CZ  ARG A   7
-  72   HETATM 3520  O   HOH   406              ATOM     78  NH1 ARG A   7
-  73   HETATM 3521 1H   HOH   406              ATOM     79  NH2 ARG A   7
-  74   HETATM 3522 2H   HOH   406              ATOM     86 1HD  ARG A   7
-  75   HETATM 3523  O   HOH   407              ATOM     87 2HD  ARG A   7
-  76   HETATM 3524 1H   HOH   407              ATOM     88  HE  ARG A   7
-  77   HETATM 3525 2H   HOH   407              ATOM     89 1HH1 ARG A   7
-  78   HETATM 3526  O   HOH   408              ATOM     90 2HH1 ARG A   7
-  79   HETATM 3527 1H   HOH   408              ATOM     91  HH2 ARG A   7
-  80   HETATM 3528 2H   HOH   408              HETATM 3369  C15 RET   216A
-  81   HETATM 3529  O   HOH   409              HETATM 3370  C14 RET   216A
-  82   HETATM 3530 1H   HOH   409              HETATM 3371  C13 RET   216A
-  83   HETATM 3531 2H   HOH   409              HETATM 3372  C12 RET   216A
-  84   HETATM 3532  O   HOH   410              HETATM 3373  C11 RET   216A
-  85   HETATM 3533 1H   HOH   410              HETATM 3374  C10 RET   216A
-  86   HETATM 3534 2H   HOH   410              HETATM 3375  C9  RET   216A
-  87   HETATM 3535  O   HOH   411              HETATM 3376  C8  RET   216A
-  88   HETATM 3536 1H   HOH   411              HETATM 3377  C7  RET   216A
-  89   HETATM 3537 2H   HOH   411              HETATM 3378  C6  RET   216A
-  90   HETATM 3538  O   HOH   412              HETATM 3379  C1  RET   216A
-  91   HETATM 3539 1H   HOH   412              HETATM 3380  C2  RET   216A
-  92   HETATM 3540 2H   HOH   412              HETATM 3381  C3  RET   216A
-  93   HETATM 3541  O   HOH   413              HETATM 3382  C4  RET   216A
-  94   HETATM 3542 1H   HOH   413              HETATM 3383  C20 RET   216A
-  95   HETATM 3543 2H   HOH   413              HETATM 3384  C5  RET   216A
-  96   HETATM 3544  O   HOH   414              HETATM 3385  C19 RET   216A
-  97   HETATM 3545 1H   HOH   414              HETATM 3386  C16 RET   216A
-  98   HETATM 3546 2H   HOH   414              HETATM 3387  C17 RET   216A
-  99   HETATM 3547  O   HOH   415              HETATM 3388  C18 RET   216A
- 100   HETATM 3548 1H   HOH   415              ATOM   3399  HZ  LYS A 216
- 101   HETATM 3549 2H   HOH   415              HETATM 3400  H15 RET   216A
- 102   HETATM 3550  O   HOH   416              HETATM 3401  H14 RET   216A
- 103   HETATM 3551 1H   HOH   416              HETATM 3402  H12 RET   216A
- 104   HETATM 3552 2H   HOH   416              HETATM 3403  H11 RET   216A
- 105   HETATM 3553  O   HOH   417              HETATM 3404  H10 RET   216A
- 106   HETATM 3554 1H   HOH   417              HETATM 3405  H8  RET   216A
- 107   HETATM 3555 2H   HOH   417              HETATM 3406  H7  RET   216A
- 108   HETATM 3556  O   HOH   418              HETATM 3407 1H2  RET   216A
- 109   HETATM 3557 1H   HOH   418              HETATM 3408 2H2  RET   216A
- 110   HETATM 3558 2H   HOH   418              HETATM 3409 1H3  RET   216A
- 111   HETATM 3559  O   HOH   419              HETATM 3410 2H3  RET   216A
- 112   HETATM 3560 1H   HOH   419              HETATM 3411 1H4  RET   216A
- 113   HETATM 3561 2H   HOH   419              HETATM 3412 2H4  RET   216A
- 114   HETATM 3562  O   HOH   420              HETATM 3413 1H20 RET   216A
- 115   HETATM 3563 1H   HOH   420              HETATM 3414 2H20 RET   216A
- 116   HETATM 3564 2H   HOH   420              HETATM 3415 3H20 RET   216A
- 117   HETATM 3565  O   HOH   421              HETATM 3416 1H19 RET   216A
- 118   HETATM 3566 1H   HOH   421              HETATM 3417 2H19 RET   216A
- 119   HETATM 3567 2H   HOH   421              HETATM 3418 3H19 RET   216A
- 120   HETATM 3568  O   HOH   422              HETATM 3419 1H16 RET   216A
- 121   HETATM 3569 1H   HOH   422              HETATM 3420 2H16 RET   216A
- 122   HETATM 3570 2H   HOH   422              HETATM 3421 3H16 RET   216A
- 123   HETATM 3571  O   HOH   423              HETATM 3422 1H17 RET   216A
- 124   HETATM 3572 1H   HOH   423              HETATM 3423 2H17 RET   216A
- 125   HETATM 3573 2H   HOH   423              HETATM 3424 3H17 RET   216A
- 126   HETATM 3574  O   HOH   424              HETATM 3425 1H18 RET   216A
- 127   HETATM 3575 1H   HOH   424              HETATM 3426 2H18 RET   216A
- 128   HETATM 3576 2H   HOH   424              HETATM 3427 3H18 RET   216A
- 129   HETATM 3577  O   HOH   425              ATOM   3557  O   ARG A 225
- 130   HETATM 3578 1H   HOH   425              ATOM   3577  N   SER A 226
- 131   HETATM 3579 2H   HOH   425              ATOM   3578  CA  SER A 226
- 132                                           ATOM   3579  C   SER A 226
- 133                                           ATOM   3580  O   SER A 226
- 134                                           ATOM   3581  CB  SER A 226
- 135                                           ATOM   3582  OG  SER A 226
- 136                                           ATOM   3583  H   SER A 226
- 137                                           ATOM   3584  HA  SER A 226
- 138                                           ATOM   3585 1HB  SER A 226
- 139                                           ATOM   3586 2HB  SER A 226
- 140                                           ATOM   3587  HG  SER A 226
- 141                                           ATOM   3588  N   ARG A 227
- 142                                           ATOM   3589  CA  ARG A 227
- 143                                           ATOM   3590  C   ARG A 227
- 144                                           ATOM   3591  O   ARG A 227
- 145                                           ATOM   3592  CB  ARG A 227
- 146                                           ATOM   3593  CG  ARG A 227
- 147                                           ATOM   3594  CD  ARG A 227
- 148                                           ATOM   3595  NE  ARG A 227
- 149                                           ATOM   3596  CZ  ARG A 227
- 150                                           ATOM   3597  NH1 ARG A 227
- 151                                           ATOM   3598  NH2 ARG A 227
- 152                                           ATOM   3599  H   ARG A 227
- 153                                           ATOM   3600  HA  ARG A 227
- 154                                           ATOM   3601 1HB  ARG A 227
- 155                                           ATOM   3602 2HB  ARG A 227
- 156                                           ATOM   3603 1HG  ARG A 227
- 157                                           ATOM   3604 2HG  ARG A 227
- 158                                           ATOM   3605 1HD  ARG A 227
- 159                                           ATOM   3606 2HD  ARG A 227
- 160                                           ATOM   3607  HE  ARG A 227
- 161                                           ATOM   3608 1HH1 ARG A 227
- 162                                           ATOM   3609 2HH1 ARG A 227
- 163                                           ATOM   3610  HH2 ARG A 227
- 164                                           ATOM   3611  N   ALA A 228
- 165                                           ATOM   3612  CA  ALA A 228
- 166                                           ATOM   3613  C   ALA A 228
- 167                                           ATOM   3614  O   ALA A 228
- 168                                           ATOM   3615  CB  ALA A 228
- 169                                           ATOM   3616  H   ALA A 228
- 170                                           ATOM   3617  HA  ALA A 228
- 171                                           ATOM   3618 1HB  ALA A 228
- 172                                           ATOM   3619 2HB  ALA A 228
- 173                                           ATOM   3620 3HB  ALA A 228
- 174                                           ATOM   3621  N   ILE A 229
- 175                                           ATOM   3622  CA  ILE A 229
- 176                                           ATOM   3623  C   ILE A 229
- 177                                           ATOM   3624  O   ILE A 229
- 178                                           ATOM   3625  CB  ILE A 229
- 179                                           ATOM   3626  CG1 ILE A 229
- 180                                           ATOM   3627  CG2 ILE A 229
- 181                                           ATOM   3628  CD1 ILE A 229
- 182                                           ATOM   3629  H   ILE A 229
- 183                                           ATOM   3630  HA  ILE A 229
- 184                                           ATOM   3631  HB  ILE A 229
- 185                                           ATOM   3632 1HG1 ILE A 229
- 186                                           ATOM   3633 2HG1 ILE A 229
- 187                                           ATOM   3634 1HG2 ILE A 229
- 188                                           ATOM   3635 2HG2 ILE A 229
- 189                                           ATOM   3636 3HG2 ILE A 229
- 190                                           ATOM   3637 1HD1 ILE A 229
- 191                                           ATOM   3638 2HD1 ILE A 229
- 192                                           ATOM   3639 3HD1 ILE A 229
- 193                                           ATOM   3640  N   PHE A 230
- 194                                           ATOM   3641  CA  PHE A 230
- 195                                           ATOM   3642  C   PHE A 230
- 196                                           ATOM   3643  O   PHE A 230
- 197                                           ATOM   3644  CB  PHE A 230
- 198                                           ATOM   3645  CG  PHE A 230
- 199                                           ATOM   3646  CD1 PHE A 230
- 200                                           ATOM   3647  CD2 PHE A 230
- 201                                           ATOM   3648  CE1 PHE A 230
- 202                                           ATOM   3649  CE2 PHE A 230
- 203                                           ATOM   3650  CZ  PHE A 230
- 204                                           ATOM   3651  H   PHE A 230
- 205                                           ATOM   3652  HA  PHE A 230
- 206                                           ATOM   3653 1HB  PHE A 230
- 207                                           ATOM   3654 2HB  PHE A 230
- 208                                           ATOM   3655  HD1 PHE A 230
- 209                                           ATOM   3656  HD2 PHE A 230
- 210                                           ATOM   3657  HE1 PHE A 230
- 211                                           ATOM   3658  HE2 PHE A 230
- 212                                           ATOM   3659  HZ  PHE A 230
- 213                                           ATOM   3660  N   GLY A 231
- 214                                           ATOM   3661  CA  GLY A 231
- 215                                           ATOM   3662  C   GLY A 231
- 216                                           ATOM   3663  O   GLY A 231
- 217                                           ATOM   3664  H   GLY A 231
- 218                                           ATOM   3665 1HA  GLY A 231
- 219                                           ATOM   3666 2HA  GLY A 231
- 220                                           ATOM   3667  HXT GLY A 231
+   1   ATOM      7 1H   ARG A   7              ATOM      1  N   ALA A   2
+   2   ATOM      8 2H   ARG A   7              ATOM      2  CA  ALA A   2
+   3   ATOM     14 3HG  ARG A   7              ATOM      3  C   ALA A   2
+   4   ATOM     44  HE1 GLU A   9              ATOM      4  O   ALA A   2
+   5   ATOM    460  HD2 ASP A  36              ATOM      5  CB  ALA A   2
+   6   ATOM    487  HD1 ASP A  38              ATOM      6 1H   ALA A   2
+   7   ATOM   1233  HD2 ASP A  85              ATOM      7 2H   ALA A   2
+   8   ATOM   1427  HD2 ASP A  96              ATOM      8  HA  ALA A   2
+   9   ATOM   1546  HD1 ASP A 104              ATOM      9 1HB  ALA A   2
+  10   ATOM   1697  HD1 ASP A 115              ATOM     10 2HB  ALA A   2
+  11   ATOM   2433  HE2 GLU A 161              ATOM     11 3HB  ALA A   2
+  12   ATOM   2967  HE2 GLU A 194              ATOM     12  N   GLN A   3
+  13   HETATM 3292  C15 RET   300              ATOM     13  CA  GLN A   3
+  14   HETATM 3293  C14 RET   300              ATOM     14  C   GLN A   3
+  15   HETATM 3294  C13 RET   300              ATOM     15  O   GLN A   3
+  16   HETATM 3295  C12 RET   300              ATOM     16  CB  GLN A   3
+  17   HETATM 3296  C11 RET   300              ATOM     17  CG  GLN A   3
+  18   HETATM 3297  C10 RET   300              ATOM     18  CD  GLN A   3
+  19   HETATM 3298  C9  RET   300              ATOM     19  OE1 GLN A   3
+  20   HETATM 3299  C8  RET   300              ATOM     20  NE2 GLN A   3
+  21   HETATM 3300  C7  RET   300              ATOM     21  H   GLN A   3
+  22   HETATM 3301  C6  RET   300              ATOM     22  HA  GLN A   3
+  23   HETATM 3302  C1  RET   300              ATOM     23 1HB  GLN A   3
+  24   HETATM 3303  C2  RET   300              ATOM     24 2HB  GLN A   3
+  25   HETATM 3304  C3  RET   300              ATOM     25 1HG  GLN A   3
+  26   HETATM 3305  C4  RET   300              ATOM     26 2HG  GLN A   3
+  27   HETATM 3306  C20 RET   300              ATOM     27 1HE2 GLN A   3
+  28   HETATM 3307  C5  RET   300              ATOM     28 2HE2 GLN A   3
+  29   HETATM 3308  C19 RET   300              ATOM     29  N   ILE A   4
+  30   HETATM 3309  C16 RET   300              ATOM     30  CA  ILE A   4
+  31   HETATM 3310  C17 RET   300              ATOM     31  C   ILE A   4
+  32   HETATM 3311  C18 RET   300              ATOM     32  O   ILE A   4
+  33   HETATM 3322  H15 RET   300              ATOM     33  CB  ILE A   4
+  34   HETATM 3323  H14 RET   300              ATOM     34  CG1 ILE A   4
+  35   HETATM 3324  H12 RET   300              ATOM     35  CG2 ILE A   4
+  36   HETATM 3325  H11 RET   300              ATOM     36  CD1 ILE A   4
+  37   HETATM 3326  H10 RET   300              ATOM     37  H   ILE A   4
+  38   HETATM 3327  H8  RET   300              ATOM     38  HA  ILE A   4
+  39   HETATM 3328  H7  RET   300              ATOM     39  HB  ILE A   4
+  40   HETATM 3329 1H2  RET   300              ATOM     40 1HG1 ILE A   4
+  41   HETATM 3330 2H2  RET   300              ATOM     41 2HG1 ILE A   4
+  42   HETATM 3331 1H3  RET   300              ATOM     42 1HG2 ILE A   4
+  43   HETATM 3332 2H3  RET   300              ATOM     43 2HG2 ILE A   4
+  44   HETATM 3333 1H4  RET   300              ATOM     44 3HG2 ILE A   4
+  45   HETATM 3334 2H4  RET   300              ATOM     45 1HD1 ILE A   4
+  46   HETATM 3335 1H20 RET   300              ATOM     46 2HD1 ILE A   4
+  47   HETATM 3336 2H20 RET   300              ATOM     47 3HD1 ILE A   4
+  48   HETATM 3337 3H20 RET   300              ATOM     48  N   THR A   5
+  49   HETATM 3338 1H19 RET   300              ATOM     49  CA  THR A   5
+  50   HETATM 3339 2H19 RET   300              ATOM     50  C   THR A   5
+  51   HETATM 3340 3H19 RET   300              ATOM     51  O   THR A   5
+  52   HETATM 3341 1H16 RET   300              ATOM     52  CB  THR A   5
+  53   HETATM 3342 2H16 RET   300              ATOM     53  OG1 THR A   5
+  54   HETATM 3343 3H16 RET   300              ATOM     54  CG2 THR A   5
+  55   HETATM 3344 1H17 RET   300              ATOM     55  H   THR A   5
+  56   HETATM 3345 2H17 RET   300              ATOM     56  HA  THR A   5
+  57   HETATM 3346 3H17 RET   300              ATOM     57  HB  THR A   5
+  58   HETATM 3347 1H18 RET   300              ATOM     58  HG1 THR A   5
+  59   HETATM 3348 2H18 RET   300              ATOM     59 1HG2 THR A   5
+  60   HETATM 3349 3H18 RET   300              ATOM     60 2HG2 THR A   5
+  61   ATOM   3498 1HXT ARG A 225              ATOM     61 3HG2 THR A   5
+  62   ATOM   3499 2HXT ARG A 225              ATOM     62  N   GLY A   6
+  63   ATOM   3500 3HXT ARG A 225              ATOM     63  CA  GLY A   6
+  64   HETATM 3502  O   HOH   400              ATOM     64  C   GLY A   6
+  65   HETATM 3503 1H   HOH   400              ATOM     65  O   GLY A   6
+  66   HETATM 3504 2H   HOH   400              ATOM     66  H   GLY A   6
+  67   HETATM 3505  O   HOH   401              ATOM     67 1HA  GLY A   6
+  68   HETATM 3506 1H   HOH   401              ATOM     68 2HA  GLY A   6
+  69   HETATM 3507 2H   HOH   401              ATOM     75  CD  ARG A   7
+  70   HETATM 3508  O   HOH   402              ATOM     76  NE  ARG A   7
+  71   HETATM 3509 1H   HOH   402              ATOM     77  CZ  ARG A   7
+  72   HETATM 3510 2H   HOH   402              ATOM     78  NH1 ARG A   7
+  73   HETATM 3511  O   HOH   403              ATOM     79  NH2 ARG A   7
+  74   HETATM 3512 1H   HOH   403              ATOM     80  H   ARG A   7
+  75   HETATM 3513 2H   HOH   403              ATOM     86 1HD  ARG A   7
+  76   HETATM 3514  O   HOH   404              ATOM     87 2HD  ARG A   7
+  77   HETATM 3515 1H   HOH   404              ATOM     88  HE  ARG A   7
+  78   HETATM 3516 2H   HOH   404              ATOM     89 1HH1 ARG A   7
+  79   HETATM 3517  O   HOH   405              ATOM     90 2HH1 ARG A   7
+  80   HETATM 3518 1H   HOH   405              ATOM     91  HH2 ARG A   7
+  81   HETATM 3519 2H   HOH   405              ATOM    121  HE2 GLU A   9
+  82   HETATM 3520  O   HOH   406              ATOM    537  HD1 ASP A  36
+  83   HETATM 3521 1H   HOH   406              ATOM    564  HD2 ASP A  38
+  84   HETATM 3522 2H   HOH   406              ATOM   1310  HD1 ASP A  85
+  85   HETATM 3523  O   HOH   407              ATOM   1504  HD1 ASP A  96
+  86   HETATM 3524 1H   HOH   407              ATOM   1623  HD2 ASP A 104
+  87   HETATM 3525 2H   HOH   407              ATOM   1774  HD2 ASP A 115
+  88   HETATM 3526  O   HOH   408              ATOM   2510  HE1 GLU A 161
+  89   HETATM 3527 1H   HOH   408              ATOM   3044  HE1 GLU A 194
+  90   HETATM 3528 2H   HOH   408              HETATM 3369  C15 RET   216A
+  91   HETATM 3529  O   HOH   409              HETATM 3370  C14 RET   216A
+  92   HETATM 3530 1H   HOH   409              HETATM 3371  C13 RET   216A
+  93   HETATM 3531 2H   HOH   409              HETATM 3372  C12 RET   216A
+  94   HETATM 3532  O   HOH   410              HETATM 3373  C11 RET   216A
+  95   HETATM 3533 1H   HOH   410              HETATM 3374  C10 RET   216A
+  96   HETATM 3534 2H   HOH   410              HETATM 3375  C9  RET   216A
+  97   HETATM 3535  O   HOH   411              HETATM 3376  C8  RET   216A
+  98   HETATM 3536 1H   HOH   411              HETATM 3377  C7  RET   216A
+  99   HETATM 3537 2H   HOH   411              HETATM 3378  C6  RET   216A
+ 100   HETATM 3538  O   HOH   412              HETATM 3379  C1  RET   216A
+ 101   HETATM 3539 1H   HOH   412              HETATM 3380  C2  RET   216A
+ 102   HETATM 3540 2H   HOH   412              HETATM 3381  C3  RET   216A
+ 103   HETATM 3541  O   HOH   413              HETATM 3382  C4  RET   216A
+ 104   HETATM 3542 1H   HOH   413              HETATM 3383  C20 RET   216A
+ 105   HETATM 3543 2H   HOH   413              HETATM 3384  C5  RET   216A
+ 106   HETATM 3544  O   HOH   414              HETATM 3385  C19 RET   216A
+ 107   HETATM 3545 1H   HOH   414              HETATM 3386  C16 RET   216A
+ 108   HETATM 3546 2H   HOH   414              HETATM 3387  C17 RET   216A
+ 109   HETATM 3547  O   HOH   415              HETATM 3388  C18 RET   216A
+ 110   HETATM 3548 1H   HOH   415              ATOM   3399  HZ  LYS A 216
+ 111   HETATM 3549 2H   HOH   415              HETATM 3400  H15 RET   216A
+ 112   HETATM 3550  O   HOH   416              HETATM 3401  H14 RET   216A
+ 113   HETATM 3551 1H   HOH   416              HETATM 3402  H12 RET   216A
+ 114   HETATM 3552 2H   HOH   416              HETATM 3403  H11 RET   216A
+ 115   HETATM 3553  O   HOH   417              HETATM 3404  H10 RET   216A
+ 116   HETATM 3554 1H   HOH   417              HETATM 3405  H8  RET   216A
+ 117   HETATM 3555 2H   HOH   417              HETATM 3406  H7  RET   216A
+ 118   HETATM 3556  O   HOH   418              HETATM 3407 1H2  RET   216A
+ 119   HETATM 3557 1H   HOH   418              HETATM 3408 2H2  RET   216A
+ 120   HETATM 3558 2H   HOH   418              HETATM 3409 1H3  RET   216A
+ 121   HETATM 3559  O   HOH   419              HETATM 3410 2H3  RET   216A
+ 122   HETATM 3560 1H   HOH   419              HETATM 3411 1H4  RET   216A
+ 123   HETATM 3561 2H   HOH   419              HETATM 3412 2H4  RET   216A
+ 124   HETATM 3562  O   HOH   420              HETATM 3413 1H20 RET   216A
+ 125   HETATM 3563 1H   HOH   420              HETATM 3414 2H20 RET   216A
+ 126   HETATM 3564 2H   HOH   420              HETATM 3415 3H20 RET   216A
+ 127   HETATM 3565  O   HOH   421              HETATM 3416 1H19 RET   216A
+ 128   HETATM 3566 1H   HOH   421              HETATM 3417 2H19 RET   216A
+ 129   HETATM 3567 2H   HOH   421              HETATM 3418 3H19 RET   216A
+ 130   HETATM 3568  O   HOH   422              HETATM 3419 1H16 RET   216A
+ 131   HETATM 3569 1H   HOH   422              HETATM 3420 2H16 RET   216A
+ 132   HETATM 3570 2H   HOH   422              HETATM 3421 3H16 RET   216A
+ 133   HETATM 3571  O   HOH   423              HETATM 3422 1H17 RET   216A
+ 134   HETATM 3572 1H   HOH   423              HETATM 3423 2H17 RET   216A
+ 135   HETATM 3573 2H   HOH   423              HETATM 3424 3H17 RET   216A
+ 136   HETATM 3574  O   HOH   424              HETATM 3425 1H18 RET   216A
+ 137   HETATM 3575 1H   HOH   424              HETATM 3426 2H18 RET   216A
+ 138   HETATM 3576 2H   HOH   424              HETATM 3427 3H18 RET   216A
+ 139   HETATM 3577  O   HOH   425              ATOM   3557  O   ARG A 225
+ 140   HETATM 3578 1H   HOH   425              ATOM   3577  N   SER A 226
+ 141   HETATM 3579 2H   HOH   425              ATOM   3578  CA  SER A 226
+ 142                                           ATOM   3579  C   SER A 226
+ 143                                           ATOM   3580  O   SER A 226
+ 144                                           ATOM   3581  CB  SER A 226
+ 145                                           ATOM   3582  OG  SER A 226
+ 146                                           ATOM   3583  H   SER A 226
+ 147                                           ATOM   3584  HA  SER A 226
+ 148                                           ATOM   3585 1HB  SER A 226
+ 149                                           ATOM   3586 2HB  SER A 226
+ 150                                           ATOM   3587  HG  SER A 226
+ 151                                           ATOM   3588  N   ARG A 227
+ 152                                           ATOM   3589  CA  ARG A 227
+ 153                                           ATOM   3590  C   ARG A 227
+ 154                                           ATOM   3591  O   ARG A 227
+ 155                                           ATOM   3592  CB  ARG A 227
+ 156                                           ATOM   3593  CG  ARG A 227
+ 157                                           ATOM   3594  CD  ARG A 227
+ 158                                           ATOM   3595  NE  ARG A 227
+ 159                                           ATOM   3596  CZ  ARG A 227
+ 160                                           ATOM   3597  NH1 ARG A 227
+ 161                                           ATOM   3598  NH2 ARG A 227
+ 162                                           ATOM   3599  H   ARG A 227
+ 163                                           ATOM   3600  HA  ARG A 227
+ 164                                           ATOM   3601 1HB  ARG A 227
+ 165                                           ATOM   3602 2HB  ARG A 227
+ 166                                           ATOM   3603 1HG  ARG A 227
+ 167                                           ATOM   3604 2HG  ARG A 227
+ 168                                           ATOM   3605 1HD  ARG A 227
+ 169                                           ATOM   3606 2HD  ARG A 227
+ 170                                           ATOM   3607  HE  ARG A 227
+ 171                                           ATOM   3608 1HH1 ARG A 227
+ 172                                           ATOM   3609 2HH1 ARG A 227
+ 173                                           ATOM   3610  HH2 ARG A 227
+ 174                                           ATOM   3611  N   ALA A 228
+ 175                                           ATOM   3612  CA  ALA A 228
+ 176                                           ATOM   3613  C   ALA A 228
+ 177                                           ATOM   3614  O   ALA A 228
+ 178                                           ATOM   3615  CB  ALA A 228
+ 179                                           ATOM   3616  H   ALA A 228
+ 180                                           ATOM   3617  HA  ALA A 228
+ 181                                           ATOM   3618 1HB  ALA A 228
+ 182                                           ATOM   3619 2HB  ALA A 228
+ 183                                           ATOM   3620 3HB  ALA A 228
+ 184                                           ATOM   3621  N   ILE A 229
+ 185                                           ATOM   3622  CA  ILE A 229
+ 186                                           ATOM   3623  C   ILE A 229
+ 187                                           ATOM   3624  O   ILE A 229
+ 188                                           ATOM   3625  CB  ILE A 229
+ 189                                           ATOM   3626  CG1 ILE A 229
+ 190                                           ATOM   3627  CG2 ILE A 229
+ 191                                           ATOM   3628  CD1 ILE A 229
+ 192                                           ATOM   3629  H   ILE A 229
+ 193                                           ATOM   3630  HA  ILE A 229
+ 194                                           ATOM   3631  HB  ILE A 229
+ 195                                           ATOM   3632 1HG1 ILE A 229
+ 196                                           ATOM   3633 2HG1 ILE A 229
+ 197                                           ATOM   3634 1HG2 ILE A 229
+ 198                                           ATOM   3635 2HG2 ILE A 229
+ 199                                           ATOM   3636 3HG2 ILE A 229
+ 200                                           ATOM   3637 1HD1 ILE A 229
+ 201                                           ATOM   3638 2HD1 ILE A 229
+ 202                                           ATOM   3639 3HD1 ILE A 229
+ 203                                           ATOM   3640  N   PHE A 230
+ 204                                           ATOM   3641  CA  PHE A 230
+ 205                                           ATOM   3642  C   PHE A 230
+ 206                                           ATOM   3643  O   PHE A 230
+ 207                                           ATOM   3644  CB  PHE A 230
+ 208                                           ATOM   3645  CG  PHE A 230
+ 209                                           ATOM   3646  CD1 PHE A 230
+ 210                                           ATOM   3647  CD2 PHE A 230
+ 211                                           ATOM   3648  CE1 PHE A 230
+ 212                                           ATOM   3649  CE2 PHE A 230
+ 213                                           ATOM   3650  CZ  PHE A 230
+ 214                                           ATOM   3651  H   PHE A 230
+ 215                                           ATOM   3652  HA  PHE A 230
+ 216                                           ATOM   3653 1HB  PHE A 230
+ 217                                           ATOM   3654 2HB  PHE A 230
+ 218                                           ATOM   3655  HD1 PHE A 230
+ 219                                           ATOM   3656  HD2 PHE A 230
+ 220                                           ATOM   3657  HE1 PHE A 230
+ 221                                           ATOM   3658  HE2 PHE A 230
+ 222                                           ATOM   3659  HZ  PHE A 230
+ 223                                           ATOM   3660  N   GLY A 231
+ 224                                           ATOM   3661  CA  GLY A 231
+ 225                                           ATOM   3662  C   GLY A 231
+ 226                                           ATOM   3663  O   GLY A 231
+ 227                                           ATOM   3664  H   GLY A 231
+ 228                                           ATOM   3665 1HA  GLY A 231
+ 229                                           ATOM   3666 2HA  GLY A 231
+ 230                                           ATOM   3667  HXT GLY A 231
 
           Empirical formulae of data-set and GEO_REF are different
 
-          Empirical formula of system in GEO_REF: C1213 H1870 N273 O302 S9  =  3667 atoms
+          Empirical formula of system in GEO_REF: C1215 H1866 N274 O303 S9  =  3667 atoms
           Empirical formula of system in GEO_DAT: C1163 H1838 N254 O314 S9  =  3578 atoms
 
-          Number of atoms common to both systems: 3447
+          Number of atoms common to both systems: 3437
 
 
                         After docking
@@ -267,80 +277,80 @@ geo_dat="ADD-H_Bacteriorhodopsin_1AP9.arc" geo_ref="ADD-H_Bacteriorhodopsin_1AT9
             (ATOM   1917  HD2 TYR A 131)  16.320  17.185 -17.019       14.68        30.81
             (ATOM   1909  CE2 TYR A 131)  16.330  19.141 -17.926       14.64        45.45
             (ATOM   1911  OH  TYR A 131)  16.146  21.299 -18.960       14.33        59.78
-            (ATOM   1907  CD2 TYR A 131)  15.727  17.955 -17.513       13.82        73.60
+            (ATOM   1907  CD2 TYR A 131)  15.727  17.955 -17.513       13.82        73.61
             (ATOM   1920  HH  TYR A 131)  15.599  21.992 -19.407       13.56        87.16
             (ATOM   1910  CZ  TYR A 131)  15.564  20.116 -18.554       13.55       100.71
-            (ATOM   1011  HZ  PHE A  71)  14.755   9.637 -16.208       13.05       113.76
-            (ATOM   1024 1HA  GLY A  73)  14.446  14.872 -25.793       12.74       126.50
-            (ATOM   1883 2HZ  LYS A 129)   3.668  10.465 -17.082       12.30       138.80
-            (ATOM   1915 2HB  TYR A 131)  14.362  15.947 -16.526       12.21       151.01
-            (ATOM   3433  HH2 ARG A 225)  30.206 -10.586  13.556       12.09       163.10
-            (ATOM   1882 1HZ  LYS A 129)   2.899  11.222 -18.329       12.07       175.17
-            (ATOM   3424  NH2 ARG A 225)  29.374 -10.210  14.010       11.96       187.13
-            (ATOM   1905  CG  TYR A 131)  14.364  17.723 -17.718       11.96       199.09
-            (ATOM   1057 1HE2 GLN A  75)   9.805   4.095 -24.075       11.90       210.99
+            (ATOM   1011  HZ  PHE A  71)  14.755   9.637 -16.208       13.05       113.77
+            (ATOM   1024 1HA  GLY A  73)  14.446  14.872 -25.793       12.75       126.51
+            (ATOM   1883 2HZ  LYS A 129)   3.668  10.465 -17.082       12.30       138.81
+            (ATOM   1915 2HB  TYR A 131)  14.362  15.947 -16.526       12.21       151.02
+            (ATOM   3433  HH2 ARG A 225)  30.206 -10.586  13.556       12.09       163.11
+            (ATOM   1882 1HZ  LYS A 129)   2.899  11.222 -18.329       12.07       175.18
+            (ATOM   1905  CG  TYR A 131)  14.364  17.723 -17.718       11.96       187.14
+            (ATOM   3424  NH2 ARG A 225)  29.374 -10.210  14.010       11.96       199.10
+            (ATOM   1057 1HE2 GLN A  75)   9.805   4.095 -24.075       11.89       210.99
             (ATOM   1908  CE1 TYR A 131)  14.206  19.907 -18.771       11.70       222.69
-            (ATOM   1018 2HA  GLY A  72)  13.625  16.911 -21.739       11.69       234.38
-            (ATOM   1914 1HB  TYR A 131)  13.623  15.760 -18.135       11.43       245.81
-            (ATOM   1015  O   GLY A  72)  14.008  16.615 -24.221       11.41       257.23
-            (ATOM   3434 1HH1 ARG A 225)  31.497  -9.009  14.595       11.37       268.59
-            (ATOM   1010  HE2 PHE A  71)  12.322   9.291 -16.535       11.32       279.91
-            (ATOM   1058 2HE2 GLN A  75)  10.909   3.748 -22.900       11.29       291.20
-            (ATOM   1871  NZ  LYS A 129)   3.796  10.927 -17.971       11.23       302.42
-            (ATOM    409 3HE  MET A  32)  20.656 -19.389  16.385       11.20       313.63
-            (ATOM   1904  CB  TYR A 131)  13.730  16.423 -17.276       11.09       324.72
-            (ATOM   1002  CZ  PHE A  71)  14.173  10.362 -16.777       11.09       335.81
-            (ATOM   1881 2HE  LYS A 129)   4.585   9.027 -18.434       11.07       346.88
-            (ATOM   1906  CD1 TYR A 131)  13.615  18.713 -18.353       10.95       357.82
-            (ATOM    407 1HE  MET A  32)  20.835 -21.036  15.732       10.95       368.77
+            (ATOM   1018 2HA  GLY A  72)  13.625  16.911 -21.739       11.69       234.39
+            (ATOM   1914 1HB  TYR A 131)  13.623  15.760 -18.135       11.44       245.82
+            (ATOM   1015  O   GLY A  72)  14.008  16.615 -24.221       11.42       257.24
+            (ATOM   3434 1HH1 ARG A 225)  31.497  -9.009  14.595       11.36       268.60
+            (ATOM   1010  HE2 PHE A  71)  12.322   9.291 -16.535       11.32       279.93
+            (ATOM   1058 2HE2 GLN A  75)  10.909   3.748 -22.900       11.28       291.21
+            (ATOM   1871  NZ  LYS A 129)   3.796  10.927 -17.971       11.22       302.43
+            (ATOM    409 3HE  MET A  32)  20.656 -19.389  16.385       11.21       313.64
+            (ATOM   1904  CB  TYR A 131)  13.730  16.423 -17.276       11.10       324.73
+            (ATOM   1002  CZ  PHE A  71)  14.173  10.362 -16.777       11.09       335.82
+            (ATOM   1881 2HE  LYS A 129)   4.585   9.027 -18.434       11.06       346.89
+            (ATOM    407 1HE  MET A  32)  20.835 -21.036  15.732       10.95       357.84
+            (ATOM   1906  CD1 TYR A 131)  13.615  18.713 -18.353       10.95       368.79
 
      Residues that move a lot and their (Movement in Angstroms, per atom)
 
-    Tyr 131(11.23)    Gly  73(10.44)    Gly  72( 9.96)    Phe  71( 7.14)    Ser 132( 6.73)
+    Tyr 131(11.23)    Gly  73(10.44)    Gly  72( 9.97)    Phe  71( 7.14)    Ser 132( 6.73)
     Lys 129( 6.32)    Glu  74( 6.18)    Val 130( 6.16)    Arg 225( 6.10)    Met  32( 5.76)
-    Pro  70( 5.67)    Gln  75( 5.65)    Met  68( 5.38)    Glu 194( 5.30)    Thr 128( 5.00)
-    Val  34( 4.26)    Leu 224( 4.09)    Trp  10( 4.03)    Tyr 133( 3.86)    Leu  66( 3.69)
-    Val  69( 3.64)    Thr  67( 3.61)    Arg   7( 3.48)    Lys  30( 3.34)    Tyr  64( 3.20)
-    Asp  36( 2.98)    Tyr  26( 2.84)    Lys 172( 2.76)    Pro 200( 2.73)    Leu  22( 2.70)
-    Glu 161( 2.70)    Trp 137( 2.59)    Gly  33( 2.54)    Asn 176( 2.51)    Ser  35( 2.48)
-    Pro  37( 2.45)    Lys  40( 2.36)    Lys 159( 2.22)    Ser 162( 2.22)    Arg 175( 2.21)
-    Leu 190( 2.20)    Gly 192( 2.20)    Gly 195( 2.19)    Glu 166( 2.12)    Gly  21( 2.06)
-    Gly  63( 2.06)    Ile 222( 2.01)    Gln 105( 2.01)    Tyr 150( 1.97)    Arg 164( 1.94)
+    Pro  70( 5.66)    Gln  75( 5.64)    Met  68( 5.38)    Glu 194( 5.09)    Thr 128( 5.00)
+    Val  34( 4.26)    Leu 224( 4.08)    Trp  10( 4.03)    Tyr 133( 3.86)    Leu  66( 3.69)
+    Val  69( 3.63)    Thr  67( 3.61)    Arg   7( 3.51)    Lys  30( 3.35)    Tyr  64( 3.20)
+    Asp  36( 2.96)    Tyr  26( 2.84)    Lys 172( 2.76)    Pro 200( 2.73)    Leu  22( 2.70)
+    Trp 137( 2.59)    Gly  33( 2.54)    Asn 176( 2.51)    Ser  35( 2.48)    Glu 161( 2.46)
+    Pro  37( 2.46)    Lys  40( 2.36)    Lys 159( 2.22)    Ser 162( 2.22)    Arg 175( 2.21)
+    Leu 190( 2.20)    Gly 192( 2.20)    Gly 195( 2.18)    Glu 166( 2.12)    Gly  21( 2.06)
+    Gly  63( 2.06)    Ile 222( 2.02)    Gln 105( 2.01)    Tyr 150( 1.97)    Arg 164( 1.93)
     Leu 146( 1.92)    Arg 134( 1.90)    Thr 107( 1.87)    Val 167( 1.87)    Ile 198( 1.84)
-    Tyr  57( 1.84)    Ile 119( 1.84)    Asn 202( 1.83)    Leu 111( 1.83)    Glu 204( 1.81)
-    Val 101( 1.78)    Leu  62( 1.76)    Asp 115( 1.72)    Leu 221( 1.71)    Ile 108( 1.71)
-    Trp 182( 1.69)    Arg  82( 1.66)    Thr 157( 1.66)    Lys  41( 1.64)    Thr  24( 1.64)
-    Asp 104( 1.63)    Thr 170( 1.63)    Ile 148( 1.61)    Ser 193( 1.59)    Asn  76( 1.59)
-    Gly  65( 1.57)    Gly  31( 1.56)    Val 199( 1.55)    Thr 121( 1.53)    Leu  97( 1.52)
-    Met  56( 1.52)    Phe  27( 1.51)    Leu 206( 1.50)    Phe  54( 1.49)    Thr  47( 1.47)
-    Thr  89( 1.46)    Asp 102( 1.45)    Asp  38( 1.44)    Val 173( 1.43)    Ile 117( 1.42)
-    Ile  78( 1.41)    Leu  15( 1.41)    Leu  48( 1.41)    Thr  90( 1.40)    Met 163( 1.39)
-    Val 177( 1.38)    Thr 142( 1.38)    Leu  61( 1.37)    Val 180( 1.37)    Leu  13( 1.35)
-    Ser 183( 1.34)    Trp 189( 1.34)    Leu 201( 1.33)    Ile 191( 1.32)    Phe  88( 1.32)
-    Leu 174( 1.32)    Leu  99( 1.31)    Val 213( 1.31)    Met 118( 1.30)    Thr  46( 1.30)
-    Pro   8( 1.30)    Ile  45( 1.29)    Leu 211( 1.28)    Leu  58( 1.28)    Leu  25( 1.28)
-    Ala 196( 1.27)    Tyr  43( 1.27)    Val 124( 1.25)    Ser 141( 1.25)    Leu 181( 1.24)
-    Gly 197( 1.24)    Ile  11( 1.23)    Ser 158( 1.23)    Leu  94( 1.23)    Phe 153( 1.20)
-    Phe 156( 1.20)    Pro 165( 1.20)    Met  20( 1.20)    Leu  87( 1.19)    Leu  19( 1.14)
-    Ile 203( 1.13)    Met  60( 1.13)    Trp  12( 1.10)    Ser  59( 1.09)    Ala 168( 1.07)
-    Trp  80( 1.06)    Gly 220( 1.06)    Leu 149( 1.06)    Leu 223( 1.06)    Pro 186( 1.05)
-    Leu  93( 1.05)    Leu 109( 1.05)    Leu 207( 1.05)    Leu  95( 1.04)    Lys 216( 1.04)
-    Phe 219( 1.04)    Leu 152( 1.04)    Leu 123( 1.03)    Leu  28( 1.03)    Phe 171( 1.01)
-    Val 217( 1.01)    Met 145( 0.99)    Asp  85( 0.99)    Tyr  83( 0.99)    Val 136( 0.98)
-    Leu 127( 0.98)    Trp 138( 0.96)    Leu  92( 0.96)    Val 112( 0.96)    Phe 154( 0.95)
-    Ala  39( 0.94)    Ala  84( 0.93)    Phe 135( 0.91)    Thr  55( 0.91)    Pro  77( 0.89)
-    Thr  17( 0.89)    Thr 178( 0.88)    Pro  50( 0.86)    Ser 169( 0.86)    Gly 125( 0.86)
-    Tyr 147( 0.86)    Tyr  79( 0.85)    Ile 140( 0.85)    Val  29( 0.84)    Gly 106( 0.84)
-    Ala 110( 0.84)    Val  49( 0.82)    Ser 214( 0.81)    Met 209( 0.80)    Val 187( 0.80)
-    Leu 100( 0.78)    Ala 144( 0.78)    Ala 160( 0.75)    Val 179( 0.72)    Gly  23( 0.72)
-    Gly  16( 0.71)    Gly 155( 0.71)    Glu   9( 0.71)    Asp 212( 0.69)    Asp  96( 0.68)
-    Gly 122( 0.68)    Ala  53( 0.68)    Ala 126( 0.68)    Thr 205( 0.65)    Ala  51( 0.64)
-    Ala  18( 0.64)    Val 188( 0.62)    Gly 218( 0.61)    Trp  86( 0.61)    Ala 139( 0.60)
-    Ala  14( 0.60)    Gly 113( 0.59)    Val 151( 0.57)    Ala 103( 0.57)    Ala 215( 0.56)
-    Gly 120( 0.55)    Ala  98( 0.55)    Ala 184( 0.54)    Tyr 185( 0.53)    Phe 208( 0.52)
+    Tyr  57( 1.84)    Ile 119( 1.84)    Asn 202( 1.84)    Leu 111( 1.83)    Glu 204( 1.81)
+    Val 101( 1.78)    Leu  62( 1.76)    Leu 221( 1.71)    Ile 108( 1.71)    Trp 182( 1.69)
+    Arg  82( 1.66)    Thr 157( 1.66)    Lys  41( 1.64)    Thr  24( 1.64)    Thr 170( 1.63)
+    Ile 148( 1.60)    Ser 193( 1.59)    Asn  76( 1.58)    Gly  65( 1.57)    Gly  31( 1.56)
+    Val 199( 1.56)    Thr 121( 1.53)    Leu  97( 1.52)    Phe  27( 1.51)    Met  56( 1.51)
+    Leu 206( 1.50)    Phe  54( 1.49)    Thr  47( 1.47)    Thr  89( 1.46)    Asp 102( 1.45)
+    Asp 104( 1.45)    Val 173( 1.43)    Ile 117( 1.42)    Ile  78( 1.41)    Leu  15( 1.41)
+    Leu  48( 1.41)    Thr  90( 1.40)    Met 163( 1.39)    Val 177( 1.38)    Thr 142( 1.37)
+    Leu  61( 1.37)    Val 180( 1.37)    Asp 115( 1.36)    Leu  13( 1.35)    Ser 183( 1.34)
+    Leu 201( 1.34)    Trp 189( 1.34)    Ile 191( 1.32)    Phe  88( 1.32)    Leu 174( 1.32)
+    Leu  99( 1.31)    Met 118( 1.30)    Val 213( 1.30)    Thr  46( 1.30)    Pro   8( 1.29)
+    Ile  45( 1.29)    Leu 211( 1.28)    Leu  58( 1.28)    Leu  25( 1.28)    Tyr  43( 1.27)
+    Ala 196( 1.27)    Val 124( 1.25)    Ser 141( 1.25)    Leu 181( 1.24)    Gly 197( 1.23)
+    Ile  11( 1.23)    Ser 158( 1.23)    Leu  94( 1.22)    Phe 153( 1.21)    Phe 156( 1.20)
+    Asp  38( 1.20)    Pro 165( 1.20)    Met  20( 1.19)    Leu  87( 1.19)    Ile 203( 1.14)
+    Leu  19( 1.13)    Met  60( 1.13)    Trp  12( 1.10)    Ser  59( 1.09)    Ala 168( 1.07)
+    Trp  80( 1.07)    Leu 149( 1.06)    Gly 220( 1.06)    Leu 223( 1.06)    Leu 109( 1.05)
+    Pro 186( 1.05)    Leu  93( 1.05)    Leu 207( 1.05)    Leu  95( 1.04)    Lys 216( 1.04)
+    Phe 219( 1.04)    Leu 152( 1.04)    Leu  28( 1.03)    Leu 123( 1.03)    Phe 171( 1.01)
+    Val 217( 1.01)    Met 145( 0.99)    Tyr  83( 0.99)    Leu 127( 0.98)    Val 136( 0.98)
+    Leu  92( 0.96)    Val 112( 0.96)    Trp 138( 0.96)    Phe 154( 0.95)    Ala  39( 0.94)
+    Ala  84( 0.93)    Phe 135( 0.91)    Thr  55( 0.91)    Pro  77( 0.89)    Thr  17( 0.89)
+    Thr 178( 0.88)    Ser 169( 0.86)    Pro  50( 0.86)    Tyr  79( 0.86)    Tyr 147( 0.86)
+    Gly 125( 0.85)    Ile 140( 0.85)    Gly 106( 0.84)    Val  29( 0.84)    Ala 110( 0.84)
+    Val  49( 0.82)    Asp  85( 0.82)    Ser 214( 0.81)    Met 209( 0.80)    Val 187( 0.80)
+    Leu 100( 0.78)    Ala 144( 0.78)    Ala 160( 0.75)    Gly  23( 0.72)    Val 179( 0.72)
+    Gly  16( 0.71)    Gly 155( 0.71)    Asp 212( 0.69)    Gly 122( 0.68)    Ala  53( 0.68)
+    Ala 126( 0.67)    Thr 205( 0.65)    Ala  51( 0.64)    Ala  18( 0.63)    Val 188( 0.62)
+    Gly 218( 0.61)    Trp  86( 0.61)    Ala  14( 0.60)    Ala 139( 0.60)    Asp  96( 0.59)
+    Gly 113( 0.59)    Glu   9( 0.57)    Val 151( 0.57)    Ala 103( 0.57)    Ala 215( 0.56)
+    Gly 120( 0.56)    Ala  98( 0.55)    Tyr 185( 0.54)    Ala 184( 0.54)    Phe 208( 0.52)
     Phe  42( 0.52)    Ala 114( 0.52)    Ile  52( 0.50)    Pro  91( 0.50)    Ala  81( 0.46)
 
-   Difference between GEO_DAT and GEO_REF: 6250.041 = total,  1.8132 = Average,  2.6720 = RMS, in Angstroms
+   Difference between GEO_DAT and GEO_REF: 6206.730 = total,  1.8059 = Average,  2.6640 = RMS, in Angstroms
 
                              Differences between bond-lengths for the two geometries
 
@@ -378,9 +388,9 @@ geo_dat="ADD-H_Bacteriorhodopsin_1AP9.arc" geo_ref="ADD-H_Bacteriorhodopsin_1AT9
 
                     Analysis of Non-Covalent Interactions
 
-          Total non-covalent energy of GEO_DAT system:  -3264.15 Kcal/mol
-          Total non-covalent energy of GEO_REF system:  -3336.77 Kcal/mol
-                                           Difference:     72.62 Kcal/mol
+          Total non-covalent energy of GEO_DAT system:  -3248.21 Kcal/mol
+          Total non-covalent energy of GEO_REF system:  -3324.38 Kcal/mol
+                                           Difference:     76.17 Kcal/mol
 
           Number of hydrogen bonds common to both systems:  187
 
@@ -389,20 +399,20 @@ geo_dat="ADD-H_Bacteriorhodopsin_1AP9.arc" geo_ref="ADD-H_Bacteriorhodopsin_1AT9
 
                Donor atom                     Hydrogen atom            H-bond length(A)     Energy    Sum
 
-   1   "ATOM   2948  OE1 GLU A 194"      "ATOM   1204  HH  TYR A  83"       1.727           -4.325   -4.325
-   2   "ATOM    130  O   ALA A  14"      "ATOM    173  HG1 THR A  17"       1.642           -3.917   -8.242
-   3   "ATOM   3228  OD2 ASP A 212"      "ATOM    791  HH  TYR A  57"       1.776           -3.403  -11.645
-   4   "ATOM    948  O   MET A  68"      "ATOM   1856  H   THR A 128"       1.531           -2.940  -14.585
-   5   "ATOM   3089  OE2 GLU A 204"      "ATOM   2936  H   SER A 193"       1.842           -2.735  -17.319
-   6   "ATOM   1442  O   ALA A  98"      "ATOM   1521  H   ALA A 103"       2.075           -2.250  -19.570
-   7   "ATOM    393  N   MET A  32"      "ATOM    511 1HZ  LYS A  40"       2.296           -2.120  -21.689
-   8   "ATOM   1771  N   GLY A 122"      "ATOM   2099  HG  SER A 141"       2.109           -1.779  -23.468
-   9   "ATOM   2904  N   ILE A 191"      "ATOM   2968  H   ALA A 196"       2.958           -1.769  -25.237
-  10   "ATOM    694  O   ILE A  52"      "ATOM    762  H   MET A  56"       2.188           -1.730  -26.968
-  11   "ATOM   3274  O   LYS A 216"      "ATOM   3337  H   GLY A 220"       1.603           -1.711  -28.678
-  12   "ATOM   1195  OH  TYR A  83"      "ATOM   2880  HE1 TRP A 189"       1.586           -1.661  -30.340
-  13   "ATOM    588  O   ILE A  45"      "ATOM    625  H   THR A  47"       1.880           -1.577  -31.916
-  14   "ATOM    771  N   TYR A  57"      "ATOM    817  H   SER A  59"       2.895           -1.546  -33.462
+   1   "ATOM    130  O   ALA A  14"      "ATOM    173  HG1 THR A  17"       1.642           -3.917   -3.917
+   2   "ATOM   3228  OD2 ASP A 212"      "ATOM    791  HH  TYR A  57"       1.776           -3.403   -7.320
+   3   "ATOM    948  O   MET A  68"      "ATOM   1856  H   THR A 128"       1.531           -2.940  -10.260
+   4   "ATOM   3089  OE2 GLU A 204"      "ATOM   2936  H   SER A 193"       1.842           -2.735  -12.994
+   5   "ATOM   2948  OE1 GLU A 194"      "ATOM   1204  HH  TYR A  83"       1.727           -2.565  -15.560
+   6   "ATOM   1442  O   ALA A  98"      "ATOM   1521  H   ALA A 103"       2.075           -2.250  -17.810
+   7   "ATOM    393  N   MET A  32"      "ATOM    511 1HZ  LYS A  40"       2.296           -2.120  -19.930
+   8   "ATOM   1771  N   GLY A 122"      "ATOM   2099  HG  SER A 141"       2.109           -1.779  -21.708
+   9   "ATOM   2904  N   ILE A 191"      "ATOM   2968  H   ALA A 196"       2.958           -1.769  -23.478
+  10   "ATOM    694  O   ILE A  52"      "ATOM    762  H   MET A  56"       2.188           -1.730  -25.208
+  11   "ATOM   3274  O   LYS A 216"      "ATOM   3337  H   GLY A 220"       1.603           -1.711  -26.919
+  12   "ATOM   1195  OH  TYR A  83"      "ATOM   2880  HE1 TRP A 189"       1.586           -1.661  -28.580
+  13   "ATOM    588  O   ILE A  45"      "ATOM    625  H   THR A  47"       1.880           -1.577  -30.157
+  14   "ATOM    771  N   TYR A  57"      "ATOM    817  H   SER A  59"       2.895           -1.546  -31.703
 
 
                             Hydrogen bonds in GEO_REF but not in GEO_DAT
