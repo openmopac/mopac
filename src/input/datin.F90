@@ -345,7 +345,7 @@
                   else
                     elemnt2 = " "
                   end if
-                  write (line, "(12X,A7,7X,A2,F16.6)") partyp (iparam)//elemnt2, elemnt(jelmnt), parsij(i)
+                  write (line, "(12X,A7,7X,A2,F16.8)") partyp (iparam)//elemnt2, elemnt(jelmnt), parsij(i)
                   if (iparam /= 41 .and. iparam < n_partyp) then
                     write (iw, "(a)") trim(line)
                   else
@@ -361,10 +361,10 @@
 ! Write out the global parameters that have been read in
 !
       do i = 1, 9
-        if (lv_par(i)) write(iw,"(12x,'PAR', i1, f28.6, a)") i, v_par(i), "    "//trim(t_par(i))
+        if (lv_par(i)) write(iw,"(12x,'PAR', i1, f28.8, a)") i, v_par(i), "    "//trim(t_par(i))
       end do
        do i = 10, 60
-        if (lv_par(i)) write(iw,"(12x,'PAR', i2, f27.6, a)") i, v_par(i), "    "// trim(t_par(i))
+        if (lv_par(i)) write(iw,"(12x,'PAR', i2, f27.8, a)") i, v_par(i), "    "// trim(t_par(i))
       end do
       return
   end subroutine write_params

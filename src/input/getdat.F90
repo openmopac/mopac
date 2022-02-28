@@ -139,33 +139,6 @@
           inquire(file=line, exist=exists)
         end if
       end if
-!
-!  Check that a password has not been used
-!
-      j = 0
-      do i = len_trim(jobnam), 1, -1
-        if (ichar(jobnam(i:i)) > ichar("9") .or. ichar(jobnam(i:i)) < ichar("0")) exit
-        j = j + 1
-      end do
-      if (j == 7 .or. j == 8) then
-        if(jobnam(i:i) == "a" .or. jobnam(i:i) == "A") then
-          j = 0
-          do i = i - 1, 1, -1
-            if (ichar(jobnam(i:i)) > ichar("9") .or. ichar(jobnam(i:i)) < ichar("0")) exit
-            j = j + 1
-          end do
-          if (j == 7 .or. j == 8) then
-            write (line, '(a)') ' Password detected, but password has already been correctly installed.'
-            open(unit=iw, file=trim(jobnam)//'.out') 
-            write(iw,"(//10x,a)")trim(line)
-            write(*,"(//,a)")trim(line)
-            write (line, '(a)') ' MOPAC is ready to run data sets.' 
-            write(*,"(/,a,/)")trim(line)
-            call mopend (trim(line)) 
-            return  
-          end if
-        end if
-      end if
   98  if (exists) then 
          if (iw0 > -1) then           
            call to_screen("Preparing to read the following MOPAC file: ")
@@ -187,9 +160,14 @@
 !
         call init_filenames 
       else
-        line = "MOPAC input data-set file: """//trim(jobnam)//""" does not exist."
+        if (is_PARAM) then
+          line = "PARAM input data-set file: """//trim(jobnam)//""" does not exist."
+          open(unit=iw, file='PARAM Error message.txt') 
+        else
+          line = "MOPAC input data-set file: """//trim(jobnam)//""" does not exist."
+          open(unit=iw, file='MOPAC Error message.txt') 
+        end if
         write(0,'(//10x,a,//)')trim(line)
-        open(unit=iw, file='MOPAC Error message.txt') 
         call to_screen(trim(line))
         call mopend(trim(line))
         return
@@ -237,9 +215,8 @@
         read (from_data_set, '(A2000)', end=30, err=30) line 
         nlines = nlines + 1 
         if (nlines == 1) then
-          j = len_trim(line1)
-          line1(:j) = line(:j)
-          call upcase(line1, j)
+          line1 = trim(line)
+          call upcase(line1, len_trim(line1))
           j = Index(line1,"DATA=")
           if (j > 0) exit
         end if
@@ -320,7 +297,7 @@
 !
 !  Data set points to a MOPAC data set.  
 !
-       i = Len_trim(line1)
+        i = Len_trim(line1)
         job_fn = line(j+5:i)
         if(line1(i:i) == "+") then
 !

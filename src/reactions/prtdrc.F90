@@ -20,7 +20,7 @@
 !   M o d u l e s 
 !-----------------------------------------------
       USE molkst_C, only : numat, keywrd, numcal, nvar, jloop => itemp_1, line
-      use common_arrays_C, only : nat, na, nb, nc, p, na_store, geoa, loc, l_atom
+      use common_arrays_C, only : nat, na, nb, nc, p, na_store, geoa, loc
       USE parameters_C, only : tore
       use chanel_C, only : iw, ires
       use drc_C, only: vref, vref0, allxyz, allvel, xyz3, vel3, allgeo, geo3, parref, &
@@ -74,10 +74,6 @@
       data cotype/ 'BL', 'BA', 'DI'/  
       geo = 0.d0
       if (icalcn /= numcal) then 
-        l_atom = .false.
-        do i = 1, numat
-          l_atom(loc(1,i)) = .true.
-        end do
         if (allocated(vref)) deallocate(vref)
         if (allocated(vref0)) deallocate(vref0)
         if (allocated(allxyz)) deallocate(allxyz)

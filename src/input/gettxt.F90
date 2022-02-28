@@ -73,13 +73,8 @@
         filen = 'SETUP' 
       end if
       inquire (file=filen, exist = exists)
-       i = len_trim(keywrd) 
-       allkey = keywrd(:i)
-       l_quote = .false.
-       do j = 1, i
-         if (allkey(j:j) == '"') l_quote = (.not. l_quote)
-         if (l_quote) allkey(j:j) = " "
-       end do   
+      i = len_trim(keywrd) 
+      allkey = keywrd(:i) 
       setup_present = (index(keywrd,'SETUP') /= 0)
       if (setup_present) then 
         if (index(allkey, " + ") /= 0) then
@@ -290,11 +285,6 @@
         call upcase (keywrd(i + 1:), len(keywrd) - i) 
         k = len_trim(keywrd)
         allkey = keywrd(:k)
-        l_quote = .false.
-        do j = 1, k
-          if (allkey(j:j) == '"') l_quote = (.not. l_quote)
-          if (l_quote) allkey(j:j) = " "
-        end do     
         if (index(keywrd,'SETUP') /= 0) then 
           i = index(keywrd,'SETUP=') 
           if (i /= 0) then 
@@ -323,11 +313,6 @@
 !
           read (ir, '(A)', end=100, err=100) refkey(3)
           allkey = refkey(3)
-          l_quote = .false.
-          do j = 1, len_trim(refkey(3))
-            if (allkey(j:j) == '"') l_quote = (.not. l_quote)
-            if (l_quote) allkey(j:j) = " "
-          end do   
           i = index(allkey, " + ")
           if (i /= 0) then
             write(iw,"(a)")" A maximum of three lines of keywords are allowed."
@@ -399,15 +384,6 @@
       return  
 60    continue  
       i = len_trim(keywrd) 
-      allkey = keywrd(:i)
-      l_quote = .false.
-      do j = 1, i
-        if (allkey(j:j) == '"') then
-          l_quote = (.not. l_quote)
-          allkey(j:j) = " "
-        end if
-        if (l_quote) allkey(j:j) = " "
-      end do             
       call upcase (keywrd, len_trim(keywrd)) 
       i = index(keywrd, "GEO-DAT")
       if (i /= 0) then

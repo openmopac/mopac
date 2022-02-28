@@ -205,7 +205,11 @@
         call geout (iw) 
         if (index(keywrd, " PDBOUT") /= 0) then
           imodel = imodel + 1
-          write(ipdb,'(a,i7)')"MODEL",imodel 
+          write(line,'(F13.5)') escf
+          do i = 1, 12
+            if (line(i:i) /= " ") exit
+          end do
+          write(ipdb,'(a, i9, 2x, a)')"MODEL",imodel, trim(line(i:))
           if (ncomments == 0) ncomments = 1
           write(all_comments(1),'(a,f12.3,a)')" HEADER Heat of Formation =", escf, " Kcal/mol"
           call pdbout(ipdb)
@@ -282,13 +286,14 @@
   end subroutine pathk 
   subroutine write_path_html(mode)
     use chanel_C, only: input_fn
-    use molkst_C, only : line, koment, escf, title, backslash, keywrd
+    use molkst_C, only : line, koment, escf, title, backslash, keywrd, l_normal_html
     implicit none
     integer, intent (in) :: mode
     logical :: exists, l_pdb
     integer :: iprt=27, i, j
     double precision :: store_escf
     character :: suffix*3
+    l_normal_html = .false.
     if (mode == 1) then
       line = input_fn(:len_trim(input_fn) - 4)//"html"
     else

@@ -19,10 +19,10 @@
 !
       use molkst_C, only : numat, nclose, nopen, fract, nalpha, nelecs, nbeta, &
       & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, escf, &
-      & keywrd, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
+      & keywrd, os, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
       jobnam, line, mers, uhf, method_indo, &
       density, formula, mozyme, mpack, stress, &
-      sz, ss2, maxtxt, E_disp, E_hb, E_hh, &
+      sz, ss2, maxtxt, E_disp, E_hb, E_hh, l_normal_html, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
       hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
       prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash
@@ -136,7 +136,7 @@
       iscf = max(1,iscf) 
       write (iw, '(4X,A58)') iter(iscf) 
       write (iw, "(2/29X,A,' CALCULATION')") trim(caltyp)
-      write (iw, '(55X,''MOPAC2016 (Version: '',a,a)') verson, ")"
+      write (iw, '(55X,''MOPAC '',a,'' '',a)') verson, os
       write (iw, '(55X,A24)') idate
       if (iscf == 2) then 
 !
@@ -960,6 +960,7 @@
           end do
           line = trim(line)//"pdb"
           open(unit=31, file=trim(line), status='UNKNOWN', position='asis') 
+          l_normal_html = .true.
           call l_control("Write_Escf", len("Write_Escf"), 1)
           call pdbout(31)
           close (31)
@@ -995,7 +996,7 @@
             write(iw,'(/10x,a)') "Could not write to archive file, run continuing."
             return
           end if
-      write (iwrite, '(55X,''MOPAC2016 (Version: '',a,a)') verson, ")"
+      write (iwrite, '(55X,''MOPAC '',a,'' '',a)') verson, os
       write (iwrite, '(55X,A24)') idate
       write(iwrite,"(/,a,/)")formula(:len_trim(formula))  
       call wrttxt (iwrite) 

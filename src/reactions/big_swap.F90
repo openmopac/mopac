@@ -851,7 +851,17 @@ subroutine Locate_TS
             if (keywrd(j:j) == ch) exit
           end do 
         end if
-        keywrd = keywrd(:i)//keywrd(j + 1:)
+!
+!  Clumsy fix to delete existing keywords that contain quotation marks.
+!
+        if (j > 1) then
+          if (keywrd(j - 1:j - 1) == '"') then
+            store = keywrd(:i)//'"'//trim(keywrd(j:))
+          else
+            store = keywrd(:i)//trim(keywrd(j + 1:))
+          end if
+        end if
+        keywrd = trim(store)
       else
         exit
       end if

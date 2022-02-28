@@ -23,6 +23,7 @@
       use common_arrays_C, only : loc, geo, p, pa, coord, errfn
       USE funcon_C, only : fpc_9  
       USE chanel_C, only : iw 
+      USE molmec_C, only : nnhco, nhco, htype 
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -38,11 +39,11 @@
       double precision :: xderiv 
       double precision, dimension(3*natoms) :: xparam
       double precision :: delta, const, aa, xstore, ee, escf_store, enuclr_store, &
-      elect_store, sum
+      elect_store, sum, sum_dihed_ref, sum_dihed_delta, angle
       double precision, external :: reada
       logical :: debug, PM6_H, precise
 
-      save icalcn, debug, xderiv, delta, const
+      save
 !-----------------------------------------------
 !***********************************************************************
 !
@@ -61,8 +62,8 @@
 !
 !***********************************************************************
       data icalcn/ 0/  
-      precise = .false.
-      PM6_H = .false.
+  !    precise = .false.
+  !    PM6_H = .false.
       if (icalcn /= numcal) then 
         debug = (index(keywrd,'DERITR') /= 0) 
         precise = (index(keywrd,'PRECISE') /= 0) 
@@ -113,6 +114,11 @@
         else
           aa = 0.d0
         end if
+        sum_dihed_ref = 0.d0
+        do i = 1, nnhco 
+          call dihed (coord, nhco(1,i), nhco(2,i), nhco(3,i), nhco(4,i), angle) 
+          sum_dihed_ref = sum_dihed_ref + htype*sin(angle)**2 
+        end do  
         if (PM6_H) then
           call post_scf_corrections(sum, .false.)
           aa = aa + sum/const
@@ -123,6 +129,9 @@
 !  RESTORE THE DENSITY MATRIX (WHY?)
 !
       if (allocated (pa)) p = pa*2.D0 
+      if (abs(escf+56.12779d0) < 1.d-4) then
+        continue
+      end if
       do i = 1, nvar 
         k = loc(1,i) 
         l = loc(2,i) 
@@ -146,6 +155,11 @@
               call hcore () 
               call iter (aa, .TRUE., .TRUE.) 
             end if 
+            sum_dihed_ref = 0.d0
+            do j = 1, nnhco 
+              call dihed (coord, nhco(1,j), nhco(2,j), nhco(3,j), nhco(4,j), angle) 
+              sum_dihed_ref = sum_dihed_ref + htype*sin(angle)**2 
+            end do  
             if (PM6_H) then
               call post_scf_corrections(sum, .false.)
               aa = aa + sum/const
@@ -170,6 +184,11 @@
             call hcore () 
             call iter (ee, .TRUE., .TRUE.) 
           end if 
+          sum_dihed_delta = 0.d0
+          do j = 1, nnhco 
+            call dihed (coord, nhco(1,j), nhco(2,j), nhco(3,j), nhco(4,j), angle) 
+            sum_dihed_delta = sum_dihed_delta + htype*sin(angle)**2 
+          end do  
           if (PM6_H) then
             call post_scf_corrections(sum, .false.)
             ee = ee + sum/const
@@ -178,7 +197,11 @@
           ee = 0.d0
         end if
         ee = ee + enuclr 
-        errfn(i) = (aa - ee)*const*xderiv
+        if (i == 13) then
+          continue
+        end if
+         errfn(i) = (aa - ee)*const*xderiv + (sum_dihed_ref - sum_dihed_delta)*xderiv
+        
       end do 
       if (debug) then 
         write (iw, '('' ERROR FUNCTION'')') 

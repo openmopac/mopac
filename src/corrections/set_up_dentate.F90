@@ -220,7 +220,7 @@
   use common_arrays_C, only : nat, coord, nbonds, ibonds
   use molkst_C, only : numat, method_pm6, method_pm7, method_pm8
   implicit none
-  integer :: i, j, isum
+  integer :: i, j, k, isum
   double precision :: rab
     if ( .not. (method_pm6 .or. method_pm7 .or. method_pm8)) then
       C_triple_bond_C = 0.d0
@@ -228,31 +228,33 @@
     end if
     isum = 0
     do i = 1, numat
+      rab = 10.d0
       if (nat(i) == 6 .and. nbonds(i) == 2) then
 !
 !  Possible triple bond
 !
-        j = 0
-        rab = 10.d0
-        if(nat(ibonds(1,i)) == 6) then
-         j = ibonds(1,i)
-         rab = (coord(1,i) - coord(1,j))**2 + (coord(2,i) - coord(2,j))**2 + (coord(3,i) - coord(3,j))**2
-        end if
-        if(nat(ibonds(2,i)) == 6) then
-          j = ibonds(2,i)
-          rab = min(rab, (coord(1,i) - coord(1,j))**2 + &
-          (coord(2,i) - coord(2,j))**2 + (coord(3,i) - coord(3,j))**2)
-        end if
-        if (j == 0) cycle
-        if (rab > 1.65d0) cycle
+        do k = 1, nbonds(i)
+          j = ibonds(k,i)
+          if (j > i) cycle
+          if(nat(j) == 6 .and. nbonds(j) == 2) then
+            rab = (coord(1,i) - coord(1,j))**2 + (coord(2,i) - coord(2,j))**2 + (coord(3,i) - coord(3,j))**2
+!
+! C-C double bond length = 1.34 Angstroms
+! C-C triple bond length = 1.20 Angstroms
+!
+            if (rab < 1.27d0**2) goto 99
+          end if
+        end do
+        if (i < j) cycle
 !
 !   Carbon atom "i" is attached to two other atoms, and is attached to carbon atom "j"
 !   and the i-j distance indicates that the bond is acetylenic.
 !
-        isum = isum + 1
       end if
+      cycle
+99    isum = isum + 1
     end do
-    C_triple_bond_C = isum*6.d0  !  (The value "6" was determined empirically
+    C_triple_bond_C = isum*12.d0  !  (The value "12" was determined empirically
   end function C_triple_bond_C
 !
 !

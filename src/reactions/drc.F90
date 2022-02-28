@@ -20,7 +20,7 @@
       USE chanel_C, only : iw, ires, iscr, restart_fn
       USE interface_C, only : iw0
       use common_arrays_C, only : geo, loc, grad, xparam, atmass, nat, &
-      & errfn, coord, na, p, q, labels, geoa
+      & errfn, coord, na, p, q, labels, geoa, txtatm
       USE parameters_C, only : tore
       USE elemts_C, only : elemnt
       use drc_C, only : georef
@@ -40,7 +40,7 @@
         old_hof, new_hof, start_hof=1.d20, minstep, escf_old, &
         escf_diff, stepx, escf_min, stepxx, dipvec(3), dip = 0.d0, cnvg
       logical :: addk, letot, let, velred, opend, parmax, debug, l_debug = .false., l_irc, &
-        l_dipole
+        l_dipole, l_pdb
       double precision, external :: ddot, dipole, reada, seconds
 !***********************************************************************
 !                                                                      *
@@ -75,6 +75,7 @@
       n_escf = 0
       escf_min = 1.d20
       parmax = .FALSE.
+      l_pdb = (txtatm(1)(:7) /= "")
       call l_control("LDRC_FIRST", len("LDRC_FIRST"), 1)
       if (nopen /= nclose .and. Index (keywrd, " IRC") /= 0) then  
         minstep = 5.d-16 ! Gradients are not very accurate, so use larger minimum step. 
@@ -476,7 +477,6 @@
 !
         const = max(1.d-36,0.5d0**(deltat*1.d15/half)) 
         const = sqrt(const) 
-        velvec = 0.d0 
         ekin = 0.d0 
         delta1 = delold + dlold2 
         elost = 0.d0 
@@ -534,7 +534,6 @@
 !   CORRECT ERRORS DUE TO CUBIC COMPONENTS IN ENERGY GRADIENT,
 !   ALSO TO ADD ON EXCESS ENERGY, IF NECESSARY.
 !
-            velvec = velvec + velo0(i)**2 
 !
 !   MODIFY VELOCITY IN LIGHT OF CURRENT ENERGY GRADIENTS.
 !
@@ -601,7 +600,6 @@
 !   CORRECT ERRORS DUE TO CUBIC COMPONENTS IN ENERGY GRADIENT,
 !   ALSO TO ADD ON EXCESS ENERGY, IF NECESSARY.
 !
-            velvec = velvec + velo0(i)**2 
 !
 !   MODIFY VELOCITY IN LIGHT OF CURRENT ENERGY GRADIENTS.
 !
@@ -678,30 +676,43 @@
           if (start_hof > 1.d19) start_hof = escf
           write(iw,"(a, f10.5)")" Calculated energy change:", elost1
           write(iw,"(a, f11.5)")" Predicted energy change:", etot - escf
-          write(iw,"(a, f11.5)")" Cumulative error:       ", escf + elost1 - etot 
+          if (Abs(elost1) > 1.d-4) write(iw,"(a, f11.5)")" Cumulative error:       ", escf + elost1 - etot 
 
           write(iw,"(a,  f13.4)")" 'Time' interval (fs):",deltat*1.d15
 
           write(iw,"(a)")" Geometry supplied to COMPFG in DRC"
           do i = 1, numat
-            write(iw,"(1x,a2,f15.4,2f17.4)")elemnt(nat(i)),&
-            (xparam((i - 1)*3 + j), j = 1,3)
+            if (l_pdb) then
+              write(iw,'(i6, 2x, a,3F15.6)') i, elemnt(nat(i))//"("//txtatm(i)(:26)//")", (xparam((i - 1)*3 + j), j = 1,3)
+            else
+              write(iw,"(1x,a2,f15.4,2f17.4)")elemnt(nat(i)), (xparam((i - 1)*3 + j), j = 1,3)
+            end if
           end do
           write(iw,"(/,a)")" Forces (gradients) acting on atoms"
           do i = 1, numat
-            write(iw,"(1x,a2,f15.4,2f17.4)")elemnt(nat(i)),&
-            (grad((i - 1)*3 + j), j = 1,3)
+            if (l_pdb) then
+              write(iw,'(i6, 2x, a,3F15.6)') i, elemnt(nat(i))//"("//txtatm(i)(:26)//")", (grad((i - 1)*3 + j), j = 1,3)
+            else
+              write(iw,"(i6, 1x,a2,f15.4,2f17.4)")i, elemnt(nat(i)), (grad((i - 1)*3 + j), j = 1,3)
+            end if
+          end do
+          velvec = 0.d0 
+          do i = 1, nvar
+            velvec = velvec + velo0(i)**2 
           end do
           if (velvec > 1.d0) then
             write(iw,"(/,a)")" Velocity of atoms, in cm/sec"
             do i = 1, numat
-              write(iw,"(1x,a2,f15.4,2f17.4)")elemnt(nat(i)),&
-              (-velo0((i - 1)*3 + j), j = 1,3)
+              if (l_pdb) then
+                write(iw,'(i6, 2x, a,3F15.6)') i, elemnt(nat(i))//"("//txtatm(i)(:26)//")", (-velo0((i - 1)*3 + j), j = 1,3)
+              else
+                write(iw,"(i6, 1x,a2,f15.4,2f17.4)")i, elemnt(nat(i)), (-velo0((i - 1)*3 + j), j = 1,3)
+              end if
             end do
           else
             write(iw,"(/,a)")" Acceleration of atoms, in 10^(-14)cm/(sec*sec) = 10^10 Angstroms/(fs**2)"
             do i = 1, numat
-              write(iw,"(1x,a2,f15.4,2f17.4)")elemnt(nat(i)),&
+              write(iw,"(i6, 1x,a2,f15.4,2f17.4)")i, elemnt(nat(i)),&
               (-1.d-14*velo1((i - 1)*3 + j), j = 1,3)
             end do
           end if

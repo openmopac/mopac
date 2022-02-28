@@ -263,6 +263,10 @@
 ! *** NOW REMOVE THE TRANSLATION VECTORS, IF ANY, FROM THE ARRAY COORD
 !
       end if 
+      if (natoms == 0) then
+        call mopend("SYSTEMS HAVE NO ATOMS IN COMMON!")
+        return
+      end if
       k = natoms 
       do while(labels(k) == 107) 
         k = k - 1 

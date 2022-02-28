@@ -36,7 +36,7 @@
       double precision  :: evecs(9*numat*numat) 
 !
       integer ::  i, lin, maxcyc, istart, jstart, kountf, lu, iskip, j, &
-        ii, ll, l, k, kk, iloop
+        ii, ll, l, k, kk, iloop, store_numat
       double precision, dimension(3*natoms) :: grad, grold
       double precision, dimension(3) :: del2 
       double precision, dimension(3*natoms) :: g2old, eigs, g2rad, fconst, dumy
@@ -212,12 +212,14 @@
 !
 !   ESTIME IS USED HERE AS DIPOLE IS A FUNCTION
 !
+        store_numat = numat
+        numat = nvar/3
         if (mozyme) then
           estime = dipole_for_MOZYME (deldip(1,i),0)          
         else
           estime = dipole(p,xparam,deldip(1,i),0) 
         end if
-       
+        numat = store_numat
         xparam(i) = xparam(i) - delta 
         grad(1) = escf ! dummy use of escf and grad 
         emin = 0.d0
@@ -235,11 +237,14 @@
 !
 !   ESTIME IS USED HERE AS DIPOLE IS A FUNCTION
 !
+        store_numat = numat
+        numat = nvar/3
         if (mozyme) then
           estime = dipole_for_MOZYME (del2, 0)          
         else
           estime = dipole(p,xparam,del2, 0) 
         end if
+        numat = store_numat
         xparam(i) = xparam(i) + delta*0.5D0 
         deldip(1,i) = (deldip(1,i)-del2(1))*0.5D0/delta 
         deldip(2,i) = (deldip(2,i)-del2(2))*0.5D0/delta 
