@@ -16,7 +16,7 @@
 
 subroutine mopac_version(version)
 !dec$ attributes dllexport :: mopac_version
-  character :: version*11
-  version = "22.0.0"
+  character :: version*12
+  version = "22.0.0-"
   return
 end subroutine mopac_version

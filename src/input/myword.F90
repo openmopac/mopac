@@ -26,9 +26,31 @@
 !-----------------------------------------------
       integer :: j, k, len_key
       logical :: quote
+      character :: key*3000
 !-----------------------------------------------
       myword = .FALSE. 
       len_key = len_trim(keywrd)
+      key = keywrd(:len_key)
+!
+!      Remove all quoted text from "key" so that, when searching for a keyword, index will not
+!      look at any text that is inside quotation marks.
+!
+      k = 0
+      do 
+        k = k + 1
+        if (k > len_key) exit
+        if (key(k:k) == '"') then
+          j = k
+          do
+            j = j + 1
+            if (j > len_key) exit
+            if (key(j:j) == '"') exit
+          end do
+          key(k:j) = " "
+          k = j + 1
+        end if
+      end do  
+!
 !
 !  If the keyword containes quoted text, then ignore text between quotation marks.
 !  quote starts off .FALSE.  
@@ -36,12 +58,13 @@
 !  quote is turned .FALSE. when another quotation mark is found.
       quote = .false.
    10 continue 
-      j = index(keywrd,testwd) 
+      j = index(key,testwd)
       if (j /= 0) then 
 !
 !  Keyword found.  Now delete keyword in its entirety
 !
-   20   continue 
+        key(j:j+1) = " "
+20      continue 
         do while(keywrd(j:j) == ' ') 
           j = j + 1 
         end do 

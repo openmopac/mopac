@@ -37,7 +37,7 @@
       integer , dimension(2,3*natoms) :: locold 
       integer , dimension(natoms) :: nar, nbr, ncr 
       integer :: j, i, l, nvaold, ndeold, iu, il, nvib, ij, &
-        im1, ju, jl, ii, jj, ni, k, nto6, nrem6, iinc1, iinc2, store_natoms
+        im1, ju, jl, ii, jj, ni, k, nto6, nrem6, iinc1, iinc2, store_natoms, store_numat
       double precision, dimension(3,3*numat) :: deldip, trdip  
       double precision, dimension(3,3) :: rot
       double precision :: time2, tscf, tder, time1, time3, a, b, c, &
@@ -142,7 +142,7 @@
       na = 0
       if (nvar > 9000) then
         call mopend("Insufficient memory to run FORCE")
-        if ((index(keywrd, " IRC=") /= 0 .or. index(keywrd, " RESTART") /= 0) .and. &
+        if ((index(keywrd, " FORCE ") /= 0 .or. index(keywrd, " IRC=") /= 0 .or. index(keywrd, " RESTART") /= 0) .and. &
           nvar == numat*3 .and. index(keywrd, " FORCETS") == 0) &
           write(iw,'(10x,a)')"If only the atoms that are flagged for optimization are to be used, add keyword ""FORCETS"""
         return
@@ -366,7 +366,10 @@
         '(2/10X,''HEAT OF FORMATION ='',F15.6,'' KCALS/MOLE'')') escf 
       coord(:,:numat) = store_coord(:,:numat)
       if (large) then 
+        store_numat = numat
+        numat = nvar/3
         call frame (store, numat, 0) 
+        numat = store_numat
         call rsp (store, nvar, freq, cnorml)
         call phase_lock(cnorml, nvar)
         do i = nvib + 1, nvar 
@@ -381,8 +384,7 @@
           call symtrz (cnorml, freq, 2, .TRUE.) 
           write (iw, '(2/''      MOLECULAR POINT GROUP   :   '',A4)') name 
           write (iw, '(2/10X,'' EIGENVECTORS  '')') 
-          i = 3*numat 
-          call matou1 (cnorml, freq, nvib, i, nvib, 5) 
+          call matou1 (cnorml, freq, nvib, nvar, nvib, 5) 
           write (iw, &
       '(2/10X,''FORCE CONSTANTS IN MILLIDYNES/ANGSTROM'' ,'' (= 10**5 DYNES/CM)'',/)') 
           write (iw, '(8F10.5)') (freq(i),i=1,nvib) 
@@ -531,6 +533,7 @@
             end if            
           end do
           na_store = 0
+          l_normal_html = .false.
           call drc (velocity, freq) 
         else
           if (.not. allocated(velocity)) &

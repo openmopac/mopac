@@ -20,7 +20,7 @@ subroutine pdbout (mode1)
     use chanel_C, only: iw, input_fn
     use elemts_C, only: elemnt
     use common_arrays_C, only: txtatm, nat, all_comments, p, labels, &
-      breaks, txtatm1, geo
+      breaks, txtatm1, geo, l_atom
     USE parameters_C, only : tore
     implicit none
     integer, intent (in) :: mode1
@@ -118,21 +118,23 @@ subroutine pdbout (mode1)
       end if
       line(81:) = " "
       write (iprt, "(A)") trim(line)
-      line = "REMARK  MOPAC 2016, Version: "//verson
-      write (iprt, "(A)") trim(line)
-      line = "REMARK  Date: "//idate(5:11)//idate(21:)//idate(11:16)
-      write (iprt, "(A)") trim(line)
-      if (.not. l_irc_drc) line = "REMARK  Heat of Formation ="  
-      sum = escf - stress
-      if (abs(sum) > 4.99999d-4) then
-        i = max(int(log10(abs(sum))), 0)
-        if ( sum < 0.d0) i = i + 1
-        if (i < 4) then
-          num = char(ichar("6") + i)
-          write (iprt, "(A, f"//num//".3, a)") trim(line), sum, " Kcal/mol"
-        else
-          num = char(ichar("6") + i - 10)
-          write (iprt, "(A, f1"//num//".3, a)") trim(line), sum, " Kcal/mol"
+      if (ncomments == 0) then
+        line = "REMARK  MOPAC 2016, Version: "//verson
+        write (iprt, "(A)") trim(line)
+        line = "REMARK  Date: "//idate(5:11)//idate(21:)//idate(11:16)
+        write (iprt, "(A)") trim(line)
+        if (.not. l_irc_drc) line = "REMARK  Heat of Formation ="  
+        sum = escf - stress
+        if (abs(sum) > 4.99999d-4) then
+          i = max(int(log10(abs(sum))), 0)
+          if ( sum < 0.d0) i = i + 1
+          if (i < 4) then
+            num = char(ichar("6") + i)
+            write (iprt, "(A, f"//num//".3, a)") trim(line), sum, " Kcal/mol"
+          else
+            num = char(ichar("6") + i - 10)
+            write (iprt, "(A, f1"//num//".3, a)") trim(line), sum, " Kcal/mol"
+          end if
         end if
       end if
     end if
@@ -154,6 +156,7 @@ subroutine pdbout (mode1)
       nline = nline + 1
       if (ter_ok) ter = (i == breaks(nbreaks))
       if (ter) nbreaks = nbreaks + 1
+      if ( .not. l_atom(i1)) cycle
       if (elemnt(labels(i)) (1:1) == " " .or. labels(i) == 99) then
         ele_pdb(1:1) = " "
         ele_pdb(2:2) = elemnt(labels(i)) (2:2)
@@ -171,11 +174,11 @@ subroutine pdbout (mode1)
       x = txtatm(i)(13:13)
       if (x == "X") txtatm(i)(13:13) = " "
       if (txtatm(i)(14:14) /= "X") then
-      write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f5.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
-        & (coord(k, i), k=1, 3), "  1.00 ",q2(i1),"      PROT", ele_pdb, " "
+      write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f7.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
+        & (coord(k, i), k=1, 3), "  1.0",q2(i1)*10.d0,"      PROT", ele_pdb, " "
       else
-        write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f5.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
-        & (coord(k, i), k=1, 3), "  1.00 ",0.d0,"      PROT", ele_pdb, " "
+        write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f7.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
+        & (coord(k, i), k=1, 3), "  1.0 ",0.d0,"      PROT", ele_pdb, " "
       end if
       txtatm(i)(13:13) = x
       if (ter) then
@@ -253,10 +256,10 @@ subroutine pdbout (mode1)
         if (k > nres) then
           nres = nres + 1
           res_txt(nres) = trim(l_res)
-          do k = 1, len_trim(l_res)
+          do k = 1, len_trim(l_res)            
             if (res_txt(nres)(k:k) == " ") res_txt(nres)(k:k) ="Q"
           end do
-        end if
+        end if     
       end do
     end if
 !
@@ -457,12 +460,12 @@ subroutine pdbout (mode1)
       if (p(1) > -900.d0) then
         write(iprt,"(a)")"<TR><TD>"
         write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_x); " 
-        write(iprt,"(a)")"var use = {visible}; select off; var sel = use;"
+        write(iprt,"(a)")"frame 0; var use = {visible}; frame 1; select off; var sel = use;"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
         write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"for (var x IN @use){select @x; var txt =  (x.temperature > 0 ? "//backslash// & 
           "'+"//backslash//"':"//backslash//"'"//backslash//"')"// &
-          "+format("//backslash//"'%1.2f"//backslash//"',x.temperature ); label @txt; color label black;"
+          "+format("//backslash//"'%1.3f"//backslash//"',x.temperature*0.1 ); label @txt; color label black;"
         write(iprt,"(a)")"set labelOffset 0 0;}  select @sel; lcharge_x= TRUE;"
         write(iprt,"(a)")"else lcharge_x= FALSE; var use = {visible}; var sel = {selected};"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
@@ -471,11 +474,11 @@ subroutine pdbout (mode1)
 
         write(iprt,"(a)")"</TD><TD>"
         write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_s); "
-        write(iprt,"(a)")"var use = {visible}; select off; var sel = use;"
+        write(iprt,"(a)")"frame 0; var use = {visible}; frame 1; select off; var sel = use;"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
         write(iprt,"(a)")"if (z = 3); use = sel; endif;"
         write(iprt,"(a)")"for (var x IN @use)"
-        write(iprt,"(a)")"{select @x; var txt =  @x.temperature*0.5;"
+        write(iprt,"(a)")"{select @x; var txt =  @x.temperature*0.05;"
         write(iprt,"(a)")"if (@txt > 0){spacefill @txt; color atom deepskyblue;}"
         write(iprt,"(a)")"if (!@txt > 0){txt = -txt; spacefill @txt; color atom deeppink;}}"
         write(iprt,"(a)")"select @sel; lcharge_s= TRUE;"

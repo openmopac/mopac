@@ -15,8 +15,13 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 subroutine wrtkey 
-  use molkst_C, only : moperr, allkey 
+  use molkst_C, only : moperr, allkey, keywrd
   implicit none
+  integer :: i, j, k, l
+  integer, parameter :: n_protected_keywords = 14
+  character :: protected_keywords(n_protected_keywords)*10
+  data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", &
+    "EXTERNAL=", "C.A.S.=", "C.I.D.=", "C.I.="/
 !**********************************************************************
 !
 !  WRTKEY CHECKS ALL KEY-WORDS AND PRINTS THOSE IT RECOGNIZES.  IF IT
@@ -24,7 +29,74 @@ subroutine wrtkey
 !
 !**********************************************************************
 !
-!   Write out the control keywords
+!   Write out the control keywords. First, tidy up: delete equals signs and quotation marks,
+!   and make sure there is a space at the start of the line.
+!
+!  Do not tidy up allkey earlier in the job, instead fill allkey here from keywrd,
+!  and do all the tidying up at this one point.  The old style of tidying up allkey
+!  as the job progressed was very error-prone and hadr to debug.
+!
+  allkey = trim(keywrd)
+  j = 1
+  do
+!
+! Delete equals sign and everything after it that belongs to it
+!
+    i = index(allkey(j:), "=") + j
+    if (i /= j) then
+      if (allkey(i:i) == "(") then
+        j = index(allkey(i + 1:), ') ') + i  
+      else if (allkey(i:i) == '"') then
+        j = index(allkey(i + 1:), '"') + i  
+      else
+        j = j + 1
+        cycle   
+      end if
+      allkey(i - 1:j) = " "
+      j = i
+    else
+      do
+        i = index(allkey, "(")
+        if (i == 0) exit
+        j = index(allkey(i + 1:), ')') + i  
+        allkey(i:j) = " "
+      end do
+      exit
+    end if
+  end do
+  j=1
+  do
+    i = index(allkey(j:), '"') + j
+    if (i /= j) then
+      j = index(allkey(i + 1:), '"') + i  
+      allkey(i - 1:j) = " "
+      j = j + 1
+    else
+      exit
+    end if
+  end do
+!
+!  Special treatment for keywords that must not be modified because they contain data that is 
+!  printed in the output.
+!
+  do k = 1, n_protected_keywords
+    j = 1
+    do
+      i = index(keywrd(j:), " "//trim(protected_keywords(k))) + j
+      if (i == j) exit
+      j = index(keywrd(i:), ") ")
+      l = index(keywrd(i:), '" ')
+      if (j > 0 .and. l > 0) then
+        j = min(j,l)
+      else if (l > 0) then
+        j = l
+      end if        
+      j = j + i
+      allkey(i - 1:j) = keywrd(i - 1:j)
+    end do
+  end do
+!
+! Now print out everything to do with keywords, starting with control keywords
 !
   call wrtcon (allkey)
   if (moperr) return
@@ -764,15 +836,13 @@ subroutine wrtcon (allkey)
       write(keywrd(i:i+11),'(" CHARGE=",i2)')old_chrge
     else 
       write(keywrd(i:i+11),'(" CHARGE=",i3)')old_chrge
-    end if    
+    end if 
+   allkey(i:i+11) = keywrd(i:i+11)
   else
     old_chrge=0 
   end if
   if (index(keywrd, " COMPAR") /= 0) &
     call l_control("0SCF HTML GEO-OK LET NOCOM", len_trim("0SCF HTML GEO-OK LET NOCOM"), -1) 
-    
-    
-  allkey = trim(keywrd)
   if (myword(allkey, " NEXT"))   write (iw, '(" *  NEXT       - DO NOT USE A BLANK LINE AFTER THE PREVIOUS JOB")')
   if (myword(allkey, " CCDC "))  i = 0 ! Dummy assignment   - to clear CCDC
   if (myword(allkey, " MNDO "))  write (iw, '(" *  MNDO       - The MNDO Hamiltonian to be used")')
@@ -1016,7 +1086,7 @@ subroutine wrtcon (allkey)
   end if
   if (myword(allkey, " NORES"))  &
     write (iw, '(" *  NORES      - THIS IS THE DEFAULT.  USE ""RESIDUES"" IF RESIDUES ARE TO BE CALCULATED")')
-  if (myword(allkey, " SITE=("))   then
+  if (myword(allkey, " SITE"))   then
     write (iw, '(" *  SITE       - SET IONIZATION LEVELS OF IONIZABLE RESIDUES ")')
     k = 0
     do i = 1, natoms
@@ -1563,7 +1633,7 @@ subroutine wrtout (allkey)
     if (prt_velocity)      write (iw,'(" *           V - VELOCITY)")')
     if (.not. myword(allkey, " OUTPUT")) return ! An impossible option
     if (index(keywrd, " FORCE ") /= 0 .and. .not. prt_force ) then
-      if (index(keywrd, " GEO-OK") == 0) then
+      if (index(keywrd, " GEO-OK") + index(keywrd, " ISOTOPE") == 0) then
         call mopend("KEYWORD ""FORCE"" PRESENT BUT KEYWORD ""OUTPUT"" SUPPRESSES RESULTS OF ""FORCE"" CALCULATION")
         write (iw,'(10x, "(Either add ""GEO-OK"" or ""ISOTOPE"", remove ""OUTPUT"", or use ""OUTPUT(F)"")")')
       end if

@@ -35,7 +35,7 @@ EIGVEC_THRESHOLD = 1e-3
 # regular expression pattern for a time stamp or other signifier of timing output, "CLOCK" or "TIME" or "SECONDS", & system-dependent versioning
 skip_criteria = re.compile('([A-Z][a-z][a-z] [A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] [0-9][0-9][0-9][0-9])'
                            '|(CLOCK)|(TIME)|(SECONDS)|(Version)|(THE VIBRATIONAL FREQUENCY)|(ITERATION)|(SCF CALCULATIONS)|(Stewart)'
-                           '|(remaining)|(\*  ISOTOPE)|(\*  DENOUT)|(\*  OLDENS)|(\*  SETUP)|(ITER.)|(\*\* )|(web-site)')
+                           '|(remaining)|(\*  ISOTOPE)|(\*  DENOUT)|(\*  OLDENS)|(\*  SETUP)|(ITER.)|(\*\* )|(web-site)|(MOPAC)')
 
 # regular expression pattern for an eigenvector block
 eigen_criteria = re.compile('(Root No.)|(ROOT NO.)')

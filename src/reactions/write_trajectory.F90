@@ -49,7 +49,8 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
 !END
 !ENDMDL
 !                                 
-  use molkst_C, only : step_num, numat, jloop => itemp_1, line, keywrd, backslash
+  use molkst_C, only : step_num, numat, jloop => itemp_1, line, keywrd, backslash, nvar, &
+  ncomments
   use chanel_C, only : ixyz, xyz_fn
   use drc_C, only : georef
   USE elemts_C, only : elemnt 
@@ -63,6 +64,8 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
   double precision :: factor
   save :: icalcn, ipdb, imodel, npt, ixyz1
   if (icalcn /= step_num) then
+    ncomments = -1
+    if (nvar >= numat*3 .and. index(keywrd, " MINI ") == 0 ) l_atom(:numat) = .true.
     do i = len_trim(xyz_fn), 1, -1
       if (xyz_fn(i:i) == "/" .or. xyz_fn(i:i) == backslash) exit
     end do

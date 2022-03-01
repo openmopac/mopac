@@ -31,7 +31,7 @@
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
-        density, norbs, method_indo, nclose, nopen, backslash
+        density, norbs, method_indo, nclose, nopen, backslash, os, verson
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
@@ -84,6 +84,10 @@
       logical            :: gpu_ok(6)
       character*3        :: on_off(6)
       integer(c_int), dimension(6)	 :: clockRate, major, minor, name_size
+#endif
+      call mopac_version(verson)
+#ifdef MOPAC_OS
+      os = MOPAC_OS
 #endif
 !-----------------------------------------------
       tore = ios + iop + iod
@@ -796,7 +800,6 @@
         end if
         if (index(keywrd, " HTML") /= 0) then
           call write_path_html(1)
-          l_normal_html = .false.
         end if
         call drc (react, react)
         iflepo = -1

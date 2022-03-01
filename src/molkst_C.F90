@@ -252,12 +252,13 @@ module molkst_C
   & ltxt,          & !
   & caltyp*27,     & !  Calculation name
   & formula*100,   & !  Type          Empirical formula
+  & os*12 = '', &    !  Operating system name
                      !  Definition    Type and number count of each element in the system
                      !  Units         Text
- &verson*11          !  Term         Version number
+ &verson*9           !  Term         Version number
                      !  Definition   Version number for this copy of MOPAC
-                     !  Pattern      "xxx.yyy.zzz"
-                     !  Description  major version, minor version, & patch version
+                     !  Pattern      "xx.yy.zz"
+                     !  Description  major version, minor version, & patch version (+ for development)
   character ::     &
   & jobnam*240 = ' ', &!
   & line*3000         !

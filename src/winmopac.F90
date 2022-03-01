@@ -24,14 +24,14 @@ program MOPAC_win
   character :: ch
     gui = .false.
     iw0 = 0
-    OPEN(0, file='user', title='MOPAC 2016') 
+    OPEN(0, file='user', title='MOPAC') 
     i4 = setbkcolor(15)
     i4 = settextcolor(0)
     call clearscreen($GCLEARSCREEN)
     i = iargc()
     if (i == 0) then
       write(0,*)
-      write(0,*)"  MOPAC in WINDOWS: To run MOPAC 2016 within WINDOWS, see:"      
+      write(0,*)"  MOPAC in WINDOWS: To run MOPAC within WINDOWS, see:"      
       write(0,*)
       write(0,*)"  http://OpenMOPAC.net/manual/Running_MOPAC.html"
       write(0,*)
@@ -107,7 +107,7 @@ return
       integer :: i4
       lstatus = checked
       i4 = messageboxqq('                    Instructions for running MOPAC for WINDOWS in screen modes\r\r &
-      & MOPAC for WINDOWS runs MOPAC2016 in screen and command-prompt modes.\r &
+      & MOPAC for WINDOWS runs MOPAC in screen and command-prompt modes.\r &
       & These instructions apply to the screen mode only.\r\r &
       & "Drag and Drop" mode:\r &
       & Locate the data set to be run, and drag it to the MOPAC for WINDOWS icon.\r\r &
@@ -115,9 +115,9 @@ return
       & where the data set came from.\r\r &
       & "Open with" mode:\r &
       & Within Windows Explorer, locate the file to be run\r &
-      & Right-click the file, and use "Open with" -> "MOPAC2016.exe"\r\r &
-      & If, at that point,  you can''t see "MOPAC2016.exe" then:\r &
-      & Use "Choose program" -> "Browse" then navigate to the file "MOPAC2016.exe".\r &
+      & Right-click the file, and use "Open with" -> "mopac.exe"\r\r &
+      & If, at that point,  you can''t see "mopac.exe" then:\r &
+      & Use "Choose program" -> "Browse" then navigate to the file "mopac.exe".\r &
       & Highlight it, then click on "Open".\r &
       & 'C,'MOPAC Instructions'C, MB$OK)
       return
@@ -127,10 +127,12 @@ subroutine About(checked)
       USE DFNLS
       logical :: checked, lstatus
       integer :: i4
+      character(len = 9) :: verson
+      call mopac_version(verson)
       lstatus = checked
       i4 = messageboxqq('   MOPAC for WINDOWS\r\r &
-      & Copyright: Stewart Computational Chemistry\r\r &
-      & Version 2016 (2016)\r\r &
+      & Copyright: Virginia Polytechnic Institute and State University\r\r &
+      & Version '//verson//' &
       &  'C,'MOPAC Instructions'C, MB$OK)
       return
 end

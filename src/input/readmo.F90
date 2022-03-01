@@ -277,6 +277,7 @@
               call upcase(keywrd, len_trim(keywrd))
               call l_control("GEO_DAT", len_trim("GEO_DAT"), -1) 
               call l_control("GEO_REF", len_trim("GEO_REF"), -1)  
+              call l_control("EXTERNAL", len_trim("EXTERNAL"), -1)
               line = trim(keywrd)
               if (i == 0 .and. index(line, " +") /= 0) i = i - 1
               if (i == 0 .and. index(line, "++") /= 0) i = i - 1
@@ -719,11 +720,11 @@
         end if
       end if
       maxci = 16000          
-      write (iw, '(1X,a)')"** Cite this program as: MOPAC2016, Version: "//verson//", James J. P. Stewart,   **"
+      write (iw, '(1X,a)')"** Cite this program as: MOPAC, Version: "//verson//", James J. P. Stewart,     **"
       write (iw, '(1X,a, a,a)')"**                           web-site: http://openmopac.net                  **"
       write (iw, '(1X,a)')"*******************************************************************************"
       write (iw, '(1X,a)')"**                                                                           **"
-      write (iw,"(1x,a)") "**                                MOPAC2016                                  **"
+      write (iw,"(1x,a)") "**                                   MOPAC                                   **"
       write (iw, '(1X,a)')"**                                                                           **"
       write (iw, '(1X,a)')"*******************************************************************************"
       j = len_trim(keywrd)
@@ -1360,6 +1361,7 @@
         end if
       end if 
       if (index(keywrd, " MINI ") /= 0) then 
+        j = 0
         nl_atoms = 0
         if (index(keywrd, " FORCETS") /= 0) then
           k = 0
@@ -1369,14 +1371,17 @@
         do i = 1, natoms 
           l_atom(i) = (abs(lopt(1,i)) > k) 
           if (l_atom(i)) nl_atoms = nl_atoms + 1
+          if (lopt(1,i) == 1) j = j + 1
         end do
         if (nl_atoms == 0) then
           if (index(keywrd, " 0SCF") == 0) then
-            line = " Keyword 'MINI' used, but no atoms flagged for printing (optimization flag '2')"
-            write(iw,'(a)')trim(line)
-            call mopend(trim(line))
+            call mopend("Keyword 'MINI' used, but no atoms flagged for printing (optimization flag '2')")
             return
           end if
+        end if
+        if (j == 0 .and. k == 0) then
+          call mopend("Keyword 'FORCETS' used, but no atoms flagged for FORCE calculation (optimization flag '1')")
+          return
         end if
       else
         nl_atoms = numat
@@ -1397,6 +1402,7 @@
                !  Read in the geometric variables
                !
          read (ires, end=1900, err=1900) i,i, (xparam(i), i=1, nvar)
+         close (ires)
          do i = 1, nvar
            k = loc(1, i)
            l = loc(2, i)
@@ -1908,7 +1914,12 @@
     character, allocatable :: residue_name(:)*10
     double precision, external :: reada
     save :: first, l_first
-    allocate (move(numat), residue_motion(-100:numat), residue_name(-100:numat), No_atoms_in_residue(-100:numat))
+    sum1 = 0.d0
+    do i = 1, numat
+      sum1 = max(sum1, reada(txtatm(i), 24))
+    end do
+    i = max(numat, nint(sum1))
+    allocate (move(i), residue_motion(-100:i), residue_name(-100:i), No_atoms_in_residue(-100:i))
 !
 !  Calculate the average and RMS differences of two geometries
 !

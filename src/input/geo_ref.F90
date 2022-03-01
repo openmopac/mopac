@@ -422,6 +422,7 @@
             end if          
           end do
         end if
+        swap = (index(keywrd, " NOSWAP") == 0)
         k = 0
         l = 0
         do j = 1, ii
@@ -452,7 +453,7 @@
 !
           if(ok(j)) cycle
           do i4 = 1, numat
-            if (same(i4)) cycle
+            if (same(i4) .or. ok(i4)) cycle
             if (txtatm1(j)(14:14) == "H" .and. txtatm(i4)(14:14) == "H" .and. &
               txtatm1(j)(18:) == txtatm(i4)(18:)) then
               if (txtatm1(j)(15:15) == txtatm(i4)(15:15)) then
@@ -631,6 +632,7 @@
         return
       end if
       call gmetry(geo, coord)
+      if (natoms == 0) return
       geo(:,:natoms) = coord(:,:natoms)
       call gmetry(geoa, coord)
       geoa(:,:natoms) = coord(:,:natoms)
@@ -851,7 +853,6 @@
       iquit = 0
       xmin = 1.d8  
       exists = .true.
-      swap = (index(keywrd, " NOSWAP") == 0)
       if (index(keywrd, "NOREOR") /= 0) then
         ub = -1
         call geo_diff(sum, rms, .false.)         

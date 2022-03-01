@@ -27,7 +27,7 @@
      method_pm6_dh_plus, method_pm6_dh2, method_pm7, trunc_1, method_pm8, &
      trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, n_methods, methods, &
      methods_keys, method_pm7_hh, method_pm7_minus, method_pm7_ts, method_pm6_dh2x, &
-     method_pm6_d3h4x, backslash
+     method_pm6_d3h4x, backslash, os, verson
     use cosmo_C, only : iseps, nspa
 !
     use common_arrays_C, only:  atmass, na, nb, nc, geoa, p, nw
@@ -74,6 +74,11 @@
     tore = ios + iop + iod
     is_PARAM = .true.
     run = 1
+    call mopac_version(verson)
+#ifdef MOPAC_OS
+    os = MOPAC_OS
+#endif
+
       call fbx   ! Factorials and Pascal's triangle (pure constants)
       call fordd ! More constats, for use by MNDO-d
   !

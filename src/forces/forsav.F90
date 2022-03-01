@@ -98,6 +98,7 @@
         n33 = nvar*nvar 
         read (ires, iostat=i99) (evecs(i),i=1,n33) 
         read (ires, iostat=i99) jstart, (fconst(i),i=1,nvar) 
+        close (ires)
         if (i99 /= 0) then
           call mopend ('INSUFFICIENT DATA ON DISK FILES FOR A FORCE CALCULATION RESTART.') 
           write (iw, '(/10X,"PERHAPS THIS STARTED OFF AS A FORCE CALCULATION")') 

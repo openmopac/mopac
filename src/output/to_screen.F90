@@ -134,7 +134,7 @@
     write(hook,"(a)")" #       Start of Input data        #"
     write(hook,"(a)")" #                                  #"
     write(hook,"(a)")" ####################################"
-    write(hook,"(a,a)")" MOPAC_VERSION=MOPAC2016.",verson
+    write(hook,"(a,a)")" MOPAC_VERSION=",verson
     call fdate (idate)
     write(hook,"(3a)")" DATE=""",idate,""""
     if (method_mndo) then
