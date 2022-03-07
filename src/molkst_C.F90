@@ -252,13 +252,13 @@ module molkst_C
   & ltxt,          & !
   & caltyp*27,     & !  Calculation name
   & formula*100,   & !  Type          Empirical formula
-  & os*12 = '', &    !  Operating system name
                      !  Definition    Type and number count of each element in the system
                      !  Units         Text
- &verson*9           !  Term         Version number
-                     !  Definition   Version number for this copy of MOPAC
-                     !  Pattern      "xx.yy.zz"
-                     !  Description  major version, minor version, & patch version (+ for development)
+  & git_hash*40 = 'unknown', & !  Git commit hash string
+  & os*12 = 'unknown', &       !  Operating system name
+  & verson*20 = 'unknown'      !  Version number for this copy of MOPAC
+                     !  Pattern      "xx.yy.zz(-pre)"
+                     !  Description  major version, minor version, patch version, & pre-release tag
   character ::     &
   & jobnam*240 = ' ', &!
   & line*3000         !

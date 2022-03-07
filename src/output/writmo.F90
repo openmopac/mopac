@@ -136,7 +136,7 @@
       iscf = max(1,iscf) 
       write (iw, '(4X,A58)') iter(iscf) 
       write (iw, "(2/29X,A,' CALCULATION')") trim(caltyp)
-      write (iw, '(55X,''MOPAC '',a,'' '',a)') verson, os
+      write (iw, '(55X,''MOPAC v'',a,'' '',a)') trim(verson), trim(os)
       write (iw, '(55X,A24)') idate
       if (iscf == 2) then 
 !
@@ -996,7 +996,7 @@
             write(iw,'(/10x,a)') "Could not write to archive file, run continuing."
             return
           end if
-      write (iwrite, '(55X,''MOPAC '',a,'' '',a)') verson, os
+      write (iwrite, '(55X,''MOPAC v'',a,'' '',a)') trim(verson), trim(os)
       write (iwrite, '(55X,A24)') idate
       write(iwrite,"(/,a,/)")formula(:len_trim(formula))  
       call wrttxt (iwrite) 
