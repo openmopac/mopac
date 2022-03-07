@@ -29,7 +29,7 @@ endif()
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
 
 # Specify project name & programming language
-project(openmopac LANGUAGES Fortran)
+project(openmopac VERSION 22.0.0 LANGUAGES Fortran)
 
 # location for CMake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -60,28 +60,26 @@ endif()
 # MOPAC shared library ABI compatibility version
 set_target_properties(mopac_core PROPERTIES SOVERSION 1)
 
-# Install the executables and library
-option(LIB_SUFFIX "Suffix for library directory (lib)" OFF)
-install(TARGETS mopac DESTINATION bin)
-install(TARGETS param DESTINATION bin)
-if(LIB_SUFFIX)
-  install(TARGETS mopac_core DESTINATION lib${LIB_SUFFIX})
-else()
-  install(TARGETS mopac_core DESTINATION lib)
+# Pass OS information to MOPAC's Fortran source
+if(APPLE)
+  target_compile_definitions(mopac_core PRIVATE MOPAC_OS="Mac")
+elseif(WIN32)
+  target_compile_definitions(mopac_core PRIVATE MOPAC_OS="Windows")
+elseif(UNIX)
+  target_compile_definitions(mopac_core PRIVATE MOPAC_OS="Linux")
 endif()
 
-# Pass OS information to MOPAC's Fortran source using preprocessor variables
-if(APPLE)
-  add_definitions(-DMOPAC_OS='Mac')
-elseif(WIN32)
-  add_definitions(-DMOPAC_OS='Windows')
-elseif(UNIX)
-  add_definitions(-DMOPAC_OS='Linux')
+# Pass version & commit information to MOPAC's Fortran source
+target_compile_definitions(mopac_core PRIVATE MOPAC_VERSION_FULL="${PROJECT_VERSION}")
+execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_HASH)
+if(GIT_HASH)
+  string(STRIP ${GIT_HASH} GIT_HASH)
+  target_compile_definitions(mopac_core PRIVATE MOPAC_GIT_HASH="${GIT_HASH}")
 endif()
 
 # Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
-option(MKL "Turn on C language support for MKL" ON)
-if(MKL)
+option(ENABLE_MKL "Turn on C language support for MKL" ON)
+if(ENABLE_MKL)
   enable_language(C)
 endif()
 
@@ -104,9 +102,12 @@ else()
 endif()
 
 # Additional link line
-set(MOPAC_LINK "" CACHE STRING "Additional link line for MOPAC executable")
+set(MOPAC_LINK "" CACHE STRING "Additional link line for MOPAC executable.")
+set(MOPAC_LINK_PATH "" CACHE STRING "Path of external dependencies to bundle.")
 separate_arguments(MOPAC_LINK)
+separate_arguments(MOPAC_LINK_PATH)
 target_link_libraries(mopac_core PUBLIC ${MOPAC_LINK})
+target_link_directories(mopac_core PUBLIC ${MOPAC_LINK_PATH})
 
 # Add list of source files from src directory
 add_subdirectory(src)
@@ -146,6 +147,27 @@ endif()
 # Add tests
 enable_testing()
 add_subdirectory(tests)
+
+# Install the executables and library
+set(LIB_SUFFIX "" CACHE STRING "Suffix for library install directory.")
+install(TARGETS mopac RUNTIME)
+install(TARGETS param RUNTIME)
+if(WIN32)
+  install(TARGETS mopac_core RUNTIME)
+else()
+  set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR}${LIB_SUFFIX})
+  install(TARGETS mopac_core LIBRARY)
+#  if(LIB_SUFFIX)
+#    install(TARGETS mopac_core DESTINATION lib${LIB_SUFFIX})
+#  else()
+#    install(TARGETS mopac_core DESTINATION lib)
+#  endif()
+endif()
+set(CMAKE_INSTALL_OPENMP_LIBRARIES TRUE)
+install(CODE "include(InstallRequiredSystemLibraries)")
+
+# Add packaging
+include(CPack)
 
 # some old stuff that should probably be deleted or cleaned up:
 

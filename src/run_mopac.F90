@@ -31,7 +31,7 @@
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
-        density, norbs, method_indo, nclose, nopen, backslash, os, verson
+        density, norbs, method_indo, nclose, nopen, backslash, os, git_hash, verson
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
@@ -89,7 +89,18 @@
 #ifdef MOPAC_OS
       os = MOPAC_OS
 #endif
-!-----------------------------------------------
+#ifdef MOPAC_GIT_HASH
+      git_hash = MOPAC_GIT_HASH
+#endif
+! parse command-line flags
+      do i = 1, iargc()
+        call getarg (i, jobnam)
+        if (jobnam == '-V' .OR. jobnam == '--version') then
+          write(*,"(a)") "MOPAC version "//trim(verson)//" commit "//trim(git_hash)
+          stop
+        endif
+      end do
+!------------------------------------------------------------------------
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
       call fordd                          ! More constants, for use by MNDO-d

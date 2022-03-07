@@ -127,12 +127,12 @@ subroutine About(checked)
       USE DFNLS
       logical :: checked, lstatus
       integer :: i4
-      character(len = 9) :: verson
+      character(len = 20) :: verson
       call mopac_version(verson)
       lstatus = checked
       i4 = messageboxqq('   MOPAC for WINDOWS\r\r &
       & Copyright: Virginia Polytechnic Institute and State University\r\r &
-      & Version '//verson//' &
+      & Version '//trim(verson)//' &
       &  'C,'MOPAC Instructions'C, MB$OK)
       return
 end

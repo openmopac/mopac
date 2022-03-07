@@ -27,7 +27,7 @@
      method_pm6_dh_plus, method_pm6_dh2, method_pm7, trunc_1, method_pm8, &
      trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, n_methods, methods, &
      methods_keys, method_pm7_hh, method_pm7_minus, method_pm7_ts, method_pm6_dh2x, &
-     method_pm6_d3h4x, backslash, os, verson
+     method_pm6_d3h4x, backslash, os, git_hash, verson
     use cosmo_C, only : iseps, nspa
 !
     use common_arrays_C, only:  atmass, na, nb, nc, geoa, p, nw
@@ -60,6 +60,22 @@
   ! ... Executable Statements ...
   !
   !
+    call mopac_version(verson)
+#ifdef MOPAC_OS
+    os = MOPAC_OS
+#endif
+#ifdef MOPAC_GIT_HASH
+    git_hash = MOPAC_GIT_HASH
+#endif
+  ! parse command-line flags
+    do i = 1, iargc()
+      call getarg (i, jobnam)
+      if (jobnam == '-V' .OR. jobnam == '--version') then
+        write(*,"(a)") "PARAM version "//trim(verson)//" commit "//trim(git_hash)
+        stop
+      endif
+    end do
+!------------------------------------------------------------------------
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
     t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."
     t_par(3)  = "Used in ccrep for scalar correction of O-H term."
