@@ -128,6 +128,9 @@
     end if
     l_RC = (index(keywrd, " IRC") + index(keywrd," DRC") > 0)
     open(unit=hook,file=output_fn(:len_trim(output_fn) - 4)//".aux")
+    if (.not. opend) then
+      write(hook,"(a)")" START OF MOPAC PROGRAM"
+    end if
     write(hook,"(a)")" START OF MOPAC FILE"
     write(hook,"(a)")" ####################################"
     write(hook,"(a)")" #                                  #"
