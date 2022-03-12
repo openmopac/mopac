@@ -60,7 +60,10 @@
   ! ... Executable Statements ...
   !
   !
-    call mopac_version(verson)
+! set versioning information
+#ifdef MOPAC_VERSION_FULL
+    version = MOPAC_VERSION_FULL
+#endif
 #ifdef MOPAC_OS
     os = MOPAC_OS
 #endif

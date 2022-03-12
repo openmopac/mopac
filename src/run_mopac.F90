@@ -85,7 +85,10 @@
       character*3        :: on_off(6)
       integer(c_int), dimension(6)	 :: clockRate, major, minor, name_size
 #endif
-      call mopac_version(verson)
+! set versioning information
+#ifdef MOPAC_VERSION_FULL
+      version = MOPAC_VERSION_FULL
+#endif
 #ifdef MOPAC_OS
       os = MOPAC_OS
 #endif
