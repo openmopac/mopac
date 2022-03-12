@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
   subroutine to_screen(text0)
-  use interface_C, only : iw0
+  use chanel_C, only : iw0
   use molkst_C, only : keywrd
   implicit none
   character (len=*) :: text0

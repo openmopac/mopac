@@ -15,8 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 subroutine vecprt_for_MOZYME(aa, numm)
-    use molkst_C, only: mpack, numat
-    use interface_C, only: gui
+    use molkst_C, only: mpack, numat, gui
     use chanel_C, only: iw
     use elemts_C, only: elemnt
     use common_arrays_C, only : nat, nfirst, nlast, l_atom

@@ -16,5 +16,6 @@
 
  program param
     implicit none
+    call mopac_gui_deactivate
     call run_param
  end program param

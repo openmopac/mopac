@@ -18,8 +18,7 @@ subroutine ef (xparam, funct)
     use Common_arrays_C, only: geo, loc, hesinv, grad, atmass, nc
     use molkst_C, only: nvar, numcal, last, gnorm, iflepo, line, &
        & tleft, numat, ndep, time0, tdump, natoms, id, keywrd, moperr
-    use chanel_C, only: iw, ilog, log, input_fn
-    use interface_C, only: iw0
+    use chanel_C, only: iw0, iw, ilog, log, input_fn
     use ef_C, only: nstep, negreq, iprnt, ef_mode, ddx, xlamd, &
        & xlamd0, skal, rmin, rmax
     use maps_C, only : latom
@@ -1544,8 +1543,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
      & oldf, d, vmode, funct0)
     use molkst_C, only: nvar, natoms, id, nalpha, tleft, time0, ndep, gnorm, &
     keywrd, moperr, line
-    use chanel_C, only: iw
-    use interface_C, only: iw0
+    use chanel_C, only: iw0, iw
     use ef_C, only: ef_mode, nstep, iprnt
    !
    !.. Implicit Declarations ..

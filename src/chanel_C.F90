@@ -17,6 +17,7 @@
       module chanel_C 
 !dec$ attributes dllexport :: iend, end_fn
       integer :: &
+     & iw0       = -1, & !    Abbrev. output, for GUI (By default, not used)
      & ifiles_1  =  1, &
      & input     =  2, & !    Input               <Filename>.dat         FORMATTED
      & iscr      =  3, & !    Scratch             <Filename>.scr         UNFORMATTED

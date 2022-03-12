@@ -40,7 +40,6 @@
     use parameters_C, only: f0sd, g2sd, tore, ios, iop, iod, f0sd_store, g2sd_store, &
       zs, t_par
     USE journal_references_C, only : allref
-    USE interface_C, only : gui
     implicit none
     logical :: opend, exists, quotation_mark
     integer :: i, j, l, k, loop, maxcyc, n9, n4, n1
@@ -62,7 +61,7 @@
   !
 ! set versioning information
 #ifdef MOPAC_VERSION_FULL
-    version = MOPAC_VERSION_FULL
+    verson = MOPAC_VERSION_FULL
 #endif
 #ifdef MOPAC_OS
     os = MOPAC_OS
@@ -86,7 +85,6 @@
     t_par(7)  = "Used in dftd3 to set ""s6""  in D3H4"
     t_par(8)  = "Used in dftd3 to set ""alp"" in D3H4"
     t_par(9)  = "Used in dftd3 to set ""rs6"" in D3H4"
-    gui = .false.
     ifiles_8 = 8
     ifiles_1 = ifiles_8
     power = 2.0d0

@@ -22,8 +22,7 @@
       & p, atmass, all_comments, pibonds_txt, l_atom
       USE parameters_C, only : tore, ams
       USE molkst_C, ONLY: numat, natoms, ndep, keywrd, maxtxt, line, &
-      & ncomments, moperr, nl_atoms
-      USE interface_C, only: gui
+      & ncomments, moperr, nl_atoms, gui
       USE symmetry_C, ONLY: depmul, locpar, idepfn, locdep 
       USE elemts_C, only : elemnt
       USE chanel_C, only : iw

@@ -35,9 +35,7 @@
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &   
       method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
-      method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label
-!
-      use interface_C, only : gui
+      method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label, gui
 !
       use meci_C, only : maxci
 !

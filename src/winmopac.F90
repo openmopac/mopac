@@ -17,13 +17,11 @@
 program MOPAC_win 
   USE IFQWIN
   use dfport
-  use interface_C, only : iw0, gui
   implicit none
   INTEGER :: i4  
   integer i, j, k, loop
   character :: ch
-    gui = .false.
-    iw0 = 0
+    call mopac_gui_deactivate
     OPEN(0, file='user', title='MOPAC') 
     i4 = setbkcolor(15)
     i4 = settextcolor(0)
