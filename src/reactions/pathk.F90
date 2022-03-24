@@ -24,9 +24,8 @@
       use maps_C, only : rxn_coord, lparam, react, latom, kloop
       use common_arrays_C, only : geo, xparam, profil, na, l_atom, coord, nat, &
         loc, grad, all_comments, p, q, labels
-      use chanel_C, only : iw, ires, iarc, restart_fn, archive_fn, &
+      use chanel_C, only : iw0, iw, ires, iarc, restart_fn, archive_fn, &
         ixyz, xyz_fn
-      use interface_C, only : iw0
       use elemts_C, only : elemnt
       USE parameters_C, only : tore
 !***********************************************************************

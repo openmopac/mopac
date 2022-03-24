@@ -15,10 +15,8 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 program mopac
-  use interface_C, only : iw0, gui
   implicit none
-  gui = .false.
-  iw0 = -1
+  call mopac_gui_deactivate
   call run_mopac 
 end program mopac
   

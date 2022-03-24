@@ -31,7 +31,7 @@
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
-        density, norbs, method_indo, nclose, nopen, backslash, os, git_hash, verson
+        density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
@@ -55,8 +55,6 @@
 !
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
-
-      USE interface_C, only: gui
 #ifdef GPU
       Use iso_c_binding 
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
@@ -85,7 +83,10 @@
       character*3        :: on_off(6)
       integer(c_int), dimension(6)	 :: clockRate, major, minor, name_size
 #endif
-      call mopac_version(verson)
+! set versioning information
+#ifdef MOPAC_VERSION_FULL
+      verson = MOPAC_VERSION_FULL
+#endif
 #ifdef MOPAC_OS
       os = MOPAC_OS
 #endif

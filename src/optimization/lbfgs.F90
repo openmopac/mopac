@@ -26,9 +26,7 @@
       use molkst_C, only: tleft, time0, iflepo, tdump, gnorm, natoms, keywrd, stress, &
       moperr, nvar, id, line, last, mozyme, numat, prt_gradients, keywrd_txt,  prt_coords
 !
-      use chanel_C, only: iw, log, ilog, input_fn
-!
-      use interface_C, only: iw0
+      use chanel_C, only: iw0, iw, log, ilog, input_fn
 !
       use common_arrays_C, only : nc, grad, loc, geo
 !

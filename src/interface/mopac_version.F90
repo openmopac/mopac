@@ -16,9 +16,8 @@
 
 subroutine mopac_version(version)
 !dec$ attributes dllexport :: mopac_version
+  use molkst_C, only : verson
   character :: version*20
-#ifdef MOPAC_VERSION_FULL
-  version = MOPAC_VERSION_FULL
-#endif
+  version = verson
   return
 end subroutine mopac_version

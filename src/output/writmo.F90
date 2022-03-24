@@ -25,9 +25,7 @@
       sz, ss2, maxtxt, E_disp, E_hb, E_hh, l_normal_html, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
       hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
-      prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash
-!
-      use interface_C, only : gui, iw0
+      prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash, gui
 !
       use MOZYME_C, only : icocc, icvir, ncocc, ncvir, nvirtual, noccupied, &
       & nnce, nncf, cocc, cvir, ncf, nce,  cocc_dim, &
@@ -52,7 +50,7 @@
 !
       use funcon_C, only : fpc_10, fpc_9
 !
-      use chanel_C, only : iw, iarc, ibrz, brillouin_fn, archive_fn, log
+      use chanel_C, only : iw0, iw, iarc, ibrz, brillouin_fn, archive_fn, log
 !-----------------------------------------------
       implicit none
 !-----------------------------------------------

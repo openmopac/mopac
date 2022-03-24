@@ -23,8 +23,7 @@ subroutine paths()
     use maps_C, only : lparam, react, latom, rxn_coord
     use common_arrays_C, only : geo, xparam, na, hesinv, l_atom, nat, coord
     use ef_C, only : alparm, x0, x1, x2, iloop
-    use chanel_C, only : iw, ires, restart_fn, ixyz, xyz_fn
-    use interface_C, only : iw0
+    use chanel_C, only : iw0, iw, ires, restart_fn, ixyz, xyz_fn
     use elemts_C, only : elemnt
 !***********************************************************************
 !-----------------------------------------------

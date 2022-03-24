@@ -14,11 +14,21 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-module interface_C
-!dec$ attributes dllexport :: gui, iw0
-!
-!  This module contains the data exposed by the MOPAC shared library API
-!
-    logical :: gui = .true.   !  By default, output information for a Graphical User Interface
-    integer :: iw0 = -1       !  Abbreviated output channel, for GUI (By default, not used)
-end module interface_C
+subroutine mopac_gui_activate(channel)
+!dec$ attributes dllexport :: mopac_gui_activate
+  use chanel_C, only : iw0
+  use molkst_C, only : gui
+  integer :: channel
+  gui = .true.
+  iw0 = channel
+  return
+end subroutine mopac_gui_activate
+
+subroutine mopac_gui_deactivate
+!dec$ attributes dllexport :: mopac_gui_deactivate
+  use chanel_C, only : iw0
+  use molkst_C, only : gui
+  gui = .false.
+  iw0 = -1
+  return
+end subroutine mopac_gui_deactivate

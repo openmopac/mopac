@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
   subroutine to_screen(text0)
-  use interface_C, only : iw0
+  use chanel_C, only : iw0
   use molkst_C, only : keywrd
   implicit none
   character (len=*) :: text0
@@ -128,6 +128,9 @@
     end if
     l_RC = (index(keywrd, " IRC") + index(keywrd," DRC") > 0)
     open(unit=hook,file=output_fn(:len_trim(output_fn) - 4)//".aux")
+    if (.not. opend) then
+      write(hook,"(a)")" START OF MOPAC PROGRAM"
+    end if
     write(hook,"(a)")" START OF MOPAC FILE"
     write(hook,"(a)")" ####################################"
     write(hook,"(a)")" #                                  #"
@@ -483,6 +486,12 @@
     end if
     write(hook,"(a,i"//atoms//",a)")" ATOM_CHARGES[",numat,"]="
     write(hook,"(sp,10f"//fmt9p5//")") (q(i), i=1,numat)
+    write(hook,"(a,i"//orbs//",a)")" AO_CHARGES[",norbs,"]="
+    write(hook,"(10f"//fmt9p5//")") (p((i*(i+1))/2), i=1,norbs)
+    if (uhf) then
+      write(hook,"(a,i"//orbs//",a)")" AO_SPINS[",norbs,"]="
+      write(hook,"(10f"//fmt9p5//")") (pa((i*(i+1))/2)-pb((i*(i+1))/2), i=1,norbs)
+    end if
     if (nvar > 0) then
       sum = 0.d0
       do i = 1, nvar

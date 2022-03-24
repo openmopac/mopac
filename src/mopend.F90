@@ -49,14 +49,21 @@
 !
 !  Local quantities
 !
-        integer, parameter :: lim = 120
+        integer, parameter :: lim = 120, hook = 50
         character :: messages(20)*(lim), blank*(lim)
         integer :: nmessages = 0, i, j, max_txt
-        logical :: first = .true.
+        logical :: first = .true., opend
         save
         if (first) then
            messages(1)(:18) = "JOB ENDED NORMALLY"
            first = .false.
+!
+!   Add closing message to AUX file
+!
+           inquire(unit=hook, opened=opend)
+           if (opend) then
+             write(hook,"(a)")" END OF MOPAC PROGRAM"
+           end if
         end if          
         if (ntxt == 1) then
           if (natoms == 0 .and. job_no == 1) then

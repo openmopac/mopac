@@ -317,9 +317,7 @@ subroutine Locate_TS
   use molkst_C, only: tleft, time0, iflepo, tdump, gnorm, keywrd, density, &
   moperr, nvar, id, line, numat, refkey, title
 !
-  use chanel_C, only: iw, log, ilog, input_fn, iarc
-!
-  use interface_C, only: iw0
+  use chanel_C, only: iw0, iw, log, ilog, input_fn, iarc
 !
   use common_arrays_C, only : loc, geo, xparam, geoa
 !

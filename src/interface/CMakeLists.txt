@@ -17,7 +17,7 @@
 #===============================================
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list 
-    interface_C mopac_version
+    mopac_gui mopac_version
    )
 #-----------------------------------------------
 # Add a list of source files to the target
