@@ -485,7 +485,7 @@
           if (i /= 0) keywrd = keywrd(:i + 5)//"S"//trim(keywrd(i + 6:))
           natoms = maxatoms
           
-          if (index(line, " PDB ") /= 0) then
+          if (index(line, " PDB ") + index(line, " PDB(")/= 0) then
             call getpdb(geo)
             coorda(:,:numat) = geo(:,:numat)
             numat_old = numat

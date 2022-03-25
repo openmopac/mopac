@@ -780,10 +780,10 @@
             labels(numat) = labels(i)
             txtatm(numat) = txtatm(i)
             lopt(:,numat) = lopt(:,i)
-            na(numat) = 0
           end if 
           geo(:,i) = xyz(:,i) 
         end do 
+        na(:natoms) = 0
 !
 !   If everything is marked for optimization then unconditionally mark the first
 !   three atoms for optimization

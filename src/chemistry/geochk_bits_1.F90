@@ -1320,6 +1320,7 @@ subroutine update_txtatm(output, sort)
     txtatm(i) = trim(line)
     if (PDB .and. i == breaks(j)) j = j + 1     
   end do 
+  if (index(keywrd, " NEWPDB") /= 0) call PDB3()
   return
   end subroutine update_txtatm
 

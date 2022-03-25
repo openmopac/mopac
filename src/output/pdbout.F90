@@ -156,6 +156,7 @@ subroutine pdbout (mode1)
       nline = nline + 1
       if (ter_ok) ter = (i == breaks(nbreaks))
       if (ter) nbreaks = nbreaks + 1
+      if (i1 == 0) cycle
       if ( .not. l_atom(i1)) cycle
       if (elemnt(labels(i)) (1:1) == " " .or. labels(i) == 99) then
         ele_pdb(1:1) = " "

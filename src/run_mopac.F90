@@ -581,6 +581,7 @@
           if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0 .and. &
             index(keywrd," RESEQ") + index(keywrd," RESID") /= 0) &
             call update_txtatm(.true., .false.)         !  Now that geometry checks are done, switch to input labels
+          if (index(keywrd, " NEWPDB") /= 0) call PDB3()
           call write_sequence
           if (log) call bridge_H()
           if (moperr) goto 101

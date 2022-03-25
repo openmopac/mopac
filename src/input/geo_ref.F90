@@ -217,6 +217,20 @@
         if (ii /= 0) rewind(99)
       end if
       line_1 = trim(keywrd)
+      if (index(keywrd,"GEO_DAT") /= 0) then
+        if (geo_ref_name == job_fn) then
+          i = index(keywrd," GEO_REF") + 11
+          do
+            if (keywrd(i:i) == '"' .or. keywrd(i:i) == "'") exit
+            i = i + 1
+          end do
+          density = reada(keywrd, i + 1)
+          write(iw,'(/10x,a,f8.3,a)')"A restraining force of",density," kcal/mol/A^2 will be used"
+          geoa(:,:numat) = geo(:,:numat)
+          ii = numat
+          goto 96
+        end if
+      end if
       i = 0
       do
         i = i + 1
@@ -229,14 +243,14 @@
           write(iw,'(10x,a)')"Line 1 of data file defined by GEO_REF: """//trim(refkey_ref(1))//""""
           line = trim(refkey_ref(1))
           call upcase(line, len_trim(line))
-          if (index(keywrd," GEO_DAT") /= 0) then
+          if (index(keywrd,"GEO_DAT") /= 0) then
             call mopend("A data file defined by GEO_REF cannot use GEO_DAT to point to another file.")
             return
           else
             write(line,'(a,i1,a)')"The data file defined by GEO_REF contains only ", i, " lines."
             call mopend(trim(line))
             return
-          end if           
+          end if
         end if
         if (refkey_ref(i)(1:1) == "*") i = i - 1
         if (i == 1) then
@@ -336,7 +350,7 @@
         call mopend("Number of atoms in both systems must be the same, unless keyword ""0SCF"" is present")
         return
       end if
-      txtatm1(:ii) = tmp_txt(:ii)   
+96    txtatm1(:ii) = tmp_txt(:ii)
       i = max(ii, numat, 26)
       allocate (tmp_geoa(3,i), same(i), ok(i), diffs(i))
       diffs = " "
