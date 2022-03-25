@@ -856,6 +856,10 @@ subroutine Locate_TS
           if (keywrd(j - 1:j - 1) == '"') then
             store = keywrd(:i)//'"'//trim(keywrd(j:))
           else
+            do
+              if (keywrd(j:j) == " ") exit
+              j = j + 1
+            end do
             store = keywrd(:i)//trim(keywrd(j + 1:))
           end if
         end if

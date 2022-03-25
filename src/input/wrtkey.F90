@@ -1001,6 +1001,11 @@ subroutine wrtcon (allkey)
         num = char(ichar("4") + int(log10(sum)))
         write(iw,'(a, f'//num//'.1, a)') " *               (A BIAS OF",sum, &
         " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"  
+        do 
+          j = j + 1
+          if (allkey(j:j) == " ") exit
+          allkey(j:j) = " "
+        end do
       end if
     end if
   end if
@@ -1017,6 +1022,10 @@ subroutine wrtcon (allkey)
                                  write (iw, '(" *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED")')
                                  write (iw, '(" *  Keyword:     ",a)')keywrd(i:j)
   end if     
+  if (myword(allkey, " NEWPDB")) then
+    write (iw, '(" *  NEWPDB     - CONVERT PDB ATOM FORMAT INTO THE MODERN PDB VERSION, VERSION-3")')
+    if (index(keywrd, " SITE") == 0) call l_control("SITE=()", len("SITE=()"), 1)
+  end if
   if (myword(allkey, " GEOCHK")) write (iw, '(" *  GEOCHK     - PRINT WORKING IN SUBROUTINE GEOCHK")') 
   if (myword(allkey, " LEWIS"))  write (iw, '(" *  LEWIS      - PRINT OUT LEWIS STRUCTURE, THEN STOP")')
   if (myword(allkey, " SETPI"))  write (iw, '(" *  SETPI      - SOME OR ALL PI BONDS EXPLICITLY SET BY USER")')
@@ -1790,7 +1799,7 @@ subroutine wrtout (allkey)
   if (myword(allkey, " POPS"))   write (iw,'(" *  POPS       - PRINT SCF ATOMIC ORBITAL POPULATIONS")')
   if (myword(allkey, " BCC"))    write (iw,'(" *  BCC        - THE SYSTEM IS BODY-CENTERED CUBIC")')
   if (myword(allkey, " EIGS"))   write (iw,'(" *  EIGS       - PRINT ALL EIGENVALUES IN ITER")')
-  if (myword(allkey, " HYPERF")) write (iw,'(" *  HYPERFINE- HYPERFINE COUPLING CONSTANTS TO BE", " PRINTED")')
+  if (myword(allkey, " HYPERF")) write (iw,'(" *  HYPERFINE  - HYPERFINE COUPLING CONSTANTS TO BE PRINTED")')
   if (myword(allkey, " THERMO")) write (iw,'(" *  THERMO     - THERMODYNAMIC QUANTITIES TO BE CALCULATED")')
   if (myword(allkey, " Z=")) then
     write (iw,'(" *  Z=",I2,"     - NUMBER OF FORMULA UNITS IN UNIT CELL")')Nint(Reada(keywrd,Index(keywrd," Z=") + 2))

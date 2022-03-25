@@ -199,15 +199,6 @@ subroutine geochk ()
       end if
     end do
 !
-! Use SITE to update hydrogen atom PDB labels
-!
-    i =  index(keywrd," SITE=()")
-    if (i /= 0) then
-      call update_txtatm(.true., .true.)
-      call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
-      goto 1100
-    end if
-!
 !   Add or remove hydrogen atoms, as necessary.
 !
     i =  index(keywrd," SITE=(IONIZE)")
@@ -987,9 +978,24 @@ subroutine geochk ()
       l_use_old_labels = (index(keywrd," SITE=") /= 0 .and. index(keywrd, " ADD-H") == 0)
       l_use_old_labels = .true.
       call update_txtatm(l_use_old_labels, .true.)
+!
+! Insert dummy atoms, if present
+!
+      allocate(temp_txtatm(natoms))
+      j = 0
+      do i = 1, natoms
+        if (labels(i) == 99) then
+          temp_txtatm(i) = "HETATM    4  XX  HET A   1"
+        else
+          j = j + 1
+          temp_txtatm(i) =  txtatm(j)
+        end if
+      end do  
+      txtatm(:natoms) = temp_txtatm(:natoms)
+      deallocate(temp_txtatm)
       call write_sequence
     end if
-90   if (index(keywrd, " PDBOUT") /= 0) then
+90  if (index(keywrd, " PDBOUT") /= 0) then
       allocate(temp_txtatm(natoms))
 !
 ! Assign atom numbers
@@ -1570,7 +1576,7 @@ subroutine geochk ()
       rewind iarc 
       if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
       call geout (iarc)
-      if (index(keywrd, " PDBOUT") /= 0) then        
+      if (index(keywrd, " PDBOUT") /= 0 .and. index(keywrd, " RESEQ") == 0) then
         line = archive_fn(:len_trim(archive_fn) - 3)//"pdb" 
         i = iarc
         inquire(unit=i, opened=opend) 
