@@ -47,7 +47,7 @@ subroutine chklew (mb, numbon, l, large, debug)
     integer, dimension(:), allocatable :: ipi, ir5, mpii
     intrinsic Index, Min, Nint
     double precision, external :: distance
-    
+
 !
 !   Set LET to .TRUE.  At some later date, have LET defined by a keyword
 !   If LET is true, then the job will not stop if there is a very large
@@ -184,13 +184,13 @@ subroutine chklew (mb, numbon, l, large, debug)
       do loop = 1, numat
         ii = pibonds(loop,1)
         if (ii == 0) exit
-        jj = pibonds(loop,2) 
+        jj = pibonds(loop,2)
         do i = 1, nbonds(ii)
           if (ibonds(i, ii) == jj) exit
         end do
         if (i > nbonds(ii)) then
           if (j == 0) write(iw, '(/10x, a)') &
-            "Using ""SETPI"" a pi-bond has been defined between two atoms that are not bonded together" 
+            "Using ""SETPI"" a pi-bond has been defined between two atoms that are not bonded together"
           if (maxtxt == 26) then
             if (j == 0) write(iw,'(/27x, a, 27x, a)')"Atom-1", "Atom-2"
             write(iw,'(17x, a, 5x, a)')'"'//txtatm(ii)(:26)//'"', '"'//txtatm(jj)(:26)//'"'
@@ -198,7 +198,7 @@ subroutine chklew (mb, numbon, l, large, debug)
             if (j == 0) write(iw,'(/15x, a, 15x, a)')"Atom-1", "Atom-2"
             write(iw,'(14x,a2,i5, 14x,a2,i5)')elemnt(nat(ii)), ii, elemnt(nat(jj)), jj
           end if
-          j = 1            
+          j = 1
         end if
         call add_Lewis_element(ii,jj,0, numbon(3))
         if (ib(ii) < 0 .or. ib(jj) < 0) then
@@ -217,7 +217,7 @@ subroutine chklew (mb, numbon, l, large, debug)
     if (j == 1) then
       call mopend("AN ERROR IN ASSIGNING PI-BONDS USING ""SETPI"" HAS BEEN DETECTED")
       return
-    end if      
+    end if
 !
 !   Second set: Assign all lone-pairs
 !
@@ -311,7 +311,7 @@ subroutine chklew (mb, numbon, l, large, debug)
                & ii, " AND", jj
               end if
 !
-!  Store atom numbers of attached atoms that might 
+!  Store atom numbers of attached atoms that might
 !  pi-bond - these have priority.
 !
               npi = npi + 1
@@ -361,7 +361,7 @@ subroutine chklew (mb, numbon, l, large, debug)
       if ( .not. graphi) then
         do loop = 1, 2
 !
-!  Do this twice - first time start from carbon end, second time 
+!  Do this twice - first time start from carbon end, second time
 !  start from any end.  This distinguishes C-C-C-N from N-C-C-C
 !
           do i1 = 1, numat
@@ -377,7 +377,7 @@ subroutine chklew (mb, numbon, l, large, debug)
                 nbii = nbonds(ii)
                 do i = 1, nbii
                   jj = ibonds(i, ii)
-                  if (natorb(nat(ii)) == 9 .or. natorb(nat(jj)) == 9  ) cycle 
+                  if (natorb(nat(ii)) == 9 .or. natorb(nat(jj)) == 9  ) cycle
                   if (nat(ii) == 8 .or. nat(jj) == 8) then
                     if (nat(ii) == 6 .or. nat(jj) == 6) then
                       if (distance(ii,jj) > 1.315d0) cycle  !  Exclude C-O, but keep C=O
@@ -504,21 +504,21 @@ subroutine chklew (mb, numbon, l, large, debug)
               nbii = nbonds(ii)
               do i = 1, nbii
                 jj = ibonds(i, ii)
-                if (natorb(nat(ii)) == 9 .or. natorb(nat(jj)) == 9  ) cycle    
+                if (natorb(nat(ii)) == 9 .or. natorb(nat(jj)) == 9  ) cycle
                 if (mb(jj) /= 0) then
                   if (ib(ii) > 0 .and. ib(jj) > 0) then
 
 !
-!   Rules of priority:  LOOP determines the order of 
+!   Rules of priority:  LOOP determines the order of
 !   priority. LOOP=1 is Rule 1, LOOP=2 is Rule 2, etc.
-!   For all bonds, the order of application of the rules 
+!   For all bonds, the order of application of the rules
 !   is 1, then 2 then 3, etc.
 !
-!   Rule 1.  If a six membered ring has two Pi bonds 
-!            already, then add a third Pi bond to make 
+!   Rule 1.  If a six membered ring has two Pi bonds
+!            already, then add a third Pi bond to make
 !            it an aromatic ring.
-!   Rule 2.  If a six membered ring has one Pi bond, 
-!            then add another Pi bond to the same ring, 
+!   Rule 2.  If a six membered ring has one Pi bond,
+!            then add another Pi bond to the same ring,
 !            so that Rule 1 can be used.
 !   Rule 3.  Any Pi bond that can be made, is made.
 !
@@ -538,8 +538,8 @@ subroutine chklew (mb, numbon, l, large, debug)
                         call add_Lewis_element(ii, jj, 0, numbon(3))
                       end if
 !
-!   Atom JJ was pi-bonding.  Add JJ to list of 
-!   potential pi bonding atoms, and add on all 
+!   Atom JJ was pi-bonding.  Add JJ to list of
+!   potential pi bonding atoms, and add on all
 !   atoms that might pi bond to II or JJ.
 !
                       npi = npi + 1
@@ -564,7 +564,7 @@ subroutine chklew (mb, numbon, l, large, debug)
                       end do
                       npi = l
 !
-! Eliminate duplicates and atoms that have already 
+! Eliminate duplicates and atoms that have already
 ! pi bonded
 !
                       l = 0
@@ -631,13 +631,13 @@ subroutine chklew (mb, numbon, l, large, debug)
               end do
               lnext = (lnext .or. loop > 2)
 !
-!  LNEXT is TRUE if atom II is next to an atom bonded to 
+!  LNEXT is TRUE if atom II is next to an atom bonded to
 !  3 other atoms (bonded to a PI system?)
 !
               do i = 1, nbii
                 jj = ibonds(i, ii)
                 if (lnext .and. mb(jj) /= 0 .and. (mb(jj) /= 3 .or. loop > 2)) then
-                  if (natorb(nat(ii)) == 9 .or. natorb(nat(jj)) == 9  ) cycle    
+                  if (natorb(nat(ii)) == 9 .or. natorb(nat(jj)) == 9  ) cycle
                   if (ib(ii) > 0 .and. ib(jj) > 0) go to 1040
                 end if
               end do
@@ -760,7 +760,7 @@ subroutine ring5 (i, mb, ir5)
                       if (mb(m) >= 3) then
 !
 !  Atoms L and M are attached to J and K respectively.
-!  The connectivity is thus: M-K-I-J-L.  Now, check: 
+!  The connectivity is thus: M-K-I-J-L.  Now, check:
 ! is M attached to L?
 !
                         nm = nbonds(m)
@@ -951,12 +951,12 @@ subroutine add_Lewis_element(atom_i, atom_j, charge, element_type)
 !  atom_j : If atom_i is non-zero, atom_j is the atom number of the other of the two atoms in a bond.
 !  atom_j : If atom_i is zero, atom_j is the atom number of a virtual lone-pair
 !  charge : The charge implied by this Lewis element (If Na virtual lone pair, then +1)
-!  Element_type : Type of Lewis structural element (sigma, lone pair, pi bond, etc.) 
+!  Element_type : Type of Lewis structural element (sigma, lone pair, pi bond, etc.)
 !
   use MOZYME_C, only: ions, Lewis_elem, Lewis_tot, iz, ib
   integer, intent (in) :: atom_i, atom_j, charge
   integer, intent (inout) :: element_type
-    Lewis_tot = Lewis_tot + 1 
+    Lewis_tot = Lewis_tot + 1
     Lewis_elem(1,Lewis_tot) = atom_i
     Lewis_elem(2,Lewis_tot) = atom_j
     if (atom_i > 0 .and. atom_j > 0) then
@@ -981,38 +981,38 @@ subroutine add_Lewis_element(atom_i, atom_j, charge, element_type)
         else if (charge == 0) then
 !
 ! A normal lone pair (two dots in the Lewis structure)
-! Decrement the atom by two electrons and one atomic orbital.  
+! Decrement the atom by two electrons and one atomic orbital.
 !
-          iz(atom_i) = iz(atom_i) - 2        
+          iz(atom_i) = iz(atom_i) - 2
         end if
         ib(atom_i) = ib(atom_i) - 1
-        element_type = element_type + 1  ! Lone pair     
+        element_type = element_type + 1  ! Lone pair
       else
 !
 ! At this point, the type is unknown, so simply decrement ib,
 ! and don't change iz.
 !
-        ib(-atom_i) = ib(-atom_i) - 1 
+        ib(-atom_i) = ib(-atom_i) - 1
       end if
     else
       if (charge == 2) then
 !
 ! A virtual lone pair arising from a di-cation
-! Decrement the atom by two electrons and one atomic orbital.  
+! Decrement the atom by two electrons and one atomic orbital.
 ! (Think of Ca(++) - this is calcium after removal of two electrons
 !
         iz(atom_j) = iz(atom_j) - 2
       else if (charge == 1) then
 !
 ! A virtual lone pair arising from a cation
-! Decrement the atom by one electrons and one atomic orbital.  
+! Decrement the atom by one electrons and one atomic orbital.
 ! (Think of Na(+) - this is sodium after removal of one electron
 !
         iz(atom_j) = iz(atom_j) - 1
       end if
-      ib(atom_j) = ib(atom_j) - 1    
+      ib(atom_j) = ib(atom_j) - 1
     end if
     if (charge == 0) return
-    ions(atom_i + atom_j) = ions(atom_i + atom_j) + charge     
+    ions(atom_i + atom_j) = ions(atom_i + atom_j) + charge
 end subroutine add_Lewis_element
 

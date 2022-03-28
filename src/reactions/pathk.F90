@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine pathk() 
+      subroutine pathk()
 !-----------------------------------------------
 !   Follow a reaction path in which the step-size is a constant,
 !   Keywords STEP and POINTS are used
@@ -39,11 +39,11 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer , dimension(20) :: mdfp 
+      integer , dimension(20) :: mdfp
       integer :: npts, maxcyc, i, lloop, iloop, l, m, k, iw00, percent, ipdb, &
         imodel, ixyz1
       double precision :: step, degree, c1, cputot, cpu1, cpu2, cpu3, stepc1, factor, dip, &
-        dipvec(3), xdfp(20),  gd(3*numat), xlast(3*numat) 
+        dipvec(3), xdfp(20),  gd(3*numat), xlast(3*numat)
       logical :: use_lbfgs, opend, scale, debug, l_dipole
       character :: num1*1, num2*1
       double precision, external :: dipole, reada, seconds
@@ -53,35 +53,35 @@
       ixyz1 = 0
       percent = 0
       use_lbfgs = (index(keywrd,' LBFGS') /=0 .or. nvar > 100 .and. index(keywrd,' EF') == 0)
-      step = reada(keywrd,index(keywrd,'STEP') + 5) 
+      step = reada(keywrd,index(keywrd,'STEP') + 5)
       debug = (index(keywrd, " DEBUG") /= 0)
       l_dipole = (index(keywrd, " DIPOLE") /= 0)
-      npts = nint(reada(keywrd,index(keywrd,'POINT') + 6)) 
+      npts = nint(reada(keywrd,index(keywrd,'POINT') + 6))
 !
 !  THE SMALLEST VALUE IN THE PATH IS
 !      REACT(1) DEGREE OR GEO(LPARAM,LATOM) RADIANS
 !
-      degree = 57.29577951308232D0 
-      if (lparam /= 1 .and. na(latom) /= 0) then 
-        step = step/degree 
-        c1 = degree 
-      else 
-        c1 = 1.D0 
-      end if 
+      degree = 57.29577951308232D0
+      if (lparam /= 1 .and. na(latom) /= 0) then
+        step = step/degree
+        c1 = degree
+      else
+        c1 = 1.D0
+      end if
       if (index(keywrd, " PDBOUT") /= 0) &
       open(unit = ipdb, file = xyz_fn(:len_trim(xyz_fn) - 3)//"pdb")
       if (index(keywrd, " MINI") /= 0) then
         loc = 0
         nvar = 0
-        do i = 1, natoms 
-          do l = 1, 3 
+        do i = 1, natoms
+          do l = 1, 3
             if (lparam /= l .or. latom /= i) then
-              nvar = nvar + 1 
-              loc(1,nvar) = i 
-              loc(2,nvar) = l 
-              xparam(nvar) = geo(l,i) 
+              nvar = nvar + 1
+              loc(1,nvar) = i
+              loc(2,nvar) = l
+              xparam(nvar) = geo(l,i)
             end if
-          end do 
+          end do
         end do
         if (allocated(grad)) deallocate(grad)
         allocate(grad(nvar))
@@ -90,50 +90,50 @@
       if (l_dipole) then
       ixyz1 = ixyz + 1
       open(unit=ixyz1, file=xyz_fn(:len_trim(xyz_fn) - 4)//" for dipole.xyz")
-    end if   
+    end if
 !
-      kloop = 1 
-      maxcyc = 100000 
+      kloop = 1
+      maxcyc = 100000
       if (index(keywrd,' BIGCYCLES') /= 0) maxcyc = nint(reada(keywrd,index(&
-        keywrd,' BIGCYCLES'))) 
-      cputot = 0.0D0 
+        keywrd,' BIGCYCLES')))
+      cputot = 0.0D0
       rxn_coord = geo(lparam,latom)
       if (allocated(profil)) deallocate(profil)
       if (allocated(react)) deallocate(react)
       allocate(profil(npts + 1), react(npts + 1))
-      profil = 0.D0 
-      react(1) = geo(lparam,latom) 
-      if (use_lbfgs) then 
-        write (iw, '(/10x,''ABOUT TO ENTER L-BFGS FROM PATHK'')') 
-        if (index(keywrd,'RESTAR') /= 0) then 
+      profil = 0.D0
+      react(1) = geo(lparam,latom)
+      if (use_lbfgs) then
+        write (iw, '(/10x,''ABOUT TO ENTER L-BFGS FROM PATHK'')')
+        if (index(keywrd,'RESTAR') /= 0) then
           mdfp(9) = 0 !   This section is almost certainly faulty!
           gd = 0.d0
           xlast = 0.d0
           xdfp = 0.d0
-          call dfpsav (cputot, xparam, gd, xlast, escf, mdfp, xdfp) 
-          write (iw, '(2/10X,'' RESTARTING AT POINT'',I3)') kloop 
-        end if 
+          call dfpsav (cputot, xparam, gd, xlast, escf, mdfp, xdfp)
+          write (iw, '(2/10X,'' RESTARTING AT POINT'',I3)') kloop
+        end if
       else
-        write (iw, '(''  ABOUT TO ENTER EF FROM PATHK'')') 
-        if (index(keywrd,'RESTAR') /= 0) then 
+        write (iw, '(''  ABOUT TO ENTER EF FROM PATHK'')')
+        if (index(keywrd,'RESTAR') /= 0) then
           open(unit=ires, file=restart_fn, status='UNKNOWN', form=&
-            'UNFORMATTED', position='asis') 
-          rewind ires 
+            'UNFORMATTED', position='asis')
+          rewind ires
           read (ires, end=60, err=60) i, l
           if (norbs /= l .or. numat /= i) then
               call mopend("Restart file read in does not match current data set")
               goto 99
           end if
-          read (ires, err=60) kloop 
-          read (ires, err=60) rxn_coord 
-          read (ires, err=60) (profil(i),i=1,kloop) 
+          read (ires, err=60) kloop
+          read (ires, err=60) rxn_coord
+          read (ires, err=60) (profil(i),i=1,kloop)
           close (ires)
-          write (iw, '(2/10X,'' RESTARTING AT POINT'',I3)') kloop 
-        end if 
-      end if 
+          write (iw, '(2/10X,'' RESTARTING AT POINT'',I3)') kloop
+        end if
+      end if
 !
-      geo(lparam,latom) = rxn_coord 
-      lloop = kloop 
+      geo(lparam,latom) = rxn_coord
+      lloop = kloop
       scale = .false.
       if (id == 1) then
         do i = 1, natoms
@@ -142,22 +142,22 @@
         scale = (i > natoms .and.latom == natoms)
       end if
       iw00 = iw0
-      if (.not. debug) iw0 = -1  
+      if (.not. debug) iw0 = -1
       if (index(keywrd, " HTML") /= 0) then
         if (index(keywrd,' DIPOLE') /= 0) call write_path_html(2)
         call write_path_html(1)
       end if
-      do iloop = kloop, npts 
-        if (iloop - lloop >= maxcyc) tleft = -100.D0 
+      do iloop = kloop, npts
+        if (iloop - lloop >= maxcyc) tleft = -100.D0
         time0 = seconds(1)
-        cpu1 = seconds(2) 
+        cpu1 = seconds(2)
         if (iloop > 1 .and. scale) then
           factor = geo(lparam,latom)/rxn_coord
           do i = 1, latom - 1
             xparam((i - 1)*3 +lparam) = xparam((i - 1)*3 +lparam)*factor
           end do
         end if
-        rxn_coord = geo(lparam,latom)         
+        rxn_coord = geo(lparam,latom)
         numcal = numcal + 1
         if (use_lbfgs) then
           write(iw,'(/10x,a)')"Geometry optimization using L-BFGS"
@@ -166,28 +166,28 @@
             call to_screen(" Geometry optimization using L-BFGS")
             if (.not. debug) iw0 = -1
           end if
-          call lbfgs (xparam, escf) 
+          call lbfgs (xparam, escf)
         else
           write(iw,'(/10x,a)')"Geometry optimization using EF"
           if (iloop == 1 .and.iw00 > -1) then
             if (.not. debug) iw0 = 0 ! Temporarily allow writing to screen
             call to_screen(" Geometry optimization using EF")
             if (.not. debug) iw0 = -1
-          end if         
-          call ef (xparam, escf) 
-        end if 
+          end if
+          call ef (xparam, escf)
+        end if
         i = index(keywrd,'RESTAR')
         if (i /= 0) keywrd(i:i+6) = " "
         i = index(keywrd,'OLDENS')
         if (i /= 0) keywrd(i:i+5) = " "
-        if (iflepo == (-1) .or. tleft < 0.d0 ) goto 99         
-        kloop = kloop + 1 
-        cpu2 = seconds(2) 
-        cpu3 = cpu2 - cpu1 
-        cputot = cputot + cpu3 
-        profil(iloop) = escf 
-        write (iw, '(/''          VARIABLE        FUNCTION'')') 
-        write (iw, '('' :'',F16.5,F16.6)') geo(lparam,latom)*c1, escf 
+        if (iflepo == (-1) .or. tleft < 0.d0 ) goto 99
+        kloop = kloop + 1
+        cpu2 = seconds(2)
+        cpu3 = cpu2 - cpu1
+        cputot = cputot + cpu3
+        profil(iloop) = escf
+        write (iw, '(/''          VARIABLE        FUNCTION'')')
+        write (iw, '('' :'',F16.5,F16.6)') geo(lparam,latom)*c1, escf
         if (iw00 > -1) then
           if (.not. debug) iw0 = 0 ! Temporarily allow writing to screen
           i = nint((100.0*iloop)/npts)
@@ -201,7 +201,7 @@
           call to_screen(line)
         end if
         call to_screen("To_file: Reaction path")
-        call geout (iw) 
+        call geout (iw)
         if (index(keywrd, " PDBOUT") /= 0) then
           imodel = imodel + 1
           write(line,'(F13.5)') escf
@@ -214,22 +214,22 @@
           call pdbout(ipdb)
           write(ipdb,'(a)')"ENDMDL"
         end if
-        geo(lparam,latom) = geo(lparam,latom) + step 
+        geo(lparam,latom) = geo(lparam,latom) + step
 !
 !  Write out "xyz" file
 !
         write(ixyz,"(i6,a)") nl_atoms," "
         num1 = char(ichar("1") + int(log10(iloop*1.01)))
         factor = abs(escf)
-        num2 = char(max(ichar("0"), ichar("0") + min(9, int(log10(factor)))))      
+        num2 = char(max(ichar("0"), ichar("0") + min(9, int(log10(factor)))))
         write(ixyz,'(a, i'//num1//', a, f1'//num2//'.5, a)')"Profile.", iloop, &
         " HEAT OF FORMATION =", escf, " KCAL "
         do i = 1, numat
           if (l_atom(i)) write(ixyz,"(3x,a2,3f15.5)")elemnt(nat(i)), (coord(l,i),l=1,3)
         end do
         if (l_dipole) then
-          call chrge (p, q) 
-          q(:numat) = tore(labels(:numat)) - q(:numat)           
+          call chrge (p, q)
+          q(:numat) = tore(labels(:numat)) - q(:numat)
           dip = dipole(p, coord, dipvec,0)
           write(ixyz1,"(i6,a)") nl_atoms," "
           write(ixyz1,'(a, i'//num1//', a, f1'//num2//'.5, a)')"Profile.", iloop, &
@@ -239,50 +239,50 @@
           end do
         end if
         if (.not. debug) iw0 = -1
-      end do 
+      end do
       if (cputot > 1.d7) cputot = cputot - 1.d7
-      react(1) = react(1)*c1 
-      stepc1 = step*c1 
-      do i = 2, npts 
-        react(i) = react(i-1) + stepc1 
-      end do 
+      react(1) = react(1)*c1
+      stepc1 = step*c1
+      do i = 2, npts
+        react(i) = react(i-1) + stepc1
+      end do
       write (iw, &
-      '(/16X,''POINTS ON REACTION PATH '',/16X,''AND CORRESPONDING HEATS'',2/)') 
-      inquire(unit=iarc, opened=opend) 
-      if (opend) close(unit=iarc, status='KEEP') 
+      '(/16X,''POINTS ON REACTION PATH '',/16X,''AND CORRESPONDING HEATS'',2/)')
+      inquire(unit=iarc, opened=opend)
+      if (opend) close(unit=iarc, status='KEEP')
       open(unit=iarc, file=archive_fn, status='UNKNOWN', position=&
-        'asis') 
-      write (iarc, 30) 
-      call wrttxt (iarc) 
+        'asis')
+      write (iarc, 30)
+      call wrttxt (iarc)
    30 format(' ARCHIVE FILE FOR PATH CALCULATION'/,&
-        'A PROFILE OF COORDINATES - HEATS'/) 
-      write (iarc, '(/'' TOTAL JOB TIME : '',F10.3/)') cputot 
+        'A PROFILE OF COORDINATES - HEATS'/)
+      write (iarc, '(/'' TOTAL JOB TIME : '',F10.3/)') cputot
 !
-      l = npts/8 
-      m = npts - l*8  
-      if (l >= 1) then 
-        do k = 0, l - 1 
-          write (iw, '(9F17.8)') (react(i),i=k*8 + 1,k*8 + 8) 
-          write (iw, '(9F17.8,/)') (profil(i),i=k*8 + 1,k*8 + 8) 
-        end do 
-      end if 
-      if (m > 0) then 
-        write (iw, '(9F17.8)') (react(i),i=l*8 + 1,l*8 + m)  
-        write (iw, '(9F17.8,/)') (profil(i),i=l*8 + 1,l*8 + m) 
-      end if 
+      l = npts/8
+      m = npts - l*8
+      if (l >= 1) then
+        do k = 0, l - 1
+          write (iw, '(9F17.8)') (react(i),i=k*8 + 1,k*8 + 8)
+          write (iw, '(9F17.8,/)') (profil(i),i=k*8 + 1,k*8 + 8)
+        end do
+      end if
+      if (m > 0) then
+        write (iw, '(9F17.8)') (react(i),i=l*8 + 1,l*8 + m)
+        write (iw, '(9F17.8,/)') (profil(i),i=l*8 + 1,l*8 + m)
+      end if
       do i = 1, npts
         write(iarc,'(2f17.8)')react(i), profil(i)
       end do
       if (.not. debug) iw0 = iw00
-      goto 99  
-   60 continue 
+      goto 99
+   60 continue
       write (iw, '(A,I3,A)') ' ERROR DETECTED DURING READ FROM CHANNEL', ires, &
-        ' IN SUBROUTINE PATHK' 
-      call mopend ('ERROR DETECTED DURING READ IN SUBROUTINE PATHK') 
+        ' IN SUBROUTINE PATHK'
+      call mopend ('ERROR DETECTED DURING READ IN SUBROUTINE PATHK')
   99  if (allocated(profil)) deallocate(profil)
       if (allocated(react)) deallocate(react)
-      return  
-  end subroutine pathk 
+      return
+  end subroutine pathk
   subroutine write_path_html(mode)
     use chanel_C, only: input_fn
     use molkst_C, only : line, koment, escf, title, backslash, keywrd, l_normal_html
@@ -298,7 +298,7 @@
     else
       line = input_fn(:len_trim(input_fn) - 5)//" for dipole.html"
     end if
-    open(unit=iprt, file=trim(line)) 
+    open(unit=iprt, file=trim(line))
     write(iprt,"(a)")"<!DOCTYPE html> "
     write(iprt,"(a)")"<html>"
     write(iprt,"(a)")"<head>"
@@ -392,10 +392,10 @@
     write(iprt,"(a)")"  var Properties = Info[i].modelProperties"
     if (l_pdb) then
       write(iprt,"(a)")"  var energy =  e[i]"
-    else      
+    else
       write(iprt,"(a)")"  var energy =  parseFloat(name.substring((name.toLowerCase() + "" kc"")."// &
        "split(""kc"")[0].lastIndexOf(""="") + 1)); //parse the name to pull out the energy"
-    end if    
+    end if
     if (mode == 2) then
       write(iprt,"(a)")"  var label =  'Model = ' + modelnumber + ', Dipole = ' + roundoff(energy,3) + ' Debye'"
     else
@@ -557,16 +557,16 @@
     write(iprt,"(a)")" <a href='javascript:jmolScript(""model next"")'>next</a> "
     write(iprt,"(a)")" <a href='javascript:jmolScript(""animation mode loop 0 0;animation play"")'>loop</a> "
     write(iprt,"(a)")" <a href='javascript:jmolScript(""animation mode palindrome 0 0;animation play"")'>palindrome</a> "
-    write(iprt,"(a)")" <a href='javascript:jmolScript(""animation off"")'>off</a> &nbsp;&nbsp; " 
+    write(iprt,"(a)")" <a href='javascript:jmolScript(""animation off"")'>off</a> &nbsp;&nbsp; "
     line = input_fn(:len_trim(input_fn) - 4)//"txt"
     do i = len_trim(line), 1, -1
       if (line(i:i) == "/" .or. line(i:i) == backslash) exit
     end do
     line = line(i+1:)
     write(iprt,"(a)")" <a href='javascript:jmolScript(""script "//backslash//"""common.txt" &
-      //backslash//""";"")'>Common</a>&nbsp;&nbsp;" 
-    write(iprt,"(a)")" <a href='javascript:jmolScript(""script "//backslash//""""//trim(line) & 
-      //backslash//""";"")'> Script</a>" 
+      //backslash//""";"")'>Common</a>&nbsp;&nbsp;"
+    write(iprt,"(a)")" <a href='javascript:jmolScript(""script "//backslash//""""//trim(line) &
+      //backslash//""";"")'> Script</a>"
     write(iprt,"(a)")"<br>"
     write(iprt,"(a)")"</td>"
     write(iprt,"(a)")"<td bgcolor=lightblue align=center>"
@@ -594,7 +594,7 @@
     write(iprt,"(a)")"</td></tr></table>"
     write(iprt,"(a)")""
     write(iprt,"(a)")"</body>"
-    write(iprt,"(a)")"</html>" 
+    write(iprt,"(a)")"</html>"
 !
 !  Write out a simple script file
 !
@@ -603,7 +603,7 @@
     call add_path(line)
     inquire (file=trim(line)//"txt", exist = exists)
     if (.not. exists) then
-      open(unit=iprt, file=trim(line)//"txt") 
+      open(unit=iprt, file=trim(line)//"txt")
       i = 0
       do j = 1, len_trim(line)
         if (line(j:j) == "/" .or. line(j:j) == backslash) i = j

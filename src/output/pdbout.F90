@@ -55,8 +55,8 @@ subroutine pdbout (mode1)
           q2(:numat) = 0.d0
         end if
       else
-        call chrge (p, q2)      
-        q2(:numat) = tore(nat(:numat)) - q2(:numat) 
+        call chrge (p, q2)
+        q2(:numat) = tore(nat(:numat)) - q2(:numat)
       end if
     else
       q2 = 0.d0
@@ -76,8 +76,8 @@ subroutine pdbout (mode1)
       iprt = iw
     else
       iprt = Abs (mode1)
-    end if 
-    call fdate (idate) 
+    end if
+    call fdate (idate)
     i = len_trim(input_fn)
     if (ncomments > 0) then
       if (index(all_comments(1),"HEADER") == 0) then
@@ -94,7 +94,7 @@ subroutine pdbout (mode1)
         write (iprt, "(A)") trim(line)
         line = "REMARK  MOPAC 2016, Version: "//verson//" Date: "//idate(5:11)//idate(21:)//idate(11:16)
         write (iprt, "(A)") trim(line)
-      end if 
+      end if
       do i = 1, ncomments
         line = all_comments(i)(:7)
         if (index(line,"ATOM  ") + index(line,"HETATM") + index(line,"TITLE ") + index(line,"HEADER") + &
@@ -123,7 +123,7 @@ subroutine pdbout (mode1)
         write (iprt, "(A)") trim(line)
         line = "REMARK  Date: "//idate(5:11)//idate(21:)//idate(11:16)
         write (iprt, "(A)") trim(line)
-        if (.not. l_irc_drc) line = "REMARK  Heat of Formation ="  
+        if (.not. l_irc_drc) line = "REMARK  Heat of Formation ="
         sum = escf - stress
         if (abs(sum) > 4.99999d-4) then
           i = max(int(log10(abs(sum))), 0)
@@ -187,7 +187,7 @@ subroutine pdbout (mode1)
         write(iprt, "(a,i8,a)")"TER",i2,"      "//txtatm(i)(18:26)  !  Write out the TERMINAL marker
       end if
     end do
-    write(iprt, "(a)")"END" 
+    write(iprt, "(a)")"END"
     if (html) then
       if (l_normal_html) then
         l_normal_html = .false.
@@ -215,9 +215,9 @@ subroutine pdbout (mode1)
     l_compare = (index(keywrd, " COMPARE") /= 0)
     l_prt_res = (index(keywrd," NORJSMOL") == 0)
     line = input_fn(:len_trim(input_fn) - 4)//"html"
-    open(unit=iprt, file=trim(line)) 
+    open(unit=iprt, file=trim(line))
     nres = 0
-    if (l_prt_res) then   
+    if (l_prt_res) then
 !
 !   Identify all residues
 !
@@ -230,7 +230,7 @@ subroutine pdbout (mode1)
            write(l_res,"(a3,i4.3,a)")txtatm(i)(18:20),j,":"//txtatm(i)(22:22)
         else
            write(l_res,"(a3,i4.4,a)")txtatm(i)(18:20),j,":"//txtatm(i)(22:22)
-        end if  
+        end if
         if (maxtxt == 27) then
           l_res(10:10) = txtatm(i)(27:27)
         else
@@ -241,7 +241,7 @@ subroutine pdbout (mode1)
 !
         do k = 1, 6
           if (l_res(k:k) /= " ") exit
-        end do          
+        end do
         if (l_res(k:k) >= "0" .and. l_res(k:k) <= "9") l_res(k:k) = "Q"
 !
 ! Change any spaces to "J"
@@ -257,10 +257,10 @@ subroutine pdbout (mode1)
         if (k > nres) then
           nres = nres + 1
           res_txt(nres) = trim(l_res)
-          do k = 1, len_trim(l_res)            
+          do k = 1, len_trim(l_res)
             if (res_txt(nres)(k:k) == " ") res_txt(nres)(k:k) ="Q"
           end do
-        end if     
+        end if
       end do
     end if
 !
@@ -294,7 +294,7 @@ subroutine pdbout (mode1)
     write(iprt,"(a)")"// Data set to be loaded", " "
     if (index(keywrd, " GRAPHF") /= 0) then
       line = input_fn(:len_trim(input_fn) - 4)//"mgf"
-    else 
+    else
       line = input_fn(:len_trim(input_fn) - 4)//"pdb"
     end if
     do i = len_trim(line), 1, -1
@@ -307,7 +307,7 @@ subroutine pdbout (mode1)
         line_1 = line(i + 1:len_trim(line)-4)//"_"
       else
         line_1 = " "
-      end if     
+      end if
       if (geo_dat_name(:len_trim(geo_dat_name) -3) == geo_ref_name(:len_trim(geo_ref_name) -3)) then
         line = trim(line_1)//geo_dat_name(:len_trim(geo_dat_name) - 4)//"_a.pdb"//"' '"// &
         trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; "//backslash
@@ -316,7 +316,7 @@ subroutine pdbout (mode1)
         trim(line_1)//geo_ref_name(:len_trim(geo_ref_name) - 3)//"pdb"//"'; "//backslash
       end if
       write(iprt,"(10x,a)")"FILES '"//trim(line)
-    else      
+    else
       write(iprt,"(10x,a)")"'"//trim(line(i + 1:))//"'; "//backslash
     end if
     write(iprt,"(10x,a)")"set measurementUnits ANGSTROMS; "//backslash
@@ -336,7 +336,7 @@ subroutine pdbout (mode1)
     "connect 0.8  1.5 (hydrogen) (phosphorus) create; "//backslash
     if (l_geo_ref) then
       write(iprt,"(10x,a)")"set zoomLarge false; frame 0;"" "
-    else      
+    else
       write(iprt,"(10x,a)")"set zoomLarge false;"" "
     end if
     write(iprt,"(a)") "} "
@@ -352,7 +352,7 @@ subroutine pdbout (mode1)
         j = len_trim(line) + 1
         if (line_1(i:i) == " ") then
           line(j:) = "&nbsp;"
-        else 
+        else
           line(j:j) = line_1(i:i)
         end if
       end do
@@ -399,7 +399,7 @@ subroutine pdbout (mode1)
       else
         num = char(Int(log10(j + 1.0)) + ichar("2"))
         write(n_res(6:),'(i'//num//',a)')j, res_txt(i)(8:9)
-      end if 
+      end if
       wrt_res = n_res(2:4)//n_res(6:)
       wrt_res(2:2) = char(ichar(wrt_res(2:2)) + ichar("a") - ichar("A"))
       wrt_res(3:3) = char(ichar(wrt_res(3:3)) + ichar("a") - ichar("A"))
@@ -414,9 +414,9 @@ subroutine pdbout (mode1)
         l_res(1:1) = char(ichar("A") + ichar(l_res(1:1)) - ichar("0"))
       k = index(l_res, "-")
       if (k > 0) l_res(k:k) = "_"
-      write(line(j + 2:),"(a)") l_res//" = FALSE;" 
+      write(line(j + 2:),"(a)") l_res//" = FALSE;"
     end do
-    write(iprt,"(a)")trim(line)    
+    write(iprt,"(a)")trim(line)
     write(iprt,"(a)") "isOK1 = TRUE; isOK2 = FALSE; lzoom = TRUE; lcenter = TRUE;"
     if (index(keywrd, " COMPARE") /= 0) then
       write(iprt,"(a)") "endif;')""> 1&<span style=""color:green"">2</span></a>"
@@ -427,14 +427,14 @@ subroutine pdbout (mode1)
       & "lcenter = TRUE; endif;')""><span style=""color:green"">2</span></a>"
     else
       write(iprt,"(a)") "endif;')"">Toggle display all</a>"
-    end if    
+    end if
     write(iprt,"(a)")"</TD>"
 !
 !   Element(2,2)
 !
     write(iprt,"(a)")"<TD><a href=""javascript:Jmol.script(jmolApplet0,'"
     write(iprt,"(a)")"if (lcenter);  lcenter = FALSE; else lcenter = TRUE; center {visible}; endif;"
-    write(iprt,"(a)")"')"">Toggle center picture</a> </TD>","</TR> <TR>" 
+    write(iprt,"(a)")"')"">Toggle center picture</a> </TD>","</TR> <TR>"
 !
 !   Element(1,3)
 !
@@ -460,11 +460,11 @@ subroutine pdbout (mode1)
     if (allocated(p)) then
       if (p(1) > -900.d0) then
         write(iprt,"(a)")"<TR><TD>"
-        write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_x); " 
+        write(iprt,"(a)")"<a href=""javascript:Jmol.script(jmolApplet0,'if (!lcharge_x); "
         write(iprt,"(a)")"frame 0; var use = {visible}; frame 1; select off; var sel = use;"
         write(iprt,"(a)")"var z = 0; for (var i IN @sel){z = 3}"
         write(iprt,"(a)")"if (z = 3); use = sel; endif;"
-        write(iprt,"(a)")"for (var x IN @use){select @x; var txt =  (x.temperature > 0 ? "//backslash// & 
+        write(iprt,"(a)")"for (var x IN @use){select @x; var txt =  (x.temperature > 0 ? "//backslash// &
           "'+"//backslash//"':"//backslash//"'"//backslash//"')"// &
           "+format("//backslash//"'%1.3f"//backslash//"',x.temperature*0.1 ); label @txt; color label black;"
         write(iprt,"(a)")"set labelOffset 0 0;}  select @sel; lcharge_x= TRUE;"
@@ -505,7 +505,7 @@ subroutine pdbout (mode1)
       "palindrome</a> </TD></TR>"
 !
 ! End of animation instructions
-!    
+!
     end if
     write(iprt,"(a)") "<TR>"
 !
@@ -518,19 +518,19 @@ subroutine pdbout (mode1)
     do j = 1, len_trim(line) - 4
       if (line(j:j) == "/" .or. line(j:j) == backslash) then
         i = j
-      end if        
+      end if
     end do
     if (i /= 0) line = line(i + 1:)
     write(iprt,"(a)")"<TD colspan=""2""><a href=""javascript:Jmol.script(jmolApplet0,'script common.txt;')"">"// &
     "<strong style=""font-size:20px"">Common Script</strong>"
     write(iprt,"(a)")"</a>&nbsp; (Read file from:<br> ""<a href=""common.txt""  target=""_blank"">common.txt</a>"")</TD>"
-    write(iprt,"(a)")"</TR> <TR>" 
+    write(iprt,"(a)")"</TR> <TR>"
     write(iprt,"(a)")"<TD colspan=""2""><a href=""javascript:Jmol.script(jmolApplet0,'script "//backslash// &
     "'"//trim(line)//backslash//"';')"">"//"<strong style=""font-size:20px"">Specific Script</strong>"
     write(iprt,"(a)")"</a>&nbsp; (Read file from:<br> ""<a href="""//trim(line)// &
     """  target=""_blank"">"//trim(line)//"</a>"")</TD>"
     write(iprt,"(a)")"</TR></TABLE>"
-!  
+!
 !  The second entry in the first cell is a table of size (nres/5) rows, ncol columns.
 !  Write all residues in table form
 !
@@ -539,8 +539,8 @@ subroutine pdbout (mode1)
       write(iprt,"(a)") "<TABLE>"
       write(iprt,"(a)") "<TR>"
 !
-! Number of rows is a maximum of 36.  
-! If the number of residues is small, put 8 residues on a line 
+! Number of rows is a maximum of 36.
+! If the number of residues is small, put 8 residues on a line
 !
       ncol = max(7, nres/16) + 1
       nprt = 1
@@ -583,7 +583,7 @@ subroutine pdbout (mode1)
             n_res = "[UNK]"//res_txt(i)(4:7)
           else
             n_res = res_txt(i)(4:7)
-          end if            
+          end if
         end if
         write(iprt,"(2a)") "<TD> <a href=""javascript:Jmol.script(jmolApplet0,'if (!"//l_res, &
         ");   display ADD "//trim(n_res)//";  "//l_res//" = TRUE; else "
@@ -593,9 +593,9 @@ subroutine pdbout (mode1)
         if (j > 0) wrt_res = wrt_res(:j - 1)//wrt_res(j + 1:)
         if (index(wrt_res,":") /= 0) then
           j = index(wrt_res,":") + 1
-          write(iprt,"(2a)")"<p class=""auto-style4"">"//wrt_res(1:1)//"<br>"//wrt_res(4:j - 2)//"</p> </a></TD>"  
-        else        
-          write(iprt,"(2a)")"<p class=""auto-style4"">"//wrt_res(1:1)//"<br>"//wrt_res(4:)//"</p> </a></TD>"  
+          write(iprt,"(2a)")"<p class=""auto-style4"">"//wrt_res(1:1)//"<br>"//wrt_res(4:j - 2)//"</p> </a></TD>"
+        else
+          write(iprt,"(2a)")"<p class=""auto-style4"">"//wrt_res(1:1)//"<br>"//wrt_res(4:)//"</p> </a></TD>"
         end if
         if (nprt == ncol) then
           nprt = 1
@@ -630,7 +630,7 @@ subroutine pdbout (mode1)
     call add_path(line)
     inquire (file=trim(line)//"txt", exist = exists)
     if (.not. exists) then
-      open(unit=iprt, file=trim(line)//"txt") 
+      open(unit=iprt, file=trim(line)//"txt")
       i = 0
       do j = 1, len_trim(line)
         if (line(j:j) == "/" .or. line(j:j) == backslash) i = j
@@ -658,7 +658,7 @@ subroutine pdbout (mode1)
 !  Print out information on the system: formula, number of atoms, heat of formation, date, etc.
 !
     write(iprt,"(a)")"<TABLE>"
-    call fdate (idate) 
+    call fdate (idate)
     write(iprt,"(a)")  "<TR><TD> Date:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>"// &
       idate(5:11)//idate(21:)//idate(11:16)//"</TD></TR>"
     write(iprt,"(a,i5,a)")  "<TR><TD> No. atoms:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>", &
@@ -685,12 +685,12 @@ subroutine pdbout (mode1)
     write(iprt,"(a)")  "<TR><TD> Formula:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>"//trim(line)//"</TD></TR>"
     if (index(keywrd, " 0SCF") == 0 .or. index(keywrd_txt, " GEO_REF") == 0) then
        if (id == 3) then
-        sum = volume(tvec,3) 
+        sum = volume(tvec,3)
         density = mol_weight*1.D24/fpc_10/sum
         if (density > 1.d-1) write(iprt,"(a,f7.3,a)")  &
-        "<TR><TD> Density:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>",density,"</TD></TR>"    
+        "<TR><TD> Density:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>",density,"</TD></TR>"
       end if
-    else      
+    else
       if (abs(arc_hof_1) > 1.d-4) then
         if (index(keywrd_txt, " GEO_DAT") /= 0) then
           write(iprt,"(a,f12.3,a)")  "<TR><TD> GEO_DAT:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>", &
@@ -708,14 +708,14 @@ subroutine pdbout (mode1)
         i = index(keywrd(i:), "F=") + i + 1
         j = index(keywrd(i:), " ") + i - 2
         k = index(keywrd, " DIFF=") + 6
-        l = k 
+        l = k
         do l = l, len_trim(keywrd)
           if (keywrd(l:l) >= "0" .and. keywrd(l:l) <= "9") exit
         end do
         l = index(keywrd(l:)," ") + l - 2
         write(iprt,"(a)")  "<TR><TD> RMSD: "//keywrd(i:j)//"&Aring;</TD><TD> </TD><TD>Diff: "//keywrd(k:l)//"&Aring;</TD></TR>"
       end if
-    end if        
+    end if
     if (index(line, "H") /= 0 .and. nelecs > 0) then
 !
 !  Net charge has to be worked out the hard way
@@ -724,11 +724,11 @@ subroutine pdbout (mode1)
       do i = 1, numat
         sum = sum + tore(nat(i))
       end do
-      i = nint(sum) 
+      i = nint(sum)
       if (i /= 0) then
         write(iprt,"(a,SP,i6,SS,a)")"<TR><TD> Net charge:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>",i,"</TD></TR>"
       else
-          write(iprt,"(a)")"<TR><TD> Net charge:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>Zero</TD></TR>"        
+          write(iprt,"(a)")"<TR><TD> Net charge:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>Zero</TD></TR>"
       end if
     end if
     if (abs(escf) > 1.d-10) then
@@ -738,4 +738,4 @@ subroutine pdbout (mode1)
     end if
     write(iprt,"(a)")  "</TABLE>"
   end subroutine write_data_to_html
-  
+

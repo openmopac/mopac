@@ -46,7 +46,7 @@
   first = (.not. let)
   first_2 = .true.
   i = index(keywrd," SITE=")
-  j = index(keywrd(i:), ") ") + i 
+  j = index(keywrd(i:), ") ") + i
   k = index(allkey, "SALT")
   if (k /= 0) then
     k = index(allkey, " SITE")
@@ -96,7 +96,7 @@
       else
         i_charge = 100 ! this means "not l_res"
       end if
-    end if       
+    end if
 !
 !  Deliberately add or remove hydrogen atoms as required by keyword "SITE"
 !  This request uses sites defined in the "C" style in the manual, e.g., "[HIS]239:A.NE2"(+)
@@ -147,7 +147,7 @@
             do j = 1, 3
               if (nbonds(ibonds(j, i_atom)) == 2) then ! Found a N with two bonds
                 l = ibonds(j, i_atom)
-                call add_sp2_H(ibonds(1,l), l, ibonds(2,l)) 
+                call add_sp2_H(ibonds(1,l), l, ibonds(2,l))
                 numat = numat + 1
                 if (i_charge /= 100) charge(jres,1:2) = charge(jres,2:3)
                 nbonds(i_atom) = nbonds(i_atom) + 1
@@ -187,7 +187,7 @@
 !
         if (k > 0) then
           if (k == 2 .or. k == 1 .and. (nbonds(i_atom) == 4 .or. &! A bit ugly, but it checks for ">C=O" of a peptide bond
-            (l_res .and. nbonds(i_atom) == 3 .and. distance(i_atom, l) > 1.3d0))) then 
+            (l_res .and. nbonds(i_atom) == 3 .and. distance(i_atom, l) > 1.3d0))) then
             if (i_charge == 1) then
 !
 !  Panic: -COO found, but charge is impossible.  Check for another charge on the same residue
@@ -208,7 +208,7 @@
                       i_charge = -1
                     else
                       i_charge = 0
-                    end if 
+                    end if
                     exit
                   end if
               end do
@@ -258,7 +258,7 @@
                 if (abs(bond_length - 1.d0) < 1.d-3) then
                   angle = angle*pi/180.d0
                   call add_a_generic_hydrogen_atom(j, nb_icc, nc_icc, bond_length, angle, dihedral, metals, nmetals)
-                  geo(:,numat) = coord(:,numat)    
+                  geo(:,numat) = coord(:,numat)
                   nbonds(j) = nbonds(j) + 1
                   ibonds(nbonds(j), j) = numat
                   nadd = nadd + 1
@@ -270,7 +270,7 @@
             end if
           end if
         end if
-      end if    
+      end if
     end if
     if (neutral(3) .or. neutral(4) .or. l_res) then !  Must be -NH3(+) or -NH2
       if (nat(i_atom) == 7) then
@@ -287,11 +287,11 @@
             if (l == 3) exit
           end if
         end do
-        if (l == 3) cycle          
+        if (l == 3) cycle
         i = 0
         l = 0
-        do j = 1, nbonds(i_atom)      
-          if (nat(ibonds(j,i_atom)) == 1) i = i + 1         
+        do j = 1, nbonds(i_atom)
+          if (nat(ibonds(j,i_atom)) == 1) i = i + 1
           do k = 1, nbonds(ibonds(j,i_atom))
             m = ibonds(k, ibonds(j,i_atom))
             if (nat(m) == 7 .and. m /= i_atom) l = 1
@@ -313,7 +313,7 @@
               end do
               if (i <= nbonds(j)) cycle
             end if
-          end if          
+          end if
 !
 !  Nitrogen bonded to two hydrogen atoms, add a hydrogen atom.
 !
@@ -402,7 +402,7 @@
           end if
         end if
       end if
-    end if   
+    end if
     if (neutral(9)) then  !  Check for sulfate.  If the structure S-O-H exists, delete the "H"
       if (nat(i_atom) == 8 .and. nbonds(i_atom) == 2) then
         do j = 1, 2
@@ -411,8 +411,8 @@
         if (j < 3) then
           do k = 1, 2
             if (nat(ibonds(k,i_atom)) == 1) exit  !  Look for a hydrogen atom attached to the oxygen
-          end do        
-          if (k < 3) then            
+          end do
+          if (k < 3) then
             l = ibonds(j,i_atom)
             m = 0
             do n = 1, nbonds(l)
@@ -429,7 +429,7 @@
       end if
     end if
     if (neutral(10)) then
-!  Check for phosphate.  
+!  Check for phosphate.
 !
 !  Aim for [PO4](-), e.g., CH3-PO4-H
 !
@@ -452,8 +452,8 @@
             if (l > 2) then
               do k = 1, 2
                 if (nat(ibonds(k,i_atom)) == 1) exit  !  Look for a hydrogen atom attached to the oxygen
-              end do        
-              if (k < 3) then            
+              end do
+              if (k < 3) then
                 l = ibonds(j,i_atom)
                 m = 0
                 do n = 1, nbonds(l)
@@ -483,9 +483,9 @@
             if (nbonds(j) == 1) k = k - 1
           end do
           if (i == 5) then
-          
+
 !
-!  Found a sulfate.  
+!  Found a sulfate.
 !
             i_charge = min(0, i_charge)
             if (charge(jres,2) == "-") i_charge = -2
@@ -493,7 +493,7 @@
 !  Work out the change in the number of ionized atoms
 !  If i_charge becomes negative, delete hydrogen atoms
 !
-            i_charge = i_charge - k 
+            i_charge = i_charge - k
             if (i_charge < 0) then
 !
 !   Now delete hydrogens, as necessary.
@@ -504,7 +504,7 @@
                   if (nbonds(j) == 2) then
                     if(nat(ibonds(2,j)) == 1) exit
                   end if
-                end do  
+                end do
                 if (l < 5) then
                   nat(ibonds(2,j)) = 99
                   ibonds(nbonds(i_atom), i_atom) = 0
@@ -522,7 +522,7 @@
                   do k = 1, 4
                     if (k /= i) exit
                   end do
-                  call add_sp_H(j, i_atom, ibonds(k,i_atom)) 
+                  call add_sp_H(j, i_atom, ibonds(k,i_atom))
                   numat = numat + 1
                   nbonds(i_atom) = nbonds(i_atom) + 1
                   ibonds(nbonds(i_atom), i_atom) = numat
@@ -548,9 +548,9 @@
           if (nbonds(j) == 1) k = k - 1
         end do
         if (i == 5) then
-          
+
 !
-!  Found a phosphate.  
+!  Found a phosphate.
 !
           i_charge = min(0, i_charge)
           if (charge(jres,2) == "-") i_charge = -2
@@ -558,7 +558,7 @@
 !  Work out the change in the number of ionized atoms
 !  If i_charge becomes negative, delete hydrogen atoms
 !
-          i_charge = i_charge - k 
+          i_charge = i_charge - k
           if (i_charge < 0) then
 !
 !   Now delete hydrogens, as necessary.
@@ -569,7 +569,7 @@
                 if (nbonds(j) == 2) then
                   if(nat(ibonds(2,j)) == 1) exit
                 end if
-              end do  
+              end do
               if (l < 5) then
                 nat(ibonds(2,j)) = 99
                 charge(jres,1:2) = charge(jres,2:3)
@@ -588,7 +588,7 @@
                 do k = 1, 4
                   if (k /= i) exit
                 end do
-                call add_sp_H(j, i_atom, ibonds(k,i_atom)) 
+                call add_sp_H(j, i_atom, ibonds(k,i_atom))
                 numat = numat + 1
                 nbonds(i_atom) = nbonds(i_atom) + 1
                 ibonds(nbonds(i_atom), i_atom) = numat
@@ -611,7 +611,7 @@
 !  Now check for explicit atoms
 !
   i = index(keywrd," SITE=")
-  j = index(keywrd(i:), ") ") + i 
+  j = index(keywrd(i:), ") ") + i
   if (j == i) then
     line = "ERROR IN KEYWORD ""SITE"" - no closing "")"""
     call mopend(trim(line))
@@ -625,7 +625,7 @@
     k = Index (keywrd(i:), ") ") + i
     j = index(keywrd(i:k),"""") + i
     if (j == i) exit
-    l = index(keywrd(j:),"""") + j 
+    l = index(keywrd(j:),"""") + j
     line = keywrd(j:l - 2)
     if (line(1:1) == "[") then
 !
@@ -639,18 +639,18 @@
         if (m == j) write(iw,'(/10x,a)')"""]"" Missing in JSmol atom label: """//keywrd(j:l - 2)//'"'
         call mopend("ERROR IN JSMOL ATOM LABEL IN KEYWORD ""SITE""")
         return
-      end if              
+      end if
       if (k == j) then
         line = keywrd(n:l - 2)//keywrd(j + 1:m - 2)//keywrd(j + 5:n - 2)
       else
         line = keywrd(n:l - 2)//keywrd(j + 1:m - 2)//keywrd(k:k)//keywrd(m:k - 2)
       end if
-    end if  
+    end if
     keywrd(j:) = trim(line)//trim(keywrd(l - 1:))
     i = j + len_trim(line) + 2
   end do
   i = index(keywrd," SITE=")
-  j = index(keywrd(i:), ") ") + i 
+  j = index(keywrd(i:), ") ") + i
   line = keywrd(i + 6:j)
   do
     i = index(line, """")
@@ -664,7 +664,7 @@
     if (line(j + 2:j + 2) == "-") i_charge = -1
     if (line(j + 3:j + 3) == "2") i_charge = i_charge*2
     if (line(j + 3:j + 3) == "3") i_charge = i_charge*3
-    line = line(j + 1:) 
+    line = line(j + 1:)
     m = 0
     do k = 1, len_trim(res_txt)
       if (res_txt(k:k) /= " ") then
@@ -672,7 +672,7 @@
         res_txt(m:m) = res_txt(k:k)
       end if
     end do
-    res_txt(m + 1:) = " "          
+    res_txt(m + 1:) = " "
     do i = 1, numat
       txt = trim(txtatm(i))
       n = 0
@@ -682,7 +682,7 @@
           txt(n:n) = txt(k:k)
         end if
       end do
-      txt(n + 1:) = " "   
+      txt(n + 1:) = " "
       n = max(n, m)
       do k = 1, n
         if (res_txt(k:k) /= txt(k:k) .and. res_txt(k:k) /= "*") exit
@@ -694,10 +694,10 @@
         write(iw,'(/10x,a)')"An atom defined by keyword SITE does not match an atom in the system."
         write(iw,'(/10x,a)')"To ignore messages of this type, add keyword ""LET"""
         first = .false.
-      end if      
+      end if
       k = index(allkey, " SITE")
       l = index(allkey(k:), ") ") + k - 1
-      do 
+      do
         k = k + 1
         if (k >= l) exit
         if (allkey(k:k) == '"') then
@@ -705,7 +705,7 @@
 !  Start of an atom-label
 !
           i = k
-          do 
+          do
             k = k + 1
             if (allkey(k:k) == '"') exit
           end do
@@ -721,7 +721,7 @@
               if (m == i) write(iw,'(/10x,a)')"""]"" Missing in JSmol atom label: "//allkey(i:k)
               call mopend("ERROR IN JSMOL ATOM LABEL IN KEYWORD ""SITE""")
               return
-            end if  
+            end if
             if (p == i) then
 !
 !  Chain-letter missing, so:
@@ -740,7 +740,7 @@
               txt(m:m) = txt(n:n)
             end if
           end do
-          txt(m + 1:) = " "            
+          txt(m + 1:) = " "
           if (trim(txt) == trim(res_txt)) exit
         end if
       end do
@@ -749,13 +749,13 @@
       cycle
     end if
     if (l_used(i)) then
-      num = char(ichar("2") + int(log10(i*1.0001))) 
+      num = char(ichar("2") + int(log10(i*1.0001)))
       write(iw,'(/5x, a, i'//num//', a)')"Two requests were made to modify the number of hydrogen atoms on atom", i, &
         ", a carbon atom, PDB label: """//txtatm(i)(:26)//"""."
       write(iw,'(5x, a)')"When more than one hydrogen atom is to be added or deleted use "// &
         """+3"" or ""+2"" or ""-2"" or ""-3"" instead of ""+"" or ""-""."
       call mopend("MULTIPLE REQUESTS WERE MADE USING ""SITE"" TO CHANGE THE NUMBER "// &
-        "OF HYDROGEN ATOMS ON AN ATOM.  THIS IS NOT ALLOWED") 
+        "OF HYDROGEN ATOMS ON AN ATOM.  THIS IS NOT ALLOWED")
       return
     else
       l_used(i) = .true.
@@ -776,7 +776,7 @@
           if (nat(ibonds(j,i)) == 1 .or. nat(ibonds(j,i)) == 99) then
              nat(ibonds(j,i)) = 99
              ibonds(j,i) = 0
-             nbonds(i) = nbonds(i) - 1 
+             nbonds(i) = nbonds(i) - 1
              m = m + 1
           end if
         end do
@@ -785,7 +785,7 @@
 !
         i_charge =  i_charge + m
         if (4 - nbonds(i) < i_charge) then
-          num = char(ichar("2") + int(log10(i*1.0001))) 
+          num = char(ichar("2") + int(log10(i*1.0001)))
           write(iw,'(/5x, a, i'//num//', a)')"An attempt to add a hydrogen atom to atom", i, &
             ", a carbon atom, PDB label: """//txtatm(i)(:26)//""","
           write(iw,'(5x, a, i'//num//', a,/)')"failed because the atom was already saturated. "// &
@@ -805,25 +805,25 @@
           if (index(keywrd, " HTML") + index(keywrd, "PDBOUT") /= 0) then
             line = job_fn(:len_trim(job_fn) - 3)//"pdb"
             call add_path(line)
-            open(unit = 99, file = trim(line), iostat = i) 
+            open(unit = 99, file = trim(line), iostat = i)
             call pdbout(99)
-          end if          
+          end if
           call mopend("ATTEMPT WAS MADE TO ADD A HYDROGEN ATOM TO A CARBON ATOM THAT WAS ALREADY SATURATED")
           return
         end if
         j = ibonds(1,i)
 !
-! Need to jump over any atoms that were hydrogen atoms.  
+! Need to jump over any atoms that were hydrogen atoms.
 ! At this point, hydrogen atoms have ibonds(a,b) = 0, so they are easily identified.
 !
         m = 0
         do l = 1, nbonds(i)
           m = m + 1
           do n = 1, 6
-            k = ibonds(m,i)          
+            k = ibonds(m,i)
             if (k /= 0) exit
             m = m + 1
-          end do          
+          end do
           if (k /= i .and. k /= j) exit
         end do
         bond_length = 1.09d0
@@ -843,17 +843,17 @@
 !
 ! Carbon bonded to two other non-hydrogen atoms
 !
-                angle = 120.d0*pi/180.d0 
+                angle = 120.d0*pi/180.d0
                 dihedral = pi
               case (3)
 !
 ! Carbon bonded to three other non-hydrogen atoms
 !
                 angle = 0.d0
-            end select          
+            end select
             if (angle < 1.d0) then
               call add_a_sp3_hydrogen_atom(i, ibonds(1,i), ibonds(2,i), ibonds(3,i), bond_length, metals, nmetals)
-            else              
+            else
               call add_a_generic_hydrogen_atom(i, j, k, bond_length, angle, dihedral, metals, nmetals)
             end if
             geo(:,numat) = coord(:,numat)
@@ -867,7 +867,7 @@
 !
 ! Carbon bonded to one other non-hydrogen atom
 !
-                angle = 120.d0*pi/180.d0 
+                angle = 120.d0*pi/180.d0
                 internal_dihedral = pi
                 dihedral = pi
               case (2)
@@ -916,8 +916,8 @@
             natoms = natoms + 1
             nbonds(i) = nbonds(i) + 1
             ibonds(nbonds(i),i) = numat
-            geo(:,numat) = coord(:,numat) 
-        end select         
+            geo(:,numat) = coord(:,numat)
+        end select
       case (7)! Select for Nitrogen in different coordination numbers
         select case (nbonds(i))
           case (1)
@@ -925,7 +925,7 @@
 !
 !  Search for an atom attached to the atom that's attached to the nitrogen that's not that nitrogen
 !
-            do k = 1, nbonds(j)   
+            do k = 1, nbonds(j)
               if (ibonds(k,j) /= i) exit
             end do
             k = ibonds(k,j)
@@ -965,7 +965,7 @@
             if (j <= nbonds(i)) then
               nat(ibonds(j,i)) = 99
               ibonds(nbonds(i),i) = 0
-              nbonds(i) = nbonds(i) - 1   
+              nbonds(i) = nbonds(i) - 1
             end if
           end if
         case (3)
@@ -1005,11 +1005,11 @@
               write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), &
               "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
               call mopend(trim(line_1))
-              bug = .true.                
+              bug = .true.
             else
               nat(ibonds(l,i)) = 99
               ibonds(nbonds(i),i) = 0
-              nbonds(i) = nbonds(i) - 1   
+              nbonds(i) = nbonds(i) - 1
             end if
           else
             write(iw,'(/1x,a)')"  A nitrogen atom defined by keyword SITE cannot have a negative charge."
@@ -1017,7 +1017,7 @@
             write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), &
             "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
             call mopend(trim(line_1))
-            bug = .true.              
+            bug = .true.
           end if
         case (4)
           if (i_charge == 0) then
@@ -1035,13 +1035,13 @@
             end if
             nat(ibonds(j,i)) = 99
             ibonds(nbonds(i),i) = 0
-            nbonds(i) = nbonds(i) - 1     
+            nbonds(i) = nbonds(i) - 1
           else if (i_charge == 1) then
             write(iw,'(/1x,a,/)')" A nitrogen atom defined by keyword SITE is already bonded to four atoms."
             write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
             call mopend(trim(line_1))
           end if
-        end select          
+        end select
       case (8, 16)! Select for Oxygen in different coordination numbers
   99    continue
         select case (nbonds(i))
@@ -1062,7 +1062,7 @@
               do k = 1, nbonds(j)   ! If no -COO, search for anything other that atom i
                 if (ibonds(k,j) /= i) exit
               end do
-            end if     
+            end if
             if (k > nbonds(j)) then
               do k = numat, 1, -1
                 if (k /= j .and. k /= i) exit
@@ -1071,8 +1071,8 @@
                 line = "A hydrogen atom cannot be added to a diatomic.  Do this outside MOPAC"
                 call mopend(trim(line))
                 return
-              end if                
-            else              
+              end if
+            else
               k = ibonds(k,j)
             end if
             call add_sp_H(i, j, k)
@@ -1084,7 +1084,7 @@
               ibonds(2,i) = natoms
             end if
           else if (i_charge == -1) then
-            num = char(ichar("1") + int(log10(i*1.001))) 
+            num = char(ichar("1") + int(log10(i*1.001)))
             write(iw,'(/,a,i'//num//',a,/,a,/)')"  Oxygen atom ",i, &
               " defined by keyword SITE is already bonded to only one atom,", &
               "  so a hydrogen atom cannot be deleted, as requested by the option ""(-)"""
@@ -1092,14 +1092,14 @@
               "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
             call mopend(trim(line_1))
             bug = .true.
-          end if 
+          end if
         case (2)
           if (i_charge == -1) then
             do j = 1, nbonds(i)
               if (nat(ibonds(j,i)) == 1) exit
             end do
             if (j > nbonds(i)) then
-              num = char(ichar("1") + int(log10(i*1.001))) 
+              num = char(ichar("1") + int(log10(i*1.001)))
               write(iw,'(/1x,a,i'//num//',a,/)')"  Oxygen atom ",i, " defined by keyword SITE is not bonded to any hydrogen atoms."
               write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
               call mopend(trim(line_1))
@@ -1107,22 +1107,22 @@
             else
               nat(ibonds(j,i)) = 99
               ibonds(nbonds(i),i) = 0
-              nbonds(i) = nbonds(i) - 1 
+              nbonds(i) = nbonds(i) - 1
             end if
           else if (i_charge == 0) then
-            num = char(ichar("1") + int(log10(i*1.001))) 
+            num = char(ichar("1") + int(log10(i*1.001)))
             write(iw,'(/1x,a,i'//num//',a,/)')"  Oxygen atom ",i, " defined by keyword SITE is already bonded to two atoms."
             write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
             call mopend(trim(line_1))
             bug = .true.
           else
-            call add_sp2_H(ibonds(1,i), i, ibonds(2,i))  
+            call add_sp2_H(ibonds(1,i), i, ibonds(2,i))
             numat = numat + 1
             nbonds(i) = nbonds(i) + 1
             ibonds(nbonds(i), i) = numat
             nadd = nadd + 1
             changes(nadd)(:15) = trim(txtatm(i)(12:))
-          end if 
+          end if
         case (3)
           if (i_charge == -1 .or. i_charge == 0) then
             do j = 1, nbonds(i)
@@ -1145,12 +1145,12 @@
             call mopend(trim(line_1))
             bug = .true.
           end if
-        end select     
+        end select
       case default
         write(iw,'(/1x,a,/)')" An atom defined by keyword SITE is not a nitrogen, oxygen, or sulfur."
         write(line_1,'(a,4x,3f8.3,a)')'Faulty atom = "'//txtatm(i), coord(:,i), "  1.00  0.00      PROT"//elemnt(nat(i))//'"'
         call mopend(trim(line_1))
-        bug = .true.      
+        bug = .true.
    end select
   end do
 !
@@ -1162,35 +1162,35 @@
       if (k == 0) then
         k = index(keywrd," SITE=")
         l = index(keywrd(k:), ") ") + k
-        if (allkey /= " ") write(iw,'(/10x,a)')"Faulty SITE Keyword: '"//trim(allkey)//"'"     
-      end if  
+        if (allkey /= " ") write(iw,'(/10x,a)')"Faulty SITE Keyword: '"//trim(allkey)//"'"
+      end if
       k = index(keywrd," SITE=")
       if (j == 1) then
        do k = k, len_trim(keywrd)
          if (keywrd(k:k) == "(") exit
        end do
        k = k + 1
-      else        
+      else
         do i = 1, j - 1
           k = index(keywrd(k + 1:l), ",") + k + 1
         end do
       end if
-      i = index(keywrd(k + 1:l), ",") 
+      i = index(keywrd(k + 1:l), ",")
       if (i == 0) i = index(keywrd(k + 1:l + 1), ") ")
       i = i + k - 1
       write(line_1,'(a,i3,a)')"Site:", j, ", '"//keywrd(k:i)//"', was not properly recognized."
-      call mopend(trim(line_1)) 
+      call mopend(trim(line_1))
       write(iw,'(/10x,a)')"(Check that the residue is not duplicated and can be ionized or de-ionized)"
       if (index(keywrd, " 0SCF") /= 0) moperr = .false.
     end if
   end do
   if (bug) then
     if (allkey /= " ") then
-      write(line_1,'(a)')"FAULTY SITE KEYWORD: '"//trim(allkey)//"'"   
+      write(line_1,'(a)')"FAULTY SITE KEYWORD: '"//trim(allkey)//"'"
     else
-      write(line_1,'(a)')"FAULTY SITE KEYWORD"  
+      write(line_1,'(a)')"FAULTY SITE KEYWORD"
     end if
-    call mopend(trim(line_1))       
+    call mopend(trim(line_1))
     write(iw,'(/10x,a,/10x,a)')"(Check that the atom is N or O and can be ionized or de-ionized)"
     if (index(keywrd, " 0SCF") /= 0) return
   end if
@@ -1204,7 +1204,7 @@
         changes(ndel)(16:) = trim(txtatm(ibonds(1,i))(12:))
       end if
     end if
-  end do  
+  end do
   j = 0
   do i = 1, ndel
     do k = 1, i - 1
@@ -1217,7 +1217,7 @@
   end do
   ndel = j
   j = 0
-  do i = 1, numat 
+  do i = 1, numat
     if (nat(i) /= 99) then
       j = j + 1
       geo(:,j) = geo(:,i)
@@ -1231,22 +1231,22 @@
   numat = j
   natoms = numat
   labels(:numat) = nat(:numat)
-  call set_up_dentate()  
-  call update_txtatm(.true., .false.) 
+  call set_up_dentate()
+  call update_txtatm(.true., .false.)
   j = max(nadd, ndel)
   if (j > 0) then
     write(iw,'(/7x,a,/)')"Changes in Ionization caused by keyword SITE"
     n = 85
     k = len_trim(allkey)
     i = min(k,n - 8)
-    l = index(allkey(i:), ",") 
-    if (l == 0) l = index(allkey(i:), "))") 
+    l = index(allkey(i:), ",")
+    if (l == 0) l = index(allkey(i:), "))")
     i = min(k, l + i) - 1
     if (i == k - 1) then
       write(iw,'(7x,a)')"Keyword:"//allkey(1:k)
     else
       write(iw,'(7x,a)')"Keyword:"//allkey(1:i)
-      do 
+      do
         l = i + 1
         i = min(l + n, k)
         i = min(k, index(allkey(i:), ",") + i)
@@ -1258,7 +1258,7 @@
           i = i - 1
           write(iw,'(7x, a)')allkey(l:i)
         end if
-      end do 
+      end do
     end if
     write(iw,'(/5x,a,/)')" Hydrogen atoms added to     Hydrogen atoms deleted from"
     k = 0
@@ -1279,4 +1279,4 @@
   natoms = natoms + id
   return
   end subroutine site
- 
+

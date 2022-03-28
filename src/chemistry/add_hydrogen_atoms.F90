@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- subroutine add_hydrogen_atoms() 
+ subroutine add_hydrogen_atoms()
 !
 !   Adds hydrogen atoms.
 !
@@ -43,7 +43,7 @@
   integer, external :: nheavy
 !
 !  Number of hydrogen atoms on each atom in a residue
-!  
+!
   data (i_add(1,i),i=1,4)/1,2,0,0/                        !   GLY
   data (i_add(2,i),i=1,5)/1,1,0,0,3/                      !   ALA
   data (i_add(3,i),i=1,6)/1,1,0,0,2,1/                    !   SER
@@ -56,7 +56,7 @@
   data (i_add(10,i),i=1,8)/1,1,0,0,2,0,0,1/               !   ASP
   data (i_add(11,i),i=1,8)/1,1,0,0,2,0,0,2/               !   ASN
   data (i_add(12,i),i=1,8)/1,1,0,0,2,1,3,3/               !   LEU
-  data (i_add(13,i),i=1,9)/1,1,0,0,2,2,2,2,2/             !   LYS  
+  data (i_add(13,i),i=1,9)/1,1,0,0,2,2,2,2,2/             !   LYS
   data (i_add(14,i),i=1,9)/1,1,0,0,2,2,0,0,1/             !   GLU
   data (i_add(15,i),i=1,9)/1,1,0,0,2,2,0,0,2/             !   GLN
   data (i_add(16,i),i=1,11)/1,1,0,0,2,2,2,1,0,2,1/        !   ARG
@@ -81,7 +81,7 @@
   data (b_add(10,i),i=1,8)/2,3,3,1,2,3,1,1/               !   ASP
   data (b_add(11,i),i=1,8)/2,3,3,1,2,3,1,1/               !   ASN
   data (b_add(12,i),i=1,8)/2,3,3,1,2,3,1,1/               !   LEU
-  data (b_add(13,i),i=1,9)/2,3,3,1,2,2,2,2,1/             !   LYS  
+  data (b_add(13,i),i=1,9)/2,3,3,1,2,2,2,2,1/             !   LYS
   data (b_add(14,i),i=1,9)/2,3,3,1,2,2,2,1,1/             !   GLU
   data (b_add(15,i),i=1,9)/2,3,3,1,2,2,3,1,1/             !   GLN
   data (b_add(16,i),i=1,11)/2,3,3,1,2,2,2,2,3,1,1/        !   ARG
@@ -118,7 +118,7 @@
       if (nat(i) /= 1) then
         j = j + 1
         store_nat(j) = nat(i)
-        store_coord(:,j) = coord(:,i) 
+        store_coord(:,j) = coord(:,i)
         store_atmass(j)  = atmass(i)
         store_lopt(:,j)  = lopt(:,i)
         store_l_atom(j)  = l_atom(i)
@@ -177,7 +177,7 @@
     store_numat = numat
 !
 !  Re-calculate connectivity.  This is simpler than trying to remove hydrogen atoms from nbonds and ibonds.
-!   
+!
      l_reseq = (index(keywrd, " RESEQ") /= 0)
      if (l_reseq) call l_control("RESEQ", len("RESEQ"), -1)
      call geochk()                               ! This needs to be called, to work out residue names
@@ -194,7 +194,7 @@
 !    If everything is in quotation marks, use the CVB keyword
 !
        k = 0
-       do 
+       do
          k = k + 1
          if (k >= ii) exit
          if (line(k:k) == '"') then
@@ -313,7 +313,7 @@
 !
 !   Get number of hydrogen atoms to be added from amino-acid residue
 !
-          nH = i_add(j,an) 
+          nH = i_add(j,an)
 !
 ! if "an" is 4, then this is a peptide oxygen atom.
 ! check to see if it is a terminal atom, i.e., it is ...-(CR)-C-O
@@ -322,7 +322,7 @@
             if (nheavy(ibonds(1,icc)) == 2) then
               if (distance(icc, ibonds(1,icc)) > 1.35d0) nH = 1
             end if
-          end if              
+          end if
           if (nat(icc) == 8 .and. nbonds(icc) > 1) nH = 0
           if (an == 1 .and. nbonds(icc) == 1) then
             if (ionized) then
@@ -396,15 +396,15 @@
                 const = 1.d0 - 0.98d0/distance(icc, i)
                 coord(:, i) = coord(:, i) - const*(coord(:, i) - coord(:, icc))
                 const = 1.d0 - 0.98d0/distance(icc, j)
-                coord(:, j) = coord(:, j) - const*(coord(:, j) - coord(:, icc))       
+                coord(:, j) = coord(:, j) - const*(coord(:, j) - coord(:, icc))
               end if
             end if
-          end if            
-        case (2)      
+          end if
+        case (2)
           call add_a_generic_hydrogen_atom(icc, nb_icc, nc_icc, bond_length, angle, dihedral, metals, nmetals)
           internal_dihedral = internal_dihedral + dihedral
           call add_a_generic_hydrogen_atom(icc, nb_icc, nc_icc, bond_length, angle, internal_dihedral, metals, nmetals)
-        case (3)      
+        case (3)
           call add_a_generic_hydrogen_atom(icc, nb_icc, nc_icc, bond_length, angle, pi, metals, nmetals)
           call add_a_generic_hydrogen_atom(icc, nb_icc, numat, bond_length, angle, internal_dihedral, metals, nmetals)
           call add_a_generic_hydrogen_atom(icc, nb_icc, numat, bond_length, angle, internal_dihedral, metals, nmetals)
@@ -440,8 +440,8 @@
 !
 ! At this point it's necessary to re-calculate nbonds and ibonds
 !
-    call set_up_dentate()   
-    call geochk()           
+    call set_up_dentate()
+    call geochk()
     if (index(keywrd, "SITE") /= 0) call geochk()
     call l_control("NOSITE", len("NOSITE"), 1)
     call reset_breaks()
@@ -464,12 +464,12 @@
 !
 ! angle:             The angle between the hydrogen atom to be added and atoms icc and nb_icc
 !
-! dihedral :         The torsion angle between the hydrogen atom to be added and atoms icc, 
+! dihedral :         The torsion angle between the hydrogen atom to be added and atoms icc,
 !                    nb_icc, and nc_icc
 !
-! internal_dihedral: The torsion angle between the hydrogen atom to be added and atoms 
+! internal_dihedral: The torsion angle between the hydrogen atom to be added and atoms
 !                    icc, nb_icc, and the previous hydrogen atom added, when two or three hydrogen atoms are added
-! 
+!
   use molkst_C,  only : numat
   use funcon_C,  only : pi
   use common_arrays_C,  only : nat,  coord,  nbonds,  ibonds, txtatm, labels
@@ -501,7 +501,7 @@
 !
     bond_length = 0.d0
     angle = 0.d0       !  Not necessary, but useful when debugging
-    nb_icc = 0 
+    nb_icc = 0
     nc_icc = 0
     nd_icc = 0
     nH = 0
@@ -517,7 +517,7 @@
         return
       end if
       select case (nat(icc))
-        case (6)      
+        case (6)
           nH = 3                        ! Methane
           bond_length = 1.09d0
           angle = tetrahedral
@@ -532,59 +532,59 @@
         case (8)
           nH = 1                        ! Water
           bond_length = 0.957d0
-          angle = 104.4d0     
-        case (14)      
+          angle = 104.4d0
+        case (14)
           nH = 3                        ! Silane
           bond_length = 1.48d0
           angle = tetrahedral
           dihedral = 120.d0
-          internal_dihedral = 120.d0     
+          internal_dihedral = 120.d0
         case (15)
           nH = 2                        ! Phosphine
           bond_length = 1.42d0
-          angle = 93.5d0   
+          angle = 93.5d0
           dihedral = 93.8d0
           internal_dihedral = dihedral
         case (16)
           nH = 1                        ! H2S
           bond_length = 1.336d0
-          angle = 92.1d0   
+          angle = 92.1d0
         case (9, 17, 35, 53)
-          return                        ! Halogen ions  
+          return                        ! Halogen ions
         case (33)
           nH = 2                        ! Arsine
           bond_length = 1.519d0
-          angle = 91.8d0   
-          dihedral = 92d0    
+          angle = 91.8d0
+          dihedral = 92d0
           internal_dihedral = dihedral
         case (34)
           nH = 1                        ! H2Se
           bond_length = 1.46d0
-          angle = 91.d0    
+          angle = 91.d0
         case (51)
           nH = 2                        ! Stibine
           bond_length = 1.707d0
-          angle = 91.8d0   
-          dihedral = 92d0 
-          internal_dihedral = dihedral  
+          angle = 91.8d0
+          dihedral = 92d0
+          internal_dihedral = dihedral
         case (52)
           nH = 1                        ! H2Se
           bond_length = 1.69d0
-          angle = 90.d0  
+          angle = 90.d0
         case default
           nH = 0                        ! If the atom is not specified, don't assign hydrogen atoms to it.
-          return              
+          return
       end select
 !
 !                                         Common to all isolated atoms that have hydrogen atoms
 !
       numat = numat + 1
       nat(numat) = 1
-      labels(numat) = 1  
+      labels(numat) = 1
       do i = 1, 6
         coord(:, numat) = coord(:,icc) + bond_length*search(:,i)
         if ( .not. near_a_metal(icc, numat, metals, nmetals)) exit
-      end do 
+      end do
       if (i > 6) then
         nH = 0
         if (nat(icc) == 8) then
@@ -608,7 +608,7 @@
           sum = 1.d0 - 0.98d0/distance(icc, i)
           coord(:, i) = coord(:, i) - sum*(coord(:, i) - coord(:, icc))
           sum = 1.d0 - 0.98d0/distance(icc, j)
-          coord(:, j) = coord(:, j) - sum*(coord(:, j) - coord(:, icc)) 
+          coord(:, j) = coord(:, j) - sum*(coord(:, j) - coord(:, icc))
           return
         end if
         numat = numat - 1
@@ -617,8 +617,8 @@
       nb_icc = numat
       nbonds(icc) = 1
       nbonds(numat) = 1
-      ibonds(1,icc) = numat     
-      ibonds(1,numat) = icc  
+      ibonds(1,icc) = numat
+      ibonds(1,numat) = icc
     else
       ii = ibonds(1,icc)
       if (nbonds(icc) == 3) then
@@ -645,9 +645,9 @@
 !
 ! Atomic numbers increase ii <= jj <= kk
 !
-        Rab = distance(icc, ii) 
-        Rac = distance(icc, jj)  
-        Rad = distance(icc, kk) 
+        Rab = distance(icc, ii)
+        Rac = distance(icc, jj)
+        Rad = distance(icc, kk)
         if (nat(ii) == nat(jj)) then
           if (Rab > Rac) then
             i = ii
@@ -663,13 +663,13 @@
         if (nat(jj) < nat(ii)) then
           i  = ii
           ii = jj
-          jj = i        
+          jj = i
         end if
 !
 ! Atomic numbers increase ii <= jj
 !
-        Rab = distance(icc, ii) 
-        Rac = distance(icc, jj) 
+        Rab = distance(icc, ii)
+        Rac = distance(icc, jj)
         if (nat(ii) == 6 .and. nat(jj) == 6) then
           if (Rab > Rac) then   ! reverse order so Rab is smaller than Rac
             Rad = Rab
@@ -678,11 +678,11 @@
             i = ii
             ii = jj
             jj = i
-          end if 
+          end if
         end if
       else
-        Rab = distance(icc, ii)   
-      end if 
+        Rab = distance(icc, ii)
+      end if
 !
 !
 !                   Now start to assign the number of hydrogen atoms to each non-hydrogen atom.
@@ -704,11 +704,11 @@
 !                     C-C 1.54     C=C 1.34  CTC 1.20
 !                     C-N 1.43     C=N 1.38  CTN 1.16
 !                     C-O 1.43     C=O 1.23  CTO 1.13
-!                     C-S 1.83     C=S 
+!                     C-S 1.83     C=S
 !                     N-N 1.47     N=N 1.24  NTN 1.10
 !                     N-O 1.36     N=O 1.22
 !                     O-O 1.48     O=O 1.21
-!                     S-S 2.08     S=S 
+!                     S-S 2.08     S=S
 !
 !             ii = atom attached to icc
 !             jj = atom attached to icc, and its atomic number is greater than or equal to that of ii
@@ -734,7 +734,7 @@
       else if (nbonds(icc) == 2) then
         nb_icc = ii
         nc_icc = jj
-      else 
+      else
         nb_icc = ibonds(1,icc)
         nc_icc = ibonds(2,icc)
         nd_icc = ibonds(3,icc)
@@ -758,13 +758,13 @@
           end if
                                         ! Carbon is very important
         case (6)                        ! so there are a lot of options for C-H bonds
-                                        ! (Add more as necessary)                  
+                                        ! (Add more as necessary)
           select case (nbonds(icc))
           case (1)                      ! Carbon bonded to one other atom
-            if (nat(ii) == 6) then         
+            if (nat(ii) == 6) then
 !
 !  C-C bonds are common. So look at single, double, and triple bonds
-!            
+!
               jj = 0
               do i = 1, nbonds(ii)
                 if (nat(ibonds(i,ii)) == 6) jj = jj + 1
@@ -780,10 +780,10 @@
                    if (nat(ll) == 6 .and. jj == 0 .and. ll /= icc .and. (kk /= ll .or. kk == 0)) jj = ibonds(i,ii)
                    if (nat(ll) == 6 .and. kk == 0 .and. ll /= icc .and. (jj /= ll .or. jj == 0)) kk = ibonds(i,ii)
                  end do
-                call dihed(coord, icc, ii, jj, kk, sum) 
+                call dihed(coord, icc, ii, jj, kk, sum)
                 sum = abs(sum)
                 if (hybrid(ii) == 3 .or. min(pi - sum, sum) > 0.4d0) then  ! 22.9 degrees
-                  nH = 3 
+                  nH = 3
                   angle = tetrahedral                   !  If flat, nc
                   internal_dihedral = 120.d0
                   hybrid(icc) = 3
@@ -832,13 +832,13 @@
                 angle = 179.d0
                 hybrid(icc) = 1
               end if
-            else if (nat(ii) == 7) then 
+            else if (nat(ii) == 7) then
               if (hybrid(ii) == 3 .or. Rab > CN) then
                 nH = 3                ! Methyl
                 bond_length = 1.09d0
                 angle = tetrahedral
-                internal_dihedral = 120.d0      
-                return         
+                internal_dihedral = 120.d0
+                return
               end if
               hybrid(icc) = 1
               if (ionized) then
@@ -847,8 +847,8 @@
                 nH = 1                    ! Hydrogen cyanide
                 angle = 179.d0
               end if
-            else if (nat(ii) == 8) then 
-              if (Rab > 1.37d0 .or. nbonds(ii) > 1) then 
+            else if (nat(ii) == 8) then
+              if (Rab > 1.37d0 .or. nbonds(ii) > 1) then
                 nH = 3                ! Methanol
                 bond_length = 1.09d0
                 angle = tetrahedral
@@ -860,7 +860,7 @@
                 internal_dihedral = 180.d0
                 hybrid(icc) = 2
               end if
-            else 
+            else
                 nH = 3                ! -CH3 (catch-all)
                 angle = tetrahedral
                 internal_dihedral = 120.d0
@@ -871,7 +871,7 @@
           case (2)                      ! Carbon bonded to two other atoms
 !
             if(nat(ii) == 6) then
-              if (nat(jj) == 6) then                
+              if (nat(jj) == 6) then
                 if (aromatic_5(icc, ii, jj, hybrid)) then
                   if (Rab < 1.44d0) then
                     nH = 1                  ! C=C-C
@@ -916,14 +916,14 @@
                  hybrid(icc) = 2
                  return
                 end if
-                if ( Rab < 1.44d0) then 
+                if ( Rab < 1.44d0) then
                   nH = 1                  ! Double bond
                   angle = 120.d0
                   dihedral = 180.d0
                   hybrid(icc) = 2
                   return
                 end if
-                i = 0 
+                i = 0
                 if (sum > 2.03d0 .and. (Rab < 1.39d0) .or. sum > 2.2d0 .and. (Rab < 1.41d0)) then
                   if (nbonds(ii) /= 4) then
                     if (nbonds(ii) == 3) then
@@ -936,7 +936,7 @@
                       call bangle (coord, ibonds(1,ii), ii, ibonds(2,ii), sum)
                       if (sum > 2.d0) i = 1
                     else
-                      i = 1 ! over 116.3 degrees and short bond-lengths                      
+                      i = 1 ! over 116.3 degrees and short bond-lengths
                     end if
                   end if
                 end if
@@ -1024,7 +1024,7 @@
                   jj = ibonds(1,ii)
                   if (jj == icc) jj = ibonds(2,ii)
                   call bangle (coord, icc, ii, jj, sum)
-                end if 
+                end if
                 if (Rac < 1.3d0 .and. sum > 2.03d0) then
                   nH = 1                  ! C-C=O
                   angle = 120.d0
@@ -1060,7 +1060,7 @@
                 end if
               else if (nat(jj) == 15) then
 !
-!   Carbon bonded to one carbon and one phosphorus atom, e.g. C-C-P 
+!   Carbon bonded to one carbon and one phosphorus atom, e.g. C-C-P
 !   Check for double bond
 !
                 nH = 2                    ! C-C-P
@@ -1071,17 +1071,17 @@
                 hybrid(icc) = 3
               else if (nat(jj) == 16 .or. nat(jj) == 34) then
 !
-!   Carbon bonded to one carbon and one sulfur or selenium atom, e.g. C-C-S 
+!   Carbon bonded to one carbon and one sulfur or selenium atom, e.g. C-C-S
 !   Check for double bond
 !
-                if (Rab > 1.35d0) then 
-                  nH = 2               
+                if (Rab > 1.35d0) then
+                  nH = 2
                   angle = tetrahedral
                   dihedral = 120.d0
                   internal_dihedral = 120.d0
                   hybrid(icc) = 3
                   hybrid(icc) = 2
-                else if (Rab > 1.25d0) then  
+                else if (Rab > 1.25d0) then
                   if (Rab < 1.4d0 .and. (Rac < 1.6d0 .and. nbonds(jj) == 1)) return ! thioketene
                   nH = 1                  ! C=CH-S
                   bond_length = 1.07d0
@@ -1096,11 +1096,11 @@
             else if (nat(ii) == 7) then
               if (nat(jj) == 8) then
                 if (Rac < 1.3d0) then
-                  nH = 1                    ! aromatic_5 - type 
+                  nH = 1                    ! aromatic_5 - type
                   angle = 120.d0
                   dihedral = 180.d0
                   hybrid(icc) = 2
-                  return  
+                  return
                 else
                   nH = 2                    ! C-C-S
                   angle = tetrahedral
@@ -1108,7 +1108,7 @@
                   internal_dihedral = 120.d0
                   hybrid(icc) = 3
                   return
-                end if              
+                end if
               else if (nat(jj) == 7) then
                 if ((hybrid(ii) == 3 .or. hybrid(jj) == 3) .and. (Rab > 1.4d0 .and. Rac > 1.4d0)) then
                   nH = 2                    ! N-C-N
@@ -1122,7 +1122,7 @@
                   angle = 120.d0
                   dihedral = 180.d0
                   hybrid(icc) = 2
-                  return  
+                  return
                 end if
               else if (nat(jj) == 14) then  ! N-C-S
                 if (Rab > 1.4d0 .and. Rac > 1.8d0) then
@@ -1132,16 +1132,16 @@
                   internal_dihedral = 120.d0
                   hybrid(icc) = 3
                 else
-                  nH = 1                    
+                  nH = 1
                   angle = 120.d0
                   dihedral = 180.d0
-                  hybrid(icc) = 2                       
+                  hybrid(icc) = 2
                 end if
                 return
               end if
               if (nat(jj) == 16) then
 !
-!   Carbon bonded to one nitrogen and one sulfur atom, e.g. N-C-S 
+!   Carbon bonded to one nitrogen and one sulfur atom, e.g. N-C-S
 !
                 nH = 2                    ! N-C-S
                 angle = tetrahedral
@@ -1153,7 +1153,7 @@
               if (nbonds(icc) == 2 .and. Rab < cyanide) then
                 nH = 0                    ! Cyanide (nitrile)
               else
-                nH = 1                    ! aromatic_5 - type 
+                nH = 1                    ! aromatic_5 - type
                 angle = 120.d0
                 dihedral = 180.d0
                 hybrid(icc) = 2
@@ -1190,37 +1190,37 @@
                 dihedral = 180.d0
                 hybrid(icc) = 2
               else
-                nH = 0    
+                nH = 0
                 hybrid(icc) = 2
               end if
               hybrid(icc) = 2
             else if (nat(ii) == 15) then
-              nH = 0   
+              nH = 0
               hybrid(icc) = 2
             else
               hybrid(icc) = 3
             end if
 !
           case (3)                      ! Carbon bonded to three other atoms
-! 
+!
             if (nat(jj) == 7 .and. Rac < CN .and. nat(kk) == 8) then
               nH = 0 ! C-(CO)=N already three ligands
               return
-            end if  
+            end if
             if (nat(jj) == 6 .and. Rad < 1.31d0 .and. nat(kk) == 7) then
               nH = 0 ! C-(C)=N already three ligands
               return
-            end if  
+            end if
             if (nat(ii) == 6 .and. Rab < CC .and. nat(jj) == 6 .and. nat(kk) == 16) then
               nH = 0 ! S-C=C and already three ligands
               return
             end if
-            call dihed(coord, icc, ii, jj, kk, sum) 
+            call dihed(coord, icc, ii, jj, kk, sum)
 !
 !  A dihedral angle involving the current atom and the three joined to it
 !  can be used in deciding whether or not it should be sp2 or sp3
 !
-!  The tetrahedral dihedral angle, that is the torsion angle from an atom 
+!  The tetrahedral dihedral angle, that is the torsion angle from an atom
 !  to the first ligand, then to the second, then to the third, is ~35.26439 degrees.
 !  The sine of this number is: 0.57735
 !
@@ -1251,7 +1251,7 @@
                 nH = 0                      !  If flat, and short bond lengths, make sp2
                 hybrid(icc) = 2
                 return
-              end if 
+              end if
             end if
             if (min(2*pi - sum, sum) > 0.25d0) then
               nH = 1                      !  If pyrimidal, make sp3, and don't check anything else
@@ -1286,7 +1286,7 @@
                     nH = 0
                     hybrid(icc) = 2
                   end if
-                else if (nat(kk) == 9 .or. nat(kk) == 17 .or. nat(kk) == 35 .or. nat(kk) == 53) then      
+                else if (nat(kk) == 9 .or. nat(kk) == 17 .or. nat(kk) == 35 .or. nat(kk) == 53) then
                   if (min(Rab, Rac) < 1.45d0) then     !  carbon bonded to two carbon atoms and one halogen
                     nH = 0
                     hybrid(icc) = 2
@@ -1314,7 +1314,7 @@
                     hybrid(icc) = 2
                   end if
                 else if (nat(kk) == 16) then
-                  call dihed(coord, icc, ii, jj, kk, sum) 
+                  call dihed(coord, icc, ii, jj, kk, sum)
                   if (min(2*pi - sum, sum) < 0.15d0) then
                     nH = 0                               ! aromatic ring
                     hybrid(icc) = 2
@@ -1332,7 +1332,7 @@
                   else
                     nH = 0
                     hybrid(icc) = 2
-                  end if                  
+                  end if
                 end if
               else if (nat(jj) == 9 .or. nat(jj) == 17 .or. nat(jj) == 35 .or. nat(jj) == 53) then
                 if (Rab < 1.44d0) nH = 0  ! X-C=C
@@ -1357,8 +1357,8 @@
               end if
             else if (nat(ii) == 8 .or. nat(ii) == 16) then
               nH = 0                                ! Carbon bonded to three oxygen or sulfur atoms !
-            end if  
-          case default  
+            end if
+          case default
             hybrid(icc) = 3
           end select
                                         ! Nitrogen is very important
@@ -1373,7 +1373,7 @@
             ii = ibonds(1,icc)
             if (nat(ii) == 6) then
               if (Rab < cyanide .and. nbonds(ii) < 3) then
-                nH = 0  
+                nH = 0
                 hybrid(icc) = 1                          ! Cyanide
                 return
               end if
@@ -1388,7 +1388,7 @@
                 angle = 120.d0
                 internal_dihedral = 180.d0
                 dihedral = 0.d0
-                hybrid(icc) = 1                          
+                hybrid(icc) = 1
                 return
               end if
 !
@@ -1430,7 +1430,7 @@
                     dihedral = 0.d0
                     hybrid(icc) = 3
                     return
-                  end if   
+                  end if
                 end if
                end do
             else if (nat(ii) == 7) then
@@ -1451,7 +1451,7 @@
               internal_dihedral = 120.d0
               dihedral = 120.d0
               hybrid(icc) = 3
-            end if          
+            end if
           else if (nbonds(icc) == 2) then
 !
 !  Nitrogen bonded to two atoms
@@ -1463,7 +1463,7 @@
                   nH = 0
                   hybrid(icc) = 2
                 else
-                  nH = 1  
+                  nH = 1
                   angle = 120.d0
                   dihedral = 180.d0
                   hybrid(icc) = 3
@@ -1477,7 +1477,7 @@
                   nH = 0
                   continue
                   return
-                end if   
+                end if
                 if (Rab < CN) then
 !
 !  Test for double bond
@@ -1495,7 +1495,7 @@
                     continue
                     return
                   end if
-                end if           
+                end if
               end if
               if (guanidine(icc, ionized, nH, angle, internal_dihedral, dihedral, hybrid)) return
               if (nat(jj) == 7) then
@@ -1503,7 +1503,7 @@
                   nH = 0
                   return
                 end if
-              end if            
+              end if
             end if
             if (nat(ii) == 8) then
               if (nat(jj) == 8) then
@@ -1528,21 +1528,21 @@
               if (nat(j) == 7 .and. j /= icc) then
                 kk = j
                 if (nbonds(j) == 2) then
-                  k = ii   ! N-C-N structure found. 
+                  k = ii   ! N-C-N structure found.
                   ii = jj  ! ii is the C in N-C-N
-                  jj = k   ! C(jj) - N(icc) - C(ii) - N(kk) 
+                  jj = k   ! C(jj) - N(icc) - C(ii) - N(kk)
                 end if
               end if
-              
+
             end do
             if (kk == 0) then
               do i = 1, nbonds(jj)
                 j = ibonds(i,jj)
                 if (nat(j) == 7 .and. j /= icc) then
                   if (nbonds(j) == 2) then
-                    k = ii   ! N-C-N structure found. 
+                    k = ii   ! N-C-N structure found.
                     ii = jj  ! ii is the C in N-C-N
-                    jj = k   ! C(jj) - N(icc) - C(ii) - N(kk) 
+                    jj = k   ! C(jj) - N(icc) - C(ii) - N(kk)
                   end if
                   kk = j   ! kk is the distant N
                 end if
@@ -1560,21 +1560,21 @@
             end if
             if (kk /= 0) then
               l = 0
-              if (nbonds(kk) >= 2) then 
+              if (nbonds(kk) >= 2) then
                 ii = ibonds(1,kk)
                 if (nat(ii) == 1 .or. nat(ii) == 6) l = 1
-                ii = ibonds(2,kk)             
+                ii = ibonds(2,kk)
                 if (nat(ii) == 1 .or. nat(ii) == 6) l = l + 1
                 if (nbonds(kk) == 3) then
                   ii = ibonds(3,kk)
                   if (nat(ii) == 1 .or. nat(ii) == 6) l = l + 1
                 end if
-                if (l == 3) then                     ! distant nitrogen in a histidine (imidazole) ring 
+                if (l == 3) then                     ! distant nitrogen in a histidine (imidazole) ring
                   hybrid(icc) = 3                    ! has a hydrogen or a carbon attached
                   if (ionized) then
                     nH = 1
                     angle = 125.5d0
-                    dihedral = 180.d0 
+                    dihedral = 180.d0
                     return
                   else
                     nH = 0
@@ -1583,7 +1583,7 @@
                 else
                   nH = 1
                   angle = 125.5d0
-                  dihedral = 180.d0 
+                  dihedral = 180.d0
                   hybrid(icc) = 3
                   return
                 end if
@@ -1594,7 +1594,7 @@
 !
                   nH = 1
                   angle = 125.5d0
-                  dihedral = 180.d0 
+                  dihedral = 180.d0
                   hybrid(icc) = 3
                   return
                 else
@@ -1602,9 +1602,9 @@
                   return
                 end if
               end if
-            end if   
+            end if
             hybrid(icc) = 3
-            if (nat(ii) == 6 .and. nat(jj) == 6) then  
+            if (nat(ii) == 6 .and. nat(jj) == 6) then
               if (aromatic(icc,ii,jj)) then
                 nH = 0                               ! aromatic ring
                 hybrid(icc) = 2
@@ -1613,17 +1613,17 @@
               if (aromatic_5(icc,ii,jj, hybrid)) then
                 nH = 1                               ! five-membered aromatic ring
                 angle = 125.5d0
-                dihedral = 180.d0 
+                dihedral = 180.d0
                 return
               end if
             end if
-            if (nat(ii) == 6 .and. nat(jj) == 8) then  
+            if (nat(ii) == 6 .and. nat(jj) == 8) then
                if (nbonds(jj) == 1) then
                  nH = 0                              ! Nitroso
                else
                 nH = 1                               ! -O-NH-C
                 angle = 125.5d0
-                dihedral = 180.d0                
+                dihedral = 180.d0
               end if
               return
             end if
@@ -1633,15 +1633,15 @@
               else
                 nH = 1
                 angle = 120.d0
-                dihedral = 180.d0  
+                dihedral = 180.d0
               end if
               return
             end if
             nH = 1
             angle = 120.d0
-            dihedral = 180.d0   
+            dihedral = 180.d0
           else
-            hybrid(icc) = 3 
+            hybrid(icc) = 3
           end if
           Rab = Rab
                                         ! Oxygen is very important
@@ -1667,8 +1667,8 @@
               end if
 !
 !  See if oxygen is attached to an aromatic ring, if so, then it's a hydroxyl.
-! 
-              if (nbonds(ii) == 3) then 
+!
+              if (nbonds(ii) == 3) then
                 do i = 1,3
                   jj = ibonds(i,ii)
                   if (jj /= icc) exit
@@ -1677,7 +1677,7 @@
                   kk = ibonds(i,ii)
                   if (kk /= icc .and. kk /= jj) exit
                 end do
-                             
+
                 if (aromatic(ii, jj, kk)) then
                   if (distance(ii,icc) > 1.3d0) then
                     nH = 1                             ! aromatic ring, therefore hydroxyl
@@ -1688,7 +1688,7 @@
                   end if
                   return
                 end if
-              end if 
+              end if
 !
 !  Check for -COOH
 !
@@ -1697,10 +1697,10 @@
                 k = 0
                 i = 0
                 do l = 1, jj
-                  kk = ibonds(l,ii)                 
+                  kk = ibonds(l,ii)
                   if (nat(kk) == 8) then             !  Found an oxygen atom
                     if (nbonds(kk) == 2) i = i + 1
-                    k = k + 1  
+                    k = k + 1
                     if (kk /= icc) j = kk
                   end if
                 end do
@@ -1710,22 +1710,22 @@
 !  This carbon is unlabeled, therefore it is a terminal carbon
 !
                     l_tmp = (icc > j)
-                  else     
+                  else
                     call find_polar_atom(icc, ii, j, Rab)
                     Rac = distance(ii, j)              !  Pick the longer of the two C-O distances
-                    if (Rab < 0.51d0) Rab = distance(ii,icc) ! No polar atom near to icc or j                      
+                    if (Rab < 0.51d0) Rab = distance(ii,icc) ! No polar atom near to icc or j
                     l_tmp =  (Rab > Rac .and. i == 0)
                   end if
-                  if (l_tmp) then   !  and neither of them has another atom attached 
+                  if (l_tmp) then   !  and neither of them has another atom attached
                     if (ionized) then
                       nH = 0
                     else
-                      bond_length = 1.00d0 
+                      bond_length = 1.00d0
                       nH = 1
                       angle = 110.d0
                       dihedral = 0.d0
                       do l = 1, jj
-                        kk = ibonds(l,ii) 
+                        kk = ibonds(l,ii)
                         if (nat(kk) == 8 .and. kk /= icc) nc_icc = kk
                       end do
                     end if
@@ -1737,26 +1737,26 @@
                   end if
                 end if
               end if
-              if (Rab > 1.37d0) then            
-                nH = 1                               ! Almost certainly hydroxyl    
-                bond_length = 0.97d0 
+              if (Rab > 1.37d0) then
+                nH = 1                               ! Almost certainly hydroxyl
+                bond_length = 0.97d0
                 angle = 110.d0
                 hybrid(icc) = 3
                 return
-              end if 
-              if (Rab < 1.3d0 .and. hybrid(ii) == 2) then            
-                nH = 0                               ! Almost certainly carbonyl    
+              end if
+              if (Rab < 1.3d0 .and. hybrid(ii) == 2) then
+                nH = 0                               ! Almost certainly carbonyl
                 hybrid(icc) = 2
                 return
-              end if 
+              end if
 !
 ! start of low-reliability tests
-!    
+!
               if (Rab < 1.23d0) then
                   nH = 0
                   return
                 end if
-                if (Rab > 1.17d0) then  
+                if (Rab > 1.17d0) then
                 nH = 0
                 j = 0
                 do i = 1, nbonds(ii)
@@ -1765,17 +1765,17 @@
                 if (nat(ii) == 6 .and. j == 2) then
                   jj = ibonds(1,ii)
                   if (jj == icc) jj = ibonds(2,ii)
-                  call bangle (coord, icc, ii, jj, sum) 
+                  call bangle (coord, icc, ii, jj, sum)
                   if (sum < 2.03d0) then
-                    nH = 1                  
-                    bond_length = 0.97d0 
+                    nH = 1
+                    bond_length = 0.97d0
                     angle = 110.d0
                     hybrid(icc) = 3
                     return
                   end if
                 end if
               end if
-              if (Rab > 1.27d0) then  
+              if (Rab > 1.27d0) then
                 if (nat(ii) == 6 .and. nbonds(ii) == 3) then  ! check for planarity
                   jj = ibonds(1,ii)
                   kk = ibonds(2,ii)
@@ -1785,7 +1785,7 @@
                   if (nat(kk) == 6) i = i + 1
                   if (nat(ll) == 6) i = i + 1
                   if (i == 2) then
-                    call dihed(coord, ii, jj, kk, ll, sum) 
+                    call dihed(coord, ii, jj, kk, ll, sum)
                     if (min(2*pi - sum, sum) < 0.25d0) then
                       nH = 1                         !  If flat, make sp3, and don't check anything else
                       hybrid(icc) = 3
@@ -1805,7 +1805,7 @@
                 if (nbonds(ii) == 3) then
                   j = 0
                   do i = 1, 3
-                    if (nat(ibonds(i,ii)) == 8) j = j + 1 
+                    if (nat(ibonds(i,ii)) == 8) j = j + 1
                   end do
                   if (j == 3) then  ! Yes, it's a NO3
   !
@@ -1866,14 +1866,14 @@
                     else
                       nH = 0
                     end if
-                  end if 
+                  end if
                 end if
               end if
-            else if (nat(ii) == 8) then  
-              nH = 1 
+            else if (nat(ii) == 8) then
+              nH = 1
               angle = 104.d0
               dihedral = 90.d0
-            else if (nat(ii) == 12 .or. nat(ii) == 20) then   
+            else if (nat(ii) == 12 .or. nat(ii) == 20) then
               nH = 1                                 ! Mg or Ca
               angle = 150.d0
               hybrid(icc) = 3
@@ -1953,13 +1953,13 @@
             hybrid(icc) = 2
           end if
 !
-!  
+!
 !
            case (14, 32, 50)
-             bond_length = 1.3d0  
+             bond_length = 1.3d0
              select case (nbonds(icc))
              case (1)
-               nH = 3   
+               nH = 3
                angle = tetrahedral
                internal_dihedral = 120.d0
                dihedral = 180.d0
@@ -1973,11 +1973,11 @@
              case (3)
                nH = 1
                angle = 125.5d0
-               dihedral = 180.d0 
+               dihedral = 180.d0
                hybrid(icc) = 3
              case (4, 5, 6)
                nH = 0
-             end select 
+             end select
              return
            case (15)
            hybrid(icc) = 3
@@ -1991,7 +1991,7 @@
             bond_length = 1.42d0
             angle = 122.d0
             dihedral = 180.d0
-          end if   
+          end if
         case (16)
           hybrid(icc) = 3
           if (nbonds(icc) == 1) then
@@ -2021,14 +2021,14 @@
             bond_length = 1.52d0
             angle = 95.d0
             internal_dihedral = 95.d0
-          end if   
+          end if
         case (34)
           hybrid(icc) = 3
           if (nbonds(icc) == 1) then
             nH = 1                                   ! -Se-H
             bond_length = 1.46d0
             angle = 91.d0
-          end if    
+          end if
         case (51)
           hybrid(icc) = 3
           if (nbonds(icc) == 1) then
@@ -2042,16 +2042,16 @@
             angle = 95.d0
             internal_dihedral = 95.d0
             hybrid(icc) = 3
-          end if    
+          end if
         case (52)
           hybrid(icc) = 3
           if (nbonds(icc) == 1) then
             nH = 1                                   ! -Te-H
             bond_length = 1.69d0
             angle = 90.d0
-          end if 
-        case default 
-          hybrid(icc) = 3       
+          end if
+        case default
+          hybrid(icc) = 3
         end select
     end if
   end subroutine h_type
@@ -2073,29 +2073,29 @@
     integer :: k
     double precision, external :: distance
     logical, external :: near_a_metal
-      cosa = cos(angle) 
+      cosa = cos(angle)
       if (id > 0) then
         xb = distance(nb, na)
         xb = temp_1
         yb = temp_2
         zb = temp_3
-      else        
-        xb = coord(1,nb) - coord(1,na) 
-        yb = coord(2,nb) - coord(2,na) 
-        zb = coord(3,nb) - coord(3,na) 
+      else
+        xb = coord(1,nb) - coord(1,na)
+        yb = coord(2,nb) - coord(2,na)
+        zb = coord(3,nb) - coord(3,na)
       end if
-      rbc = xb*xb + yb*yb + zb*zb 
-      rbc = 1.0D00/sqrt(rbc) 
+      rbc = xb*xb + yb*yb + zb*zb
+      rbc = 1.0D00/sqrt(rbc)
       if (nc /= 0) then
         if (id > 0) then
           xa = distance(nc, na)
           xa = temp_1
           ya = temp_2
           za = temp_3
-        else  
-          xa = coord(1,nc) - coord(1,na) 
-          ya = coord(2,nc) - coord(2,na) 
-          za = coord(3,nc) - coord(3,na) 
+        else
+          xa = coord(1,nc) - coord(1,na)
+          ya = coord(2,nc) - coord(2,na)
+          za = coord(3,nc) - coord(3,na)
         end if
       else
         xa = 1.d0
@@ -2106,78 +2106,78 @@
 !     ROTATE ABOUT THE Z-AXIS TO MAKE YB=0, AND XB POSITIVE.  IF XYB IS
 !     TOO SMALL, FIRST ROTATE THE Y-AXIS BY 90 DEGREES.
 !
-      xyb = sqrt(xb*xb + yb*yb) 
-      k = -1 
-      if (xyb <= 0.009d0) then 
-        xpa = za 
-        za = -xa 
-        xa = xpa 
-        xpb = zb 
-        zb = -xb 
-        xb = xpb 
-        xyb = sqrt(xb*xb + yb*yb) 
-        k = 1 
-      end if 
+      xyb = sqrt(xb*xb + yb*yb)
+      k = -1
+      if (xyb <= 0.009d0) then
+        xpa = za
+        za = -xa
+        xa = xpa
+        xpb = zb
+        zb = -xb
+        xb = xpb
+        xyb = sqrt(xb*xb + yb*yb)
+        k = 1
+      end if
 !
 !     ROTATE ABOUT THE Y-AXIS TO MAKE ZB VANISH
 !
-      costh = xb/xyb 
-      sinth = yb/xyb 
-      xpa = xa*costh + ya*sinth 
-      ypa = ya*costh - xa*sinth 
-      sinph = zb*rbc 
-      cosph = sqrt(abs(1.D00 - sinph*sinph)) 
-      zqa = za*cosph - xpa*sinph 
+      costh = xb/xyb
+      sinth = yb/xyb
+      xpa = xa*costh + ya*sinth
+      ypa = ya*costh - xa*sinth
+      sinph = zb*rbc
+      cosph = sqrt(abs(1.D00 - sinph*sinph))
+      zqa = za*cosph - xpa*sinph
 !
 !     ROTATE ABOUT THE X-AXIS TO MAKE ZA=0, AND YA POSITIVE.
 !
-      yza = sqrt(ypa**2 + zqa**2) 
-      if (yza >= 1.D-4) then 
-        coskh = ypa/yza 
-        sinkh = zqa/yza 
-      else 
+      yza = sqrt(ypa**2 + zqa**2)
+      if (yza >= 1.D-4) then
+        coskh = ypa/yza
+        sinkh = zqa/yza
+      else
 !
 !   ANGLE TOO SMALL TO BE IMPORTANT
 !
-        coskh = 1.D0 
-        sinkh = 0.D0 
-      end if 
+        coskh = 1.D0
+        sinkh = 0.D0
+      end if
 !
 !     COORDINATES :-   A=(???,YZA,0),   B=(RBC,0,0),  C=(0,0,0)
 !     NONE ARE NEGATIVE.
 !     THE COORDINATES OF I ARE EVALUATED IN THE NEW FRAME.
 !
-      sina = sin(angle) 
-      sind = -sin(dihedral) 
-      cosd = cos(dihedral) 
-      xd = bond_length*cosa 
-      yd = bond_length*sina*cosd 
-      zd = bond_length*sina*sind 
+      sina = sin(angle)
+      sind = -sin(dihedral)
+      cosd = cos(dihedral)
+      xd = bond_length*cosa
+      yd = bond_length*sina*cosd
+      zd = bond_length*sina*sind
 !
 !     TRANSFORM THE COORDINATES BACK TO THE ORIGINAL SYSTEM.
 !
-      ypd = yd*coskh - zd*sinkh 
-      zpd = zd*coskh + yd*sinkh 
-      xpd = xd*cosph - zpd*sinph 
-      zqd = zpd*cosph + xd*sinph 
-      xqd = xpd*costh - ypd*sinth 
-      yqd = ypd*costh + xpd*sinth 
-      if (k >= 1) then 
-        xrd = -zqd 
-        zqd = xqd 
-        xqd = xrd 
-      end if 
+      ypd = yd*coskh - zd*sinkh
+      zpd = zd*coskh + yd*sinkh
+      xpd = xd*cosph - zpd*sinph
+      zqd = zpd*cosph + xd*sinph
+      xqd = xpd*costh - ypd*sinth
+      yqd = ypd*costh + xpd*sinth
+      if (k >= 1) then
+        xrd = -zqd
+        zqd = xqd
+        xqd = xrd
+      end if
       numat = numat + 1
-      coord(1,numat) = xqd + coord(1,na) 
-      coord(2,numat) = yqd + coord(2,na) 
-      coord(3,numat) = zqd + coord(3,na) 
+      coord(1,numat) = xqd + coord(1,na)
+      coord(2,numat) = yqd + coord(2,na)
+      coord(3,numat) = zqd + coord(3,na)
       nbonds(na) = nbonds(na) + 1
       nbonds(numat) = 1
       nat(numat) = 1
       ibonds(1,numat) = na
       ibonds(nbonds(na),na) = numat
       if (near_a_metal(na, numat, metals, nmetals)) numat = numat - 1
-      return  
+      return
   end subroutine add_a_generic_hydrogen_atom
 !
 !
@@ -2197,7 +2197,7 @@
 !  and atoms nb_icc, nc_icc, and nd_icc which are attached to icc.
 !  These atoms form a triangle, this triangle is used in determining the direction that the hydrogen
 !  atom is pointed.
-!    
+!
     ax = coord(1, icc)
     ay = coord(2, icc)
     az = coord(3, icc)
@@ -2231,11 +2231,11 @@
       numat = numat - 1
       return
     end if
-    sum=bond_length/r1        
+    sum=bond_length/r1
     numat = numat + 1
     coord(1, numat) = ax + sum*(ax-x)
     coord(2, numat) = ay + sum*(ay-y)
-    coord(3, numat) = az + sum*(az-z)    
+    coord(3, numat) = az + sum*(az-z)
     nbonds(icc) = nbonds(icc) + 1
     nbonds(numat) = 1
     nat(numat) = 1
@@ -2278,18 +2278,18 @@
 !
                 if (nat(atom_4) == 7 .or. nat(atom_4) == 8 .or. nat(atom_4) == 16 .or. &
                     nat(atom_3) == 7 .or. nat(atom_3) == 8 .or. nat(atom_3) == 16) then
-                  call dihed(coord, atom_1, atom_2, atom_4, atom_6, sum) 
+                  call dihed(coord, atom_1, atom_2, atom_4, atom_6, sum)
                   if (min(2*pi - sum, sum) < bent) then
-                    call dihed(coord, atom_1, atom_2, atom_3, atom_4, sum) 
+                    call dihed(coord, atom_1, atom_2, atom_3, atom_4, sum)
                     if (nat(atom_1) /= 6) then
                       Rcc = 2.d0 ! Definitely not aromatic
                     else
                       Rcc = min(distance(atom_1, atom_2), distance(atom_1, atom_6))
                     end if
                     aromatic = (min(2*pi - sum, sum) < bent .and. Rcc < 1.43d0 )
-                  end if                    
+                  end if
                   return
-                end if 
+                end if
               end if
               if (kka == atom_4) then
                 if (atom_1 == atom_3 .or. atom_1 == atom_4 .or. atom_1 == atom_5) exit
@@ -2300,8 +2300,8 @@
                 if (m == 8 .or. m == 14 .or. m == 16) exit
                 m = 0
                 if (nat(atom_1) == 7 .and. nbonds(atom_1) > 2) m = m + 1
-                if (nat(atom_2) == 7 .and. nbonds(atom_2) > 2) m = m + 1               
-                if (nat(atom_3) == 7 .and. nbonds(atom_3) > 2) m = m + 1                
+                if (nat(atom_2) == 7 .and. nbonds(atom_2) > 2) m = m + 1
+                if (nat(atom_3) == 7 .and. nbonds(atom_3) > 2) m = m + 1
                 if (nat(atom_4) == 7 .and. nbonds(atom_4) > 2) m = m + 1
                 if (nat(atom_5) == 7 .and. nbonds(atom_5) > 2) m = m + 1
                 if (nat(atom_6) == 7 .and. nbonds(atom_6) > 2) m = m + 1
@@ -2324,31 +2324,31 @@
                     if (ii < 4) then
                       if (distance(atom_6, ibonds(ii, atom_6)) < 1.29d0) m = m + 2
                     end if
-                  end if       
+                  end if
                 end if
                 if (m > 1) exit
 !
 !  Six-membered ring, with atoms numbered atom_1, atom_2, atom_3, atom_4 = kka, atom_5, atom_6
 !
-                call dihed(coord, atom_1, atom_2, atom_3, atom_4, sum) 
-                if (min(2*pi - sum, sum) < bent) then  
-                  call dihed(coord, atom_2, atom_3, atom_4, atom_5, sum) 
-                  if (min(2*pi - sum, sum) < bent) then  
-                    call dihed(coord, atom_3, atom_4, atom_5, atom_6, sum)  
-                    if (min(2*pi - sum, sum) < bent) then  
-                      call dihed(coord, atom_4, atom_5, atom_6, atom_1, sum) 
-                      if (min(2*pi - sum, sum) < bent) then 
-                        call dihed(coord, atom_5, atom_6, atom_1, atom_2, sum) 
-                        if (min(2*pi - sum, sum) < bent) then  
-                          call dihed(coord, atom_6, atom_1, atom_2, atom_3, sum) 
-                          if (min(2*pi - sum, sum) < bent) then  
+                call dihed(coord, atom_1, atom_2, atom_3, atom_4, sum)
+                if (min(2*pi - sum, sum) < bent) then
+                  call dihed(coord, atom_2, atom_3, atom_4, atom_5, sum)
+                  if (min(2*pi - sum, sum) < bent) then
+                    call dihed(coord, atom_3, atom_4, atom_5, atom_6, sum)
+                    if (min(2*pi - sum, sum) < bent) then
+                      call dihed(coord, atom_4, atom_5, atom_6, atom_1, sum)
+                      if (min(2*pi - sum, sum) < bent) then
+                        call dihed(coord, atom_5, atom_6, atom_1, atom_2, sum)
+                        if (min(2*pi - sum, sum) < bent) then
+                          call dihed(coord, atom_6, atom_1, atom_2, atom_3, sum)
+                          if (min(2*pi - sum, sum) < bent) then
 !
 ! Flat six-membered ring
 !
                           aromatic = .true.
                           return
                           end if
-                        end if  
+                        end if
                       end if
                     end if
                   end if
@@ -2385,28 +2385,28 @@
           atom_4 = ibonds(j,atom_5)
           if (atom_4 == atom_1) cycle
           do k = 1, nbonds(atom_4)
-            kka = ibonds(k,atom_4)           
+            kka = ibonds(k,atom_4)
             if (kka == atom_3) then
               l = max(hybrid(2), hybrid(3), hybrid(4), hybrid(5))
               if (l == 3) cycle  ! if any atom in the ring is sp3, the ring cannot be aromatic
 !
 !  five-membered ring, with atoms numbered atom_1, atom_2, atom_3 = kka, atom_4, atom_5
 !
-              call dihed(coord, atom_1, atom_2, atom_3, atom_4, sum) 
-              if (min(2*pi - sum, sum) < bent) then  
-                call dihed(coord, atom_2, atom_3, atom_4, atom_5, sum) 
-                if (min(2*pi - sum, sum) < bent) then  
-                  call dihed(coord, atom_3, atom_4, atom_5, atom_1, sum) 
-                  if (min(2*pi - sum, sum) < bent) then  
-                    call dihed(coord, atom_4, atom_5, atom_1, atom_2, sum) 
-                    if (min(2*pi - sum, sum) < bent) then 
-                      call dihed(coord, atom_5, atom_1, atom_2, atom_3, sum) 
-                      if (min(2*pi - sum, sum) < bent) then   
+              call dihed(coord, atom_1, atom_2, atom_3, atom_4, sum)
+              if (min(2*pi - sum, sum) < bent) then
+                call dihed(coord, atom_2, atom_3, atom_4, atom_5, sum)
+                if (min(2*pi - sum, sum) < bent) then
+                  call dihed(coord, atom_3, atom_4, atom_5, atom_1, sum)
+                  if (min(2*pi - sum, sum) < bent) then
+                    call dihed(coord, atom_4, atom_5, atom_1, atom_2, sum)
+                    if (min(2*pi - sum, sum) < bent) then
+                      call dihed(coord, atom_5, atom_1, atom_2, atom_3, sum)
+                      if (min(2*pi - sum, sum) < bent) then
 !
 ! Flat five-membered ring
 !
                         aromatic_5 = .true.
-                        return 
+                        return
                       end if
                     end if
                   end if
@@ -2441,8 +2441,8 @@
       Sulfur =   (nat(icc) == 16 .and. Rab < 2.6d0)
       Oxygen =   (nat(icc) == 8 .and. Rab < 2.1d0 .and. Rac <= Rab)
       Nitrogen = (nat(icc) == 7 .and. Rab < 2.5d0 .and. Rac <= Rab)
-      if (Rac < 1.5d0) exit   
-      if ((Sulfur .or. Oxygen .or. Nitrogen)) exit       
+      if (Rac < 1.5d0) exit
+      if ((Sulfur .or. Oxygen .or. Nitrogen)) exit
     end do
     near_a_metal = (i <= nmetals)
     if (.not. near_a_metal) return
@@ -2475,7 +2475,7 @@
     do i = 1, numat
       if (nat(i) /= 1) cycle
       bond_length = 10.d0
-      bond_length_2 = 10.d0 
+      bond_length_2 = 10.d0
       nchain2 = 1
       l = 0
       k = 0
@@ -2546,7 +2546,7 @@
           txtatm(h1(k))(18:20)//txtatm(h1(k))(23:27)//" "//txtatm(h1(k))(22:22)
       write(iw,"(a)")trim(line)
       if(log) write(ilog,"(a)")trim(line)
-      Rab2(k) = 10.d0 
+      Rab2(k) = 10.d0
     end do
     if (ii == 1) write(iw,*)
     if (ii == 1 .and. log) write(ilog,*)
@@ -2569,8 +2569,8 @@
         numat_loop: do j = 1, numat
           sum = abs(coord(1,j) - break_coords(1,nbreaks)) + &
                 abs(coord(2,j) - break_coords(2,nbreaks)) + &
-                abs(coord(3,j) - break_coords(3,nbreaks)) 
-          if (sum < 0.1d0) then            
+                abs(coord(3,j) - break_coords(3,nbreaks))
+          if (sum < 0.1d0) then
             exit numat_loop
           end if
         end do numat_loop
@@ -2579,13 +2579,13 @@
   !  Now move to the end of the residue
   !
         line = txtatm(j)(23:)
-        k = nint(reada(line,1)) 
-        do 
+        k = nint(reada(line,1))
+        do
           j = j + 1
           if (j > numat) exit
           line = txtatm(j)(23:)
-          l = nint(reada(line,1)) 
-          if (l /= k) exit          
+          l = nint(reada(line,1))
+          if (l /= k) exit
         end do
         breaks(nbreaks) = j - 1
       end do
@@ -2646,9 +2646,9 @@
       breaks(nbreaks + 1) = 0
       j = 1
       do i = 1, numat
-        write(line,'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)  
+        write(line,'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)
         txtatm(i) = trim(line)
-        if (i == breaks(j)) j = j + 1         
+        if (i == breaks(j)) j = j + 1
       end do
   end subroutine reset_breaks
   subroutine find_polar_atom(O1, C, O2, Rab)
@@ -2675,12 +2675,12 @@
           do j = 1, nbonds(i)
             k = ibonds(j,i)
             if (nat(k) == 6) then
-              RO1 = distance(O1, i) 
+              RO1 = distance(O1, i)
               if (RO1 < 4.d0) then
                 call bangle(coord, C, O1, i, angle)
                 if (angle > 1.570796d0) then ! 90 degrees
                   call dihed (coord, i, O1, C, O2, angle)
-                  if (angle < 1.570796d0 .or. angle > 4.71239d0) then 
+                  if (angle < 1.570796d0 .or. angle > 4.71239d0) then
                     n1 = n1 + 1
                     n1_near(n1) = i
                     RO1_near(n1) = RO1
@@ -2694,12 +2694,12 @@
           do j = 1, nbonds(i)
             k = ibonds(j,i)
             if (nat(k) == 6) then
-              RO2 = distance(O2, i) 
+              RO2 = distance(O2, i)
               if (RO2 < 4.d0) then
                 call bangle(coord, C, O2, i, angle)
                 if (angle > 1.570796d0) then ! 90 degrees
                   call dihed (coord, i, O2, C, O1, angle)
-                  if (angle < 1.570796d0 .or. angle > 4.71239d0) then 
+                  if (angle < 1.570796d0 .or. angle > 4.71239d0) then
                     n2 = n2 + 1
                     n2_near(n2) = i
                     RO2_near(n2) = RO1
@@ -2712,7 +2712,7 @@
       end if
     end do
     if (n1 == 0) then
-      if (n2 == 0) return   
+      if (n2 == 0) return
 !
 !  There is an oxygen near to O2.  Set Rab small, so that the hydrogen is put on O2
 !
@@ -2722,7 +2722,7 @@
 !
 !  There is an oxygen near to O1.  Set Rab large, so that the hydrogen is put on O1
 !
-        Rab = 4.02d0  
+        Rab = 4.02d0
       else
 !
 !  There are no oxygen atoms near tp O1 or O2.  Set Rab large, so that the C-O1 and C-O2
@@ -2747,10 +2747,10 @@
 !  There is an oxygen near to both O1 and O2.  Use the O1-O and O2-O distances
 !  in deciding where to put the hydrogen atom.
 !
-           Rab = 4.1d0 
+           Rab = 4.1d0
         else
            Rab = 0.5d0
-        end if    
+        end if
       end if
     end if
     return
@@ -2804,7 +2804,7 @@
           dihedral = 0.d0
           hybrid(icc) = 3
           return
-        end if   
+        end if
       end if
     end do
   end do

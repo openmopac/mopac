@@ -45,7 +45,7 @@ subroutine reseq (iopt, lused, n1, new, io)
 ! "Move" is only present if hydrogen atoms have been added or deleted.  If this is done, then the
 ! hydrogen atoms need to be put in their correct place in the list of atoms.  It is also important that
 ! the order of the non-hydrogen atoms is not changed.  For this reason a special subroutine "move_hydrogen_atoms"
-! is used.  
+! is used.
 !
       call move_hydrogen_atoms
       call lewis(.false.)
@@ -56,7 +56,7 @@ subroutine reseq (iopt, lused, n1, new, io)
 ! If "Move" is not present, do a complete resequence of the atoms.  This is complicated...
 !
     nbackb = 0
-    inres = 0    
+    inres = 0
     call lewis(.false.)
     i = Index (keywrd, " CVB")
     if (i /= 0) then
@@ -79,7 +79,7 @@ subroutine reseq (iopt, lused, n1, new, io)
       jatom = nbackb(4)
 !
 !    STORE INDICES FOR  C (OF -HCR-) AND C (OF -CO-) in 'N-C(H,R)-C(=O)'
-!   
+!
       if (ico > 0) then
         iopt_ico = iopt(ico)
       else
@@ -187,7 +187,7 @@ subroutine reseq (iopt, lused, n1, new, io)
           nlive = nlive - 1
           do i = i3, nlive
             live(i) = live(i + 1)
-          end do          
+          end do
         else
           iopt(l) = .true.
 !
@@ -263,7 +263,7 @@ subroutine reseq (iopt, lused, n1, new, io)
       if (io == 0 .and. iatom /= 0 .and. .not. iopt(iatom)) then
         new = new + 1
         lused(new) = iatom
-        iopt(iatom) = .true.        
+        iopt(iatom) = .true.
       end if
       do i2 = 1, ninres
         j2 = inres(i2)
@@ -295,7 +295,7 @@ subroutine reseq (iopt, lused, n1, new, io)
             if (nat(lused(i)) == 1) exit
             lused(i - 1) = lused(i)
           end do
-          lused(i - 1) = k        
+          lused(i - 1) = k
         end if
       end if
       j = new
@@ -310,14 +310,14 @@ subroutine reseq (iopt, lused, n1, new, io)
       i = iatom
     else if (ico > 0 .and. ico <= numat) then
       i = ico
-    end if    
+    end if
     if (index(keywrd, " ADD-H") > 0) then
       write(iw,'(/10x,a)') "Attempt to resequence the atoms after adding hydrogen atoms (ADD-H) failed"
     else if (index(keywrd, " SITE=") > 0) then
       write(iw,'(/10x,a)') "Attempt to resequence the atoms after adding or deleting hydrogen atoms (SITE) failed"
     else
-      write(iw,'(/10x,a)') "Attempt to resequence the atoms by using keyword RESEQ failed"      
-    end if      
+      write(iw,'(/10x,a)') "Attempt to resequence the atoms by using keyword RESEQ failed"
+    end if
     if (i > 0) then
       do j = 1, 10
         if (atom_names(nat(i))(j:j) /= " ") exit
@@ -347,7 +347,7 @@ subroutine reseq (iopt, lused, n1, new, io)
            lused(new) = j
          end if
        end do
-     end if       
+     end if
      if (io < 1) return
 !
 !  SPECIAL CASE - IS THERE A HYDROGEN ATTACHED TO THE FINAL OXYGEN?
@@ -368,7 +368,7 @@ subroutine move_hydrogen_atoms
 ! so move the hydrogen atoms to their correct place.
 !
 !  This operation assumes that the geometry had PDB labels in "txtatm"
-! 
+!
  use common_arrays_C, only : coord, txtatm, nat, atmass, labels, geo, loc, lopt
  USE molkst_C, only : natoms, numat, id
  USE chanel_C, only : iw
@@ -382,10 +382,10 @@ subroutine move_hydrogen_atoms
  logical :: l_debug
  l_debug = .false.
 !
-! Separate all the atoms into two sets, one set consisting of the hydrogen atoms, the other set 
+! Separate all the atoms into two sets, one set consisting of the hydrogen atoms, the other set
 ! consisting of the non-hydrogen atoms.
 !
-! "res_end" = Atom number of the last atom in residue in the set "not_H_txtatm" 
+! "res_end" = Atom number of the last atom in residue in the set "not_H_txtatm"
 !
  allocate(not_H_txtatm(natoms), H_txtatm(natoms), not_H_coord(3,natoms), H_coord(3,natoms), not_H_atmass(natoms), &
    H_atmass(natoms), H_lopt(3,natoms), not_H_lopt(3,natoms))
@@ -412,12 +412,12 @@ subroutine move_hydrogen_atoms
        if (not_H_txtatm(n_heavy)(17:26) /= not_H_txtatm(n_heavy - 1)(17:26)) then
          n_res = n_res + 1
          res_end(n_res) = n_heavy - 1
-       end if 
+       end if
      end if
    end if
  end do
  n_res = n_res + 1
- res_end(n_res) = n_heavy 
+ res_end(n_res) = n_heavy
  if (l_debug) then
    write(iw,'(10x,a)')"Heavy atoms"
    write(iw,'(i5,3x,a)')(i, not_H_txtatm(i), i = 1, n_heavy)
@@ -428,11 +428,11 @@ subroutine move_hydrogen_atoms
  end if
 !
 ! Start the merge of hydrogen atoms into their correct locations
-! 
+!
 ! l = atom number in merged set
 ! j = atom number in non-hydrogen atom set
 !
- l = 0 
+ l = 0
  j = 0
  do i = 1, n_res
    do
@@ -461,9 +461,9 @@ subroutine move_hydrogen_atoms
        exit
      end if
    end do
- end do  
+ end do
 !
-! Fill "loc" with the new values 
+! Fill "loc" with the new values
 !
  k = 0
  do i = 1, l
@@ -509,7 +509,7 @@ subroutine move_hydrogen_atoms
 !
  integer :: i, j, tv_id = 0, tv_loc(2,9), tv_lopt(3,3), tv_old_natoms
  logical :: first = .true.
- save 
+ save
  if (mode == "STORE") then
    if (id == 0) return
    natoms = natoms - id
@@ -518,7 +518,7 @@ subroutine move_hydrogen_atoms
 !
 !  Store data on Tv here
 !
-   tv_id = id  
+   tv_id = id
    tv_old_natoms = natoms
    do i = 1, 3*natoms
      if (loc(1,i) > natoms) exit
@@ -540,12 +540,12 @@ subroutine move_hydrogen_atoms
 !
    id = tv_id
    do i = 1, id
-     coord(:,numat + i) = tvec(:,i) 
+     coord(:,numat + i) = tvec(:,i)
      geo(:,numat + i) = tvec(:,i)
    end do
    nat(numat + 1:numat + id) = 107
    labels(numat + 1:numat + id) = 107
-  
+
    do i = 1, 3*natoms
      if (loc(1,i) > natoms .or. loc(1,i) == 0) exit
    end do
@@ -569,8 +569,8 @@ subroutine move_hydrogen_atoms
  end if
  return
  end subroutine store_and_restore_Tv
-  
-  
-  
-  
+
+
+
+
 

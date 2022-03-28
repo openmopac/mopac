@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine Locate_TS 
+subroutine Locate_TS
 !
 ! Multi-step procedure for locating a transition state involving two stationary points in a
 ! protein mechanism
@@ -44,27 +44,27 @@ subroutine Locate_TS
     allocate(active_site(200))
     if (.not. allocated(geoa)) allocate(geoa(3,numat))
     if (allocated(geo_1)) then
-      geoa(:,:numat) = geo_1(:,:numat)      
+      geoa(:,:numat) = geo_1(:,:numat)
       call build_active_site(active_site, ninsite)
       if (moperr) return
-    end if    
+    end if
     gnorm_store = 0.d0
 !
 !   Fill array "lopt"  When two systems are used, "lopt" is the difference in connectivity (topology) of them.
-!   
+!
     if (.not. allocated(geo_1)) then
 !
 ! If geo_1 does not exist, only one system was input, i.e. GEO_REF was not used.
 ! so set up conditions to go straight to "Refine_TS"
 !
-!  Set "lopt" to 
+!  Set "lopt" to
 !
       shell = 0
       if (.not. allocated(lopt_store)) then
         allocate(lopt_store(3,numat))
         lopt(:3,:numat) = 1 - lopt(:3,:numat)
-      end if 
-      lopt_store = 1       
+      end if
+      lopt_store = 1
       deallocate(grad)
       allocate(grad(3*numat))
       goto 99
@@ -75,7 +75,7 @@ subroutine Locate_TS
 !
     i = index(keywrd, " GNORM=")
     if (i /= 0) gnorm_store = reada(keywrd, i)
-    gradients = max(4.d0,min(20.d0,sqrt(numat*0.5d0)))    
+    gradients = max(4.d0,min(20.d0,sqrt(numat*0.5d0)))
     i = index(keywrd,  " LOCATE-TS") + 11
     do j = i + 1, len_trim(keywrd)
       if (keywrd(j:j) == " ") exit
@@ -95,16 +95,16 @@ subroutine Locate_TS
             call mopend(trim(line))
             return
           end if
-          do 
+          do
             i = i + 1
-            if (ichar(keywrd(i:i)) /= ichar(".") .and. ichar(keywrd(i:i)) < ichar("0") .or. ichar(keywrd(i:i)) > ichar("9")) exit        
+            if (ichar(keywrd(i:i)) /= ichar(".") .and. ichar(keywrd(i:i)) < ichar("0") .or. ichar(keywrd(i:i)) > ichar("9")) exit
           end do
-          i = i + 1  
-        else 
+          i = i + 1
+        else
           exit
         end if
         if (i > j) exit
-      end do      
+      end do
     else
       if (keywrd(i:i) > "0" .and. keywrd(i:i) <= "9") then
         call mopend("The first term in LOCATE-TS must be either ""C:"" or ""SET:""")
@@ -117,10 +117,10 @@ subroutine Locate_TS
       stresses(4) = 30.d0
       stresses(5) = 30.d0
       nloop = 5
-    end if  
+    end if
     if (index(keywrd, " LOCATE-TS ") /= 0) then
       k = 1
-    else    
+    else
       i = index(keywrd,  " LOCATE-TS") + 11
       do j = i + 1, len_trim(keywrd)
         if (keywrd(j:j) == " ") exit
@@ -141,7 +141,7 @@ subroutine Locate_TS
           write(iw,'(/10x,a,i1,a)') "(Either remove "";SET=""",nset,""" from keyword ""LOCATE-TS"""// &
             "or add keyword ""LET"" to allow job to continue)"
           return
-        end if        
+        end if
       end if
     else
       nset = 1
@@ -163,21 +163,21 @@ subroutine Locate_TS
           loc(2, nvar) = j
         end if
       end do
-    end do 
+    end do
     loc(:,nvar + 1:) = 0
     big_nvar = 2*nvar
     allocate(big_xparam(big_nvar))
     if (nset > 0) then
-      shell = ninsite(nset)  
+      shell = ninsite(nset)
       call select_opt(shell, active_site)
       big_nvar = 2*nvar
-      do i = 1, nvar 
-        k = loc(1,i) 
-        l = loc(2,i) 
+      do i = 1, nvar
+        k = loc(1,i)
+        l = loc(2,i)
         big_xparam(i) = geo_1(l,k)
         big_xparam(i + nvar) = geo_2(l,k)
         xparam(i) = geo(l,k)
-      end do      
+      end do
     else
       shell = 0
     end if
@@ -185,7 +185,7 @@ subroutine Locate_TS
 ! Delete GEO_REF and LOCATE-TS from the new .mop, .arc, and other files
 !
     call delete_ref_key("GEO_REF=", len_trim("GEO_REF="), '" ', 2)
-    call delete_ref_key("LOCATE-TS", len_trim("LOCATE-TS"), ') ', 2) 
+    call delete_ref_key("LOCATE-TS", len_trim("LOCATE-TS"), ') ', 2)
     call delete_ref_key("XYZ", len_trim("XYZ"), " ", 1)
     call delete_ref_key("OPT", len_trim("OPT"), " ", 1)
     if (nloop == 0) then
@@ -194,34 +194,34 @@ subroutine Locate_TS
 !
       do i = 1, nvar
         xparam(i)=0.5d0*(big_xparam(i) + big_xparam(i + nvar))
-        k = loc(1,i) 
-        l = loc(2,i) 
+        k = loc(1,i)
+        l = loc(2,i)
         geo(l,k) = xparam(i)
       end do
       if (extra_print .and. prt_coords) then
         write(iw,'(/10x,a,/)')"Average of the input and reference geometries"
         call geout (iw)
       end if
-    else 
+    else
 !
 !            Locate the transition state by climbing the barrier. The strength of the pull from the
 !            other geometry is in "density"  The pull is increased in steps, with the steps in "stresses"
-!   
 !
-! Run reference geometry 
+!
+! Run reference geometry
 !
       density = 0.d0
-      call big_swap(1,2)  
+      call big_swap(1,2)
       numcal = numcal + 1
       step_num = step_num + 1
       call set_up_rapid("ON")
       call set_up_rapid("OFF")
-      call big_swap(0,2)  
+      call big_swap(0,2)
       geoa(:,:numat) = geo(:,:numat)
 !
-! Run data-set geometry 
+! Run data-set geometry
 !
-      call big_swap(1,1) 
+      call big_swap(1,1)
       nvar = 0
       do i = 1, numat
         do j = 1,3
@@ -244,12 +244,12 @@ subroutine Locate_TS
           num = "5"
         else
           num = "4"
-        end if  
+        end if
   !      write(iw,'(/10x,a,f0.2,a,/)')"Constraining constant: ",density, " Kcal/mol/Angstrom^2"
         write(line1,'(a,f'//num//'.2)')"C: ",density
         write(line,'(a,S,f0.5)')"GNORM=",gradients(loop)
         write(line1(len_trim(line1) + 4:),'(a)')trim(line)
-        call l_control(trim(line), len_trim(line), 1)   
+        call l_control(trim(line), len_trim(line), 1)
         extra_print = (extra_print .or. loop == nloop)
         call lbfgs_TS(big_xparam, big_nvar, escf, extra_print)
       end do
@@ -259,7 +259,7 @@ subroutine Locate_TS
 !           Now switch off the two geometry option, and prepare to refine the transition state.
 !
     if (shell == 0 .and. ninsite(1) == 0) return
-99  continue  
+99  continue
     if (.not. l_refine) goto 98
     use_ref_geo = .false.
 !
@@ -280,7 +280,7 @@ subroutine Locate_TS
     mpack = store_mpack
     n2elec = store_n2elec
     if (shell > 0) then
-      lopt(:,:numat) = 1 
+      lopt(:,:numat) = 1
       do i = 1, shell
         lopt(:,active_site(i)) = 0
       end do
@@ -290,7 +290,7 @@ subroutine Locate_TS
     if (index(keywrd, " PDBOUT") /= 0) then
       line = input_fn(:len_trim(input_fn) - 5)//".pdb"
       call add_path(line)
-      inquire(unit=ipdb, opened=opend) 
+      inquire(unit=ipdb, opened=opend)
       if (opend) close(ipdb)
       open(unit=ipdb, file=trim(line), status='UNKNOWN', position='asis')
       call pdbout(ipdb)
@@ -300,19 +300,19 @@ subroutine Locate_TS
     inquire (file=trim(line), exist = exists)
     if (exists) then
       open(unit=iden, file=trim(line))
-      close(unit=iden, status='DELETE') 
+      close(unit=iden, status='DELETE')
     end if
     return
-  end subroutine Locate_TS  
-  
-  subroutine lbfgs_TS (big_xparam, big_nvar, escf_tot, extra_print) 
+  end subroutine Locate_TS
+
+  subroutine lbfgs_TS (big_xparam, big_nvar, escf_tot, extra_print)
 !
 !  Use the limited-memory quasi-Newton Broyden-Fletcher-Goldfarb-Shanno method for unconstrained optimization
 !
-!    J. Nocedal. Updating Quasi-Newton Matrices with Limited Storage (1980), 
-!    Mathematics of Computation 35, pp. 773-782. 
+!    J. Nocedal. Updating Quasi-Newton Matrices with Limited Storage (1980),
+!    Mathematics of Computation 35, pp. 773-782.
 !    D.C. Liu and J. Nocedal. On the Limited Memory Method for Large Scale Optimization (1989),
-!    Mathematical Programming B, 45, 3, pp. 503-528. 
+!    Mathematical Programming B, 45, 3, pp. 503-528.
 !
   use molkst_C, only: tleft, time0, iflepo, tdump, gnorm, keywrd, density, &
   moperr, nvar, id, line, numat, refkey, title
@@ -339,7 +339,7 @@ subroutine Locate_TS
 !
   double precision, dimension(:), allocatable :: bot, gold, top, xold, wa, big_grad, store_big_grad
   integer, dimension (:), allocatable :: iwa, nbd
-! For Mopac BLAS      
+! For Mopac BLAS
   double precision, external :: ddot, dot, reada, seconds
 !
   save :: tlast, first
@@ -348,7 +348,7 @@ subroutine Locate_TS
   if (alloc_stat /= 0) then
     call memory_error ("mod_lbfgs")
     return
-  end if  
+  end if
   m = 12
   nstep = 0
   niwa = 3 * big_nvar
@@ -443,15 +443,15 @@ subroutine Locate_TS
         end if
       end do
       if (first) then
-        call  geo_diff(sum, rms, .false.)  
+        call  geo_diff(sum, rms, .false.)
         if (density < 0.01d0) then
           write(iw,'(/10x,a,f23.3,a)')"Current value of GEO_REF constraint:", density, " Kcal/mol/Angstrom^2"
         else
           write(iw,'(/10x,a,f22.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
         end if
-        write(iw,'(10x,a,f26.2,a)') "Distance between the geometries:", sum,"  Angstroms"  
-      end if        
-      call compfg_TS (big_xparam, (mod(jcyc,222) == 0), escf1, escf2, .true., big_grad, .true.)       
+        write(iw,'(10x,a,f26.2,a)') "Distance between the geometries:", sum,"  Angstroms"
+      end if
+      call compfg_TS (big_xparam, (mod(jcyc,222) == 0), escf1, escf2, .true., big_grad, .true.)
       if (first) then
         first = .false.
         store_big_grad(:big_nvar) = big_grad(:big_nvar)
@@ -473,12 +473,12 @@ subroutine Locate_TS
         sum1 = sqrt(dot(big_grad, big_grad, nvar))
         sum2 = sqrt(dot(big_grad(nvar + 1), big_grad(nvar + 1), nvar))
         write(iw,'(10x,a,f22.3,a)') "Gradient arising from first geometry:", sum1, "  Kcal/mol/Angstrom"
-        write(iw,'(10x,a,f21.3,a)') "Gradient arising from second geometry:", sum2,"  Kcal/mol/Angstrom"  
+        write(iw,'(10x,a,f21.3,a)') "Gradient arising from second geometry:", sum2,"  Kcal/mol/Angstrom"
         sum = dot(big_grad, big_grad(nvar + 1), nvar)/(sum1*sum2)
         if (sum < 0.d0) then
           write(iw,'(10x,a, f27.2, a, /)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
         else
-          write(iw,'(10x,a, f15.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
+          write(iw,'(10x,a, f15.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"
         end if
         big_grad(:big_nvar) = store_big_grad(:big_nvar)
       end if
@@ -530,9 +530,9 @@ subroutine Locate_TS
       jcyc, Min (tstep, 9999.99d0), tprt, txt, &
       & Min (gnorm, 999999.999d0), escf_tot
     write(iw,"(a)")trim(line)
-    endfile (iw) 
-    backspace (iw) 
-    if (log) write (ilog, "(a)")trim(line)                  
+    endfile (iw)
+    backspace (iw)
+    if (log) write (ilog, "(a)")trim(line)
     call to_screen(line)
     if (mod(jcyc,30) == 0) then
       line = trim(input_fn)
@@ -542,11 +542,11 @@ subroutine Locate_TS
     end if
     if (nflush /= 0) then
       if (Mod(jcyc, nflush) == 0) then
-        endfile (iw) 
-        backspace (iw) 
+        endfile (iw)
+        backspace (iw)
         if (log) then
-          endfile (ilog) 
-          backspace (ilog) 
+          endfile (ilog)
+          backspace (ilog)
         end if
       end if
     end if
@@ -556,8 +556,8 @@ subroutine Locate_TS
 !  with the old gradient.  Ideally, this should be small.
 !
       call dcopy (big_nvar, big_grad, 1, gold, 1)
-      endfile (iw) 
-      backspace (iw) 
+      endfile (iw)
+      backspace (iw)
 !
 !  EXIT CRITERIA.  (The criteria in SETULB are ignored.)
 !
@@ -576,7 +576,7 @@ subroutine Locate_TS
 !
 !  Prepare to exit: advise user of current status, in case anything goes wrong.
 !
-99 call  geo_diff(sum, rms, .false.)      
+99 call  geo_diff(sum, rms, .false.)
   e_stress = 0.d0
 !
 !  Evaluate the cosine of the angle between the gradient-vectors for the two geometries
@@ -599,7 +599,7 @@ subroutine Locate_TS
     fmt = "4.2"
   else
     fmt = "5.3"
-  end if  
+  end if
   line = refkey(1)
   call upcase(line, len_trim(line))
 !
@@ -631,7 +631,7 @@ subroutine Locate_TS
     title = "(Bias="//trim(bias)//" first) "//trim(title)
     write(line(len_trim(line) + 1:),'(a,f'//fmt//',a)')" bias=",density, " first.mop"
     call add_path(line)
-    inquire(unit=iarc, opened=opend) 
+    inquire(unit=iarc, opened=opend)
     if (opend) close(iarc)
     open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
     write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"First geometry (derived from data-set) after optimization subject to ", &
@@ -641,7 +641,7 @@ subroutine Locate_TS
     close(iarc)
     k = index(title, ")") + 2
     title = trim(title(k:))
-    geo(:,:numat) = geoa(:,:numat)  
+    geo(:,:numat) = geoa(:,:numat)
     line = refkey(1)
     call upcase(line, len_trim(line))
     k = index(line, "GEO_REF=") + 9
@@ -650,7 +650,7 @@ subroutine Locate_TS
     title = "(Bias="//trim(bias)//" second) "//trim(title)
     write(line(len_trim(line) + 1:),'(a,f'//fmt//',a)')" bias=",density, " second.mop"
     call add_path(line)
-    inquire(unit=iarc, opened=opend) 
+    inquire(unit=iarc, opened=opend)
     if (opend) close(iarc)
     open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
     write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"Second geometry (derived from reference geometry)"// &
@@ -667,12 +667,12 @@ subroutine Locate_TS
   else
     write(iw,'(/10x,a,f22.2,a)')"Current value of GEO_REF constraint:", density, "  Kcal/mol/Angstrom^2"
   end if
-  write(iw,'(10x,a,f24.2,a)') "Distance between the geometries:", sum,"  Angstroms" 
-  do i = 1, nvar 
-    k = loc(1,i) 
-    l = loc(2,i) 
-    geo(l,k) = big_xparam(i) 
-  end do 
+  write(iw,'(10x,a,f24.2,a)') "Distance between the geometries:", sum,"  Angstroms"
+  do i = 1, nvar
+    k = loc(1,i)
+    l = loc(2,i)
+    geo(l,k) = big_xparam(i)
+  end do
   call geo_diff(sum, rms, .true.)
   write(iw,'(/10x,a,f19.3,a)') "Heat of formation of the first geometry:", escf1 - e_stress, " Kcal/mol"
   write(iw,'(10x,a,f18.3,a)') "Heat of formation of the second geometry:", escf2 - e_stress, " Kcal/mol"
@@ -680,25 +680,25 @@ subroutine Locate_TS
   sum1 = sqrt(dot(big_grad, big_grad, nvar))
   sum2 = sqrt(dot(big_grad(nvar + 1), big_grad(nvar + 1), nvar))
   write(iw,'(10x,a,f22.3,a)') "Gradient arising from first geometry:", sum1, "  Kcal/mol/Angstrom"
-  write(iw,'(10x,a,f21.3,a)') "Gradient arising from second geometry:", sum2,"  Kcal/mol/Angstrom"  
+  write(iw,'(10x,a,f21.3,a)') "Gradient arising from second geometry:", sum2,"  Kcal/mol/Angstrom"
   sum = dot(big_grad, big_grad(nvar + 1), nvar)/(sum1*sum2)
   if (sum < 0.d0) then
     write(iw,'(10x,a, f27.2, a, /)')"Angle between gradient vectors:", acos(sum)*57.2957795d0, "  degrees"
   else
-    write(iw,'(10x,a, f15.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"    
+    write(iw,'(10x,a, f15.2, a, /)')"WARNING! - Angle between gradient vectors: ", acos(sum)*57.2957795d0, "  degrees"
   end if
   do i = 1, nvar
     xparam(i)=0.5d0*(big_xparam(i) + big_xparam(i + nvar))
-    k = loc(1,i) 
-    l = loc(2,i) 
+    k = loc(1,i)
+    l = loc(2,i)
     geo(l,k) = xparam(i)
-  end do  
+  end do
   if (extra_print) then
     line = input_fn(:len_trim(input_fn) - 5)
     title = "(Bias="//trim(bias)//" average) "//trim(title)
     write(line(len_trim(line) + 1:),'(a,f'//fmt//',a)')" bias=",density, " average.mop"
     call add_path(line)
-    inquire(unit=iarc, opened=opend) 
+    inquire(unit=iarc, opened=opend)
     if (opend) close(iarc)
     open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
      write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"Average of first and second geometries after optimization subject to ", &
@@ -711,10 +711,10 @@ subroutine Locate_TS
   end if
   return
   end subroutine lbfgs_TS
-  
-  subroutine compfg_TS(big_xparam, int, escf1, escf2, fulscf, big_grad, lgrad) 
+
+  subroutine compfg_TS(big_xparam, int, escf1, escf2, fulscf, big_grad, lgrad)
 !
-! compfg_TS evaluates the heat of formation and, if lgrad, the gradients of the two systems, 
+! compfg_TS evaluates the heat of formation and, if lgrad, the gradients of the two systems,
 ! one in the data-set and one in the reference data-set.
 !
     USE molkst_C, ONLY: nvar, numat
@@ -724,12 +724,12 @@ subroutine Locate_TS
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-    double precision, intent(out) :: escf1, escf2 
-    logical , intent(in) :: int 
-    logical, intent(in)  :: fulscf 
-    logical , intent(in) :: lgrad 
+    double precision, intent(out) :: escf1, escf2
+    logical , intent(in) :: int
+    logical, intent(in)  :: fulscf
+    logical , intent(in) :: lgrad
     double precision, intent(in) :: big_xparam(2*nvar)
-    double precision, intent (out) :: big_grad(2*nvar) 
+    double precision, intent (out) :: big_grad(2*nvar)
     double precision, allocatable :: xparam(:)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -745,25 +745,25 @@ subroutine Locate_TS
 !
 !  Save the current point
 !
-    do i = 1, nvar 
+    do i = 1, nvar
       xparam(i) = big_xparam(i)
-    end do 
+    end do
 !
 !  Run data-set geometry, using reference geometry as geo_ref - this is in geoa
 !
-    call big_swap(1,1) 
+    call big_swap(1,1)
     call compfg(xparam, int, escf1, fulscf, grad, lgrad)
-    call big_swap(0,1)  
+    call big_swap(0,1)
     big_grad(:nvar) = grad(:nvar)
     geoa(:,:numat) = geo(:,:numat)
 !
 ! Run reference geometry using data-set as reference - this is now in geoa
 !
-    call big_swap(1,2)  
+    call big_swap(1,2)
     xparam = big_xparam(nvar + 1: 2*nvar)
     call compfg(xparam, int, escf2, fulscf, grad, lgrad)
     big_grad(nvar + 1: 2*nvar) = grad(:nvar)
-    call big_swap(0,2) 
+    call big_swap(0,2)
 !
 !  Re-set geo and geoa to data-set and reference geometries
 !
@@ -771,7 +771,7 @@ subroutine Locate_TS
     geoa(:,:numat) = geo_2(:,:numat)
     return
   end subroutine compfg_TS
-  
+
   subroutine l_control(txt, nt, mode)
 !
 !   l_control has two modes:
@@ -806,10 +806,10 @@ subroutine Locate_TS
           if (local_txt(mt:mt) == '"') exit
         end do
       end if
-      if (local_txt(mt:mt) == ' ') exit 
+      if (local_txt(mt:mt) == ' ') exit
       if (mt == nt) exit
     end do
-    line = local_txt(:mt)  
+    line = local_txt(:mt)
 !
 !  "line" holds a single keyword
 !
@@ -825,7 +825,7 @@ subroutine Locate_TS
         line(i:i) /= "_" .and. line(i:i) /= "-") exit
       end do
     end if
-    trim_len = i - 1  
+    trim_len = i - 1
 !
 !  If keyword already exists, then delete the keyword
 !  Keyword can have an "=" sign, or be followed by a "(" or a '"'
@@ -847,7 +847,7 @@ subroutine Locate_TS
           do
             j = j + 1
             if (keywrd(j:j) == ch) exit
-          end do 
+          end do
         end if
 !
 !  Clumsy fix to delete existing keywords that contain quotation marks.
@@ -872,12 +872,12 @@ subroutine Locate_TS
     if (mode == 1) then
       i = index(keywrd, store(:mt + 2))
       keywrd = keywrd(:i)//line(:mt)//trim(keywrd(i + mt + 1:))
-    end if  
+    end if
     if (local_txt == " ") exit
   end do
   return
   end subroutine l_control
-  
+
   subroutine get_pars(stresses, gradients, relscf, cutoff, nloop)
 !
 !  Used for calibrating quantities
@@ -897,15 +897,15 @@ subroutine Locate_TS
       if (io_stat /= 0) exit
       read(line,*, iostat = io_stat)stresses(nloop), gradients(nloop), relscf(nloop), cutoff(nloop)
       if (io_stat /= 0) exit
-    end do 
+    end do
     nloop = nloop - 1
     close (33)
     return
   end subroutine get_pars
-  
-  Subroutine big_swap(mode, system) 
+
+  Subroutine big_swap(mode, system)
 !
-!  Given two entire geometries, via 'GEO_REF="data-set.moip"', store or read 
+!  Given two entire geometries, via 'GEO_REF="data-set.moip"', store or read
 !  a geometry and all arrays specific to that geometry, e.g., occupied and virtual LMO's
 !
 ! On input:
@@ -937,7 +937,7 @@ subroutine Locate_TS
     icocc_dim_2, icvir_dim_2, cvir_dim_2, cocc_dim_2, mpack_2, norred_1, norred_2, &
       nelred_1, nelred_2
     double precision :: refnuc_1, refnuc_2, solv_energy_1 = 0.d0, solv_energy_2 = 0.d0
-    save 
+    save
     if (mode == 0) then
 !
 !  Store system
@@ -947,8 +947,8 @@ subroutine Locate_TS
           if (.not. allocated(nbonds_1)) allocate (nbonds_1(numat), ibonds_1(15,numat), &
           geo_1(3,numat), dxyz_1(3*numat))
           nbonds_1 = nbonds
-          ibonds_1 = ibonds 
-        end if 
+          ibonds_1 = ibonds
+        end if
         icocc_dim_1 = icocc_dim
         icvir_dim_1 = icvir_dim
         cvir_dim_1  = cvir_dim
@@ -961,7 +961,7 @@ subroutine Locate_TS
         call copy_r_2(geo,             geo_1, 3)
         call copy_r_1(dxyz,           dxyz_1)
         call copy_i_1(icocc,         icocc_1)
-        call copy_i_1(icvir,         icvir_1)     
+        call copy_i_1(icvir,         icvir_1)
         call copy_i_1(ncocc,         ncocc_1)
         call copy_i_1(ncvir,         ncvir_1)
         call copy_i_1(nncf,           nncf_1)
@@ -972,7 +972,7 @@ subroutine Locate_TS
         call copy_i_1(iijj,           iijj_1)
         call copy_i_1(ijall,         ijall_1)
         call copy_i_1(numij,         numij_1)
-        call copy_i_1(iorbs,         iorbs_1)   
+        call copy_i_1(iorbs,         iorbs_1)
         call copy_i_2(nijbo,         nijbo_1, numat)
         call copy_r_1(cocc,           cocc_1)
         call copy_r_1(cvir,           cvir_1)
@@ -987,7 +987,7 @@ subroutine Locate_TS
           if (.not. allocated(nbonds_2)) allocate (nbonds_2(numat), ibonds_2(15,numat), &
           geo_2(3,numat), dxyz_2(3*numat))
           nbonds_2 = nbonds
-          ibonds_2 = ibonds  
+          ibonds_2 = ibonds
         end if
         icocc_dim_2 = icocc_dim
         icvir_dim_2 = icvir_dim
@@ -1001,7 +1001,7 @@ subroutine Locate_TS
         call copy_r_2(geo,             geo_2, 3)
         call copy_r_1(dxyz,           dxyz_2)
         call copy_i_1(icocc,         icocc_2)
-        call copy_i_1(icvir,         icvir_2)     
+        call copy_i_1(icvir,         icvir_2)
         call copy_i_1(ncocc,         ncocc_2)
         call copy_i_1(ncvir,         ncvir_2)
         call copy_i_1(nncf,           nncf_2)
@@ -1012,7 +1012,7 @@ subroutine Locate_TS
         call copy_i_1(iijj,           iijj_2)
         call copy_i_1(ijall,         ijall_2)
         call copy_i_1(numij,         numij_2)
-        call copy_i_1(iorbs,         iorbs_2) 
+        call copy_i_1(iorbs,         iorbs_2)
         call copy_i_2(nijbo,         nijbo_2, numat)
         call copy_r_1(cocc,           cocc_2)
         call copy_r_1(cvir,           cvir_2)
@@ -1042,7 +1042,7 @@ subroutine Locate_TS
         call copy_r_2(geo_1,             geo, 3)
         call copy_r_1(dxyz_1,           dxyz)
         call copy_i_1(icocc_1,         icocc)
-        call copy_i_1(icvir_1,         icvir)     
+        call copy_i_1(icvir_1,         icvir)
         call copy_i_1(ncocc_1,         ncocc)
         call copy_i_1(ncvir_1,         ncvir)
         call copy_i_1(nncf_1,           nncf)
@@ -1053,7 +1053,7 @@ subroutine Locate_TS
         call copy_i_1(iijj_1,           iijj)
         call copy_i_1(ijall_1,         ijall)
         call copy_i_1(numij_1,         numij)
-        call copy_i_1(iorbs_1,         iorbs)  
+        call copy_i_1(iorbs_1,         iorbs)
         call copy_i_2(nijbo_1,         nijbo, numat)
         call copy_r_1(cocc_1,           cocc)
         call copy_r_1(cvir_1,           cvir)
@@ -1080,7 +1080,7 @@ subroutine Locate_TS
         call copy_r_2(geo_2,             geo, 3)
         call copy_r_1(dxyz_2,           dxyz)
         call copy_i_1(icocc_2,         icocc)
-        call copy_i_1(icvir_2,         icvir)     
+        call copy_i_1(icvir_2,         icvir)
         call copy_i_1(ncocc_2,         ncocc)
         call copy_i_1(ncvir_2,         ncvir)
         call copy_i_1(nncf_2,           nncf)
@@ -1103,7 +1103,7 @@ subroutine Locate_TS
         call copy_r_1(p_2,                 p)
         if (allocated(pa)) pa = p*0.5d0
         if (allocated(pb)) pb = pa
-      end if  
+      end if
       coord(:,:numat) = geo(:,:numat)
     end if
   contains
@@ -1116,7 +1116,7 @@ subroutine Locate_TS
         to = from
       end if
     end subroutine copy_i_1
-    
+
     subroutine copy_i_2(from, to, dim_1)
       integer, allocatable :: from(:,:), to(:,:)
       integer :: dim_1
@@ -1135,7 +1135,7 @@ subroutine Locate_TS
         to = from
       end if
     end subroutine copy_r_1
- 
+
     subroutine copy_r_2(from, to, dim_1)
       double precision, allocatable :: from(:,:), to(:,:)
       integer :: dim_1
@@ -1203,24 +1203,24 @@ subroutine Locate_TS
           end if
         end do
       end if
-    end do    
+    end do
     if (nsite == 0) return
     k = 0
     do i = 1, nsite
       k = max(k,nbonds_b(active_site(i)))
     end do
     write(ch,'(i2)')k*6 - 6
-      
+
     if (pdb_label) then
       write(iw,'(/,a,'//ch//'x,a,/16x,a)') &
       " Set 1: Atoms involved in covalent bond-breaking and bond-making", "Connectivity of atoms"
       write(iw,'(77x,a,'//ch//'x,a)')"Data-set", "Reference"
-      write(iw,'(37x,a)')"(PDB labels from GEO-REF)" 
+      write(iw,'(37x,a)')"(PDB labels from GEO-REF)"
     else
       write(iw,'(/6x,a,'//ch//'x,a)')" Set 1: Atoms involved in covalent", "Connectivity of atoms"
       write(iw,'(7x, a,21x,a,/)')"bond-breaking and bond-making            Data-set", "Reference"
     end if
-    write(ch,'(i2)')k*6 
+    write(ch,'(i2)')k*6
     do i = 1, nsite
       write(line,'(i12,10i6)')(ibonds_b(j, active_site(i)), j = 1, nbonds_b(active_site(i)))
       write(line(k*6 + 10:),'(i6,10i6)')(ibonds(j, active_site(i)), j = 1, nbonds(active_site(i)))
@@ -1229,7 +1229,7 @@ subroutine Locate_TS
     "  PDB Label: ("//txtatm(active_site(i))(:maxtxt)//")", trim(line)
       else
          write(iw,'(i12, 3x, a, i6, 6x, a)')i, " Atom:  "//elemnt(nat(active_site(i))), active_site(i), trim(line)
-      end if      
+      end if
     end do
     ninsite(1) = nsite
 !
@@ -1245,11 +1245,11 @@ subroutine Locate_TS
         end do
         if (l <= nsite) cycle
         nsite = nsite + 1
-        active_site(nsite) = k           
-      end do          
+        active_site(nsite) = k
+      end do
     end do
     do jj = 1, ii
-      i = active_site(jj)     
+      i = active_site(jj)
       do j = 1, nbonds_b(i)
         k = ibonds_b(j,i)
         do l = 1, nsite
@@ -1257,8 +1257,8 @@ subroutine Locate_TS
         end do
         if (l <= nsite) cycle
         nsite = nsite + 1
-        active_site(nsite) = k           
-      end do   
+        active_site(nsite) = k
+      end do
     end do
     write(iw,'(/,a,/)')" Set 2 : Atoms involved in covalent bond-breaking "// &
       "and bond-making, plus nearest neighbors"
@@ -1267,8 +1267,8 @@ subroutine Locate_TS
   "  PDB Label: ("//txtatm(active_site(i))(:maxtxt)//")", i = 1, nsite)
     else
       write(iw,'(i12, 3x, a, i6)')(i, " Atom:  "//elemnt(nat(active_site(i))), active_site(i), i = 1, nsite)
-    end if      
-    ninsite(2) = nsite     
+    end if
+    ninsite(2) = nsite
     return
   end subroutine build_active_site
   subroutine select_opt(shell, active_site)
@@ -1287,10 +1287,10 @@ subroutine Locate_TS
         k = tmp(j)
         l = j
       end if
-      
+
     end do
     tmp(l) = 200000
-    use(i) = k   
+    use(i) = k
   end do
   if (.false.) then
   nvar = 0
@@ -1310,16 +1310,16 @@ subroutine Locate_TS
   xparam(:nvar) = x_2(:nvar)
   call big_swap(0,2)
   end if
-  return 
+  return
   end subroutine select_opt
-  
+
   subroutine Refine_TS
 !
-!       Refine the transition state by minimizing the heat of formation of everything 
+!       Refine the transition state by minimizing the heat of formation of everything
 !       except the reaction side, followed by gradient minimization of the active site.
-!       This is an iterative process, so up to five cycles of 
+!       This is an iterative process, so up to five cycles of
 !       (HoF minimization followed by gradient minimization) are used
-!   
+!
   use common_arrays_C, only : xparam, loc, lopt, geo, f, h, lopt_store
   USE molkst_C, only : nvar, numat, moperr, keywrd
   use ef_C, only: nstep
@@ -1327,11 +1327,11 @@ subroutine Locate_TS
   implicit none
   integer :: loop, i, j
   logical :: converged, extra_print, l_ts, l_nllsq, l_sigma
-    i = index(keywrd,  " LOCATE-TS")    
+    i = index(keywrd,  " LOCATE-TS")
     do j = i + 12, min(240, i + 100)
       if (keywrd(j:j) == " ") exit
     end do
-    extra_print = (index(keywrd(i:j), "C:") > 0)    
+    extra_print = (index(keywrd(i:j), "C:") > 0)
     l_ts = (index(keywrd, " TS") /= 0)
     l_nllsq = (index(keywrd, " NLLSQ") /= 0)
     l_sigma = (index(keywrd, " SIGMA") /= 0)
@@ -1352,7 +1352,7 @@ subroutine Locate_TS
           do j = 1, 3
             lopt(j,i) = 1 - lopt(j,i)
           end do
-        end do 
+        end do
       end if
 !
 !  lopt = geometric variables to be optimized.  This consists of all atoms not involved in bond-making or bond-breaking.
@@ -1363,15 +1363,15 @@ subroutine Locate_TS
       loc = 0
       nvar = 0
       do i = 1, numat
-        do j = 1, 3 
+        do j = 1, 3
           if (lopt(j,i) == 1 .and. lopt_store(j,i) == 1) then
-            nvar = nvar + 1 
-            loc(1,nvar) = i 
-            loc(2,nvar) = j 
-            xparam(nvar) = geo(j,i) 
+            nvar = nvar + 1
+            loc(1,nvar) = i
+            loc(2,nvar) = j
+            xparam(nvar) = geo(j,i)
           end if
-        end do 
-      end do 
+        end do
+      end do
       h = 0.d0
       f = 0.d0
       parth = 0.d0
@@ -1382,12 +1382,12 @@ subroutine Locate_TS
 !
 ! Set up gradient-minimum calculation for the active site, i.e., where the imaginary mode is.
 !
-      if (moperr) return  
+      if (moperr) return
       do i = 1, numat
         do j = 1, 3
           lopt(j,i) = 1 - lopt(j,i)
         end do
-      end do  
+      end do
 !
 !  lopt = geometric variables to be optimized.  This consists of all atoms involved in bond-making or bond-breaking.
 !  lopt_store = all geometric variables to be optimized.
@@ -1397,15 +1397,15 @@ subroutine Locate_TS
       loc = 0
       nvar = 0
       do i = 1, numat
-        do j = 1, 3 
+        do j = 1, 3
           if (lopt(j,i) == 1 .and. lopt_store(j,i) == 1) then
-            nvar = nvar + 1 
-            loc(1,nvar) = i 
-            loc(2,nvar) = j 
-            xparam(nvar) = geo(j,i) 
+            nvar = nvar + 1
+            loc(1,nvar) = i
+            loc(2,nvar) = j
+            xparam(nvar) = geo(j,i)
           end if
-        end do 
-      end do  
+        end do
+      end do
       call minimize_gradient(loop, converged, extra_print, l_ts, l_nllsq, l_sigma)
       converged = (converged .and. nstep < 3)
       if (converged) exit
@@ -1423,8 +1423,8 @@ subroutine Locate_TS
 !
     integer :: i, k, l
     double precision, external :: seconds, reada
-    
-    
+
+
       call l_control("TS", len("TS"), -1)
       write(iw,'(a, i4 ,a,/)')"  Loop:", loop, &
       "  Energy minimization, excluding active site, using L-BFGS"
@@ -1444,13 +1444,13 @@ subroutine Locate_TS
           write (iw, '(/, 5 x, "GRADIENT =", f9.5, " IS LESS THAN CUTOFF =", f9.5,//)') gnorm, &
           gnorm_lim
         end if
-        do i = 1, nvar 
-          k = loc(1,i) 
-          l = loc(2,i) 
-          geo(l,k) = xparam(i) 
-        end do 
+        do i = 1, nvar
+          k = loc(1,i)
+          l = loc(2,i)
+          geo(l,k) = xparam(i)
+        end do
       else
-        call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.) 
+        call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.)
         gnorm = 0.d0
       end if
       return
@@ -1479,7 +1479,7 @@ subroutine Locate_TS
     end if
     write(iw,'(a, i4 ,a)')"  Loop:", loop, &
     "  Gradient minimization of atoms in the active site using "//trim(line)
-    i = int(log10(loop + 0.05)) 
+    i = int(log10(loop + 0.05))
     num = char(ichar("1") + i)
     do
       if (title(1:5) /= "(Loop") exit
@@ -1492,7 +1492,7 @@ subroutine Locate_TS
     write(line(len_trim(line) + 1:),'(a, i'//num//', a)')" Loop",loop, ".mop"
     if (extra_print) then
       call add_path(line)
-      inquire(unit=iarc, opened=opend) 
+      inquire(unit=iarc, opened=opend)
       if (opend) close(iarc)
       open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
       write(iw,'(/10x,a,i2,a,/10x,a,/)')"Transition state on cycle",loop, " written to file:", &
@@ -1514,7 +1514,7 @@ subroutine Locate_TS
       call powsq()
     else if (l_nllsq) then
       call nllsq()
-    end if 
+    end if
     iflepo = 19
     if (moperr) then
       write(iw,'(//2x,a,//)')" Gradient minimization failed.  The best geometry at this point will be output to ARC file"
@@ -1523,22 +1523,22 @@ subroutine Locate_TS
       line = input_fn(:len_trim(input_fn) - 5)
       write(line(len_trim(line) + 1:),'(a)')".arc"
       call add_path(line)
-      inquire(unit=iarc, opened=opend) 
+      inquire(unit=iarc, opened=opend)
       if (opend) close(iarc)
       open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
-      do i = 1, nvar 
+      do i = 1, nvar
         geo(loc(2,i),loc(1,i)) = xparam(i)
-      end do     
+      end do
       call geout (iarc)
       close(iarc)
       return
     end if
     return
   end subroutine minimize_gradient
-  
-   
-   
-  
-   
-   
- 
+
+
+
+
+
+
+

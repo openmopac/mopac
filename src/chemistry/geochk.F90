@@ -40,7 +40,7 @@ subroutine geochk ()
     use MOZYME_C, only : ions, icharges, angles, allres, iz, ib, tyr, allr, &
     iopt, nres, at_res, Lewis_tot, Lewis_elem, noccupied, nvirtual, &
     odd_h, tyres, start_res, lstart_res, uni_res
-!    
+!
     use molkst_C, only: natoms, numat, nelecs, keywrd, moperr, maxtxt, mozyme, &
       maxatoms, line, nalpha, nbeta, uhf, nclose, nopen, norbs, numcal, id, &
       ncomments, numat_old, nvar, prt_coords, prt_topo, allkey, txtmax, pdb_label
@@ -63,7 +63,7 @@ subroutine geochk ()
     integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, kkk, near_ions_store(2), &
    & j, jbad, k, l, large, n1, new, alloc_stat, mres, near_ions(2, 100), atomic_charges(8), &
      maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10, nnumat, delta_res, max_frag
-    integer, dimension(:), allocatable ::  mb    
+    integer, dimension(:), allocatable ::  mb
     integer, save :: numbon(3), num_ions(-6:6)
     integer, dimension(:), allocatable :: nnbonds
     integer, dimension(:,:), allocatable :: iibonds
@@ -132,11 +132,11 @@ subroutine geochk ()
         if (line(i:i) == "(") exit
         line = line(2:)
       end do
-      j = index(line(i:), ") ") 
+      j = index(line(i:), ") ")
       if (j == 0) then
         call mopend("Closing parenthesis for XENO not found")
         return
-      end if      
+      end if
       line = ","//line(i + 1: j + i)
       do
         if (line == " ") exit
@@ -150,7 +150,7 @@ subroutine geochk ()
         if (k == 0) then
           call mopend("Equals sign (""="") expected in XENO but not found")
           return
-        end if  
+        end if
         l = k + 2
         j = k + 4
         n_new = n_new + 1
@@ -167,13 +167,13 @@ subroutine geochk ()
 !   A three-letter residue name has been detected.
 !
           new_name(n_new) = line(k + 1:k + 3)
-        else  
+        else
           write(iw,'(/10x,a)')"XENO keyword used: ("//trim(line)
           call mopend("RESIDUE NAMES IN KEYWORD XENO MUST BE ONE OR THREE CHARACTERS LONG")
           return
         end if
       end do
-    end if      
+    end if
     do
       i = Index (keywrd, " xeno")
       if (i == 0) exit
@@ -205,7 +205,7 @@ subroutine geochk ()
     if (i > 0) then
       line = "SITE=(COO,NH3,ARG(+),SO4,PO4)"
       keywrd = keywrd(:i)//trim(line)//keywrd(i + 14:)
-    end if      
+    end if
     i = index(keywrd," SITE=")
     lsite = .false.
 !
@@ -224,7 +224,7 @@ subroutine geochk ()
 !   9:    SO4(=)
 !  10:    PO4(=)
 !
-    
+
     i = index(keywrd," SITE=(")
     if (i /= 0 .and. index (keywrd, " ADD-H") == 0) then
 !
@@ -232,7 +232,7 @@ subroutine geochk ()
 !
       j = index(keywrd(i:), ") ") + i
       line = keywrd(i + 7:j)
-      do 
+      do
         i = index(line,'"')
         if (i == 0) exit
         j = index(line(i + 1:), '"') + i + 1
@@ -261,7 +261,7 @@ subroutine geochk ()
           return
         end if
         line = line(j:)
-      end do  
+      end do
       call lewis(.true.)
       do
         i = index(keywrd," SITE=")
@@ -298,7 +298,7 @@ subroutine geochk ()
             end if
             if (index(keywrd(i:j),"PO4") /= 0) then
                neutral(10) = .true.
-            end if        
+            end if
           end if
           do k = 1, 10
             if (neutral(k)) exit
@@ -339,43 +339,43 @@ subroutine geochk ()
               if (i >= j) exit
               m = m + 1
               new_chain(m) = keywrd(i:i)
-              num = char(Int(log10(m*1.0)) + ichar("1") + 1) 
-              if (new_chain(m) < "A" .or. new_chain(m) > "Z") then             
+              num = char(Int(log10(m*1.0)) + ichar("1") + 1)
+              if (new_chain(m) < "A" .or. new_chain(m) > "Z") then
                 write(iw,'(//10x,a,/10x,a,i'//num//',a)')" There is a fault in the SITE keyword", &
                 " Chain letter for residue", m, " is not in the range 'A' to 'Z'"
-              end if          
+              end if
               i = i + 1
               k = ichar(keywrd(i:i)) - ichar("0")
               if ((k < 0 .or. k > 9) .and. keywrd(i:i) /= "-") then
                 write(iw,'(//10x,a,/10x,a,i'//num//',a)')" There is a fault in the SITE keyword", &
                 " The entry for site", m, " is faulty"
-              end if  
+              end if
               if (keywrd(i:i) == "-") then
                 ii = -1
                 k = 0
               else
                 ii = 1
-              end if            
+              end if
               do
               i = i + 1
               if (keywrd(i:i) < "0" .or. keywrd(i:i) > "9") exit
-                k = k*10 + ichar(keywrd(i:i)) - ichar("0")  
+                k = k*10 + ichar(keywrd(i:i)) - ichar("0")
               end do
               new_res(m) = k*ii
               if (txtmax == 27 .and. keywrd(i:i) /= "(") then
                 new_alt(m) = keywrd(i:i)
-                if ((new_alt(m) < "A" .or. new_alt(m) > "Z") .and. new_alt(m) /= " ") &             
+                if ((new_alt(m) < "A" .or. new_alt(m) > "Z") .and. new_alt(m) /= " ") &
                   write(iw,'(//10x,a,/10x,a,i'//num//',a)')" There is a fault in the SITE keyword", &
                   " Alternate residue for residue", m, " is not in the range 'A' to 'Z'"
                 i = i + 1
               else
                 new_alt(m) = " "
-              end if                   
+              end if
               i = i + 1
               charge(m,1) = keywrd(i:i)
               if (charge(m,1) /= "+" .and. charge(m,1) /= "-" .and. charge(m,1) /= "0") then
                 write(iw,'(//10x,a,/10x,a,i4,a)')" There is a fault in the SITE keyword", &
-                " Charge on site", m, " is not '+', '0', or '-'"   
+                " Charge on site", m, " is not '+', '0', or '-'"
               end if
               i = i + 1
               charge(m,2) = keywrd(i:i)
@@ -390,7 +390,7 @@ subroutine geochk ()
             end do
           else
             m = 0
-          end if      
+          end if
           lsite = .true.
           call update_txtatm(.true., .true.)
           do j = 1, id
@@ -459,7 +459,7 @@ subroutine geochk ()
 !   WORK OUT WHAT ATOMS ARE BONDED TO EACH OTHER.
 !
     call lewis (.true.)
-    if (moperr) return   
+    if (moperr) return
     allocate (nnbonds(numat), iibonds(15,numat), stat=alloc_stat)
     if (alloc_stat /= 0) then
       call memory_error ("geochn")
@@ -548,11 +548,11 @@ subroutine geochk ()
             write(iw,'(a)') "Atoms missing (Use original numbering system)"
             ioptl(:numat) = .true.
             do i = 1, new
-              ioptl(iz(i)) = .false.              
+              ioptl(iz(i)) = .false.
             end do
             do i = 1, numat
               if (ioptl(i)) write(iw,'(i5)')i
-            end do         
+            end do
           else
           end if
           call mopend("THERE IS A FAULT IN RESEQ")
@@ -581,7 +581,7 @@ subroutine geochk ()
         end do
         labels(i) = nat(j)
         nlast(i) = nfirst(i) + natorb(labels(i)) - 1
-        l = nlast(i) + 1 
+        l = nlast(i) + 1
       end do
       nat(:numat) = labels(:numat)
       coord(:,:numat) = geo(:,:numat)
@@ -609,7 +609,7 @@ subroutine geochk ()
         end do
       end do
     end if
-    noccupied = 0  
+    noccupied = 0
     if (Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") + index(keywrd, " ADD-H") &
       + index(keywrd, " 0SCF") == 0) then
 !
@@ -623,7 +623,7 @@ subroutine geochk ()
       do i = 1, numat
         l = l + Abs (iz(i))
       end do
-      if (l /= 0) then         
+      if (l /= 0) then
 !
 !  THERE ARE IONS.  IDENTIFY THEM.
 !
@@ -654,12 +654,12 @@ subroutine geochk ()
     else
       nvar = 0
       do i = 1, numat
-        do j = 1, numat_old          
+        do j = 1, numat_old
           if (abs(coord(1,i) - coorda(1,j)) > 0.1d0) cycle
           if (abs(coord(2,i) - coorda(2,j)) > 0.1d0) cycle
           if (abs(coord(3,i) - coorda(3,j)) > 0.1d0) cycle
           exit
-        end do 
+        end do
         if (j <= numat_old) then
 !
 !  Atom "i" in coord has the same coordinates as atom "j" in coorda
@@ -676,7 +676,7 @@ subroutine geochk ()
             nvar = nvar + 1
             loc(1,nvar) = i
             loc(2,nvar) = k
-          end do          
+          end do
         end if
       end do
       do j = numat + 1, numat + id
@@ -687,8 +687,8 @@ subroutine geochk ()
             loc(2,nvar) = k
           end if
         end do
-      end do       
-    end if 
+      end do
+    end if
 !
 !   Use the following block to debug the construction of the Lewis structure
 !
@@ -723,7 +723,7 @@ subroutine geochk ()
     end if
 !
 !
-    if (lres) then      
+    if (lres) then
       txtatm(:) = " "
       if (maxtxt == 0) then
         maxtxt = 26
@@ -731,7 +731,7 @@ subroutine geochk ()
       end if
       angles = 0.d0
       allres = " "
-      if (done) then        
+      if (done) then
 !
 !   THE EARLIER CALL TO RESEQ MEANS THAT N1 MIGHT HAVE MOVED.
 !   SO FIND N1 AGAIN.
@@ -754,10 +754,10 @@ subroutine geochk ()
       do max_frag = 1, 10000
         if (start_res(max_frag) == -200) exit
       end do
-      max_frag = max_frag - 1  
+      max_frag = max_frag - 1
       lstart_res = .false.
       nfrag = 0
-      do      
+      do
         if (max_frag > 0) then
           do nfrag = 1, max_frag
             if (.not. lstart_res(start_res(nfrag) + 1)) exit
@@ -775,23 +775,23 @@ subroutine geochk ()
 !
         if (nfrag > 999) then
           call mopend("STRUCTURE UNRECOGNIZABLE")
-          inquire(unit=iarc, opened=opend) 
-          if (opend) close(iarc, status = "DELETE")          
+          inquire(unit=iarc, opened=opend)
+          if (opend) close(iarc, status = "DELETE")
           go to 1100
         endif
 !
         call names (ioptl, ib, n1, ires, nfrag, io, uni_res, mres)
         if (moperr) return
-!    
+!
         nn1 = n1
         call findn1 (n1, ioptl, io, delta_res)
 !
 ! n1 is the start of the next fragment
 ! delta_res is the distance back along the chain to the start of the next fragment.
-! 
+!
         if (.not. l_protein) nfrag = 0
-        if (n1 == 0) exit  
-        if (n1 == nn1) ioptl(n1) = .true.   
+        if (n1 == 0) exit
+        if (n1 == nn1) ioptl(n1) = .true.
         if (.not. lbreaks) then
           mbreaks = mbreaks + 1
           breaks(mbreaks) = n1
@@ -801,8 +801,8 @@ subroutine geochk ()
           do i = 1, numat
             if (.not. ioptl(i)) exit
           end do
-          if (i - 1 > 0) break_coords(:,mbreaks) = coord(:,i - 1)          
-        end if             
+          if (i - 1 > 0) break_coords(:,mbreaks) = coord(:,i - 1)
+        end if
       end do
 !
 !  Re-evaluate all residues
@@ -816,16 +816,16 @@ subroutine geochk ()
         allres(j) = txtatm(i)(18:20)
         end if
       end do
-      ires = j      
+      ires = j
       iopt(:natoms) = ib(:natoms)
 !
 !   LABEL THE ATOMS IN ANY NON-PROTEIN MOLECULES IN THE SYSTEM
 !
-      nfrag = nfrag + 1  
+      nfrag = nfrag + 1
       if (start_res(max(1,nfrag)) == -200) then
-        if (.not. l_protein) ires = 0       
+        if (.not. l_protein) ires = 0
       else
-        ires = start_res(nfrag)         
+        ires = start_res(nfrag)
       end if
       call lewis(.true.)
       call ligand (ires, start_res, nfrag)
@@ -841,8 +841,8 @@ subroutine geochk ()
         do i = 1, numat
           if (.not. ioptl(i)) exit
         end do
-        if (i - 1 > 0) break_coords(:,mbreaks) = coord(:,i - 1)          
-      end if         
+        if (i - 1 > 0) break_coords(:,mbreaks) = coord(:,i - 1)
+      end if
       nres = uni_res
       maxtxt = txtmax
       if (.not. pdb_label) pdb_label = (maxtxt > 25)
@@ -867,8 +867,8 @@ subroutine geochk ()
         txtatm(i) = txtatm(i)(:21)//chains(mbreaks)//txtatm(i)(23:)
         if (i == breaks(mbreaks)) then
           mbreaks = mbreaks + 1
-        else  
-          if (txtatm(i)(23:txtmax) == "    ") cycle          
+        else
+          if (txtatm(i)(23:txtmax) == "    ") cycle
           if (mbreaks > 1) then
 !
 !  This is a workaround to avoid having a break that already has been used.
@@ -888,11 +888,11 @@ subroutine geochk ()
                 end if
               end if
             end if
-            txtatm(i) = txtatm(i)(:21)//chains(mbreaks)//txtatm(i)(23:)            
+            txtatm(i) = txtatm(i)(:21)//chains(mbreaks)//txtatm(i)(23:)
           end if
         end if
         line = txtatm(i)(23:txtmax)
-      end do 
+      end do
 !
 !   Check for unknowns
 !
@@ -910,20 +910,20 @@ subroutine geochk ()
                 write(txtatm(k)(15:15),'(i1)')j
               else
                  write(txtatm(k)(15:16),'(i2)')min(j, 99)
-              end if                
+              end if
             end if
           end do
           if (j > 1) write(txtatm(i)(15:15),'(i1)')1
-        end if 
+        end if
       end do
-      do i = 1, natoms 
+      do i = 1, natoms
         if (txtatm(i)(1:6) /= "HETATM" .and. txtatm(i)(1:6) /= "ATOM  ") then
 !
 !  Catch all atoms that have still not been identified
 !
           write(line, '(a,i5, a, a)')"HETATM", i, " "//elemnt(labels(i)), "   HET"
           txtatm(i) = trim(line)
-        end if  
+        end if
       end do
       if (n_new /= 0) then
 !
@@ -959,7 +959,7 @@ subroutine geochk ()
                 "  Name not changed!"
             else
               write(iw,'(i3,i9,3x,a1,8x,a3,13x,a3)')i, new_res(i), new_chain(i), old_name(i), new_name(i)
-            end if 
+            end if
           end if
         end do
         if (log) then
@@ -971,10 +971,10 @@ subroutine geochk ()
               "  Name not changed!"
             else
               write(ilog,'(i3,i9,3x,a1,8x,a3,13x,a3)')i, new_res(i), new_chain(i), old_name(i), new_name(i)
-            end if        
+            end if
           end do
         end if
-      end if  
+      end if
       l_use_old_labels = (index(keywrd," SITE=") /= 0 .and. index(keywrd, " ADD-H") == 0)
       l_use_old_labels = .true.
       call update_txtatm(l_use_old_labels, .true.)
@@ -990,7 +990,7 @@ subroutine geochk ()
           j = j + 1
           temp_txtatm(i) =  txtatm(j)
         end if
-      end do  
+      end do
       txtatm(:natoms) = temp_txtatm(:natoms)
       deallocate(temp_txtatm)
       call write_sequence
@@ -1002,10 +1002,10 @@ subroutine geochk ()
 !
       temp_txtatm = txtatm
       do i = 1, natoms
-        write (txtatm(i), "(a,i5,a)")temp_txtatm(i)(1:6),i,temp_txtatm(i)(12:maxtxt)         
+        write (txtatm(i), "(a,i5,a)")temp_txtatm(i)(1:6),i,temp_txtatm(i)(12:maxtxt)
       end do
       deallocate(temp_txtatm)
-      
+
 !
 !  Identify atoms where chain breaks occur
 !
@@ -1017,7 +1017,7 @@ subroutine geochk ()
       end if
     end if
 !
-!  Edit keywords to remove text that would not be used in the next calculation. 
+!  Edit keywords to remove text that would not be used in the next calculation.
 !
     call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
     i = index(keywrd, "SITE=()")
@@ -1030,19 +1030,19 @@ subroutine geochk ()
       if ( index(keywrd," PDBOUT") /= 0) then
         line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
         i = iarc
-        inquire(unit=i, opened=opend) 
-        if (opend) close(i, status = 'keep', iostat=j)  
-        open(unit=i, file=line, status='UNKNOWN', position='asis') 
-        rewind i 
+        inquire(unit=i, opened=opend)
+        if (opend) close(i, status = 'keep', iostat=j)
+        open(unit=i, file=line, status='UNKNOWN', position='asis')
+        rewind i
         call pdbout(i)
         close (i)
       end if
       if (index(keywrd, " RESEQ") /= 0) then
         line = archive_fn(:len_trim(archive_fn) - 3)//"arc"
-        inquire(unit=iarc, opened=opend) 
-        if (opend) close(iarc, status = 'keep', iostat=i)  
-        open(unit=iarc, file=line, status='UNKNOWN', position='asis') 
-        rewind iarc 
+        inquire(unit=iarc, opened=opend)
+        if (opend) close(iarc, status = 'keep', iostat=i)
+        open(unit=iarc, file=line, status='UNKNOWN', position='asis')
+        rewind iarc
         call geout (iarc)
       end if
       if (index(keywrd, " RESEQ") == 0) return
@@ -1057,7 +1057,7 @@ subroutine geochk ()
     ions = 0
     do i = 1, natoms
       if (labels(i) == 99) then
-        ions(i) = 0       
+        ions(i) = 0
       else
          j = j + 1
         ions(i) = iz(j)
@@ -1114,8 +1114,8 @@ subroutine geochk ()
             do i = 1, numat
               write (iw, "(I7,9X,A,9I7)") i, elemnt (nat(i)), (ibonds(j, i), j=1, nbonds(i))
             end do
-          end if        
-        end if 
+          end if
+        end if
       end if
     end if
     if (noccupied /= 0 .and. index(keywrd," LEWIS") > 0) then
@@ -1130,10 +1130,10 @@ subroutine geochk ()
       do i = 1, Lewis_tot
         if (Lewis_elem(1,i) > 0) j = j + 1
       end do
-      m = j/l + 1    
-      write(iw,"(4('     LMO  Atom  Atom    '))")  
+      m = j/l + 1
+      write(iw,"(4('     LMO  Atom  Atom    '))")
       ii = 0
-      jj = 1  
+      jj = 1
       do i = 1, Lewis_tot
         if (Lewis_elem(1,i) > 0) then
           k = k + 1
@@ -1163,7 +1163,7 @@ subroutine geochk ()
         m = j/l + 1
         k = 0
         ii = 0
-        jj = 1  
+        jj = 1
         do i = 1, Lewis_tot
           if (Lewis_elem(2,i) > 0) then
             k = k + 1
@@ -1210,7 +1210,7 @@ subroutine geochk ()
       end if
       l = 0
       m = 0
-      num = char(Int(log10(numat + 1.0)) + ichar("1") + 1) 
+      num = char(Int(log10(numat + 1.0)) + ichar("1") + 1)
       do i = 1, numat
         if (.not. main_group(nat(i))) then
 !
@@ -1231,7 +1231,7 @@ subroutine geochk ()
         end if
       end do
       if (l == 1) call web_message(iw,"Lewis_structures.html")
-    end if    
+    end if
 !
 ! Check for sulfate and phosphate
 !
@@ -1272,7 +1272,7 @@ subroutine geochk ()
     end do
     if (i == 0) then
       write(iw,'(/10x, a)')"NO CHARGES FOUND."
-    else      
+    else
       if (index(keywrd," LEWIS") > 0) then
         write (iw,*)
         write (iw,"(a,/)") "          Type           Number of charged sites identified"
@@ -1331,12 +1331,12 @@ subroutine geochk ()
       l_salt = .false.
       if (first_prt .and. .not. l_rama) then
         if (i <= numat) then
-          if (maxtxt > 1) then        
+          if (maxtxt > 1) then
              l = max(1,(17 - maxtxt/2))
              residues = (index(keywrd, " RESID") /= 0)
           end if
         else
-          write(iw,'(/18x,a)') "NO CHARGED ATOMS FOUND."        
+          write(iw,'(/18x,a)') "NO CHARGED ATOMS FOUND."
         end if
         ioptl = .true.
         m = 0
@@ -1358,7 +1358,7 @@ subroutine geochk ()
                 line = " "
                 do ii = 1, numat
                   if (ions(ii) < 0 .and. ioptl(ii)) then
-                    call identify_nearby_counterions(i, ii, jj, near_ions, r_ions, line)   
+                    call identify_nearby_counterions(i, ii, jj, near_ions, r_ions, line)
                     if (line == "Salt bridge!") then
                       ioptl(i) = .false.
                       ioptl(ii) = .false.
@@ -1371,7 +1371,7 @@ subroutine geochk ()
                 line = " "
                 do ii = 1, numat
                   if (ions(ii) > 0 .and. ioptl(ii)) then
-                    call identify_nearby_counterions(i, ii, jj, near_ions, r_ions, line)   
+                    call identify_nearby_counterions(i, ii, jj, near_ions, r_ions, line)
                     if (line == "Salt bridge!") exit
                   end if
                 end do
@@ -1391,7 +1391,7 @@ subroutine geochk ()
                       near_ions(:,kk) = near_ions(:,ii)
                       near_ions(:,ii) = near_ions_store
                     end if
-                  end do 
+                  end do
                 end do
                 do ii = 2, jj
                   if (r_ions(ii) > 5.d0) then
@@ -1407,7 +1407,7 @@ subroutine geochk ()
 ! There is a counterion, therefore this is a salt-bridge
 !
                     if (residues) then
-                      txtatm_1 = txtatm(near_ions(1,1))  
+                      txtatm_1 = txtatm(near_ions(1,1))
                       txtatm_2 = txtatm(near_ions(2,1))
                     else
                       txtatm_1 = txtatm1(near_ions(1,1))
@@ -1424,7 +1424,7 @@ subroutine geochk ()
                         kk = maxtxt
                       end if
                       if ( .not. l_salt) then
-                        if (maxtxt > 1) then        
+                        if (maxtxt > 1) then
                            write(line,"(a)")"   Ion     <--------PDB Label------->   Charge     "// &
                              &"Distance        PDB label for Salt Bridge   Charge"
                            write(iw,'(/,a,/)') trim(line)
@@ -1469,9 +1469,9 @@ subroutine geochk ()
 ! Find the first free unit, and use that number for the scratch file
 !
                     do m = 10, 100
-                      inquire(unit=m, opened = opend) 
+                      inquire(unit=m, opened = opend)
                       if (.not. opend) then
-                      open(unit=m, status='SCRATCH') 
+                      open(unit=m, status='SCRATCH')
                       exit
                       end if
                     end do
@@ -1509,7 +1509,7 @@ subroutine geochk ()
                 end if
                 write(iw,'(a)') trim(line)
                 if (log) write(ilog,"(a)")trim(line)
-              end if            
+              end if
             end if
           end do
           if (j == 2 .and. m /= 0) then
@@ -1552,14 +1552,14 @@ subroutine geochk ()
         end if
       else
         if (.not. charges) write (iw, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
-      end if      
+      end if
       if (log) write (ilog, "(SP/10x,A,I"//num//")") "COMPUTED CHARGE ON SYSTEM:", ichrge
       end if
-      first_prt = .false.      
+      first_prt = .false.
     if (index(keywrd, " LEWIS") /= 0 .and. index(keywrd," 0SCF") == 0) &
       call mopend ("RUN STOPPED BECAUSE KEYWORD LEWIS WAS USED.")
 !
-99  continue  
+99  continue
     atmass(1:numat) = ams(nat(1:numat))
     if (done .and. .not. lreseq) then
       call xyzint (coord, numat, na, nb, nc, 1.d0, geo)
@@ -1567,24 +1567,24 @@ subroutine geochk ()
     if (lreseq) then
       geo(:,:numat) = coord(:,:numat)
       na = 0
-    end if   
-    if (lreseq .or. lsite) then    
+    end if
+    if (lreseq .or. lsite) then
       archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
-      inquire(unit=iarc, opened=opend) 
-      if (opend) close(iarc, status = 'keep', iostat=i)  
-      open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
-      rewind iarc 
+      inquire(unit=iarc, opened=opend)
+      if (opend) close(iarc, status = 'keep', iostat=i)
+      open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+      rewind iarc
       if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
       call geout (iarc)
       if (index(keywrd, " PDBOUT") /= 0 .and. index(keywrd, " RESEQ") == 0) then
-        line = archive_fn(:len_trim(archive_fn) - 3)//"pdb" 
+        line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
         i = iarc
-        inquire(unit=i, opened=opend) 
+        inquire(unit=i, opened=opend)
         if (opend) close(i)
-        open(unit=i, file=line, status='UNKNOWN', position='asis') 
-        rewind i 
+        open(unit=i, file=line, status='UNKNOWN', position='asis')
+        rewind i
         coord(:,:numat) = geo(:,:numat)
-        call update_txtatm(.true., .true.) 
+        call update_txtatm(.true., .true.)
         if (index(keywrd, " NORES") == 0) call rectify_sequence()
         call reset_breaks()
         call pdbout(i)
@@ -1603,7 +1603,7 @@ subroutine geochk ()
 !  FOUND HERE.
 !
 !
-      if (icharges /= 0) write (iw,*)   
+      if (icharges /= 0) write (iw,*)
       line = " "
       if (index(keywrd, " 0SCF") == 0) line = "JOB STOPPED BECAUSE"
       i = len_trim(line)
@@ -1619,26 +1619,26 @@ subroutine geochk ()
           call write_sequence
           if (irefq /= ichrge) then
             if (index(keywrd," CHARGE=") /= 0) then
-              write (iw, "(10x,A,SP,I"//num//",A)") "CHARGE SPECIFIED IN DATA SET: ", irefq," IS INCORRECT." 
+              write (iw, "(10x,A,SP,I"//num//",A)") "CHARGE SPECIFIED IN DATA SET: ", irefq," IS INCORRECT."
             else
               write (iw, "(/10x,A,SP,I"//num//",a)") "COMPUTED CHARGE ON SYSTEM: ", ichrge, &
                 "  (THIS DOES NOT AGREE WITH THE DEFAULT CHARGE OF ZERO)"
             end if
           else
             if (.not. charges) write (iw, "(SP/3x,A,I"//num//", a)") "COMPUTED CHARGE ON SYSTEM = ", ichrge, &
-            ". THIS AGREES WITH THE CHARGE IN THE DATA-SET."             
+            ". THIS AGREES WITH THE CHARGE IN THE DATA-SET."
           end if
           archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
-          inquire(unit=iarc, opened=opend) 
-          if (opend) close(iarc, status = 'keep', iostat=i)  
-          open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis') 
-          rewind iarc 
+          inquire(unit=iarc, opened=opend)
+          if (opend) close(iarc, status = 'keep', iostat=i)
+          open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+          rewind iarc
           if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
           call geout (iarc)
           call mopend ("JOB STOPPED HERE BECAUSE KEYWORD ""CHARGES"" WAS USED")
         end if
         call delete_ref_key("SITE", len_trim("SITE"), ') ', 2)
-      end if    
+      end if
       if (lreseq .or. index(keywrd, " Move") /= 0) then
 !
 !  Check to see if any atoms are in internal coordinates
@@ -1675,18 +1675,18 @@ subroutine geochk ()
           if (.not. moperr) call mopend (line(:i)//"KEYWORD LEWIS USED")
           return
         end if
-      end if 
+      end if
 !
 !
-      if (Index (keywrd, " 0SCF") + Index (keywrd, " RESEQ") + Index (keywrd, " LEWIS") == 0) then    
+      if (Index (keywrd, " 0SCF") + Index (keywrd, " RESEQ") + Index (keywrd, " LEWIS") == 0) then
         write(iw,*)" "
         if (index(keywrd," CHARGE=") /= 0) then
           if (index(keywrd," GEO-OK") /= 0) then
             write (iw, "(10x,A)") "KEYWORD 'GEO-OK' WAS PRESENT, SO THE CHARGE HAS BEEN RESET."
             write (iw, "(10x,A)") "IF THE NEW CHARGE IS INCORRECT, EITHER MODIFY THE STRUCTURE OR "//&
-            "USE KEYWORD 'SETPI' TO CORRECT THE LEWIS STRUCTURE." 
+            "USE KEYWORD 'SETPI' TO CORRECT THE LEWIS STRUCTURE."
           else
-            write (iw, "(10x,A,SP,I"//num//",A)") "In the data-set supplied, the charge specified (", irefq,") is incorrect."  
+            write (iw, "(10x,A,SP,I"//num//",A)") "In the data-set supplied, the charge specified (", irefq,") is incorrect."
           end if
         else
           num = char(ichar("3") + max(int(log10(abs(ichrge) + 0.05)),0))
@@ -1694,13 +1694,13 @@ subroutine geochk ()
           ichrge, " WILL BE USED IN THIS RUN."
           sum = -dfloat(ichrge)/norbs
           pdiag(:norbs) = pdiag(:norbs) + sum
-        end if             
-        nelecs = nelecs + irefq - ichrge     
+        end if
+        nelecs = nelecs + irefq - ichrge
         nclose = nelecs/2
         nopen = nclose
         nalpha = 0
         nbeta = 0
-        uhf = .false.     
+        uhf = .false.
         if (irefq /= ichrge) then
           if (mod(irefq - ichrge, 2) == 0) then
             write(iw,"(/10x,a)")"If the Lewis structure used by MOZYME is incorrect, "// &
@@ -1709,28 +1709,28 @@ subroutine geochk ()
           else
             if (index(keywrd," CHARGE=") /= 0) &
               write(iw,"(/10x,a)")"The charge keyword, Lewis structure, or the chemical formula is faulty"
-          end if            
-          if (Index(keywrd," GEO-OK") == 0 .and. index(keywrd," CHARGE=") /= 0 ) then  
+          end if
+          if (Index(keywrd," GEO-OK") == 0 .and. index(keywrd," CHARGE=") /= 0 ) then
             call mopend("CHARGE SPECIFIED IS INCORRECT. CORRECT THE ERROR BEFORE CONTINUING")
             write(iw,"(/10x,a)")"If that is done, then the correct charge will be used."
-            return  
+            return
           else if (id > 0) then
             write(iw,"(/10x,a)")"INFINITE SYSTEMS MUST HAVE A ZERO CHARGE ON THE UNIT CELL"
             call mopend("Unit cell has a charge. Correct fault and re-submit ")
             return
-          else 
-            call fix_charges(ichrge)  
+          else
+            call fix_charges(ichrge)
           end if
         end if
       end if
     end if
 98  if (done) then
       if (prt_coords) write (iw, "(//10X,A,//)") " GEOMETRY AFTER RE-SEQUENCING"
-      call update_txtatm(.true., .true.) 
+      call update_txtatm(.true., .true.)
       if (prt_coords) call geout (iw)
       if (index(keywrd, "0SCF") + index(keywrd, " RESEQ") == 0 .or. &
          index(keywrd, " PDBOUT") == 0) then
-        inquire(unit=iarc, opened=opend) 
+        inquire(unit=iarc, opened=opend)
         if ( .not. opend) open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
         rewind(iarc)
         call geout (iarc)
@@ -1749,7 +1749,7 @@ subroutine geochk ()
     if (times) then
       call timer (" END OF GEOCHK")
     end if
-    if (lreseq .or. lsite) then     
+    if (lreseq .or. lsite) then
       if (lsite) then
         call mopend ("RUN STOPPED BECAUSE KEYWORD ""SITE"" USED")
         call delete_ref_key("SITE", len_trim("SITE"), ') ', len_trim(') '))
@@ -1761,7 +1761,7 @@ subroutine geochk ()
         else
           call mopend("GEOMETRY RESEQUENCED")
         end if
-      end if   
+      end if
       moperr = .false.
       if (prt_coords) call geout (iw)
       return
@@ -1800,7 +1800,7 @@ subroutine geochk ()
   end subroutine geochk
   subroutine identify_nearby_counterions(i_in, j_in, n_jj, near_ions, r_ions, line)
 !
-! Identify charged atoms 
+! Identify charged atoms
 ! If the charge is +1 or -1, then test for salt bridge
 !
   use MOZYME_C, only : ions
@@ -1818,7 +1818,7 @@ subroutine geochk ()
   double precision, external :: distance
   if (ions(i_in) == 1) then
     atom_i = i_in
-    atom_j = j_in 
+    atom_j = j_in
   else
     atom_j = i_in
     atom_i = j_in
@@ -1849,13 +1849,13 @@ subroutine geochk ()
               ni = ni + 1
               i_set(ni) = j
             end if
-          end do     
+          end do
         else                                                  ! The following block has not been tested.
           if (txtatm(i_in)(14:16) == "ND1") then
             atm = "NE2"
           else
             atm = "ND1"
-          end if          
+          end if
 !
 !  Use the current nitrogen atom and the nitrogen atom on the other side of "CE1"
 !
@@ -1864,16 +1864,16 @@ subroutine geochk ()
             if (txtatm(j)(14:16) == "CE1") then
               do k = 1, nbonds(j)
                 l = ibonds(k,j)
-                if (txtatm(l)(14:16) == atm) then    
+                if (txtatm(l)(14:16) == atm) then
                   ni = ni + 1
                   i_set(ni) = l
-                end if          
+                end if
               end do
             end if
-          end do     
+          end do
         end if
       end if
-    else if (txtatm(atom_i)(18:20) == "ARG") then 
+    else if (txtatm(atom_i)(18:20) == "ARG") then
       if (txtatm(atom_i)(14:15) == "CZ" .or. txtatm(atom_i)(14:16) == "NH1" .or. txtatm(atom_i)(14:16) == "NH2") then
         if (txtatm(atom_i)(14:15) == "CZ") then
 !
@@ -1884,7 +1884,7 @@ subroutine geochk ()
             j = ibonds(i,atom_i)
             ni = ni + 1
             i_set(ni) = j
-          end do     
+          end do
         end if
       end if
     end if
@@ -1899,21 +1899,21 @@ subroutine geochk ()
         j = ibonds(i, atom_j)
         if (txtatm(j)(14:14) == "C" .and. nbonds(j) == 3) then
 !
-! Search for both oxygen atoms of a -COO 
+! Search for both oxygen atoms of a -COO
 !
           nj = 0
           do l = 1, nbonds(j)
             m = ibonds(l,j)
-            if (txtatm(m)(14:14) == "O") then    
+            if (txtatm(m)(14:14) == "O") then
               nj = nj + 1
               j_set(nj) = m
-            end if          
+            end if
           end do
         end if
       end do
-    end if  
+    end if
   end if
-  
+
 !
 ! Now find the shortest distance between the two ions
 !
@@ -1943,10 +1943,10 @@ subroutine geochk ()
     else
       near_ions(1,n_jj) = atom_j
       near_ions(2,n_jj) = atom_i
-    end if      
+    end if
     r_ions(n_jj) = sum_min
     l_salt_i = .false.
-    l_salt_j = .false.        
+    l_salt_j = .false.
     if (txtatm(atom_i)(18:20) == "HIS") then
       if (txtatm(atom_i)(14:16) == "ND1" .or. txtatm(atom_i)(14:16) == "NE2") l_salt_i = .true.
     else if (txtatm(atom_i)(18:20) == "ARG") then
@@ -1957,7 +1957,7 @@ subroutine geochk ()
     end if
     if (txtatm(atom_j)(14:14) == "O") l_salt_j = .true.
     if (l_salt_i .and. l_salt_j .and. sum_min < 4.d0) line = "Salt bridge!"
-  end if 
+  end if
   return
   end subroutine identify_nearby_counterions
- 
+

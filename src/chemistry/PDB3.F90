@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine PDB3 
+subroutine PDB3
 !
 ! Work out the atom label of a hydrogen atom, as defined by the PDB format definition 3.0 and higher
 !
@@ -61,13 +61,13 @@ do i = 1, numat
               do n = 1, nbonds(m)
                 ii = ibonds(n,m)
                 if (txtatm(ii)(14:15) == "CD") then
-                  call dihed (coord, i, k, m, ii, torsion) 
+                  call dihed (coord, i, k, m, ii, torsion)
                   if (torsion > pi) torsion = torsion - 2*pi
-                  swap = (torsion > pi*0.5d0) 
+                  swap = (torsion > pi*0.5d0)
 !
-!  NH1 is trans, it should be cis, so swap labels 
+!  NH1 is trans, it should be cis, so swap labels
 !
-                  go to 10                  
+                  go to 10
                 end if
               end do
             end if
@@ -92,7 +92,7 @@ do i = 1, numat
         end if
       end do
     end if
-  end if 
+  end if
 end do
 allocate (used(numat))
 used = .false.
@@ -102,7 +102,7 @@ do i = 1, numat
     do j = 1, 20
       if (txtatm(i)(18:20) == tyres(j)) exit
     end do
-    if (j == 21) cycle  
+    if (j == 21) cycle
 !
 !  Convert hydrogen atom from old-style to Greek letter only
 !
@@ -121,7 +121,7 @@ do i = 1, numat
     do j = 1, 20
       if (txtatm(i)(18:20) == tyres(j)) exit
     end do
-    if (j == 21) cycle      
+    if (j == 21) cycle
 !
 ! Identify the atom that the hydrogen atom is attached to
 !
@@ -153,12 +153,12 @@ do i = 1, numat
               line = txtatm(n)(14:16)
               txtatm(n)(13:16) = line(1:4)
               k = 16
-            end if    
+            end if
             used(n) = .true.
             write(txtatm(n)(k:k), '(i1)')l
           end if
         end do
-      else if (l == 2) then 
+      else if (l == 2) then
         call two_atoms(i,j)
       end if
     else if (nbonds(j) == 3 .and. l == 2) then
@@ -168,9 +168,9 @@ do i = 1, numat
       call two_atoms(i,j)
     end if
   end if
-end do 
-return  
-end subroutine PDB3 
+end do
+return
+end subroutine PDB3
 subroutine two_atoms(i, j)
 !
 ! two_atoms assignes the PDB-3.n labels to two hydrogen atoms attached to atom "j"
@@ -205,11 +205,11 @@ data nos / "1", "2", "3" /
       if (txtatm(k)(14:15) == "CZ") then
         do l = 1, nbonds(k)
           m = ibonds(l,k)
-          if (txtatm(m)(14:15) == "NE") then             
-            call dihed (coord, i, j, k, m, torsion) 
+          if (txtatm(m)(14:15) == "NE") then
+            call dihed (coord, i, j, k, m, torsion)
             if (torsion > pi) torsion = torsion - 2*pi
-            swap = (abs(torsion) > pi*0.5d0) 
-            go to 10   
+            swap = (abs(torsion) > pi*0.5d0)
+            go to 10
           end if
         end do
       end if
@@ -231,11 +231,11 @@ data nos / "1", "2", "3" /
       if (txtatm(k)(14:15) == "CG") then
         do l = 1, nbonds(k)
           m = ibonds(l,k)
-          if (txtatm(m)(14:15) == "CB") then           
-            call dihed (coord, i, j, k, m, torsion) 
+          if (txtatm(m)(14:15) == "CB") then
+            call dihed (coord, i, j, k, m, torsion)
             if (torsion > pi) torsion = torsion - 2*pi
-            swap = (abs(torsion) > pi*0.5d0) 
-            go to 20   
+            swap = (abs(torsion) > pi*0.5d0)
+            go to 20
           end if
         end do
       end if
@@ -257,11 +257,11 @@ data nos / "1", "2", "3" /
       if (txtatm(k)(14:15) == "CD") then
         do l = 1, nbonds(k)
           m = ibonds(l,k)
-          if (txtatm(m)(14:15) == "CG") then           
-            call dihed (coord, i, j, k, m, torsion) 
+          if (txtatm(m)(14:15) == "CG") then
+            call dihed (coord, i, j, k, m, torsion)
             if (torsion > pi) torsion = torsion - 2*pi
-            swap = (abs(torsion) > pi*0.5d0) 
-            go to 30   
+            swap = (abs(torsion) > pi*0.5d0)
+            go to 30
           end if
         end do
       end if
@@ -281,7 +281,7 @@ data nos / "1", "2", "3" /
 !
 ! Assumed convention: The first hydrogen on CA is HA2, the second is HA3
 !
-    if (txtatm(i + 1)(12:20) == txtatm(i)(12:20)) then   
+    if (txtatm(i + 1)(12:20) == txtatm(i)(12:20)) then
       txtatm(i)(14:16) = "HA2"
     else
       txtatm(i)(14:16) = "HA3"
@@ -295,7 +295,7 @@ data nos / "1", "2", "3" /
     l = ibonds(k, j)
     if (l == i) then
       m = 25
-    else        
+    else
       jj = 15
       if (txtatm(l)(13:13) /= " ") jj = 14
       if (txtatm(l)(jj:jj) /= " ") then
@@ -322,11 +322,11 @@ data nos / "1", "2", "3" /
     end do
     priority(ii) = 100
     order(k) = n
-  end do  
+  end do
 !
 ! Evaluate dihedral i - j - order(1) - order(2)
 !
-  call dihed (coord, i, j, order(1), order(2), torsion) 
+  call dihed (coord, i, j, order(1), order(2), torsion)
   if (torsion > pi) torsion = torsion - 2*pi
   do k = 15, 17
     if (txtatm(i)(k:k) == " ") exit
@@ -335,11 +335,11 @@ data nos / "1", "2", "3" /
     line = txtatm(i)(14:16)
     txtatm(i)(13:16) = line(1:4)
     k = 16
-  end if    
+  end if
   if (torsion < 0.d0) then
     txtatm(i)(k:k) = nos(nbonds(j) - 2)
   else
     txtatm(i)(k:k) = nos(nbonds(j) - 1)
   end if
 end subroutine two_atoms
-  
+
