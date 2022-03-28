@@ -106,7 +106,7 @@ subroutine hybrid (catom)
             eig(1) = a(1)
             c(1) = 1.d0
           else
-            call rsp (a, k, eig, c) 
+            call rsp (a, k, eig, c)
                !
                !  Set phase of coefficient 1 in each M.O. to +1
                !

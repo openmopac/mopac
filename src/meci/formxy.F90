@@ -14,10 +14,10 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    
-      subroutine formxy(w, kr, wca, wcb, ca, na, cb, nb) 
+
+      subroutine formxy(w, kr, wca, wcb, ca, na, cb, nb)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE molkst_C, only : numcal
       implicit none
@@ -25,21 +25,21 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(inout) :: kr
-      integer , intent(in) :: na 
-      integer , intent(in) :: nb 
-      double precision , intent(in) :: w(*) 
-      double precision , intent(inout) :: wca(45) 
-      double precision , intent(inout) :: wcb(45) 
-      double precision , intent(in) :: ca(45) 
-      double precision , intent(in) :: cb(45) 
+      integer , intent(in) :: na
+      integer , intent(in) :: nb
+      double precision , intent(in) :: w(*)
+      double precision , intent(inout) :: wca(45)
+      double precision , intent(inout) :: wcb(45)
+      double precision , intent(in) :: ca(45)
+      double precision , intent(in) :: cb(45)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, ij, i, j, kl, k, l, nna, nnb, n1, n2
-      double precision :: aa, sum, bb 
-      integer, dimension (45) :: in 
+      double precision :: aa, sum, bb
+      integer, dimension (45) :: in
 
-      save icalcn 
+      save icalcn
 !-----------------------------------------------
 !***********************************************************************
 !
@@ -56,11 +56,11 @@
 ! NB=NUMBER OF ATOMIC ORBITALS ON ATOM 'B'.
 !
 !***********************************************************************
-      data icalcn/ 0/  
+      data icalcn/ 0/
       in(1)  = 1
       in(10) = 4
       in(45) = 9
-      if (icalcn /= numcal) icalcn = numcal  
+      if (icalcn /= numcal) icalcn = numcal
       ij = 0
       n1 = 0
       nna = in(na)
@@ -118,6 +118,6 @@
         end do
       end do
       kr = kr + na * nb
-      return  
-      end subroutine formxy 
+      return
+      end subroutine formxy
 

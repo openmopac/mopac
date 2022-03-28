@@ -55,9 +55,9 @@ subroutine ef (xparam, funct)
 !
     integer :: i, ij, imode, instep, itry1, ittest, j, k, l, neg, &
          & nflush, ih
-    integer, dimension (9) :: ipow    
-    integer, dimension (:), allocatable :: best_nc  
-! 
+    integer, dimension (9) :: ipow
+    integer, dimension (:), allocatable :: best_nc
+!
     double precision, parameter :: demin = 1.0d-2, gmin = 5.0d0, &
          & one = 1.d0, two = 2.d0,  three = 3.0d0, four = 4.d0, &
          & zero = 0.d0, pt5 = 0.5d0, pt75 = 0.75d0, tmone = 1.0d-1, &
@@ -73,10 +73,10 @@ subroutine ef (xparam, funct)
     double precision, dimension(:), allocatable :: x, rm, dx, best_xparam, &
            best_grad
     double precision, dimension(:,:), allocatable :: p, coord
-    double precision, dimension(:,:), allocatable, save :: bmat 
+    double precision, dimension(:,:), allocatable, save :: bmat
     double precision, external :: ddot, seconds
-!      
-    
+!
+
     intrinsic Abs, Index, Int, Max, Min, Mod, Sqrt
     i = 0
    !
@@ -92,14 +92,14 @@ subroutine ef (xparam, funct)
     if (nvar > 7995 .or. i /= 0) then
       if (index(keywrd, " TS") /= 0) then
         call mopend("Insufficient memory to run TS")
-      else        
+      else
         call mopend("Insufficient memory to run EF")
         write(iw,'(6x,a)') " ", &
         "The L-BFGS geometry optimizer uses less memory", &
         "To use the L-BFGS geometry optimizer, add LBFGS to the keyword line", " "
       end if
       return
-    end if  
+    end if
     tstep = 0.d0
     pmat(:) = 0.d0
     bmat(:,:) = 0.d0
@@ -159,12 +159,12 @@ subroutine ef (xparam, funct)
       if (.not. old) then
         if (allocated(hesinv)) deallocate(hesinv)
         allocate (hesinv(nvar*nvar))
-        hesinv = 0.0D00 
+        hesinv = 0.0D00
       end if
       call efstr (xparam, funct, ihess, ntime, iloop, igthes, mxstep, &
            & ireclc, iupd, dmax, ddmax, ddmin, tol2, time1, time2, nvar, &
            & scf1, lupd, ldump, rrscal, donr, hesinv, pmat, bmat, grad, &
-           & oldf, d, vmode)  
+           & oldf, d, vmode)
       if (moperr) go to 1100
       if (old) iloop = -1
       let = (Index (keywrd, " LET") /= 0)
@@ -172,7 +172,7 @@ subroutine ef (xparam, funct)
       first_time = .true.
     else
       first_time = (latom /= 0)
-    end if 
+    end if
    !
    !  Assume that this is the last SCF, so that if geometry is optimized
    !  then the results will be OK.
@@ -181,7 +181,7 @@ subroutine ef (xparam, funct)
     do i = 1, nvar
       grad(i) = 0.d0
     end do
-    time1 = seconds(1)     
+    time1 = seconds(1)
     call compfg (xparam, .true., funct, .true., grad, .true.)
     if (moperr) then
       go to 1100
@@ -196,13 +196,13 @@ subroutine ef (xparam, funct)
     end if
     lorjk = .false.
     if (scf1) then
-      gnorm = dSqrt (ddot(nvar, grad, 1,grad, 1))     
+      gnorm = dSqrt (ddot(nvar, grad, 1,grad, 1))
       iflepo = 1
       go to 1100
     end if
 !     CHECK THAT GEOMETRY IS NOT ALREADY OPTIMIZED
     rmx = dSqrt (ddot(nvar, grad, 1, grad, 1))
-!    
+!
     if (rmx < tol2) then
       iflepo = 2
       last = 1
@@ -243,7 +243,7 @@ subroutine ef (xparam, funct)
           bmat(i, j) = hesinv(i + (j-1)*nvar)
           pmat(i + (j-1)*nvar) = u(i + (j-1)*nvar)
         end do
-      end do 
+      end do
       if (ihess >= ireclc .and. iflepo /= 15) then
         iloop = 1
         ihess = 0
@@ -254,7 +254,7 @@ subroutine ef (xparam, funct)
              & geo, loc, oldf, d, vmode, funct)
         if (moperr) then
           go to 1100
-        end if  
+        end if
       end if
       if (ihess > 0) then
         call updhes (svec, tvec, grad, nvar, iupd, hesinv, oldf, d)
@@ -272,7 +272,7 @@ subroutine ef (xparam, funct)
       !
       !        PRINT RESULTS IN CYCLE
       gnorm = dSqrt (ddot(nvar, grad, 1, grad, 1))
-!       
+!
       time2 = seconds (2)
       tstep = time2 - time1
       if (tstep < zero) then
@@ -307,22 +307,22 @@ subroutine ef (xparam, funct)
             i = len_trim(line) - 5
           call to_screen(line(:i))
         end if
-          endfile (iw) 
-          backspace (iw) 
-          if (log) write (ilog, "(a)")line(:len_trim(line))  
+          endfile (iw)
+          backspace (iw)
+          if (log) write (ilog, "(a)")line(:len_trim(line))
           call to_screen(line)
         end if
         if (nflush /= 0) then
           if (Mod(nstep+1, nflush) == 0) then
-              endfile (iw) 
-              backspace (iw) 
+              endfile (iw)
+              backspace (iw)
             if (log) then
-              endfile (ilog) 
-              backspace (ilog) 
+              endfile (ilog)
+              backspace (ilog)
             end if
           end if
         end if
-      else               
+      else
         if (id == 3) then
           call write_cell(iw)
           call write_cell(iw0)
@@ -330,10 +330,10 @@ subroutine ef (xparam, funct)
         write (line, '(" RESTART FILE WRITTEN,      TIME LEFT:", f6.2, &
         & a1, "  GRAD.:", f10.3, " HEAT:", g14.7)') &
         tprt, txt, Min (gnorm, 999999.999d0), funct
-        write(iw,"(a)")line(:len_trim(line))   
+        write(iw,"(a)")line(:len_trim(line))
         call to_screen(line)
-        endfile (iw) 
-        backspace (iw) 
+        endfile (iw)
+        backspace (iw)
         if (log) then
           write (ilog, '(" RESTART FILE WRITTEN,      TIME LEFT:", f6.2, &
         & a1, "  GRAD.:", f10.3, " HEAT:", g14.7)', err=1000) &
@@ -341,11 +341,11 @@ subroutine ef (xparam, funct)
         end if
         if (nflush /= 0) then
           if (Mod(nstep+1, nflush) == 0) then
-              endfile (iw) 
-              backspace (iw) 
+              endfile (iw)
+              backspace (iw)
             if (log) then
-                endfile (ilog) 
-                backspace (ilog) 
+                endfile (ilog)
+                backspace (ilog)
             end if
           end if
         end if
@@ -366,7 +366,7 @@ subroutine ef (xparam, funct)
         best_funct = funct
         best_xparam = xparam
         best_grad = grad
-        best_nc(:natoms) = nc(:natoms) 
+        best_nc(:natoms) = nc(:natoms)
       end if
       !
 1000  ihess = ihess + 1
@@ -375,7 +375,7 @@ subroutine ef (xparam, funct)
       !        TEST FOR CONVERGENCE
       !
       rmx = dSqrt (ddot(nvar, grad, 1, grad, 1))
-!      
+!
       if (rmx < tol2) then
          !
          !     ****** OPTIMIZATION TERMINATION ******
@@ -399,7 +399,7 @@ subroutine ef (xparam, funct)
         olde = funct
         if (nstep > 5) then
           cosine = ddot(nvar, grad, 1, oldf, 1)/ &
-                 & dsqrt(ddot(nvar, grad, 1, grad, 1)*ddot(nvar, oldf, 1, oldf, 1))        
+                 & dsqrt(ddot(nvar, grad, 1, grad, 1)*ddot(nvar, oldf, 1, oldf, 1))
           if (cosine > 0.9d0) then
             cos_const = cos_const*1.5d0
           else
@@ -415,10 +415,10 @@ subroutine ef (xparam, funct)
          ! TRANSLATION AND ROTATION MODES. POSSIBLE PROBLEM IF RUN IS IN
          ! INTERNAL BUT WITH EXACTLY 3*NATOMS VARIABLE (I.E. DUMMY ATOMS
          ! ARE ALSO OPTIMIZED).
-        if (nvar == 3*numat .and. numat > 2) then ! Sometime, add check that system is not linear. 
+        if (nvar == 3*numat .and. numat > 2) then ! Sometime, add check that system is not linear.
                                                   ! Here NUMAT = 2 is a primitive check
           allocate (p(nvar,nvar), x(nvar), rm(nvar), dx(nvar), coord(3,nvar))
- 
+
           p(:,:) = 0.d0
           x(:) = 0.d0
           rm(:) = 0.d0
@@ -437,7 +437,7 @@ subroutine ef (xparam, funct)
             ij = ij + 1
             hessc(ij) = hesinv(j + (i-1)*nvar)
           end do
-        end do    
+        end do
         call rsp (hessc, nvar, eigval, u)
 !
         do i = 1, nvar
@@ -488,7 +488,7 @@ subroutine ef (xparam, funct)
           if (moperr) then
             go to 1099
           end if
-            ! IF LORJK IS TRUE, THEN TS MODE OVERLAP IS LESS THAN OMIN, 
+            ! IF LORJK IS TRUE, THEN TS MODE OVERLAP IS LESS THAN OMIN,
             ! REJECT PREVIOUS STEP
           if (lorjk) then
             if (iprnt >= 1) then
@@ -568,12 +568,12 @@ subroutine ef (xparam, funct)
             deact = funct - olde
             if (depre == zero) then
               write (iw, "(' CALCULATION IS TERMINATED TO AVOID ZERO DIVIDE')")
-              call mopend ("in EF") 
+              call mopend ("in EF")
               go to 1100
             end if
             ratio = deact / depre
          !   if (nstep > 1 .and. Abs(depre) < 1.d0) ratio = 1.d0 ! ignore ratio when step is small
-            if (iprnt >= 1) then 
+            if (iprnt >= 1) then
 		!                   12345678901234567890123456789012345678901234567890
                write (iw, '("       HoF         ACTUAL,  PREDICTED ENERGY CHANGE, RATIO",/ &
                    & 2 f14.7, f20.7, f13.7)') funct, deact, depre, ratio
@@ -581,7 +581,7 @@ subroutine ef (xparam, funct)
                !
                ! POSSIBLY REJECT THE STEP IF THE RATIO BETWEEN ACTUAL AND
                ! PREDICTED CHANGE IN ENERGY IS OUTSIDE RMIN AND RMAX LIMITS
-               ! THE DEFAULT VALUES OF RMIN=0.0 FOR MINIMIZATIONS IS 
+               ! THE DEFAULT VALUES OF RMIN=0.0 FOR MINIMIZATIONS IS
                ! EQUIVALENT
                ! TO NOT ALLOWING THE ENERGY THE RAISE.
                ! DON'T WORRY IS THE ABSOLUTE CHANGES ARE SMALL ( < DEMIN)
@@ -641,14 +641,14 @@ subroutine ef (xparam, funct)
           write (iw, "(3X,8F10.6)") (d(i), i=1, nvar)
         end if
          !
-         !     POSSIBLE USE DYNAMICAL TRUST RADIUS 
+         !     POSSIBLE USE DYNAMICAL TRUST RADIUS
         odmax = dmax
         odd = ddx
         oolde = olde
         if (lupd .and. ((rmx > gmin) .or. (Abs (depre) > demin .or. &
              & Abs (deact) > demin))) then
             ! FLETCHER RECOMMEND DMAX=DMAX/4 AND DMAX=DMAX*2
-            ! THESE ARE A LITTLE MORE CONSERVATIVE SINCE HESSIAN IS BEING 
+            ! THESE ARE A LITTLE MORE CONSERVATIVE SINCE HESSIAN IS BEING
             ! UPDATED
             ! DON'T REDUCE TRUST RADIUS DUE TO RATIO FOR MIN SEARCHES
           if (lts .and. ratio <= tmone .or. ratio >= three) then
@@ -710,7 +710,7 @@ subroutine ef (xparam, funct)
            & " THE GEOMETRY MAY NOT BE COMPLETELY OPTIMIZED",/, 5 x, &
            & " (TO CONTINUE, ADD 'LET DDMIN=0.0' TO THE KEYWORD LINE)")
     write (iw, 10090) ddmin
-1099 continue 
+1099 continue
 !
 !  If current point is not the best, then load in the best point
 !
@@ -719,7 +719,7 @@ subroutine ef (xparam, funct)
           gnorm = best_gnorm
           xparam(:nvar) = best_xparam(:nvar)
           grad(:nvar) = best_grad(:nvar)
-          nc(:natoms) = best_nc(:natoms) 
+          nc(:natoms) = best_nc(:natoms)
       end if
 1020 iflepo = 15
     last = 1
@@ -761,19 +761,19 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
    nstep, negreq, alparm, x0, x1, x2, iloop
   USE chanel_C, only : iw, ires, restart_fn
   implicit none
-  integer :: il 
-  double precision  :: tt0 
-  double precision  :: funct 
-  integer  :: ipow(9) 
-  double precision  :: hess(nvar,nvar) 
+  integer :: il
+  double precision  :: tt0
+  double precision  :: funct
+  integer  :: ipow(9)
+  double precision  :: hess(nvar,nvar)
   double precision  :: grad(nvar), oldf(*), d(nvar), vmode(nvar)
-  double precision  :: xparam(nvar) 
-  double precision  :: pmat(*) 
-  double precision  :: bmat(nvar,nvar) 
+  double precision  :: xparam(nvar)
+  double precision  :: pmat(*)
+  double precision  :: bmat(nvar,nvar)
 !
   integer ::  i, j, linear, io_stat, old_numat, old_norbs
-  double precision :: funct1 
-  logical :: opend     
+  double precision :: funct1
+  logical :: opend
   double precision, external :: ddot
 !*********************************************************************
 !
@@ -791,96 +791,96 @@ subroutine efsav (tt0, hess, funct, grad, xparam, pmat, il, bmat, ipow, &
 !
 !*********************************************************************
   if (is_PARAM) return
-  inquire(unit=ires, opened=opend) 
-  if (opend) close(unit=ires, status='KEEP') 
+  inquire(unit=ires, opened=opend)
+  if (opend) close(unit=ires, status='KEEP')
   open(unit=ires, file=restart_fn, status='UNKNOWN', form=&
-  'UNFORMATTED', position='asis', iostat = io_stat) 
+  'UNFORMATTED', position='asis', iostat = io_stat)
   if (io_stat /= 0) then
     write(iw,*)" Restart file either does not exist or is not available for reading"
     call mopend ("Restart file either does not exist or is not available for reading")
     return
   end if
-  rewind ires 
-  if (ipow(9)==1 .or. ipow(9)==2) then  
-    funct1 = dsqrt(ddot(nvar, grad, 1, grad, 1)) 
-    if (ipow(9) == 1 .and. index(keywrd,'STEP1') == 0) then 
-      write (iw, '(2/10X,''CURRENT VALUE OF GRADIENT NORM ='',F12.6)') funct1 
-      if (prt_gradients .and. index(keywrd," GRADI") /= 0 .and. mozyme) then 
-        write (iw, '(3/7X,''CURRENT  POINT  AND  DERIVATIVES'',/)')        
+  rewind ires
+  if (ipow(9)==1 .or. ipow(9)==2) then
+    funct1 = dsqrt(ddot(nvar, grad, 1, grad, 1))
+    if (ipow(9) == 1 .and. index(keywrd,'STEP1') == 0) then
+      write (iw, '(2/10X,''CURRENT VALUE OF GRADIENT NORM ='',F12.6)') funct1
+      if (prt_gradients .and. index(keywrd," GRADI") /= 0 .and. mozyme) then
+        write (iw, '(3/7X,''CURRENT  POINT  AND  DERIVATIVES'',/)')
         call prtgra ()
       end if
-      write (iw, '(/10X,''CURRENT VALUE OF GEOMETRY'',/)') 
-      call geout (iw) 
-    end if 
+      write (iw, '(/10X,''CURRENT VALUE OF GEOMETRY'',/)')
+      call geout (iw)
+    end if
 !
 !  IPOW(1) AND IPOW(9) ARE USED ALREADY, THE REST ARE FREE FOR USE
 !
-    ipow(8) = nscf 
-    write (ires) numat, norbs, (xparam(i),i=1,nvar) 
-    if (latom /= 0) then 
-      if (index(keywrd,' STEP=') /= 0) then 
-        write (ires) kloop 
-        write (ires) rxn_coord 
-        write (ires) (profil(i),i=1,kloop) 
-      else 
-        write (ires) ((alparm(j,i),j=1,3),i=1,nvar) 
-       write (ires) iloop, x0, x1, x2 
-      end if 
-    end if 
-    write (ires) ipow, il, nstep, funct, tt0 
-    write (ires) (grad(i),i=1,nvar) 
-    write (ires) ((hess(j,i),j=1,nvar),i=1,nvar) 
-    write (ires) ((bmat(j,i),j=1,nvar),i=1,nvar) 
-    write (ires) (oldf(i),i=1,nvar), (d(i),i=1,nvar), (vmode(i),i=1,nvar) 
-    write (ires) ddx, ef_mode, nstep, negreq 
-    linear = (nvar*(nvar + 1))/2 
-    write (ires) (pmat(i),i=1,linear) 
+    ipow(8) = nscf
+    write (ires) numat, norbs, (xparam(i),i=1,nvar)
+    if (latom /= 0) then
+      if (index(keywrd,' STEP=') /= 0) then
+        write (ires) kloop
+        write (ires) rxn_coord
+        write (ires) (profil(i),i=1,kloop)
+      else
+        write (ires) ((alparm(j,i),j=1,3),i=1,nvar)
+       write (ires) iloop, x0, x1, x2
+      end if
+    end if
+    write (ires) ipow, il, nstep, funct, tt0
+    write (ires) (grad(i),i=1,nvar)
+    write (ires) ((hess(j,i),j=1,nvar),i=1,nvar)
+    write (ires) ((bmat(j,i),j=1,nvar),i=1,nvar)
+    write (ires) (oldf(i),i=1,nvar), (d(i),i=1,nvar), (vmode(i),i=1,nvar)
+    write (ires) ddx, ef_mode, nstep, negreq
+    linear = (nvar*(nvar + 1))/2
+    write (ires) (pmat(i),i=1,linear)
     call den_in_out(1)
     if (index(keywrd,'STEP1') /= 0) return
-    close(ires) 
-    return  
-  else 
+    close(ires)
+    return
+  else
     read (ires, iostat = io_stat)old_numat, old_norbs
     if (norbs /= old_norbs .or. numat /= old_numat) then
         call mopend("Restart file read in does not match current data set")
         return
     end if
-    if (latom /= 0) then 
-      if (index(keywrd,' STEP=') /= 0) then 
-        read (ires, iostat = io_stat) kloop 
-        read (ires, iostat = io_stat) rxn_coord 
-        read (ires, iostat = io_stat) (profil(i),i=1,kloop) 
-      else 
-        read (ires, iostat = io_stat) ((alparm(j,i),j=1,3),i=1,nvar) 
-        read (ires, iostat = io_stat) iloop, x0, x1, x2 
-      end if 
-    end if 
-    read (ires, iostat = io_stat) ipow, il, nstep, funct, tt0 
-    nscf = ipow(8) 
-    i = int(tt0/1000000) 
-    tt0 = tt0 - i*1000000 
-    write (iw, '(2/10X,''TOTAL TIME USED SO FAR:'',F13.2,'' SECONDS'')') tt0 
-    if(abs(funct) > 1.d-20) write (iw, '(  10X,''              FUNCTION:'',F17.6)') funct 
-    read (ires, iostat = io_stat) (grad(i),i=1,nvar) 
-    read (ires, iostat = io_stat) ((hess(j,i),j=1,nvar),i=1,nvar) 
-    read (ires, iostat = io_stat) ((bmat(j,i),j=1,nvar),i=1,nvar) 
-    read (ires, iostat = io_stat) (oldf(i),i=1,nvar), (d(i),i=1,nvar), (vmode(i),i=1,nvar) 
-    read (ires, iostat = io_stat) ddx, ef_mode, nstep, negreq 
-    linear = (nvar*(nvar + 1))/2 
-    read (ires, iostat = io_stat) (pmat(i),i=1,linear) 
-    if (index(keywrd,' STEP1') /= 0) return 
-    close(ires) 
+    if (latom /= 0) then
+      if (index(keywrd,' STEP=') /= 0) then
+        read (ires, iostat = io_stat) kloop
+        read (ires, iostat = io_stat) rxn_coord
+        read (ires, iostat = io_stat) (profil(i),i=1,kloop)
+      else
+        read (ires, iostat = io_stat) ((alparm(j,i),j=1,3),i=1,nvar)
+        read (ires, iostat = io_stat) iloop, x0, x1, x2
+      end if
+    end if
+    read (ires, iostat = io_stat) ipow, il, nstep, funct, tt0
+    nscf = ipow(8)
+    i = int(tt0/1000000)
+    tt0 = tt0 - i*1000000
+    write (iw, '(2/10X,''TOTAL TIME USED SO FAR:'',F13.2,'' SECONDS'')') tt0
+    if(abs(funct) > 1.d-20) write (iw, '(  10X,''              FUNCTION:'',F17.6)') funct
+    read (ires, iostat = io_stat) (grad(i),i=1,nvar)
+    read (ires, iostat = io_stat) ((hess(j,i),j=1,nvar),i=1,nvar)
+    read (ires, iostat = io_stat) ((bmat(j,i),j=1,nvar),i=1,nvar)
+    read (ires, iostat = io_stat) (oldf(i),i=1,nvar), (d(i),i=1,nvar), (vmode(i),i=1,nvar)
+    read (ires, iostat = io_stat) ddx, ef_mode, nstep, negreq
+    linear = (nvar*(nvar + 1))/2
+    read (ires, iostat = io_stat) (pmat(i),i=1,linear)
+    if (index(keywrd,' STEP1') /= 0) return
+    close(ires)
     if (io_stat /= 0) then
       call mopend ("Restart file is currupt")
     end if
-    return  
-  end if 
-  return  
-  end subroutine efsav 
+    return
+  end if
+  return
+  end subroutine efsav
 subroutine efstr (xparam, funct, ihess, ntime, iloop, igthes, mxstep, ireclc, &
      & iupd, dmax, ddmax, ddmin, tol2, time1, time2, nvar, scf1, lupd, &
      & ldump, rrscal, donr, hess, bmat, pmat, grad, oldf, d, vmode)
-    use molkst_C, only: limscf, time0, numcal, keywrd, moperr, id 
+    use molkst_C, only: limscf, time0, numcal, keywrd, moperr, id
     use chanel_C, only: iw
     use ef_C, only: nstep, ef_mode, negreq, rmin, rmax, omin, iprnt
    !
@@ -1130,10 +1130,10 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
          & tmsix = 1.0d-06, toll = 1.0d-8, zero = 0.0d0
     save :: store_ddx
 
-!For MOPAC BLAS            
+!For MOPAC BLAS
     double precision, external :: ddot
-!      
-    
+!
+
    !
    !
    !.. Intrinsic Functions ..
@@ -1177,9 +1177,9 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
           if (nvar == 3*numat) &
             write(iw,"(10x,a,i5)")"(If coordinates are Cartesian, convert to internal coordinates and re-run.)"
         else
-          write(iw,"(a)")" At least one force constant is exactly zero" 
+          write(iw,"(a)")" At least one force constant is exactly zero"
           call mopend("At least one force constant is exactly zero")
-        end if       
+        end if
         return
       else if (iprnt >= 1) then
 10010   format (/, 5 x, "TS MODE IS NUMBER", i3, " WITH EIGENVALUE", &
@@ -1277,8 +1277,8 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
         bu = eone - ssmin
         frodo2 = .true.
       end if
-      endfile (iw) 
-      backspace (iw) 
+      endfile (iw)
+      backspace (iw)
       if (frodo1 .and. frodo2) then
         write (iw,*) "NUMERICAL PROBLEMS IN BRACKETING LAMDA", eone, bl, &
              & bu, fl, fu
@@ -1526,7 +1526,7 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
       write (iw, "(' CALCULATION IS TERMINATED TO AVOID ZERO DIVIDE')")
       call mopend ("in FORMD")
       return
-    end if 
+    end if
     skal = dmax / ddx
     do i = 1, nvar
       d(i) = d(i) * skal
@@ -1571,7 +1571,7 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
     integer, dimension (9) :: ipow = (/ 0, 0, 0, 0, 0, 0, 0, 0, 0 /)
     double precision, dimension(:), allocatable :: gnext1, gmin1
     double precision, external :: seconds
-  
+
     intrinsic Index, Max, Sign
    !
    ! ... Executable Statements ...
@@ -1734,13 +1734,13 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
         tstep = time2 - time1
         tleft = tleft - tstep
         time1 = time2
-        j = (100*i)/nvar 
+        j = (100*i)/nvar
         test = test + tstep
         if (j/5 > percent/5 .or. (j == 1 .and. percent /= 1) .or. i == 1) then
 !
 !   User pacifier
 !
-          percent = j          
+          percent = j
           j = i - iloop + 1
           if (nvar*test/(j*3600) > 0.1d0 .or. lpacifier) then
             lpacifier = .true.
@@ -1748,15 +1748,15 @@ subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
             write(line,"(a,i3,a,f7.2,a)") &
               "    Hessian",percent,"% complete.  Estimated remaining time required:", sum, " hours"
             write(iw,"(a)")trim(line)
-            call to_screen(line) 
+            call to_screen(line)
           end if
         end if
-        if (nvar*test/(j*3600) > 0.1d0 .or. lpacifier) then          
+        if (nvar*test/(j*3600) > 0.1d0 .or. lpacifier) then
           write(line,"(i5,a,i4,a)")i," of",nvar," steps completed"
           write(iw,"(a)")trim(line)
-          if (iw0 >= 0) call to_screen(line) 
+          if (iw0 >= 0) call to_screen(line)
         end if
-        
+
         if (tleft < tstep*two) then
             !
             !  STORE PARTIAL HESSIAN PATRIX
@@ -1904,12 +1904,12 @@ subroutine prjfc (f, xparam, nvar, cof, p, atmass, x, rm, dx, coord)
     double precision, dimension (2) :: det2
     double precision, dimension (3) :: cmass
     double precision, dimension (3, 3) :: rot, scr
-    double precision, dimension (3, 3, 3), save :: tens   
+    double precision, dimension (3, 3, 3), save :: tens
     intrinsic Abs, Sqrt
     data tens / 0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0, -1.0d0, &
    & 0.0d0, 1.0d0, 0.0d0, 0.0d0, 0.0d0, 1.0d0, 0.0d0, 0.0d+0, &
    & 0.0d0, -1.0d0, 0.0d0, 0.0d0, 0.0d0, -1.0d0, 0.0d0, &
-   & 1.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0 /          
+   & 1.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0 /
     natm_loc = nvar / 3
     nc1 = nvar
     ij = 1
@@ -1986,9 +1986,9 @@ subroutine prjfc (f, xparam, nvar, cof, p, atmass, x, rm, dx, coord)
       if (info /= 0) then
         if (numat == 3 .and. natm_loc == 3) then
           call mopend ("ERROR DETECTED IN EF: SYSTEM IS TRIATOMIC AND ALMOST LINEAR")
-          write(iw,'(/10x,a)')"Nine geometric parameters marked for optimization." 
+          write(iw,'(/10x,a)')"Nine geometric parameters marked for optimization."
           write(iw,'(10x,a)')"Reduce this to three or four."
-        else 
+        else
           call mopend ("ERROR DETECTED IN EF: SYSTEM IS ALMOST BUT NOT EXACTLY LINEAR")
           write(iw,'(/10x,a)')"Either define it as being linear or define it as being non-linear."
         end if
@@ -2104,9 +2104,9 @@ subroutine prjfc (f, xparam, nvar, cof, p, atmass, x, rm, dx, coord)
       end do
     end do
 
-! For GPU MOPAC      
+! For GPU MOPAC
 ! GBR_new_addition
-   !     USE COF FOR SCRATCH.     
+   !     USE COF FOR SCRATCH.
     call dgemm ("N", "N", nc1, nc1, nc1, 1.0d0, f, nvar, p, nvar, &
          & 0.0d0, cof, nvar)
    !
@@ -2114,7 +2114,7 @@ subroutine prjfc (f, xparam, nvar, cof, p, atmass, x, rm, dx, coord)
    !
     call dgemm ("N", "N", nc1, nc1, nc1, 1.0d0, p, nvar, cof, nvar, &
          & 0.0d0, f, nvar)
-    continue    
+    continue
     return
 !
 end subroutine prjfc
@@ -2187,10 +2187,10 @@ subroutine updhes (svec, tvec, grad, nvar, iupd, hess, oldf, d)
     integer, save :: icalcn = 0
     integer :: j
     double precision :: dds, ddtd, temp
-    double precision, save :: zero = 0.0d0           
+    double precision, save :: zero = 0.0d0
     double precision, external :: dot, ddot
-!      
-    
+!
+
 
    !
    ! ... Executable Statements ...
@@ -2254,7 +2254,7 @@ subroutine updhes (svec, tvec, grad, nvar, iupd, hess, oldf, d)
         svec(i) = grad(i) - oldf(i)
       end do
       dds = ddx * ddx
-      
+
       ddtd = dot (tvec, d, nvar)
       if (Abs(dds - zero) < 1.d-20) then
         write (iw, "(' CALCULATION IS TERMINATED TO AVOID ZERO DIVIDE')")
@@ -2284,7 +2284,7 @@ subroutine updhes (svec, tvec, grad, nvar, iupd, hess, oldf, d)
     end do
     dds = ddot (nvar, svec, 1, d, 1)
     ddtd = ddot (nvar, d, 1, tvec, 1)
-!    
+!
    !
     if (Abs(dds - zero) < 1.d-20 .or. Abs(ddtd) < 1.d-20) then
       write (iw, "(' CALCULATION IS TERMINATED TO AVOID ZERO DIVIDE')")

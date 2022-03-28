@@ -14,16 +14,16 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine dijkl2(dc) 
+      subroutine dijkl2(dc)
       use meci_C, only : dijkl, xy, nmos
       use molkst_C, only : norbs
       implicit none
-      double precision  :: dc(norbs,nmos) 
+      double precision  :: dc(norbs,nmos)
 !
-      integer :: ij, i, j, kl, k, ll, l 
-      double precision :: val, val2 
-      logical :: lij, lkl       
-      double precision, external :: ddot   
+      integer :: ij, i, j, kl, k, ll, l
+      double precision :: val, val2
+      logical :: lij, lkl
+      double precision, external :: ddot
 !***********************************************************************
 !     RELAXATION OF 2-ELECTRONS INTEGRALS IN M.O BASIS.
 !
@@ -42,48 +42,48 @@
 ! (NOTE BY JJPS: AS THIS CODE IS HIGHLY EFFICIENT, NO CHANGES WERE MADE)
 !***********************************************************************
 !
-      ij = 0 
-      do i = 1, nmos 
-        do j = 1, i 
-          ij = ij + 1 
-          lij = i == j 
-          kl = 0 
-          do k = 1, i 
-            if (k == i) then 
-              ll = j 
-            else 
-              ll = k 
-            end if 
-            do l = 1, ll 
-              kl = kl + 1 
-              lkl = k == l 
-              val = ddot(norbs,dc(1,i),1,dijkl(1,j,kl),1) 
-              if (lij .and. lkl .and. j==k) then 
-                val = val*4.D0 
-              else 
-                if (lij) then 
-                  val = val*2.D0 
-                else 
-                  val = val + ddot(norbs,dc(1,j),1,dijkl(1,i,kl),1) 
-                end if 
-                val2 = ddot(norbs,dc(1,k),1,dijkl(1,l,ij),1) 
-                if (lkl) then 
-                  val = val + val2*2.D0 
-                else 
-                  val = val + val2 + ddot(norbs,dc(1,l),1,dijkl(1,k,ij),1) 
-                end if 
-              end if 
-              xy(i,j,k,l) = val 
-              xy(i,j,l,k) = val 
-              xy(j,i,k,l) = val 
-              xy(j,i,l,k) = val 
-              xy(k,l,i,j) = val 
-              xy(k,l,j,i) = val 
-              xy(l,k,i,j) = val 
-              xy(l,k,j,i) = val 
-            end do 
-          end do 
-        end do 
-      end do 
-      return  
-      end subroutine dijkl2 
+      ij = 0
+      do i = 1, nmos
+        do j = 1, i
+          ij = ij + 1
+          lij = i == j
+          kl = 0
+          do k = 1, i
+            if (k == i) then
+              ll = j
+            else
+              ll = k
+            end if
+            do l = 1, ll
+              kl = kl + 1
+              lkl = k == l
+              val = ddot(norbs,dc(1,i),1,dijkl(1,j,kl),1)
+              if (lij .and. lkl .and. j==k) then
+                val = val*4.D0
+              else
+                if (lij) then
+                  val = val*2.D0
+                else
+                  val = val + ddot(norbs,dc(1,j),1,dijkl(1,i,kl),1)
+                end if
+                val2 = ddot(norbs,dc(1,k),1,dijkl(1,l,ij),1)
+                if (lkl) then
+                  val = val + val2*2.D0
+                else
+                  val = val + val2 + ddot(norbs,dc(1,l),1,dijkl(1,k,ij),1)
+                end if
+              end if
+              xy(i,j,k,l) = val
+              xy(i,j,l,k) = val
+              xy(j,i,k,l) = val
+              xy(j,i,l,k) = val
+              xy(k,l,i,j) = val
+              xy(k,l,j,i) = val
+              xy(l,k,i,j) = val
+              xy(l,k,j,i) = val
+            end do
+          end do
+        end do
+      end do
+      return
+      end subroutine dijkl2

@@ -17,7 +17,7 @@
 subroutine eimp ()
 !
 !   Store in the s-s location of array p the value of the Fock terms relating
-!   atom A and atom B, for all pairs of atoms.  This quantity will be used by 
+!   atom A and atom B, for all pairs of atoms.  This quantity will be used by
 !   the diagonalizer
 !
   use molkst_C, only: numat

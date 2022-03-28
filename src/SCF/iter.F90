@@ -470,7 +470,7 @@
   320 continue
       if (timitr) call timer ('BEFORE FOCKS')
       if (id /= 0) then
-        call fock2 (f, p, pa, w, w, wk, numat, nfirst, nlast, 2)        
+        call fock2 (f, p, pa, w, w, wk, numat, nfirst, nlast, 2)
       else if (method_indo) then
         if (.not. allocated(dd)) then
           allocate(dd(mpack,2))
@@ -1180,7 +1180,7 @@
                 write(iw,'(10x,a)')'(Most likely the previous job did not use UHF)'
                 write(iw,'(10x,a)')"To continue, using the RHF density matrix as the starting point, add keyword ""GEO-OK"""
                 return
-              end if              
+              end if
               pb = pa
             end if
             p = pa + pb

@@ -72,7 +72,7 @@ subroutine hbonds (fao, nocc, nvir, iused, nij_loc, cutoff)
             m = 0
             do k = 1, nocc
               !
-              !  If the LMO only contains one atom, do NOT check the 
+              !  If the LMO only contains one atom, do NOT check the
               !  second atom.
               !
               kk = Min (ncf(k)-1, 1)
@@ -85,7 +85,7 @@ subroutine hbonds (fao, nocc, nvir, iused, nij_loc, cutoff)
             end do
             do k = 1, nvir
               !
-              !  If the LMO only contains one atom, do NOT check the 
+              !  If the LMO only contains one atom, do NOT check the
               !  second atom.
               !
               kk = Min (nce(k)-1, 1)

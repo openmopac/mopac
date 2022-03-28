@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 subroutine chkpar
-    use param_global_C, only : ifiles_8, numvar, nfns, diffns, locvar 
+    use param_global_C, only : ifiles_8, numvar, nfns, diffns, locvar
     use elemts_C, only : elemnt
     use parameters_C, only : partyp
     implicit none
@@ -71,7 +71,7 @@ subroutine chkpar
         write (ifiles_8, "(8F10.1)") (par(j), j=ll, lu)
       end do
     end if
-    call rsp (par, numvar, parmod, vects) 
+    call rsp (par, numvar, parmod, vects)
     write (ifiles_8, "(//20X,A,/)") " Eigenvalues of Parameter Hessian"
     do j = 1, numvar
       if (parmod(j) > 1.d7) then

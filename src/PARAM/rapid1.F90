@@ -16,7 +16,7 @@
 
 subroutine rapid1 (loop, xparam, numvar_loc, funct1)
 !
-!   
+!
     use param_global_C, only : ifiles_8, parab, contrl, nfns, error, &
     factor, maxpms
     integer, intent (inout) :: numvar_loc
@@ -182,7 +182,7 @@ subroutine rapid1 (loop, xparam, numvar_loc, funct1)
             do i = 1, numvar_loc
               xparam(i) = xd(i)
               grad(i) = gd(i)
-              gnorm_loc = gnorm_loc + grad(i) ** 2 
+              gnorm_loc = gnorm_loc + grad(i) ** 2
             end do
             gnorm_loc = Sqrt (gnorm_loc)
           end if
@@ -286,8 +286,8 @@ subroutine rapid1 (loop, xparam, numvar_loc, funct1)
              first_print = .false.
           end if
           write(ifiles_8,'(i7,f16.2, f14.2)')iloop,funct1,gnorm_loc
-          endfile (ifiles_8) 
-          backspace (ifiles_8) 
+          endfile (ifiles_8)
+          backspace (ifiles_8)
         end if
         if (jnrst /= 0 .and. gnorm_loc < 0.01d0*startg .or. iloop > 2000) then
           i = 0

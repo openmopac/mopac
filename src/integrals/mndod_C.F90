@@ -14,32 +14,32 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module mndod_C 
-      integer, dimension(9,9) :: indexd, indx 
-      integer, dimension(243) :: intij, intkl, intrep 
-      integer, dimension(107) :: iii, iiid 
-      integer, dimension(3,3) :: indpp 
-      integer, dimension(5,3) :: inddp 
-      integer, dimension(5,5) :: inddd 
-      integer, dimension(500) :: iaf, ial 
-      integer, dimension(45,45) :: ind2 
-      integer, dimension(491) :: isym 
-      integer :: nalp 
-      double precision, dimension(45,0:2,-2:2) :: ch      
-      double precision, dimension(500) :: alpb, xfac 
-      double precision, dimension(6,107) :: aij 
-      double precision, dimension(52,107) :: repd 
-      double precision, dimension(10,2) :: cored 
-      double precision, dimension(3,3) :: sp 
-      double precision, dimension(5,5) :: sd 
-      double precision, dimension(6,3,3) :: pp 
-      double precision, dimension(15,5,3) :: dp 
-      double precision, dimension(15,5,5) :: d_d 
+      module mndod_C
+      integer, dimension(9,9) :: indexd, indx
+      integer, dimension(243) :: intij, intkl, intrep
+      integer, dimension(107) :: iii, iiid
+      integer, dimension(3,3) :: indpp
+      integer, dimension(5,3) :: inddp
+      integer, dimension(5,5) :: inddd
+      integer, dimension(500) :: iaf, ial
+      integer, dimension(45,45) :: ind2
+      integer, dimension(491) :: isym
+      integer :: nalp
+      double precision, dimension(45,0:2,-2:2) :: ch
+      double precision, dimension(500) :: alpb, xfac
+      double precision, dimension(6,107) :: aij
+      double precision, dimension(52,107) :: repd
+      double precision, dimension(10,2) :: cored
+      double precision, dimension(3,3) :: sp
+      double precision, dimension(5,5) :: sd
+      double precision, dimension(6,3,3) :: pp
+      double precision, dimension(15,5,3) :: dp
+      double precision, dimension(15,5,5) :: d_d
       double precision, dimension(30) :: fx   !   Factorials:  fx(i) = i!
       double precision, dimension(30,30) :: b  !   Binomial expansion (Pascal's triangle): b(1,1) = 1
-     
-      data iii/ 2*1, 8*2, 8*3, 18*4, 18*5, 32*6, 21*0/  
-      data iiid/ 30*3, 18*4, 32*5, 6*6, 21*0/  
+
+      data iii/ 2*1, 8*2, 8*3, 18*4, 18*5, 32*6, 21*0/
+      data iiid/ 30*3, 18*4, 32*5, 6*6, 21*0/
       data intij/ 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4&
         , 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10&
         , 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 13, &
@@ -53,7 +53,7 @@
         , 35, 35, 35, 35, 35, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, &
         37, 37, 37, 37, 38, 38, 38, 38, 38, 39, 39, 39, 39, 39, 40, 40, 40, 41&
         , 42, 42, 42, 42, 42, 43, 43, 43, 43, 44, 44, 44, 44, 44, 45, 45, 45, &
-        45, 45, 45, 45, 45, 45, 45/  
+        45, 45, 45, 45, 45, 45, 45/
       data intkl/ 15, 21, 28, 36, 45, 12, 19, 23, 39, 11, 15, 21, 22, 26, 28, &
         36, 45, 13, 24, 32, 38, 34, 37, 43, 11, 15, 21, 22, 26, 28, 36, 45, 17&
         , 25, 31, 16, 20, 27, 44, 29, 33, 35, 42, 15, 21, 22, 28, 36, 45, 3, 6&
@@ -67,7 +67,7 @@
         34, 37, 43, 9, 29, 33, 35, 42, 1, 3, 6, 10, 11, 15, 21, 22, 26, 28, 36&
         , 45, 5, 34, 37, 43, 4, 13, 24, 32, 38, 2, 12, 19, 23, 39, 18, 30, 40, &
         41, 9, 29, 33, 35, 42, 5, 34, 37, 43, 8, 16, 20, 27, 44, 1, 3, 6, 10, &
-        15, 21, 22, 28, 36, 45/  
+        15, 21, 22, 28, 36, 45/
       data intrep/ 1, 1, 1, 1, 1, 3, 3, 8, 3, 9, 6, 6, 12, 14, 13, 7, 6, 15, 8&
         , 3, 3, 11, 9, 14, 17, 6, 7, 12, 18, 13, 6, 6, 3, 2, 3, 9, 11, 10, 11, &
         9, 16, 10, 11, 7, 6, 4, 5, 6, 7, 9, 17, 19, 32, 22, 40, 3, 33, 34, 27, &
@@ -81,5 +81,5 @@
         36, 37, 1, 7, 6, 6, 40, 38, 38, 21, 45, 30, 29, 38, 9, 32, 19, 22, 3, &
         47, 27, 34, 33, 3, 46, 34, 27, 33, 35, 35, 35, 52, 11, 32, 50, 37, 44, &
         14, 39, 22, 48, 11, 32, 49, 37, 44, 1, 6, 6, 7, 51, 38, 22, 31, 38, 29&
-        /  
-      end module mndod_C 
+        /
+      end module mndod_C

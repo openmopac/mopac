@@ -205,7 +205,7 @@
             aa = c(i, mu + k1) * c(b, mu + k4) * gk
             k12 = k12 + c(a, mu + k2) * c(j, mu + k3) * aa
             j12 = j12 + c(a, mu + k3) * c(j, mu + k2) * aa
- 
+
 !	    **** terms (k1, k2|k4, k3) ****
             aa = c(i, mu + k1) * c(b, mu + k3) * gk
             k12 = k12 + c(a, mu + k2) * c(j, mu + k4) * aa
@@ -277,7 +277,7 @@
       i = i1 - ncore
       a = a1 - ncore
       nm = matind(max(i, a)) + min(i, a)
-      edefs = edef / 2. 
+      edefs = edef / 2.
       if (eec(nm) > edefs) then
 !	**** value not previously determined, calculate it ****
         eec(nm) = 0.0
@@ -501,9 +501,9 @@
               ioutt = ioutt + 1
               if (ee2(nm) /= 0.E0) then
                 iout = iout + 1
-                iwk(1, iout) = i 
-                iwk(2, iout) = j 
-                iwk(3, iout) = a 
+                iwk(1, iout) = i
+                iwk(2, iout) = j
+                iwk(3, iout) = a
                 iwk(4, iout) = b
                 wk0(1, iout) = ee2(nm)
               end if
@@ -711,7 +711,7 @@
 !     *************************************************************************
 
       subroutine cidiag (ciin, ci, aii, aocc, bocc)
-      use reimers_C, only : matind, nconf, nci, nr, nov, nex, mspn 
+      use reimers_C, only : matind, nconf, nci, nr, nov, nex, mspn
       use cosmo_C, only : ffact, diagsl
 
       implicit none
@@ -929,7 +929,7 @@
 !	  **** transition moments and oscillator strengths ****
           nm = matind(max(i0, il)) + min(i0, il)
           mom = dmci(nm, 1)**2 + dmci(nm, 2)**2 + dmci(nm, 3)**2
-!	  write (iy, '(3i4, 4f10.5)') i0, il, nm, sqrt(mom)*debye, 
+!	  write (iy, '(3i4, 4f10.5)') i0, il, nm, sqrt(mom)*debye,
 !     $				   (dmci(nm, k)*debye, k = 1, 3)
           if (ndtype /= 2) then
 !	    **** f = 2/3*m**2*e with m, e in au; with m in Ang and e in cm** - 1
@@ -953,7 +953,7 @@
             if (ndtype <= 1) then
               write (iw, "(i4, 1x, a3, f11.7, f10.0, f10.2, f10.6, 3f11.6, f10.6, 3f8.3)") &
                 il, nmrep(nst, nptg), eng, freq, wl, fosc, &
-     &                (dmci(nm, kk)*rmom, kk = 1, 3), & 
+     &                (dmci(nm, kk)*rmom, kk = 1, 3), &
      &                dmtot, (debye*dmci(nmd, kk), kk = 1, 3)
             else
               write (iw, "(i4, 1x, a3, f11.7, f10.0, f10.2, f10.6, 3f11.6, f10.6, 3f8.3)") &
@@ -1020,8 +1020,8 @@
           end do
          end do
         close(14)
-      end if  
- 
+      end if
+
 ! End RMG
 
       return
@@ -1036,7 +1036,7 @@
 !     **** between CI configurations					****
       use reimers_C, only : na, nb2, matind, au2ev, au2ang, au2cm, debye, &
           icifrag, nconf, multci, ncore, nov, fastci, n2phot, nciouv, &
-          nmrep, nptg, aor1, bor1, dipsym, ndtype, nex, mspn  
+          nmrep, nptg, aor1, bor1, dipsym, ndtype, nex, mspn
       USE chanel_C, only : iw
 
       implicit none
@@ -1045,7 +1045,7 @@
                         zcore(na), dcore(3), sqrt2, foscf, foscm, &
                         xx, align, emin, freq, diplen, tmsq, f
       integer ::           istsym(nconf), nspn(nconf), &
-                        i, j, k, i1, ilow, iov, ivo, j1, k1, k2, kk, & 
+                        i, j, k, i1, ilow, iov, ivo, j1, k1, k2, kk, &
                         maxx, ndiff, nel, nio, niv, nm, nspni
       logical*1 ::         aocc(nov, mspn, nex), bocc(nov, mspn, nex), &
      &                  same, adiff, bdiff, abdiff
@@ -1221,7 +1221,7 @@
           lo(j) = '    '
           lv(j) = '    '
         end do
- 
+
 !	**** loop over orbitals, check diffs from first ref det ****
         do j = 1, nov
 

@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module Parameters_for_MNDOD_C 
+      module Parameters_for_MNDOD_C
       double precision, dimension(107) :: ussd, uppd, zsd, zpd, betasd, betapd, &
         alpd, gssd, gppd, gspd, gp2d, hspd, uddd, zdd, betadd, zsnd, zpnd, zdnd&
         , poc_d
@@ -415,4 +415,4 @@
       data     gp2d( 80)/       6.1712498D0/
       data     hspd( 80)/       0.8359410D0/
       data    poc_d( 80)/       1.6360718D0/
-      end module Parameters_for_MNDOD_C 
+      end module Parameters_for_MNDOD_C

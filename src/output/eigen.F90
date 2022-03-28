@@ -85,7 +85,7 @@ subroutine eigen (write_gpt, write_out)
         ! except VECTORS data
         tmpkey = trim(keywrd)
         i = Index (tmpkey, "VECTORS=(") + Index (tmpkey, "VECTORS(")
-        tmpkey (:i) = " " 
+        tmpkey (:i) = " "
         j = Index (tmpkey, ")")
         tmpkey (j:) = " "
         ! Extract number of occupied orbitals to be written out
@@ -454,7 +454,7 @@ end subroutine eigen_limits
 subroutine lmo_to_eigenvectors(nlmo, ncx, nncx, ncxxx, n_dim, &
      & icxxx, icxxx_dim, cxxx, cxxx_dim, eigs, c)
   use molkst_C, only : numat, norbs
-  use common_arrays_C, only : nfirst, nlast       
+  use common_arrays_C, only : nfirst, nlast
   implicit none
   integer, intent (in) :: nlmo, icxxx_dim, cxxx_dim, n_dim
   integer, dimension (n_dim), intent (in) :: ncx, ncxxx, nncx
@@ -470,7 +470,7 @@ subroutine lmo_to_eigenvectors(nlmo, ncx, nncx, ncxxx, n_dim, &
   allocate (fmo_expanded (nlmo*nlmo), vec_lmo(nlmo*nlmo), c_lmo(norbs), &
          & latoms(numat), ws(norbs), &
          & ac(numat), stat=i)
-         
+
   if (i /= 0) then
     call memory_error ("DiagonaliseFockLMOScheme")
     return
@@ -480,7 +480,7 @@ subroutine lmo_to_eigenvectors(nlmo, ncx, nncx, ncxxx, n_dim, &
            & ac, fmo_expanded)
 !
 ! Diagonalise Fock matrix
-   call rsp(fmo_expanded, nlmo, eigs, vec_lmo)     
+   call rsp(fmo_expanded, nlmo, eigs, vec_lmo)
 !
 ! Reconstruct eigenvectors in AO basis
 !
@@ -499,7 +499,7 @@ subroutine lmo_to_eigenvectors(nlmo, ncx, nncx, ncxxx, n_dim, &
     end do
     !
     ! Add contribution from i'th LMO to all eigenstates
-    !   
+    !
     do k = 1, norbs
       if (Abs (c_lmo(k)) > 1.0d-10) then
         l = i

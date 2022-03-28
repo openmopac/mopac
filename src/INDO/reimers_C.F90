@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module reimers_C 
+      module reimers_C
 ! Full module added by RMG
       integer :: n, na, nb2, nham, ix, iy, &
                  nlocl, nstrt, ndump, ion, nstop, &
@@ -55,7 +55,7 @@
                  avec1(0:4), bvec1(0:4), avec2(0:4), bvec2(0:4), &
                  dia(0:4), tot, edef = 0.d0, ecore, rr, &
                  dq(3), dda(3), dtot(3), pol(6), nel(4), ef(3) = 0.d0
-                 
+
 
       integer, allocatable :: natm(:), nbf(:), ibf(:), iat(:), &
                  nbt(:), nprn(:), itrmet(:), natt(:), nstr(:), &
@@ -109,7 +109,7 @@
      & "Kr", "Rb", "Sr", "Y ", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", &
      & "Cd", "In", "Sn", "Sb", "Te", " I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", &
      & "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", &
-     & "Hf", "Ta", "W ", "Re", "Os", "Ir", "Pt", "Au", "Hg" / 
+     & "Hf", "Ta", "W ", "Re", "Os", "Ir", "Pt", "Au", "Hg" /
       data kind    /' S ', ' Px',' Py',' Pz', 'Dz2','xy2','Dxy',&
      &              'Dxz','Dyz'/
 
@@ -130,9 +130,9 @@
      & (mfg(16),mg2sd),   (mfg(17),mg1pd),   (mfg(18),mf2pd), &
      & (mfg(19),mg3pd),   (mfg(20),mf2dd),   (mfg(21),mf4dd), &
      & (mfg(22),mr1sppd), (mfg(23),mr2sddd), (mfg(24),mr2sdpp)
-      
+
       equivalence (fintfa(1),fssig),(fintfa(2),fpsig), &
      &            (fintfa(3),fppi), (fintfa(4),fdsig), &
      &            (fintfa(5),fdpi), (fintfa(6),fddel)
 
-      end module reimers_C 
+      end module reimers_C

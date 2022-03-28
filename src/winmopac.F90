@@ -14,22 +14,22 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-program MOPAC_win 
+program MOPAC_win
   USE IFQWIN
   use dfport
   implicit none
-  INTEGER :: i4  
+  INTEGER :: i4
   integer i, j, k, loop
   character :: ch
     call mopac_gui_deactivate
-    OPEN(0, file='user', title='MOPAC') 
+    OPEN(0, file='user', title='MOPAC')
     i4 = setbkcolor(15)
     i4 = settextcolor(0)
     call clearscreen($GCLEARSCREEN)
     i = iargc()
     if (i == 0) then
       write(0,*)
-      write(0,*)"  MOPAC in WINDOWS: To run MOPAC within WINDOWS, see:"      
+      write(0,*)"  MOPAC in WINDOWS: To run MOPAC within WINDOWS, see:"
       write(0,*)
       write(0,*)"  http://OpenMOPAC.net/manual/Running_MOPAC.html"
       write(0,*)
@@ -41,8 +41,8 @@ program MOPAC_win
     call run_mopac()  ! the user has supplied data sets as arguments
     i = SETEXITQQ(QWIN$EXITNOPERSIST)
   end program MOPAC_win
-  
-  
+
+
 !+++++++++++++++++++++++++++++++++++++++++++++++++
 !  InitialSettings Do not edit, unless necessary
 !
@@ -56,7 +56,7 @@ integer(4) cp, i
   type (qwinfo) :: qwi
 external :: instructions, about, shutdown
 
-call NLSGetLocale(CODEPAGE = cp)   
+call NLSGetLocale(CODEPAGE = cp)
 ! This routine is called automatically when the program begins.  It sets
 ! up the menu structure for the program, and connects "callback" routines
 ! with each menu item.
@@ -88,7 +88,7 @@ call NLSGetLocale(CODEPAGE = cp)
    l4 = appendmenuqq(6, $MENUENABLED,   'Help'C,           NUL)
    l4 = appendmenuqq(6, $MENUENABLED,   'Instructions'C, Instructions)
    l4 = appendmenuqq(6, $MENUENABLED,   'About'C,               About)
-   
+
    l4 = appendmenuqq(7, $MENUENABLED,   'Shutdown'C,         NUL)
    l4 = appendmenuqq(7, $MENUENABLED,   'Shutdown'C,         Shutdown)
 
@@ -97,7 +97,7 @@ InitialSettings = l4
 
 return
   end
-  
+
   subroutine Instructions(checked)
       USE DFLIB
       USE DFNLS
@@ -142,7 +142,7 @@ subroutine Shutdown(checked)
       open (unit=iend, file=end_fn, status="UNKNOWN", err=1000)
       write(iend,*)"Shut"
       close(iend)
-1000  return 
+1000  return
 end
 
 

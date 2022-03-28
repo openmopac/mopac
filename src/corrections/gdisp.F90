@@ -16,17 +16,17 @@
 
   subroutine gdisp(r0ab, rs6, alp6, c6ab, s6, s8, mxc, r2r4, rcov, rs8, alp8, dxyz_temp)
 !
-! Calculates the derivative (gradient) of the D3 dispersion term, 
+! Calculates the derivative (gradient) of the D3 dispersion term,
 ! based on material provided by Stefan Grimme, University of Muenster, Germany
 ! v3.1 of the DFTD3 library
 !
-  use common_arrays_C, only: nat, Vab 
+  use common_arrays_C, only: nat, Vab
   use molkst_C, only : numat
   implicit none
   double precision, parameter :: k1 = 16.d0
-  integer, parameter :: max_elem = 94, maxc = 5 ! maximum coordination number references per element    
+  integer, parameter :: max_elem = 94, maxc = 5 ! maximum coordination number references per element
   double precision :: &
-  c6ab(max_elem, max_elem, maxc, maxc, 3), & ! C6 for all element pairs 
+  c6ab(max_elem, max_elem, maxc, maxc, 3), & ! C6 for all element pairs
   dxyz_temp(3,numat),                      & ! Contribution to gradient
   rcov(max_elem),                          & ! covalent radii
   cn(numat),                               & ! coordination numbers of the atoms
@@ -76,16 +76,16 @@
           damp8 =1.d0/( 1.d0+6.d0*t8 )
       tmp1 = s6*6.d0*damp6*C6/r7
       tmp2=s8*6.d0*C6*r42*damp8/r9
-      drij(linij) = drij(linij) - tmp1 - 4.d0*tmp2 
-      drij(linij) = drij(linij)  + tmp1*alp6*t6*damp6 +3.d0*tmp2*alp8*t8*damp8  
+      drij(linij) = drij(linij) - tmp1 - 4.d0*tmp2
+      drij(linij) = drij(linij)  + tmp1*alp6*t6*damp6 +3.d0*tmp2*alp8*t8*damp8
       dc6_rest = s6/r6*damp6 +3.d0*s8*r42/r8*damp8
 !
 !     saving all f_dmp/r6*dC6(ij)/dCN(i) for each atom for later
 !
       dc6i(i) = dc6i(i) + dc6_rest*dc6iji
       dc6i(j) = dc6i(j) + dc6_rest*dc6ijj
-    end do 
-  end do 
+    end do
+  end do
 !
 ! After calculating all derivatives dE/dr_ij w.r.t. distances,
 ! the grad w.r.t. the coordinates is calculated dE/dr_ij * dr_ij/dxyz_i
@@ -109,12 +109,12 @@
       x1 = drij(linij) + dcn*(dc6i(i) + dc6i(j))
       dxyz_temp(:,i) = dxyz_temp(:,i) + x1*rij/r
       dxyz_temp(:,j) = dxyz_temp(:,j) - x1*rij/r
-    end do 
-  end do 
+    end do
+  end do
   return
   end subroutine gdisp
-  
-  
+
+
   subroutine ncoord(natoms, rcov, nat, cn)
   implicit none
   integer nat(*),natoms, i, j
@@ -138,12 +138,12 @@
   end do
   return
   end subroutine ncoord
-  
+
   subroutine get_dC6_dCNij(maxc ,max_elem, c6ab, mxci, mxcj,  &
     cni, cnj, izi, izj, c6check, dc6i, dc6j)
     implicit none
-    integer, intent (in) :: maxc ,max_elem, mxci, mxcj 
-    double precision, intent (in) :: c6ab(max_elem,max_elem,maxc,maxc,3), cni, cnj    
+    integer, intent (in) :: maxc ,max_elem, mxci, mxcj
+    double precision, intent (in) :: c6ab(max_elem,max_elem,maxc,maxc,3), cni, cnj
     integer :: izi, izj, a, b
     double precision :: dc6i, dc6j, c6check, term
     double precision :: zaehler, nenner, dzaehler_i, dnenner_i, dzaehler_j, dnenner_j

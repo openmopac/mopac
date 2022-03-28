@@ -17,8 +17,8 @@
 ! calculate dC6/dr analytically
       subroutine anagrdc6(max_elem, maxc, n, cn, dcn2, dcn3, nat, c6ab, mxc, iat, jat, kat, anag)
       implicit   none
-      double precision :: k3 
-      parameter (k3 = -4.d0) 
+      double precision :: k3
+      parameter (k3 = -4.d0)
       integer :: n, nat(*), max_elem, maxc, iat, jat, kat, mxc(max_elem)
       double precision :: cn(*), dcn2(3, n), anag(3)
       double precision :: c6ab(max_elem, max_elem, maxc, maxc, 3)
@@ -66,17 +66,17 @@
       subroutine edisp(max_elem, maxc, n, nat, c6ab, mxc, r2r4, r0ab, rcov, &
         rs6, rs8, alp6, alp8, e6, e8)
       use funcon_C, only : a0
-      implicit none  
-      integer :: n, nat(*), max_elem, maxc, mxc(max_elem) 
+      implicit none
+      integer :: n, nat(*), max_elem, maxc, mxc(max_elem)
       double precision :: r0ab(max_elem, max_elem), r2r4(*)
       double precision :: rs6, rs8, alp6, alp8, rcov(max_elem)
       double precision :: c6ab(max_elem, max_elem, maxc, maxc, 3)
-      double precision :: e6,  e8        
- 
+      double precision :: e6,  e8
+
       integer :: iat, jat
       double precision :: r, r2, r6, r8, tmp, c6, c8, rthr, rthr2
       double precision :: damp6, damp8, rr
-      double precision :: cn(n) 
+      double precision :: cn(n)
       double precision, external :: distance
 !
 ! In this subroutine, array "coord" is in atomic units, not Angstroms.
@@ -84,9 +84,9 @@
 !
 !  Set cutoff for Edisp interactions, in Angstroms
 !
-      rthr = 15.d0  
+      rthr = 15.d0
 !
-      rthr2 = (rthr/a0)**2 
+      rthr2 = (rthr/a0)**2
       e6  =  0.d0
       e8  =  0.d0
       call ncoord(n, rcov, nat, cn)
@@ -94,22 +94,22 @@
         do jat  =  iat + 1, n
           r = distance(iat, jat)
           r2 = r**2
-!THR        
+!THR
           if (r2 > rthr2) cycle
           rr  =  r0ab(nat(jat), nat(iat))/r
 ! damping
-          tmp  =  rs6*rr   
+          tmp  =  rs6*rr
           damp6  =  1.d0/( 1.d0 + 6.d0*tmp**alp6 )
-          tmp  =  rs8*rr     
+          tmp  =  rs8*rr
           damp8  =  1.d0/( 1.d0 + 6.d0*tmp**alp8 )
 ! get C6
           call getc6(maxc, max_elem, c6ab, mxc, nat(iat), nat(jat), cn(iat), cn(jat), c6)
-          r6  =  r2**3      
+          r6  =  r2**3
           r8  =  r6*r2
 ! r2r4 stored in main as sqrt
           c8  =  3.0d0*c6*r2r4(nat(iat))*r2r4(nat(jat))
           e6  =  e6 + c6*damp6/r6
-          e8  =  e8 + c8*damp8/r8          
+          e8  =  e8 + c8*damp8/r8
         end do
       end do
       return
@@ -133,8 +133,8 @@
       RETURN
       END
 
-! gradient of C6(iat, jat) wrt to coord of kat or iat                       
-! interpolate c6  
+! gradient of C6(iat, jat) wrt to coord of kat or iat
+! interpolate c6
     subroutine getc6(maxc, max_elem, c6ab, mxc, iat, jat, nci, ncj, c6)
       implicit none
       integer maxc, max_elem
@@ -156,9 +156,9 @@
             cn1 = c6ab(iat, jat, i, j, 2)
             cn2 = c6ab(iat, jat, i, j, 3)
 ! distance
-            r = (cn1-nci)**2 + (cn2-ncj)**2 
+            r = (cn1-nci)**2 + (cn2-ncj)**2
             tmp1 = exp(-4.d0*r)
-            rsum = rsum + tmp1     
+            rsum = rsum + tmp1
             csum = csum + tmp1*c6
           end if
         end do
@@ -399,7 +399,7 @@
 ! compute coordination numbers by adding an inverse damping function
 !
       subroutine setr0ab(max_elem,autoang,r)
-      implicit none  
+      implicit none
       integer max_elem,i,j,k
       real*8 r(max_elem,max_elem),autoang
       real*8 r0ab(4465)
@@ -1168,7 +1168,7 @@
          4.2725d0,  4.1961d0,  3.7361d0,  3.6193d0,  3.4916d0,  3.9115d0,  3.9914d0, &
          3.9809d0,  3.9866d0,  4.3329d0,  4.1276d0,  3.9782d0,  4.5097d0,  4.6769d0, &
          4.5158d0,  4.3291d0,  4.3609d0,  4.3462d0,  4.3265d0,  4.4341d0  /)
-      
+
       k = 0
       do i = 1, max_elem
          do j = 1, i

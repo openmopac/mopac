@@ -14,11 +14,11 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module Parameters_for_AM1_C 
+      module Parameters_for_AM1_C
       double precision, dimension(107) :: ussam1, uppam1, uddam1, zsam1, zpam1, zdam1, &
         betasa, betapa, betada, alpam1, gssam1, gspam1, gppam1, gp2am1, hspam1, &
         polvolam1, zsnam1, zpnam1, zdnam1, f0sdam1, g2sdam1
-      double precision, dimension(107,4) :: guesa1, guesa2, guesa3         
+      double precision, dimension(107,4) :: guesa1, guesa2, guesa3
 !
 !       Data for Element   1:     Hydrogen
 !
@@ -754,7 +754,7 @@
       data      hspam1( 56)/       0.5159824d0/
 !
 !       Data for Element  80:      Mercury
-! 
+!
       data      ussam1( 80)/     -19.9415780d0/
       data      uppam1( 80)/     -11.1108700d0/
       data      betasa( 80)/      -0.9086570d0/
@@ -840,4 +840,4 @@
 !       Data for Element 106:    - Sparkle
 !
       data      alpam1(106)/       1.5000000d0/
-   end module Parameters_for_AM1_C 
+   end module Parameters_for_AM1_C

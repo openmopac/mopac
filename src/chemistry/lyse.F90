@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  subroutine lyse 
+  subroutine lyse
 !
 !  Before a residue sequence can be worked out, all inter-protein bonds
 !  must first be broken.  These bonds are of type N-S, O-S, and S-S
@@ -23,7 +23,7 @@
     use molkst_C, only : numat
     implicit none
     integer :: i, j, k, l, ll, m, n
-    logical :: special 
+    logical :: special
     double precision :: r_min, r
     double precision, external :: distance
  !
@@ -107,12 +107,12 @@
           do j = 1, nbonds(i)
             r = distance(ibonds(j,i), i)
 !
-!  Chose the shortest bond, but not shorter than a normal X-H 
+!  Chose the shortest bond, but not shorter than a normal X-H
 !
             if (r < r_min .and. r > 0.95d0) then
               r_min = r
               k = ibonds(j,i)
-            end if            
+            end if
           end do
           if ( k > 0) then
 !
@@ -127,13 +127,13 @@
               nbonds(l) = nbonds(l) - 1
               do n = m, nbonds(l)
                 ibonds(n,l) = ibonds(n + 1,l)
-              end do           
+              end do
             end do
 !
 !  Create bond between atoms i and k
 !
             nbonds(i) = 1
-            ibonds(1,i) = k     
+            ibonds(1,i) = k
             nbonds(k) = nbonds(k) + 1
             ibonds(nbonds(k),k) = i
           end if

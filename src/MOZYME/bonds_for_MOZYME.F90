@@ -28,21 +28,21 @@
     double precision, allocatable, dimension (:) :: bab
     intrinsic Index
     integer, external :: ijbo
-  !  
+  !
     lall = (Index (keywrd, " ALLBOND") /= 0)
     sumlim = 0.01d0                  !  Report all bonds greater than 0.01 not involving hydrogen
-    if (lall) sumlim = sumlim*0.1d0  !  Report all bonds greater than 0.001   
+    if (lall) sumlim = sumlim*0.1d0  !  Report all bonds greater than 0.001
     mozyme_style = .true.
-    if (index(keywrd, " IRC") + index(keywrd, " DRC") + index(keywrd, " MINI") /= 0) mozyme_style = .false.    
+    if (index(keywrd, " IRC") + index(keywrd, " DRC") + index(keywrd, " MINI") /= 0) mozyme_style = .false.
     if (mozyme_style) then
       if (maxtxt > 25) then
-        write (iw, '(1X,2/37X,"(VALENCIES)",1x,"BOND ORDER       TO",/)') 
+        write (iw, '(1X,2/37X,"(VALENCIES)",1x,"BOND ORDER       TO",/)')
       else
-        write (iw, '(1X,2/12X,"(VALENCIES)   BOND ORDERS",/)') 
+        write (iw, '(1X,2/12X,"(VALENCIES)   BOND ORDERS",/)')
       end if
       allocate (bab(100), ibab(100))
     else
-      write (iw, '(1X,2/20X,''BOND ORDERS AND VALENCIES'')') 
+      write (iw, '(1X,2/20X,''BOND ORDERS AND VALENCIES'')')
       sumlim = -1.d0
       i = (nl_atoms*(nl_atoms + 1))/2
       allocate (bab(i), l_atom_store(nl_atoms))
@@ -75,7 +75,7 @@
             valenc = valenc + 2.d0 * p(kk)
           end do
         end if
-        do j = 1, j_lim 
+        do j = 1, j_lim
           if ( .not. mozyme_style .and.  .not. l_atom(j)) cycle
           if (nat(j) /= 1 .or. lall) then
             jo = iorbs(j)
@@ -99,7 +99,7 @@
             end if
           end if
         end do
-        if (mozyme_style) then  
+        if (mozyme_style) then
           call print_bonds_compact(i,l, valenc, bab, ibab)
         else
           l = l + 1
@@ -110,7 +110,7 @@
     if ( .not. mozyme_style) then
       l_atom_store = l_atom(:nl_atoms)
       l_atom(:nl_atoms) = .true.
-      call vecprt (bab, newl) 
+      call vecprt (bab, newl)
       l_atom(:nl_atoms) = l_atom_store
       deallocate (l_atom_store, bab)
     end if
@@ -162,7 +162,7 @@
       bab(m) = sum
     end do
     ju = Min (nper, n_non_zero)
-            
+
     if (maxtxt /= 0) then
       write (iw, "(I6, 1X, A, A, "//f5p3//", A1, F8.3, 2x, a)") i_atom, elemnt (nat(i_atom)) &
       & //"("// txtatm (i_atom)(:maxtxt)//")", "  (", valenc, ")      ", &

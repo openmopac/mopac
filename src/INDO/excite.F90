@@ -233,12 +233,12 @@
         nelopn = nint(tel)
         nalpha = (nelopn + multci - 1) / 2
         nbeta = nelopn - nalpha
-        
+
         if (nbeta < 0) then
           nbeta = 0
           nalpha = nelopn
         end if
-        
+
         nv = 1
         vv(1) = norb(1) + nalpha
 
@@ -423,7 +423,7 @@
      &          aocc, bocc, nspn, spintr, beta, cc0, gamma, nbtmo, aii, nfact, &
      &          irefd, krefd, .false.)
 !            write (6, *) 'CAS ', jconf, e(jconf), aoc, '   ', boc
- 
+
 !	    ***** generate single excitations from all CAS dets *****
 
             do i1 = vvs(2), vvs(1), - 1

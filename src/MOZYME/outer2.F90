@@ -153,10 +153,10 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
 !
 !   SOLID SYSTEM
 !
-      if (icalcn /= numcal) then 
-        icalcn = numcal 
+      if (icalcn /= numcal) then
+        icalcn = numcal
         cutof2 = clower**2
-      end if 
+      end if
       do i = 1, 10
         e1b(i) = 0.d0
         e2a(i) = 0.d0
@@ -185,16 +185,16 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
 !
 !  Interaction distance is greater than cutoff, so use point-charge
 !
-              rij = sqrt(rij)  
+              rij = sqrt(rij)
               call point(rij, ni, nj, ri, l, e1bits, e2bits, enubit)
               ri(4) = ri(1)
               ri(6) = 0.d0
-            else 
+            else
               rij = Sqrt (rij)
 !
 ! *** COMPUTE INTEGRALS IN DIATOMIC FRAME
 !
-              call reppd (ni, nj, rij, ri, gab)      
+              call reppd (ni, nj, rij, ri, gab)
             end if
 !
               a = 1.d0 / rij

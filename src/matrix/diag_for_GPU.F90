@@ -37,7 +37,7 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
 #ifdef GPU
     double precision, allocatable, dimension(:,:)  :: ci0,ca0 ! alp,bet
 #endif
-    integer :: kk      
+    integer :: kk
 !
     integer,external :: idamax
 

@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine mecid(eigs, gse, eiga, diag, xy) 
+      subroutine mecid(eigs, gse, eiga, diag, xy)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use meci_C, only : occa, microa, microb, nmos, lab
 !***********************************************************************
@@ -27,19 +27,19 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      double precision , intent(out) :: gse 
-      double precision , intent(in) :: eigs(*) 
-      double precision  :: eiga(*) 
-      double precision , intent(out) :: diag(*) 
-      double precision  :: xy(nmos,nmos,nmos,nmos) 
+      double precision , intent(out) :: gse
+      double precision , intent(in) :: eigs(*)
+      double precision  :: eiga(*)
+      double precision , intent(out) :: diag(*)
+      double precision  :: xy(nmos,nmos,nmos,nmos)
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, j 
-      double precision :: x 
+      integer :: i, j
+      double precision :: x
       double precision, external :: diagi
 !-----------------------------------------------
 !***********************************************************************
@@ -62,21 +62,21 @@
 !            MATRIX
 !
 !***********************************************************************
-      gse = 0.D0 
-      do i = 1, nmos 
-        x = 0.D0 
-        do j = 1, nmos 
-          x = x + (2.D0*xy(i,i,j,j)-xy(i,j,i,j))*occa(j) 
-        end do 
-        eiga(i) = eigs(i) - x 
-        gse = gse + eiga(i)*occa(i)*2.D0 
-        gse = gse + xy(i,i,i,i)*occa(i)*occa(i) 
-        do j = i + 1, nmos 
-          gse = gse + 2.D0*(2.D0*xy(i,i,j,j)-xy(i,j,i,j))*occa(i)*occa(j) 
-        end do 
-      end do 
-      do i = 1, lab 
-        diag(i) = diagi(microa(1,i),microb(1,i),eiga,xy,nmos) - gse 
-      end do 
-      return  
-      end subroutine mecid 
+      gse = 0.D0
+      do i = 1, nmos
+        x = 0.D0
+        do j = 1, nmos
+          x = x + (2.D0*xy(i,i,j,j)-xy(i,j,i,j))*occa(j)
+        end do
+        eiga(i) = eigs(i) - x
+        gse = gse + eiga(i)*occa(i)*2.D0
+        gse = gse + xy(i,i,i,i)*occa(i)*occa(i)
+        do j = i + 1, nmos
+          gse = gse + 2.D0*(2.D0*xy(i,i,j,j)-xy(i,j,i,j))*occa(i)*occa(j)
+        end do
+      end do
+      do i = 1, lab
+        diag(i) = diagi(microa(1,i),microb(1,i),eiga,xy,nmos) - gse
+      end do
+      return
+      end subroutine mecid

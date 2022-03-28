@@ -14,25 +14,25 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine axis(a, b, c, evec) 
+      subroutine axis(a, b, c, evec)
       use molkst_C, only : numcal, keywrd, mol_weight, numat
       use common_arrays_C, only : atmass, coord
       USE chanel_C, only : iw
       use to_screen_C, only : rot, xyzmom
       USE funcon_C, only : fpc_6, fpc_8, fpc_10, pi
       implicit none
-      double precision , intent(out) :: a 
-      double precision , intent(out) :: b 
-      double precision , intent(out) :: c 
-      double precision  :: evec(3,3) 
-      integer :: icalcn, i, j 
-      double precision, dimension(6) :: t 
-      double precision, dimension(numat) :: x, y, z 
-      double precision, dimension(3) ::  eig 
-      double precision :: const1, const2, sumwx, sumwy, sumwz, sum 
-      logical :: first      
+      double precision , intent(out) :: a
+      double precision , intent(out) :: b
+      double precision , intent(out) :: c
+      double precision  :: evec(3,3)
+      integer :: icalcn, i, j
+      double precision, dimension(6) :: t
+      double precision, dimension(numat) :: x, y, z
+      double precision, dimension(3) ::  eig
+      double precision :: const1, const2, sumwx, sumwy, sumwz, sum
+      logical :: first
       double precision, external :: ddot
-      save t, eig, first, icalcn 
+      save t, eig, first, icalcn
 !***********************************************************************
 !
 !  AXIS CALCULATES THE THREE MOMENTS OF INERTIA AND THE MOLECULAR
@@ -41,12 +41,12 @@
 !       THE UNITS OF INERTIA ARE 10**(-40)GRAM-CM**2,
 !       AND MOL.WEIGHT IN ATOMIC-MASS-UNITS. (AMU'S)
 !***********************************************************************
-      data t/ 6*0.D0/  
-      data icalcn/ 0/  
-      if (icalcn /= numcal) then 
-        icalcn = numcal 
-        first = .TRUE. 
-      end if 
+      data t/ 6*0.D0/
+      data icalcn/ 0/
+      if (icalcn /= numcal) then
+        icalcn = numcal
+        first = .TRUE.
+      end if
 !***********************************************************************
 !     CONST1 =  10**40/(N*A*A)
 !               N = AVERGADRO'S NUMBER
@@ -64,37 +64,37 @@
 !              (8*PI**2*C[CM/SEC])
 !
 !***********************************************************************
-      const2 = fpc_6*fpc_10*1.D16/(8.D0*pi**2*fpc_8) 
+      const2 = fpc_6*fpc_10*1.D16/(8.D0*pi**2*fpc_8)
 !    FIRST WE CENTRE THE MOLECULE ABOUT THE CENTRE OF GRAVITY,
 !    THIS DEPENDS ON THE ISOTOPIC MASSES, AND THE CARTESIAN GEOMETRY.
 !
-      sumwx = 0.D0 
-      sumwy = 0.D0 
-      sumwz = 0.D0 
+      sumwx = 0.D0
+      sumwy = 0.D0
+      sumwz = 0.D0
 !
-      if (mol_weight > 0) then 
-        do i = 1, numat 
-          sumwx = sumwx + atmass(i)*coord(1,i) 
-          sumwy = sumwy + atmass(i)*coord(2,i) 
-          sumwz = sumwz + atmass(i)*coord(3,i) 
-        end do 
-      else 
-        mol_weight = mol_weight + dble(numat) 
-        do i = 1, numat 
-          sumwx = sumwx + coord(1,i) 
-          sumwy = sumwy + coord(2,i) 
-          sumwz = sumwz + coord(3,i) 
-        end do 
-      end if 
+      if (mol_weight > 0) then
+        do i = 1, numat
+          sumwx = sumwx + atmass(i)*coord(1,i)
+          sumwy = sumwy + atmass(i)*coord(2,i)
+          sumwz = sumwz + atmass(i)*coord(3,i)
+        end do
+      else
+        mol_weight = mol_weight + dble(numat)
+        do i = 1, numat
+          sumwx = sumwx + coord(1,i)
+          sumwy = sumwy + coord(2,i)
+          sumwz = sumwz + coord(3,i)
+        end do
+      end if
 !
       if (mol_weight>0 .and. first) &
-      write (iw, '(/10X,''MOLECULAR WEIGHT ='',F8.2,/)') min(99999.99D0,mol_weight) 
-      sumwx = sumwx/mol_weight 
-      sumwy = sumwy/mol_weight 
-      sumwz = sumwz/mol_weight 
-      x(:numat) = coord(1,:numat) - sumwx 
-      y(:numat) = coord(2,:numat) - sumwy 
-      z(:numat) = coord(3,:numat) - sumwz 
+      write (iw, '(/10X,''MOLECULAR WEIGHT ='',F8.2,/)') min(99999.99D0,mol_weight)
+      sumwx = sumwx/mol_weight
+      sumwy = sumwy/mol_weight
+      sumwz = sumwz/mol_weight
+      x(:numat) = coord(1,:numat) - sumwx
+      y(:numat) = coord(2,:numat) - sumwy
+      z(:numat) = coord(3,:numat) - sumwz
 !***********************************************************************
 !
 !    MATRIX FOR MOMENTS OF INERTIA IS OF FORM
@@ -104,9 +104,9 @@
 !           |    -Z*X        -Z*Y       X**2+Y**2 |
 !
 !***********************************************************************
-      do i = 1, 6 
-        t(i) = dble(i)*1.0D-10 
-      end do 
+      do i = 1, 6
+        t(i) = dble(i)*1.0D-10
+      end do
 !
       if (mol_weight > 0) then
         do i = 1, numat
@@ -128,54 +128,54 @@
         end do
       end if
 !
-      call rsp (t, 3, eig, evec) 
-      if (mol_weight>0 .and. first .and. index(keywrd,'RC=')==0) then 
-        write (iw,'(2/9X,'' ROTATIONAL CONSTANTS IN CM(-1)'',/)') 
-        where (eig < 3.D-4)  
-          eig = 0.D0 
-          rot = 0.D0 
-        elsewhere 
-          rot = const2/eig 
-        end where 
-        xyzmom = eig*const1 
+      call rsp (t, 3, eig, evec)
+      if (mol_weight>0 .and. first .and. index(keywrd,'RC=')==0) then
+        write (iw,'(2/9X,'' ROTATIONAL CONSTANTS IN CM(-1)'',/)')
+        where (eig < 3.D-4)
+          eig = 0.D0
+          rot = 0.D0
+        elsewhere
+          rot = const2/eig
+        end where
+        xyzmom = eig*const1
         write (iw, &
-      '(10X,''A ='',F14.8,''   B ='',F14.8,''   C ='',F14.8,/)') (rot(i),i=1,3) 
+      '(10X,''A ='',F14.8,''   B ='',F14.8,''   C ='',F14.8,/)') (rot(i),i=1,3)
         if (index(keywrd,'RC=') == 0) write (iw, &
-      '(2/10X,'' PRINCIPAL MOMENTS OF INERTIA IN UNITS OF 10**(-40)*GRAM-CM**2'',/)') 
+      '(2/10X,'' PRINCIPAL MOMENTS OF INERTIA IN UNITS OF 10**(-40)*GRAM-CM**2'',/)')
         write (iw, &
-      '(10X,''A ='',F14.4,''   B ='',F14.4,''   C ='',F14.4,/)') (xyzmom(i),i=1,3) 
-        c = rot(1) 
-        b = rot(2) 
-        a = rot(3) 
-      end if 
+      '(10X,''A ='',F14.4,''   B ='',F14.4,''   C ='',F14.4,/)') (xyzmom(i),i=1,3)
+        c = rot(1)
+        b = rot(2)
+        a = rot(3)
+      end if
 !
 !     MAKE DIAGONAL TERMS OBLIGATE POSITIVE
 !
-      do i = 1, 3 
-        if (evec(i,i) >= 0.D0) cycle  
-        evec(:,i) = -evec(:,i) 
-      end do 
+      do i = 1, 3
+        if (evec(i,i) >= 0.D0) cycle
+        evec(:,i) = -evec(:,i)
+      end do
 !
 !   NOW TO ORIENT THE MOLECULE SO THE CHIRALITY IS PRESERVED
 !   CHIRALITY CAN ONLY BE LOST IF ONE OR MORE EVEC(I,I) ARE ZERO
 !
       sum = evec(1,1)*(evec(2,2)*evec(3,3)-evec(3,2)*evec(2,3)) + &
             evec(1,2)*(evec(2,3)*evec(3,1)-evec(2,1)*evec(3,3)) + &
-            evec(1,3)*(evec(2,1)*evec(3,2)-evec(2,2)*evec(3,1)) 
-      if (sum < 0) then 
-        sum = 1.D0 
-        do j = 1, 3 
-          if (evec(j,j) >= sum) cycle  
-          sum = evec(j,j) 
-          i = j 
-        end do 
-        evec(:,i) = -evec(:,i) 
-      end if 
-      if (index(keywrd,' NOREOR') + index(keywrd,' FORCETS') == 0) then 
-        coord(1,:numat) = x(:numat) 
-        coord(2,:numat) = y(:numat) 
-        coord(3,:numat) = z(:numat) 
-      end if 
-      if (mol_weight > 0) first = .FALSE. 
-      return  
-      end subroutine axis 
+            evec(1,3)*(evec(2,1)*evec(3,2)-evec(2,2)*evec(3,1))
+      if (sum < 0) then
+        sum = 1.D0
+        do j = 1, 3
+          if (evec(j,j) >= sum) cycle
+          sum = evec(j,j)
+          i = j
+        end do
+        evec(:,i) = -evec(:,i)
+      end if
+      if (index(keywrd,' NOREOR') + index(keywrd,' FORCETS') == 0) then
+        coord(1,:numat) = x(:numat)
+        coord(2,:numat) = y(:numat)
+        coord(3,:numat) = z(:numat)
+      end if
+      if (mol_weight > 0) first = .FALSE.
+      return
+      end subroutine axis

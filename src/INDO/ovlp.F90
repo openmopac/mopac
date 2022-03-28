@@ -133,7 +133,7 @@
       atomjx = ' 0 0 0'
 !
 !     fspdf(i, j) is weighting factor.
-!     i = angular quantum number + 1, 
+!     i = angular quantum number + 1,
 !     j = 1, 2, 3, 4 for sigma, pi, delta, phi.
       do 1 i = 1, 4
       do 11 j = 1, 4
@@ -436,7 +436,7 @@
       end subroutine ovlaap
 
 !     *************************************************************************
- 
+
       subroutine aux (pp, tt)
 
 !     this subroutine calculates a and b fns. for molecular integrals.
@@ -697,7 +697,7 @@
 !        y(3x2 - y2)
 !     m = 51, 52, 53 for x2, y2, z2
 !
-!     h(i) returns as sigma, pi - x, pi - y, delta - (x**2 - y**2), delta - xy, phi - 
+!     h(i) returns as sigma, pi - x, pi - y, delta - (x**2 - y**2), delta - xy, phi -
 !          x(x2 - 3y2), phi - y(3x2 - y2), and s component if any.
 !
 !     the phases of the real fns. are those of frank harris in the upps

@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-module MOZYME_C 
+module MOZYME_C
 !
 !  This module holds all the data that is specific to the MOZYME Localized
 !  Molecular Orbital (LMO) procedure.
@@ -23,7 +23,7 @@ module MOZYME_C
     integer :: i
 !
 !                               Data for the system
-! 
+!
   integer :: &
     noccupied,   & ! Number of occupied molecular orbitals
     nvirtual,    & ! Number of virtual molecular orbitals
@@ -38,7 +38,7 @@ module MOZYME_C
 !
   integer, allocatable, dimension (:) :: &
     iorbs,       &
-    jopt 
+    jopt
 !
 !                              Data on diatomic interactions
 !
@@ -46,7 +46,7 @@ module MOZYME_C
     ij_dim         ! Number of interactions treated by NDDO approximations
                    ! = size of arrays iijj and ijall
   logical :: &
-    lijbo          ! TRUE if array ijbo is to be used, 
+    lijbo          ! TRUE if array ijbo is to be used,
                    ! FALSE if the ijbo function is to be used
   integer, dimension (:), allocatable :: &
     iijj,        & !
@@ -63,15 +63,15 @@ module MOZYME_C
   integer, parameter :: &
     maxres = 9999    !  Maximum number of residues allowed in a protein
 
-  integer, dimension(:), allocatable :: &    
+  integer, dimension(:), allocatable :: &
                   !
                   ! The unique residue number of atom i is at_res(i)
     at_res,     & ! This number is independent of the residue number printed
                   ! and is only used inside MOPAC - it is never printed out
-    iz,         & ! Number of valence electrons available for Lewis structure, on each atom 
-    ib,         & ! Number of valence orbitals available for Lewis structure, on each atom 
+    iz,         & ! Number of valence electrons available for Lewis structure, on each atom
+    ib,         & ! Number of valence orbitals available for Lewis structure, on each atom
     ions          ! Charge on ionized atoms, cations = 1 neutral = 0
-   
+
                   !
   integer, dimension(:,:), allocatable :: &
     Lewis_elem       ! Atoms and atom pairs involved in making the Lewis structure
@@ -80,10 +80,10 @@ module MOZYME_C
     jatom,       & ! Used in working out residue names
     mxeno,       & ! Used in working out residue names
     k,           &
-    loop,        &     
+    loop,        &
     icharges       ! Number of charged sites
    integer :: &
-    nxeno(4,11), & ! Up to 10 xeno groups allowed. nxeno(1,*) = number of C, 
+    nxeno(4,11), & ! Up to 10 xeno groups allowed. nxeno(1,*) = number of C,
                    ! 2 = No. on N, 3 = #O, 4 = #S
     nbackb(4),   & ! for each peptide line, nbackb(1) = atom number of C of CHR,
                    ! 2 = # of C of C=O, 3 = # of O of C=O, 4 = # of N
@@ -149,33 +149,33 @@ module MOZYME_C
     ifmo           !
   integer, dimension (:), allocatable :: &
     idiag,       & !
-  
-    nfmo           ! Number of filled LMO's that interact with a virtual LMO     
-  double precision, dimension (:), allocatable :: &    
-    partf,       & ! 
+
+    nfmo           ! Number of filled LMO's that interact with a virtual LMO
+  double precision, dimension (:), allocatable :: &
+    partf,       & !
     p1,          & !
     p2,          & !
     p3,          & !
     fmo,         & !
     partp,       & !
     parth,       & !
-    ws             !      
-       
+    ws             !
+
 !
   integer ::     &
-    nelred,      & ! Number of electrons to be used in the SCF during a geometry optimization.  
+    nelred,      & ! Number of electrons to be used in the SCF during a geometry optimization.
                    ! In the first SCF, numred = nelecs
     norred,      & ! Number of atomic orbitals to be used in the SCF during a geometry optimization
                    ! In the first SCF, norred = norbs
     numred,      & ! Number of atoms to be used in the SCF during a geometry optimization
                    ! In the first SCF, numred = numat
     fmo_dim,     & ! Size of arrays holding the occupied M.O. - virtual M.O. interactions
-    mode,        & !  0 for a simple MOZYME, 
+    mode,        & !  0 for a simple MOZYME,
                    ! -1 if depleted arrays are to be constructed (RAPID only)
                    ! +1 if arrays are to be built using depleted arrays (RAPID only)
     ijc
   double precision, allocatable, dimension (:,:) ::  &
-     part_dxyz    
+     part_dxyz
   double precision :: &
     cutofs,      & ! Overlap cut-off distance (normally 7 A)
     thresh,      & ! Criterion for deciding to do Euler rotation to annihilate
@@ -209,11 +209,11 @@ module MOZYME_C
 
     integer, allocatable, dimension (:) :: &
       isort,       &
-      kopt,        &      
-      iopt   
+      kopt,        &
+      iopt
     data tyres / "GLY", "ALA", "VAL", "LEU", "ILE", "SER", "THR", "ASP", &
          & "ASN", "LYS", "GLU", "GLN", "ARG", "HIS", "PHE", "CYS", "TRP", &
-         & "TYR", "MET", "PRO", "PRO", "PRO", "UNK" /  
+         & "TYR", "MET", "PRO", "PRO", "PRO", "UNK" /
     data tyr / "G", "A", "V", "L", "I", "S", "T", "D", "N", "K", "E", "Q", &
          & "R", "H", "F", "C", "W", "Y", "M", "P", "P", "P", "?" /
     character*4 :: atomname(20,14), afn(20)
@@ -240,7 +240,7 @@ module MOZYME_C
   data (atomname(17,i),i=1,10)/" N  "," CA "," C  "," O  "," CB "," CG "," ND1"," CD2"," CE1"," NE2"/                              !   HIS
   data (atomname(18,i),i=1,11)/" N  "," CA "," C  "," O  "," CB "," CG "," CD1"," CD2"," CE1"," CE2"," CZ "/                       !   PHE
   data (atomname(19,i),i=1,12)/" N  "," CA "," C  "," O  "," CB "," CG "," CD1"," CD2"," CE1"," CE2"," CZ "," OH "/                !   TYR
-  data (atomname(20,i),i=1,14)/" N  "," CA "," C  "," O  "," CB "," CG "," CD1"," CD2"," NE1"," CE2"," CE3"," CZ2"," CZ3"," CH2"/  !   TRP 
+  data (atomname(20,i),i=1,14)/" N  "," CA "," C  "," O  "," CB "," CG "," CD1"," CD2"," NE1"," CE2"," CE3"," CZ2"," CZ3"," CH2"/  !   TRP
 !
 ! "long" names of each residue
 !
@@ -248,7 +248,7 @@ module MOZYME_C
 !
 !  number of non-hydrogen atoms in each residue
 !
-  data n_add /4,    5,    6,    6,    7,    7,    8,    7,    8,    8,    8,    8,    9,    9,    9,   11,   10,   11,   12,   14/   
+  data n_add /4,    5,    6,    6,    7,    7,    8,    7,    8,    8,    8,    8,    9,    9,    9,   11,   10,   11,   12,   14/
     save
 !
 !  All arrays used in "big_swap" - these are the arrays that define the LMOs, the geometry, and some details of the SCF.

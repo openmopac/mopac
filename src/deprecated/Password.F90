@@ -28,15 +28,15 @@ subroutine password()
   character (len=8), external :: jdate
   double precision, external :: reada
   data academic_text &
-  
+
   /"Academic End User Software License Agreement", &
   "Important:  ", &
   "This License Agreement (""Agreement"") is a legal agreement between you, ", &
   "the end user (either an individual or an entity), and Stewart Computational ", &
   "Chemistry (""SCC"").  By typing the word ""Yes"" below, you signify that you ", &
-  "have read the SCC License Agreement and accept its terms.  If you do not agree ", & 
+  "have read the SCC License Agreement and accept its terms.  If you do not agree ", &
   "to the Agreement's terms, please delete all copies of this Software.", &
-  "Grant of License. ", & 
+  "Grant of License. ", &
   "SCC grants, and you hereby accept, a non-exclusive license to install and use", &
   "the enclosed software product (""Software"") in accordance with the", &
   "terms of this Agreement.  This licensed copy of the Software may only be used ", &
@@ -160,11 +160,11 @@ subroutine password()
 'URL: http://openmopac.net/                          Email: MrMOPAC@ATT.net', &
 '----------------------------------------------------------------------------------', &
 "*******************************************************************************", &
-"** Cite this work as: MOPAC2016, James J. P. Stewart, Stewart Computational  **", & 
+"** Cite this work as: MOPAC2016, James J. P. Stewart, Stewart Computational  **", &
 "** Chemistry, Colorado, USA      web: HTTP://OpenMOPAC.net                   **", &
 "*******************************************************************************", &
 '++++'/
-  if (site_no == 999) then 
+  if (site_no == 999) then
     ijulian = 1000
     verson(7:7) = "W"
     return                                   !
@@ -177,11 +177,11 @@ subroutine password()
   ii(1) = 0
   ii(2) = screen
   inquire (directory = "C:\", exist = is_windows)
-  i = getenvqq("MOPAC_LICENSE",mopac_pw) 
+  i = getenvqq("MOPAC_LICENSE",mopac_pw)
   if (i /= 0) then
     inquire (directory = trim(mopac_pw), exist = exists)
     if ( .not. exists) then
-      write(screen,*)" Environmental variable ""MOPAC_LICENSE"" exists, but its value" 
+      write(screen,*)" Environmental variable ""MOPAC_LICENSE"" exists, but its value"
       write(screen,*)" does not represent a folder on this computer"
       write(screen,*)" (An attempt was made to detect the folder '"//trim(mopac_pw)//"')"
       call sleep (5)
@@ -224,7 +224,7 @@ subroutine password()
         write(screen,*)" (MOPAC_LICENSE points to directory '"//trim(mopac_pw)//"')"
         call sleep (5)
         stop
-      end if   
+      end if
     end if
   else
 !
@@ -234,12 +234,12 @@ subroutine password()
     if (exists) then
 !
 ! Platform is Windows
-!  
+!
       inquire (directory = "C:\program files\", exist = exists)
       if (exists) then
         inquire (directory = "C:\program files\mopac", exist = exists)
         if ( .not. exists) then
-          write(screen,*) 
+          write(screen,*)
           write(screen,*) '  The MOPAC2016.exe file MUST be put in folder C:\Program Files\mopac'
           write(screen,*) '  unless the Environmental Variable MOPAC_LICENSE is set.'
           write(screen,*) ' '
@@ -302,7 +302,7 @@ subroutine password()
     mopac_pw = trim(line1)
     inquire (file = trim(mopac_pw), exist = exists)
     if (exists) then
-      write(screen,*)"An old license file for MOPAC2012 was found." 
+      write(screen,*)"An old license file for MOPAC2012 was found."
       write(screen,*)"An attempt will be made to write a license for MOPAC2016."
       p_new = 76
       open(p_new, file = mopac_pw(:i)//"16", form="unformatted", iostat = j)
@@ -315,7 +315,7 @@ subroutine password()
           write(screen,*)"(Delete this window when it is no longer wanted.)"
         end if
         do
-          inquire(unit=0, opened=opend) 
+          inquire(unit=0, opened=opend)
           if (opend) call sleep(1)
         end do
         stop
@@ -325,7 +325,7 @@ subroutine password()
       mopac_pw = trim(line1)
     end if
   end if
-  if (exists .and. j < 3) then    
+  if (exists .and. j < 3) then
     do jj = 1, 3
       open(unit=7, file=trim(mopac_pw), form="unformatted", iostat = i)
       if (i == 0) exit
@@ -337,11 +337,11 @@ subroutine password()
       write(screen,*) " Correct this fault before continuing"
       read(5,"(a)")line
       stop
-    end if  
+    end if
     read(7, iostat=i)pass, site_no
     if (i /= 0) then
       if (i == -1) then
-        close (7, STATUS = "DELETE",iostat=i)        
+        close (7, STATUS = "DELETE",iostat=i)
         if (i /= 0) then
           write(line,'(2a)')" Unable to delete corrupt password file in '", trim(mopac_pw)//"'"
           write(screen,'(//10x,a,/)')trim(line)
@@ -358,7 +358,7 @@ subroutine password()
       write(screen,'(10x,a)')" (To correct this fault, delete the file '"//trim(mopac_pw)//"' and try again.)"
       call mopend(trim(line))
       stop
-    end if     
+    end if
     new = .false.
     if  (p_new /= 0) then
       write(p_new, iostat=i)pass, site_no
@@ -367,8 +367,8 @@ subroutine password()
   else
 !
 !  "exists" is true only if a password exists in the appropriate place.
-!   
-    new = .true.    
+!
+    new = .true.
     line = " "
 !
 !
@@ -385,11 +385,11 @@ subroutine password()
       write(screen,'(10x,a)')" e.g., 'MOPAC2016.exe 1234567a12345678'"
       call web_message(screen,"running_MOPAC.html")
       write(screen,'(10x,a)')" Press (return) to continue"
-      read(5,*) 
+      read(5,*)
       stop
     end if
     call getarg (1, line)
-    do i = 1, 60 
+    do i = 1, 60
       if(line(1:1) == " ")then
         line = line(2:)
       else if (index(line,"\") /= 0 .or. index(line,"/") /= 0) then
@@ -401,29 +401,29 @@ subroutine password()
         exit
       end if
     end do
-    pass = nint(reada(line,1)) 
+    pass = nint(reada(line,1))
     if (pass > 99999999 .or. pass < 999999) then
       do i = 1, 2
         if (i == 2 .and. ii(i) == 0) exit
         write(ii(i),'(a)')" The licence key has not been read in,"
-        write(ii(i),'(a)')" instead, an attempt was made to run MOPAC with the file """//trim(line)//"""" 
-        write(ii(i),'(/,a)')" To activate MOPAC, run it using your personal license key."    
-        write(ii(i),'(/,a)')" The command should be of the type ""MOPAC2016.exe 12345678a12345678""" 
-        write(ii(i),'(a)')" or ""MOPAC2016.exe 12345678a12345678.mop"" (this file can be empty)" 
+        write(ii(i),'(a)')" instead, an attempt was made to run MOPAC with the file """//trim(line)//""""
+        write(ii(i),'(/,a)')" To activate MOPAC, run it using your personal license key."
+        write(ii(i),'(/,a)')" The command should be of the type ""MOPAC2016.exe 12345678a12345678"""
+        write(ii(i),'(a)')" or ""MOPAC2016.exe 12345678a12345678.mop"" (this file can be empty)"
         write(ii(i),'(/,a)')" (Replace the key ""12345678a12345678"" with the license key you were given.)"
       end do
-      call sleep(1000)  
+      call sleep(1000)
       stop
     end if
     i = index(line,"a") + index(line,"A")
     if (i /= 0) then
       site_no = nint(reada(line, i))
       if (site_no > 99999999 .or. site_no < 999999) then
-        write(screen,'(/,a)')" There must be 7 or 8 digits in the second set of numbers in the licence key" 
+        write(screen,'(/,a)')" There must be 7 or 8 digits in the second set of numbers in the licence key"
          if (screen == 6) then
-        write(0,'(a)')" Licence key: """//trim(line)//""" read in" 
-        write(0,'(a)')" (The licence key must be in the format ""12345678a12345678"")"    
-        write(0,'(/,a)')" There must be 7 or 8 digits in the second set of numbers in the licence key" 
+        write(0,'(a)')" Licence key: """//trim(line)//""" read in"
+        write(0,'(a)')" (The licence key must be in the format ""12345678a12345678"")"
+        write(0,'(/,a)')" There must be 7 or 8 digits in the second set of numbers in the licence key"
       end if
      call sleep (1000)
         stop
@@ -434,7 +434,7 @@ subroutine password()
     site_ok = .false.
     if (i == 0 .and. pass > 0 .and. j == 0 .and. site_no > 0)then
       if (screen == 6) &
-      write(0,'(/,a)')" Minimize this window so you can see the license agreement." 
+      write(0,'(/,a)')" Minimize this window so you can see the license agreement."
 !
 !  This is the Academic license
 !
@@ -443,16 +443,16 @@ subroutine password()
         write(screen,"(a)")academic_text(i)(:len_trim(academic_text(i)))
         if (mod(i,52) == 0) then
           write(screen,*)" Press (return) to exit"
-          read(5,*) 
+          read(5,*)
         end if
       end do
       site_ok = .true.
     end if
     i = Mod(pass,1511)
-    j = Mod(site_no,1523)      
+    j = Mod(site_no,1523)
     if (i == 0 .and. pass > 0 .and. j == 0 .and. site_no > 0)then
       if (screen == 6) &
-      write(0,'(/,a)')" Minimize this window so you can see the license agreement." 
+      write(0,'(/,a)')" Minimize this window so you can see the license agreement."
 !
 !  This is the Commercial license
 !
@@ -467,7 +467,7 @@ subroutine password()
         write(screen,"(a)")Commercial_text(i)(:len_trim(Commercial_text(i)))
         if (mod(i,52) == 0) then
           write(screen,*)" Press (return) to exit"
-          read(5,*) 
+          read(5,*)
         end if
       end do
       site_ok = .true.
@@ -484,8 +484,8 @@ subroutine password()
       open(unit=7, file=trim(mopac_pw), form="unformatted", iostat = i)
       close(7, status="delete", iostat = i)
       if (screen == 6) &
-      write(0,'(/,a)')" An error ocurred. Minimize this window so you can see the error message." 
-      call sleep(1000)    
+      write(0,'(/,a)')" An error ocurred. Minimize this window so you can see the error message."
+      call sleep(1000)
       stop
     end if
     write(screen,"(a,//,a)")"Scroll down to see the next part", &
@@ -508,13 +508,13 @@ subroutine password()
       write(screen,'(/)')
       write(screen,'(a)')" The file: ", " """//trim(mopac_pw)//""""," cannot be created - check permissions"
       if (verson(7:7) == "W") &
-        write(screen,'(/,a,//)')" For instructions, see: http://openmopac.net/Windows_set_permissions.html"  
+        write(screen,'(/,a,//)')" For instructions, see: http://openmopac.net/Windows_set_permissions.html"
       write(screen,'(/,a)')" (Delete this window when it is no longer wanted.)"
       do
-        inquire(unit=0, opened=opend) 
+        inquire(unit=0, opened=opend)
         if (opend) call sleep(1)
       end do
-      stop     
+      stop
     end if
     write(7, iostat=i)pass, site_no
     if (i /= 0) then
@@ -531,11 +531,11 @@ subroutine password()
   end if
 !
 !   A valid password is now in the file mopac_pw
-!        
+!
 !  On entry to password, ijulian is set to minus the number of days that have
 !  passed since 1 January 2009
 !
-!  The password should be translate at the number of days since 1 January 2007 
+!  The password should be translate at the number of days since 1 January 2007
 !  plus the number of days the password is good for.
 !  Academic sites get 366 days
 !  Commercial evaluation sites get 31 days
@@ -569,7 +569,7 @@ subroutine password()
                       (ichar(julian(3:3)) - ichar('0'))*100 + &
                       (ichar(julian(4:4)) - ichar('0'))*10  + &
                       (ichar(julian(5:5)) - ichar('0')))    + 1096
-  julian = jdate() 
+  julian = jdate()
 !
 !  Set ijulian to minus the number of days lapsed since 1-Jan-2009
 !
@@ -601,7 +601,7 @@ subroutine password()
 !   write(screen,"(/10x,a)")" Press press 'enter' to continue in Demo mode only (accepts  "
 !   write(screen,"( 10x,a)")" only molecules with 1-12, 50-60, or 110-120 atoms)."
 !   read(5,*)
-!   ijulian = ijulian + 10000 !  
+!   ijulian = ijulian + 10000 !
 !   site_no = -1
 !   return
 ! end if
@@ -612,7 +612,7 @@ subroutine password()
 !  ijulian           = -(current number of days since the end of 2006)
 !  date_of_creation  = number of days since the end of 2006 until the executable was made.
 !
-    ijulian = ijulian + date_of_creation + 365 
+    ijulian = ijulian + date_of_creation + 365
     academic = .true.
     site_no = site_no/1511 - 10000
     if (ijulian < 0) then
@@ -640,7 +640,7 @@ subroutine password()
 !
 !  This is the commercial license
 !
-    ijulian = ijulian + pass/1511 
+    ijulian = ijulian + pass/1511
     academic = .false.
     site_no = site_no/1523 - 10000
     if (ijulian < 0) then
@@ -659,7 +659,7 @@ subroutine password()
       open(unit=7, file=trim(mopac_pw), form="unformatted")
       close(7, status="delete")
       stop
-    end if      
+    end if
   end if
   if (.not. site_ok) then
     write(screen,"(//,a)")" Before MOPAC2016 can be used, a password must be supplied"
@@ -675,7 +675,7 @@ subroutine password()
   if (new) then
     write(screen,"(//a,////)")"         Password for MOPAC2016 successfully installed. Enjoy!"
     stop
-  end if 
+  end if
 end subroutine password
 !function from_MAC_address()
 !  use dfport, only : system
@@ -699,7 +699,7 @@ end subroutine password
 !    if (j /= 0) then
 !      j = 0
 !    end if
-!    do 
+!    do
 !      read(8,'(a)', iostat = j)line
 !      if (j /= 0) then
 !        j = 0
@@ -707,12 +707,12 @@ end subroutine password
 !      if (index(line, "Physical Address") /= 0) exit
 !    end do
 !    close(8)
-!    command = 'del /F /q '//trim(location)  
+!    command = 'del /F /q '//trim(location)
 !    j = SYSTEM(trim(command))
 !    if (j /= 0) then
 !      j = 0
 !    end if
-!    line = line(index(line,":") + 2:)         
+!    line = line(index(line,":") + 2:)
 !    mac_no = 0
 !    do i = 1, 6
 !      mac_no = 10*mac_no + 100*ichar(line(i*3 - 2: i*3 - 2)) + 10*ichar(line(i*3 - 1:i*3 - 1))
@@ -720,5 +720,5 @@ end subroutine password
 !    from_MAC_address = mod(mac_no,71) + 100*mod(mac_no,73) + 10000*mod(mac_no,79) + 1000000*mod(mac_no, 83)
 !    return
 !  end if
-!        
+!
 !end function from_MAC_address

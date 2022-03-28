@@ -16,7 +16,7 @@
 
 module molkst_C
 !
-!  This module contains all the scalars relating to the system being calculated. 
+!  This module contains all the scalars relating to the system being calculated.
 !  Every entry is unique, and has the same meaning in every subroutine.
 !
 !
@@ -47,8 +47,8 @@ module molkst_C
   &  nelecs,   & !  Term        Number of electrons
                  !  Units       Electrons
                  !  Min. value  0
-                 !  Max. value  2*norbs    
-                 !             
+                 !  Max. value  2*norbs
+                 !
   &  ispd,     & !  0 if a s-p basis set, 1 or more if any atoms have d-orbitals
   &  ndep = 0, & !  Number of dependent coordinates, related by symmetry
   &  nvar = 0, & !  Number of coordinate that are to be optimized
@@ -56,15 +56,15 @@ module molkst_C
   &  nclose,    &!  Term        Number of doubly-occupied M.O.s
                  !  Units       Molecular orbitals
                  !  Min. value  0
-                 !  Max. value  nelecs/2  
+                 !  Max. value  nelecs/2
                  !
   &  nopen,    & !  Term        Upper bound of active space in ROHF - C.I.
                  !  Units       Molecular orbitals
                  !  Definition  nclose + number of M.O.s in the active space.
                  !  Min. value  0
-                 !  Max. value  norbs     
+                 !  Max. value  norbs
                  !  Default     nclose
-                 !  
+                 !
   &  nalpha,   & !  Term        Number of alpha singly-occupied M.O.s
                  !  Units       Molecular orbitals
                  !  Min. value  0
@@ -93,7 +93,7 @@ module molkst_C
                  !  job_no = 1.  The second job will have job_no = 2, and so on.
                  !  Most jobs consist of a single operation, see numcal next.
                  !
-  &  numcal=0, & !  Number of the calculation.  The first calculation in job 1 will have numcal = 1. 
+  &  numcal=0, & !  Number of the calculation.  The first calculation in job 1 will have numcal = 1.
                  !  If there are several calculations in one job, numcal will be incremented with
                  !  each new calculation.  A "calculation" is any operation that assumes that it is
                  !  the first operation.  So, for example, if hydrogen atoms are added, that counts
@@ -101,7 +101,7 @@ module molkst_C
                  !  operation. So adding hydrogen atoms is one job with two operations.
                  !
    step_num=0, & !  The unique number of the stage or step within a calculation of a molecule.
-                 !  The first stage of the first calculation will have step_num = 1. 
+                 !  The first stage of the first calculation will have step_num = 1.
                  !  If that calculation involves a second stage, then step_num will be incremented.
                  !  When a new calculation starts, step_num will be incremented.
                  !  Each stage is limited to the same electronic structure.  Most calculations
@@ -115,7 +115,7 @@ module molkst_C
   &  = 10,     & !  Default set to standard value in quantum chemistry codes
   &  iflepo,   & !  Index of message of how the geometry operation ended
   &  maxtxt,   & !  Maximum number of characters in labeled atoms (e.g. C(on Si))
-  &  last,     & !  
+  &  last,     & !
   &  na1,      & !  99 if coordinates must be Cartesian, 0 otherwise
   &  lm61,     & !
   &  nbreaks,  & !  Number of breaks in a PDB structure
@@ -164,7 +164,7 @@ module molkst_C
                      !
   &  emin,         & !  Lowest heat of formation calculated.
                      !
-  &  elect,        & !  Term        Electronic energy 
+  &  elect,        & !  Term        Electronic energy
                      !  Units       eV
                      !  Definition  Total electronic energy of the system in electron volts
                      !  Min. value  Very negative
@@ -175,7 +175,7 @@ module molkst_C
                      !  Definition  Total core-core repulsion energy in eV
                      !  Min. value  0.0
                      !  Max. value  Very large
-                     ! 
+                     !
   &  fract,        & !  Term        Fractional occupancy of M.O.s in active space
                      !  Units       Electrons
                      !  Definition  Number of electrons in active space divided by number of M.O.s in active space
@@ -212,11 +212,11 @@ module molkst_C
                      !  Max. value  Very positive
                      !  Default     0.0, 0.0, 0.0
                      !
-  &  cutofp,       & !  Cutoff distance for NDDO approximation in solid state 
+  &  cutofp,       & !  Cutoff distance for NDDO approximation in solid state
                      !  Default     10**(10) for molecules, 30 for polymers, layers, solids
-  &  clower = 0.d0,& !  Lower bound for transition to point charges in solid-state 
+  &  clower = 0.d0,& !  Lower bound for transition to point charges in solid-state
                      !  Default     13 Angstroms
-  &  cupper,       & !  Upper bound for transition to point charges in solid-state 
+  &  cupper,       & !  Upper bound for transition to point charges in solid-state
                      !  Default     cutofp
                      !
   &  pressure,     & !  Term        Pressure or stress for solid-state and polymer work
@@ -264,7 +264,7 @@ module molkst_C
   & line*3000         !
   character :: backslash = achar(92) ! portable way of representing the backslash character
   character :: keywrd*3000, koment*200, title*200, refkey(6)*3000, geo_ref_name*241, geo_dat_name*241, &
-    allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000 
+    allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000
   character :: errtxt*200, dh*20
 !
   logical ::            &
@@ -276,7 +276,7 @@ module molkst_C
                           !  Definition  True if the calculation is Restricted Hartree-Fock
                           !  Default    = .false.
      isok,              & !
-     mozyme,            & !  TRUE if any of the MOZYME functions are to be used 
+     mozyme,            & !  TRUE if any of the MOZYME functions are to be used
      limscf,            & !  Convergence criterion for SCF: if TRUE, then exit the SCF
                           !  if the energy changes a lot (useful in geometry optimization)
                           !  if FALSE, then converge the SCF to the default criterion
@@ -288,7 +288,7 @@ module molkst_C
      keep_res,          & !  TRUE if the original residue names are to be used
      use_ref_geo,       & !  TRUE if keyword GEO_REF is used
      pdb_label,         & !  TRUE if label text is in PDB format
-     MM_corrections(20),& !  
+     MM_corrections(20),& !
      N_3_present,       & !
      Si_O_H_present,    & !
      prt_coords,        & ! TRUE if coordinates are to be printed
@@ -302,7 +302,7 @@ module molkst_C
      prt_orientation,   & ! TRUE if orientation in a FORCE matrix calculation to be printed
      prt_velocity,      & ! TRUE if velocity vector in IRC/DRC to be printed
      dummy_present,     & !
-     l_normal_html,     & ! TRUE if a normal HTML file is to be generated. After it's generated, set FALSE 
+     l_normal_html,     & ! TRUE if a normal HTML file is to be generated. After it's generated, set FALSE
      is_PARAM=.false.     !  This will be set "TRUE" in a PARAM run
   equivalence  &
     (MM_corrections(1), N_3_present),    & ! TRUE if the system contains at least one N bonded to three ligands
@@ -321,20 +321,20 @@ module molkst_C
        & method_RM1,           &
        & method_MNDOD,         &   !  5
        & method_PM6,           &
-       & method_PM6_DH_plus,   &   
+       & method_PM6_DH_plus,   &
        & method_PM6_DH2,       &
        & method_PM6_D3H4,      &
        & method_PM6_DH2X,      &   ! 10
        & method_PM6_D3H4X,     &
-       & method_PM6_D3,        &   
+       & method_PM6_D3,        &
        & method_PM6_D3_not_H4, &
-       & method_PM7,           &  
+       & method_PM7,           &
        & method_pm7_ts,        &   ! 15
-       & method_PM7_HH,        &   
+       & method_PM7_HH,        &
        & method_PM7_minus,     &
        & method_PM8,           &
        & method_indo,          &
-       & method_x,             &  ! 20 To be used some day 
+       & method_x,             &  ! 20 To be used some day
        & l_feather,            &  ! Smooth transition from NDDO to point-charge
        & l_feather_1,          &  ! Type of smoothing used in l_feather
        & method             !  Default method = PM7

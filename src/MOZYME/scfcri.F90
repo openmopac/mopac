@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine scfcri (selcon) 
+subroutine scfcri (selcon)
     use molkst_C, only: numcal, keywrd, efield
     use chanel_C, only: iw
  !   use common_convrg, only: scfref
@@ -29,7 +29,7 @@ subroutine scfcri (selcon)
     logical :: precis
     integer :: i
     integer :: icalcn = 0
-    double precision, save  :: scfcrt, scfref 
+    double precision, save  :: scfcrt, scfref
     double precision, external :: reada
     if (icalcn /= numcal) then
       icalcn = numcal
@@ -74,7 +74,7 @@ subroutine scfcri (selcon)
         scfcrt = scfcrt * 0.01d0
       end if
       !
-      ! For polarizability calculations, the default convergence should be 
+      ! For polarizability calculations, the default convergence should be
       ! tightened
       !
       if (Index (keywrd, " POLAR") /= 0 .and. scfref == 0.0d0) then

@@ -26,8 +26,8 @@
   double precision, parameter :: sqrt_pi = 1.772453850905516027298167483341d0
 
   contains
-  
-  subroutine GSJPS_IntQ(Rab, na, Ca, Za, dZadQa, Zb, dZbdQb, X, Xa, Xb)    
+
+  subroutine GSJPS_IntQ(Rab, na, Ca, Za, dZadQa, Zb, dZbdQb, X, Xa, Xb)
     implicit none
     double precision, intent(in) :: Rab(3)
     integer, intent(in) :: na
@@ -41,9 +41,9 @@
     Gb = XSZ * Zb**2
     dGb = XSZ * 2*Zb * dZbdQb
     call GGJPS_IntQ(Rab, na, Ca, Za, dZadQa, XSN, XSC, Gb, dGb, X, Xa, Xb)
-  end subroutine GSJPS_IntQ  
+  end subroutine GSJPS_IntQ
 
-  subroutine SSJPS_IntQ(Rab, Za, dZadQa, Zb, dZbdQb, X, Xa, Xb)    
+  subroutine SSJPS_IntQ(Rab, Za, dZadQa, Zb, dZbdQb, X, Xa, Xb)
     implicit none
     double precision, intent(in) :: Rab(3), Za, Zb, dZadQa, dZbdQb
     double precision, intent(OUT) :: X(3, 1), Xa(3, 1), Xb(3, 1)
@@ -59,7 +59,7 @@
     call GGJPS_IntQ(Rab, XSN, XSC, Ga, dGa, XSN, XSC, Gb, dGb, X, Xa, Xb)
   end subroutine SSJPS_IntQ
 
-  subroutine GGJPS_IntQ(Rab, na, Ca, Za, dZadQa, nb, Cb, Zb, dZbdQb, X, Xa, Xb)    
+  subroutine GGJPS_IntQ(Rab, na, Ca, Za, dZadQa, nb, Cb, Zb, dZbdQb, X, Xa, Xb)
     implicit none
     double precision, intent(in) :: Rab(3)
     integer, intent(in) :: na, nb
@@ -116,7 +116,7 @@
     end if
   end subroutine GGJPS_IntQ
 
-  subroutine SSJPP_Int(Rab, Za, Zb, X)    
+  subroutine SSJPP_Int(Rab, Za, Zb, X)
     implicit none
     double precision, intent(in) :: Rab(3)
     double precision, intent(in) :: Za, Zb
@@ -133,7 +133,7 @@
 
 
 
-  subroutine GGJPP_Int(Rab, na, Ca, Za, nb, Cb, Zb, X)    
+  subroutine GGJPP_Int(Rab, na, Ca, Za, nb, Cb, Zb, X)
     implicit none
     double precision, intent(in) :: Rab(3)
     integer, intent(in) :: na, nb
@@ -204,7 +204,7 @@
     end if
   end subroutine GGJPP_Int
 
-  subroutine GGJPP_IntQ(Rab, na, Ca, Za, dZadQa, nb, Cb, Zb, dZbdQb, X, Xa, Xb)    
+  subroutine GGJPP_IntQ(Rab, na, Ca, Za, dZadQa, nb, Cb, Zb, dZbdQb, X, Xa, Xb)
     implicit none
     double precision, intent(in) :: Rab(3)
     integer, intent(in) :: na, nb
@@ -308,7 +308,7 @@
     end if
   end subroutine GGJPP_IntQ
 
-  subroutine SPJPS_Int(Rab, Za, X)    
+  subroutine SPJPS_Int(Rab, Za, X)
     implicit none
     double precision, intent(in) :: Rab(3), Za
     double precision, intent(OUT) :: X(3, 1)
@@ -323,7 +323,7 @@
 
 
 
-  subroutine GPJPS_Int(Rab, na, Ca, Za, X)    
+  subroutine GPJPS_Int(Rab, na, Ca, Za, X)
     implicit none
     double precision, intent(in) :: Rab(3)
     integer, intent(in) :: na
@@ -359,7 +359,7 @@
 
 
 
-  subroutine GPJPS_IntQ(Rab, na, Ca, Za, dZadQa, X, Xa)    
+  subroutine GPJPS_IntQ(Rab, na, Ca, Za, dZadQa, X, Xa)
     implicit none
     double precision, intent(in) :: Rab(3)
     integer, intent(in) :: na
@@ -405,7 +405,7 @@
     end if
   end subroutine GPJPS_IntQ
   end module YGXX_SimpleGaussianInts
- 
+
   subroutine Invert_Symmetric_Matrix( N, A, AI )
     implicit none
     integer, intent(in) :: N
@@ -417,7 +417,7 @@
     integer :: INFO, i, j
     AI = A
     call dpotrf( "U", N, AI(1, 1), N, INFO )
-    call dpotri( "U", N, AI(1, 1), N, INFO ) 
+    call dpotri( "U", N, AI(1, 1), N, INFO )
     do j=2, N
       do i=1, j-1
           AI(j, i) = AI(i, j)
@@ -431,7 +431,7 @@
     integer, intent(in) :: Id_qm( N_qm ) ! Parameter indices
     double precision, intent(in) :: Crd_qm( 3, N_qm ) ! qm coordinates (xyz)
     double precision, intent(in) :: Q_qm( N_qm )      ! qm electric partial charges
-    double precision, intent(in) :: Zeta_qm( N_qm )   ! qm aux slater exponent   
+    double precision, intent(in) :: Zeta_qm( N_qm )   ! qm aux slater exponent
     double precision, intent(OUT) :: E                ! response energy contribution
     double precision, intent(OUT) :: Pot( N_qm )      ! effective monopolar potential correction to be mapped into the fock matrix
     double precision, intent(OUT) :: C( 3 * N_qm )    ! Response dipole coefs (zxy)
@@ -446,7 +446,7 @@
     N = 3 * N_qm
     allocate( Eta(N, N), dEtadQa(N, N), dEtadQb(N, N), EtaInv(N, N), M(N), Mmat( N, N_qm ) )
     allocate( dMdQa(N), Q0( N_qm) )
-    Q0( 1:N_qm ) = Q_qm( 1:N_qm )   
+    Q0( 1:N_qm ) = Q_qm( 1:N_qm )
     call Cpt_SecondOrderMatrix( N_qm, Id_qm, Crd_qm, Q_qm, Eta, dEtadQa, dEtadQb )
     call Cpt_FirstOrderMatrix( N_qm, Id_qm, Crd_qm, Q_qm, Zeta_qm, Mmat, dMdQa )
     call Invert_Symmetric_Matrix( N, Eta, EtaInv )
@@ -513,7 +513,7 @@
     end do
     if (xb(1, 1) > 1.d9) return
   end subroutine Cpt_FirstOrderMatrix
-  
+
   subroutine Cpt_SecondOrderMatrix( N_qm, Id_qm, Crd_qm, Q_qm, Eta, dEtadQa, dEtadQb )
     use YGXX_SimpleGaussianInts, only : GGJPP_IntQ
     USE parameters_C, only : CPE_Z0, CPE_B
@@ -554,7 +554,7 @@
     end do
   end subroutine Cpt_SecondOrderMatrix
 
-  subroutine SwitchOn(x, xlo, xhi, f)    
+  subroutine SwitchOn(x, xlo, xhi, f)
     implicit none
     double precision, intent(in) :: x, xlo, xhi
     double precision, intent(OUT) :: f
@@ -585,7 +585,7 @@
   Subroutine CPE_energy(Ene, Pot, C)
 !
 ! Evaluates the total energy due to CPE (chemical-potential equalization)
-!  
+!
     use molkst_C, only : numat
     use Common_arrays_C, only : nat, coord, chrg
     use funcon_C, only : a0, eV, fpc_9
@@ -594,7 +594,7 @@
     double precision :: Pot(numat)! Effective monopolar potential correction to be mapped into the Fock matrix
     double precision :: C(3*numat)! Response dipole coefs (zxy)
     double precision :: Ene       ! Response energy contribution
-!  
+!
 !  Local variables
 !
     double precision, allocatable :: Crd_qm(:,:), Zeta_qm(:)
@@ -602,7 +602,7 @@
 !  Initialization
 !=============================================================================
     allocate(Zeta_qm(numat), Crd_qm(3, numat))
-    Crd_qm(:,:numat) = coord(:,:numat)/a0 !  Convert geometry from Angstroms to Bohrs 
+    Crd_qm(:,:numat) = coord(:,:numat)/a0 !  Convert geometry from Angstroms to Bohrs
     Zeta_qm(:numat) = CPE_Zeta(nat(:numat))
 !=============================================================================
 ! Initialization complete.  Now do the calculation.

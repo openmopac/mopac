@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module funcon_C 
+      module funcon_C
       double precision :: &
       &  fpc_1,     & !
       &  fpc_2,     & !
@@ -25,11 +25,11 @@
       &  fpc_7,     & !
       &  fpc_8,     & !
       &  fpc_9,     & !
-      &  fpc_10   
+      &  fpc_10
       double precision, dimension (10) :: fpc = 0.d0
       double precision, parameter :: pi = 3.14159265358979323846d0
       double precision, parameter :: twopi = 2.0d0 * pi
       equivalence (fpc(1), fpc_1), (fpc(2), fpc_2), (fpc(3), a0), (fpc(4), ev), &
       & (fpc(5), fpc_5), (fpc(6), fpc_6), (fpc(7), fpc_7), (fpc(8), fpc_8), &
       & (fpc(9), fpc_9), (fpc(10), fpc_10)
-      end module funcon_C 
+      end module funcon_C

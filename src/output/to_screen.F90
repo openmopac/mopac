@@ -333,13 +333,13 @@
       write(opt_hook,"(a)",iostat=i)" ####################################"
       if (i /= 0) then
         write(iw,'(/5x,a,i3,a)') "WARNING: Channel", opt_hook, " cannot be opened"
-        open(unit=opt_hook, file=trim(jobnam)//'_opt.aux') 
+        open(unit=opt_hook, file=trim(jobnam)//'_opt.aux')
         write(iw,'(3x,a)') "- intermediate results will be sent to '"//trim(jobnam)//"_opt.aux'"
         if (opt_hook /= 0) then
           write(iw,'(5x,a,/)') "(Try using chanel 0 if you want to avoid having intermediate results written out.)"
         else
           write(iw,'(5x,a)') " "
-        end if        
+        end if
         write(opt_hook,"(a)")" ####################################"
       end if
       write(opt_hook,"(a)")" #                                  #"
@@ -358,7 +358,7 @@
     if (abs(escf) > 1.d-30) then
       write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" HEAT_OF_FORM_UPDATED:KCAL/MOL=",escf
       write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" GRADIENT_UPDATED:KCAL/MOL/ANG=",gnorm
- 
+
       write(opt_hook,"(a,i"//paras//",a)")" ATOM_X_UPDATED:ANGSTROMS[",3*numat, "]="
       write(opt_hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
       if (id > 0) then
@@ -459,7 +459,7 @@
         if (nopen > 0) eig_min = -eigs(nopen)
         if (nclose > 0) eig_min = min(eig_min,-eigs(nclose))
 !   CORRECTION TO I.P. OF DOUBLETS
-        if (nopen - nclose == 1 .and. fract <= 1.99D0) eig_min = eig_min + 0.5D0*rjkab(1,1) 
+        if (nopen - nclose == 1 .and. fract <= 1.99D0) eig_min = eig_min + 0.5D0*rjkab(1,1)
       end if
       if (nelecs > 0) write(hook,"(a,sp, d"//fmt13p6//",a)")" IONIZATION_POTENTIAL:EV=",eig_min
     end if
@@ -637,7 +637,7 @@
           write(hook,"(1x,a,i"//fmt//",a)")" COMPRESSED_OVERLAP_VALUES[",ic,"]="
           write(hook,"(10f"//fmt9p4//")") (comp(ii),ii=1,ic)
         end if
-      end if      
+      end if
       if (index(keywrd, " BOND") /= 0) then
         if (compressed) then
           write(hook,"(a)")" ####################################"
@@ -689,7 +689,7 @@
             fmt = "6.6"
           end if
           j = int(log10((numat*(numat + 1))/2*1.0001)) + 2
-          write(fmt1,'(i2,a,i2)')120/j, "i", j     
+          write(fmt1,'(i2,a,i2)')120/j, "i", j
           write(hook,"(1x,a,i"//fmt//",a)")" COMPRESSED_BOND_ORDERS_INDICES[",ic,"]="
           write(hook,"("//fmt1//")") (icomp(ii),ii=1,ic)
           write(hook,"(1x,a,i"//fmt//",a)")" COMPRESSED_BOND_ORDERS_VALUES[",ic,"]="
@@ -906,7 +906,7 @@
       if (compressed) then
         deallocate (icomp, comp)
       else
-        if (allocated(overlap2)) deallocate (overlap2)       
+        if (allocated(overlap2)) deallocate (overlap2)
       end if
       if (allocated(c_lmo)) deallocate (c_lmo)
       if (allocated(eigs_map)) deallocate (eigs_map)
@@ -1143,7 +1143,7 @@
     write(hook,"(a,i"//paras//",a)")" ORIENTATION_ATOM_X:ANGSTROMS[",3*numat, "]="
     write(hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
     write(hook,"(a,i"//paras//",a)")" ISOTOPIC_MASSES[",numat, "]="
-    write(hook,"(10f9.4)") (atmass(i), i=1,numat)    
+    write(hook,"(10f9.4)") (atmass(i), i=1,numat)
     write(hook,"(a,3f"//fmt13p6//",a)")" ROTAT_CONSTS:CM(-1)[3]=",rot
     write(hook,"(a,3f"//fmt13p6//",a)")" PRI_MOM_OF_I:10**(-40)*GRAM-CM**2[3]=",xyzmom
     write(hook,"(a,f"//fmt13p6//",a)")" ZERO_POINT_ENERGY:KCAL/MOL=",zpe
@@ -1192,7 +1192,7 @@
       write(hook,"(a,i"//paras//",a)")" THERMODYNAMIC_PROPERTIES_TEMPS:K[", ilim, "]= "
       write(hook,"(10f"//fmt9p3//")") (T_range(i), i=1,ilim)
       write(hook,"(a,i"//paras//",a)")" ENTHALPY_TOT:CAL/MOL[", ilim, "]= "
-      write(hook,"(10f"//fmt10p1//")") (H_tot(i), i=1,ilim)  
+      write(hook,"(10f"//fmt10p1//")") (H_tot(i), i=1,ilim)
       write(hook,"(a,i"//paras//",a)")" HEAT_CAPACITY_TOT:CAL/K/MOL[", ilim, "]= "
       write(hook,"(10f"//fmt10p3//")") (Cp_tot(i), i=1,ilim)
       write(hook,"(a,i"//paras//",a)")" ENTROPY_TOT:CAL/K/MOL[", ilim, "]= "

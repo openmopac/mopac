@@ -35,19 +35,19 @@
 ! Deallocate arrays before use (not essential, but prevents possible errors if a complicated
 ! job involving several calculations is run)
 !
-  call delete_MOZYME_arrays() 
+  call delete_MOZYME_arrays()
   allocate (iorbs(numat), stat = i)
     if (i /= 0) then
-     
+
     end if
     iorbs = nlast - nfirst + 1
 !
 ! The sizes of the arrays used by MOZYME must be evaluated by a call to fillij.
 ! Once the sizes are known, the arrays can be created.
-! 
+!
 
-  
-  
+
+
   call fillij(.true.)
   noccupied = nelecs/2
   nvirtual = norbs - noccupied
@@ -63,15 +63,15 @@
 !     n2elec: the number of two-electron integrals that are stored
 !
 
- 
+
 !
 !  Allocate the arrays.  If there is not enough memory, it's better to find out before
 !  any real work is done.
 !
-  allocate(h(mpack), w(n2elec), stat = i)  
+  allocate(h(mpack), w(n2elec), stat = i)
   j = i
   if (id > 0) then
-    allocate( wk(n2elec), stat = i)  
+    allocate( wk(n2elec), stat = i)
     j = j + i
   end if
   allocate (pold(mpack), pold2(1), pold3(1), pbold(1), pbold2(1), stat = i)
@@ -83,7 +83,7 @@
   j = j + i
   allocate(ifact(norbs), stat = i)
   j = j + i
-  allocate(cocc(cocc_dim), cvir(cvir_dim), stat = i)  
+  allocate(cocc(cocc_dim), cvir(cvir_dim), stat = i)
   j = j + i
   if ( index(keywrd, " RESTART") /= 0 .or. &
        index(keywrd," 1SCF") == 0     .or. &
@@ -112,7 +112,7 @@
   if (j /= 0) then
     call mopend("Failed to assign memory in MOZYME")
     return
-  end if  
+  end if
   icocc = 0
   icvir = 0
   jopt = 0
@@ -122,17 +122,17 @@
 !
 
   call fillij(.false.)
-  
+
   ifact(1) = 0
   do i = 1, norbs - 1
-    ifact(i + 1) = i + ifact(i) 
+    ifact(i + 1) = i + ifact(i)
   end do
-  
- 
+
+
   numred = numat
   norred = norbs
   nelred = nelecs
-  
+
   end subroutine set_up_MOZYME_arrays
   subroutine delete_MOZYME_arrays()
     use molkst_C, only : numat
@@ -149,14 +149,14 @@
       if (allocated(ions))     deallocate(ions)
       if (allocated(iopt))     deallocate(iopt)
     end if
-    
+
     if (allocated(c))          deallocate(c)
     if (allocated(h))          deallocate(h)
     if (allocated(jopt))       deallocate(jopt)
     if (allocated(wk))         deallocate(wk)
     if (allocated(w))          deallocate(w)
     if (allocated(f))          deallocate(f)
-    if (allocated(fb))         deallocate(fb)    
+    if (allocated(fb))         deallocate(fb)
     if (allocated(p))          deallocate(p)
     if (allocated(pold))       deallocate(pold)
     if (allocated(pold2))      deallocate(pold2)

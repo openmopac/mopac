@@ -31,12 +31,12 @@ double precision function PM6_DH_Dispersion(l_grad)
 !
 !   Dispersion contribution is small, so only calculate the CUC.
 !
-    do k = 1, numat   
+    do k = 1, numat
       sum2 = PM6_DH_Disp(k, 1)
-      do i = 1, 3             
-        coord(i,k) = coord(i,k) + delta   
+      do i = 1, 3
+        coord(i,k) = coord(i,k) + delta
         sum = PM6_DH_Disp(k, 1)
-        sum1 = (sum2 - sum)/delta             
+        sum1 = (sum2 - sum)/delta
         if (Abs(sum1) < 50.d0) then
           dxyz((k - 1)*3 + i) = dxyz((k - 1)*3 + i) - sum1
         end if
@@ -44,16 +44,16 @@ double precision function PM6_DH_Dispersion(l_grad)
       end do
     end do
   end if
-  return  
+  return
 end function PM6_DH_Dispersion
-  
+
 double precision function PM6_DH_Disp(set_a, nsa)
 !
 !  Based on materials provided by Jan Rezak, as described in:
 !
 !  "A Transferable H-bonding Correction For Semiempirical Quantum-Chemical Methods"
-!  Martin Korth, Michal Pitonak, Jan Rezac and Pavel Hobza, 
-! 
+!  Martin Korth, Michal Pitonak, Jan Rezac and Pavel Hobza,
+!
 !  J Chem Theory and Computation 6:344-352 (2010)
 !
   use common_arrays_C, only: nat, nbonds, tvec, coord
@@ -66,7 +66,7 @@ double precision function PM6_DH_Disp(set_a, nsa)
   logical :: first_1 = .true., l_eles(110), first_2 = .true.
   double precision :: alpha = 20.d0, s = 1.04d0, cscale = 0.89d0, C6i, C6j, V_ab(3)
   integer :: ii, i, j, ni, nj, j_start, icalcn = 0, i1, j1, k1
-  double precision :: C(86),R(86),N(86) 
+  double precision :: C(86),R(86),N(86)
   double precision :: C6, R0, E_disp_tmp, damp, disp_limit = 6.5d0, sum, E_disp
   logical, external :: connected
   save :: icalcn, first_1, first_2
@@ -113,7 +113,7 @@ double precision function PM6_DH_Disp(set_a, nsa)
     0.00D0, 0.00D0, 0.00D0, 0.00D0, 0.00D0, 0.00D0, 0.00D0, 0.00D0,   &  ! Ta  W Re Os Ir Pt Au Hg
     0.00D0, 0.00D0, 0.00D0, 0.00D0, 0.00D0, 0.00D0/                      ! Tl Pb Bi Po At Rn
 !
-! dispersion energy 
+! dispersion energy
 !
   E_disp = 0.d0
   if (method_PM7) then
@@ -145,9 +145,9 @@ double precision function PM6_DH_Disp(set_a, nsa)
         end do
         if (first_1) write(iw,'(///,6(a,/))') "          *********************************************", &
                                             "          *                                           *", &
-                                            "          *                 WARNING                   *", &  
-                                            "          *                                           *", &    
-                                            "          *********************************************"          
+                                            "          *                 WARNING                   *", &
+                                            "          *                                           *", &
+                                            "          *********************************************"
         if (first_2) write(iw,'(10x,a)') "Dispersion parameters missing for "//trim(line)
       end if
       first_1 = .false.
@@ -159,7 +159,7 @@ double precision function PM6_DH_Disp(set_a, nsa)
       j_start = 1
     end if
     do j  = j_start, numat
-      if (i == j) cycle    
+      if (i == j) cycle
       nj = nat(j)
       if (nj > 86) cycle
       if (ni == 6) then
@@ -184,9 +184,9 @@ double precision function PM6_DH_Disp(set_a, nsa)
       C6 = 2.d0*(C6i**2*C6j**2*N(ni)*N(nj))**(1.d0/3.d0)/((C6i*N(nj)**2)**(1.d0/3.d0) + &
         (C6j*N(ni)**2)**(1.d0/3.d0))
       R0 = (R(ni)**3+R(nj)**3)/(R(ni)**2+R(nj)**2) /1000.d0*2.d0    ! pm to nm
-      if (connected(i, j, 100.d0**2)) then          
+      if (connected(i, j, 100.d0**2)) then
         if (id == 0) then
-! atomic distance Rij, in nm          
+! atomic distance Rij, in nm
 ! i-j dispersion energy
           Rij = Rij*0.1d0
           damp = 1.d0 / (1.d0 + exp(-alpha * (Rij/(s*R0) - 1.d0)))
@@ -194,10 +194,10 @@ double precision function PM6_DH_Disp(set_a, nsa)
           E_disp = E_disp - E_disp_tmp
         else
           sum = 0.d0
-          do i1 = -l11, l11 
-            do j1 = -l21, l21 
-              do k1 = -l31, l31 
-                V_ab = coord(:,i) - coord(:,j) + tvec(:,1)*i1 + tvec(:,2)*j1 + tvec(:,3)*k1 
+          do i1 = -l11, l11
+            do j1 = -l21, l21
+              do k1 = -l31, l31
+                V_ab = coord(:,i) - coord(:,j) + tvec(:,1)*i1 + tvec(:,2)*j1 + tvec(:,3)*k1
                 Rij = sqrt(V_ab(1)**2 + V_ab(2)**2 + V_ab(3)**2)*0.1d0
                 if (Rij*10.d0 < disp_limit) then
                   damp = 1.d0 / (1.d0 + exp(-alpha * (Rij/(s*R0) - 1.d0)))
@@ -208,22 +208,22 @@ double precision function PM6_DH_Disp(set_a, nsa)
 !
 
                   E_disp_tmp = C6/Rij**6*damp/(1000.d0*4.184d0)*(1.d0 - exp(-(Rij*10.d0 - disp_limit)**2))
-                    sum = sum + E_disp_tmp 
+                    sum = sum + E_disp_tmp
                 end if
-              end do 
-            end do 
-          end do 
-          E_disp = E_disp - sum  
-        end if                       
-      end if       
+              end do
+            end do
+          end do
+          E_disp = E_disp - sum
+        end if
+      end if
     end do
   end do
   if (first_2 .and. .not. first_1) &
   write(iw,'(/,6(a,/))')   "          *********************************************", &
                             "          *                                           *", &
-                            "          *              END OF WARNING               *", &  
-                            "          *                                           *", &    
-                            "          *********************************************"          
+                            "          *              END OF WARNING               *", &
+                            "          *                                           *", &
+                            "          *********************************************"
   first_2 = .false.
   icalcn = numcal
   PM6_DH_Disp = E_disp*cscale

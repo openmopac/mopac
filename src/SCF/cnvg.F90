@@ -14,29 +14,29 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine cnvg(pnew, p, p1, niter, pl) 
+      subroutine cnvg(pnew, p, p1, niter, pl)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : norbs, numcal, keywrd, mpack, method_indo
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer , intent(in) :: niter 
-      double precision , intent(out) :: pl 
-      double precision , intent(inout) :: pnew(mpack) 
-      double precision , intent(inout) :: p(mpack) 
-      double precision , intent(inout) :: p1(norbs) 
+      integer , intent(in) :: niter
+      double precision , intent(out) :: pl
+      double precision , intent(inout) :: pnew(mpack)
+      double precision , intent(inout) :: p(mpack)
+      double precision , intent(inout) :: p1(norbs)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: icalcn, ii, k, i, ie, j 
+      integer :: icalcn, ii, k, i, ie, j
       double precision :: rhfuhf, faca, damp, facb, fac, sum1, a, sa, sum2, sum0, &
-        sum 
-      logical :: extrap 
+        sum
+      logical :: extrap
 
-      save rhfuhf, icalcn 
+      save rhfuhf, icalcn
 !-----------------------------------------------
 !***********************************************************************
 !
@@ -48,30 +48,30 @@
 !           PL     = LARGEST DIFFERENCE BETWEEN OLD AND NEW DENSITY
 !                    MATRIX DIAGONAL ELEMENTS
 !***********************************************************************
-      data icalcn/ 0/  
-      if (icalcn /= numcal) then 
-        icalcn = numcal 
-        if (index(keywrd,' UHF') /= 0) then 
-          rhfuhf = 1.d0 
-        else 
-          rhfuhf = 2.d0 
-        end if 
-      end if 
-      pl = 0.0d0 
-      faca = 0.0d0 
-      damp = 1.D10 
-      if (niter > 3) damp = 0.05d0 
+      data icalcn/ 0/
+      if (icalcn /= numcal) then
+        icalcn = numcal
+        if (index(keywrd,' UHF') /= 0) then
+          rhfuhf = 1.d0
+        else
+          rhfuhf = 2.d0
+        end if
+      end if
+      pl = 0.0d0
+      faca = 0.0d0
+      damp = 1.D10
+      if (niter > 3) damp = 0.05d0
       if (method_indo) then
         if (niter > 40) damp = 0.01D0
         if (niter > 200) damp = 0.002D0
         if (niter > 350) damp = 0.001D0
       end if
-      facb = 0.0d0 
-      fac = 0.0d0 
-      ii = mod(niter,3) 
-      extrap = ii /= 0 
-      sum1 = 0.d0 
-      k = 0 
+      facb = 0.0d0
+      fac = 0.0d0
+      ii = mod(niter,3)
+      extrap = ii /= 0
+      sum1 = 0.d0
+      k = 0
       do i = 1, norbs
         k = k + i
         a = pnew(k)
@@ -143,4 +143,4 @@
           pnew(j) = p(j)
         end do
       end do
-      end subroutine cnvg 
+      end subroutine cnvg

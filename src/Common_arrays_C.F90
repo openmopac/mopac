@@ -158,7 +158,7 @@ module Common_arrays_C
                    !  Units         Kelvin
   &  HOF_tot,    & !  Term          Heats of formation at temperatures in T_range
                    !  Units         kilo-calories per mole
-  &  H_tot,      & !  Term          Enthalpy at temperatures in T_range 
+  &  H_tot,      & !  Term          Enthalpy at temperatures in T_range
                    !  Units         cal/mol
   &  Cp_tot,     & !  Term          Heat capacity at temperatures in T_range
                    !  Units         cal/(K.Mol)

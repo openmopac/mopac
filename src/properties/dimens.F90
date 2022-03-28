@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine dimens(coord, iw) 
+      subroutine dimens(coord, iw)
 !
 !  Work out the three dimensions of a molecule.
 !
@@ -27,15 +27,15 @@
       use elemts_C, only : elemnt
 !***********************************************************************
       implicit none
-      integer , intent(in) :: iw 
-      double precision  :: coord(3,numat) 
+      integer , intent(in) :: iw
+      double precision  :: coord(3,numat)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer , dimension(3,2) :: ij 
+      integer , dimension(3,2) :: ij
       integer :: l, loop, j, k, kmax, lmax, i, kk, ll
-      double precision, dimension(3,3) :: c 
-      double precision, dimension(3) :: dim 
+      double precision, dimension(3,3) :: c
+      double precision, dimension(3) :: dim
       double precision :: x1, y1, z1, rabmax, rmax, r, xy, ca, cb, sa, sb, ymin, &
         ymax, store_coords(3,numat), sum
 !-----------------------------------------------
@@ -105,7 +105,7 @@
     c(3, 2) = 0.d0
     c(3, 1) = cb
     call symopr (numat, coord, 1, c)
-   
+
     dim(1) = r
     ij(1, 1) = k
     ij(1, 2) = l

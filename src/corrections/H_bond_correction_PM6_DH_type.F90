@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-double precision function PM6_DH_H_bond_corrections(l_grad, prt)  
+double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !
 !    Add a dispersion E_disp, a coulombic, EC, and a repulsive correction, ER,
 !    to improve intermolecular interaction energies.
@@ -35,11 +35,11 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   integer, allocatable :: nrbondsa(:), nrbondsb(:)
   double precision, allocatable :: vector(:)
   double precision :: EC, ER, sum, sum1, delta = 1.d-5, covrad(94)
-  double precision, external :: EC_plus_ER, EH_plus  
+  double precision, external :: EC_plus_ER, EH_plus
   logical, external :: connected
-  
+
   save
-   data covrad /& 
+   data covrad /&
   &0.32d0,  0.46d0,  1.20d0,  0.94d0,  0.77d0,  0.75d0,  0.71d0,  0.63d0,  0.64d0,  0.67d0, &
   &1.40d0,  1.25d0,  1.13d0,  1.04d0,  1.10d0,  1.02d0,  0.99d0,  0.96d0,  1.76d0,  1.54d0, &
   &1.33d0,  1.22d0,  1.21d0,  1.10d0,  1.07d0,  1.04d0,  1.00d0,  0.99d0,  1.01d0,  1.09d0, &
@@ -49,7 +49,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   &1.56d0,  1.55d0,  1.51d0,  1.52d0,  1.51d0,  1.50d0,  1.49d0,  1.49d0,  1.48d0,  1.53d0, &
   &1.46d0,  1.37d0,  1.31d0,  1.23d0,  1.18d0,  1.16d0,  1.11d0,  1.12d0,  1.13d0,  1.32d0, &
   &1.30d0,  1.30d0,  1.36d0,  1.31d0,  1.38d0,  1.42d0,  2.01d0,  1.81d0,  1.67d0,  1.58d0, &
-  &1.52d0,  1.53d0,  1.54d0,  1.55d0 / 
+  &1.52d0,  1.53d0,  1.54d0,  1.55d0 /
 !
   if (first) then
     covrad = 4.d0/3.d0*covrad !  This must be done once per entire run
@@ -69,12 +69,12 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
   if (max_h_bonds == 0) then
     PM6_DH_H_bond_corrections = 0.d0
     return
-  end if    
+  end if
   if (allocated(nrbondsa))   deallocate(nrbondsa)
-  if (allocated(nrbondsb))   deallocate(nrbondsb) 
-  if (allocated(hblist))     deallocate(hblist) 
-  if (allocated(vector))     deallocate(vector) 
-  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), vector(numat), stat=i)   
+  if (allocated(nrbondsb))   deallocate(nrbondsb)
+  if (allocated(hblist))     deallocate(hblist)
+  if (allocated(vector))     deallocate(vector)
+  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), vector(numat), stat=i)
     if (i /= 0) then
     line = " Cannot allocate arrays for PM6-DH+"
     call to_screen(trim(line))
@@ -83,17 +83,17 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
     return
   end if
   hblist(:,:) = 0
-  nrpairs = 0   
+  nrpairs = 0
   if (method_pm6_dh_plus .or. method_PM7) then
-    call all_h_bonds(hblist(1,1), hblist(1,9), hblist(1,5), max_h_bonds, nrpairs)   
-    call setup_DH_Plus(nrpairs, nrbondsa, nrbondsb, n_h_bonds, covrad) 
+    call all_h_bonds(hblist(1,1), hblist(1,9), hblist(1,5), max_h_bonds, nrpairs)
+    call setup_DH_Plus(nrpairs, nrbondsa, nrbondsb, n_h_bonds, covrad)
   else
-    call all_h_bonds(hblist(1,1), hblist(1,2), hblist(1,3), max_h_bonds, nrpairs)  
-  end if    
+    call all_h_bonds(hblist(1,1), hblist(1,2), hblist(1,3), max_h_bonds, nrpairs)
+  end if
   if (method_pm6_dh2 .or. method_pm6_dh2x) then
     call chrge (p, vector)  ! PM6-DH2 needs partial charges
-    do i = 1, numat 
-      j = nat(i) 
+    do i = 1, numat
+      j = nat(i)
       q(i) = tore(j) - vector(i)
     end do
   end if
@@ -111,7 +111,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !    (7) oxygen interacting with H in a water molecule, and
 !    (8) oxygen interacting with H in a carboxyl group.
 !
-     
+
   N_Hbonds = 0
   E_hb = 0.d0
   do ii = 1, nrpairs
@@ -131,14 +131,14 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
           if (l > nd_list) then
             nd_list = nd_list + 1
             d_list(nd_list) = hblist(ii,i)
-          end if 
+          end if
         end if
       end do
     else
       H = hblist(ii,2)
       A = hblist(ii,3)
       D = hblist(ii,1)
-      sum = EC_plus_ER(hblist(ii,1), hblist(ii,2), hblist(ii,3), q(hblist(ii,2)), q(hblist(ii,3)), EC, ER, d_list, nd_list)       
+      sum = EC_plus_ER(hblist(ii,1), hblist(ii,2), hblist(ii,3), q(hblist(ii,2)), q(hblist(ii,3)), EC, ER, d_list, nd_list)
       E_hb = E_hb + EC + ER
     end if
     if (sum < -1.d0) N_Hbonds = N_Hbonds + 1
@@ -162,14 +162,14 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
 !  in the derivatives.  The "ideal" value of delta should be 10^(-4), but 10^(-5) was selected by JJPS as the best compromise,
 !  based on finding the middle of the plateau of constant derivatives.
 !
-          do i = 1, 3             
+          do i = 1, 3
             coord(i,k) = coord(i,k) + delta
             if (method_pm6_dh_plus .or. method_pm7) then
               sum1 = EH_plus(ii, hblist, max_h_bonds, nrbondsa, nrbondsb)
             else
               sum1 = EC_plus_ER(D, H, A, q(H), q(A), EC, ER, d_l, l)
-            end if           
-            sum1 = (sum1 - sum)/delta             
+            end if
+            sum1 = (sum1 - sum)/delta
             if (Abs(sum1) < 50.d0) then
               dxyz(i_cell*3 + i) = dxyz(i_cell*3 + i) + sum1
             end if
@@ -177,7 +177,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
           end do
         end if
       end do
-    end if     
+    end if
   end do
   PM6_DH_H_bond_corrections = E_hb
   return

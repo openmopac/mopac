@@ -23,7 +23,7 @@ subroutine empire (formla, nat, els)
     character (len=8), intent (out) :: els
     logical :: first = .true.
     integer :: i, j
-    integer :: maxele 
+    integer :: maxele
     integer :: l, nc, ne, mers(3), k, nele(109), m, nelements
     character (len=2), dimension (107) :: elemnt, lowel
     character (len=3), dimension (14) :: presnt
@@ -51,7 +51,7 @@ subroutine empire (formla, nat, els)
  & "Ag","Cu","Hg","Cd","Zn","Tl","In","Ga","Al","Pb","Sn","Ge","Bi", &
  & "B ","Si","C ","Sb","As","P ","N ","H ","Te","Se","S ","I ","Br", &
  & "Cl","O ","F ","He","Ne","Ar","Kr","Xe",25*"XX"/
-   
+
     data elemnt / "H ", "He", "Li", "Be", "B ", "C ", "N ", "O ", "F ", "Ne", &
    & "Na", "Mg", "Al", "Si", "P ", "S ", "Cl", "Ar", "K ", "Ca", "Sc", "Ti", "&
    &V ", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br&
@@ -159,12 +159,12 @@ subroutine empire (formla, nat, els)
         do i = 1, 100
           m = 0
           do l = 1, j
-            if (Abs((i*nele(l))/k - (i*1.d0*nele(l))/k) > 1.d-5) m = 1 
+            if (Abs((i*nele(l))/k - (i*1.d0*nele(l))/k) > 1.d-5) m = 1
           end do
           if (m == 0) exit
         end do
         k = k/i
-      end if     
+      end if
       nosort = nosort/max(k,1)
     end if
 !

@@ -48,7 +48,7 @@ module Param_global_C
     molnum,       & ! Molecule number of the current molecule
     nref,         & ! Number of reference directories to be used
     maxpab,       & ! Number of density matrix elements
-    aaaint         
+    aaaint
 !
 !  Real scalars
 !
@@ -78,16 +78,16 @@ module Param_global_C
 !
       character (len=2000) :: contrl = " "  ! Keywords for PARAM
 !
-    
+
       character (len=40) :: molnam         ! Names of file of current system
 !
 !   Arrays
 !
     logical :: &
     is_a_ref(maxmol), &   ! "true" if the H.o.F. reference datum is used only as a reference to
-                          ! another reference H.O.F. 
+                          ! another reference H.O.F.
     save_parameters,  &   ! "true" if parameters are to be saved
-    locked(maxpms),   &   ! "false" if parameter is selected for optimization using "(all)" 
+    locked(maxpms),   &   ! "false" if parameter is selected for optimization using "(all)"
     dorbs(107)
 !
 !
@@ -173,7 +173,7 @@ module Param_global_C
     comnts(maxmol)          ! Comments for all molecules
     character (len=120) :: &
     source(3, 400)          ! Original references for all reference data
-    
+
 
 !
 !

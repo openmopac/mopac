@@ -49,12 +49,12 @@ subroutine parfg (errors, ttype, nerr, loop, do_scf)
     double precision :: caldip, calhof, calips, cerr, derr, gerr, herr, toterr, &
     & sum
     double precision, dimension (300) :: q
-    character , dimension(10) :: tspin*8 
+    character , dimension(10) :: tspin*8
     double precision, external :: meci, parips, pardip, pargeo
     character :: srep(1000)*4
     save :: ndif, nopn, loop_ref, iloop
     data tspin/ 'SINGLET ', 'DOUBLET ', 'TRIPLET ', 'QUARTET ', 'QUINTET ', &
-      'SEXTET  ', 'SEPTET  ', 'OCTET   ', 'NONET   ', '??????? '/  
+      'SEXTET  ', 'SEPTET  ', 'OCTET   ', 'NONET   ', '??????? '/
 !-----------------------------------------------------------------------
   !
   !  Need to fill USPD - this would normally be filled in MOLDAT...
@@ -64,7 +64,7 @@ subroutine parfg (errors, ttype, nerr, loop, do_scf)
   !
   !  Compute the Function
   !
-  !  set last to 3 to force MECI to calculate all roots. (Dataset must have 
+  !  set last to 3 to force MECI to calculate all roots. (Dataset must have
   !  keyword MECI in order for this to work)
   !
     last = 3
@@ -94,7 +94,7 @@ subroutine parfg (errors, ttype, nerr, loop, do_scf)
     if (wthof > 1.d-8) then
       if(qn(loop_ref) /= 0)then
       if (labsiz == 11) sum = meci()
-        call symtrz (c(1, nelec + 1), eig, 3, .TRUE.) 
+        call symtrz (c(1, nelec + 1), eig, 3, .TRUE.)
         qn_temp = 0
         j = 0
         l = 0
@@ -128,7 +128,7 @@ subroutine parfg (errors, ttype, nerr, loop, do_scf)
           end if
           qn_temp(k, m) = qn_temp(k, m) + 1
           jndex(i) = qn_temp(k, m)
-        end do      
+        end do
 !
 !  Use excited state relative energy.  First, identify desired state.
 !
@@ -161,7 +161,7 @@ subroutine parfg (errors, ttype, nerr, loop, do_scf)
 !  message and fix the problem.
 !
           calhof = refhof
-        end if 
+        end if
       end if
       herr = calhof - refhof + 1.d-15 !(Ensure that the H.o.F. error is not exactly zero)
       nerr = nerr + 1
@@ -184,10 +184,10 @@ subroutine parfg (errors, ttype, nerr, loop, do_scf)
             if (atom_pKa == i) cycle
             sum = (coord(1,i) - coord(1,atom_pKa))**2 + &
          & (coord(2,i) - coord(2,atom_pKa))**2 + &
-         & (coord(3,i) - coord(3,atom_pKa))**2 
+         & (coord(3,i) - coord(3,atom_pKa))**2
             if (sum < herr) then
               herr = sum
-              atom_pKa_O = i           
+              atom_pKa_O = i
             end if
           end do
         end if

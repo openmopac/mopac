@@ -14,13 +14,13 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-module mod_vars_cuda                                         
+module mod_vars_cuda
 
   integer, parameter :: nthreads_gpu = 256, nblocks_gpu = 256
   logical :: lgpu = .false.
   real, parameter :: real_cuda = selected_real_kind(8)
   integer, parameter :: prec = 8
   integer :: ngpus,gpu_id
-  logical, parameter :: exe_gpu_kepler = .true.      
-end module mod_vars_cuda  
-      
+  logical, parameter :: exe_gpu_kepler = .true.
+end module mod_vars_cuda
+

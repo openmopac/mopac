@@ -49,7 +49,7 @@ subroutine diagg (fao, nocc, nvir, idiagg, partp, indi)
 !  nij elements are stored in fmo, and their indices are stored in ifmo.
 !
 !**********************************************************************
-  
+
 !
     call diagg1 (fao, nocc, nvir,  eigs(nocc+1:), ws, latoms,  ifmo, fmo, &
      & fmo_dim, nij, idiagg, avir, aocc, aov)
@@ -57,7 +57,7 @@ subroutine diagg (fao, nocc, nvir, idiagg, partp, indi)
 !**********************************************************************
 !
 !  In diagg2, the significant matrix elements are annihilated by a two by
-!  two rotation.  
+!  two rotation.
 !
 !**********************************************************************
 

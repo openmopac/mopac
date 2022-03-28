@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  subroutine wrt_diffs 
+  subroutine wrt_diffs
 !
 ! Given two geometries, work out the differences in bond-lengths
 ! and print the resulting values, largest first
@@ -37,15 +37,15 @@
    integer, allocatable :: jbonds(:,:), njbonds(:)
      allocate(pairs(2,numat*10), dist(3,numat*10), jbonds(15,numat), njbonds(numat))
 !
-! Work out connectivity twice - the sequence of atoms on one set might be 
+! Work out connectivity twice - the sequence of atoms on one set might be
 ! different to that in the other set.
 !
      coord(:,:numat) = geoa(:,:numat)
-     call set_up_dentate() 
+     call set_up_dentate()
      jbonds(:,:numat) = ibonds(:,:numat)
      njbonds(:numat) = nbonds(:numat)
      coord(:,:numat) = geo(:,:numat)
-     call set_up_dentate() 
+     call set_up_dentate()
 !
 !  Decide on bonds to an atom by whichever system has the more bonds to that atom
 !
@@ -58,8 +58,8 @@
          njbonds(i) = nbonds(i)
         jbonds(:nbonds(i),i) = ibonds(:nbonds(i),i)
        end if
-     end do         
-     npairs = 0   
+     end do
+     npairs = 0
      do i = 1, numat
        do j = 1, nbonds(i)
          k = ibonds(j,i)
@@ -114,7 +114,7 @@
            dist(3,npairs) = sum_bb
          end if
        end do
-     end do  
+     end do
     !
     ! Write out differences,largest first
     !
@@ -125,11 +125,11 @@
         if (sum < dist(1,j)) then
           sum = dist(1,j)
           k = j
-        end if        
-      end do   
-      if (sum < 0.01d0) exit  
+        end if
+      end do
+      if (sum < 0.01d0) exit
       j = pairs(1,k)
-      l = pairs(2,k) 
+      l = pairs(2,k)
       if (nat(l) == nat(j) .and. j > l .or. nat(l) > nat(j)) then
         j = pairs(2,k)
         l = pairs(1,k)
@@ -283,11 +283,11 @@
           write(iw,'(//28x,a)')"Hydrogen bonds in "//trim(line)//" but not in GEO_REF"
           write(iw,'(/15x,a,21x,a,12x,a,5x,a,/)')"Donor atom","Hydrogen atom","H-bond length(A)","Energy    Sum"
           l_prt = .false.
-        end if  
+        end if
         sum_a = sum_a + set_1_H_energy(k)
         write(iw,'(i4,3x,a, 7x, a, f17.3, f9.3)')l, set_1_H_txt(k), set_1_H_dist(k), set_1_H_energy(k), sum_a
         set_1_H_energy(k) = 5.d0
-      end do      
+      end do
       j = 0
       l_prt = .true.
       do i = 1, set_2_P_Hbonds
@@ -323,14 +323,14 @@
         sum_a = sum_a + set_2_H_energy(k)
         write(iw,'(i4, 3x, a, 7x, a, f17.3, f9.3)')l, set_2_H_txt(k), set_2_H_dist(k), set_2_H_energy(k), sum_a
         set_2_H_energy(k) = 5.d0
-      end do   
+      end do
       return
   end subroutine analyze_h_bonds
   subroutine get_H_bonds
     logical :: L_grad = .false.
     double precision :: correction
-    call post_scf_corrections(correction, l_grad)  
+    call post_scf_corrections(correction, l_grad)
     return
   end subroutine get_H_bonds
-  
-  
+
+

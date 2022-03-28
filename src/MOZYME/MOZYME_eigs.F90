@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine MOZYME_eigs (nocc) 
+subroutine MOZYME_eigs (nocc)
    !**********************************************************************
    !
    !  f:      FOCK MATRIX OVER ATOMIC ORBITALS
@@ -230,5 +230,5 @@ subroutine MOZYME_eigs (nocc)
           eigs(i) = sum
           !
       end do
-      
+
 end subroutine MOZYME_eigs

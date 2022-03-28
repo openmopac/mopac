@@ -14,12 +14,12 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine rsp(a, n, root, vect) 
+      subroutine rsp(a, n, root, vect)
       implicit none
-      integer  :: n 
-      double precision  :: a(*) 
-      double precision, intent (out)  :: root(n) 
-      double precision  :: vect(n,n) 
+      integer  :: n
+      double precision  :: a(*)
+      double precision, intent (out)  :: root(n)
+      double precision  :: vect(n,n)
 !
 ! Trivial case: n = 1
 !
@@ -29,6 +29,6 @@
         return
       end if
       call eigenvectors_LAPACK(vect, a, root, n)
-      return  
-      end subroutine rsp 
+      return
+      end subroutine rsp
 

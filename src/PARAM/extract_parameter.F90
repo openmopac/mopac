@@ -33,7 +33,7 @@
       kfn = (jparam - n_partyp_fn) / 3
       jparam = jparam - kfn * 3
       kfn = kfn + 1
-    end if 
+    end if
     select case (jparam)
     case (2)
       param = upp(ielmnt)

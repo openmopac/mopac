@@ -82,6 +82,6 @@ subroutine modgra ()
         write(iw,'(14x, a, f13.3)')(txtatm(res_start(i))(18:20)//" "//txtatm(res_start(i))(23:26),  &
           res_grad_s(i),i = 1, nres)
       end if
-    end if      
+    end if
     return
 end subroutine modgra

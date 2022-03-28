@@ -59,7 +59,7 @@ module cosmo_C
   & srad,    & !
   & abcmat,  & !
   & qden,    & !
-  & bh,      & ! 
+  & bh,      & !
   & cdiag
   double precision, dimension(:,:), allocatable :: &
   & bmat,    & !
@@ -69,5 +69,5 @@ module cosmo_C
   & cosurf,  & !
   & sude,    & !
   & xsp,     & !
-  & cxy     
+  & cxy
 end module cosmo_C

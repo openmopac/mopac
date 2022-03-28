@@ -16,7 +16,7 @@
 
 module symmetry_C
     integer, parameter :: ntbs = 38
-    
+
     save
   integer :: &
   &  igroup, & !  Index of point-group
@@ -24,39 +24,39 @@ module symmetry_C
   &  nirred, & !  Number of irreducible representations
   &  nsym,   &
   &  nent,   &
-  &  dummy  
-  
+  &  dummy
+
   integer, dimension(20)               :: ielem
   integer, dimension(6)                :: jy
   integer, dimension (348)             :: nallop
   integer, dimension (ntbs)            :: ntab
   integer, dimension (764)             :: nallg
-  
-  character, dimension(20)             :: jx*4      ! 
+
+  character, dimension(20)             :: jx*4      !
   character                            :: name*4
   character, dimension (406)           :: allrep*4
-  character, dimension(:), allocatable :: namo*4             !  Names of irreducible representations  
+  character, dimension(:), allocatable :: namo*4             !  Names of irreducible representations
   character                            :: state_spin*8       !  Spin-state, e.g., "TRIPLET"
   character                            :: state_Irred_Rep*4  !  Irreducible representation, e.g. "T2g"
   integer                              :: state_QN           !  Quantum number, e.g., 2, 3, 4.
-  
+
   integer, dimension(:), allocatable :: &
-  &  jndex,  & !  Principal quantum number of irreducible representation  
+  &  jndex,  & !  Principal quantum number of irreducible representation
   &  dummys
 
 
   integer, dimension(:,:), allocatable :: &
-  &  ipo,    & ! 
-  &  jelem 
-  double precision, dimension(3,3)              :: cub 
+  &  ipo,    & !
+  &  jelem
+  double precision, dimension(3,3)              :: cub
   double precision, dimension(9,120)            :: r
   double precision, dimension(3,3,20)           :: elem
   double precision, dimension(20,5)             :: group
   double precision, dimension(:), allocatable   :: depmul
   integer, dimension(:), allocatable        :: locpar, idepfn, locdep
 
-  
-  
+
+
     !*********************************************************************
    !
    !  BLOCK DATA FOR ALL THE POINT-GROUPS USED IN MOPAC
@@ -432,6 +432,6 @@ module symmetry_C
          & "D(u)", "F(g)", "F(u)", "G(g)", "G(u)", "H(g)", "H(u)", "I(g)", &
          & "I(u)", "K(g)", "K(u)", "L(g)", "L(u)", "M(g)", "M(u)" /
     data nallop(342:348) / 3, 20, 38, 524992, 10, 8, 7 /
-  
+
 
 end module symmetry_C

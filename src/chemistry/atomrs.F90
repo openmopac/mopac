@@ -38,7 +38,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
       double precision :: sum
     character (len=3) :: loc_tyres, tmp
     integer, dimension (natomr) :: inres
-    integer, dimension (natomr) :: npack  
+    integer, dimension (natomr) :: npack
     integer, dimension (5, size_mres) :: mres
     logical :: okay, found(14), UNK
     intrinsic Abs, Max
@@ -160,13 +160,13 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
                          & " greater than 500"
     do i = 1, numat
       if (index(txtatm(i), "UNK") > 0) exit
-    end do    
+    end do
     if (i > 1 .and. i <= numat) &
-      write(iw,'(/10x,a)')"The fault is probably after atom:  """//trim(txtatm(i - 1))//""""   
+      write(iw,'(/10x,a)')"The fault is probably after atom:  """//trim(txtatm(i - 1))//""""
     if (txtatm1(jatom) /= " ") then
-      write(iw,'(/10x,a,a)')"The fault is probably before atom: """//trim(txtatm1(jatom))//"""" 
+      write(iw,'(/10x,a,a)')"The fault is probably before atom: """//trim(txtatm1(jatom))//""""
     else
-      write(iw,'(/10x,a, i5)')"The fault is probably before atom: "//elemnt(nat(jatom)), jatom  
+      write(iw,'(/10x,a, i5)')"The fault is probably before atom: "//elemnt(nat(jatom)), jatom
     end if
     call mopend ("More than 500 atoms in residue")
 1000 if (nat(io) == 8) then
@@ -190,7 +190,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
     end do
     npack(:) = 0
 !
-!  If the starting atom of the residue was a nitrogen, then count it 
+!  If the starting atom of the residue was a nitrogen, then count it
 !
     if (nat(iatom) == 7) npack(7) = 1
     jj3 = 0
@@ -207,7 +207,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
           case default
             jj3 = j5
           end select
-        end do        
+        end do
         npack(nat(j2)) = npack(nat(j2)) + 1
       end if
       lused(inres(i2)) = ires
@@ -228,7 +228,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
 !  Check for terminal -COOH  If present, delete one oxygen from formula count.
 !
       k = 0
-      i2 = 0 
+      i2 = 0
       j3 = 0
       j4 = 0
       do j = 1, nbonds(ico)
@@ -257,7 +257,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
 !
       npack(16) = npack(16) + 1
     end if
-    if (jj3 == 0 .or. jj3 == 34) then     
+    if (jj3 == 0 .or. jj3 == 34) then
       do loop = 1, mxeno
         npack(1) = npack(6) - nxeno(1, loop)
         npack(2) = npack(7) - nxeno(2, loop)
@@ -301,7 +301,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
                   if (nat(ibonds(j3,j2)) == 6) l = l + 1
                 end do
               end if
-              j4 = max(j4,l) 
+              j4 = max(j4,l)
             end do
             if (j4 == 2) then
   !
@@ -341,7 +341,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
                           end do
                         end if
                       end do
-                    end if                  
+                    end if
                   end do
                 end if
               end do proline_check
@@ -400,7 +400,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
                 do j3 = 1, nbonds(j2)
                   if (nat(ibonds(j3,j2)) == 6) l = l + 1
                 end do
-                j4 = max(j4,l) 
+                j4 = max(j4,l)
               end do
               if (j4 /= 3) cycle loop3
             end if
@@ -418,7 +418,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
             if (abs(coord(3,ihcr) - coorda(3,j6)) < 0.0005d0) exit
           end if
         end if
-      end do   
+      end do
       do j7 = 1, n_once
         if (once(j7) == j6) exit
       end do
@@ -437,7 +437,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
       return
     end if
 1200 if (k == 0) then
-       k = size_mres 
+       k = size_mres
      end if
      if (k == 4) then
       !
@@ -454,7 +454,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
           loop4: do j2 = 1, nbonds(j)
             j3 = ibonds(j2, j)
                !
-               !  IS THE ATOM ATTACHED TO THE CARBON THAT IS ATTACHED 
+               !  IS THE ATOM ATTACHED TO THE CARBON THAT IS ATTACHED
                ! TO THE NITROGEN A CARBON?
                !
             if (nat(j3) == 6) then
@@ -523,7 +523,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
     do j = 1, ninres
       l = inres(j)
       if (l /= 0) then
-        write (txtatm(l), "(a,i6,1x,a3,a5,i6)")"ATOM ", l, cap_elemnt(nat(l)), loc_tyres, ires        
+        write (txtatm(l), "(a,i6,1x,a3,a5,i6)")"ATOM ", l, cap_elemnt(nat(l)), loc_tyres, ires
       end if
     end do
     res_start(uni_res) = iatom
@@ -535,17 +535,17 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
       if (i == ninres + 1 .and. jatom > 0) then
         txtatm(jatom) = " "
       end if
-    end if 
+    end if
     if (txtatm(iatom)(:15) /= " ") then
       allres (ires) = loc_tyres // " "
       return
     end if
     if (ires == 1 .and.  txtatm(ihcr)(18:20) == "PRO") then
       write(txtatm(n1), "(I6,1X,A3, i4)") n1, "PRO", 1  ! Label N of proline in
-    end if 
+    end if
     if (OXT /= 0) txtatm(OXT)(15:16) = "XT"
 !
-!  Run a check to make sure that all atoms are properly labeled.  
+!  Run a check to make sure that all atoms are properly labeled.
 !  If they are not properly labeled, re-label them as "unknown"
 !
     do j2 = 1, 20
@@ -560,7 +560,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
         do j = 1, n_add(j2)
           if (line(:4) == atomname(j2,j)) found(j) = .true.
         end do
-      end do 
+      end do
       do i = 5, n_add(j2)
         if (.not. found(i)) exit
       end do
@@ -587,8 +587,8 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
 ! Assign labels to atoms that are associated with this residue, but call them "UNK"
 !
       live(:2) = extra_atoms(:2)
-      nlive = 1   
-      if (live(2) /= 0) nlive = 2 
+      nlive = 1
+      if (live(2) /= 0) nlive = 2
       ninres = 0
       outer_loop_extra: do
         l = live(1)
@@ -612,7 +612,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
             write(iw,'(/10x,a,/)')" Atoms recognized"
             do i = 1, numat
               if (txtatm(i) /= " ") write(iw,'(a)')txtatm(i)
-            end do    
+            end do
             write(iw,'(/10x,a)')"(The fault is probably near the end of the list of recognized atoms)"
             call mopend ("Too many atoms in residue")
             go to 1000
@@ -654,7 +654,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
       end do
       okay = .false.
       select case (npack(6))
-      case(1)     
+      case(1)
         if (npack(7) == 1 .and. npack(8) == 0 .and. npack(16) == 0) then
           tmp = "CH3"
           line = "Methyl group"
@@ -680,28 +680,28 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
         do j = 1, ninres
           l = inres(j)
           if (l /= 0) then
-            write (txtatm(l), "(a,i6,1x,a3,a5,i6)")"ATOM ", l, cap_elemnt(nat(l)), tmp, ires   
+            write (txtatm(l), "(a,i6,1x,a3,a5,i6)")"ATOM ", l, cap_elemnt(nat(l)), tmp, ires
           end if
         end do
       else
         do j = 1, ninres
           l = inres(j)
           if (l /= 0) then
-            write (txtatm(l), "(a,i6,1x,a3,a5,i6)")"ATOM ", l, cap_elemnt(nat(l)), tmp, ires   
+            write (txtatm(l), "(a,i6,1x,a3,a5,i6)")"ATOM ", l, cap_elemnt(nat(l)), tmp, ires
           end if
         end do
-      end if      
+      end if
     end if
-    write (txtatm(iatom), "(a,i6,1x,a3,a5,i6)")"ATOM ", iatom, cap_elemnt(nat(iatom)), loc_tyres, ires 
+    write (txtatm(iatom), "(a,i6,1x,a3,a5,i6)")"ATOM ", iatom, cap_elemnt(nat(iatom)), loc_tyres, ires
     if (index(keywrd, " ADD-H") /= 0) return
 !
-! residue 1 "by hand"  
+! residue 1 "by hand"
 !
     i = Abs(mres(5,k) - nh)
     if (ico /= 0 .and. .not. UNK .and. i > 1 .and. .not. first_res .and. loop == 1) then
       if (nbonds(ico) /= 4 .or. nbonds(jofco) /= 2 .or. i /= 3) then  ! Exclude end group being -CH2OH instead of -COOH
         if(odd_h .and. k /= size_mres) then
-          odd_h = .false.      
+          odd_h = .false.
           write(line,"(a, a)")"         Residues where the number of hydrogen", &
                        " atoms is not equal to that expected"
           write(iw,'(/,a,/)')trim(line)
@@ -711,20 +711,20 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
           if (log) write(ilog,'(a)')trim(line)
         end if
         if (k /= size_mres) then
-          do j = 1, numat_old        
+          do j = 1, numat_old
             if (abs(coord(1,iatom) - coorda(1,j)) > 0.1d0) cycle
             if (abs(coord(2,iatom) - coorda(2,j)) > 0.1d0) cycle
             if (abs(coord(3,iatom) - coorda(3,j)) > 0.1d0) cycle
             exit
-          end do 
+          end do
           line = "          "//loc_tyres
           if (txtatm1(j) /= " ") line = txtatm1(j)
-          write(line,"(6x, a, 4x, 3F8.3, i16)")'"'//line(:27)//'"', coord(:,iatom), nh - mres(5,k)   
+          write(line,"(6x, a, 4x, 3F8.3, i16)")'"'//line(:27)//'"', coord(:,iatom), nh - mres(5,k)
           write(iw,'(a)')trim(line)
           if (log) write(ilog,'(a)')trim(line)
         end if
       end if
-    end if       
+    end if
     if (ires > maxres) then
       write (iw,*) " MODIFY SUBROUTINE NAMES"
       write (iw,*) " MAXIMUM NUMBER OF RESIDUES ALLOWED:", maxres
@@ -737,7 +737,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
       end if
     end do
     j = 0
-    l = 0 
+    l = 0
     do i = 1, numat
       if (ions(i) > 0 .and. Abs (lused(i)) == ires) j = j + ions(i)
       if (ions(i) < 0 .and. Abs (lused(i)) == ires) l = l + ions(i)
@@ -793,7 +793,7 @@ subroutine atomrs (lused, ioptl, ires, n1, io, uni_res, first_res)
             do j = 1, 4
               if (nat(ibonds(j,k)) == 8) then ! Structure N-C-O-R detected
                 peptide_n = .false.
-                return                
+                return
               end if
             end do
           end if

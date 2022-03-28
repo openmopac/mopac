@@ -18,12 +18,12 @@
     use common_arrays_C, only : grad, xparam, p, nat, coord
     use molkst_C, only : numat, escf, mozyme, emin, mpack, moperr
     use linear_cosmo, only : ini_linear_cosmo, coscavz
-    use parameters_C, only : tore 
+    use parameters_C, only : tore
     use cosmo_C, only : iseps, useps, lpka
     use chanel_C, only : iw
     implicit none
     integer, intent (out) :: ipKa_sorted(numat), ipKa_unsorted(numat), no
-    double precision, intent (out) :: pKa_sorted(numat), pKa_unsorted(numat) 
+    double precision, intent (out) :: pKa_sorted(numat), pKa_unsorted(numat)
 !
 ! Calculates and prints the pKa_sorted for an organic molecule with an ionizable hydrogen
 ! attached to an oxygen atom.
@@ -42,33 +42,33 @@
     store_iseps = iseps
     store_useps = useps
     iseps = .true.
-    useps = .true.    
+    useps = .true.
     emin = 0.d0
     call cosini(.true.)
     if (mozyme) call ini_linear_cosmo
-    if (mozyme) then      
+    if (mozyme) then
       call coscavz(coord, nat)
       lpka = .true.
     else
-       call coscav 
+       call coscav
        call mkbmat
-    end if 
+    end if
     i = mpack
-    call moldat(1)  
+    call moldat(1)
     mpack = i
     moperr = .false. ! An error in moldat is not important here. only the electronics are affected.
-    call calpar  
+    call calpar
     call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.)
     nh = 0
     if (moperr) return
-    lpka = .false. 
-    call chrge (p, q) 
-    q(:numat) = tore(nat(:numat)) - q(:numat) 
+    lpka = .false.
+    call chrge (p, q)
+    q(:numat) = tore(nat(:numat)) - q(:numat)
 !
-!  Find the ionizable hydrogens 
+!  Find the ionizable hydrogens
 !
     pKa_unsorted = 0.d0
-    do i = 1, numat     
+    do i = 1, numat
       if (nat(i) /= 1) cycle
       sum_min = 2.d0
       i_min = 0
@@ -76,13 +76,13 @@
         if (nat(j) /= 8) cycle
         sum = (coord(1,i) - coord(1,j))**2 + &
             & (coord(2,i) - coord(2,j))**2 + &
-            & (coord(3,i) - coord(3,j))**2 
-        if (sum < sum_min) then      ! Assume that a hydrogen within 1.4 Angstroms of an oxygen is 
+            & (coord(3,i) - coord(3,j))**2
+        if (sum < sum_min) then      ! Assume that a hydrogen within 1.4 Angstroms of an oxygen is
           sum_min = sum              ! attached to that atom
-          i_min = j               
+          i_min = j
         end if
       end do
-      if (sum_min < 1.9999d0) then  
+      if (sum_min < 1.9999d0) then
 !
 ! Exclude water
 !
@@ -91,18 +91,18 @@
           if (nat(k) /= 1 .or. k == i) cycle
           sum = (coord(1,k) - coord(1,i_min))**2 + &
               & (coord(2,k) - coord(2,i_min))**2 + &
-              & (coord(3,k) - coord(3,i_min))**2 
+              & (coord(3,k) - coord(3,i_min))**2
 ! Assume that a hydrogen within 1.4 Angstroms of an oxygen is attached to that atom
-          if (sum < sum_H_min) then 
-            sum_H_min = sum    
+          if (sum < sum_H_min) then
+            sum_H_min = sum
           end if
         end do
         if (sum_H_min < 1.9999d0 .and. numat > 3) cycle
-        nh = nh + 1               
-        ipKa_unsorted(nh) = i  
+        nh = nh + 1
+        ipKa_unsorted(nh) = i
         pKa_unsorted(nh)=q(i)
-        dist(nh) = sqrt(sum_min) 
-      end if 
+        dist(nh) = sqrt(sum_min)
+      end if
     end do
 !
 ! Now sort into decending order
@@ -136,26 +136,26 @@
         end do
       end if
       if (j <= loop) cycle
-      loop = loop + 1 
+      loop = loop + 1
       ipKa_sorted(loop) = ipKa_unsorted(k)
       pKa_sorted(loop) =  pKa_unsorted(k)
-      pKa_unsorted(k) = 200.d0 + pKa_unsorted(k) 
-    end do  
+      pKa_unsorted(k) = 200.d0 + pKa_unsorted(k)
+    end do
     pKa_unsorted(:loop) = pKa_unsorted(:loop) - 200.d0
-    no = loop 
+    no = loop
     call switch
     iseps = store_iseps
     useps = store_useps
     i = mpack
     call moldat(1)
-    mpack = i  
+    mpack = i
     moperr = .false. ! An error in moldat is not important here. only the electronics are affected.
-    call calpar  
+    call calpar
     emin = 0.d0
-    call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.) 
+    call compfg (xparam, .TRUE., escf, .TRUE., grad, .FALSE.)
     return
   end subroutine prtpka
-  subroutine Parameters_for_PKA(c1, c2, c3)  
+  subroutine Parameters_for_PKA(c1, c2, c3)
     use parameters_C, only : uss, upp, udd, zs, zp, zd, betas, &
     betap, betad, gss, gsp, gpp, gp2, hsp, zsn, zpn, zdn
     double precision, intent (out) :: c1, c2, c3

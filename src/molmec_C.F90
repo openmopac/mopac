@@ -14,8 +14,8 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module molmec_C 
+      module molmec_C
       integer, dimension(4,6000) :: nhco = 0
       integer :: nnhco = 0
       double precision :: htype = 0.d0
-      end module molmec_C 
+      end module molmec_C

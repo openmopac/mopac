@@ -62,7 +62,7 @@ subroutine cnvgz (pnew, p, p1, p2, p3, niter, idiag)
 !
       end if
 !
-!   From iteration 4 on, the change in the diagonal elements is 
+!   From iteration 4 on, the change in the diagonal elements is
 !   limited to 'damp'
 !
       if (niter > 3) then

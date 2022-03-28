@@ -97,7 +97,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
     do i = 1, 102
       if (is_metal(i)) vdw(i) = -1.0d0
     end do
-    do i = 1, numat 
+    do i = 1, numat
       radius(i) = vdw(nat(i))
     end do
 !
@@ -171,7 +171,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
       do res3 = res1, res1 + 1
         num_min = max(i_lower - 50, 1)
         num_max = min(i_lower + 50, numat)
-        do 
+        do
           do jj = num_min, num_max
             res = nint(reada(txtatm1(jj), 23))
             chain = used(jj)
@@ -182,17 +182,17 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           coord(:,ii) = geo(:,jj)
           txtatm(ii) = txtatm1(jj)
           nat(ii) = labels(jj)
-          used(jj) = "a"   
-        end do 
+          used(jj) = "a"
+        end do
       end do
 !
 ! Look for a fault at the start of the next bit of chain
 ! This will occur in atoms in the domain res2 - 1 to res2
 !
-      do res3 = res2 - 1, res2 
+      do res3 = res2 - 1, res2
         num_min = max(i_lower - 50, 1)
         num_max = min(i_lower + 50, numat)
-        do 
+        do
           do jj = num_min, num_max
             res = nint(reada(txtatm1(jj), 23))
             chain = used(jj)
@@ -203,12 +203,12 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           coord(:,ii) = geo(:,jj)
           txtatm(ii) = txtatm1(jj)
           nat(ii) = labels(jj)
-          used(jj) = "a"   
-        end do 
-      end do   
+          used(jj) = "a"
+        end do
+      end do
       chain1 = chain2
       res1 = res2
-    end do 
+    end do
     if (ii < numat) then
       do jj = 1, numat
         if (used(jj) /= "a") then
@@ -228,7 +228,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
     use MOZYME_C, only : ions, allres, tyr, allr, tyres, maxres
 !
     use chanel_C, only: iw
-!    
+!
     use molkst_C, only: numat, line, job_no, maxtxt
     implicit none
     integer :: i, nfrag, jj, ii, ires, kl, ku, irold, l, j, k, charge, i_job_no = -50, &
@@ -255,8 +255,8 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
       do nfrag = 1, 100
         if (ii > numat) exit
         if (txtatm(ii) == " ") exit
-        chain = txtatm(ii)(22:22)        
-        ires = nint(reada(txtatm(ii), 23)) 
+        chain = txtatm(ii)(22:22)
+        ires = nint(reada(txtatm(ii), 23))
         allres = " "
         allres(ires) = txtatm(ii)(18:20)
         ilet = txtatm(ii)(27:27)
@@ -296,7 +296,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
             res_no(i_alt) = ii - 1
             res_charge(i_alt) = allres(ires)(4:4)
             if (.not. use_alt) use_alt = (ilet /= jj_let)
-          end if            
+          end if
           charge = 0
           if (ires /= jj) ires = ires + 1
           ilet = jj_let
@@ -304,7 +304,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
             write(line,'(a,i5)')" Maximum residue number allowed:", maxres
             call mopend(trim(line))
             return
-          end if          
+          end if
         end do
         if (ii > numat) j = numat
         if (j /= 0) then
@@ -319,7 +319,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           do k = 1, 20
             if (allres(j) == tyres(k)) exit
           end do
-          if (k < 21) exit          
+          if (k < 21) exit
         end do
         if (j > ires .or. (j == ires .and. j == 0)) cycle
         do i = ires, 1, -1
@@ -339,32 +339,32 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           end do
           use_alt_2 = .true.
           cycle
-        end if         
+        end if
         if (irold < 1) then
           jj = 100
           i = mod(irold + jj, 10)
           if (i == 0) i = 10
           kl = irold
-          ku = min(ires, kl - i + 10)         
+          ku = min(ires, kl - i + 10)
           line = " "
           l = 6*(i - 1) + 1
           j = ((kl + jj)/10)*10 - jj
           if (i == 10) j = j - 10
           write(iw,"(8x,10i6)")((k - 10), k = 1, 10)
-          write(iw,"(5x,i4,2x,a,10(a4,'  '))")j, line(:l), allres(kl:ku)      
+          write(iw,"(5x,i4,2x,a,10(a4,'  '))")j, line(:l), allres(kl:ku)
           do
             kl = ku + 1
             if (kl > min(0, ires)) exit
             j = j + 10
             ku = min(ires, ku + 10)
-            write(iw,"(5x,i4,3x,10(a4,'  '))")j, allres(kl:ku)        
+            write(iw,"(5x,i4,3x,10(a4,'  '))")j, allres(kl:ku)
          end do
          write(iw,'(a)')" "
         end if
         kl = max(irold, 1)
         i = mod(kl, 10)
-        if (i == 0) i = 10        
-        ku = min(ires, kl - i + 10)         
+        if (i == 0) i = 10
+        ku = min(ires, kl - i + 10)
         line = " "
         l = 6*(i - 1) + 1
         j = (kl/10)*10
@@ -376,17 +376,17 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           if (kl > ires) exit
           j = j + 10
           ku = min(ires, ku + 10)
-          write(iw,"(5x,i4,3x,10(a4,'  '))")j, allres(kl:ku)        
+          write(iw,"(5x,i4,3x,10(a4,'  '))")j, allres(kl:ku)
         end do
       end do
       if (use_alt_2) return
       ii = 1
-      ifrag = 0      
+      ifrag = 0
       do nfrag = 1, 100
         j = 0
         if (ii > numat) exit
         if (txtatm(ii) == " ") exit
-        chain = txtatm(ii)(22:22)        
+        chain = txtatm(ii)(22:22)
         ires = nint(reada(txtatm(ii), 23))
         irold = ires
         do ii = ii + 1, numat
@@ -396,17 +396,17 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           if (ires == jj) cycle              !  Residue is same
           if (txtatm(ii)(14:14) == "H") cycle!  Ignore hydrogen atoms
           if (ires + 1 /= jj) exit           !  Residue is not contiguous
-          allres(ires) = txtatm(ii - 1)(18:20)  
+          allres(ires) = txtatm(ii - 1)(18:20)
           ires = ires + 1
         end do
         if (j /= 0) then
-          if (txtatm(j)(18:20) /= "   ") allres(ires) = txtatm(j)(18:20) 
-        end if 
+          if (txtatm(j)(18:20) /= "   ") allres(ires) = txtatm(j)(18:20)
+        end if
         do j = irold, ires
           do k = 1, 20
             if (allres(j) == tyres(k)) exit
           end do
-          if (k < 21) exit          
+          if (k < 21) exit
         end do
         if (j > ires .or. (j == ires .and. j == 0)) cycle
         do i = ires, 1, -1
@@ -430,16 +430,16 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           write (iw, "(/,16X,A,/)") "RESIDUE SEQUENCE IN PROTEIN Chain: "//chain
         else
           write (iw, "(/,16X,A,I2, a/)") "RESIDUE SEQUENCE IN PROTEIN FRAGMENT:", ifrag, " Chain: "//chain
-        end if   
+        end if
         jj = 100
         i = mod(irold + jj, 10)
         if (irold < 0) i = i - 10
         if (i == 0) i = 10
         kl = irold
         if (i < 0) then
-          ku = min(ires, kl - i + 40) 
+          ku = min(ires, kl - i + 40)
         else
-          ku = min(ires, kl - i + 50) 
+          ku = min(ires, kl - i + 50)
         end if
         line = " "
         j = ((kl + jj)/10)*10 - jj
@@ -448,7 +448,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           ch = "10"
         else
           ch(1:1) = " "
-          if (i < 0) then           
+          if (i < 0) then
              ch(2:2) = char(9 + i + ichar("0"))
              if (ch(2:2) == "0") then
                ch(1:1) = "1"
@@ -458,10 +458,10 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
              end if
           else
              ch(2:2) = char(11 - i + ichar("0"))
-          end if         
+          end if
         end if
         if (i /= 0) write (iw, "(5x,i4,a,"//ch//"a,x,10(10a1,x))")j, line(:i + 1), (allr(i), i=kl, ku)
-        do 
+        do
           kl = ku + 1
           if (kl > ires) exit
           j = j + 50
@@ -471,7 +471,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
       end do
       return
   end subroutine write_sequence
-  subroutine fix_charges(ichrge)  
+  subroutine fix_charges(ichrge)
   use molkst_C, only: refkey, keywrd, line
   implicit none
   integer, intent (in) :: ichrge
@@ -487,13 +487,13 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
 !     Rewind the output file, so the user does not see the faulty output.
 !
       line = trim(refkey(1))
-      call upcase(line,len_trim(line))     
+      call upcase(line,len_trim(line))
       i = Index(line," CHARGE=")
       if (i /= 0) then
         j = Index(refkey(1)(i+2:)," ")
         refkey(1)(i + 1:) = refkey(1)(i + j + 2:)
       end if
-!                 12345678901 
+!                 12345678901
       i = Index(refkey(1),"            ")
       if (ichrge /= 0) then
         if (ichrge > 99) then
@@ -504,7 +504,7 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           write(refkey(1)(i:i+11),'(" CHARGE=",i1)')ichrge
         else if (ichrge > -10) then
           write(refkey(1)(i:i+11),'(" CHARGE=",i2)')ichrge
-        else 
+        else
           write(refkey(1)(i:i+11),'(" CHARGE=",i3)')ichrge
         end if
       end if
@@ -523,14 +523,14 @@ subroutine extvdw_for_MOZYME (radius, refvdw)
           write(keywrd(i:i+11),'(" CHARGE=",i1)')ichrge
         else if (ichrge > -10) then
           write(keywrd(i:i+11),'(" CHARGE=",i2)')ichrge
-        else 
+        else
           write(keywrd(i:i+11),'(" CHARGE=",i3)')ichrge
         end if
       end if
 end subroutine fix_charges
 subroutine add_sp_H(i1, i, i2)
 !
-! Given three atoms, i1, i, and i2, put a hydrogen atom at the point 
+! Given three atoms, i1, i, and i2, put a hydrogen atom at the point
 ! of a triangle
 !
   use molkst_C, only: natoms, maxatoms
@@ -560,7 +560,7 @@ subroutine add_sp_H(i1, i, i2)
 end subroutine add_sp_H
 subroutine add_sp2_H(i1, i, i2)
 !
-! Given three atoms, i1, i, and i2, put a hydrogen atom at the point 
+! Given three atoms, i1, i, and i2, put a hydrogen atom at the point
 ! of a triangle
 !
   use molkst_C, only: natoms, maxatoms
@@ -589,7 +589,7 @@ subroutine add_sp2_H(i1, i, i2)
 end subroutine add_sp2_H
 subroutine add_sp3_H(i1, i, i2, i3)
 !
-! Given four atoms, i1, i, and i2, put a hydrogen atom at the point 
+! Given four atoms, i1, i, and i2, put a hydrogen atom at the point
 ! of a tetrahedron
 !
   use molkst_C, only: natoms, maxatoms
@@ -630,7 +630,7 @@ subroutine compare_sequence(n_new)
   integer :: n_new
 !
 ! Local
-!  
+!
   integer :: i_atom, i, j, i_delta = 0, new_res, old_res, previous = -200, &
     mbreaks, loop
   character :: old*3, new*3
@@ -644,16 +644,16 @@ subroutine compare_sequence(n_new)
 !
 !  Find first non-hydrogen atom
 !
-    do 
+    do
       i_atom = i_atom + 1
       if (i_atom > numat) exit
        if (i_atom == breaks(mbreaks)) mbreaks = mbreaks + 1
       if (nat(i_atom) /= 1) exit
     end do
     if (i_atom > numat) exit
-    new_res = nint(reada(txtatm(i_atom),23)) 
+    new_res = nint(reada(txtatm(i_atom),23))
     new = txtatm (i_atom)(18:20)
-    if (maxtxt == 14) then  
+    if (maxtxt == 14) then
       old_res = nint(reada(txtatm1(i_atom),12))
       old = txtatm1(i_atom)(8:10)
     else
@@ -724,7 +724,7 @@ end subroutine compare_sequence
     use MOZYME_C, only : tyres
     use atomradii_C, only: is_metal
     implicit none
-    integer, intent(in) :: n_cat, n_ani, in_cat(n_cat), in_ani(n_ani)    
+    integer, intent(in) :: n_cat, n_ani, in_cat(n_cat), in_ani(n_ani)
     integer :: i, j, k, kk, l, m, n, n_cations, n_anions, n_C, n_H, n_O, C, pairs(2,200), n_pairs, &
       salt_bridges(2,200), n_salt, i_length, ii, jj, nh_cat, nh_ani, nmetals
     double precision :: r, cutoff, Rab(200), R_min, R_sorted(200)
@@ -754,14 +754,14 @@ end subroutine compare_sequence
         cutoff = reada(keywrd, i + 4)
       else
         cutoff = 4.d0
-      end if 
+      end if
       nh_cat = 0
       nh_ani = 0
-    else 
+    else
       cutoff = 8.d0
       nh_cat = 1
       nh_ani = -1
-    end if    
+    end if
 !
 !  Locate all Arg guanidine "C" atoms and all -C(R)H-NH2 "N" atoms
 !
@@ -780,12 +780,12 @@ end subroutine compare_sequence
             if (m == 8 + nh_cat) then
               if (n_cat > 0) then
                 do n = 1, n_cat
-                  if (txtatm(in_cat(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then                   
+                  if (txtatm(in_cat(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then
                     exit
                   end if
                 end do
               else
-                n = 0              
+                n = 0
               end if
               if (n <= n_cat .and. txtatm(i)(18:20) /= "UNK" &
                 .and. txtatm(i)(22:22) >= "A" .and. txtatm(i)(22:22) <= "Z") then
@@ -801,7 +801,7 @@ end subroutine compare_sequence
       if (nat(i) == 7) then
         if (nbonds(i) == 3 + nh_cat) then
 !
-!  Test for -NH2, e.g. N-terminus and lysine 
+!  Test for -NH2, e.g. N-terminus and lysine
 !
           n_C = 0
           n_H = 0
@@ -829,16 +829,16 @@ end subroutine compare_sequence
                do k = 1, nbonds(i)
                  if (nat(ibonds(k,i)) == 1) j = j + 1
                end do
-            end if                 
+            end if
             if (j > nbonds(C)) then
               if (n_cat > 0) then
                 do n = 1, n_cat
-                  if (txtatm(in_cat(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then                   
+                  if (txtatm(in_cat(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then
                     exit
                   end if
                 end do
               else
-                n = 0              
+                n = 0
               end if
               if (n <= n_cat .and. txtatm(C)(18:20) /= "UNK" &
                 .and. txtatm(C)(22:22) >= "A" .and. txtatm(C)(22:22) <= "Z") then
@@ -858,16 +858,16 @@ end subroutine compare_sequence
               if (nat(ibonds(l,k)) == 7 .and. ibonds(l,k) /= i) exit
             end do
             if (l <= nbonds(k)) exit
-          end do 
+          end do
           if (j > nbonds(i)) cycle
           if (n_cat > 0) then
             do n = 1, n_cat
-              if (txtatm(in_cat(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then                   
+              if (txtatm(in_cat(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then
                 exit
               end if
             end do
           else
-            n = 0              
+            n = 0
           end if
 !
 !  Avoid a "double count"
@@ -883,7 +883,7 @@ end subroutine compare_sequence
           end if
         end if
       end if
-    end do     
+    end do
 !
 !  Locate all -COOH "C" atoms
 !
@@ -912,12 +912,12 @@ end subroutine compare_sequence
           if (m == 1 + nh_ani .and. ii < 4) then
             if (n_ani > 0) then
               do n = 1, n_ani
-                if (txtatm(in_ani(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then                   
+                if (txtatm(in_ani(n))(18:maxtxt) == txtatm(i)(18:maxtxt)) then
                   exit
                 end if
               end do
             else
-              n = 0              
+              n = 0
             end if
             if (n <= n_ani .and. txtatm(i)(18:20) /= "UNK" &
                 .and. txtatm(i)(22:22) >= "A" .and. txtatm(i)(22:22) <= "Z") then
@@ -930,7 +930,7 @@ end subroutine compare_sequence
       end if
     end do
 !
-!  Find interatomic distances and weight them by type 
+!  Find interatomic distances and weight them by type
 !
     n_pairs = 0
     do i = 1, n_cations
@@ -1026,10 +1026,10 @@ end subroutine compare_sequence
                 end do
               end do
               if (salt_bridges(1,j) == 0) exit
-            end do        
-          end if        
+            end do
+          end if
         end do
-      end do   
+      end do
     end if
 !
 !  Build new SITE keyword
@@ -1061,7 +1061,7 @@ end subroutine compare_sequence
       do n = 26, 23, -1
         if (txtatm(l)(n:n) == " ") exit
       end do
-      n = max(23,n + 1)   
+      n = max(23,n + 1)
       i_length = len_trim(line)
       if (i_length > 1900 - len_trim(keywrd)) then
         call mopend("TOO MANY SALT BRIDGES FOUND")
@@ -1076,17 +1076,17 @@ end subroutine compare_sequence
       j, "("//txtatm(k)(:maxtxt)//")", txtatm(k)(22:22)//txtatm(k)(m:maxtxt)//"(+)", &
       "("//txtatm(l)(:maxtxt)//")", txtatm(l)(22:22)//txtatm(l)(n:maxtxt)//"(-)", R_sorted(i)
       if (txtatm(k)(22:22) < "A" .or. txtatm(k)(22:22) > "Z") then
-        write(line,'(a)')"Chain letter for the cation is not in the range 'A' to 'Z'"      
+        write(line,'(a)')"Chain letter for the cation is not in the range 'A' to 'Z'"
         call mopend(trim(line))
         write(iw,'(10x,a)')"Chain letter = """//txtatm(k)(22:22)//""""
         return
       end if
       if (txtatm(l)(22:22) < "A" .or. txtatm(l)(22:22) > "Z") then
-        write(line,'(a)')"Chain letter for the anion is not in the range 'A' to 'Z'" 
+        write(line,'(a)')"Chain letter for the anion is not in the range 'A' to 'Z'"
         call mopend(trim(line))
         write(iw,'(10x,a)')"Chain letter = """//txtatm(l)(22:22)//""""
         return
-      end if      
+      end if
     end do
     if (n_cat > 0) return
     line = line(2:)
@@ -1106,7 +1106,7 @@ end subroutine compare_sequence
       i = index(keywrd, "(SALT") + index(keywrd, ",SALT") + 1
       keywrd(i:) = keywrd(i + 4:)
       if (keywrd(i:i) == ",") keywrd(i:) = trim(keywrd(i + 1:))
-    end if  
+    end if
 !
 !   Check for duplicate sites in keywrd
 !
@@ -1114,7 +1114,7 @@ end subroutine compare_sequence
     m = index(keywrd(m:), "(") + m
     j = index(keywrd(m:),") ") + m
     if (keywrd(m:m) == ",") m = m + 1
-    do 
+    do
       k = index(keywrd(m:j), ",")
       if (k == 0) k = index(keywrd(m:j + 1), ") ")
       if (k == 0) exit
@@ -1130,14 +1130,14 @@ end subroutine compare_sequence
           line = line(:l - 2)//line(l + k - m + 1:)
         else
           line = line(:l - 1)//line(l + k - m:)
-        end if 
+        end if
       end if
       m = k + 2
       if (keywrd(m:m) == ",") m = m + 1
     end do
 !
 !  Insert the new keyword
-!   
+!
     i = index(keywrd," SITE")
     if (keywrd(i + 7:i + 7) /= ")") then
 !
@@ -1181,7 +1181,7 @@ subroutine update_txtatm(output, sort)
     H_Z = 0
   end if
   pdb = (index(keywrd, " PDBOUT") /= 0)
-  L_all = (output .and. index(keywrd," RESID") == 0) 
+  L_all = (output .and. index(keywrd," RESID") == 0)
   if (L_all .and. .not. sort .and. numat == numat_old) then
 !
 !  Do nothing!
@@ -1192,14 +1192,14 @@ subroutine update_txtatm(output, sort)
       else
         txtatm(i) = txtatm1(i)
       end if
-    end do    
+    end do
     goto 99
   end if
 !
 !  Add text to TXTATM to label hydrogen atoms and to add chain letter
 !
   if (index(keywrd," ADD-H") + index(keywrd," SITE=") + index(keywrd," RESEQ") /= 0) &
-    call set_up_dentate()  
+    call set_up_dentate()
   if (index(keywrd, "0SCF") == 0 .or. index(keywrd, "SITE") /= 0) call check_cvs(.true.)
   call check_H(i)
   update_chain = (index(keywrd, " CHAINS=(") == 0)
@@ -1207,7 +1207,7 @@ subroutine update_txtatm(output, sort)
     if (sort) then
       if (nat(i) > H_Z) then
         if (L_all .or. update_chain) then
-          do j = 1, numat_old          
+          do j = 1, numat_old
             if (abs(coord(1,i) - coorda(1,j)) > 0.01d0) cycle
             if (abs(coord(2,i) - coorda(2,j)) > 0.01d0) cycle
             if (abs(coord(3,i) - coorda(3,j)) > 0.01d0) cycle
@@ -1217,17 +1217,17 @@ subroutine update_txtatm(output, sort)
               if (txtatm1(j)(22:22) /= " ") txtatm(i)(22:22) = txtatm1(j)(22:22)
             end if
             exit
-          end do 
+          end do
         end if
-      else     
-        if (nbonds(i) > 0) txtatm(i) = txtatm(ibonds(1,i))  
+      else
+        if (nbonds(i) > 0) txtatm(i) = txtatm(ibonds(1,i))
       end if
-    else 
+    else
       if (L_all) then
         if (nat(i) > 1) then
           if (txtatm1(i) /= " ") txtatm(i) = txtatm1(i)
         else if (nbonds(i) > 0) then
-          txtatm(i) = txtatm(ibonds(1,i)) 
+          txtatm(i) = txtatm(ibonds(1,i))
         end if
       else
         if (update_chain .and. txtatm1(i)(22:22) /= " ") txtatm(i)(22:22) = txtatm1(i)(22:22)
@@ -1239,7 +1239,7 @@ subroutine update_txtatm(output, sort)
 !  Number hydrogen atoms, if more than one on a heavy atom
 !
   allocate(n_H(numat), nn_H(numat))
-  nn_H = 0 
+  nn_H = 0
   do i = 1, numat
     if (nat(i) > H_Z) then
       j = 0
@@ -1267,10 +1267,10 @@ subroutine update_txtatm(output, sort)
       else
         nn_H(k) = nn_H(k) + 1
         txtatm(i)(13:14) = char(nn_H(k) + ichar("0"))//"H"
-      end if         
+      end if
     end if
     if (numat == numat_old) then
-      if (txtatm1(i) == " ") txtatm1(i) = txtatm(i)  
+      if (txtatm1(i) == " ") txtatm1(i) = txtatm(i)
     end if
   end do
 !
@@ -1287,7 +1287,7 @@ subroutine update_txtatm(output, sort)
                 l = l + 1
                 txtatm(j)(k:k) = char(l + ichar("0"))
                 if (numat == numat_old) then
-                  if (txtatm1(j) == " ") txtatm1(j) = txtatm(j)  
+                  if (txtatm1(j) == " ") txtatm1(j) = txtatm(j)
                 end if
                 exit
               end if
@@ -1301,25 +1301,25 @@ subroutine update_txtatm(output, sort)
             if (txtatm(i)(k:k) == " ") then
               txtatm(i)(k:k) = "1"
               if (numat == numat_old) then
-                if (txtatm1(i) == " ") txtatm1(i) = txtatm(i)  
+                if (txtatm1(i) == " ") txtatm1(i) = txtatm(i)
               end if
               exit
             end if
         end do
       end if
     end if
-  end do 
-  
+  end do
+
 !
 !  Add atom numbering, using PDB format, i.e., a TER group has its own number
 !  (TER groups are represented by BREAKS)
 !
   j = 1
   do i = 1, numat
-    write(line,'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)  
+    write(line,'(a6,i5,a)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)
     txtatm(i) = trim(line)
-    if (PDB .and. i == breaks(j)) j = j + 1     
-  end do 
+    if (PDB .and. i == breaks(j)) j = j + 1
+  end do
   if (index(keywrd, " NEWPDB") /= 0) call PDB3()
   return
   end subroutine update_txtatm

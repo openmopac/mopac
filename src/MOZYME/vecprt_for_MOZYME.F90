@@ -57,7 +57,7 @@ subroutine vecprt_for_MOZYME(aa, numm)
       !
       j = 0
       l = 0
-      do i = 1, numb       
+      do i = 1, numb
         if (l_atom(i)) then
           j = j + 1
           itext(j) = "  "
@@ -66,7 +66,7 @@ subroutine vecprt_for_MOZYME(aa, numm)
             natom(j) = j
           else
             natom(j) = i
-          end if          
+          end if
           do k = 1, i
             if (l_atom(k)) then
               l = l + 1

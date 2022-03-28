@@ -30,7 +30,7 @@
     pdiag
 
     use elemts_C, only : elemnt
-    
+
     use parameters_C, only : n_partyp_alpb
 !
     use molkst_C, only : keywrd, moperr, title, natoms, method_mndo, &
@@ -44,7 +44,7 @@
 !
     USE molmec_C, only : nnhco
 !
-    USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar 
+    USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar
 !
     use chanel_C, only : iw, ir, igpt, ilog, job_fn
 !----------------------------------------------------------------------------
@@ -88,8 +88,8 @@
 !              K   Ca  Sc             Ti  V   Cr  Mn  Fe  Co  Ni  Cu  Zn   Ga  Ge  As  Se  Br  Kr
 !              Rb  Sr  Y              Zr  Nb  Mo  Tc  Ru  Rh  Pd  Ag  Cd   In  Sn  Sb  Te  I   Xe
 !              Cs  Ba  La Ce-Lu       Hf  Ta  W   Re  Os  Ir  Pt  Au  Hg   Tl  Pb  Bi  Po  At  Rn
-!              Fr  Ra  Ac Th Pa U     Np  Pu  Am  Cm  Bk  Cf  XX  +++ ---  Cb  ++  +   --  -   Tv 
-!                                     
+!              Fr  Ra  Ac Th Pa U     Np  Pu  Am  Cm  Bk  Cf  XX  +++ ---  Cb  ++  +   --  -   Tv
+!
 !
     data element_weights  &
            &/ org,                                                                            mg1, &!    2
@@ -106,17 +106,17 @@
 !  Assign the maximum possible size to pas and pbs
 !
     maxpab = 10000000
-    do 
+    do
       maxpab = (maxpab*6)/5
-      allocate (pas(maxpab), pbs(maxpab), stat = i) 
+      allocate (pas(maxpab), pbs(maxpab), stat = i)
       if (i /= 0) then
         maxpab = (maxpab*5)/6
         if (allocated(pas)) deallocate(pas)
-        allocate (pas(maxpab), pbs(maxpab), stat = i) 
+        allocate (pas(maxpab), pbs(maxpab), stat = i)
         exit
       end if
       if (maxpab > 40000000) exit
-      deallocate (pas, pbs, stat = i) 
+      deallocate (pas, pbs, stat = i)
     end do
     refnam = " "
     refok = .false.
@@ -144,7 +144,7 @@
     icapz = Ichar ("Z")
     told = seconds (1)
     max_atom = 1000
-    if (Index (contrl, " MAXAT") /= 0) max_atom = Nint(reada(contrl, Index(contrl," MAXAT"))) 
+    if (Index (contrl, " MAXAT") /= 0) max_atom = Nint(reada(contrl, Index(contrl," MAXAT")))
 
     let = (Index (contrl, " LET") /= 0)
     large = (Index(contrl, "LARGE") /= 0)
@@ -191,7 +191,7 @@
     do i = 1, numvar
       if (locvar(1,i) /= 41) elemok(1, mod(locvar(2, i),200)) = .true.
     end do
-   
+
 !
 !  Establish which elements have parameters. If GSS(I) is non-zero
 !  parameters are assumed to exist.
@@ -233,7 +233,7 @@
         if (opend) close(ir)
         line = get_a_name(contrl(loop:), len_trim(contrl(loop:)))
         loop = loop + len_trim(line)
-        if (contrl(loop + 1:loop + 1) == '"') loop = loop + 2     
+        if (contrl(loop + 1:loop + 1) == '"') loop = loop + 2
         if (contrl(loop:loop) == ";") then
           loop = loop + 1
         else
@@ -250,14 +250,14 @@
       else
         if (i /= 0) exit!  At least one set of data has been read in.
       end if
-    
+
 !
 !   Read in all the names of the molecules to be used in the optimization
 !
-      
+
       do m = 1, maxmol
         read (ir, "(A)", end=1200) keywrd
-        if (keywrd(1:1) == "*") cycle     
+        if (keywrd(1:1) == "*") cycle
 !
 !  Force molecule name into lower case
 !
@@ -304,7 +304,7 @@
       close (ir)
     end if
     if (Ichar(names(i)(1:1)) == 0) i = i - 1
-    nmolmx = i 
+    nmolmx = i
     write (ifiles_8, "(//10X,' FILE NAMES OF MOLECULES USED',/)")
     write (ifiles_8, "(2x,a)") (names(i), i=1, nmolmx)
     write (ifiles_8, "('1',//,'     MOLECULE         ',25x,'           H-EXP','   WT'&
@@ -338,7 +338,7 @@
           refdir(nref) = trim(get_a_name(contrl(k:j), len_trim(contrl(k:j))))//"/"
           n = len_trim(refdir(nref))
           if (refdir(nref)(n:n) /= "/") refdir(nref)(n + 1:n + 1) = "/"
-          k = k + i 
+          k = k + i
         end if
         if (i == 0) exit
       end do
@@ -367,7 +367,7 @@
 !      if (.not. exists) then
 !        write(ifiles_8,'(//10x,a)')"Reference folder """//trim(refdir(i))//""" does not exist"
 !        do n =  len_trim(refdir(i)) - 1, 1, -1
-!          if (refdir(i)(n:n) == "\") then                
+!          if (refdir(i)(n:n) == "\") then
 !            inquire (directory = refdir(i)(:n), exist = exists)
 !            if (.not. exists) then
 !              write(ifiles_8,'(10x,a)')"Reference folder """//refdir(i)(:n)//""" also does not exist"
@@ -379,7 +379,7 @@
 !        end do
 !        m = 1
 !      end if
-    end do 
+    end do
  !   call finish
     if (m == 1) call finish
     i = Index (jobnam, " ") - 1
@@ -410,7 +410,7 @@
 !
           if (names(nmols) (1:1) == " ") exit
           do iref = 1, nref
-            refnam = trim(refdir(iref)) // trim(names (nmols)) 
+            refnam = trim(refdir(iref)) // trim(names (nmols))
             if (Index(refnam,".mop") == 0) refnam = trim(refnam)//".mop"
             inquire (unit=igpt, opened=opend)
             if (opend) then
@@ -421,7 +421,7 @@
             open (igpt, status="OLD", file=trim(refnam), blank="ZERO", iostat=l)
             if (l /= 0) then
               continue
-            end if            
+            end if
             if ( l == 30 .and. i < 10) then
 !
 !  The file exists, but is not currently accessible
@@ -512,7 +512,7 @@
             end if
             i = index(keywrd," GNORM")
             if ( i == 0) then
-              i = Index (contrl, "GNORM") 
+              i = Index (contrl, "GNORM")
               if (i /= 0) then
                 k = index(contrl(i:)," ")
                 j = index(keywrd,"            ")
@@ -526,7 +526,7 @@
             if (method_mndo)        keywrd(i:i+3) = "MNDO"
             if (method_am1 )        keywrd(i:i+3) = "AM1 "
             if (method_pm3 )        keywrd(i:i+3) = "PM3 "
-            if (method_pm5 )        keywrd(i:i+3) = "PM5 "  
+            if (method_pm5 )        keywrd(i:i+3) = "PM5 "
             if (method_mndod)       keywrd(i:i+4) = "MNDOD"
             if (method_PM6_DH_plus) keywrd(i:i+6) = "PM6-DH+"
             if (method_PM6_D3H4)    keywrd(i:i+7) = "PM6-D3H4"
@@ -539,12 +539,12 @@
                 call l_control("PM6-DH2", len("PM6-DH2"),  1)
               end if
             end if
-          
+
             if (method_pm7)    then
               if (index(keywrd,"PM7") == 0) then
                   keywrd(i:i+4) = "PM7 "
                 end if
-            end if   
+            end if
             call l_control("PRECISE", len("PRECISE"), -1)
             if(.not. large) then
               call l_control("HCORE", len("HCORE"), -1)
@@ -564,7 +564,7 @@
 !***********************************************************************
             if (clean) call l_control("MECI", len("MECI"), -1)
 !***********************************************************************
-            do 
+            do
               i = index(keywrd(:len_trim(keywrd)),"  ")
               if (i /= 0) then
                 keywrd(i:) = keywrd(i + 1:)
@@ -572,7 +572,7 @@
                 exit
               end if
             end do
-            do 
+            do
               i = index(title(:len_trim(title)),"  ")
               if (i /= 0) then
                 title(i:) = title(i + 1:)
@@ -603,7 +603,7 @@
                   if (elemok(1, labels(i)) .and. labels(i) /= 99 .and. labels(i) /= 107) exit
                 end do
                 if(i > natoms) then
-                  ne_excluded = ne_excluded + 1 
+                  ne_excluded = ne_excluded + 1
                   go to 1400
                 end if
 !
@@ -624,7 +624,7 @@
               end do
               do i = len_trim(refnam), 2, -1
                 if (refnam(i:i) == backslash) exit
-              end do  
+              end do
               j = 0
               do i = 1, natoms
                 if (labels(i) /= 99 .and. labels(i) /= 107) then
@@ -632,7 +632,7 @@
                   nat(j) = labels(i)
                 end if
               end do
-              if (.not.(let .or. core_core_OK(geo, nat, numat, k, l, ccp) .or. .not. method_pm6)) then 
+              if (.not.(let .or. core_core_OK(geo, nat, numat, k, l, ccp) .or. .not. method_pm6)) then
                 do i = len_trim(refnam), 1, -1
                   if (refnam(i:i) == backslash .or. refnam(i:i) == "/") exit
                 end do
@@ -698,8 +698,8 @@
                 qn(nmols) = 0
                 Excited_state: if( i /= 5 ) then
 !
-! Format:  "ROOT=n,m,rep", n   = quantum number, 
-!                          m   = spin multiplicity, 
+! Format:  "ROOT=n,m,rep", n   = quantum number,
+!                          m   = spin multiplicity,
 !                          rep = representation.
                   j = Index(title(i:), " ")+i
 !
@@ -717,8 +717,8 @@
                       iline = Ichar (i_r(nmols)(i:i))
                       if (iline >= icapa .and. iline <= icapz) then
                         i_r(nmols)(i:i) = Char(iline+ilowa-icapa)
-                      end if 
-                  end do 
+                      end if
+                  end do
                 end if
 !
 !  If keyword MECI is not present, put it in - to force MECI to calculate all states
@@ -726,7 +726,7 @@
                 if(Index(keywrd," MECI") == 0) then
                   i = Index(keywrd,"      ")
                   keywrd(i+1:i+4) = "MECI"
-                end if             
+                end if
               end if Excited_state
               do
 !
@@ -756,7 +756,7 @@
 !
 !  j = end of name
 !
-                 j = Index (title (i + 2:), """") + i 
+                 j = Index (title (i + 2:), """") + i
                  if (j == i-1) then
                     j = 80
                   end if
@@ -849,7 +849,7 @@
 ! Set weights for states (defined by the presence of "ROOT=") to be less than other heats of formation, because the
 ! emphasis is on normal heats of formation, and state energies are used just to help tame the PES.
 !
-              if (qn(nmols) /= 0) weight(1, nmols) = 0.5d0*weight(1, nmols) 
+              if (qn(nmols) /= 0) weight(1, nmols) = 0.5d0*weight(1, nmols)
               if (is_a_ref(nmols)) weight(1, nmols) = 1.d-6
             else
               if (is_a_ref(nmols)) then
@@ -880,15 +880,15 @@
                 hr = "*"
               end if
 !
-!  pKa value is stored 
+!  pKa value is stored
 !
               Atom_pKas(nmols,1) = Nint(Reada(title,i))!  i
               i = i + Index(title(i:),"=")
               pKas(nmols) = reada (title, i)
               heats(nmols) = pKas(nmols)
               sum = 10.d0!   pKa default weight relative to H.o.F. weight
-              weight(1, nmols) = wth * sum   
-              i = Index (title, " PKA_WT=")  
+              weight(1, nmols) = wth * sum
+              i = Index (title, " PKA_WT=")
               if (i /= 0) then
                 weight(1, nmols) = reada (title, i) * wth * sum
               end if
@@ -1094,7 +1094,7 @@
                 do i = 1, 10
                   m = 0
                   do l = 1, j
-                    if (Abs((i*nele(l))/k - (i*1.d0*nele(l))/k) > 1.d-5) m = 1 
+                    if (Abs((i*nele(l))/k - (i*1.d0*nele(l))/k) > 1.d-5) m = 1
                   end do
                   if (m == 0) exit
                 end do
@@ -1151,7 +1151,7 @@
                 faulty = faulty + 1
                 go to 1600
               else
-                call moldat(2) 
+                call moldat(2)
                 if (moperr) then
                   if(errtxt(1:10) == "PARAMETERS")then
                     moperr=.false.
@@ -1175,7 +1175,7 @@
                         & ': No reference data '
                       end if
                       goto 1400
-                    end if                    
+                    end if
                   exit loop1
                 end if
               end if
@@ -1233,14 +1233,14 @@
 !
       lnmols = lnmols + 1
       is = is + 1
-      safety(is) = names(nmols) 
+      safety(is) = names(nmols)
       if (Index (keywrd, " XFAC") /= 0 .and. index(keywrd, " POP") == 0 .and. numat /= 2) then
         write(ifiles_8,"(a)")" Number of atoms in reference function must be 2"
         call finish
-      end if       
+      end if
 !
 !  element 99 is used for all parameters that are constant for all elements
-! 
+!
       nel = nel + 1
       molele(nel,nmols) = 99
       molele(1, nmols) = nel
@@ -1327,7 +1327,7 @@
   close (unit=jfiles(1), status="DELETE")
   close (unit=igpt)
   close (unit=55)
-  close (unit = 56) 
+  close (unit = 56)
   ifiles_8 = jfiles(3)
 !
 ! IF THERE ARE NO MOLECULES LEFT AT ALL, THEN STOP
@@ -1404,7 +1404,7 @@
 
 !
 !   Write out the matrix of core-core terms
-! 
+!
   ccp(99,99) = 1! Deliberately allow dummy atom parameters to be optimized.
   do i = 1, 83
     do j = 1,i-1
@@ -1422,10 +1422,10 @@
           line(j:j) = "*"
         else
           line(j:j) = Char(Ichar("0") + ccp(i,j))
-        end if        
+        end if
       else
         line(j:j) = "-"
-      end if      
+      end if
     end do
      select case (i)
     case (2,10,18,36,54)
@@ -1448,7 +1448,7 @@
     do j = 1,i
       if (bonds_ij(i,j) == 0) then
         line(j:j) = "-"
-      else if (bonds_ij(i,j) < 10) then 
+      else if (bonds_ij(i,j) < 10) then
         line(j:j) = Char(Ichar("0") + bonds_ij(i,j))
       else
         line(j:j) = "+"
@@ -1484,7 +1484,7 @@ end if
     do j = 1,i
       if (ccp(i,j) > 0) elemok(1,i) = .true.
     end do
-  end do 
+  end do
   elemok(:,97:99)  = .true.
 !
 ! At this point, no parameters have been excluded yet
@@ -1584,7 +1584,7 @@ logical function core_core_OK(geo, nat, numat, ni, nj, ccp)
   integer :: numat, ni, nj
   integer, dimension (numat) :: nat
   integer, dimension (107,107) :: ccp
-  double precision, dimension (3,*) :: geo 
+  double precision, dimension (3,*) :: geo
   logical :: first = .true.
   logical, save, dimension (107,107) :: cc_OK
   integer :: i, j
@@ -1602,7 +1602,7 @@ logical function core_core_OK(geo, nat, numat, ni, nj, ccp)
       end do
     end do
     cc_OK(:,98:) = .true.
-    cc_OK(98:,:) = .true. 
+    cc_OK(98:,:) = .true.
     cc_OK(:,57:71) = .true.
     cc_OK(57:71,:) = .true.
   end if
@@ -1629,6 +1629,6 @@ logical function core_core_OK(geo, nat, numat, ni, nj, ccp)
     ccp(nat(i), nat(i)) = ccp(nat(i), nat(i)) + 1
   end do
   ccp(:,98:) = 1
-  ccp(98:,:) = 1 
+  ccp(98:,:) = 1
   core_core_OK = .true.
 end  function core_core_OK

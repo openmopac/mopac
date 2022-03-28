@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    subroutine grid 
+    subroutine grid
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use chanel_C, only : iw0, iw, iarc, ires, iump, archive_fn, ump_fn, &
       restart_fn
@@ -34,12 +34,12 @@
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
-      implicit none 
+      implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: npts1, npts2, maxcyc, i, iloop, jloop, j, k, ij, l, &
-      iw00, percent = 0, max_count, big_loop, loop, io_stat 
+      iw00, percent = 0, max_count, big_loop, loop, io_stat
       double precision :: step1, step2, degree, c1, c2, cputot, &
         escf, cpu1, cpu2, cpu3, geo11, geo22, sum
       character :: formt*4, num*1
@@ -166,16 +166,16 @@
         c2 = degree
       else
         c2 = 1.d0
-      end if     
+      end if
       cputot = 0.d0
-      if (restrt) then 
+      if (restrt) then
           open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', &
           position='asis', iostat = io_stat)
           if (io_stat /= 0) then
             call mopend ("Restart file either does not exist or is not available for reading")
             return
-          end if 
-          rewind ires 
+          end if
+          rewind ires
           if (nvar > 0) then
             read (ires, iostat = io_stat)i,j
             if ((norbs /= j .or. numat /= i) .and. (norbs /= i .or. numat /= j) ) then
@@ -183,7 +183,7 @@
               return
             end if
           end if
-        if (useef .and. nvar > 1) then 
+        if (useef .and. nvar > 1) then
 !
 !  Dummy read over the EF restart file
 !
@@ -195,24 +195,24 @@
           if (nvar > 0) then
             do i = 1, 3
               read(ires, iostat = io_stat)txt
-            end do 
+            end do
           end if
-        end if 
-        read(ires, iostat = io_stat) max_count, ijlp, ilp, jlp, jlp1, ione 
-        read(ires, iostat = io_stat) rxn_coord1, rxn_coord2 
+        end if
+        read(ires, iostat = io_stat) max_count, ijlp, ilp, jlp, jlp1, ione
+        read(ires, iostat = io_stat) rxn_coord1, rxn_coord2
         read(ires, iostat = io_stat)all_geo(:max_count,:,:natoms)
-        read(ires, iostat = io_stat)all_nabc(:max_count,:,:natoms) 
+        read(ires, iostat = io_stat)all_nabc(:max_count,:,:natoms)
         read(ires, iostat = io_stat)surf(:max_count), all_points1(:max_count), all_points2(:max_count)
       else
         ijlp = 1
-      end if 
+      end if
       if ( minimize_energy_in_grid )  then
         big_loop = 4*npts1*npts2
       else
         big_loop = npts1*npts2
       end if
       if (iw00 > -1) &
-      call to_screen('       FIRST VARIABLE   SECOND VARIABLE        FUNCTION      DONE LEFT')  
+      call to_screen('       FIRST VARIABLE   SECOND VARIABLE        FUNCTION      DONE LEFT')
  Main_Loop:  do loop = ijlp, big_loop
         if (loop >= maxcyc) then
           tleft = -100.d0
@@ -220,7 +220,7 @@
         geo (lpara1, latom1) = geo11 + xy(1,loop)*step1
         geo (lpara2, latom2) = geo22 + xy(2,loop)*step2
         cpu1 = seconds (2)
-        if (useef .and. nvar > 1) then 
+        if (useef .and. nvar > 1) then
           call ef (xparam, escf)
         else
           call flepo (xparam, nvar, escf)
@@ -231,8 +231,8 @@
         jlp = jlp + 1
         ijlp = ijlp + 1
  !
- !  Find the point in all_points1(1:max_count) and all_points2(1:max_count) 
- !  defined by geo(lpara1, latom1) and geo(lpara2, latom2).  
+ !  Find the point in all_points1(1:max_count) and all_points2(1:max_count)
+ !  defined by geo(lpara1, latom1) and geo(lpara2, latom2).
  !  If it does not exist, then create it.
  !
         k = 0
@@ -259,14 +259,14 @@
  !  the current value.
  !
         if (escf + 1.d-10 < surf(k)) then
-           
+
  !
  !  Store all data for this point
  !
           surf(k) = escf
           do i = 1,natoms
             do j = 1,3
-              all_geo(k,j,i) = geo(j,i)                
+              all_geo(k,j,i) = geo(j,i)
             end do
             all_nabc(k,1,i) = na(i)
             all_nabc(k,2,i) = nb(i)
@@ -283,14 +283,14 @@
           write (line, '('' :'',F16.5,F16.5,F21.6, i10,i5)') &
             geo(lpara1,latom1)*c1, geo(lpara2,latom2)*c2, escf, &
             loop , big_loop - loop
-            
+
           if (iw00 > -1) then
             i = nint((100.0*loop)/big_loop)
             if (i /= percent) then
               percent = i
               write(line,"(i4,a)")percent, "% of Grid Surface done"
               call to_screen(line)
-            end if            
+            end if
             call to_screen(line)
           end if
           write(iw,'(a)')trim(line)
@@ -304,23 +304,23 @@
         end if
         if (tleft < 0.d0 .or. moperr) then
           if (tleft < 0.d0) then
-            inquire(unit=ires, opened=opend) 
+            inquire(unit=ires, opened=opend)
             if (.not. opend) &
               open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', &
               position='asis', iostat = io_stat)
 !
 !  Save everything that would be needed by GRID when the job is restarted.
 !
-            write(ires, iostat = io_stat) max_count, ijlp, ilp, jlp, jlp1, ione               
-            write(ires, iostat = io_stat) rxn_coord1, rxn_coord2 
+            write(ires, iostat = io_stat) max_count, ijlp, ilp, jlp, jlp1, ione
+            write(ires, iostat = io_stat) rxn_coord1, rxn_coord2
             write(ires, iostat = io_stat)all_geo(:max_count,:,:natoms)
-            write(ires, iostat = io_stat)all_nabc(:max_count,:,:natoms) 
-            write(ires, iostat = io_stat)surf(:max_count), all_points1(:max_count), all_points2(:max_count)         
+            write(ires, iostat = io_stat)all_nabc(:max_count,:,:natoms)
+            write(ires, iostat = io_stat)surf(:max_count), all_points1(:max_count), all_points2(:max_count)
           end if
           deallocate (surf, surfac)
           return
         end if
-      end do   Main_Loop    
+      end do   Main_Loop
 
       if (minimize_energy_in_grid) write(iw,*)" Survey complete.  About to print points"
       do iloop = 1,npts1
@@ -342,18 +342,18 @@
               end if
             end if
           if (k /= 0) exit
-          end do          
+          end do
 !
 !  Restore all data for this point
 !
-          escf = surf(k) 
+          escf = surf(k)
           do i = 1,natoms
             do j = 1,3
               geo(j,i) = all_geo(k,j,i)
             end do
-            na(i) = all_nabc(k,1,i) 
-            nb(i) = all_nabc(k,2,i) 
-            nc(i) = all_nabc(k,3,i) 
+            na(i) = all_nabc(k,1,i)
+            nb(i) = all_nabc(k,2,i)
+            nc(i) = all_nabc(k,3,i)
           end do
           surfac(jloop, iloop) = escf
           write (iw, "(/'       FIRST VARIABLE   ',  'SECOND VARIABLE FUNCTION')")
@@ -383,11 +383,11 @@
               p = pa + pb
             else
               p = 2*pa
-            end if      
+            end if
             call bonds()
           end if
         end do
-      end do 
+      end do
       write (iw, "(/10x,'HORIZONTAL: VARYING SECOND PARAMETER,',/10x, &
    & 'VERTICAL:   VARYING FIRST PARAMETER')")
     write (iw, "(/10X,'WHOLE OF GRID, SUITABLE FOR PLOTTING',//)")
@@ -418,18 +418,18 @@
         num = char(ichar("7") + int(log10(sum)))
         formt = " "//num//".3"
       end if
-      write(iw  ,'('//num//'x,1000f'//formt//')') ((geo22 + (j - 1)*step2)*c2,j=1,npts2) 
-      write(iarc,'('//num//'x,1000f'//formt//')') ((geo22 + (j - 1)*step2)*c2,j=1,npts2) 
-      open(unit=iump, file=ump_fn, status='UNKNOWN', position='asis') 
-      do i = 1, npts1 
-        write (iw,   '(1000f'//formt//')') (geo11 + (i - 1)*step1)*c1, (surfac(j,i),j=1,npts2) 
-        write (iarc, '(1000f'//formt//')') (geo11 + (i - 1)*step1)*c1, (surfac(j,i),j=1,npts2) 
+      write(iw  ,'('//num//'x,1000f'//formt//')') ((geo22 + (j - 1)*step2)*c2,j=1,npts2)
+      write(iarc,'('//num//'x,1000f'//formt//')') ((geo22 + (j - 1)*step2)*c2,j=1,npts2)
+      open(unit=iump, file=ump_fn, status='UNKNOWN', position='asis')
+      do i = 1, npts1
+        write (iw,   '(1000f'//formt//')') (geo11 + (i - 1)*step1)*c1, (surfac(j,i),j=1,npts2)
+        write (iarc, '(1000f'//formt//')') (geo11 + (i - 1)*step1)*c1, (surfac(j,i),j=1,npts2)
         do j = 1, npts2
           write (iump, '(2f9.3,F'//formt//')')(rxn_coord1 + step1*(i - 1))*c1, &
           (rxn_coord2 + step2*(j - 1))*c2, surfac(j,i)
         end do
       end do
-      close(iump) 
+      close(iump)
     if (allocated(surf)) then
       deallocate (surf, surfac)
     end if

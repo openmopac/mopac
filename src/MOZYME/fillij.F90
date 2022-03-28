@@ -46,7 +46,7 @@
         n2elec = 0
         mpack = 0
         first = .true.
-        morb = 4 
+        morb = 4
         if (ispd > 0) morb = 9
       else
 !
@@ -60,15 +60,15 @@
         ! Allocate either nijbo or iijj and ijall
         if ( .not. allocated(nijbo)) then
           i = 1
-          if (lijbo) then  
+          if (lijbo) then
 !
 !  Try to allocate memory for a simple square array
-!        
+!
             allocate (nijbo(numat, numat), stat = i)
             if (i == 0) nijbo(:, :) = 0
           end if
           if (i /= 0) then
-            
+
 !
 !  Array nijbo could not be created.  Therefore set lijbo false and
 !  create smaller, but more CPU intensive, arrays
@@ -93,7 +93,7 @@
       !   Set CUTOF values  CUTOF2 = First cutoff (NDDO-dipolar)
       !                     CUTOF1 = Second cutoff (dipolar-point charge)
       !
-      
+
       cutof1 = 10.d0 ** 2
       if (cutofp < 100.d0) cutof1 = cutofp ** 2 + 1.d-4
       if (numat < 30)      cutof1 = 1.d6 + 10
@@ -106,10 +106,10 @@
         j = index(line(i + 10:),'" ') + i + 9
         line(i:j) = " "
       end if
-     
+
       i = Index (line, " CUTOFF=")
       if (i /= 0) then
-        cutof1 = reada (line, i+8) 
+        cutof1 = reada (line, i+8)
         cutof2 = (cutof1 - 1.d-1)**2
         cutof1 = cutof1**2
       else
@@ -149,7 +149,7 @@
       rmin = 100.d0
       !
       !     Identify atom pairs involved in calculation.  This is done based
-      !     on interatomic distance.  
+      !     on interatomic distance.
       !
       i = 0
       do iloop = 1, numat

@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module journal_references_C 
+      module journal_references_C
       character, dimension(107,9) :: allref*100
 ! 2nd index denotes the model:
 ! 1 = MNDO
@@ -34,7 +34,7 @@
  data  allref( 9,6)/ '  F: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
  data  allref(15,6)/ '  P: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
  data  allref(16,6)/ '  S: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
- data  allref(17,6)/ ' Cl: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/ 
+ data  allref(17,6)/ ' Cl: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
  data  allref(35,6)/ ' Br: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
  data  allref(53,6)/ '  I: (RM1): G.B. ROCHA, R.O. FREIRE, A.M.SIMAS, J.J.P. STEWART, J. COMP. CHEM. 27, 1101 (2006)'/
 
@@ -213,19 +213,19 @@
  data  allref( 55,3)/ ' Cs: (AM1): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                  '/
  data  allref( 56,3)/ ' Ba: (AM1): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                  '/
  data  allref( 57,3)/ ' La: (AM1): R.O. FREIRE, ET AL, J. PHYS. CHEM. A 110 (17) (2006) 5897.          '/
- data  allref( 58,3)/ ' Ce: (AM1): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 691 (2006) 2584.    '/   
- data  allref( 59,3)/ ' Pr: (AM1): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 690 (2005) 4099.    '/  
- data  allref( 60,3)/ ' Nd: (AM1): C.C. BASTOS, ET AL, J. PHOTOCHEM. PHOTOBIOL. A 177 (2006) 225.      '/ 
+ data  allref( 58,3)/ ' Ce: (AM1): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 691 (2006) 2584.    '/
+ data  allref( 59,3)/ ' Pr: (AM1): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 690 (2005) 4099.    '/
+ data  allref( 60,3)/ ' Nd: (AM1): C.C. BASTOS, ET AL, J. PHOTOCHEM. PHOTOBIOL. A 177 (2006) 225.      '/
  data  allref( 61,3)/ ' Pm: (AM1): R.O. FREIRE, ET AL, J. CHEM. THEORY COMPUT. 2 (2006) 64.            '/
- data  allref( 62,3)/ ' Sm: (AM1): R.O. FREIRE, ET AL, J. CHEM. THEORY COMPUT. 2 (2006) 64.            '/  
- data  allref( 63,3)/ ' Eu: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/ 
- data  allref( 64,3)/ ' Gd: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/ 
- data  allref( 65,3)/ ' Tb: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/ 
- data  allref( 66,3)/ ' Dy: (AM1): N.B. DA COSTA JR, ET AL, INORG. CHEM. COMM. 8 (2005) 831.           '/ 
- data  allref( 67,3)/ ' Ho: (AM1): N.B. DA COSTA JR, ET AL, POLYHEDRON 24 (2005) 3046.                 '/  
+ data  allref( 62,3)/ ' Sm: (AM1): R.O. FREIRE, ET AL, J. CHEM. THEORY COMPUT. 2 (2006) 64.            '/
+ data  allref( 63,3)/ ' Eu: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/
+ data  allref( 64,3)/ ' Gd: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/
+ data  allref( 65,3)/ ' Tb: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/
+ data  allref( 66,3)/ ' Dy: (AM1): N.B. DA COSTA JR, ET AL, INORG. CHEM. COMM. 8 (2005) 831.           '/
+ data  allref( 67,3)/ ' Ho: (AM1): N.B. DA COSTA JR, ET AL, POLYHEDRON 24 (2005) 3046.                 '/
  data  allref( 68,3)/ ' Er: (AM1): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 691 (2006) 2584.    '/
- data  allref( 69,3)/ ' Tm: (AM1): R.O. FREIRE, ET AL, CHEM. PHYS. LETT., 411 (2005) 61.               '/ 
- data  allref( 70,3)/ ' Yb: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, J. COMP. CHEM., 26 (2005) 1524.'/        
+ data  allref( 69,3)/ ' Tm: (AM1): R.O. FREIRE, ET AL, CHEM. PHYS. LETT., 411 (2005) 61.               '/
+ data  allref( 70,3)/ ' Yb: (AM1): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, J. COMP. CHEM., 26 (2005) 1524.'/
  data  allref( 71,3)/ ' Lu: (AM1): R.O. FREIRE, ET AL, J. PHYS. CHEM. A 110 (17) (2006) 5897.          '/
  data  allref( 80,3)/ ' Hg: (AM1): M.J.S.Dewar and C.Jie, Organometallics 8, 1547, (1989)              '/
  data  allref( 81,3)/ ' Tl: (AM1): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                  '/
@@ -277,19 +277,19 @@
  data  allref( 55,4)/ ' Cs: (PM3): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                  '/
  data  allref( 56,4)/ ' Ba: (PM3): J. J. P. STEWART, J. MOL. MOD., 10, 155-164 (2004)                  '/
  data  allref( 57,4)/ ' La: (PM3): R.O. FREIRE, ET AL, J. PHYS. CHEM. A 110 (17) (2006) 5897.          '/
- data  allref( 58,4)/ ' Ce: (PM3): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 691 (2006) 2584.    '/   
- data  allref( 59,4)/ ' Pr: (PM3): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 690 (2005) 4099.    '/  
- data  allref( 60,4)/ ' Nd: (PM3): C.C. BASTOS, ET AL, J. PHOTOCHEM. PHOTOBIOL. A 177 (2006) 225.      '/ 
+ data  allref( 58,4)/ ' Ce: (PM3): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 691 (2006) 2584.    '/
+ data  allref( 59,4)/ ' Pr: (PM3): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 690 (2005) 4099.    '/
+ data  allref( 60,4)/ ' Nd: (PM3): C.C. BASTOS, ET AL, J. PHOTOCHEM. PHOTOBIOL. A 177 (2006) 225.      '/
  data  allref( 61,4)/ ' Pm: (PM3): R.O. FREIRE, ET AL, J. CHEM. THEORY COMPUT. 2 (2006) 64.            '/
- data  allref( 62,4)/ ' Sm: (PM3): R.O. FREIRE, ET AL, J. CHEM. THEORY COMPUT. 2 (2006) 64.            '/  
- data  allref( 63,4)/ ' Eu: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/ 
- data  allref( 64,4)/ ' Gd: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/ 
- data  allref( 65,4)/ ' Tb: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/ 
- data  allref( 66,4)/ ' Dy: (PM3): N.B. DA COSTA JR, ET AL, INORG. CHEM. COMM. 8 (2005) 831.           '/ 
- data  allref( 67,4)/ ' Ho: (PM3): N.B. DA COSTA JR, ET AL, POLYHEDRON 24 (2005) 3046.                 '/  
+ data  allref( 62,4)/ ' Sm: (PM3): R.O. FREIRE, ET AL, J. CHEM. THEORY COMPUT. 2 (2006) 64.            '/
+ data  allref( 63,4)/ ' Eu: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/
+ data  allref( 64,4)/ ' Gd: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/
+ data  allref( 65,4)/ ' Tb: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, INORG. CHEM.44 (2005) 3299.    '/
+ data  allref( 66,4)/ ' Dy: (PM3): N.B. DA COSTA JR, ET AL, INORG. CHEM. COMM. 8 (2005) 831.           '/
+ data  allref( 67,4)/ ' Ho: (PM3): N.B. DA COSTA JR, ET AL, POLYHEDRON 24 (2005) 3046.                 '/
  data  allref( 68,4)/ ' Er: (PM3): R.O. FREIRE, ET AL, J. ORGANOMETALLIC CHEMISTRY 691 (2006) 2584.    '/
- data  allref( 69,4)/ ' Tm: (PM3): R.O. FREIRE, ET AL, CHEM. PHYS. LETT., 425 (2006) 138.              '/ 
- data  allref( 70,4)/ ' Yb: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, J. COMP. CHEM., 26 (2005) 1524.'/        
+ data  allref( 69,4)/ ' Tm: (PM3): R.O. FREIRE, ET AL, CHEM. PHYS. LETT., 425 (2006) 138.              '/
+ data  allref( 70,4)/ ' Yb: (PM3): R.O. FREIRE, G.B. ROCHA, A.M. SIMAS, J. COMP. CHEM., 26 (2005) 1524.'/
  data  allref( 71,4)/ ' Lu: (PM3): R.O. FREIRE, ET AL, J. PHYS. CHEM. A 110 (17) (2006) 5897.          '/
  data  allref( 80,4)/ ' Hg: (PM3): J. J. P. STEWART, J. COMP. CHEM. 12, 320-341 (1991).                '/
  data  allref( 81,4)/ ' Tl: (PM3): J. J. P. STEWART, J. COMP. CHEM. 12, 320-341 (1991).                '/

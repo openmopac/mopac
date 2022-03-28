@@ -35,7 +35,7 @@
     use chanel_C, only : ir, iw, ilog, job_fn, input, iarc, ifiles_1
     use funcon_C, only : fpc_1, fpc_2, a0, ev, fpc_6, fpc_7, fpc_8, &
     & fpc_9, fpc_10, fpc_5
-    use conref_C, only : fpcref 
+    use conref_C, only : fpcref
     use meci_C, only : nmos
     use parameters_C, only: f0sd, g2sd, tore, ios, iop, iod, f0sd_store, g2sd_store, &
       zs, t_par
@@ -113,7 +113,7 @@
     end do
   !
   ! Read in all the data in the file "<filename>.dat", and put it
-  ! in an internal file. 
+  ! in an internal file.
   !
     call getdat(input, ifiles_8)
     if (moperr) then
@@ -122,7 +122,7 @@
     job_fn = Trim (jobnam) // ".dat"
     inquire (file=job_fn, exist=exists)
     if (.not. exists) then
-      open(unit=ifiles_8, file=trim(jobnam)//'.out') 
+      open(unit=ifiles_8, file=trim(jobnam)//'.out')
       write(ifiles_8,'(//10x,a,/10x,a)')"File: """//trim(job_fn)//"""", &
       "does not exist in this folder, therefore this job cannot be run."
       call finish
@@ -136,7 +136,7 @@
   !
   !  Open output results
   !
-    i = len_trim(jobnam) 
+    i = len_trim(jobnam)
     k = Index (contrl, "OUT=")
     if (k /= 0) then
       j = Index (contrl(k+4:), " ")
@@ -176,20 +176,20 @@
         text = " "
         read (ir, "(a)",end = 99, err = 98) text
         if (text == " ") cycle
-        do 
+        do
           if (text(1:1) /= " ") exit
           text = text(2:)
         end do
         if (text(1:1) == '"') then
           contrl(len_trim(contrl) + 1:) = trim(text)
         else
-          contrl(len_trim(contrl) + 1:) = " "//trim(text) 
+          contrl(len_trim(contrl) + 1:) = " "//trim(text)
         end if
       else
         exit
       end if
     end do
-    
+
   !
   !  Force character 1 to be a space
   !
@@ -201,7 +201,7 @@
     end if
     call upcase (contrl, len_trim(contrl))
     j = 1
-    do 
+    do
       l = Index (contrl(j:), '"') + j
       if (l /= j) then
 !
@@ -269,9 +269,9 @@
       n4 = 304            !  Number of atoms with 4 basis functions
       n9 = 100            !  Number of atoms with 9 basis functions
       lm61 = 0
-      iseps = .false. 
+      iseps = .false.
     end if
-    
+
 !
 !
     maxatoms = n1 + n4 + n9
@@ -283,7 +283,7 @@
     nvar = 3*maxatoms
     n2elec = 2025*n9+100*n4+n1+2025*(n9*(n9-1))/2+450*n9*n4+45*n9*n1+&
      & 100*(n4*(n4-1))/2+10*n4*n1+ (n1*(n1-1))/2+10
-   
+
     nmos = 12
     l123 = 1000
     uhf = .true.
@@ -326,7 +326,7 @@
     if (i /= 0) power = Reada(contrl, i)
     do i = 1, n_methods
       methods(i) = (index(contrl, trim(methods_keys(i))//" ") /= 0)
-    end do 
+    end do
     do i = 1, n_methods
       if (methods(i)) exit
     end do
@@ -347,7 +347,7 @@
           i = 14
           method_pm8 = .true.
         end if
-    end if 
+    end if
     tdump = 1.d8 ! (a long time)
     tleft=1.d6
 !
@@ -394,8 +394,8 @@
       if (zs(i) < 0.1d0) tore(i) = 3.d0
     end do
     call fractional_metal_ion
-    call l_control(trim("ifiles_8=8"), len_trim("ifiles_8=8"), 1)   
-    call calpar    
+    call l_control(trim("ifiles_8=8"), len_trim("ifiles_8=8"), 1)
+    call calpar
     if (Index (contrl, " CC") /= 0) then
     end if
     save_parameters = (Index (contrl, " NOSAVEP") == 0)
@@ -405,10 +405,10 @@
     i = size(p)
     deallocate(p)
     call datinp()
-    text = trim(jobnam)//".F90" 
+    text = trim(jobnam)//".F90"
     j = iw
     iw = ifiles_8
-    ! call create_parameters_for_PMx_C(text, "7") 
+    ! call create_parameters_for_PMx_C(text, "7")
     iw = j
     allocate(p(i))
     call fractional_metal_ion
@@ -436,7 +436,7 @@
       rewind (iw)
     else
       open (unit=iw, status="SCRATCH", form="FORMATTED")
-    end if     
+    end if
   !***********************************************************************
   !
   !   Different functions within PARAM
@@ -456,7 +456,7 @@
     !
     !   Generate publication-quality tables
     !
-      call partab 
+      call partab
       call finish
     end if
     if (numvar < 1) then
@@ -483,7 +483,7 @@
 !
         close (iw, iostat=i)
         open (unit=iw, status="SCRATCH", form="FORMATTED", iostat=i)
-      end if   
+      end if
       call rapid0 (loop)
       call pparsav(save_parameters)
     !
@@ -495,7 +495,7 @@
           sum = sum + xparamp(j) * diffns(j, i)
         end do
         fnsnew(i) = fns(i) - sum
-      end do      
+      end do
     end do
     call finish
  99 write(*,*)" Data file '",jobnam(:i),".dat' does not exist!"

@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine sympop(h, i, iskip, deldip) 
+      subroutine sympop(h, i, iskip, deldip)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use symmetry_C, only : nsym, ipo
 !***********************************************************************
@@ -27,19 +27,19 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer  :: i 
-      integer , intent(out) :: iskip 
-      double precision  :: h(*) 
-      double precision  :: deldip(3,*) 
+      integer  :: i
+      integer , intent(out) :: iskip
+      double precision  :: h(*)
+      double precision  :: deldip(3,*)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: j 
+      integer :: j
 !-----------------------------------------------
-      do j = 1, nsym 
-        if (ipo(i,j) >= i) cycle  
-        call symh (h, deldip, i, j, ipo) 
-        iskip = 3 
+      do j = 1, nsym
+        if (ipo(i,j) >= i) cycle
+        call symh (h, deldip, i, j, ipo)
+        iskip = 3
 !  atom ipo(i,j) is suitable for transition dipole calc'n
 !
 !            K=I*3-2
@@ -50,9 +50,9 @@
 !
 !   INSERT DELDIP ROTATION HERE
 !
-        go to 20 
-      end do 
-      iskip = 0 
-   20 continue 
-      return  
-      end subroutine sympop 
+        go to 20
+      end do
+      iskip = 0
+   20 continue
+      return
+      end subroutine sympop

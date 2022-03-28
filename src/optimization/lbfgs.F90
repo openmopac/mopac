@@ -18,10 +18,10 @@
 !
 !  Use the limited-memory quasi-Newton Broyden-Fletcher-Goldfarb-Shanno method for unconstrained optimization
 !
-!    J. Nocedal. Updating Quasi-Newton Matrices with Limited Storage (1980), 
-!    Mathematics of Computation 35, pp. 773-782. 
+!    J. Nocedal. Updating Quasi-Newton Matrices with Limited Storage (1980),
+!    Mathematics of Computation 35, pp. 773-782.
 !    D.C. Liu and J. Nocedal. On the Limited Memory Method for Large Scale Optimization (1989),
-!    Mathematical Programming B, 45, 3, pp. 503-528. 
+!    Mathematical Programming B, 45, 3, pp. 503-528.
 !
       use molkst_C, only: tleft, time0, iflepo, tdump, gnorm, natoms, keywrd, stress, &
       moperr, nvar, id, line, last, mozyme, numat, prt_gradients, keywrd_txt,  prt_coords
@@ -47,12 +47,12 @@
       double precision, dimension(:), allocatable :: best_xparam, best_gradients, &
       bot, gold, top, xold, wa
       integer, dimension (:), allocatable :: best_nc, iwa, nbd
-! For Mopac BLAS      
+! For Mopac BLAS
       double precision, external :: ddot, reada, seconds
 !
-      
+
       save :: resfil, tlast
-!     
+!
       allocate (best_xparam(nvar), best_gradients(nvar), best_nc(natoms), &
          & nbd(nvar), stat=alloc_stat)
       if (alloc_stat /= 0) then
@@ -92,7 +92,7 @@
         if (index(keywrd, " LET(") /= 0) then
           max_bad = Nint (reada (keywrd, Index (keywrd, " LET(")))
           write(iw,'(/10x,a,i4)') &
-            "Keyword ""LET"" re-set the number of cycles used in identifying the lowest-energy geometry to",max_bad 
+            "Keyword ""LET"" re-set the number of cycles used in identifying the lowest-energy geometry to",max_bad
         else
           max_bad = 60
         end if
@@ -125,7 +125,7 @@
       do i = 1, nvar
         nbd(i) = 0
       end do
-      restrt = (Index (keywrd, " RESTART") /= 0) 
+      restrt = (Index (keywrd, " RESTART") /= 0)
       if (restrt) then
         isave = 0
         dsave = 0.d0
@@ -211,7 +211,7 @@
               !
               const = 2.d0 * stepmx / sum
               do i = 1, nvar
-                xparam(i) = const * xparam(i) + (1.d0-const) * xold(i) 
+                xparam(i) = const * xparam(i) + (1.d0-const) * xold(i)
               end do
               sum = 2.d0 * stepmx
             end if
@@ -283,7 +283,7 @@
             nstep = nstep + 1
           end if
           if (geo_ref) then
-            call  geo_diff(sum, rms, .false.)         
+            call  geo_diff(sum, rms, .false.)
             write(iw,'(/1x, a, f8.2, a, f8.4, a, f8.4, a, f11.2, a)') "Difference to Geo-Ref:", sum, &
             " = total,", sum/numat, " = Average,", sqrt(rms/numat)," = RMS movement.    STRESS:", &
             stress
@@ -292,15 +292,15 @@
             write(line1,'(a,g15.7)')"  - STRESS:", escf - stress
           else
             line1 = " "
-          end if       
-          if (resfil) then          
+          end if
+          if (resfil) then
             write (line, '(" RESTART FILE WRITTEN,      TIME LEFT:", f6.2, &
              & a1, "  GRAD.:", f10.3, " HEAT:", g14.7, a)') &
              tprt, txt, Min (gnorm, 999999.999d0), escf, trim(line1)
-            write(iw,"(a)")trim(line)   
+            write(iw,"(a)")trim(line)
             call to_screen(trim(line))
-            endfile (iw) 
-            backspace (iw) 
+            endfile (iw)
+            backspace (iw)
             if (log) write (ilog, '(a)', err = 1000)trim(line)
             resfil = .false.
           else
@@ -309,9 +309,9 @@
                    nstep, Min (tstep, 9999.99d0), tprt, txt, &
                    & Min (gnorm, 999999.999d0), escf, trim(line1)
             write(iw,"(a)")trim(line)
-            endfile (iw) 
-            backspace (iw) 
-            if (log) write (ilog, "(a)")trim(line)                   
+            endfile (iw)
+            backspace (iw)
+            if (log) write (ilog, "(a)")trim(line)
             call to_screen(trim(line))
           end if
           if (mod(nstep,30) == 0) then
@@ -322,11 +322,11 @@
           end if
           if (nflush /= 0) then
             if (Mod(nstep, nflush) == 0) then
-              endfile (iw) 
-              backspace (iw) 
+              endfile (iw)
+              backspace (iw)
               if (log) then
-                endfile (ilog) 
-                backspace (ilog) 
+                endfile (ilog)
+                backspace (ilog)
               end if
             end if
           end if
@@ -336,8 +336,8 @@
           !  with the old gradient.  Ideally, this should be small.
           !
   1000    call dcopy (nvar, grad, 1, gold, 1)
-          endfile (iw) 
-          backspace (iw) 
+          endfile (iw)
+          backspace (iw)
           !
           !  EXIT CRITERIA.  (The criteria in SETULB are ignored.)
           if (gnorm < tolerg) then
@@ -365,10 +365,10 @@
 ! Job ran out of time or out of cycles - most likely shut down using the SHUT command.
 ! so update the geometry before printing it.
 !       Update array geo
-          do i = 1, nvar 
-            geo(loc(2,i) ,loc(1,i)) = xparam(i) 
-          end do 
-          call symtry 
+          do i = 1, nvar
+            geo(loc(2,i) ,loc(1,i)) = xparam(i)
+          end do
+          call symtry
         else
 !
 !  Call compfg to re-set all calculated quantities
@@ -398,9 +398,9 @@
           write (iw, "(//10X,'CURRENT BEST VALUE OF HEAT OF FORMATION ='   ,F14.6)") escf - stress
         else
           write (iw, "(//10X,'CURRENT VALUE OF HEAT OF FORMATION ='   ,F14.6)") escf - stress
-        end if      
-        if (prt_gradients .and. index(keywrd," GRADI") /= 0 .and. mozyme) then 
-          write (iw, '(3/7X,''CURRENT  POINT  AND  DERIVATIVES'',/)')        
+        end if
+        if (prt_gradients .and. index(keywrd," GRADI") /= 0 .and. mozyme) then
+          write (iw, '(3/7X,''CURRENT  POINT  AND  DERIVATIVES'',/)')
           call prtgra ()
         end if
         call geout (iw)
@@ -417,7 +417,7 @@
       implicit none
       character (len=60), intent (inout) :: csave, task
       integer, intent (in) :: mode, niwa, nwa
-      integer, intent (inout) :: nstep      
+      integer, intent (inout) :: nstep
       double precision, intent (inout) :: escf, tt0
       logical, dimension (4), intent (inout) :: lsave
       integer, dimension (44), intent (inout) :: isave
@@ -437,7 +437,7 @@
        !
        !  Write out XPARAM and GRAD
        !
-        write (ires) numat, norbs, (xparam(i),i=1,nvar) 
+        write (ires) numat, norbs, (xparam(i),i=1,nvar)
         write (ires) grad
        !
        !  Write out restart file
@@ -461,9 +461,9 @@
        !
         read (ires, err=1000, END=1000) wa, iwa, task, csave, lsave, isave, &
        & dsave, nstep, escf, nscf, tt0
-        i = int(tt0/10000000) 
-    tt0 = tt0 - i*10000000 
-    write (iw, '(10X,''TOTAL TIME USED SO FAR:'',F13.2,'' SECONDS'',/)') tt0 
+        i = int(tt0/10000000)
+    tt0 = tt0 - i*10000000
+    write (iw, '(10X,''TOTAL TIME USED SO FAR:'',F13.2,'' SECONDS'',/)') tt0
         return
 1000    call mopend ("RESTART FILE EXISTS, BUT IS CORRUPT")
         return
@@ -531,7 +531,7 @@
    & wt, wn, snd, z, r, d, t, wa, Index, iwhere, indx2, task, iprint, csave, &
    & lsave, isave, dsave)
     !
-    use chanel_C, only: lbfgs_it, iw     
+    use chanel_C, only: lbfgs_it, iw
       implicit none
       double precision, parameter :: one = 1.0d0
       double precision, parameter :: zero = 0.0d0
@@ -558,9 +558,9 @@
      & fold, gd, gdold, lnscht, rr, sbgnrm, sbtime, stp, stpmx, theta, time, &
      & time1, time2, tol, xstep
       double precision, external :: dpmeps
-! For Parallel MOPAC      
+! For Parallel MOPAC
       double precision, external :: ddot
-      
+
       if (task == "START") then
        !
        !         call timer(time1)
@@ -743,7 +743,7 @@
                   updatd = .true.
                   iupdat = iupdat + 1
                   !
-                  !     Update matrices WS and WY and form the middle 
+                  !     Update matrices WS and WY and form the middle
                   !     matrix in B.
                   !
                   call matupd (n, m, ws, wy, sy, ss, d, r, itail, iupdat, &
@@ -850,7 +850,7 @@
                 nintol = nintol + nint
                 !
                 !     Count the entering and leaving variables for iter > 0;
-                !     find the index set of free and active variables at 
+                !     find the index set of free and active variables at
                 !     the GCP.
                 !
                 call freev (n, nfree, index, nenter, ileave, indx2, iwhere, &
@@ -2384,7 +2384,7 @@
 
       use chanel_C, only: iw
       implicit none
- 
+
       character (len=3), intent (in) :: word
       character (len=60), intent (in) :: task
       integer, intent (in) :: iback, info, iprint, iter, itfile, k, n, nact, &
@@ -2755,7 +2755,7 @@
        !        The variables stp, f, g contain the values of the step,
        !        function, and derivative at stp.
        !
-        stx = 1.d-5 
+        stx = 1.d-5
         fx = finit
         gx = ginit
         sty = 1.d-4

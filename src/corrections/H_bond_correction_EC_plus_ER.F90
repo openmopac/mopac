@@ -16,7 +16,7 @@
 
   double precision function EC_plus_ER(D, H, A, q1, q2, EC, ER, d_list, nd_list)
 !
-! Based on "A Transferable H-bonding Correction For Semiempirical Quantum-Chemical Methods", 
+! Based on "A Transferable H-bonding Correction For Semiempirical Quantum-Chemical Methods",
 ! by Martin Korth, Michal Pitonak, Jan Rezac and Pavel Hobza, J. Chem. Theory Comput., 2010, 6 (1), pp 344:352
 !
   use common_arrays_C, only: coord, nat, nbonds, ibonds
@@ -61,28 +61,28 @@
     d_list(1) = D
     d_list(2) = H
     d_list(3) = A
-    nd_list = 3  
+    nd_list = 3
     angle_cos = -cos(angle)
     if (angle_cos < 0.d0) return
 !
 ! get target angles
 !
-    torsion_check = 0.0 
+    torsion_check = 0.0
     torsion_check_set = .false.
     torsion_check_set2 = .false.
     if (nat(A) == 8 .or. nat(A) == 16) then
-      if (nbonds(A) == 1) then 
-        angle2_shift = pi 
-        angle2_shift_2 = pi/(180.d0/120.d0) 
+      if (nbonds(A) == 1) then
+        angle2_shift = pi
+        angle2_shift_2 = pi/(180.d0/120.d0)
         torsion_shift = 0.0
         torsion_check_set2 = .true.
-      else 
-        angle2_shift = pi/(180.d0/109.48d0) 
-        angle2_shift_2 = angle2_shift 
-        torsion_shift = pi/(180.d0/54.74d0) 
+      else
+        angle2_shift = pi/(180.d0/109.48d0)
+        angle2_shift_2 = angle2_shift
+        torsion_shift = pi/(180.d0/54.74d0)
       end if
-      if (nat(A) == 8) then   
-        multiplier_a = 0.d0     
+      if (nat(A) == 8) then
+        multiplier_a = 0.d0
         if (nbonds(A) == 2) then
           if (nat(ibonds(1,A)) == 1 .and. nat(ibonds(2,A)) == 1) multiplier_a = dh2_a_parameters(5)   ! Water
         else if (nat(ibonds(1,A)) == 6) then
@@ -110,7 +110,7 @@
               do i = 1, nbonds(N_of_HNCO)
                 if (nat(ibonds(i,N_of_HNCO)) == 1) then
                   nH = nH + 1
-                  call dihed (coord, A, C_of_CO, N_of_HNCO, ibonds(i,N_of_HNCO), sum) 
+                  call dihed (coord, A, C_of_CO, N_of_HNCO, ibonds(i,N_of_HNCO), sum)
                   sum = min(sum, 2*pi - sum)
                   if (sum > 0.5d0*pi) peptide = .true.
                 end if
@@ -127,15 +127,15 @@
       end if
     else if (nat(A) == 7) then
       multiplier_a = dh2_a_parameters(1)   ! nitrogen
-      if (nbonds(A) == 2) then 
-        angle2_shift = pi/(180.d0/120.d0) 
-        angle2_shift_2 = angle2_shift 
+      if (nbonds(A) == 2) then
+        angle2_shift = pi/(180.d0/120.d0)
+        angle2_shift_2 = angle2_shift
         torsion_shift = 0.d0
-      else 
-        angle2_shift = pi/(180.d0/109.48d0) 
-        angle2_shift_2 = angle2_shift 
-        torsion_shift = pi/(180.d0/54.74d0) 
-        torsion_check_set = .true.! NR3 group 
+      else
+        angle2_shift = pi/(180.d0/109.48d0)
+        angle2_shift_2 = angle2_shift
+        torsion_shift = pi/(180.d0/54.74d0)
+        torsion_check_set = .true.! NR3 group
       end if
     end if
 !
@@ -159,7 +159,7 @@
       sum_max = 0.d0
       do ii = 1, nbonds(A)
         i = ibonds(ii,A)
-        if ( .not. connected(i, H, 1000.d0**2)) return 
+        if ( .not. connected(i, H, 1000.d0**2)) return
         if (sum_max < Rab) then
           sum_max = Rab
           R1 = i
@@ -196,7 +196,7 @@
         if (i == R1 .or. i == R2) cycle
         R3 = i
       end do
-      if (torsion_check_set) call dihed (coord, R2, R1, A, R3, torsion2) 
+      if (torsion_check_set) call dihed (coord, R2, R1, A, R3, torsion2)
       torsion_check = torsion2
       if (torsion_check <   -pi) torsion_check = torsion_check + 2.d0*pi
       if (torsion_check >    pi) torsion_check = torsion_check - 2.d0*pi
@@ -206,31 +206,31 @@
         torsion_check =  pi - torsion_check
       end if
       sum = torsion_check
-      if (sum <  0.d0) sum = -sum 
+      if (sum <  0.d0) sum = -sum
       sum = 180.d0/pi*sum
       torsion_shift = torsion_shift + pi/(180.d0/((54.74d0 - sum)/54.74d0*35.26d0))
       angle2_shift=angle2_shift - pi/(180.d00/((54.74d0 - sum)/54.74d0*19.48d0))
-      angle2_shift_2 = angle2_shift     
+      angle2_shift_2 = angle2_shift
     end if
     if (R1 == 0) return
 !
 ! second angle
 !
-    call bangle (coord, R1, A, H, angle2) 
-    nd_list = nd_list + 1   
-    d_list(nd_list) = R1    
+    call bangle (coord, R1, A, H, angle2)
+    nd_list = nd_list + 1
+    d_list(nd_list) = R1
     angle2_cos = cos(angle2_shift - angle2)
     angle2_cos_2 = cos(angle2_shift_2 - angle2)
     if (angle2_cos_2 > angle2_cos) angle2_cos = angle2_cos_2
     if (angle2_cos <= 0.d0) return
 !
 ! torsion angle
-! correction of NR3 torsion angle for through-bond case 
+! correction of NR3 torsion angle for through-bond case
 !
       call dihed (coord, R2, R1, A, H, torsion_ref)
-      nd_list = nd_list + 1   
-      d_list(nd_list) = R2  
-      torsion_correct = torsion_ref      
+      nd_list = nd_list + 1
+      d_list(nd_list) = R2
+      torsion_correct = torsion_ref
       if (torsion_correct < -pi) torsion_correct = torsion_correct + 2.d0*pi
       if (torsion_correct >  pi) torsion_correct = torsion_correct - 2.d0*pi
       if (.not. torsion_check_set2 .or. Abs(torsion_correct) > 0.5d0*pi) then
@@ -241,8 +241,8 @@
         end if
       end if
 
-     
-      if (torsion_check < 0.0) then ! negative torsion angle occupied by -NR3 r3 
+
+      if (torsion_check < 0.0) then ! negative torsion angle occupied by -NR3 r3
         torsion = torsion_shift - torsion_correct
         if (torsion <  -pi) torsion = torsion + 2.d0*pi
         if (torsion >   pi) torsion = torsion - 2.d0*pi
@@ -251,8 +251,8 @@
         torsion = -torsion_shift - torsion_correct
         if (torsion <  -pi) torsion = torsion + 2.d0*pi
         if (torsion >   pi) torsion = torsion - 2.d0*pi
-        torsion_cos = cos(torsion) 
-      else ! planar -NR3 or general case       
+        torsion_cos = cos(torsion)
+      else ! planar -NR3 or general case
         torsion = torsion_shift - torsion_correct
         torsion_2 = -torsion_shift - torsion_correct
         if (torsion <  -pi) torsion = torsion + 2.d0*pi
@@ -260,8 +260,8 @@
         if (torsion_2 <  -pi) torsion_2 = torsion_2 + 2.d0*pi
         if (torsion_2 >   pi) torsion_2 = torsion_2 - 2.d0*pi
         torsion_cos = cos(torsion)
-        torsion_cos_2 = cos(torsion_2)    
-        if (torsion_cos_2 > torsion_cos) torsion_cos = torsion_cos_2 
+        torsion_cos_2 = cos(torsion_2)
+        if (torsion_cos_2 > torsion_cos) torsion_cos = torsion_cos_2
       end if
       if ( .not. connected(A, H, 1000.d0**2)) return
       r = Rab
@@ -276,16 +276,16 @@
 !  Above 1.85 Angstroms, r = r
 !  Below 1.75 Angstroms r is increased to 1.80 Angstroms
 !
-    r = truncation(r, 1.80d0, 0.05d0)   
-    r = r/a0 
+    r = truncation(r, 1.80d0, 0.05d0)
+    r = r/a0
     expo    = 3.d0    ! "b" in equation 2
     rep_pre = 0.65d0    ! "c" in equation 2
     rep_exp = 5.d0    ! "d" in equation 2
     unit_part = fpc_9*eV
     attraction = multiplier_a*q1*q2/r**expo*unit_part
     repulsion = rep_pre*rep_exp**(-r)*unit_part
-    c = (attraction + repulsion)*angle_cos*angle2_cos*torsion_cos    
-    EC =       attraction*angle_cos*angle2_cos*torsion_cos  
-    ER =       repulsion*angle_cos*angle2_cos*torsion_cos                 
-    EC_plus_ER = c    
+    c = (attraction + repulsion)*angle_cos*angle2_cos*torsion_cos
+    EC =       attraction*angle_cos*angle2_cos*torsion_cos
+    ER =       repulsion*angle_cos*angle2_cos*torsion_cos
+    EC_plus_ER = c
   end function EC_plus_ER

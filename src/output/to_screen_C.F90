@@ -65,7 +65,7 @@ force_const, & ! Type          Force constant
 
   cnorml,    & ! Type          Normal modes of vibration
                ! Definition    Orthonormal coordinates of vibration
-               ! Units         (None) Normalized to unity 
+               ! Units         (None) Normalized to unity
   to_b         ! Type          Generic one-dimensional matrix
- 
+
 end module to_screen_C

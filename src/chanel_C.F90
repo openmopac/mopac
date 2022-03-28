@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module chanel_C 
+      module chanel_C
 !dec$ attributes dllexport :: iend, end_fn
       integer :: &
      & iw0       = -1, & !    Abbrev. output, for GUI (By default, not used)
@@ -22,7 +22,7 @@
      & input     =  2, & !    Input               <Filename>.dat         FORMATTED
      & iscr      =  3, & !    Scratch             <Filename>.scr         UNFORMATTED
      & irot      =  2, & !    Two-electron integrals used in analytical work
-     & iend      =  4, & !    End                 <Filename>.end         FORMATTED      
+     & iend      =  4, & !    End                 <Filename>.end         FORMATTED
      & ires      =  9, & !    Restart             <Filename>.res         UNFORMATTED
      & iden      = 10, & !    Density             <Filename>.den         UNFORMATTED
      & ilog      = 31, & !    Log                 <Filename>.log         FORMATTED
@@ -36,7 +36,7 @@
      & iump      = 20, & !    Grid map            <Filename>.ump         FORMATTED
      & iesp      = 21, & !    Electrostatic map   <Filename>.esp         FORMATTED
      & imep      = 22, & !    MEP map             <Filename>.mep         FORMATTED
-     & ixyz      = 23, & !    XYZ output file     <Filename>.xyz         Formatted   
+     & ixyz      = 23, & !    XYZ output file     <Filename>.xyz         Formatted
      & param_out = 24, & !
      & ir        = 25, & !    Input (During run)  <Filename>.temp        FORMATTED
      & iw        = 26, & !    Output              <Filename>.out         FORMATTED
@@ -44,7 +44,7 @@
      & lbfgs_it  = 28, &
      & idaf      = 29, & !    DAF (polarization)  29   <Filename>.pol         FORMATTED
      & iwc       = 30    !    COSMO output (used by keyword COSWRT)
-      
+
       logical :: log
 
       integer, parameter :: filename_len = 241
@@ -70,6 +70,6 @@
      & cosmo_fn,     &
      & archive_fn
 
-      integer, dimension(145) :: ifilen, ioda 
-      integer :: irecln = 1023, irecst 
-      end module chanel_C 
+      integer, dimension(145) :: ifilen, ioda
+      integer :: irecln = 1023, irecst
+      end module chanel_C

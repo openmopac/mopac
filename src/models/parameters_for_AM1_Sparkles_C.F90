@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module Parameters_for_AM1_Sparkles_C 
+      module Parameters_for_AM1_Sparkles_C
       double precision, dimension(107) :: alpam1sp, gssam1sp
-      double precision, dimension(107,4) :: guesam1sp1, guesam1sp2, guesam1sp3         
+      double precision, dimension(107,4) :: guesam1sp1, guesam1sp2, guesam1sp3
 !
 !       Data for Element  57:    Lanthanum
 !
@@ -48,7 +48,7 @@
       data    guesam1sp3( 59,1)/       1.8084677d0/
       data    guesam1sp1( 59,2)/       0.0097057d0/
       data    guesam1sp2( 59,2)/       8.7264195d0/
-      data    guesam1sp3( 59,2)/       2.9111890d0/      
+      data    guesam1sp3( 59,2)/       2.9111890d0/
       data    gssam1sp(59)  /         58.9017644267d0/
 !
 !       Data for Element  60:    Neodymium
@@ -114,7 +114,7 @@
       data    guesam1sp3( 65,1)/       1.7033464d0/
       data    guesam1sp1( 65,2)/       0.3936233d0/
       data    guesam1sp2( 65,2)/       7.9261457d0/
-      data    guesam1sp3( 65,2)/       3.0132951d0/      
+      data    guesam1sp3( 65,2)/       3.0132951d0/
       data    gssam1sp(65) /          55.7245956904D0/
 !
 !       Data for Element  66:   Dysprosium
@@ -183,4 +183,4 @@
       data    guesam1sp3( 71,2)/       2.9153096d0/
       data    gssam1sp(71)  /         56.1751741742d0/
 
-   end module Parameters_for_AM1_Sparkles_C 
+   end module Parameters_for_AM1_Sparkles_C

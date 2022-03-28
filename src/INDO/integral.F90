@@ -338,7 +338,7 @@
             call irreg (k, xx, 7, 8, 4, 6)
             xx = (2*fg(mf2dd, ia) - 10*fg(mf4dd, ia)) * sqrt3
             call irreg (k, xx, 8, 8, 4, 5)
-        
+
             if (ifroti == 1) then
 !	      ********* R1(sppd) contrinutions *************
               xx = 0.1490712d0 * fg(mr1sppd, ia)
@@ -483,13 +483,13 @@
 
 !               **** (I + A)/2, 2nd row code only ****
                 uu = uu - (zcore - 0.5d0) * f0(1, 1)
- 
+
                 if (k == 4) then
                   uu = uu + fg(mg1sp)/4
                 else if (k > 4) then
                   uu = uu + fg(mg1sp)/2*(zcore - 1.5d0)
                 end if
- 
+
               end if
             else
 !             **** renormalization as no d(n)s(0) ****
@@ -534,7 +534,7 @@
                   uu = uu + fg(mg1sp)&
      &                  + fg(mf2pp)*2*(zcore - 2.5d0)
                 end if
- 
+
               end if
 
             else
@@ -638,7 +638,7 @@
                         i1, ia, ib, iss, &
                         j2, j3, ja, jb, jnat, &
                         k3, ka, kb, knat, mmmm, mu, nm, nu
-      
+
 
       data two, three    /2.d0, 3.d0/
 !     **** the Borh magneton ehbar/(2.mass_e.c) in units of e Ang ****

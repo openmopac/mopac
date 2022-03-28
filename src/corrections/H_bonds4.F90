@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-   module radii_C 
+   module radii_C
    double precision :: covalent_radii(118)
    data covalent_radii /0.37d0, 0.32d0, 1.34d0, 0.9d0, 0.82d0, 0.77d0, &
      0.75d0, 0.73d0, 0.71d0, 0.69d0, 1.54d0, 1.3d0, 1.18d0, 1.11d0, 1.06d0, 1.02d0, 0.99d0, 0.97d0, &
@@ -30,8 +30,8 @@
 
   double precision function H_bonds4(H_i, i, j, d_list, nd_list)
 !
-! Rezac J., Hobza P., "Advanced Corrections of Hydrogen Bonding and 
-! Dispersion for Semiempirical Quantum Mechanical Methods", J. Chem. 
+! Rezac J., Hobza P., "Advanced Corrections of Hydrogen Bonding and
+! Dispersion for Semiempirical Quantum Mechanical Methods", J. Chem.
 ! Theory and Comp 8, 141-151 (2012).
 !
   use common_arrays_C, only: coord, nat
@@ -54,19 +54,19 @@
   double precision, external :: distance, cvalence_contribution
   save :: icalcn
     cv_cc = 0.d0
-    if (icalcn /= numcal) then  
+    if (icalcn /= numcal) then
 !
 !   Variables that change depending on the method
 !
       if (method_PM6_D3H4 .or. method_pm6_d3h4x) then
-        icalcn = numcal 
+        icalcn = numcal
         para_oh_o = 2.32d0
         para_oh_n = 3.10d0
         para_nh_o = 1.07d0
         para_nh_n = 2.01d0
         multiplier_wh_o = 0.42d0
         multiplier_nh4 = 3.61d0
-        multiplier_coo = 1.41d0        
+        multiplier_coo = 1.41d0
       else if (method_PM7 .or. method_PM8) then
         para_oh_o = 2.32d0
         para_oh_n = 3.10d0
@@ -75,20 +75,20 @@
         multiplier_wh_o = 0.42d0
         multiplier_nh4 = 3.61d0
         multiplier_coo = 1.41d0
-      else 
+      else
         para_oh_o = 2.32d0
         para_oh_n = 3.10d0
         para_nh_o = 1.07d0
         para_nh_n = 2.01d0
         multiplier_wh_o = 0.42d0
         multiplier_nh4 = 3.61d0
-        multiplier_coo = 1.41d0  
-      end if         
+        multiplier_coo = 1.41d0
+      end if
     end if
     d_list(1) = i
     d_list(2) = j
     d_list(3) = H_i
-    nd_list = 3  
+    nd_list = 3
 !
 ! Iterate over donor/acceptor pairs
 !
@@ -148,14 +148,14 @@
 !  5.75 -0.001     8.00  -43.815
 !  6.00 -0.026     8.25  -71.155
 !  6.25 -0.152     8.50 -111.391
-!  6.50 -0.550     8.75 -169.028 
+!  6.50 -0.550     8.75 -169.028
 !
 ! This is set in "cutoff" in find_H__Y_bonds
 !
 ! Angular term
 !
     a = angle/(M_PI/2.d0)
-    x = -20.d0*a**7 + 70.d0*a**6 - 84.d0*a**5 + 35.d0*a**4  
+    x = -20.d0*a**7 + 70.d0*a**6 - 84.d0*a**5 + 35.d0*a**4
     e_angular = 1.d0 - x*x
 !
 ! Energy coefficient
@@ -172,7 +172,7 @@
       rdhs = rdh - 1.15d0
       ravgs = 0.5d0*rdh + 0.5d0*rah - 1.15d0
       x = rdhs/ravgs
-      e_bond_switch = 1.d0 - (-20.d0*x**7 + 70.d0*x**6 -84.d0*x**5 + 35.d0*x**4) 
+      e_bond_switch = 1.d0 - (-20.d0*x**7 + 70.d0*x**6 -84.d0*x**5 + 35.d0*x**4)
     else
 !
 ! No switching, no gradient
@@ -226,7 +226,7 @@
       end do
       if (v > 3.d0) then
         v = v - 3.d0
-      else 
+      else
         v = 0.d0
       end if
       e_scale_chd = 1.d0 + slope*v
@@ -299,11 +299,11 @@
     e_corr_sum = e_corr_sum  + e_corr
     H_bonds4 = e_corr_sum
   end function H_bonds4
-  
- 
-  
-  
-  function energy_corr_hh_rep(l_grad, dxyz) 
+
+
+
+
+  function energy_corr_hh_rep(l_grad, dxyz)
     use common_arrays_C, only: nat, cell_ijk, Vab
     use molkst_C, only : numat, keywrd, e_hh, l123, l1u, l2u, l3u
     use chanel_C, only : iw
@@ -331,7 +331,7 @@
         if (cell_ijk(1) /= 0) then
           continue
         end if
-        
+
         e_corr = poly(r, l_grad, d_rad)
         e_hh = e_hh + e_corr
         if (l_grad) then
@@ -341,12 +341,12 @@
           g(:) = Vab(:)/r*d_rad
 !
 ! Add pair contribution to the global gradient
-!  
+!
           iii = l123*(i - 1)
           jjj = l123*(j - 1)
           kkkk = (l3u - cell_ijk(3)) + (2*l3u + 1)*(l2u - cell_ijk(2) + (2*l2u + 1)*(l1u - cell_ijk(1))) + 1
-          i_cell = iii + kkkk 
-          j_cell = jjj + kkkk       
+          i_cell = iii + kkkk
+          j_cell = jjj + kkkk
           grad_hh(:,i_cell) = grad_hh(:,i_cell) - g(:)
           grad_hh(:,j_cell) = grad_hh(:,j_cell) + g(:)
         end if
@@ -356,16 +356,16 @@
     if (l_grad) then
       dxyz = dxyz + grad_hh
       if (index(keywrd, " DERIV") > 0) then
-        write (iw, '(/25X,a)')"HH REPULSION" 
-        write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)') 
-        write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i, elemnt(nat(i)), grad_hh(:,i), i = 1,numat) 
-      end if 
+        write (iw, '(/25X,a)')"HH REPULSION"
+        write (iw, '(" NUMBER  ATOM  ",5X,"X",12X,"Y",12X,"Z",/)')
+        write (iw, '(I6,4x,a2,F13.6,2F13.6)') (i, elemnt(nat(i)), grad_hh(:,i), i = 1,numat)
+      end if
     end if
     return
   end function energy_corr_hh_rep
   double precision function poly(r, l_grad, dpoly)
     implicit none
-    double precision :: r, dpoly 
+    double precision :: r, dpoly
     logical :: l_grad
 !
 !  poly is the hydrogen-hydrogen correction for two atoms separated by "r" Angstroms
@@ -374,7 +374,7 @@
     if (r <= 1.d0) then
       poly = 25.46293603147693d0
       dpoly = 0.d0
-    else if ( r > 1.d0 .and. r < 1.5d0) then      
+    else if ( r > 1.d0 .and. r < 1.5d0) then
       poly =  -2714.952351603469651d0 * r**5 &
              +17103.650110591705015d0 * r**4 &
              -42511.857982217959943d0 * r**3 &
@@ -386,16 +386,16 @@
                +17103.650110591705015d0*4.d0 * r**3 &
                -42511.857982217959943d0*3.d0 * r**2 &
                +52063.196799138342612d0*2.d0 * r    &
-               -31430.658335972289933d0 
+               -31430.658335972289933d0
     else
-      poly = 118.7326d0*exp(-1.53965d0*(r**1.72905d0))  
+      poly = 118.7326d0*exp(-1.53965d0*(r**1.72905d0))
       if (l_grad) &
       dpoly = -1.53965d0*1.72905d0*r**0.72905d0*118.7326d0*exp(-1.53965d0*(r**1.72905d0))
-    end if      
+    end if
     return
   end function poly
 
-  
+
    function cvalence_contribution(atom_a, atom_b, d_list, nd_list)
     use common_arrays_C, only: nat
     use radii_C, only : covalent_radii
@@ -423,8 +423,8 @@
       if (i > nd_list) then
         nd_list = nd_list + 1
         d_list(nd_list) = atom_b
-      end if      
+      end if
     end if
-    return     
+    return
   end function cvalence_contribution
-  
+

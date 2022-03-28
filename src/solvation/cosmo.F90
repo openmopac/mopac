@@ -17,7 +17,7 @@
 subroutine addfck (f, p)
     use molkst_C, only : lm61, numat, mpack
     use funcon_C, only : a0, ev
-    use cosmo_C, only : ediel, fepsi, nps, & 
+    use cosmo_C, only : ediel, fepsi, nps, &
      amat, bmat, iatsp, nsetf, phinet, qscnet, qdenet, ipiden, gden, qscat
     implicit none
     double precision, dimension(mpack), intent(in) :: p
@@ -68,7 +68,7 @@ subroutine addfck (f, p)
       f(im) = f(im) - fcon * fim
     end do
 end subroutine addfck
-subroutine addhcr 
+subroutine addhcr
     use molkst_C, only : lm61
     use funcon_C, only : a0, ev
     use cosmo_C, only : nps, bmat, qscnet, ipiden
@@ -86,7 +86,7 @@ subroutine addhcr
       h(im) = h(im) - fcon * him
     end do
 end subroutine addhcr
-subroutine addnuc 
+subroutine addnuc
     use molkst_C, only : numat, lm61, enuclr
     use funcon_C, only : a0, ev
     use common_arrays_c, only : nat
@@ -368,7 +368,7 @@ subroutine coscav
           dist = sqrt(9.d0*(tm(1, 2, I) + rr)**2 + 4.d0*(tm(1, 1, i) + rr**2)**2 + tm(1, 3, i)**2)
           xx(1) = 3.d0*(tm(1, 2, I) + rr)/dist
           xx(2) = tm(1, 3, I)/dist
-          xx(3) = 2.d0*(tm(1, 1, I) + rr**2)/dist 
+          xx(3) = 2.d0*(tm(1, 1, I) + rr**2)/dist
         else
           dist2 = 0.d0
           do ix = 1, 3
@@ -714,7 +714,7 @@ subroutine diegrd (dxyz)
    & qqi2, qsk, rm2, rm4, xxx
     double precision, dimension (3) :: xk, xl, xx
     double precision, dimension (0:3, 10) :: db
-    double precision, dimension (3, numat), intent (inout) :: dxyz 
+    double precision, dimension (3, numat), intent (inout) :: dxyz
     intrinsic Min, Sqrt
     do i = 1, 10
       do ix = 1, 3
@@ -920,7 +920,7 @@ subroutine dmecip (coeffs, deltap, delta, eig, vectci, conf)
       end do
       !
       !     BACK TRANSFORM INTO A.O. BASIS.
-      !    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      !    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       !     P(C.I.) = P(SCF) + C * DELTAP * C'
       do i = 1, nmos
         do j = 1, i - 1
@@ -971,7 +971,7 @@ subroutine dvfill (nppa, dirvec)
    !   DVFILL CALCULATES THE DIRECTION VECTORS.  THESE ARE PUT IN DIRVEC.
    !
    !  (THE VARIOUS SETS FORM ALMOST REGULAR POLYHEDRA WITH IH
-   !   SYMMETRY.  A GOOD EXERCISE IS TO SKETCH THE POINTS USING, 
+   !   SYMMETRY.  A GOOD EXERCISE IS TO SKETCH THE POINTS USING,
    !   E.G. CHEM3D)
    !
    !***********************************************************************
@@ -1154,7 +1154,7 @@ subroutine mfinel (ips, k, finel, nar_csm, nsetf, nset, rsc, nipsrs, dirvec, tm,
       end do
     end do
 end subroutine mfinel
-subroutine mkbmat 
+subroutine mkbmat
     use molkst_C, only : numat, method_indo
     use cosmo_C, only : nps, bmat, cosurf
     use parameters_C, only : dd, qq, dsd, dpd, ddd
@@ -1299,7 +1299,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
     use funcon_C, only : pi, twopi
     implicit none
     integer, intent (in) :: maxrs, dim_din
-    logical, dimension (dim_din), intent (in) :: din 
+    logical, dimension (dim_din), intent (in) :: din
     integer, dimension (lenabc + 1), intent (inout) :: iatsp, nar_csm, nsetf
     integer, dimension (maxrs), intent (in) :: lipa
     integer, dimension (maxrs), intent (out) :: ipsrs, isort
@@ -1794,7 +1794,7 @@ subroutine cosini(l_print)
    2.29d0,  2.36d0,  2.64d0,  2.64d0,  2.63d0,  2.69d0,  2.57d0,  2.57d0, &
    2.57d0,  2.57d0,  2.57d0,  2.18d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0, &
    2.57d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0,  2.57d0,  5*2.d0/
-    lenabc = max(100, nspa*numat) 
+    lenabc = max(100, nspa*numat)
     ns = 0
     nsp = 0
     nspd = 0
@@ -1833,14 +1833,14 @@ subroutine cosini(l_print)
     if (allocated(sude))   deallocate (sude)
     if (allocated(arat))   deallocate (arat)
     if (allocated(amat))   deallocate (amat)
-    allocate(ipiden(lm61), idenat(numat), gden(lm61), & 
+    allocate(ipiden(lm61), idenat(numat), gden(lm61), &
           qdenet(lm61, 3), phinet(lenabc + 1, 3), qscnet(lenabc + 1, 3), &
-          qscat(numat), stat = i)  
+          qscat(numat), stat = i)
           qscat = 0.d0
     if (i /= 0) then
       call memory_error("COSINI (0) in Cosmo")
       return
-    end if       
+    end if
     allocate(srad(numat), nn(3, numat), qden(lm61), &
           iatsp(lenabc + 1), isude(2, 30*numat), nar_csm(lenabc + 1), &
           arat(numat), sude(2, 30*numat), nsetf(lenabc + 1), cosurf(4, lenabc), stat = i)
@@ -1848,13 +1848,13 @@ subroutine cosini(l_print)
     if (i /= 0) then
       call memory_error("COSINI (1) in Cosmo")
       return
-    end if 
-    if (.not. mozyme) then    
+    end if
+    if (.not. mozyme) then
       if (lenabc > 22000) then
         if (l_print) then
           write(line, '(a, i5, a)')"Data set '"//trim(jobnam)//"' exists, "
           write(0, '(//10x, a)')trim(line)
-          call mopend(trim(line)) 
+          call mopend(trim(line))
           write(line, '(a)')"but is too large to run using COSMO."
           write(0, '(//10x, a)')trim(line)
           call mopend(trim(line))
@@ -1868,16 +1868,16 @@ subroutine cosini(l_print)
       allocate(abcmat(lenabc), xsp(3, lenabc), nset(nppa*numat), bh(lenabc), stat = j)
       allocate(bmat(lm61, lenabc), stat = i)
       j = j + i
-      allocate(amat((lenabc*(lenabc + 1))/2), stat = i) 
+      allocate(amat((lenabc*(lenabc + 1))/2), stat = i)
       j = j + i
       allocate(cmat((lm61*(lm61 + 1))/2), stat = i)
       j = j + i
       if (j /= 0) then
         call memory_error("COSINI (2) in Cosmo")
         return
-      end if 
+      end if
       cmat = 0.d0
-    end if 
+    end if
     call extvdw (usevdw, rvdw)
     if (moperr) return
     rsolv = 1.30005d0
@@ -1993,7 +1993,7 @@ end subroutine cosini
 subroutine extvdw (vdw, refvdw)
     use molkst_C, only : numat, keywrd, line
     use chanel_C, only : iw
-    use common_arrays_C, only : nat 
+    use common_arrays_C, only : nat
     use elemts_C, only : cap_elemnt, elemnt
     implicit none
     double precision, dimension (107), intent (out) :: vdw

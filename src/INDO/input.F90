@@ -35,7 +35,7 @@
       character*3       rep
       integer           ictbl(8, 7), nrep(8), jsymt(0:8, 7), ioploc(7, 8), &
                         irs(8), isign(8), jrels(na, 7)
-      integer           i, j, k, l, & 
+      integer           i, j, k, l, &
                         iao, ier, iop, ir, ja, jsign, jr, jrs, &
                         k1, kc, krs, mt, mu, nop, nrs, nu
       double precision  sum, summ, sumx, sumy, sumz, xo, yo, zo, &
@@ -135,7 +135,7 @@
       call tred2e (3, 3, cc0, pmom, wk0, cc0)
       call tql2e  (3, 3,    pmom, wk0, cc0, ier)
 
-!     rotation of coordinates 
+!     rotation of coordinates
 
       do i = 1, na
         do k = 1, 3
@@ -379,7 +379,7 @@
       end do
 
 !     **** weights for transform vectors ****
-      if (allocated(stwt))  deallocate(stwt) 
+      if (allocated(stwt))  deallocate(stwt)
       allocate(stwt(n))
 
       do i = 1, n
@@ -521,7 +521,7 @@
         tmp = xz(k, i)
         xz(k, i) = xz(k, j)
         xz(k, j) = tmp
-        
+
         itmp = jrels(k, 4-i)
         jrels(k, 4-i) = jrels(k, 4-j)
         jrels(k, 4-j) = itmp

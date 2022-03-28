@@ -123,7 +123,7 @@
       data gues6sp1( 65,2)/          0.3099626210D0/
       data gues6sp2( 65,2)/          6.6812787003D0/
       data gues6sp3( 65,2)/          2.9759649920D0/
-  
+
 !
 !       Data for Element  66:                       Dysprosium
 !
@@ -135,7 +135,7 @@
       data gues6sp1( 66,2)/          0.4066395540D0/
       data gues6sp2( 66,2)/          8.9799453811D0/
       data gues6sp3( 66,2)/          2.9787279400D0/
-  
+
 !
 !       Data for Element  67:                       Holmium
 !
@@ -147,7 +147,7 @@
       data gues6sp1( 67,2)/          0.1333201849D0/
       data gues6sp2( 67,2)/          8.7112042124D0/
       data gues6sp3( 67,2)/          2.9809112221D0/
-  
+
 !
 !       Data for Element  68:                       Erbium
 !
@@ -159,7 +159,7 @@
       data gues6sp1( 68,2)/          0.2107436963D0/
       data gues6sp2( 68,2)/          8.4256041357D0/
       data gues6sp3( 68,2)/          2.7714227710D0/
- 
+
 !
 !       Data for Element  69:                       Thulium
 !

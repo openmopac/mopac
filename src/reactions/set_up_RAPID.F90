@@ -16,11 +16,11 @@
 
 subroutine set_up_rapid (txt)
 !
-!  set_up_rapid creates the environment where SCF and gradient calculations can be run 
+!  set_up_rapid creates the environment where SCF and gradient calculations can be run
 !  using a small number of atoms instead of the whole set.  When first called (option ON)
 !  a full SCF is done, then the atoms of interest are selected and moved to the start.
 !
-!  Until OFF is specified, the SCF and gradient calculations use the results of the sub-set plus 
+!  Until OFF is specified, the SCF and gradient calculations use the results of the sub-set plus
 !  "depleted" arrays - arrays representing the atoms not used in the SCF.
 !
 !  txt has three setting:
@@ -101,13 +101,13 @@ subroutine set_up_rapid (txt)
 !
 !  That is, each array = the normal array - terms due to the moving atoms.
 !  Each "depleted array" has the same "part<x>" where <x> refers to the
-!  name of the normal array.  
+!  name of the normal array.
 !
 !  Second, recalculate the one-electron matrix, but this time build the array parth
 !
   mode = -1
-  call hcore_for_MOZYME () 
-  if (moperr) return  
+  call hcore_for_MOZYME ()
+  if (moperr) return
 !  Build the depleted array part_dxyz if RAPID is used
   if (index(keywrd," RAPID") /= 0)  call dcart(coord, dxyz)
 !  Finally, set mode to +1.  The first time COMPFG is run, the following arrays will be built:

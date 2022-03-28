@@ -58,7 +58,7 @@ subroutine pinout (mode, l_use_disk)
 !
 !  The scratch file exists, so close it because it is going to be written to later on.
 !
-        if (mode == 1) close (unit = iden, iostat = i)      
+        if (mode == 1) close (unit = iden, iostat = i)
       end if
     end if
     if (l_use_disk) then
@@ -158,7 +158,7 @@ subroutine pinout (mode, l_use_disk)
           allocate (icvir(icvir_dim), cvir(cvir_dim))
         end if
       !
-      !   COMPRESS INCOMING DATA.  
+      !   COMPRESS INCOMING DATA.
       !
         j = 0
         do i = 1, nocc

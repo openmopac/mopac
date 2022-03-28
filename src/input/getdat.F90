@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine getdat(input, output)  
+      subroutine getdat(input, output)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : natoms, jobnam, run, backslash, &
       line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2, gui
@@ -24,7 +24,7 @@
       use common_arrays_C, only : all_comments
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
-!----------------------------------------------- 
+!-----------------------------------------------
       implicit none
 !-----------------------------------------------
       integer, intent (in) :: input, output
@@ -37,7 +37,7 @@
       character :: line1*3000, num1*1, num2*1
       character, allocatable :: tmp_comments(:)*120
       double precision, external :: reada
-      save i 
+      save i
 !-----------------------------------------------
 !
 !***********************************************************************
@@ -45,8 +45,8 @@
 !   GETDAT READS IN ALL THE DATA USING CHANEL "from_data_set", AND WRITES IT
 !   TO SCRATCH CHANNEL "input".  THIS WAY THE ORIGINAL DATA-SET IS
 !   FREED UP AS SOON AS THE JOB STARTS.
-!******************************************************************** 
-      natoms = 0 
+!********************************************************************
+      natoms = 0
       call to_screen("To_file: getdat")
       if (gui) then
         jobnam = "MOPAC input"
@@ -62,7 +62,7 @@
             end do
             jobnam(i + 1:) = " "
 !
-!  Replace backslash with forward-slash 
+!  Replace backslash with forward-slash
 !
             do i = 1, len_trim(jobnam)
               if (jobnam(i:i) == backslash) jobnam(i:i) = "/"
@@ -75,7 +75,7 @@
               write(0,'(10x,a)')" The command to run PARAM is 'PARAM.exe <data-set>.dat'"
              ! call web_message(0,"running_MOPAC.html")
               write(0,'(10x,a)')" Press (return) to continue"
-              read(5,*, iostat=i) 
+              read(5,*, iostat=i)
               return
             else
               write(0,'(//10x,a,/)')" MOPAC is a semiempirical quantum chemistry program"
@@ -83,9 +83,9 @@
               write(0,'(10x,a)')" The command to run MOPAC is 'MOPAC2016.exe <data-set>.mop'"
               call web_message(0,"running_MOPAC.html")
               write(0,'(10x,a)')" Press (return) to continue"
-              read(5,*, iostat=i) 
+              read(5,*, iostat=i)
               return
-            end if            
+            end if
           end if
         else
           natoms = 1
@@ -100,7 +100,7 @@
       call upcase(line, len_trim(line))
       i = Index(line,".MOP") + Index(line,".DAT") + Index(line, ".ARC")
       arc_file = (Index(line, ".ARC") > 0)
-      if (i > 0) then  ! User has supplied a suffix - use it     
+      if (i > 0) then  ! User has supplied a suffix - use it
         line1 = trim(line)
         line = trim(jobnam)
         inquire(file=line, exist=exists)
@@ -110,11 +110,11 @@
           if (j - i > 7) then
           line1 = "There must not be any text between """//line1(i:i+3)// &
           """ and "".TXT"" in the file-name"
-           open(unit=iw, file=trim(jobnam)//'.out') 
+           open(unit=iw, file=trim(jobnam)//'.out')
            call mopend(trim(line1))
-           write(iw,'(/10x,a)')"(End of file name: """//trim(line(i:))//""")"           
+           write(iw,'(/10x,a)')"(End of file name: """//trim(line(i:))//""")"
            return
-          end if          
+          end if
         end if
         jobnam(i:i+3) = " "
       else  ! No suffix supplied, try the file, then .mop, then .dat
@@ -122,7 +122,7 @@
         inquire(file=line, exist=exists)
         if (exists) then ! Check that it is not a folder
           open(unit=from_data_set, file=line, status='OLD', position=&
-          'asis', iostat=io_stat) 
+          'asis', iostat=io_stat)
           if (io_stat == 9) then
             exists = .false.
           else
@@ -138,15 +138,15 @@
           inquire(file=line, exist=exists)
         end if
       end if
-  98  if (exists) then 
-         if (iw0 > -1) then           
+  98  if (exists) then
+         if (iw0 > -1) then
            call to_screen("Preparing to read the following MOPAC file: ")
            i = min(len_trim(line), 240)
                          call to_screen(line(:min(i,120)))
            if (i > 120)  call to_screen(line(121:min(i,240)))
          end if
          job_fn = line(:len(job_fn))
-        open(unit=from_data_set, file=job_fn, status='OLD', position='asis', iostat=io_stat) 
+        open(unit=from_data_set, file=job_fn, status='OLD', position='asis', iostat=io_stat)
         if (io_stat /= 0) then
           write(line,'(2a)')" Data file: '"//trim(job_fn)//"' exists, but it cannot be opened."
           write(0,'(//10x,a,//)')trim(line)
@@ -157,25 +157,25 @@
 !
 !  Now that the name of the data-set is known, set up all the other file-names
 !
-        call init_filenames 
+        call init_filenames
       else
         if (is_PARAM) then
           line = "PARAM input data-set file: """//trim(jobnam)//""" does not exist."
-          open(unit=iw, file='PARAM Error message.txt') 
+          open(unit=iw, file='PARAM Error message.txt')
         else
           line = "MOPAC input data-set file: """//trim(jobnam)//""" does not exist."
-          open(unit=iw, file='MOPAC Error message.txt') 
+          open(unit=iw, file='MOPAC Error message.txt')
         end if
         write(0,'(//10x,a,//)')trim(line)
         call to_screen(trim(line))
         call mopend(trim(line))
         return
-      end if 
+      end if
 !
 !  CLOSE UNIT IFILES(5) IN CASE IT WAS ALREADY PRE-ASSIGNED.
-!INPUT FILE MISSING 
-      close(input) 
-      open(unit=input, status='SCRATCH', iostat = io_stat) 
+!INPUT FILE MISSING
+      close(input)
+      open(unit=input, status='SCRATCH', iostat = io_stat)
       if (io_stat /= 0) then
         if (io_stat == 30) then
           call to_screen(" The file'"//input_fn(:len_trim(input_fn))//"' is busy")
@@ -184,35 +184,35 @@
           return
         end if
       end if
-      rewind input 
-      rewind from_data_set 
+      rewind input
+      rewind from_data_set
       arc_hof_1 = 0.d0
       arc_hof_2 = 0.d0
       if (arc_file) then
-        do 
+        do
           read (from_data_set, '(A1000)', iostat = i) line
           if (i /= 0) then
             i = 0
             ncomments = 0
             rewind(from_data_set)
             exit
-          end if 
+          end if
           if (index(line, "HEAT OF FORMATION") > 0) arc_hof_1 = reada(line,20)
-          if (index(line, "FINAL GEOMETRY OBTAINED") > 0) exit   
-          if (index(line, "GEOMETRY IN CARTESIAN COORDINATE") > 0) exit 
-          if (index(line, "GEOMETRY IN MOPAC Z-MATRIX") > 0) exit            
-        end do    
+          if (index(line, "FINAL GEOMETRY OBTAINED") > 0) exit
+          if (index(line, "GEOMETRY IN CARTESIAN COORDINATE") > 0) exit
+          if (index(line, "GEOMETRY IN MOPAC Z-MATRIX") > 0) exit
+        end do
       end if
-      nlines = 0 
+      nlines = 0
       ncomments = 0
       if (.not. allocated(tmp_comments)) allocate(tmp_comments(10000))
       keywrd = " "
 !
 !  The size of the comments is not known, so set up a temporary array of size 10000 lines
 !
-      do        
-        read (from_data_set, '(A2000)', end=30, err=30) line 
-        nlines = nlines + 1 
+      do
+        read (from_data_set, '(A2000)', end=30, err=30) line
+        nlines = nlines + 1
         if (nlines == 1) then
           line1 = trim(line)
           call upcase(line1, len_trim(line1))
@@ -220,7 +220,7 @@
           if (j > 0) exit
         end if
         if (line(1:1) /= '*') then
-            line1 = trim(line)    
+            line1 = trim(line)
             i = 0
             do j = 1, len_trim(line1)
               if (ichar(line1(j:j)) == 9) then
@@ -230,7 +230,7 @@
                 i = i + 1
                 l = mod(i,8)
                 line(i:) = " "
-                if (l /= 0) i = i + 8 - l                    
+                if (l /= 0) i = i + 8 - l
               else
                 i = i + 1
                 line(i:i) = line1(j:j)
@@ -239,14 +239,14 @@
           write (input, '(A)', iostat=io_stat) trim(line)
           if (io_stat /= 0) then
             write (line, '(a)') ' The run-time temporary file "'//trim(jobnam)//'.temp" cannot be written to.'
-            open(unit=iw, file=trim(jobnam)//'.out') 
+            open(unit=iw, file=trim(jobnam)//'.out')
             if( .not. gui) write(0,"(///10x,a)")line
             call to_screen(line)
-            call mopend (trim(line)) 
+            call mopend (trim(line))
             return
           end if
           comments = .false.
-          if (keywrd == " ") keywrd = line      
+          if (keywrd == " ") keywrd = line
         else if (comments) then
           ncomments = ncomments + 1
           tmp_comments(ncomments) = trim(line)
@@ -258,7 +258,7 @@
             index(line,"SOURCE") + index(line,"KEYWDS") + index(line,"USER ") + &
             index(line,"HELIX") + index(line,"SHEET") + index(line,"REMARK") + &
             index(line, "SEQRES") /= 0) then
-              open(unit=iw, file=trim(jobnam)//'.out') 
+              open(unit=iw, file=trim(jobnam)//'.out')
               num1 = char(ichar("2") + int(log10(ncomments*1.01)))
               num2 = char(ichar("2") + int(log10(i*1.01)))
               write(iw,'(/10x, a, i'//num1//', a,i'//num2//', a)') "Comment number", ncomments, &
@@ -273,7 +273,7 @@
           end if
         end if
       end do
-30    continue 
+30    continue
       call upcase(keywrd, len_trim(keywrd))
       if (keywrd(1:1) /= " ") keywrd = " "//trim(keywrd)
       i = index(keywrd, "GEO-DAT")
@@ -283,8 +283,8 @@
       if (index(keywrd, " GEO_DAT") + index(keywrd, " SETUP")/= 0) then
         nlines = nlines + 3
       else if (.not. is_PARAM .and. nlines < 4) then
-        inquire(unit=iw, opened=exists) 
-        if (.not. exists) open(unit=iw, file=trim(jobnam)//'.out') 
+        inquire(unit=iw, opened=exists)
+        if (.not. exists) open(unit=iw, file=trim(jobnam)//'.out')
         if (keywrd /= " ") then
           if (index(keywrd, "++") == 0) &
           write(iw,'(3/10x,a,/)')" Data set does not contain "//&
@@ -292,9 +292,9 @@
         end if
       end if
       keywrd = "  "
-      if (nlines == 1 .and. Len_trim(line1) > 0 .and. .not. is_PARAM) then  
+      if (nlines == 1 .and. Len_trim(line1) > 0 .and. .not. is_PARAM) then
 !
-!  Data set points to a MOPAC data set.  
+!  Data set points to a MOPAC data set.
 !
         i = Len_trim(line1)
         job_fn = line(j+5:i)
@@ -322,9 +322,9 @@
         line = job_fn
         call upcase(line,i)
         i = index(line,".MOP") + index(line,".DAT") + index(line,".ARC")
-        if (i /= 0) job_fn(i + 4:) = " " 
+        if (i /= 0) job_fn(i + 4:) = " "
         if (job_fn(1:1) == '"') job_fn = trim(job_fn(2:))
-        do j = 1,Len_trim(job_fn) 
+        do j = 1,Len_trim(job_fn)
           if (job_fn(j:j) == char(92)) job_fn(j:j) = "/"
         end do
 !
@@ -335,11 +335,11 @@
         end do
         l = Index(job_fn,"/")
         if (l == 0) then
-          open(unit=iw, file=trim(jobnam)//'.out') 
+          open(unit=iw, file=trim(jobnam)//'.out')
           call mopend ('INPUT FILE PATH MUST BE DEFINED IN ''DATA="<file plus path>"''')
           call web_message(iw,"DATA.html")
           return
-        end if                       
+        end if
         call to_screen ("Preparing to read the following MOPAC file: ")
         j = Len_trim (job_fn)
         if (j > 160) then
@@ -353,7 +353,7 @@
           call to_screen ("'"//job_fn(1:j)//"'")
         end if
         line = job_fn
-        exists = .true.        
+        exists = .true.
         goto 98
     end if   ! Line was one of first 5 lines
 !
@@ -364,19 +364,19 @@
         all_comments(i) = trim(tmp_comments(i))
       end do
       deallocate(tmp_comments)
-      line = ' ' 
-      write (input, '(A241)') line 
-      rewind input 
-1000  if (nlines < 3 .and. .not. is_PARAM) then 
+      line = ' '
+      write (input, '(A241)') line
+      rewind input
+1000  if (nlines < 3 .and. .not. is_PARAM) then
         inquire(unit=output, opened=exists)
-        if (.not. exists) open(unit=output, file=trim(jobnam)//'.out') 
+        if (.not. exists) open(unit=output, file=trim(jobnam)//'.out')
         call getarg (run, jobnam)
-        write (0, '(A)') ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY'  
-        call mopend ( ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY') 
-        return  
-      end if 
+        write (0, '(A)') ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY'
+        call mopend ( ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY')
+        return
+      end if
       natoms = nlines
-      close(from_data_set) 
-      return  
-      end subroutine getdat 
- 
+      close(from_data_set)
+      return
+      end subroutine getdat
+

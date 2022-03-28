@@ -164,7 +164,7 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
             jba = iorbs(jj)
             if (ijbo(ii, jj) >= 0) then
               if (direct .and. (calci .or. calcj)) then
-                call rotate(nat(ii), nat(jj), coord(1, ii), coord(1, jj), wjloc, kr, e1b, e2a, enuc) 
+                call rotate(nat(ii), nat(jj), coord(1, ii), coord(1, jj), wjloc, kr, e1b, e2a, enuc)
               end if
                !
               if (iab > 5 .or. jba > 5) then
@@ -464,7 +464,7 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
                     if (l_feather) then
                       call to_point(sqrt(r2), point, const)
                       w1 = w1*const + (1.d0 - const)*point
-                    end if   
+                    end if
                   else
                     w1 = wj(kr+1)
                   end if
@@ -509,9 +509,9 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
                       ri2 = ev * (0.5d0/rp-0.5d0/rm)
                       if (l_feather) then
                         call to_point(r, point, const)
-                        ri2 = ri2*const 
-                      end if  
-                       
+                        ri2 = ri2*const
+                      end if
+
                       w5 = ri2 * dx
                       w6 = ri2 * dy
                       w7 = ri2 * dz
@@ -526,8 +526,8 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
                       ri5 = -ev * (0.5d0/rp-0.5d0/rm)
                       if (l_feather) then
                         call to_point(r, point, const)
-                        ri5 = ri5*const 
-                      end if 
+                        ri5 = ri5*const
+                      end if
 
                       w2 = ri5 * dx
                       w3 = ri5 * dy
@@ -801,7 +801,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
             jba = iorbs(jj)
             if (nijbo(ii, jj) >= 0) then
               if (direct .and. (calci .or. calcj)) then
-                call rotate(nat(ii), nat(jj), coord(1, ii), coord(1, jj), wjloc, kr, e1b, e2a, enuc) 
+                call rotate(nat(ii), nat(jj), coord(1, ii), coord(1, jj), wjloc, kr, e1b, e2a, enuc)
               end if
                !
               if (iab > 5 .or. jba > 5) then
@@ -1092,7 +1092,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
                     r2 = dx * dx + dy * dy + dz * dz
                     ni = nat(ii)
                     nj = nat(jj)
-                    aee = 0.5d0 / am(ni) + 0.5d0 / am(nj)                    
+                    aee = 0.5d0 / am(ni) + 0.5d0 / am(nj)
                     if (l_feather) then
                       rij = sqrt(r2)
                       call to_point(rij, point, const)
@@ -1100,7 +1100,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
                       w1 = w1*const + (1.d0 - const)*point
                     else
                       w1 = ev / Sqrt (r2/(a0**2)+aee**2)
-                    end if              
+                    end if
                   else
                     w1 = wj(kr+1)
                   end if
@@ -1145,9 +1145,9 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
                       ri2 = ev * (0.5d0/rp-0.5d0/rm)
                       if (l_feather) then
                         call to_point(r, point, const)
-                        ri2 = ri2*const 
+                        ri2 = ri2*const
                       end if
-                        
+
                       w5 = ri2 * dx
                       w6 = ri2 * dy
                       w7 = ri2 * dz
@@ -1162,7 +1162,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
                       ri5 = -ev * (0.5d0/rp-0.5d0/rm)
                       if (l_feather) then
                         call to_point(r, point, const)
-                        ri5 = ri5*const 
+                        ri5 = ri5*const
                       end if
                       w2 = ri5 * dx
                       w3 = ri5 * dy

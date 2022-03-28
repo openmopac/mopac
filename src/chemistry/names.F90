@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres) 
+subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
     use molkst_C, only: natoms, numat, keywrd, id
     use MOZYME_C, only : nres, allres, maxres, nbackb, nxeno, mxeno, k, iatom, jatom, &
        & loop, bbone, angles, txeno, afn, allr, lstart_res
@@ -113,8 +113,8 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
               ires = 0
             else
               write(iw,'(/10x, a)') "A residue that can have either the number 1 or 0 has been detected"
-              write(iw,'(10x, a)') "Add keyword ""NOZERO"" if the number 1 is to be used for this residue" 
-              write(iw,'(10x, a)') "Add keyword ""ZERO"" if the number 0 is to be used for this residue" 
+              write(iw,'(10x, a)') "Add keyword ""NOZERO"" if the number 1 is to be used for this residue"
+              write(iw,'(10x, a)') "Add keyword ""ZERO"" if the number 0 is to be used for this residue"
               call mopend("DURING ASSIGNMENT OF RESIDUES AN AMBIGUITY IN RESIDUE NUMBER 0 WAS FOUND.")
               return
             end if
@@ -149,7 +149,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
 ! Work out phi
 !
           if (bbone(3,i - 1)*bbone(1,i) /= 0 .and. bbone(2,i)*bbone(3,i) /= 0) then
-            call dihed(coord, bbone(3,i - 1), bbone(1,i), bbone(2,i), bbone(3,i), angles(1,mres)) 
+            call dihed(coord, bbone(3,i - 1), bbone(1,i), bbone(2,i), bbone(3,i), angles(1,mres))
           else
             angles(1,mres) = 0.d0
           end if
@@ -170,7 +170,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
             call dihed(coord, bbone(2,i), bbone(3,i), bbone(1,i + 1), bbone(2,i + 1), angles(3,mres))
           else
             angles(3,mres) = 0.d0
-          end if 
+          end if
         end if
         do j = 1,3
           if (angles(j,mres) >  pi) angles(j,mres) = angles(j,mres) - 2.d0*pi
@@ -182,8 +182,8 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
       do i = 1, ires
         do j = 1, 20
           if(allres(i)(:3) == afn(j)(:3)) exit
-        end do     
-        if ( j > 20) allr(i) = "X"   
+        end do
+        if ( j > 20) allr(i) = "X"
       end do
     end if
 !
@@ -218,7 +218,7 @@ subroutine names (ioptl, lused, n1, ires, nfrag, io, uni_res, mres)
     end if
     nres = ires
     goto 1020
-1010 nres = 1 
+1010 nres = 1
     if (allres (ires) (:3) /= "   ") then
       if (index(keywrd, " RESIDUE") /= 0) &
         write (iw,'(10x,a,i4,a,a)') " AMINO ACID (residue:",ires,") = ", allres (ires) (:3)

@@ -14,19 +14,19 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine diag(fao, vector, nocc, eig, mdim, n) 
+      subroutine diag(fao, vector, nocc, eig, mdim, n)
       use molkst_C, only : norbs, mpack
       implicit none
-      integer , intent(in) :: nocc 
-      integer , intent(in) :: mdim 
-      integer , intent(in) :: n 
-      double precision , intent(in) :: fao(mpack) 
-      double precision , intent(inout) :: vector(mdim,mdim) 
-      double precision , intent(in) :: eig(mdim) 
+      integer , intent(in) :: nocc
+      integer , intent(in) :: mdim
+      integer , intent(in) :: n
+      double precision , intent(in) :: fao(mpack)
+      double precision , intent(inout) :: vector(mdim,mdim)
+      double precision , intent(in) :: eig(mdim)
 !
-      integer :: lumo, ij, i, kk, j, k, j1, k2, m 
-      double precision, dimension(norbs) :: ws 
-      double precision ::  bigeps = 1.5d-007, tiny, sum, a, b, c, d, e, alpha, beta 
+      integer :: lumo, ij, i, kk, j, k, j1, k2, m
+      double precision, dimension(norbs) :: ws
+      double precision ::  bigeps = 1.5d-007, tiny, sum, a, b, c, d, e, alpha, beta
       double precision, allocatable :: fmo(:)
 !***********************************************************************
 !
@@ -72,93 +72,93 @@
 !  ORBITALS WHICH CONNECTS THE OCCUPIED AND VIRTUAL SETS.
 !
 !***********************************************************************
-! 
+!
 
 
       allocate(fmo(mpack))
-      tiny = 0.D0 
-      lumo = nocc + 1 
-      ij = 0 
-      do i = lumo, n 
-        kk = 0 
-        do j = 1, n 
-          sum = 0.D0 
-          do k = 1, j 
-            kk = kk + 1 
-            sum = sum + fao(kk)*vector(k,i) 
-          end do 
-          if (j /= n) then 
-            j1 = j + 1 
-            k2 = kk 
-            do k = j1, n 
-              k2 = k2 + k - 1 
-              sum = sum + fao(k2)*vector(k,i) 
-            end do 
-          end if 
-          ws(j) = sum 
-        end do 
-        do j = 1, nocc 
-          ij = ij + 1 
-          sum = 0.D0 
-          do k = 1, n 
-            sum = sum + ws(k)*vector(k,j) 
-          end do 
-          tiny = dmax1(abs(sum),tiny) 
-          fmo(ij) = sum 
-        end do 
-      end do 
-      tiny = 0.05D0*tiny 
+      tiny = 0.D0
+      lumo = nocc + 1
+      ij = 0
+      do i = lumo, n
+        kk = 0
+        do j = 1, n
+          sum = 0.D0
+          do k = 1, j
+            kk = kk + 1
+            sum = sum + fao(kk)*vector(k,i)
+          end do
+          if (j /= n) then
+            j1 = j + 1
+            k2 = kk
+            do k = j1, n
+              k2 = k2 + k - 1
+              sum = sum + fao(k2)*vector(k,i)
+            end do
+          end if
+          ws(j) = sum
+        end do
+        do j = 1, nocc
+          ij = ij + 1
+          sum = 0.D0
+          do k = 1, n
+            sum = sum + ws(k)*vector(k,j)
+          end do
+          tiny = dmax1(abs(sum),tiny)
+          fmo(ij) = sum
+        end do
+      end do
+      tiny = 0.05D0*tiny
 
-  
-      
+
+
 !***********************************************************************
 !
 !   NOW DO A CRUDE 2 BY 2 ROTATION TO "ELIMINATE" SIGNIFICANT ELEMENTS
 !
 !***********************************************************************
-      ij = 0 
+      ij = 0
 !      k = 0
-      
-!      
-      do i = lumo, n 
-        do j = 1, nocc 
-          ij = ij + 1 
-          if (abs(fmo(ij)) < tiny) cycle  
+
+!
+      do i = lumo, n
+        do j = 1, nocc
+          ij = ij + 1
+          if (abs(fmo(ij)) < tiny) cycle
 !
 !      BEGIN 2 X 2 ROTATIONS
 !
-          a = eig(j) 
-          b = eig(i) 
-          c = fmo(ij) 
-          d = a - b 
+          a = eig(j)
+          b = eig(i)
+          c = fmo(ij)
+          d = a - b
 !
 !    USE BIGEPS TO DETERMINE WHETHER TO DO A 2 BY 2 ROTATION
 !
-          if (abs(c/d) < bigeps) cycle  
+          if (abs(c/d) < bigeps) cycle
 !
 !  AT THIS POINT WE KNOW THAT
-          e = sign(sqrt(4.D0*c*c + d*d),d) 
-          alpha = sqrt(0.5D0*(1.D0 + d/e)) 
-          beta = -sign(sqrt(1.D0 - alpha*alpha),c) 
+          e = sign(sqrt(4.D0*c*c + d*d),d)
+          alpha = sqrt(0.5D0*(1.D0 + d/e))
+          beta = -sign(sqrt(1.D0 - alpha*alpha),c)
 !
 !      ROTATION OF PSEUDO-EIGENVECTORS
 !
 ! GBR test
 !          k = k + 1
 !
-          do m = 1, n 
-            a = vector(m,j) 
-            b = vector(m,i) 
-            vector(m,j) = alpha*a + beta*b 
-            vector(m,i) = alpha*b - beta*a 
+          do m = 1, n
+            a = vector(m,j)
+            b = vector(m,i)
+            vector(m,j) = alpha*a + beta*b
+            vector(m,i) = alpha*b - beta*a
           end do
-          continue 
-        end do 
-      end do 
+          continue
+        end do
+      end do
 
 ! GBR test
 !      write(iw,*) ' Number of Jacobi rotations in diag = ',k
-!    
+!
 
-      return  
-      end subroutine diag 
+      return
+      end subroutine diag

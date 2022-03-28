@@ -21,7 +21,7 @@
 !  Dr Andrey Bliznuk, Australian National University, Canberra, Australia.
 !
 !  See also:
-!  Jana Khandogin, Anguang Hu, Darrin M. York, "Electronic structure properties 
+!  Jana Khandogin, Anguang Hu, Darrin M. York, "Electronic structure properties
 !  of solvated biomolecules: A quantum approach for macromolecular characterization
 !  Volume 21, Issue 16 , Pages 1562 - 1571 (2000)
 !
@@ -47,7 +47,7 @@
 
   public :: ini_linear_cosmo, coscavz, addnucz, addfckz, am1dft_solve
   double precision, public :: c_proc
-  
+
 
   private
 
@@ -68,17 +68,17 @@
   !!!!
 
   double precision, dimension(:, :), allocatable :: rsc
- 
+
   integer, dimension(:), allocatable :: nipsrs
   integer, dimension(:), allocatable :: nset
   integer, dimension(:), allocatable :: npoints
   integer, dimension(:), allocatable :: iatom_pos
 
   integer, dimension(:), allocatable :: ijbo_diag
-  
-  
-  
-  integer :: max_block_size  
+
+
+
+  integer :: max_block_size
   integer :: atom_handle, surface_handle
   integer, parameter :: dcmplx_kind = Kind ((1.d0, 1.d0))
 
@@ -371,7 +371,7 @@ contains
     if (compute_a_part) then
 
       if (allocated (a_part)) then
-        deallocate (a_part) 
+        deallocate (a_part)
       end if
       if (nps > na2max .or. nps > na1max) then
 
@@ -380,7 +380,7 @@ contains
           call mopend ("CosmoZ:  Tesselation ini error ")
           return
         end if
-        ndim = count_short_ints  (cosurf, 4, simulate_aq_dir_int, .false.) 
+        ndim = count_short_ints  (cosurf, 4, simulate_aq_dir_int, .false.)
 
       else
 
@@ -394,7 +394,7 @@ contains
 
   !    write(iw,*) ' Number of close-range interactions: ', ndim
 
-      allocate (a_part(ndim) , stat=i) 
+      allocate (a_part(ndim) , stat=i)
       if (i /= 0) then
          write(iw,*) ' Allocation failed for a_part'
          call mopend (' Allocation failed for a_part')
@@ -404,16 +404,16 @@ contains
     end if
 
     if (allocated (m_vec)) then
-      deallocate (m_vec) 
+      deallocate (m_vec)
     end if
 
     if (use_a_blocks) then
       if (allocated (iblock_pos)) then
-        deallocate (iblock_pos) 
-        deallocate (a_block) 
+        deallocate (iblock_pos)
+        deallocate (a_block)
       end if
 
-      allocate (iblock_pos(numat) , stat=i) 
+      allocate (iblock_pos(numat) , stat=i)
       if (i /= 0) then
          write(iw, *) ' Allocation failed for iblock_pos'
          call mopend (' Allocation failed for iblock_pos')
@@ -434,13 +434,13 @@ contains
   !    write(iw, *) ' Size of the preconditioner = ', ndim
   !    write(iw, *) ' Size of max_block = ', max_block_size
 
-      allocate (m_vec(ndim) , stat=i) 
+      allocate (m_vec(ndim) , stat=i)
       if (i /= 0) then
          write(iw, *) ' Allocation failed for m_vec'
          call mopend (' Allocation failed for m_vec')
          return
       end if
-      allocate (a_block(max_block_size, max_block_size) , stat=i) 
+      allocate (a_block(max_block_size, max_block_size) , stat=i)
       if (i /= 0) then
          write(iw, *) ' Allocation failed for a_block'
          call mopend (' Allocation failed for a_block')
@@ -453,7 +453,7 @@ contains
 
       write(iw, *) ' Size of the preconditioner = ', nps
 
-      allocate (m_vec(nps) , stat=i) 
+      allocate (m_vec(nps) , stat=i)
       if (i /= 0) then
          write(iw, *) ' Allocation failed for m_vec'
          call mopend (' Allocation failed for m_vec')
@@ -1106,7 +1106,7 @@ contains
  !   write(iw, *) ' Cosmo atomic radii and accessible surface area '
 
  !   do i=1, numat
-  !    write(iw, '(I10, F12.4, I10)') i, srad(i), s_box(i-1) 
+  !    write(iw, '(I10, F12.4, I10)') i, srad(i), s_box(i-1)
   !  end do
     !
     !     NOW THE SEGMENT FORMATION ON ALL ATOMS IS FINISHED
@@ -1238,7 +1238,7 @@ contains
         else
           if (compute_a_part) then
             ijpos = ijpos +1
-            aa = a_part(ijpos) 
+            aa = a_part(ijpos)
           else
             xj(1:3) = coord(1:3, j)
             rj = srad(j)
@@ -1417,7 +1417,7 @@ contains
           else
             if (compute_a_part) then
               ijpos = ijpos +1
-              aa = a_part(ijpos) 
+              aa = a_part(ijpos)
             else
               rj = srad(j)
               call mfinel (jj, 2, finel, nar_csm, nsetf, &
@@ -1475,7 +1475,7 @@ contains
           else
             if (compute_a_part) then
               ijpos = ijpos +1
-              aa = a_part(ijpos) 
+              aa = a_part(ijpos)
             else
               rj = srad(j)
               call mfinel (jj, 2, finel, nar_csm, nsetf, &
@@ -1510,7 +1510,7 @@ contains
   end subroutine aq_dir_int
 
   subroutine simulate_aq_dir_int (ind1, n1, ind2, n2, c, nc, same, compute, &
-                & npos) 
+                & npos)
 
     !
     ! Computes number of short-range elements in A matrix and
@@ -1612,7 +1612,7 @@ contains
 
           if (d2 <= disex2) then
             npos = npos +1
-            
+
             if (compute) then
               rj = srad(j)
               call mfinel (jj, 2, finel, nar_csm, nsetf, &
@@ -1646,7 +1646,7 @@ contains
   end subroutine simulate_aq_dir_int
 
   subroutine precond_aq_dir_int (ind1, n1, ind2, n2, c, nc, same, compute, &
-                & npos) 
+                & npos)
     !
     ! Computes block preconditioner
     !
@@ -1683,12 +1683,12 @@ contains
             aa = 1.d0 / Sqrt (d2)
           else
             npos = npos +1
-            aa = a_part(npos) 
+            aa = a_part(npos)
           end if
           if (i == j) then ! same atom
             ips = ii - npoints(i) +1
             jps = jj - npoints(i) +1
-            
+
             if (ips >= jps) then
               m_vec(iblock_pos(i) -1 + (ips*(ips-1))/2 + jps) = aa
             else
@@ -1719,7 +1719,7 @@ contains
             aa = 1.d0 / Sqrt (d2)
           else
             npos = npos +1
-            aa = a_part(npos) 
+            aa = a_part(npos)
           end if
 
           if (i == j) then ! same atom
@@ -2010,7 +2010,7 @@ contains
             nao = nlast(j)-nfirst(j)
             call get_bvec (cosurf(1, i), c(1, j), nao, nat(j), w)
 
-            jj = ijbo_diag(j) 
+            jj = ijbo_diag(j)
 
             m = 0
             do k = 1, nao+1
@@ -2041,7 +2041,7 @@ contains
             nao = nlast(j)-nfirst(j)
             call get_bvec (cosurf(1, i), c(1, j), nao, nat(j), w)
 
-            jj = ijbo_diag(j) 
+            jj = ijbo_diag(j)
 
             m = 0
             do k = 1, nao+1
@@ -2070,7 +2070,7 @@ contains
             nao = nlast(j)-nfirst(j)
             call get_bvec (cosurf(1, i), c(1, j), nao, nat(j), w)
 
-            jj = ijbo_diag(j) 
+            jj = ijbo_diag(j)
 
             m = 0
             do k = 1, nao+1
@@ -2138,7 +2138,7 @@ contains
       end if
 
       if (compute_a_part .and. new_points) then
-        i = count_short_ints  (cosurf, 4, simulate_aq_dir_int, .true.) 
+        i = count_short_ints  (cosurf, 4, simulate_aq_dir_int, .true.)
       end if
 
     else
@@ -2190,7 +2190,7 @@ contains
       t = stop_tol
     end if
 
-    t = Min (t, current_tol) 
+    t = Min (t, current_tol)
     current_tol = t
 !
 !   write(26,*) ' Tol = ', t
@@ -2312,12 +2312,12 @@ contains
     !
 
     if (nps > na2max .or. nps > na1max) then
-      i = count_short_ints  (cosurf, 4, precond_aq_dir_int, .false.) 
+      i = count_short_ints  (cosurf, 4, precond_aq_dir_int, .false.)
       do i=1, nps
-        j = iatsp(i) 
+        j = iatsp(i)
         ii = iblock_pos(j) -1
         jj = i - npoints(j) +1
-        m(ii + (jj*(jj+1))/2) = a_diag(i) 
+        m(ii + (jj*(jj+1))/2) = a_diag(i)
       end do
 
     else
@@ -2342,11 +2342,11 @@ contains
           if (i == j) then ! same atom
 
             if (ii == jj) then ! same point
-               aa = a_diag(jj) 
+               aa = a_diag(jj)
             else if (d2 > disex2) then
-               aa = 1.d0 / Sqrt (d2) 
+               aa = 1.d0 / Sqrt (d2)
             else
-               aa = a_part(ijpos) 
+               aa = a_part(ijpos)
             end if
 
             ips = ii - npoints(i) +1
@@ -2367,27 +2367,27 @@ contains
     !
 
     do i=1, numat
-       ii = npoints(i+1) - npoints(i) 
+       ii = npoints(i+1) - npoints(i)
        if (ii > 0) then
-         ijpos = iblock_pos(i) 
+         ijpos = iblock_pos(i)
          do j=1,ii
            do jj=1,j
-             a_block(jj, j) = m(ijpos) 
+             a_block(jj, j) = m(ijpos)
              ijpos = ijpos +1
            end do
          end do
 
-         call dpotrf ('U', ii, a_block, max_block_size, ierr) 
+         call dpotrf ('U', ii, a_block, max_block_size, ierr)
       !   if (ierr /= 0) then
       !     write(iw,*) ' Error in decomposition of atom ', i, ' = ', ierr
-      !     call mopend(' Internal error') 
+      !     call mopend(' Internal error')
       !     return
       !  end if
 
-         call dpotri ('U', ii, a_block, max_block_size, ierr) 
+         call dpotri ('U', ii, a_block, max_block_size, ierr)
          if (ierr /= 0) then
            write(iw,*) ' Error in Matrix invert ', i, ' = ', ierr
-           call mopend(' Internal error') 
+           call mopend(' Internal error')
            return
          end if
 
@@ -2422,10 +2422,10 @@ contains
        ! ! === end Test ===
        ! !
 
-         ijpos = iblock_pos(i) 
+         ijpos = iblock_pos(i)
          do j=1,ii
            do jj=1,j
-             m(ijpos) = a_block(jj, j) 
+             m(ijpos) = a_block(jj, j)
              ijpos = ijpos +1
            end do
          end do
@@ -2512,7 +2512,7 @@ contains
         ndim = npoints(i+1) - npoints(i)
         if (ndim > 0) then
           call mult_triangle_vec (m(iblock_pos(i)) , r(ipos) , ndim, &
-            & z(ipos)) 
+            & z(ipos))
           ipos = ipos + ndim
         end if
       end do
@@ -2522,7 +2522,7 @@ contains
 
   end subroutine precondition_solve
 
-  subroutine mult_triangle_vec (t, x, n, y) 
+  subroutine mult_triangle_vec (t, x, n, y)
     !
     !.. Implicit Declarations ..
     implicit none
@@ -2583,7 +2583,7 @@ contains
     qdenet(1:lm61, 1) = 0.d0
 
     do i = 1, numat
-       qdenet(idenat(i), 1) = tore(nat(i)) 
+       qdenet(idenat(i), 1) = tore(nat(i))
     end do
 
   end subroutine addnucz
@@ -2621,7 +2621,7 @@ contains
     phinet(1:nps, 2) = 0.d0
     if (numat > nb1max .or. numat > nb2max) then
       do i = 1, numat
-        ii = ijbo_diag(i) 
+        ii = ijbo_diag(i)
         j = nlast(i) - nfirst(i) + 1
         s1 = Sum(p(ii + idiag(1:j)))
         q_vec(i) = -s1 + tore(nat(i))
@@ -2709,7 +2709,7 @@ contains
       im = 0
       do i = 1, numat
         nao = nlast(i)-nfirst(i)
-        ii = ijbo_diag(i) 
+        ii = ijbo_diag(i)
 
         if (nao == 0) then ! S - element
 
@@ -2717,7 +2717,7 @@ contains
           do j=1, nps
             t = 1.d0 / Sqrt (( cosurf(1,j) - coord(1,i) )**2 &
                          &  +( cosurf(2,j) - coord(2,i) )**2 &
-                         &  +( cosurf(3,j) - coord(3,i) )**2) 
+                         &  +( cosurf(3,j) - coord(3,i) )**2)
             v(1) = v(1) + qscnet(j, 2) * t
           end do
 
@@ -3090,7 +3090,7 @@ contains
 
   subroutine am1dft_solve (qsct, phit, nps)
     ! Wrapper for cgm_solve to calculate AM1DFT correction in writmn.
-    
+
     !.. Implicit Declarations ..
     implicit none
 

@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      double precision function babbbc (iocca1, ioccb1, ioccb2, nmos, xy) 
+      double precision function babbbc (iocca1, ioccb1, ioccb2, nmos, xy)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use meci_C, only : occa
 !***********************************************************************
@@ -27,16 +27,16 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer , intent(in) :: nmos 
-      integer , intent(in) :: iocca1(nmos) 
-      integer , intent(in) :: ioccb1(nmos) 
-      integer , intent(in) :: ioccb2(nmos) 
-      double precision , intent(in) :: xy(nmos,nmos,nmos,nmos) 
+      integer , intent(in) :: nmos
+      integer , intent(in) :: iocca1(nmos)
+      integer , intent(in) :: ioccb1(nmos)
+      integer , intent(in) :: ioccb2(nmos)
+      double precision , intent(in) :: xy(nmos,nmos,nmos,nmos)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, ij, j, k 
-      double precision :: sum 
+      integer :: i, ij, j, k
+      double precision :: sum
 !-----------------------------------------------
 !**********************************************************************
 !
@@ -45,24 +45,24 @@
 !       ELECTRON IN PSI(I) AND THE OTHER MICROSTATE HAS AN ELECTRON IN
 !       PSI(J).
 !**********************************************************************
-      do i = 1, nmos 
-        if (ioccb1(i) == ioccb2(i)) cycle  
-        exit  
-      end do 
-      ij = 0 
-      do j = i + 1, nmos 
-        if (ioccb1(j) /= ioccb2(j)) exit  
-        ij = ij + iocca1(j) + ioccb1(j) 
-      end do 
-      ij = ij + iocca1(j) 
+      do i = 1, nmos
+        if (ioccb1(i) == ioccb2(i)) cycle
+        exit
+      end do
+      ij = 0
+      do j = i + 1, nmos
+        if (ioccb1(j) /= ioccb2(j)) exit
+        ij = ij + iocca1(j) + ioccb1(j)
+      end do
+      ij = ij + iocca1(j)
 !
 !   THE UNPAIRED M.O.S ARE I AND J
-      sum = 0.D0 
-      do k = 1, nmos 
+      sum = 0.D0
+      do k = 1, nmos
         sum = sum + (xy(i,j,k,k)-xy(i,k,j,k))*(ioccb1(k)-occa(k)) + xy(i,j,k,k)&
-          *(iocca1(k)-occa(k)) 
-      end do 
-      if (mod(ij,2) == 1) sum = -sum 
-      babbbc = sum 
-      return  
-      end function babbbc 
+          *(iocca1(k)-occa(k))
+      end do
+      if (mod(ij,2) == 1) sum = -sum
+      babbbc = sum
+      return
+      end function babbbc

@@ -14,18 +14,18 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine compfg(xparam, int, escf, fulscf, grad, lgrad) 
+      subroutine compfg(xparam, int, escf, fulscf, grad, lgrad)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
 !
-      USE funcon_C, only : fpc_9  
+      USE funcon_C, only : fpc_9
 !
-      USE chanel_C, only : iw 
+      USE chanel_C, only : iw
 !
       use elemts_C, only : elemnt
 !
-      USE molmec_C, only : nnhco, nhco, htype 
+      USE molmec_C, only : nnhco, nhco, htype
 !
       use MOZYME_C, only : partf
 !
@@ -54,17 +54,17 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      double precision , intent(out) :: escf 
-      logical , intent(in) :: int 
-      logical, intent(in)  :: fulscf 
-      logical , intent(in) :: lgrad 
-      double precision , intent(in) :: xparam(nvar) 
-      double precision  :: grad(nvar) 
+      double precision , intent(out) :: escf
+      logical , intent(in) :: int
+      logical, intent(in)  :: fulscf
+      logical , intent(in) :: lgrad
+      double precision , intent(in) :: xparam(nvar)
+      double precision  :: grad(nvar)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer :: icalcn, i, j, k, l
-      double precision, dimension(3) :: degree 
+      double precision, dimension(3) :: degree
       double precision :: angle, atheat_store, sum, store_e_disp
       double precision, external ::  nsp2_correction, Si_O_H_correction
       double precision, external :: helecz
@@ -90,8 +90,8 @@
 !             GRAD   = ARRAY OF GRADIENTS, IF LGRAD = .TRUE.
 !
 !***********************************************************************
-      data icalcn/ 0/  
-      if (lxfac) then 
+      data icalcn/ 0/
+      if (lxfac) then
         if (index(keywrd," POP") /= 0) then
           pa = 0.d0
           i = index(keywrd," POP") + 4
@@ -110,12 +110,12 @@
           pdiag(2:4) = p(3)
           pdiag(5:9) = p(15)
         else
-          escf = xfac_value()        
+          escf = xfac_value()
           return
         end if
-      end if 
-      if (icalcn /= numcal) then 
-        icalcn = numcal 
+      end if
+      if (icalcn /= numcal) then
+        icalcn = numcal
         hpress = 0.d0
         nsp2_corr = 0.d0
         Si_O_H_corr = 0.d0
@@ -125,7 +125,7 @@
           noeps = .true.
           call cosini(.true.)
           if (moperr) return
-          mozyme = (index(keywrd," MOZ") + index(keywrd," LOCATE-TS") + index(keywrd," RAPID") /= 0)    
+          mozyme = (index(keywrd," MOZ") + index(keywrd," LOCATE-TS") + index(keywrd," RAPID") /= 0)
           if (mozyme .and. numat == 1) then
             call mopend("MOZYME cannot be used for systems composed of only one atom!")
             return
@@ -135,81 +135,81 @@
           iseps = .false.
           noeps = .false.
         end if
-        aider = index(keywrd,'AIDER') /= 0 
-        times = index(keywrd,'TIMES') /= 0 
+        aider = index(keywrd,'AIDER') /= 0
+        times = index(keywrd,'TIMES') /= 0
         usedci = nclose/=nopen .and. Abs(fract - 2.d0) > 1.d-20 .and. &
-          fract > 1.d-20 .or. index(keywrd,'C.I.')/=0 
-        force = index(keywrd,'FORCE') /= 0 
-        large = index(keywrd,'LARGE') /= 0 
-        print = index(keywrd,'COMPFG') /= 0 
-        l_locate_ts = index(keywrd,'LOCATE-TS') /= 0 
-        debug = index(keywrd,'DEBUG')/=0 .and. print 
+          fract > 1.d-20 .or. index(keywrd,'C.I.')/=0
+        force = index(keywrd,'FORCE') /= 0
+        large = index(keywrd,'LARGE') /= 0
+        print = index(keywrd,'COMPFG') /= 0
+        l_locate_ts = index(keywrd,'LOCATE-TS') /= 0
+        debug = index(keywrd,'DEBUG')/=0 .and. print
         dh = (method_pm6_d3h4x .or. method_pm6_d3h4    .or. &
               method_pm6_d3    .or. method_pm6_dh_plus .or. &
               method_pm7_hh    .or. method_pm7_minus   .or. &
               method_PM7 .or. method_pm8)
-        emin = 0.D0 
-        xparef(:nvar) = xparam(:nvar) 
-      end if 
+        emin = 0.D0
+        xparef(:nvar) = xparam(:nvar)
+      end if
 !
 ! SET UP COORDINATES FOR CURRENT CALCULATION
 !
 !       PLACE THE NEW VALUES OF THE VARIABLES IN THE ARRAY GEO.
 !       MAKE CHANGES IN THE GEOMETRY.
-      do i = 1, nvar 
-        k = loc(1,i) 
-        l = loc(2,i) 
-        geo(l,k) = xparam(i) 
-      end do 
+      do i = 1, nvar
+        k = loc(1,i)
+        l = loc(2,i)
+        geo(l,k) = xparam(i)
+      end do
 !      IMPOSE THE SYMMETRY CONDITIONS + COMPUTE THE DEPENDENT-PARAMETERS
-      if (ndep /= 0) call symtry 
+      if (ndep /= 0) call symtry
 !      NOW COMPUTE THE ATOMIC COORDINATES.
-      if (debug) then 
-        if (large) then 
-          k = natoms 
-        else 
-          k = min(5,natoms) 
-        end if 
+      if (debug) then
+        if (large) then
+          k = natoms
+        else
+          k = min(5,natoms)
+        end if
         write(iw,"(a)")" COORDINATES IN ARRAY 'GEO'"
         degree(1) = 1.d0
         do i = 1, k
           if (na(i) > 0) then
-            degree(2:3) = 57.29577951308232D0 
+            degree(2:3) = 57.29577951308232D0
           else
             degree(2:3) = 1.d0
           end if
           write (iw, "(i4,3x,a2,3x,3F14.5,3i5)") i,elemnt(labels(i)), &
-          (geo(j, i)*degree(j), j=1, 3), na(i), nb(i), nc(i) 
+          (geo(j, i)*degree(j), j=1, 3), na(i), nb(i), nc(i)
         end do
-      end if 
-      call gmetry (geo, coord) 
+      end if
+      call gmetry (geo, coord)
       if (moperr) return
-      if (debug) then 
-        if (large) then 
-          k = numat 
-        else 
-          k = min(5,numat) 
-        end if 
+      if (debug) then
+        if (large) then
+          k = numat
+        else
+          k = min(5,numat)
+        end if
         write (iw, '('' CARTESIAN COORDINATES'',/10000(/,i4,3x,a2,3x,3F16.9))') &
-          (i,elemnt(nat(i)),(coord(j,i),j=1,3),i=1,k) 
-      end if 
+          (i,elemnt(nat(i)),(coord(j,i),j=1,3),i=1,k)
+      end if
       if (iseps) then
-      ! The following routine constructs the dielectric screening surface      
-      if (mozyme) then      
+      ! The following routine constructs the dielectric screening surface
+      if (mozyme) then
           call coscavz(coord, nat)
         else
-          call coscav 
+          call coscav
           call mkbmat
-        end if 
+        end if
         if (moperr) return
         if (noeps) useps = .false.
       end if
-      if (index(keywrd,' HCORE') /= 0) call prtpar 
-      if (times) call timer ('BEFORE HCORE')   
-      if (mozyme) then    
-        if (iseps) useps = .true.  
-        if (l_locate_ts .or. int) call hcore_for_MOZYME () 
-        if (moperr) return  
+      if (index(keywrd,' HCORE') /= 0) call prtpar
+      if (times) call timer ('BEFORE HCORE')
+      if (mozyme) then
+        if (iseps) useps = .true.
+        if (l_locate_ts .or. int) call hcore_for_MOZYME ()
+        if (moperr) return
       else if (method_indo) then
 ! Set up Reimers data
         if (allocated(x))     deallocate(x)
@@ -257,7 +257,7 @@
         allocate(iat(norbs))
         allocate(natt(norbs))
 
-        
+
         matind(1) = 0
         do i=2,50000
           matind(i) = matind(i-1) + i-1
@@ -341,13 +341,13 @@
           do i= 1,mpack
             beta(i) = h(i)
           end do
-        end if        
+        end if
       else
-        if (int) call hcore () 
+        if (int) call hcore ()
         if (moperr) return
-      end if  
-       atheat_store = atheat           
-      if (times) call timer ('AFTER  HCORE') 
+      end if
+       atheat_store = atheat
+      if (times) call timer ('AFTER  HCORE')
 !
 ! COMPUTE THE HEAT OF FORMATION.
 !
@@ -357,7 +357,7 @@
 !  is used
 !
         hpress = 0.d0
-        if (Abs (pressure) > 1.d-4) then            
+        if (Abs (pressure) > 1.d-4) then
           if (id == 1) then
             hpress = -pressure * Sqrt (dot(tvec(1, 1), tvec(1, 1), 3))
           else if (id == 3) then
@@ -370,7 +370,7 @@
 !  Add in any molecular-mechanics type corrections here
 !
         if (method_pm6 .and. N_3_present) then
-          nsp2_corr = nsp2_correction() 
+          nsp2_corr = nsp2_correction()
           atheat = atheat + nsp2_corr
         end if
         if (method_pm7 .and. Si_O_H_present) then
@@ -379,10 +379,10 @@
         end if
         call setup_nhco(i)
         sum_dihed = 0.d0
-        do i = 1, nnhco 
-          call dihed (coord, nhco(1,i), nhco(2,i), nhco(3,i), nhco(4,i), angle) 
-          sum_dihed = sum_dihed + htype*sin(angle)**2 
-        end do  
+        do i = 1, nnhco
+          call dihed (coord, nhco(1,i), nhco(2,i), nhco(3,i), nhco(4,i), angle)
+          sum_dihed = sum_dihed + htype*sin(angle)**2
+        end do
         atheat = atheat + sum_dihed
         stress = 0.d0
         if(use_ref_geo) then
@@ -397,14 +397,14 @@
           if (moperr) return
           atheat =  sum + atheat
         end if
-        if (times) call timer ('BEFORE ITER') 
+        if (times) call timer ('BEFORE ITER')
         if (int) then
           if (mozyme) then
-            call iter_for_MOZYME (elect)  
+            call iter_for_MOZYME (elect)
           else
-            call iter (elect, fulscf, .TRUE.) 
+            call iter (elect, fulscf, .TRUE.)
           end if
-          if (moperr) return   
+          if (moperr) return
           if (noeps) then
             noeps = .false.
             useps = .true.
@@ -417,8 +417,8 @@
                   beta(i) = h(i)
                 end do
               end if
-              call iter (elect, fulscf, .TRUE.) 
-            end if    
+              call iter (elect, fulscf, .TRUE.)
+            end if
           end if
         else
           if (mozyme) then
@@ -428,55 +428,55 @@
         end if
         stress = stress*density
         atheat = atheat + stress
-        if (moperr) return  
-        if (times) call timer ('AFTER  ITER') 
-      else 
-        elect = 0.D0 
-      end if 
-      escf = (elect + enuclr)*fpc_9 + atheat 
+        if (moperr) return
+        if (times) call timer ('AFTER  ITER')
+      else
+        elect = 0.D0
+      end if
+      escf = (elect + enuclr)*fpc_9 + atheat
       if (useps .and. mozyme) then
             escf = escf + solv_energy * fpc_9
-      end if 
+      end if
       if (.not. dh) then
         call post_scf_corrections(sum, .false.)
         if (moperr) return
         escf =  sum + escf
       end if
       atheat = atheat_store
-      if (escf < emin .or. emin == 0.D0) emin = escf    
+      if (escf < emin .or. emin == 0.D0) emin = escf
       if (method_indo) then
         call output (c,eigs)
       end if
 !
 ! FIND DERIVATIVES IF DESIRED
 !
-      if (lgrad) then 
+      if (lgrad) then
         store_e_disp = e_disp
-        if (times) call timer ('Before DERIV') 
-        if (nelecs > 0) call deriv (geo, grad) 
-        if (moperr) return  
-        if (times) call timer ('AFTER  DERIV')  
+        if (times) call timer ('Before DERIV')
+        if (nelecs > 0) call deriv (geo, grad)
+        if (moperr) return
+        if (times) call timer ('AFTER  DERIV')
         e_disp = store_e_disp
-      end if 
-      if (aider) then 
+      end if
+      if (aider) then
 !
 !  ADD IN AB INITIO CORRECTION
 !
         escf = escf + ddot(nvar,xparam(:nvar)-xparef(:nvar),1,aicorr(:nvar),1)
-      end if 
+      end if
       if (int .and. print) write (iw, '(/1X,'' HEAT OF FORMATION'',G30.17)') &
-        escf 
+        escf
       if (print .and. lgrad) then
-        write (iw, '('' PARAMETERS     '',8F8.3,(/10F8.3))') (xparam(i),i=1,nvar) 
-        write (iw, '('' GRADIENT       '',8F8.3,(/10F8.3))') (grad(i),i=1,nvar) 
+        write (iw, '('' PARAMETERS     '',8F8.3,(/10F8.3))') (xparam(i),i=1,nvar)
+        write (iw, '('' GRADIENT       '',8F8.3,(/10F8.3))') (grad(i),i=1,nvar)
       end if
 !
 ! REFORM DENSITY MATRIX, IF A C.I. DONE AND EITHER THE LAST SCF OR A
 ! FORCE CALCULATION
 !
-      if (usedci .and. force .and. .not. method_indo) call mecip () 
-      return  
-      end subroutine compfg 
+      if (usedci .and. force .and. .not. method_indo) call mecip ()
+      return
+      end subroutine compfg
 !
 !
 !
@@ -522,34 +522,34 @@
           xfac_value = 0.0d0 ! dummy return value for unaccessed branch
           return
         end if
-        r = coord(1,2) 
+        r = coord(1,2)
         ni = nat(1)
-        nj = nat(2) 
-        if (pocord(ni) > 1.D-5) po(9,ni) = pocord(ni) 
-        if (pocord(nj) > 1.D-5) po(9,nj) = pocord(nj) 
+        nj = nat(2)
+        if (pocord(ni) > 1.D-5) po(9,ni) = pocord(ni)
+        if (pocord(nj) > 1.D-5) po(9,nj) = pocord(nj)
         gab = eV/sqrt((r/a0)**2 + (po(9,ni) + po(9,nj))**2)
         call to_point(r, point, const)
         gab = gab*const + (1.d0 - const)*point
-        enuc = tore(ni)*tore(nj)*gab 
+        enuc = tore(ni)*tore(nj)*gab
         abond = alpb(ni,nj)
         if (abond  > 1.d-3) then
           fff = xfac(ni,nj)
-          scale = 2.d0 * fff * Exp (-abond*(r + 0.0003*r**6)) 
+          scale = 2.d0 * fff * Exp (-abond*(r + 0.0003*r**6))
           enuclr = enuc * scale
           scale = 0.d0
-          ax = guess2(ni,1)*(r - guess3(ni,1))**2 
-          if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,1)*exp((-ax)) 
-          ax = guess2(nj,1)*(r - guess3(nj,1))**2 
+          ax = guess2(ni,1)*(r - guess3(ni,1))**2
+          if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,1)*exp((-ax))
+          ax = guess2(nj,1)*(r - guess3(nj,1))**2
           if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(nj,1)*exp((-ax))
-          enuclr = enuclr + scale 
+          enuclr = enuclr + scale
           ax = r/(ni**0.3333d0 + nj**0.3333d0)
           if (ax < 3.d0) then
             scale = 1.d-8/ax**12
             enuclr = enuclr + min(scale, 1.d5)
           end if
-        else 
+        else
           scale = 10.d0*exp((-2.18d0*r)) ! This is a generic core-core term.
-          enuclr = abs(scale*enuc) 
+          enuclr = abs(scale*enuc)
       end if
         xfac_value = enuclr*fpc_9
       end function xfac_value

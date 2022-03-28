@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine modchg () 
+subroutine modchg ()
    !***********************************************************************
    !
    !   MODGRA prints the charge due to (a) backbone residue atoms, and
@@ -76,7 +76,7 @@ subroutine modchg ()
         if (work(i) < 0.d0 .and. work(i) > -0.0005d0) work(i) = 0.d0
         if (txtatm(res_start(i))(18:20) /= "HOH" .or. abs(work(i)) > 0.1d0) &
          write (iw, "(6x,a,SP,F13.3)") txtatm(res_start(i))(18:maxtxt), work(i)
-      end if  
+      end if
       res_charge = res_charge + work(i)
     end do
     work = 0.d0
@@ -103,9 +103,9 @@ subroutine modchg ()
           write (iw,"(a)")"    HETERO-GROUP      Charge "
           write (iw,"(a)")" "
         end if
-        write (iw, "(6x,a,F14.3)") txtatm(res_start(i))(18:maxtxt), work(i) 
+        write (iw, "(6x,a,F14.3)") txtatm(res_start(i))(18:maxtxt), work(i)
       end do
-    end if        
+    end if
     write(iw,*)
 !
 !  Print out salt bridges

@@ -42,7 +42,7 @@ double precision, external :: distance
     if (distance(O_of_H2O, i) < 3.5d0) then
       if (i /= O_of_H2O .and. i /= H1 .and. i /= H2) then
         n_atoms = n_atoms + 1
-        near(:, n_atoms) = coord(:, i)  
+        near(:, n_atoms) = coord(:, i)
         near_nat(n_atoms) = nat(i)
         atom_nos(n_atoms) = i
       end if
@@ -55,16 +55,16 @@ double precision, external :: distance
   end if
   return
 end subroutine orient_water
-  
+
 subroutine calcfc (x, fun)
 !
 ! Evaluate the energy penalty due to steric interactions between water hydrogen atoms
 ! and nearby heavy atoms.
-! 
+!
 ! Input:
 ! x:                Coordinates of the two hydrogen atoms
 ! O_coord:          Coordinates of the oxygen atom
-! near(3, n_atoms): Coordinates of the n_atoms atoms near to oxygen atom 
+! near(3, n_atoms): Coordinates of the n_atoms atoms near to oxygen atom
 !
 ! On exit:
 ! fun:                Value of the energy-penalty, i.e., function to be minimized
@@ -81,7 +81,7 @@ integer :: i, j
 double precision :: h2(3,2), Rab, Rab2, min_O, c_O, angle
 !
 logical :: first = .true.
-save 
+save
 !
 ! This method of positioning the hydrogen atoms in a water molecule is "quick and dirty" -
 ! it works, but could do with being improved.
@@ -96,9 +96,9 @@ save
 !
     c_O = 2.d0/min_O**6
     first = .false.
-  end if    
+  end if
   h2(1:3,1) = x(1:3)
-  h2(1:3,2) = x(4:6) 
+  h2(1:3,2) = x(4:6)
   fun = 0.d0
 !
 !  H - other atoms repulsion
@@ -109,9 +109,9 @@ save
       rab =  sqrt(rab2)
       select case (near_nat(i))
       case (1)  ! H-H repulsion
-        fun = fun + 1.d0*Rab2**(-6) 
+        fun = fun + 1.d0*Rab2**(-6)
       case (6, 7)  ! H-(C, and N) repulsion
-        fun = fun + 100.d0*Rab2**(-6) 
+        fun = fun + 100.d0*Rab2**(-6)
       case (8)  ! H-O interaction
         fun = fun + 100.d0*(Rab2**(-6) - c_O/Rab2**3)
         if (j == 1) then
@@ -120,7 +120,7 @@ save
           fun = fun + 0.15d0*(3.14159d0 - angle)
         end if
       case (12)  ! H-Mg
-        fun = fun + 200.d0*Rab2**(-6) 
+        fun = fun + 200.d0*Rab2**(-6)
       case default  ! H-(everything else) repulsion
         fun = fun + 100.d0/Rab2**6
       end select
@@ -149,7 +149,7 @@ subroutine cobyla (n,  x,  fun)
 ! x   = Coordinates of the two hydrogen atoms,  updated on output
 ! fun = value of penalty (used in debugging only)
 !
-! This code is "black-box" 
+! This code is "black-box"
 !
 integer,  intent(in) :: n
 double precision,  intent(in out)  :: x(6)
@@ -272,7 +272,7 @@ integer   :: i,  ibrnch,  iflag,  ifull,  iptem,  iptemp,  j,  jdrop,  k,  l,  m
     end if
   end do
 
-  !  Switch the best vertex into pole position if it is not there already, 
+  !  Switch the best vertex into pole position if it is not there already,
   !  and also update SIM,  SIMI and DATMAT.
 
   if (nbest <= n) then
@@ -590,7 +590,7 @@ double precision,  intent(in)   :: rho
 double precision,  intent(out)  :: dx(10)
 integer,  intent(out)    :: ifull
 
-! 
+!
 
 double precision :: z(n, n),  zdota(m + 1),  vmultc(m + 1),  sdirn(n),  dxnew(n),  vmultd(m + 1)
 double precision :: acca,  accb,  alpha,  beta,  dd,  optnew,  optold,  ratio,  resmax,    &

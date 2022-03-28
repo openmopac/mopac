@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine solrot(ni, nj, xi, xj, wj, wk, kr, e1b, e2a, enuc) 
+      subroutine solrot(ni, nj, xi, xj, wj, wk, kr, e1b, e2a, enuc)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use common_arrays_C, only : tvec
       use molkst_C, only : numcal, l1u, l2u, l3u, clower
@@ -27,24 +27,24 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer  :: ni 
-      integer  :: nj 
-      integer , intent(inout) :: kr 
-      double precision , intent(out) :: enuc 
-      double precision , intent(in) :: xi(3) 
-      double precision , intent(in) :: xj(3) 
-      double precision , intent(out) :: wj(2025) 
-      double precision , intent(out) :: wk(2025) 
-      double precision , intent(inout) :: e1b(45) 
-      double precision , intent(inout) :: e2a(45) 
+      integer  :: ni
+      integer  :: nj
+      integer , intent(inout) :: kr
+      double precision , intent(out) :: enuc
+      double precision , intent(in) :: xi(3)
+      double precision , intent(in) :: xj(3)
+      double precision , intent(out) :: wj(2025)
+      double precision , intent(out) :: wk(2025)
+      double precision , intent(inout) :: e1b(45)
+      double precision , intent(inout) :: e2a(45)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
-!----------------------------------------------- 
+!-----------------------------------------------
       integer :: icalcn, i, j, k, kb
       double precision, dimension(:), allocatable :: wsum, wmax, wbits
-      double precision, dimension(3) :: xjuc 
+      double precision, dimension(3) :: xjuc
       double precision, dimension(45) :: e1bits = 0.d0, e2bits = 0.d0
-      double precision, dimension(3) :: xdumy 
+      double precision, dimension(3) :: xdumy
       double precision :: one, cutof2, r, enubit
 
       save xdumy, icalcn, cutof2
@@ -57,55 +57,55 @@
 !
 !      FOR MOLECULES, WJ = WK.
 !***********************************************************************
-      data icalcn/ 0/  
-      data xdumy/ 3*0.D0/  
-      if (icalcn /= numcal) then 
-        icalcn = numcal 
+      data icalcn/ 0/
+      data xdumy/ 3*0.D0/
+      if (icalcn /= numcal) then
+        icalcn = numcal
         cutof2 = clower**2
-      end if 
-      one = 1.D0 
+      end if
+      one = 1.D0
       if (Abs(xi(1) - xj(1)) <1.d-20 .and. Abs(xi(2) - xj(2)) <1.d-20 .and. &
-      Abs(xi(3) - xj(3)) <1.d-20) one = 0.5D0 
+      Abs(xi(3) - xj(3)) <1.d-20) one = 0.5D0
       allocate (wsum(2025), wmax(2025), wbits(2025))
-      wmax = 0.D0 
-      wsum = 0.D0 
-      wbits = 0.D0 
-      e1b = 0.D0 
-      e2a = 0.D0 
-      enuc = 0.D0 
-      do i = -l1u, l1u 
-        do j = -l2u, l2u 
-          do k = -l3u, l3u 
-            xjuc = xj + tvec(:,1)*i + tvec(:,2)*j + tvec(:,3)*k - xi 
-            r = xjuc(1)**2 + xjuc(2)**2 + xjuc(3)**2 
-            if (r > cutof2) then 
+      wmax = 0.D0
+      wsum = 0.D0
+      wbits = 0.D0
+      e1b = 0.D0
+      e2a = 0.D0
+      enuc = 0.D0
+      do i = -l1u, l1u
+        do j = -l2u, l2u
+          do k = -l3u, l3u
+            xjuc = xj + tvec(:,1)*i + tvec(:,2)*j + tvec(:,3)*k - xi
+            r = xjuc(1)**2 + xjuc(2)**2 + xjuc(3)**2
+            if (r > cutof2) then
 !
 !  Interaction distance is greater than cutoff, so use point-charge
 !
               r = sqrt(r)
               call point(r, ni, nj, wbits, kb, e1bits, e2bits, enubit)
-            else 
+            else
 !
 !  Interaction distance is less than cutoff
 !
-              kb = 0 
+              kb = 0
               call rotate (ni, nj, xdumy, xjuc, wbits, kb, e1bits, e2bits, enubit)
             end if
-            wsum(:kb) = wsum(:kb) + wbits(:kb) 
+            wsum(:kb) = wsum(:kb) + wbits(:kb)
             if (wmax(1) < wbits(1)) wmax(:kb) = wbits(:kb) ! "K" integrals apply only to nearest pair
-            e1b = e1b + e1bits 
-            e2a = e2a + e2bits 
-            enuc = enuc + enubit*one 
-          end do 
-        end do 
-      end do 
-      if (one < 0.9D0) wmax(:kb) = 0.D0  
-      wk(:kb) = wmax(:kb) 
-      wj(:kb) = wsum(:kb) 
-      kr = kb + kr 
+            e1b = e1b + e1bits
+            e2a = e2a + e2bits
+            enuc = enuc + enubit*one
+          end do
+        end do
+      end do
+      if (one < 0.9D0) wmax(:kb) = 0.D0
+      wk(:kb) = wmax(:kb)
+      wj(:kb) = wsum(:kb)
+      kr = kb + kr
       deallocate(wmax, wbits, wsum)
-      return  
-      end subroutine solrot 
+      return
+      end subroutine solrot
       subroutine nddo_to_point(wbits, e1bits, e2bits, enubit, r, ni, nj)
 !
 ! NDDO_to_point smoothly transitions the two center integrals from NDDO to point-charge
@@ -117,14 +117,14 @@
       use molkst_C, only : l_feather
         implicit none
         double precision, dimension(45) :: e1bits, e2bits, e1bits_p = 0.d0, e2bits_p = 0.d0
-        double precision, dimension(2025) :: wbits 
+        double precision, dimension(2025) :: wbits
         double precision, intent (inout):: r
         double precision, intent (inout):: enubit
         integer, intent (in) :: ni, nj
         integer :: kb
         double precision :: const, enubit_p, dummy
         double precision, dimension(2025) :: wbits_p
-        
+
         if (l_feather) then
           call to_point(r, dummy, const)
         else
@@ -155,7 +155,7 @@
 !   In solid-state work, if an interatomic distance is larger than
 !   clower, then the NDDO approximation is replaced by a point-charge
 !   approximation, in which the point-charge is located at a distance
-!   that depends on the interatomic distance (see trunk) 
+!   that depends on the interatomic distance (see trunk)
 !
     r = trunk (r)
     ee = ev * a0 / r
@@ -193,7 +193,7 @@
 end subroutine point
 double precision function trunk (r)
 !
-!  In solids, change the apparent distance so that the Madelung sum can be 
+!  In solids, change the apparent distance so that the Madelung sum can be
 !  solved.
 !
 !   r: Distance in Angstroms

@@ -52,7 +52,7 @@
             iv(niv) = j + ncore
           end if
         end if
-        
+
         if (bo1(j) .neqv. boc(j)) then
 !         **** beta differs from first ref det ****
           if (bo1(j)) then
@@ -158,7 +158,7 @@
 
       subroutine unsolv(cimat, cist, diagsl, ucener)
       use reimers_C, only : nconf, matind
-      implicit none 
+      implicit none
       double precision :: cimat(nconf*(nconf + 1)/2), cist(nconf, nconf), &
                       diagsl(nconf), ucener(nconf)
       integer :: iconf, ist, nm, jconf
@@ -192,7 +192,7 @@
       return
       end subroutine unsolv
 
-      
+
       subroutine stdeltap(cist, aocc, bocc, dpstat, ist)
       use molkst_c, only : mpack
       use reimers_C, only : nconf, nov, nex, &
@@ -235,11 +235,11 @@
       return
       end subroutine stdeltap
 
-      
+
       subroutine exdeltap(io, iv, nio, deltap)
       use molkst_c, only : mpack
       use reimers_C, only : n, matind, cc0
-      implicit none 
+      implicit none
       double precision  :: deltap(mpack)
       integer :: i, j, ia, occ, vir, &
                  io(4), iv(4), nio
@@ -262,7 +262,7 @@
       return
       end subroutine exdeltap
 
-      
+
       subroutine solenr(deltap, dcie)
       use cosmo_C, only : amat, bmat, nden, gden, ipiden, nps, &
            nsetf, fnsq
@@ -275,7 +275,7 @@
 !***********************************************************************
 !   RMG - adapted from dmecip subroutine in MOPAC
 !
-!   Given the density deltap (change in AO occupation upon excitation), 
+!   Given the density deltap (change in AO occupation upon excitation),
 !   computes the energetic stabilization due to electronic screening of
 !   the density difference (dcie).
 !
@@ -298,7 +298,7 @@
 
       call coscl2 (amat, nsetf, qsc, phi, nps)
       do i = 1, nps
-        dcie = dcie + qsc(i) * phi(i) 
+        dcie = dcie + qsc(i) * phi(i)
       end do
 
       dcie = -dcie * fnsq * fcon / 2
@@ -361,7 +361,7 @@
       do i = 1, nps
         ener = ener + qscnet(i, 2) * phi(i)
       end do
-      ener = ener * fcon 
+      ener = ener * fcon
       return
       end subroutine staticsolv
 

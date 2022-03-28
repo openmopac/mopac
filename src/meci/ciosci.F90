@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine ciosci(vects, lroot, oscil, conf) 
+      subroutine ciosci(vects, lroot, oscil, conf)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only: numat,  norbs, keywrd
       use common_arrays_C, only : coord, nfirst, nlast, nat
@@ -39,26 +39,26 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      double precision , intent(in) :: vects(norbs,norbs) 
-      double precision , intent(inout) :: oscil(3,*) 
+      double precision , intent(in) :: vects(norbs,norbs)
+      double precision , intent(inout) :: oscil(3,*)
       double precision, dimension(:,:), allocatable :: t4
-      double precision , intent(in) :: conf(lab*lab) 
+      double precision , intent(in) :: conf(lab*lab)
       integer :: lroot
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer , dimension(14) :: ll 
+      integer , dimension(14) :: ll
       integer :: loop, iloop, iatom, i, j, k, l, m, ii, ij, jj, istate, &
       nd, npp, ns
-      double precision, dimension(norbs,nmos) :: vect1, vect2 
-      double precision, dimension(nmos,nmos) :: t2 
-      double precision, dimension(lab) :: work 
+      double precision, dimension(norbs,nmos) :: vect1, vect2
+      double precision, dimension(nmos,nmos) :: t2
+      double precision, dimension(lab) :: work
       integer, dimension (107), save :: nspqn
       double precision, dimension (numat) :: sppol
       double precision, dimension (:), allocatable :: pdpol
       character (len=1) :: type (3)
-      double precision :: sum 
-      logical :: debug 
+      double precision :: sum
+      logical :: debug
 !***********************************************************************
 !
 !    CIOSCI evaluates the expectation value <STATE|x or y or z|STATE>
@@ -68,7 +68,7 @@
 !           NSTATE = State to be excited from
 !
 !
-!***********************************************************************     
+!***********************************************************************
       data nspqn / 2 * 1, 8 * 2, 8 * 3, 18 * 4, 18 * 5, 32 * 6, 21 * 0 /
       data type / "x", "y", "z" /
       debug = (Index (keywrd, "CIOSCI") /= 0)
@@ -263,7 +263,7 @@
                 !
                 ii = ll(1)
                 !
-                !   Add in MICROA(II,I) to allow for the fact that M.O. LL(1) 
+                !   Add in MICROA(II,I) to allow for the fact that M.O. LL(1)
                 !   is ALWAYS less than M.O. LL(2).
                 !
                 !   Step over MICROB(II,I)
@@ -278,7 +278,7 @@
                 !
                 ii = ll(1)
                 !
-                !   Add in MICROB(II,I) to allow for the fact that M.O. LL(1) 
+                !   Add in MICROB(II,I) to allow for the fact that M.O. LL(1)
                 !   is ALWAYS less than M.O. LL(2).
                 !
                 ij = microb(ii, i)

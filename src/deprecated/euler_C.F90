@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module euler_C 
-      integer :: id, l1l, l2l, l3l, l1u, l2u, l3u 
-      double precision, dimension(3,3) :: tvec 
-      end module euler_C 
+      module euler_C
+      integer :: id, l1l, l2l, l3l, l1u, l2u, l3u
+      double precision, dimension(3,3) :: tvec
+      end module euler_C

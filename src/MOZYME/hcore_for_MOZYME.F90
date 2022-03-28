@@ -122,7 +122,7 @@ subroutine hcore_for_MOZYME ()
     h(1:mpack) = 0.d0
   end if
   do i = 1, numat
-   
+
     calci = (jopt(ired) == i)
     if (calci .and. ired < numred) then
       ired = ired + 1
@@ -208,7 +208,7 @@ subroutine hcore_for_MOZYME ()
             ! CALCULATE THE TWO-ELECTRON INTEGRALS, W; THE ELECTRON
             ! NUCLEAR TERMS E1B AND E2A; AND THE NUCLEAR-NUCLEAR TERM ENUC.
             !
-            call rotate (ni, nj, coord(1, i), coord(1, j), w(kr), i1, e1b, e2a, enuc) 
+            call rotate (ni, nj, coord(1, i), coord(1, j), w(kr), i1, e1b, e2a, enuc)
             enuclr = enuclr + enuc
            !
           else if ( .not. direct) then
@@ -273,16 +273,16 @@ subroutine hcore_for_MOZYME ()
         !
         if (ijbo(i, j) >= 0) then
           if (calcij) then
-            di = 0.D0 
-            do ii = -l1u, l1u 
-              do jj = -l2u, l2u 
-                do k = -l3u, l3u 
-                  xj = coord(:,j) + tvec(:,1)*ii + tvec(:,2)*jj + tvec(:,3)*k 
-                  call h1elec (ni, nj, coord(1,i), xj, dibits) 
-                  di = di + dibits 
-                end do 
-              end do 
-            end do 
+            di = 0.D0
+            do ii = -l1u, l1u
+              do jj = -l2u, l2u
+                do k = -l3u, l3u
+                  xj = coord(:,j) + tvec(:,1)*ii + tvec(:,2)*jj + tvec(:,3)*k
+                  call h1elec (ni, nj, coord(1,i), xj, dibits)
+                  di = di + dibits
+                end do
+              end do
+            end do
             ii = ijbo (i, j)
             if (i == j) then
               do i1 = 1, iorbs(i)
@@ -300,14 +300,14 @@ subroutine hcore_for_MOZYME ()
               end do
             end if
             !
-            ! CALCULATE THE TWO-ELECTRON INTEGRALS, W; 
-            ! THE ELECTRON NUCLEAR TERMS E1B AND E2A; 
+            ! CALCULATE THE TWO-ELECTRON INTEGRALS, W;
+            ! THE ELECTRON NUCLEAR TERMS E1B AND E2A;
             ! AND THE NUCLEAR-NUCLEAR TERM ENUC.
             !
             kro = kr
-            call solrot (ni, nj, coord(1,i), coord(1,j), wjd, wkd, kr, e1b, e2a, enuc) 
-            w(kro:kr - 1) = wjd(:kr-kro) 
-            wk(kro:kr - 1) = wkd(:kr-kro) 
+            call solrot (ni, nj, coord(1,i), coord(1,j), wjd, wkd, kr, e1b, e2a, enuc)
+            w(kro:kr - 1) = wjd(:kr-kro)
+            wk(kro:kr - 1) = wkd(:kr-kro)
             enuclr = enuclr + enuc
           else if (natorb(ni) == 1) then
             if (natorb(nj) == 1) then

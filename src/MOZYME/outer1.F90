@@ -48,7 +48,7 @@ subroutine outer1 (ni_loc, nj, c1, c2, w, kr, e1b, e2a, enuc, mode, direct)
       if (l_feather) then
         call to_point(rij, point, const)
         ww = ww*const + (1.d0 - const)*point
-      end if 
+      end if
       e1b(1) = -ww * tore(nj)
       e1b(3) = -ww * tore(nj)
       e1b(6) = -ww * tore(nj)

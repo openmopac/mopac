@@ -26,7 +26,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
 !    The geometry in Cartesian coordinates
 !
 !  Example of a single point in such a file (6 lines):
-!     4 
+!     4
 !Profile.   2 HEAT OF FORMATION =    -0.467 KCAL =    -1.955 KJ
 !    N        0.00000        0.00000       -0.00092
 !    H        0.97231        0.00000        0.00427
@@ -42,18 +42,18 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
 !  Example of a single point in such a file (8 lines)
 !MODEL      2
 !HEADER Heat of Formation =       2.677 Kcal/mol
-!HETATM    1  N   NH3 A   1       0.000   0.000   0.000  1.00 -0.83      PROT N 
-!HETATM    2 1H   NH3 A   1       0.920   0.000   0.000  1.00  0.28      PROT H 
-!HETATM    3 2H   NH3 A   1      -0.460   0.797   0.000  1.00  0.28      PROT H 
-!HETATM    4 3H   NH3 A   1      -0.460  -0.797  -0.000  1.00  0.28      PROT H 
+!HETATM    1  N   NH3 A   1       0.000   0.000   0.000  1.00 -0.83      PROT N
+!HETATM    2 1H   NH3 A   1       0.920   0.000   0.000  1.00  0.28      PROT H
+!HETATM    3 2H   NH3 A   1      -0.460   0.797   0.000  1.00  0.28      PROT H
+!HETATM    4 3H   NH3 A   1      -0.460  -0.797  -0.000  1.00  0.28      PROT H
 !END
 !ENDMDL
-!                                 
+!
   use molkst_C, only : step_num, numat, jloop => itemp_1, line, keywrd, backslash, nvar, &
   ncomments
   use chanel_C, only : ixyz, xyz_fn
   use drc_C, only : georef
-  USE elemts_C, only : elemnt 
+  USE elemts_C, only : elemnt
   use common_arrays_C, only : nat, l_atom
   implicit none
   double precision, intent (in) :: escf, ekin, time, xtot, rc_dipo
@@ -73,7 +73,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
     if (l_dipole) then
       ixyz1 = ixyz + 1
       open(unit=ixyz1, file=xyz_fn(:len_trim(xyz_fn) - 4)//" for dipole.xyz")
-    end if      
+    end if
     if (index(keywrd, " PDBOUT") /= 0) &
       open(unit = ipdb, file = xyz_fn(:len_trim(xyz_fn) - 3)//"pdb")
     icalcn = step_num
@@ -90,7 +90,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
   num1 = char(ichar("1") + int(log10(jloop*1.01)))
   factor = abs(escf)
   num2 = char(max(ichar("0"), ichar("0") + min(9, int(log10(factor)) - 1)))
-  num3 = char(max(ichar("0"), ichar("0") + min(9, int(log10(4.184d0*factor)) - 1))) 
+  num3 = char(max(ichar("0"), ichar("0") + min(9, int(log10(4.184d0*factor)) - 1)))
   npt = npt + 1
   if (l_dipole) then
     write(ixyz1,"(i6,a)") numat," "
@@ -101,7 +101,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
   end if
   write(line,'(a, i'//num1//', a, f1'//num2//'.3, a, f1'//num3//'.3, a)')"Profile.", jloop, &
     " HEAT OF FORMATION =", escf, " KCAL "
-  k = index(line, "HEAT") 
+  k = index(line, "HEAT")
   write(ixyz,'(a,i4,a)')line(:8), npt," "//trim(line(k:))
   k = 0
   do i = 1, numat
@@ -118,7 +118,7 @@ subroutine write_trajectory(xyz, escf, ekin, rc_dipo, time, xtot, l_dipole)
     if (time > 1.d-6) then
       write (line, "(a7,i6,a8,f17.5,a8,f9.4,a7,f9.4,a7,f9.3)") " CYCLE:", jloop, &
         & "  Pot.E:", escf, "  Kin.E:", ekin, "  Move:", xtot,"  Time:", Min(time,99999.999d0)
-      else    
+      else
         write (line, "(a7,i6,a19,f17.5,a8,f9.4,a7,f9.4,a7,f9.3)") " CYCLE:", jloop, &
     & "  Potential energy:", escf, " Diff.:", ekin, "  Move:", xtot
     end if
@@ -139,14 +139,14 @@ subroutine reverse_trajectory(mode)
 !
 ! Read in a trajectory that was created earlier in this run, and
 ! write it back out, in reverse order of points.
-!                                 
+!
   use molkst_C, only : step_num, jloop => itemp_1, line, nl_atoms, keywrd, backslash
   use chanel_C, only : ixyz, xyz_fn
   implicit none
   integer, intent (in) :: mode
   integer :: icalcn = 0, i, k, io_stat, ipdb = 14, imodel = 0, npdb, npt, ixyzn
   character :: dummy_char*1, xyz_fnn*200
-  character, allocatable :: store_path(:,:)*200, store_hofs(:)*200  
+  character, allocatable :: store_path(:,:)*200, store_hofs(:)*200
   save :: icalcn, ipdb, imodel, npt
   ixyzn = 0
   if (icalcn /= step_num) then
@@ -165,7 +165,7 @@ subroutine reverse_trajectory(mode)
       open(unit = ipdb, file = xyz_fnn(:len_trim(xyz_fnn) - 3)//"pdb")
     if (mode == 1) icalcn = step_num
   end if
- 
+
   close (ixyzn)
   open(ixyzn, file = xyz_fnn)
   rewind(ixyzn)
@@ -198,7 +198,7 @@ subroutine reverse_trajectory(mode)
     do k = 1, nl_atoms
       write(ixyzn,"(a)") trim(store_path(k,i))
     end do
-  end do  
+  end do
 !
 !  Do the same with the PDB file
 !
@@ -240,9 +240,9 @@ subroutine reverse_trajectory(mode)
       do k = 1, npdb
         write(ipdb,"(a)") trim(store_path(k,i))
       end do
-    end do          
+    end do
   end if
-  deallocate (store_path) 
+  deallocate (store_path)
 end subroutine reverse_trajectory
 subroutine reverse_aux
 !
@@ -288,8 +288,8 @@ subroutine reverse_aux
   end do
   do i = npoints, 2, -1
     write(hook,'(a,i5.5)')" REF_POINT=",npoints - i + 1
-    irc(2,i)(21:21) = "-" 
-    do j = 2, n_lines       
+    irc(2,i)(21:21) = "-"
+    do j = 2, n_lines
       write(hook,'(a)')trim(irc(j,i))
     end do
   end do

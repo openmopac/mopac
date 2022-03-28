@@ -14,33 +14,33 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine mopend(txt)  
+      subroutine mopend(txt)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      USE molkst_C, only : moperr, errtxt 
+      USE molkst_C, only : moperr, errtxt
       use chanel_C, only : iw
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      character , intent(in) :: txt*(*) 
+      character , intent(in) :: txt*(*)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
 !-----------------------------------------------
-      moperr = .TRUE. 
-      errtxt = txt 
+      moperr = .TRUE.
+      errtxt = txt
       call summary(txt, len_trim(txt))
       if (trim(txt) /= "JOB ENDED NORMALLY" ) write(iw,'(/10x,a)')trim(txt)
-      call to_screen("To_file:END_OF_JOB"//trim(txt)) 
-      return  
-      end subroutine mopend 
+      call to_screen("To_file:END_OF_JOB"//trim(txt))
+      return
+      end subroutine mopend
       subroutine summary(txt, ntxt)
 !
 !  Collect error messages and print them at the end of each calculation
 !
-!     
+!
         use chanel_C, only : iw, ir
         use molkst_C, only : line, job_no, natoms
         implicit none
@@ -64,7 +64,7 @@
            if (opend) then
              write(hook,"(a)")" END OF MOPAC PROGRAM"
            end if
-        end if          
+        end if
         if (ntxt == 1) then
           if (natoms == 0 .and. job_no == 1) then
             write(iw,'(/10x, a)')"Job failed to run because no atoms were detected in the system"
@@ -75,7 +75,7 @@
               read(ir, '(a)', iostat = j)line
               if (j /= 0) exit
               max_txt = max(max_txt, len_trim(line))
-            end do        
+            end do
             rewind (ir)
             do i = 1, 9
               read(ir, '(a)', iostat = j)line
@@ -83,7 +83,7 @@
               write(iw,'(a, i1, a)')" Line ", i, ": """//line(:max_txt)//""""
             end do
             if (i < 10) write(iw,'(/,a)')"          Then the end of the data-set was detected"
-          end if             
+          end if
 !
 !   Write out messages
 !
@@ -92,7 +92,7 @@
           max_txt = 1
           do i = 1, nmessages
             max_txt = max(max_txt, len_trim(messages(i)))
-          end do  
+          end do
           max_txt = min(lim, max(max_txt + 4, 22))
           if (messages(1)(1:18) /= "JOB ENDED NORMALLY" ) max_txt = max(max_txt, 78)
           write(iw,'(/1x,120a)')("*", i = 1, max_txt)

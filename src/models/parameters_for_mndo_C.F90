@@ -14,11 +14,11 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module Parameters_for_MNDO_C 
+      module Parameters_for_MNDO_C
       double precision, dimension(107) :: ussm, uppm, uddm, zsm, zpm, zdm, betasm, &
         betapm, betadm, alpm, gssm, gspm, gppm, gp2m, hspm, polvom, &
         zsnm, zpnm, zdnm, polvolm, f0sdm, g2sdm, pocm
-      double precision, dimension(107,4) :: guesm1, guesm2, guesm3   
+      double precision, dimension(107,4) :: guesm1, guesm2, guesm3
 !
 !       Data for Element   1:     Hydrogen
 !
@@ -985,4 +985,4 @@
 !       Data for Element 106:    - Sparkle
 !
       data      alpm(106)/       1.5000000d0/
-      end module Parameters_for_MNDO_C 
+      end module Parameters_for_MNDO_C

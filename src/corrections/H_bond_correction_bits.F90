@@ -40,13 +40,13 @@ logical function connected(atom_i, atom_j, criterion)
 !
   if (id == 0) then
     Vab = coord(:,atom_i) - coord(:,atom_j)
-    Rab = Vab(1)**2 + Vab(2)**2 + Vab(3)**2 
+    Rab = Vab(1)**2 + Vab(2)**2 + Vab(3)**2
   else
     Rab = distance(atom_i, atom_j)**2
-  end if 
-  connected = (Rab < criterion) 
+  end if
+  connected = (Rab < criterion)
   if (connected) Rab = sqrt(Rab)
-  return       
+  return
 end function connected
 subroutine find_XH_bonds(acc, nacc, h_b, nhb)
 !
@@ -73,8 +73,8 @@ subroutine find_XH_bonds(acc, nacc, h_b, nhb)
       is = 8  ! Change to 16 ASAP
     else if (method_pm6_d3h4 .or. method_pm6_d3h4x) then
       RAH = 1.15d0
-      is = 8  
-    else      
+      is = 8
+    else
       RAH = 1.15d0
       is = 16
     end if
@@ -101,7 +101,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
 !
 !  Find all sets of three atoms that form a hydrogen bond
 !
-!   acc_a:       All O and N atoms 
+!   acc_a:       All O and N atoms
 !   bonding_a_h: Hydrogen atoms bonded to acc_a, not in any particular order
 !
   use chanel_C, only : iw
@@ -118,23 +118,23 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
       RAH = 1.4d0
       cutoff = 10.d0
     else if (method_PM7) then
-      RAH = 1.4d0 
+      RAH = 1.4d0
       cutoff = 7.d0
     else
 !
 !  "cutoff" had been set to 7.0, but that had caused problems with the radial term "e_radial"
-!  in H_bonds4.F90.  "e_radial" increases sharply beyond 5.5 Angstroms.      
+!  in H_bonds4.F90.  "e_radial" increases sharply beyond 5.5 Angstroms.
 !
       RAH = 1.15d0
       cutoff = 5.5d0
     end if
     do ii = 1, nacc_a
-      i = acc_a(ii)   !  i = Acceptor atom bonded to H  
+      i = acc_a(ii)   !  i = Acceptor atom bonded to H
       do jj = 1, nb_a_h
         j = bonding_a_h(jj)   !  j = Hydrogen bond to acceptor atom
         if (connected(i, j, RAH**2)) then
           do kk = 1, nacc_b
-            k = acc_b(kk)  
+            k = acc_b(kk)
             if (k /= i) then
               if (connected(k, i, cutoff**2)) then
                 if (angle(k,j,i) > pi*0.5d0) then
@@ -154,7 +154,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
                     if (hblist3(i1) /= k) cycle
                     exit
                   end do
-                  if (i1 /= nrpairs + 1) cycle                  
+                  if (i1 /= nrpairs + 1) cycle
                   nrpairs = nrpairs + 1 !  k = Distant acceptor atom
                   if (nrpairs > max_h_bonds) then
                     call mopend("The default array size for hydrogen bonds is too small")
@@ -169,13 +169,13 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
                 end if
               end if
             end if
-          end do                
-        end if          
+          end do
+        end if
       end do
     end do
     return
   end subroutine find_H__Y_bonds
- 
+
   function truncation(R, limit, spread)
 !
 !  Truncation has the values:
@@ -191,11 +191,11 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
   double precision, intent(in) :: R, limit, spread
   double precision :: truncation, a, b
     a = limit - spread
-    b = limit + spread  
+    b = limit + spread
     if (R < b) then
       if (R < a) then
         truncation = limit
-      else      
+      else
         truncation = limit + (limit - a)/(a - b)**2*(R - a)**2
       end if
     else
@@ -218,7 +218,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
 !    hblist1: Atom number of oxygen or nitrogen attached to hydrogen
 !    hblist2: Atom number of hydrogen atom involved in hydrogen bonding
 !    hblist3: Atom number ofoxygen or nitrogen hydrogen bonded to the hydrogen atom
-!    
+!
 !
   use common_arrays_C, only: bonding_a_h, bonding_b_h, acceptor_a, acceptor_b
   use molkst_C, only : numat, line, moperr
@@ -233,7 +233,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
 !
 !  Work out list of of potential hydrogen bonds
 !
-!   First, find all N-H and O-H groups 
+!   First, find all N-H and O-H groups
 !
     if (allocated(acceptor_a))   deallocate(acceptor_a)
     if (allocated(acceptor_b))   deallocate(acceptor_b)
@@ -254,10 +254,10 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
 !  acceptor_b now holds the list of acceptor O and N atoms (for the second fragment, if it exists)
 !  bonding_a_h now holds the list of H atoms attached to an O or N (for the first fragment)
 !  bonding_b_h now holds the list of H atoms attached to an O or N (for the second fragment, if it exists)
-!  
+!
 !
 !  Find if there is a hydrogen bond
-!     
+!
     nrpairs = 0
     call find_H__Y_bonds(acceptor_a, nacceptor_a, acceptor_a, nacceptor_a, &
       bonding_a_h, nbonding_a_h, hblist1, hblist2, hblist3, max_h_bonds, nrpairs)
@@ -287,7 +287,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
                    + (coord1(2)-coord(2, b))**2 &
                    + (coord1(3)-coord(3, b))**2
               if (sum < distance) then
-                distance = sum 
+                distance = sum
                 temp_1 = coord1(1)-coord(1, b)
                 temp_2 = coord1(2)-coord(2, b)
                 temp_3 = coord1(3)-coord(3, b)
@@ -300,9 +300,9 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
           end do
         end do
         distance = sqrt(distance)
-      end if    
+      end if
   end function distance
-  double precision function angle(a, b, c) 
+  double precision function angle(a, b, c)
     use common_arrays_C, only: coord
       integer :: a,  b,  c
       call bangle(coord, a, b, c, angle)
@@ -316,12 +316,12 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
   double precision function bonding(x, y, covrad)
     use common_arrays_C, only: nat
     implicit none
-    integer,  INTENT(IN) :: x, y 
+    integer,  INTENT(IN) :: x, y
     double precision :: covrad(94)
-      bonding = covrad(nat(x)) + covrad(nat(y)) 
+      bonding = covrad(nat(x)) + covrad(nat(y))
     return
   end function bonding
-  
+
   subroutine prt_hbonds(D, H, A, energy)
   use common_arrays_C, only: nat, txtatm, H_txt, H_energy
   use molkst_C, only : numat, keywrd, numcal, P_hbonds, maxtxt
@@ -359,7 +359,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
     if (maxtxt == 0) then
       write(H_txt(P_Hbonds),'(2x,a,f15.3,6x,a,12x,a,10x, f7.2,a)')trim(txtatm(D)), sum1,  &
       trim(txtatm(H)), trim(txtatm(A)), energy, " Kcal/mol"
-    else      
+    else
       write(H_txt(P_Hbonds),'(a,2x,f6.3,3x,a,3x,a,3x, f7.2,a)')""""//txtatm(D)(:maxtxt)//"""", sum1,  &
       """"//txtatm(H)(:maxtxt)//"""", """"//txtatm(A)(:maxtxt)//"""", energy, " Kcal/mol"
     end if

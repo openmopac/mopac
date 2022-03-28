@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine symtry () 
+      subroutine symtry ()
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : ndep
       USE symmetry_C, ONLY: locpar, idepfn, locdep, depmul
@@ -28,8 +28,8 @@
       implicit none
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: n, i, locn, j 
-      double precision :: value 
+      integer :: n, i, locn, j
+      double precision :: value
 !-----------------------------------------------
 !**********************************************************************
 !
@@ -47,24 +47,24 @@
 !
 !     NOW COMPUTE THE DEPENDENT PARAMETERS.
 !
-      n = 0 
-      do i = 1, ndep 
+      n = 0
+      do i = 1, ndep
         if (idepfn(i) == 19 .and. depmul(n + 1) > 1.d-20) then
           n = n + 1
-          call haddon (value, locn, idepfn(i), locpar(i), geo, depmul(n)) 
+          call haddon (value, locn, idepfn(i), locpar(i), geo, depmul(n))
         else
-          call haddon (value, locn, idepfn(i), locpar(i), geo, depmul(i)) 
+          call haddon (value, locn, idepfn(i), locpar(i), geo, depmul(i))
         end if
-        j = locdep(i) 
-        geo(locn,j) = value 
-      end do 
-      return  
+        j = locdep(i)
+        geo(locn,j) = value
+      end do
+      return
       end subroutine symtry
       subroutine haddon(w, l, m, loc, a,  fact)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
-      use chanel_C, only : iw 
+      use chanel_C, only : iw
       use molkst_C, only : numcal
       use common_arrays_C, only : na
       use funcon_C, only : pi
@@ -75,22 +75,22 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer , intent(out) :: l 
-      integer , intent(in) :: m 
-      integer , intent(in) :: loc 
-      double precision , intent(out) :: w 
-      double precision , intent(in) :: fact 
-      double precision , intent(in) :: a(3,*) 
+      integer , intent(out) :: l
+      integer , intent(in) :: m
+      integer , intent(in) :: loc
+      double precision , intent(out) :: w
+      double precision , intent(in) :: fact
+      double precision , intent(in) :: a(3,*)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: icalcn, i 
-      save icalcn 
+      integer :: icalcn, i
+      save icalcn
 !-----------------------------------------------
-      data icalcn/ 0/  
-      if (numcal /= icalcn) then 
-        icalcn = numcal 
-      end if 
+      data icalcn/ 0/
+      if (numcal /= icalcn) then
+        icalcn = numcal
+      end if
      !**********************************************************************
     if (m > 19 .or. m < 1) then
       write (iw, "(///10X,'UNDEFINED SYMMETRY FUNCTION',I3, ' USED')") m
@@ -257,5 +257,5 @@
    !
 1000 l = 1
     w = a(1, i)
-      end subroutine haddon 
+      end subroutine haddon
 

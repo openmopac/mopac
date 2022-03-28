@@ -26,7 +26,7 @@
     maxpms, locvar
     use chanel_C, only: iw, ir
     use parameters_C, only : udd, zd, f0sd, g2sd, main_group, f0sd_store, g2sd_store, &
-    dorbs, partyp, defmin, defmax, n_partyp_fn, n_partyp_alpb, n_partyp 
+    dorbs, partyp, defmin, defmax, n_partyp_fn, n_partyp_alpb, n_partyp
     implicit none
     character :: text*240, text2*240,koment*120, elemnt2*2
     logical :: buggy = .false., use_list
@@ -34,7 +34,7 @@
     & npar, mpar, nele, ipar, iele, n_ele, nlines
     character (len=2), dimension (107) :: elemnt
     character (len=7), dimension (2,1000) :: parlist
-    external upcase 
+    external upcase
     double precision, external :: reada
     intrinsic Index
     data (elemnt(i), i=1, 107) / "H ", "HE", "LI", "BE", "B ", "C ", "N ", "O ", &
@@ -51,7 +51,7 @@
     if (main_group(i)) g2sd(i) = 0.d0
     if (f0sd_store(i) < 1.d-5) f0sd_store(i) = f0sd(i)
     if (g2sd_store(i) < 1.d-5) g2sd_store(i) = g2sd(i)
-    dorbs(i) = (Abs(udd(i)) > 1.d-8 .and. zd(i) > 1.d-1) 
+    dorbs(i) = (Abs(udd(i)) > 1.d-8 .and. zd(i) > 1.d-1)
     end do
 !
 !  Read in parameters to be optimized
@@ -133,9 +133,9 @@
       if (index(text, "PAR") /= 0) then
         i = index(text,"PAR") + 4
         text2 = text
-        j = ichar(text(i-1:i-1)) - ichar("0") 
+        j = ichar(text(i-1:i-1)) - ichar("0")
         if (text(i:i) /= " ") j = j*10 + ichar(text(i:i)) - ichar("0")
-        if (j < 13) then       
+        if (j < 13) then
           k = mod(j - 1,3) + 1
           j = (j - 1)/3 + 1
           write(text,"('FN',2i1,' XX ',a)") k, j, trim(text2(i + 1:))
@@ -148,14 +148,14 @@
       end if
       use_list = .false.
 !
-!  If "text" involves parentheses, parse the line to extract the different 
+!  If "text" involves parentheses, parse the line to extract the different
 !  parameters to be optimized
 !
       k = Index(text,"(") + 1
       if (k /= 1) then
         use_list = .true.
         do
-          i = index(text," )") 
+          i = index(text," )")
           if (i /= 0) then
             text(i:) = text(i + 1:)
           else
@@ -178,9 +178,9 @@
           if(j - k > 2 .or. j - k > 1 .and. text(j:j) /= " ")then
             if (text(k:j) == "ALL") then
               nele = 0
-              do i = 1,57 
+              do i = 1,57
                 nele = nele + 1
-                parlist(1,nele) = elemnt(i)                 
+                parlist(1,nele) = elemnt(i)
               end do
               do i = 71, 83
                 nele = nele + 1
@@ -216,7 +216,7 @@
           parlist(2,npar) = text(k:j)
           k = j + 1
           if (k >=l) exit
-        end do   
+        end do
       else
         npar = 1
         nele = 1
@@ -233,7 +233,7 @@
           end do
         else
           mpar = npar
-        end if                  
+        end if
         mpar_loop: do ipar = 1,mpar
           if (use_list) text = parlist(2,ipar)//" "//parlist(1,iele)
           koment = "    " // text (1:76)
@@ -283,14 +283,14 @@
           text = " " // koment (1:49)
           botlim(numvar) = defmin(locvar(1, numvar))
           toplim(numvar) = defmax(locvar(1, numvar))
-!Gallo                  
+!Gallo
 ! Instead of setting the general upper and lower bounds to -1000 and 1000,
 ! respectively, they are defined in parameters_C.F90 also for par == T
 !          if (par) then
 !            botlim(numvar) = -1000.d0
 !            toplim(numvar) =  1000.d0
 !          end if
-!Gallo                  
+!Gallo
 !
 !  Read in lower and upper limits
 !
@@ -383,7 +383,7 @@
           else if (j < 20) then
             text(2:2) = char(j - 10 + ichar("0"))
             text(1:1) = "1"
-          else 
+          else
             text(2:2) = char(j - 20 + ichar("0"))
             text(1:1) = "2"
           end if
@@ -404,7 +404,7 @@
      write (ifiles_8,'(a)')text(1:len_trim(text))
     end do!  All parameters loop
 199 stop
-97  return    
+97  return
 end subroutine getpar
 subroutine what_parameters(z,parlist,mpar)
   use parameters_C, only : alpb
@@ -442,7 +442,7 @@ subroutine what_parameters(z,parlist,mpar)
   parlist(2,17) = "HSP"
   parlist(2,18) = "F0SD"
   parlist(2,19) = "G2SD"
-  parlist(2,20) = "ALP" 
+  parlist(2,20) = "ALP"
     parlist(2,21) = "FN11"
     parlist(2,22) = "FN21"
     parlist(2,23) = "FN31"
@@ -480,7 +480,7 @@ subroutine lockit(value, numvar)
 !  Truncate value so that the last digits are all zero's
 !
 !     i = int(value)
-!     value = i + nint((value - i)*multiplier)/multiplier      
+!     value = i + nint((value - i)*multiplier)/multiplier
 !    if (.not. locked(numvar)) then
 !
 !  Modify value of parameter so that the last digit printed is not zero
@@ -491,7 +491,7 @@ subroutine lockit(value, numvar)
   subroutine print_par
     use param_global_C, only : valvar, toplim, botlim, numvar, ifiles_8, locvar, &
       penalty, contrl
-    use parameters_C, only : partyp 
+    use parameters_C, only : partyp
 !
 !  Local
 !
@@ -510,7 +510,7 @@ subroutine lockit(value, numvar)
    & "BI", "PO", "AT", "RN", "FR", "RA", "AC", "TH", "PA", "U ", "NP", "PU", &
    & "AM", "CM", "BK", "MI", "XX", "+3", "-3", "CB", "++", "+", "--", "-", "TV" /
     save
-    l_prt = (index(contrl, " SURVEY") == 0) 
+    l_prt = (index(contrl, " SURVEY") == 0)
     if (lfirst) then
       if (l_prt) then
         write (ifiles_8, "(//,10X,A)") "    PARAMETERS TO BE OPTIMIZED"

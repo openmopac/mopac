@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine getpdb (geo) 
+subroutine getpdb (geo)
     use molkst_C, only: maxtxt, natoms, numat, na1, keywrd, line, &
       ncomments, nbreaks, title, txtmax, pdb_label
     use common_arrays_C, only : txtatm, atmass, na, nb, nc, break_coords, &
@@ -82,7 +82,7 @@ subroutine getpdb (geo)
     ielem(i)   = 1
     defined_elements = i
     numerr = 0
-    new_elements = 0 
+    new_elements = 0
     line = trim(keywrd)
     j = 0
     do i = 1, len_trim(keywrd)
@@ -181,7 +181,7 @@ subroutine getpdb (geo)
           if (nbreaks > 400) then
             call mopend("Maximum number (400) of breaks (lines starting with TER) exceeded")
             return
-          end if 
+          end if
           line1 = txtatm(natoms)(22:)
           do i = natoms, 1, -1
             j = i
@@ -255,7 +255,7 @@ subroutine getpdb (geo)
             new_key_1 = " START_RES=("//line(i:26)//line(22:22)
             new_key_2 = " CHAINS=("//line(22:22)
           end if
-        else         
+        else
           if (abs(current_res - previous_res) > 1 .or. (natoms > 2 .and. line(22:22) /= ch)) then
             if (line(:6) /= "HETATM" .or. line(22:22) /= " ") then
               do i = 23, 25
@@ -270,7 +270,7 @@ subroutine getpdb (geo)
                   new_key_1 = trim(line1)
                 end if
                 n_water = 0
-                old_natoms = natoms 
+                old_natoms = natoms
                 line1 = trim(new_key_2)//line(22:22)
                 new_key_2 = trim(line1)
               else
@@ -279,13 +279,13 @@ subroutine getpdb (geo)
                   new_key_1 = trim(line1)
                 end if
                 n_water = 0
-                old_natoms = natoms 
+                old_natoms = natoms
               end if
             end if
-          end if          
+          end if
         end if
-        previous_res = current_res   
-        ch = line(22:22)      
+        previous_res = current_res
+        ch = line(22:22)
       end if
       last_atom = (line(:4) == "ATOM")
 !
@@ -363,7 +363,7 @@ subroutine getpdb (geo)
             ele(1:1) = ele(2:2)
             ele(2:2) = " "
             end if
-            
+
             if( scan( " 0123456789", ele(2:2) ) /= 0 ) then
               ele(2:2) = " "
             end if
@@ -433,7 +433,7 @@ subroutine getpdb (geo)
       do i = 1, natoms
         if (txtatm(i)(22:22) == " ") txtatm(i)(22:22) = char(ichar("A") + j)
       end do
-    end if        
+    end if
 1020 if (npdb /= 0) then
       write (iw,*) " THE SPECIES THAT WERE NOT RECOGNIZED CAN BE"
       write (iw,*) " RECOGNIZED BY USING THE FOLLOWING KEYWORD"
@@ -458,7 +458,7 @@ subroutine getpdb (geo)
       line1 = new_key_1
       new_key_1 = " "
       ii = min(999, len_trim(line1))
-      do i = 2, ii 
+      do i = 2, ii
         if (line1(i:i + 1) == "  ") cycle
         if (line1(i - 1:i) == "- ") cycle
         j = j + 1
@@ -473,7 +473,7 @@ subroutine getpdb (geo)
     end if
     if (index(keywrd,"CHAINS") == 0 .and. new_key_2(9:) /= "(") then
       line1 = " "//trim(new_key_2)//") "//trim(keywrd)
-      keywrd = trim(line1)   
+      keywrd = trim(line1)
     end if
     if (line /= " ") then
 !

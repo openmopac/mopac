@@ -39,10 +39,10 @@ subroutine local_for_MOZYME (type)
       do i = 1, 100
         call localize_for_MOZYME (cocc, cocc_dim, icocc, icocc_dim, ncf, ncocc, &
              & nocc, iorbs, psi1, psi2, axiiii, nf, nl, ioc, nncf, totij, sum)
-   !     write (iw, "(10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALIZATION VALUE =',f14.9)") i, sum 
+   !     write (iw, "(10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALIZATION VALUE =',f14.9)") i, sum
         if (totij < 1.d-5) exit
       end do
-      write (iw, "(10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALIZATION VALUE =',f14.9,/)") i, sum 
+      write (iw, "(10x,'NUMBER OF ITERATIONS =',i4,/,10x,'LOCALIZATION VALUE =',f14.9,/)") i, sum
 !
       call MOZYME_eigs(nocc)
 !

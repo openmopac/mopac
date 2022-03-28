@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 subroutine direct(cycle_no)
-! 
+!
     use param_global_C, only : valvar, numvar, power, ifiles_8, fnsnew, &
     error, factor, tfns, fns, diffns, nfns, ihrefs, refgeo, is_a_ref, &
     refcer, reftot, refger, refher, refder, wthof, wtdip, wtips, wtgeo, wtpKa, &
@@ -65,14 +65,14 @@ subroutine direct(cycle_no)
   !
   !***********************************************************************
     geopt = (Index (contrl, "1SCF") == 0)
-    lfact = (Index (contrl, " NOSCALE") == 0)  
+    lfact = (Index (contrl, " NOSCALE") == 0)
     full = (Index (contrl, "FULL") /= 0)
     lderivs = (Index (contrl, "DERI") /= 0)
     lfast = (Index (contrl, " NOFINE") /= 0)
     useps = (Index (contrl, " EPS") + Index (contrl, " PKA")/= 0)
     iseps = useps
     lim_gnorm = 3.d0
-    i = Index (contrl, "GNORM") 
+    i = Index (contrl, "GNORM")
     if( i /= 0) lim_gnorm = Reada(contrl, i)
     used = .false.
     j = 0
@@ -117,8 +117,8 @@ subroutine direct(cycle_no)
       call calpar
       call getmol (loop)
       write(iw,*)trim(koment)
-      endfile (iw) 
-      backspace (iw) 
+      endfile (iw)
+      backspace (iw)
       deallocate(c)
       if (allocated(cb)) deallocate(cb)
       allocate(c(norbs, norbs), cb(norbs, norbs))
@@ -135,9 +135,9 @@ subroutine direct(cycle_no)
         end do
         goto 98
     99  open(ir,file=trim(line), iostat=i)
-        if (i /= 0) goto 98 
+        if (i /= 0) goto 98
         j = 0
-        do 
+        do
           read(ir,'(a)', iostat=i)line
           if (i /= 0) goto  98
           if (line(1:1) /= "*") j = j + 1
@@ -151,7 +151,7 @@ subroutine direct(cycle_no)
         if (Abs(store - refhof) > 0.001d0) then
            write (ifiles_8, "(a,f9.3,a,f9.3,a,a)") " HoF changed from", &
              store, " to", refhof, " kcal/mol for system '"// trim(molnam)//"'"
-           heats(loop) = refhof 
+           heats(loop) = refhof
         end if
       end if
    98 moperr = .false.
@@ -163,14 +163,14 @@ subroutine direct(cycle_no)
   !  Write(ifiles_8,"(A,F12.4)")" Tleft:",tleft
  !     if (cycle_no == 1) is_PARAM = .false.
       if (iseps) then
-         call gmetry (geometry, coord) 
-      ! The following routine constructs the dielectric screening surface 
+         call gmetry (geometry, coord)
+      ! The following routine constructs the dielectric screening surface
         call cosini(.false.)
-      !  if (moperr) goto 100 
-        call coscav 
+      !  if (moperr) goto 100
+        call coscav
         call mkbmat
-      !  if (moperr) go to 100  
-      end if     
+      !  if (moperr) go to 100
+      end if
       if (geopt) then
         call optgeo (xparam, yparam, nvar, refgeo(1), lim_gnorm)
       else
@@ -274,19 +274,19 @@ subroutine direct(cycle_no)
     !   4.d-3 previous value - used from 1999 - 2005
     !   I've not tried higher values than 8.d-3
     !
-              dstep(loopar) = 2.d-3 
+              dstep(loopar) = 2.d-3
             else
     !
     !   1.d-2 looks good
     !
               dstep(loopar) = 10.d-3*phase !min(max(2.d-2, abs(valvar(loopar)*0.02d0)), 3.d-2 ) * phase
             end if
-              
+
             delta = -dstep(loopar)
     !
     ! Single-sided derivatives are only good for quick rough work.  For accurate
     ! work, double-sided derivatives are needed.
-    
+
             if (lfast .and. (id /= 3 .or. locvar(2,loopar) < 200)) &
                call update (locvar(1, loopar), locvar(2, loopar), delta, 1.d0)
           end do
@@ -302,7 +302,7 @@ subroutine direct(cycle_no)
         !
         !  For each parameter in turn, step two delta in the positive direction
         !
-    
+
           do loopar = 1, numvar
             nel = molele(1, loop)
             used = .true.
@@ -317,7 +317,7 @@ subroutine direct(cycle_no)
                     end do
                   end if
                 end if
-              end if           
+              end if
             end do
             if (id == 3 .and. locvar(2,loopar) < 200) k = 1
             if (k /= 0) then
@@ -325,7 +325,7 @@ subroutine direct(cycle_no)
           !  Set all derivatives to zero IF:
           !  (A) The element whose parameter is being optimized is not present, OR
           !  (B) The system is a solid, and the parameter is not a diatomic.
-          !             
+          !
               do i = 1, nerr
                 differ(i) = 0.d0
               end do
@@ -335,13 +335,13 @@ subroutine direct(cycle_no)
            ! if (id == 3) write(ifiles_8,"(2a,2i4,a)")" Derivative for Parameter: ", &
           !    partyp(locvar(1, loopar)), &
             !  mod(locvar(2, loopar),200), locvar(2, loopar)/200, " calculated"
-            endfile (ifiles_8) 
-            backspace (ifiles_8) 
+            endfile (ifiles_8)
+            backspace (ifiles_8)
             if (.not. lfast) then
         !
         !  Compute the value of all errors at the point -0.5*delta
         !
-              delta = -1.d0*dstep(loopar) 
+              delta = -1.d0*dstep(loopar)
               call update (locvar(1, loopar), locvar(2, loopar), delta, 1.d0)
               call calpar
               call getusp (nat, nfirst, nlast, uspd, atheat)
@@ -406,9 +406,9 @@ subroutine direct(cycle_no)
             if (j == 0) exit
           else
             exit
-          end if      
+          end if
         end do ! big_loop
-      end if  ! numvar 
+      end if  ! numvar
     !
     !  Reset the value of all parameters.  These were stored in VALVAR.
     !  VALVAR is updated in rapid0
@@ -416,7 +416,7 @@ subroutine direct(cycle_no)
       do loopar = 1, numvar
         call update (locvar(1, loopar), locvar(2, loopar), valvar(loopar), 0.d0)
       end do
-      
+
     !
     !  Store location of heat of formation error and derivatives.
     !
@@ -429,7 +429,7 @@ subroutine direct(cycle_no)
     !
     !  Write out information on this system
     !
-     
+
       if (Mod(loop,5) == 0) then
         do i = 80,2,-2
           if(koment(i:i+1) /= "  ") exit
@@ -443,7 +443,7 @@ subroutine direct(cycle_no)
       write (ifiles_8, "(A49,I4,F9.3,F9.3,F9.2,F12.3,F12.3)") koment, i - &
      & itime, refher, refder, refcer, refger, reftot
 !
-!   Print the contribution from pKa and the scalar of the derivative vector 
+!   Print the contribution from pKa and the scalar of the derivative vector
 !   of the first reference function.
 !
   !    if (wtpKa > 1.d-5) &
@@ -475,8 +475,8 @@ subroutine direct(cycle_no)
       end if
       itime = i
       write(iw,*)trim(koment)//" end"
-      endfile (iw) 
-      backspace (iw) 
+      endfile (iw)
+      backspace (iw)
     end do
     write(iw,*)" End of cycle"
     do loop = 1, nmols
@@ -514,7 +514,7 @@ subroutine direct(cycle_no)
       do i = 1, nfns
         error(i) = fns(i) - fnsnew(i)
 !
-!   If the predicted and calculated quantities are very different, then alter 
+!   If the predicted and calculated quantities are very different, then alter
 !   the weighting for that reference datum.
 !
 !   The weighting factor is just a "best guess".  Currently:
@@ -527,15 +527,15 @@ subroutine direct(cycle_no)
 !
 !
         sum = Abs(error(i))
-        if (lfact_here(i)) then  
-      !  if (lfact) then          
+        if (lfact_here(i)) then
+      !  if (lfact) then
           if (sum < scale_lim) then
             factor(i) = 1.d0 ! Min(1.d0, (factor(i) + 0.01d0)*2.d0) !  Double scaling factor
-          else 
+          else
             factor(i) =  1.d0/sum**2
           end if
-        end if     
-        if (Abs (fns(i)-fnsnew(i)) > 5.d0) then 
+        end if
+        if (Abs (fns(i)-fnsnew(i)) > 5.d0) then
           if (j == 0) then
             write (ifiles_8, "(A,43X,2A)") "    Function ", "   Calculated ", " &
            & Predicted     Error      Factor"
@@ -568,7 +568,7 @@ subroutine direct(cycle_no)
     end do
   ! end if
    if (full) write(ifiles_8,"(/2x,A33,F14.4,3F14.2,10(/7x,7f14.2))") &
-   & "Total Error:",sumerr,fnsnew(1:numvar) 
+   & "Total Error:",sumerr,fnsnew(1:numvar)
    write(ifiles_8,*)
    if (lderivs) then
 !
@@ -588,7 +588,7 @@ subroutine direct(cycle_no)
    end do
     end do
        write(ifiles_8,"(/2x,A33,F14.4,3F14.4,10(/7x,7f14.4))") &
-   & "Total Error:",sumerr,fnsnew(1:numvar) 
+   & "Total Error:",sumerr,fnsnew(1:numvar)
    end if
    return
    end subroutine direct

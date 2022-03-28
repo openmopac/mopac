@@ -14,10 +14,10 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine wrttxt(iprt)  
+      subroutine wrttxt(iprt)
       use molkst_C, only : koment, title, refkey, keywrd, line
       implicit none
-      integer , intent(in) :: iprt 
+      integer , intent(in) :: iprt
       integer :: i, j, k
       logical :: l_chains = .false., l_start = .false.
 !-----------------------------------------------
@@ -54,14 +54,14 @@
 !
         j = index(keywrd(i + 10:), ")") + i + 10
         refkey(1) = keywrd(i:j)//trim(refkey(1))
-      end if   
+      end if
       if (refkey(2) == " ") then
         i = index(refkey(1), " +")
         if (i /= 0) then
           refkey(1)(i:i + 1) = " "
           refkey(2) = " NULL"
         end if
-      end if        
+      end if
       k = 0
       do i = 1, 6
         if (index(refkey(i), " NULL") /= 0) exit
@@ -72,7 +72,7 @@
           return
         end if
       end do
-      if (index(koment, " NULL") == 0 .and. k < 3) write (iprt, '(A)') trim(koment) 
-      if (index(koment, " NULL") == 0 .and. k < 4) write (iprt, '(A)') trim(title) 
-      return  
-      end subroutine wrttxt 
+      if (index(koment, " NULL") == 0 .and. k < 3) write (iprt, '(A)') trim(koment)
+      if (index(koment, " NULL") == 0 .and. k < 4) write (iprt, '(A)') trim(title)
+      return
+      end subroutine wrttxt

@@ -36,19 +36,19 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer , dimension(100) :: ivalue 
+      integer , dimension(100) :: ivalue
       integer :: n, nvalue, i, ll, j, l, nerror, n_used, i_sym(4)
       double precision :: sum
-      double precision, dimension(100) :: value 
-      character , dimension(19) :: texti*60, textx*60 
-      character, dimension(19,2) :: text*60 
+      double precision, dimension(100) :: value
+      character , dimension(19) :: texti*60, textx*60
+      character, dimension(19,2) :: text*60
       character, dimension(38) :: used*60
       logical :: ok, sym_pdb
 
       save text, i_sym
 !-----------------------------------------------
-      
-      equivalence (text(1,1), texti), (text(1,2), textx) 
+
+      equivalence (text(1,1), texti), (text(1,2), textx)
       data i_sym/3, 6, 8, 12/
       data texti/ &
         ' BOND LENGTH    IS SET EQUAL TO THE REFERENCE BOND LENGTH   ', &
@@ -69,7 +69,7 @@
         ' BOND ANGLE VARIES AS HALF THE REFERENCE BOND ANGLE         ', &
         ' BOND ANGLE VARIES AS 180 DEGREES - REFERENCE BOND ANGLE    ', &
         ' DO NOT USE - USE SYMMETY FUNCTION 19 INSTEAD               ', &
-        ' BOND LENGTH IS A MULTIPLE OF THE REFERENCE BOND LENGTH     '/  
+        ' BOND LENGTH IS A MULTIPLE OF THE REFERENCE BOND LENGTH     '/
       data textx/ &
         ' X COORDINATE IS SET EQUAL TO   THE REFERENCE X COORDINATE  ', &
         ' Y COORDINATE IS SET EQUAL TO   THE REFERENCE Y COORDINATE  ', &
@@ -89,24 +89,24 @@
         ' X COORDINATE IS SET EQUAL TO - THE REFERENCE Z COORDINATE  ', &
         ' Y COORDINATE IS SET EQUAL TO - THE REFERENCE X COORDINATE  ', &
         ' Z COORDINATE IS SET EQUAL TO - THE REFERENCE Y COORDINATE  ', &
-        ' NOT USED                                                   '/  
+        ' NOT USED                                                   '/
       n_used = 0
       nerror = 0
       sym_pdb = .false.
 !
 ! TITLE OUTPUT
 !
-      write (iw, 10) 
+      write (iw, 10)
    10 format(/,/,/,20x,'PARAMETER DEPENDENCE DATA'/,/,&
-        '        REFERENCE ATOM      FUNCTION NO.    DEPENDENT ATOM(S)') 
+        '        REFERENCE ATOM      FUNCTION NO.    DEPENDENT ATOM(S)')
 !
 ! INPUT SYMMETRY : FUNCTION, REFERANCE PARAMETER, AND DEPENDENT ATOMS
 !
-      n = 0 
+      n = 0
       if (ndep > 0) then
         j = 2
         do i = 1, ndep
-          j = j + 1        
+          j = j + 1
           ivalue(j) = locdep(i)
           ok = (i == ndep)
           if (.not. ok) ok = (locpar(i) /= locpar(i + 1) .or. idepfn(i) /= idepfn(i + 1))
@@ -116,27 +116,27 @@
             j = 2
           end if
         end do
-        goto 90 
+        goto 90
       end if
-      depmul(1) = 0.D0 
-   20 continue 
-      read (ir, '(A)', end=90) line 
+      depmul(1) = 0.D0
+   20 continue
+      read (ir, '(A)', end=90) line
       call upcase(line, len_trim(line))
       do
         i =index(line, '"')
         if (i == 0) exit
         call txt_to_atom_no(line, i, .false.)
-        call  l_control("CONTROL_SYM_in_PDB", len_trim("CONTROL_SYM_in_PDB"), 1) 
+        call  l_control("CONTROL_SYM_in_PDB", len_trim("CONTROL_SYM_in_PDB"), 1)
         sym_pdb = .true.
         if (moperr) return
       end do
-      call nuchar (line, len_trim(line), value, nvalue) 
+      call nuchar (line, len_trim(line), value, nvalue)
 !   INTEGER VALUES
-      do i = 1, nvalue 
-        ivalue(i) = nint(value(i)) 
-      end do 
+      do i = 1, nvalue
+        ivalue(i) = nint(value(i))
+      end do
 !   FILL THE LOCDEP ARRAY
-      if (nvalue==0 .or. Abs(value(3)) < 1.d-20) go to 90 
+      if (nvalue==0 .or. Abs(value(3)) < 1.d-20) go to 90
       if (ivalue(2) == 19) then
         if (na(ivalue(1)) == 0) then
             !
@@ -193,7 +193,7 @@
       if (ivalue(2) == 19) then
           write (iw,'(i13, i13, f13.8, i9, 6 i5, 10(/, 43 x, 7 i5))') &
           ivalue(1), ivalue(2), value(3), (ivalue(j), j=4, ll)
-      else 
+      else
         if (sym_pdb) then
           line = " "
           call atom_no_to_txt(ivalue(1), line(9:))
@@ -202,7 +202,7 @@
           do j = 4, ll
             call atom_no_to_txt(ivalue(j), line(len_trim(line) + 2:))
           end do
-          write(iw, '(a)')trim(line)   
+          write(iw, '(a)')trim(line)
         else
           write (iw, "(i13, i19, i16, 6 i5, 10(/, 43 x, 7 i5))") ivalue(1), ivalue(2), (ivalue(j), j=3, ll)
         end if
@@ -227,26 +227,26 @@
     goto 20
 !
 ! CLEAN UP
-   90 continue 
-      write (iw, 100) 
-  100 format(/,10x,'   DESCRIPTIONS OF THE FUNCTIONS USED') 
-      do j = 1, 18 
-        do i = 1, n_used 
-          if (used(i) == texti(j)) go to 120 
-        end do 
-        cycle  
-  120   continue 
+   90 continue
+      write (iw, 100)
+  100 format(/,10x,'   DESCRIPTIONS OF THE FUNCTIONS USED')
+      do j = 1, 18
+        do i = 1, n_used
+          if (used(i) == texti(j)) go to 120
+        end do
+        cycle
+  120   continue
          write (iw, 130) j, used(i)
-  130   format(i4,5x,a) 
-      end do 
-      do j = 1, 18 
-        do i = 1, n_used 
-          if (used(i) == textx(j)) go to 121 
-        end do 
-        cycle  
-  121   continue 
+  130   format(i4,5x,a)
+      end do
+      do j = 1, 18
+        do i = 1, n_used
+          if (used(i) == textx(j)) go to 121
+        end do
+        cycle
+  121   continue
          write (iw, 130) j, used(i)
-      end do 
+      end do
       write(iw,*)
-      return  
-      end subroutine getsym 
+      return
+      end subroutine getsym

@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine switch 
+      subroutine switch
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE parameters_C, only : alp, guess1, guess2, guess3, &
       betas, betap, betad, uss, upp, udd, zs, zp, zd, zsn, zpn, zdn, &
@@ -24,7 +24,7 @@
       polvol, pocord, xfac, alpb, CPE_Zeta, CPE_Z0, CPE_B, CPE_Xlo, CPE_Xhi, &
       ams, npq, natorb
 !
-!    
+!
       USE molkst_C, only : keywrd, method_mndo, method_pm3, method_indo, &
       & method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm8
 !
@@ -35,7 +35,7 @@
       USE reimers_C, only: isok, nprin, nbfa, zcorea, weight,&
         zeta, zetad, zetawt, betaa, fg, mg1sp, ifgfac
 !
-!  
+!
       USE parameters_for_mndod_C, only : zsnd, zpnd, zdnd, ussd, uppd, uddd, &
       & zsd, zpd, zdd, betasd, betapd, betadd, alpd, gssd, gspd, &
       & gp2d, hspd, gppd, poc_d
@@ -65,12 +65,12 @@
        USE parameters_for_PM7_TS_C, only : uss7_TS, upp7_TS, udd7_TS, zs7_TS, zp7_TS, zd7_TS, betas7_TS, &
          betap7_TS, betad7_TS, gss7_TS, gsp7_TS, gpp7_TS, gp27_TS, hsp7_TS, polvo7_TS, poc_7_TS, &
          zsn7_TS, zpn7_TS, zdn7_TS, f0sd7_TS, g2sd7_TS, alp7_TS, v_par7_TS, alpb_and_xfac_pm7_ts, &
-         gues7_ts1, gues7_ts2, gues7_ts3 
+         gues7_ts1, gues7_ts2, gues7_ts3
 !
 !
       USE parameters_for_PM3_C, only : usspm3, upppm3, zspm3, zppm3, &
         betasp, betapp, alppm3, gsspm3, gsppm3, gpppm3, polvolpm3, &
-        gp2pm3, hsppm3, guesp1, guesp2, guesp3  
+        gp2pm3, hsppm3, guesp1, guesp2, guesp3
 !
 !
       use parameters_for_PM3_Sparkles_C, only : gssPM3sp, alpPM3sp, guesPM3sp1, guesPM3sp2, guesPM3sp3
@@ -114,32 +114,32 @@
 !-----------------------------------------------
       integer :: i, j
         pocord = 0.d0
-        if (method_mndo) then 
+        if (method_mndo) then
 !
 !    SWITCH IN MNDO PARAMETERS
 !
-          guess1 = guesm1 
-          guess2 = guesm2 
-          guess3 = guesm3 
-          polvol = polvolm 
-          zs = zsm 
-          zp = zpm 
-          zd = zdm 
-          zsn = zsnm 
-          zpn = zpnm 
-          zdn = zdnm 
-          uss = ussm 
-          upp = uppm 
-          udd = uddm 
-          betas = betasm 
-          betap = betapm 
+          guess1 = guesm1
+          guess2 = guesm2
+          guess3 = guesm3
+          polvol = polvolm
+          zs = zsm
+          zp = zpm
+          zd = zdm
+          zsn = zsnm
+          zpn = zpnm
+          zdn = zdnm
+          uss = ussm
+          upp = uppm
+          udd = uddm
+          betas = betasm
+          betap = betapm
           betad = betadm
-          alp = alpm 
-          gss = gssm 
-          gpp = gppm 
-          gsp = gspm 
-          gp2 = gp2m 
-          hsp = hspm 
+          alp = alpm
+          gss = gssm
+          gpp = gppm
+          gsp = gspm
+          gp2 = gp2m
+          hsp = hspm
           f0sd = f0sdm
           g2sd = g2sdm
           pocord = pocm
@@ -166,27 +166,27 @@
             zs(i) = zeta(i)
             zp(i) = zeta(i)
           end do
-        else if (method_pm3) then 
+        else if (method_pm3) then
 !
 !    SWITCH IN MNDO-PM3 PARAMETERS
 !
-          guess1 = guesp1 
-          guess2 = guesp2 
-          guess3 = guesp3 
-          polvol = polvolpm3 
-          zs = zspm3 
-          zp = zppm3 
+          guess1 = guesp1
+          guess2 = guesp2
+          guess3 = guesp3
+          polvol = polvolpm3
+          zs = zspm3
+          zp = zppm3
           zd = 0.d0
-          uss = usspm3 
-          upp = upppm3 
-          betas = betasp 
-          betap = betapp 
-          alp = alppm3 
-          gss = gsspm3 
-          gpp = gpppm3 
-          gsp = gsppm3 
-          gp2 = gp2pm3 
-          hsp = hsppm3 
+          uss = usspm3
+          upp = upppm3
+          betas = betasp
+          betap = betapp
+          alp = alppm3
+          gss = gsspm3
+          gpp = gpppm3
+          gsp = gsppm3
+          gp2 = gp2pm3
+          hsp = hsppm3
           call alpb_and_xfac_pm3
           if (index(keywrd, " SPARK") /= 0) then
             do i = 1, 102
@@ -220,38 +220,38 @@
                 guess3(i,2) = guesPM3sp3(i,2)
                 guess1(i,3:4) = 0.d0
                 guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0               
+                guess3(i,3:4) = 0.d0
               end if
-            end do  
-            alpb(:100,57:71) = 0.d0           
-            alpb(57:71,:100) = 0.d0  
+            end do
+            alpb(:100,57:71) = 0.d0
+            alpb(57:71,:100) = 0.d0
             xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0 
+            xfac(57:71,:100) = 0.d0
           end if
-        else if (method_pm8) then 
+        else if (method_pm8) then
 !
 !    SWITCH IN PM8 PARAMETERS
 !
-          guess1 = gues81 
-          guess2 = gues82 
-          guess3 = gues83 
-          zs = zs8 
-          zp = zp8 
-          zd = zd8 
-          zsn = zsn8 
-          zpn = zpn8 
-          zdn = zdn8 
-          uss = uss8 
-          upp = upp8 
-          udd = udd8 
-          betas = betas8 
-          betap = betap8 
+          guess1 = gues81
+          guess2 = gues82
+          guess3 = gues83
+          zs = zs8
+          zp = zp8
+          zd = zd8
+          zsn = zsn8
+          zpn = zpn8
+          zdn = zdn8
+          uss = uss8
+          upp = upp8
+          udd = udd8
+          betas = betas8
+          betap = betap8
           betad = betad8
-          gss = gss8 
-          gpp = gpp8 
-          gsp = gsp8 
-          gp2 = gp28 
-          hsp = hsp8 
+          gss = gss8
+          gpp = gpp8
+          gsp = gsp8
+          gp2 = gp28
+          hsp = hsp8
           f0sd = f0sd8
           g2sd = g2sd8
           alp = alp8
@@ -259,30 +259,30 @@
           polvol = polvo8
           v_par = v_par8
           call alpb_and_xfac_pm8
-        else if (method_pm6) then 
+        else if (method_pm6) then
 !
 !    SWITCH IN PM6 PARAMETERS
 !
-          guess1 = gues61 
-          guess2 = gues62 
-          guess3 = gues63 
-          zs = zs6 
-          zp = zp6 
-          zd = zd6 
-          zsn = zsn6 
-          zpn = zpn6 
-          zdn = zdn6 
-          uss = uss6 
-          upp = upp6 
-          udd = udd6 
-          betas = betas6 
-          betap = betap6 
+          guess1 = gues61
+          guess2 = gues62
+          guess3 = gues63
+          zs = zs6
+          zp = zp6
+          zd = zd6
+          zsn = zsn6
+          zpn = zpn6
+          zdn = zdn6
+          uss = uss6
+          upp = upp6
+          udd = udd6
+          betas = betas6
+          betap = betap6
           betad = betad6
-          gss = gss6 
-          gpp = gpp6 
-          gsp = gsp6 
-          gp2 = gp26 
-          hsp = hsp6 
+          gss = gss6
+          gpp = gpp6
+          gsp = gsp6
+          gp2 = gp26
+          hsp = hsp6
           f0sd = f0sd6
           g2sd = g2sd6
           alp = alp6
@@ -327,38 +327,38 @@
                 guess3(i,2) = gues6sp3(i,2)
                 guess1(i,3:4) = 0.d0
                 guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0               
+                guess3(i,3:4) = 0.d0
               end if
-            end do  
-            alpb(:100,57:71) = 0.d0           
-            alpb(57:71,:100) = 0.d0  
+            end do
+            alpb(:100,57:71) = 0.d0
+            alpb(57:71,:100) = 0.d0
             xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0 
+            xfac(57:71,:100) = 0.d0
           end if
-        else if (method_pm7_ts) then 
+        else if (method_pm7_ts) then
 !
 !    SWITCH IN PM7_TS PARAMETERS
 !
-          guess1 = gues7_TS1 
-          guess2 = gues7_TS2 
-          guess3 = gues7_TS3 
-          zs = zs7_TS 
-          zp = zp7_TS 
-          zd = zd7_TS 
-          zsn = zsn7_TS 
-          zpn = zpn7_TS 
-          zdn = zdn7_TS 
-          uss = uss7_TS 
-          upp = upp7_TS 
-          udd = udd7_TS 
-          betas = betas7_TS 
-          betap = betap7_TS 
+          guess1 = gues7_TS1
+          guess2 = gues7_TS2
+          guess3 = gues7_TS3
+          zs = zs7_TS
+          zp = zp7_TS
+          zd = zd7_TS
+          zsn = zsn7_TS
+          zpn = zpn7_TS
+          zdn = zdn7_TS
+          uss = uss7_TS
+          upp = upp7_TS
+          udd = udd7_TS
+          betas = betas7_TS
+          betap = betap7_TS
           betad = betad7_TS
-          gss = gss7_TS 
-          gpp = gpp7_TS 
-          gsp = gsp7_TS 
-          gp2 = gp27_TS 
-          hsp = hsp7_TS 
+          gss = gss7_TS
+          gpp = gpp7_TS
+          gsp = gsp7_TS
+          gp2 = gp27_TS
+          hsp = hsp7_TS
           f0sd = f0sd7_TS
           g2sd = g2sd7_TS
           alp = alp7_TS
@@ -366,30 +366,30 @@
           polvol = polvo7_TS
           v_par = v_par7_TS
           call alpb_and_xfac_pm7_TS
-        else if (method_pm7) then 
+        else if (method_pm7) then
 !
 !    SWITCH IN PM7 PARAMETERS
 !
-          guess1 = gues71 
-          guess2 = gues72 
-          guess3 = gues73 
-          zs = zs7 
-          zp = zp7 
-          zd = zd7 
-          zsn = zsn7 
-          zpn = zpn7 
-          zdn = zdn7 
-          uss = uss7 
-          upp = upp7 
-          udd = udd7 
-          betas = betas7 
-          betap = betap7 
+          guess1 = gues71
+          guess2 = gues72
+          guess3 = gues73
+          zs = zs7
+          zp = zp7
+          zd = zd7
+          zsn = zsn7
+          zpn = zpn7
+          zdn = zdn7
+          uss = uss7
+          upp = upp7
+          udd = udd7
+          betas = betas7
+          betap = betap7
           betad = betad7
-          gss = gss7 
-          gpp = gpp7 
-          gsp = gsp7 
-          gp2 = gp27 
-          hsp = hsp7 
+          gss = gss7
+          gpp = gpp7
+          gsp = gsp7
+          gp2 = gp27
+          hsp = hsp7
           f0sd = f0sd7
           g2sd = g2sd7
           alp = alp7
@@ -429,15 +429,15 @@
                 guess3(i,2) = gues7sp3(i,2)
                 guess1(i,3:4) = 0.d0
                 guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0               
+                guess3(i,3:4) = 0.d0
               end if
-            end do  
-            alpb(:100,57:71) = 0.d0           
-            alpb(57:71,:100) = 0.d0  
+            end do
+            alpb(:100,57:71) = 0.d0
+            alpb(57:71,:100) = 0.d0
             xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0 
+            xfac(57:71,:100) = 0.d0
           end if
-        else if (method_mndod) then 
+        else if (method_mndod) then
 !
 !    SWITCH IN MNDOD PARAMETERS
 !
@@ -466,22 +466,22 @@
           f0sd = 0.d0
           g2sd = 0.d0
           call alpb_and_xfac_mndod
-        else if (method_rm1) then 
+        else if (method_rm1) then
 !
 !    SWITCH IN RM1 PARAMETERS
 !
-          guess1 = guess1RM1 
-          guess2 = guess2RM1 
-          guess3 = guess3RM1 
+          guess1 = guess1RM1
+          guess2 = guess2RM1
+          guess3 = guess3RM1
           uss = ussRM1
           upp = uppRM1
           udd = uddRM1
           zs  = zsRM1
           zp  = zpRM1
           zd  = zdRM1
-          zsn = zsnRM1 
-          zpn = zpnRM1 
-          zdn = zdnRM1 
+          zsn = zsnRM1
+          zpn = zpnRM1
+          zdn = zdnRM1
           betas = betasRM1
           betap = betapRM1
           betad = betadRM1
@@ -527,38 +527,38 @@
                 guess3(i,2) = guesrm1sp3(i,2)
                 guess1(i,3:4) = 0.d0
                 guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0               
+                guess3(i,3:4) = 0.d0
               end if
-            end do  
+            end do
           end if
-        else 
+        else
 !
 !    SWITCH IN AM1 PARAMETERS
 !
-          guess1 = guesa1 
-          guess2 = guesa2 
-          guess3 = guesa3 
-          polvol = polvolam1 
-          zs = zsam1 
-          zp = zpam1 
-          zd = zdam1 
-          zsn = zsnam1 
-          zpn = zpnam1 
-          zdn = zdnam1 
+          guess1 = guesa1
+          guess2 = guesa2
+          guess3 = guesa3
+          polvol = polvolam1
+          zs = zsam1
+          zp = zpam1
+          zd = zdam1
+          zsn = zsnam1
+          zpn = zpnam1
+          zdn = zdnam1
           f0sd = f0sdam1
           g2sd = g2sdam1
-          uss = ussam1 
-          upp = uppam1 
+          uss = ussam1
+          upp = uppam1
           udd = uddam1
-          betas = betasa 
-          betap = betapa 
+          betas = betasa
+          betap = betapa
           betad = betada
-          alp = alpam1 
-          gss = gssam1 
-          gpp = gppam1 
-          gsp = gspam1 
-          gp2 = gp2am1 
-          hsp = hspam1 
+          alp = alpam1
+          gss = gssam1
+          gpp = gppam1
+          gsp = gspam1
+          gp2 = gp2am1
+          hsp = hspam1
           call alpb_and_xfac_am1
 !
 !   Unique parameter for Voityuk's Molybdenum
@@ -596,40 +596,40 @@
                 guess3(i,2) = guesam1sp3(i,2)
                 guess1(i,3:4) = 0.d0
                 guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0               
+                guess3(i,3:4) = 0.d0
               end if
-            end do  
-            alpb(:100,57:71) = 0.d0           
-            alpb(57:71,:100) = 0.d0  
+            end do
+            alpb(:100,57:71) = 0.d0
+            alpb(57:71,:100) = 0.d0
             xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0 
+            xfac(57:71,:100) = 0.d0
           end if
         end if
 !
-!    
+!
         f0sd_store = f0sd
-        g2sd_store = g2sd 
+        g2sd_store = g2sd
 
 !
 !  Symmetrize the alpb and xfac arrays
 !
       do i = 1, 100
         alpb(:i,i) = alpb(i,:i)
-        xfac(:i,i) = xfac(i,:i) 
+        xfac(:i,i) = xfac(i,:i)
       end do
       call fractional_metal_ion
-      if (index(keywrd,' EXTERNAL') /= 0) return  
-      if (.not. method_indo .and. uss(1) > (-1.D0)) then 
+      if (index(keywrd,' EXTERNAL') /= 0) return
+      if (.not. method_indo .and. uss(1) > (-1.D0)) then
         call mopend (&
-          'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM') 
-        return  
-      end if 
-      return  
-      end subroutine switch 
+          'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM')
+        return
+      end if
+      return
+      end subroutine switch
       subroutine fractional_metal_ion
       use parameters_C, only : tore, zs, zp, gss, gpp, gp2, gsp, hsp, &
       betas, betap, upp, alp
-      integer :: i 
+      integer :: i
 !
 !  Pseudo - halide metal ion with core charge of -1/2 - for use with
 !  transition metal ions only

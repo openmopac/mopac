@@ -46,7 +46,7 @@
 !     **** this does the symmetry - orbital transform on a matrix in ao basis ***
 !     ****			b = T(transp) . a . T			    ***
 !     **** ihalf = 1 lower, = 2 upper, triangle of matrices only		    ***
- 
+
       do i = 1, n
         do j = i, n
           if (ihalf == 2) then
@@ -94,7 +94,7 @@
       implicit none
       double precision ::  g1(n, n), gamma(n, n)
       integer ::           i, j
- 
+
 !     **** symmetry - trandforms the gamma (i, i|j, j) and (i, j|i, j) matrices ****
 
 !     **** first copy gamma into g1 ****
@@ -254,7 +254,7 @@
       end do
 ! End RMG
       return
-      end subroutine mo2ao 
+      end subroutine mo2ao
 
 !     *************************************************************************
 
@@ -273,7 +273,7 @@
 !     **** dumps a symmetric matrix					    ****
 !     **** ibtype = 1 atom by atom; = 2 orbital by orbital; = 3 state by state;   ****
 !     **** = 4 state by state max 15, 	 = 0 is basic			    ****
- 
+
       write (iw, *)
       write (iw, *) name
 
@@ -344,7 +344,7 @@
       use reimers_C, only : pol
       implicit none
       integer ::           j
- 
+
       do 100 j = 1, 6
         pol(j) = 0.d0
 100   continue
@@ -382,7 +382,7 @@
       implicit none
       double precision ::  conv, toang
       integer ::           j
- 
+
       conv = 2.d0 * au2cm / au2ang**2
       toang = au2ang**3
       write (iw, *)

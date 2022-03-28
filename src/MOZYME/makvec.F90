@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine makvec () 
+subroutine makvec ()
 !
 !   Construct the starting occupied and virtual localized molecular orbitals.
 !   These are on one or two atoms.  The LMOs are stored in
@@ -86,7 +86,7 @@ subroutine makvec ()
       jj = Lewis_elem(2, nLewis)
       if (ii > 0 .and. jj > 0) then
 !
-! Di-atomic Lewis element 
+! Di-atomic Lewis element
 !
         ni = nfirst(ii)
         nj = nfirst(jj)

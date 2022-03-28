@@ -19,14 +19,14 @@ subroutine findn1 (n1, ioptl, io, delta_res)
 !
 !  Locate the nitrogen atom of a peptide linkage.
 !
-!  On input, ioptl is a logical array of atoms which might contain a 
+!  On input, ioptl is a logical array of atoms which might contain a
 !  peptide linkage.
 !
 !  On output:
 !
 !  n1 is the atom-number of the nitrogen atom of the peptide
 !  or zero, if a nitrogen could not be found.
-! 
+!
 !  io is the oxygen of the "C=O" of the peptide linkage.
 !
 !  delta_res is the change in residue number caused by moving along
@@ -67,7 +67,7 @@ subroutine findn1 (n1, ioptl, io, delta_res)
       loop_k: do k = 1, nbonds(l)
                 if (nat(ibonds(k, l)) == 6) then
 !
-!  THERE IS A CARBON ATTACHED TO THE CARBON ATTACHED 
+!  THERE IS A CARBON ATTACHED TO THE CARBON ATTACHED
 !  TO THE OXYGEN
 !
                   j = ibonds(k, l)
@@ -97,7 +97,7 @@ subroutine findn1 (n1, ioptl, io, delta_res)
 !   THE NITROGEN IS N1
 !
                       n1 = ibonds(ii, j)
-!                       
+!
 !  Make sure it's not part of a ring
 !
                       is_ring = .false.
@@ -163,7 +163,7 @@ subroutine findn1 (n1, ioptl, io, delta_res)
         end if
       end do
       cycle
-1010  j = ibonds(k, j)      
+1010  j = ibonds(k, j)
       do k = 1, nbonds(j)
         if (nat(ibonds(k, j)) == 7) go to 1020
       end do
@@ -173,7 +173,7 @@ subroutine findn1 (n1, ioptl, io, delta_res)
 !  So, temporarily, artificially convert a hydrogen into a nitrogen.
 !  This will allow the second residue to be correctly identified.
 !  (The first residue might be almost correctly identified)
-! 
+!
         do k = 1, nbonds(j)
           if (nat(ibonds(k, j)) == 1) n1 = ibonds(k, j)
         end do
@@ -231,7 +231,7 @@ logical function ring_6(atom_1, atom_2, atom_6)
 !
 !  Six-membered ring, with atoms numbered atom_1, atom_2, atom_3, atom_4 = kka, atom_5, atom_6
 !
-                
+
                 ring_6 = .true.
                 return
               end if

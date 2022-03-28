@@ -18,7 +18,7 @@
     double precision, dimension(107) :: ussRM1, uppRM1, uddRM1, zsRM1, zpRM1, zdRM1, betasRM1, &
     betapRM1, betadRM1, gssRM1, gspRM1, gppRM1, gp2RM1, hspRM1, alpRM1, zsnRM1, zpnRM1, zdnRM1, &
     poc_RM1, f0sdRM1, g2sdRM1
-    character (len=80), dimension(107) :: refRM1  
+    character (len=80), dimension(107) :: refRM1
     double precision, dimension(107,4) :: guess1RM1, guess2RM1, guess3RM1
 !
 !                    Data for Element  1         Hydrogen

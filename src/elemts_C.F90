@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module elemts_C 
+      module elemts_C
       character, dimension(107) :: elemnt*2, cap_elemnt*2
       character (len=12), dimension(107) :: atom_names
       data elemnt/ ' H', 'He', 'Li', 'Be', ' B', ' C', ' N', ' O', ' F', 'Ne', &
@@ -26,7 +26,7 @@
         , 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', ' W', 'Re', 'Os', 'Ir', 'Pt', 'Au', &
         'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa'&
         , ' U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Mi', 'XX', '+3', '-3', 'Cb', &
-        '++', ' +', '--', ' -', 'Tv'/  
+        '++', ' +', '--', ' -', 'Tv'/
       data cap_elemnt / "H ", "HE", "LI", "BE", "B ", "C ", "N ", "O ", "F ", "NE", &
         & "NA", "MG", "AL", "SI", "P ", "S ", "CL", "AR", "K ", "CA", "SC", "TI", &
         & "V ", "CR", "MN", "FE", "CO", "NI", "CU", "ZN", "GA", "GE", "AS", "SE", "BR", &
@@ -35,7 +35,7 @@
         & "ND", "PM", "SM", "EU", "GD", "TB", "DY", "HO", "ER", "TM", "YB", "LU", "HF", &
         & "TA", " W", "RE", "OS", "IR", "PT", "AU", "HG", "TL", "PB", "BI", "PO", &
         & "AT", "RN", "FR", "RA", "AC", "TH", "PA", " U", "NP", "PU", "AM", "CM", &
-        & "BK", "CF", "XX", "+3", "-3", "CB", '++', ' +', '--', ' -', 'TV'/ 
+        & "BK", "CF", "XX", "+3", "-3", "CB", '++', ' +', '--', ' -', 'TV'/
                data atom_names / &
    & "    Hydrogen", "      Helium", "     Lithium", "   Beryllium", &
    & "       Boron", "      Carbon", "    Nitrogen", "      Oxygen", &
@@ -45,7 +45,7 @@
    & "    Scandium", "    Titanium", "    Vanadium", "    Chromium", &
    & "   Manganese", "        Iron", "      Cobalt", "      Nickel", &
    & "      Copper", "        Zinc", "     Gallium", "   Germanium", &
-   & "     Arsenic", "    Selenium", "     Bromine", "     Krypton", &   
+   & "     Arsenic", "    Selenium", "     Bromine", "     Krypton", &
    & "    Rubidium", "   Strontium", "     Yttrium", "   Zirconium", &
    & "     Niobium", "  Molybdenum", "  Technetium", "   Ruthenium", &
    & "     Rhodium", "   Palladium", "      Silver", "     Cadmium", &
@@ -65,4 +65,4 @@
    & "  Dummy atom", &
    & "  3+ Sparkle", "  3- Sparkle", " Capped bond", "  ++ Sparkle", &
    & "   + Sparkle", "  -- Sparkle", "   - Sparkle", "     Tv     "/
-      end module elemts_C 
+      end module elemts_C

@@ -57,7 +57,7 @@ subroutine psort (refers, mode, nmols, reftxt, allref, ifile, l, lp)
       iw = trim(contrl(i:j))
       call add_path(iw)
       inquire (file=trim(iw), exist = exists)
-    else      
+    else
       do i = 1, nrefs
         inquire (file=trim(location_of_references(i)), exist = exists)
         if (exists) then
@@ -119,9 +119,9 @@ subroutine psort (refers, mode, nmols, reftxt, allref, ifile, l, lp)
         end if
       end if
       if (index(iw, " NO REFERENCE") == 0) then
-        write (ifile, "(A)")  allref (i) (1:5) // ":" // trim(iw)  
+        write (ifile, "(A)")  allref (i) (1:5) // ":" // trim(iw)
       else
-        write (ifile, "(A)")  allref (i) (1:5) // ": " // trim(iw(3:))  
+        write (ifile, "(A)")  allref (i) (1:5) // ": " // trim(iw(3:))
       end if
     end do
 end subroutine psort

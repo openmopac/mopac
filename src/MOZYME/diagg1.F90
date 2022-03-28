@@ -261,7 +261,7 @@ subroutine diagg1 (fao, nocc, nvir, eigv, ws, latoms, ifmo, fmo, fmo_dim, nij, i
             sum = sum + ws(k) ** 2
           end do
           !
-          !   AOV(J) HOLDS THE SQUARE OF THE ENERGY CONTRIBUTION OF THE 
+          !   AOV(J) HOLDS THE SQUARE OF THE ENERGY CONTRIBUTION OF THE
           !   ATOM J IN THE VIRTUAL LMO 'I'.
           !
           aov(j) = sum
@@ -456,7 +456,7 @@ subroutine diagg1 (fao, nocc, nvir, eigv, ws, latoms, ifmo, fmo, fmo_dim, nij, i
       end if
     end do
     !
-    if (ijc == nij) then 
+    if (ijc == nij) then
       !
       !   THERE WAS NOT ENOUGH STORAGE TO HOLD ALL THE INTEGRALS.
       !   THEREFORE, ON THE NEXT ITERATION, CALCULATE FEWER INTEGRALS.

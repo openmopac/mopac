@@ -14,14 +14,14 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine moldat(mode) 
+subroutine moldat(mode)
 !-----------------------------------------------
 !
 !   If mode == 1 run silently
 !   If mode /= 1 generate normal MOPAC output
 !
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
 !
       use common_arrays_C, only : nfirst, nlast, nat, uspd, txtatm, &
@@ -61,7 +61,7 @@ subroutine moldat(mode)
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer , intent(in) :: mode 
+      integer , intent(in) :: mode
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -77,30 +77,30 @@ subroutine moldat(mode)
       double precision, dimension (:), allocatable :: rxyz
       double precision, external :: reada
 !-----------------------------------------------
-      debug = index(keywrd,'MOLDAT') /= 0 
+      debug = index(keywrd,'MOLDAT') /= 0
 !
 !   SPECIAL MODIFIERS FOR LIMITATIONS IN AVAILABLE PARAMETERS
 !
-      i = index(keywrd,' CHARGE=') 
+      i = index(keywrd,' CHARGE=')
       if (i /= 0) then
-        kharge = nint(reada(keywrd,i)) 
+        kharge = nint(reada(keywrd,i))
         old_chrge = kharge
       else
         kharge = 0
       end if
-      elecs = -kharge 
-      ndorbs = 0 
-      if (.not. method_indo .and. uss(1) > (-1.D0)) then 
+      elecs = -kharge
+      ndorbs = 0
+      if (.not. method_indo .and. uss(1) > (-1.D0)) then
       call mopend (&
-           'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM') 
-        return  
+           'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM')
+        return
       end if
 !
 !  Determine the number of atomic orbitals on each element
 !
       if (.not. method_indo) then
         do i = 1,107
-          dorbs(i) = (zd(i) > 1.d-8) 
+          dorbs(i) = (zd(i) > 1.d-8)
           if (dorbs(i)) then
             natorb(i) = 9                   ! Element has "d"-orbitals
           else if (zp(i) > 1.d-20) then
@@ -112,53 +112,53 @@ subroutine moldat(mode)
           end if
         end do
       end if
-      numat = 0 
-      ia = 1 
-      ib = 0 
-      nheavy = 0 
-      nnull = 0 
-      do ii = 1, natoms 
-        if (labels(ii)/=99 .and. labels(ii)/=107) then 
-          numat = numat + 1 
-          nat(numat) = labels(ii) 
-          nfirst(numat) = ia 
-          ni = nat(numat) 
+      numat = 0
+      ia = 1
+      ib = 0
+      nheavy = 0
+      nnull = 0
+      do ii = 1, natoms
+        if (labels(ii)/=99 .and. labels(ii)/=107) then
+          numat = numat + 1
+          nat(numat) = labels(ii)
+          nfirst(numat) = ia
+          ni = nat(numat)
           elecs = elecs + tore(ni)
-          ib = ia + natorb(ni) - 1 
-          if (natorb(ni) == 9) ndorbs = ndorbs + 5 
-          nlast(numat) = ib 
-          uspd(ia) = uss(ni) 
-          if (ia /= ib) then 
-            k = ia + 1 
-            k1 = ia + 3 
-            do j = k, k1 
-              uspd(j) = upp(ni) 
-            end do 
-            if (ib > ia) then 
-              nheavy = nheavy + 1 
-            else 
-              nnull = nnull + 1 
-            end if 
-            if (k1 /= ib) then 
-              k = k1 + 1 
-              uspd(k:ib) = udd(ni) 
-            end if 
-          end if 
-        end if 
-        ia = ib + 1 
-      end do 
-      if (numat == 1) then 
-        if (index(keywrd,'FORCE') /= 0 .and. index(keywrd,' THERMO') == 0) then 
-          call mopend ('A SINGLE ATOM HAS NO VIBRATIONAL MODES') 
-          return  
-        end if 
-      end if 
-      if (mode /= 1) call refer 
-      call gmetry (geo, coord) 
+          ib = ia + natorb(ni) - 1
+          if (natorb(ni) == 9) ndorbs = ndorbs + 5
+          nlast(numat) = ib
+          uspd(ia) = uss(ni)
+          if (ia /= ib) then
+            k = ia + 1
+            k1 = ia + 3
+            do j = k, k1
+              uspd(j) = upp(ni)
+            end do
+            if (ib > ia) then
+              nheavy = nheavy + 1
+            else
+              nnull = nnull + 1
+            end if
+            if (k1 /= ib) then
+              k = k1 + 1
+              uspd(k:ib) = udd(ni)
+            end if
+          end if
+        end if
+        ia = ib + 1
+      end do
+      if (numat == 1) then
+        if (index(keywrd,'FORCE') /= 0 .and. index(keywrd,' THERMO') == 0) then
+          call mopend ('A SINGLE ATOM HAS NO VIBRATIONAL MODES')
+          return
+        end if
+      end if
+      if (mode /= 1) call refer
+      call gmetry (geo, coord)
       if (mode /= 1)then
         call empiri()
         write(iw,"(/,a,/)") trim(formula)
-        if (moperr) return      
+        if (moperr) return
       end if
       allocate(rxyz((numat*(numat + 1))/2), stat = i)
       if (i /= 0) then
@@ -186,10 +186,10 @@ subroutine moldat(mode)
             if(elemnt(j)(2:2) /= txtatm(i)(14:14) .and. elemnt(j)(2:2) /= txtatm(i)(13:13)) then
               if (j == 1 .and. txtatm(i)(13:13) == "D") then
                 txtatm(i)(13:13) = "H"
-              else if (j == 1 .and. txtatm(i)(14:14) == "D") then 
+              else if (j == 1 .and. txtatm(i)(14:14) == "D") then
                 txtatm(i)(14:14) = "H"
               else
-                num1 = char(Int(log10(i + 0.5)) + ichar("2")) 
+                num1 = char(Int(log10(i + 0.5)) + ichar("2"))
                 write(line,'(a,i'//num1//',a,a)')"Atom name for atom", i, &
                 " ("//elemnt(j)(2:2)//") does not match its label """//txtatm(i)//""""
                 write(iw,'(10x,a)')trim(line)
@@ -210,22 +210,22 @@ subroutine moldat(mode)
 !
 !   WRITE OUT THE INTERATOMIC DISTANCES
 !
-      l = 0 
+      l = 0
       iminr = 0
       jminr = 0
-      rmin = 100.D0 
-      do i = 1, numat 
-        do j = 1, i 
-          l = l + 1 
+      rmin = 100.D0
+      do i = 1, numat
+        do j = 1, i
+          l = l + 1
           rxyz(l) = sqrt((coord(1,i) - coord(1,j))**2 + &
                          (coord(2,i) - coord(2,j))**2 + &
-                         (coord(3,i) - coord(3,j))**2) 
-          if (.not.(rmin > rxyz(l) .and. i /= j .and. (nat(i) < 103 .or. nat(j) < 103))) cycle  
-          iminr = i 
-          jminr = j 
-          rmin = rxyz(l) 
-        end do 
-      end do 
+                         (coord(3,i) - coord(3,j))**2)
+          if (.not.(rmin > rxyz(l) .and. i /= j .and. (nat(i) < 103 .or. nat(j) < 103))) cycle
+          iminr = i
+          jminr = j
+          rmin = rxyz(l)
+        end do
+      end do
       call setcup
       if (moperr) return
 !
@@ -242,7 +242,7 @@ subroutine moldat(mode)
             Index (keywrd, " GEO-OK") + Index (keywrd, " ADD-H") + Index (keywrd, " LET") == 0) then
             write(iw,'(10x,a)') "Add keyword ""LET"" to allow job to continue"
             call mopend ("A hydrogen atom is badly positioned")
-            if ( index(keywrd," PDBOUT") /= 0) then           
+            if ( index(keywrd," PDBOUT") /= 0) then
               inquire(unit=iarc, opened=opend)
               if (opend) close(iarc)
                 line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
@@ -261,15 +261,15 @@ subroutine moldat(mode)
       if (use_ref_geo) call big_swap(0,1)
       if (id == 0) then
         if ((index(keywrd, " ADD-H") == 0 .and. .not. mozyme) .or. numat < 200) then
-          call symtrz (c, pdiag, 1, .FALSE.) 
-          if (moperr) return  
-          if (mode /= 1) write (iw, '(2/''      MOLECULAR POINT GROUP   :   '',A4)') name 
+          call symtrz (c, pdiag, 1, .FALSE.)
+          if (moperr) return
+          if (mode /= 1) write (iw, '(2/''      MOLECULAR POINT GROUP   :   '',A4)') name
         end if
       end if
-      mol_weight = 0.D0 
-      do i = 1, numat 
-        mol_weight = mol_weight + atmass(i) 
-      end do 
+      mol_weight = 0.D0
+      do i = 1, numat
+        mol_weight = mol_weight + atmass(i)
+      end do
       mpack = 1
       if (Index (keywrd, " RESEQ") + index(keywrd,' 0SCF') + index(keywrd,' ADD-H') &
         + index(keywrd,' SITE')/= 0) return
@@ -293,7 +293,7 @@ subroutine moldat(mode)
       if (id == 0) then
         n2elec8 = (n4*(n4 - 1))/2
         n2elec8 = 100*n2elec8 + 2025*n9 + 100*n4 + n1 + 2025*(n9*(n9 - 1))/2 + 450*n9*n4 + 45*n9*n1 + &
-     &  10*n4*n1 + (n1*(n1 - 1))/2 + 10       
+     &  10*n4*n1 + (n1*(n1 - 1))/2 + 10
       else
         n2elec8 = (n4*(n4 + 1))/2
         n2elec8 = 100*n2elec8 + 2025*n9 + 100*n4 + n1 + 2025*(n9*(n9 + 1))/2 + 450*n9*n4 + 45*n9*n1 + &
@@ -305,7 +305,7 @@ subroutine moldat(mode)
           write(iw,'(10x,a)')"(Maximum number of two-electron integrals allowed: 2,147,483,647)"
           write(iw,'(10x,a, i10,a)')"(Number of two-electron integrals exceeded this by:", &
             n2elec8 - 2147483647,")"
-          write(iw,'(/10x,a, i10,a)')"(Try using MOZYME on this system)" 
+          write(iw,'(/10x,a, i10,a)')"(Try using MOZYME on this system)"
           return
         end if
       end if
@@ -323,7 +323,7 @@ subroutine moldat(mode)
 !  Set all solid-state variables at this point
 !
       lm61 = 45*n9 + 10*n4 + n1
-      norbs = nlast(numat) 
+      norbs = nlast(numat)
       if (index(keywrd, " GRAPH") /= 0) then
         if (norbs > 9500) then
           write(line,'(a)')" The system is too large for 'GRAPH' to be used."
@@ -341,37 +341,37 @@ subroutine moldat(mode)
 !
 !   NOW TO CALCULATE THE NUMBER OF LEVELS OCCUPIED
 !
-      sing = index(keywrd,' SING') /= 0 
-      doub = index(keywrd,' DOUB') /= 0 
-      trip = index(keywrd,' TRIP') /= 0 
-      quar = index(keywrd,' QUAR') /= 0 
-      quin = index(keywrd,' QUIN') /= 0 
-      sext = index(keywrd,' SEXT') /= 0 
-      sept = index(keywrd,' SEPT') /= 0 
-      octe = index(keywrd,' OCTE') /= 0 
-      none = index(keywrd,' NONE') /= 0 
-      exci = index(keywrd,' EXCI') /= 0 
-      birad = exci .or. index(keywrd,'BIRAD')/=0 
-      if (index(keywrd,'C.I.')/=0 .and. uhf) then 
+      sing = index(keywrd,' SING') /= 0
+      doub = index(keywrd,' DOUB') /= 0
+      trip = index(keywrd,' TRIP') /= 0
+      quar = index(keywrd,' QUAR') /= 0
+      quin = index(keywrd,' QUIN') /= 0
+      sext = index(keywrd,' SEXT') /= 0
+      sept = index(keywrd,' SEPT') /= 0
+      octe = index(keywrd,' OCTE') /= 0
+      none = index(keywrd,' NONE') /= 0
+      exci = index(keywrd,' EXCI') /= 0
+      birad = exci .or. index(keywrd,'BIRAD')/=0
+      if (index(keywrd,'C.I.')/=0 .and. uhf) then
         write (iw, '(2/10X,''C.I. NOT ALLOWED WITH UHF '')')
-        call mopend ('C.I. NOT ALLOWED WITH UHF')  
-        return  
-      end if 
+        call mopend ('C.I. NOT ALLOWED WITH UHF')
+        return
+      end if
 !
 ! NOW TO WORK OUT HOW MANY ELECTRONS ARE IN EACH TYPE OF SHELL
 !
-      nalpha = 0 
-      nbeta = 0 
+      nalpha = 0
+      nbeta = 0
 !
 !      PROTECT DUMB USERS FROM DUMB ERRORS!
 !
-      nelecs = nint(max(elecs,0.D0)) 
-      nelecs = min(2*norbs,nelecs) 
+      nelecs = nint(max(elecs,0.D0))
+      nelecs = min(2*norbs,nelecs)
       if (.not. rhf .and. .not. uhf) then
         if (mod(nelecs,2) == 0) then
           rhf = .true.
         else
-          uhf = .true.          
+          uhf = .true.
         end if
       end if
       if (method_indo .and. uhf) then
@@ -402,88 +402,88 @@ subroutine moldat(mode)
 ! Explicit (named) declaration of spin state
 !
       msdel = 100000 ! Set to a very high value, so if it is explicitly set, that will be obvious
-      if (sing) then 
-        if (odd) then 
+      if (sing) then
+        if (odd) then
          call mopend (&
-             'SINGLET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')  
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' SINGLET STATE CALCULATION'')') 
+             'SINGLET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' SINGLET STATE CALCULATION'')')
           msdel = 0
-        end if 
-      else if (doub) then 
-        if (.not. odd) then 
+        end if
+      else if (doub) then
+        if (.not. odd) then
          call mopend (&
-             'DOUBLET SPECIFIED WITH EVEN NUMBER OF ELECTRONS, CORRECT FAULT')  
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' DOUBLET STATE CALCULATION'')') 
+             'DOUBLET SPECIFIED WITH EVEN NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' DOUBLET STATE CALCULATION'')')
           msdel = 1
-        end if 
-      else if (trip) then 
-        if (odd) then 
+        end if
+      else if (trip) then
+        if (odd) then
          call mopend (&
-             'TRIPLET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')  
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' TRIPLET STATE CALCULATION'')') 
+             'TRIPLET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' TRIPLET STATE CALCULATION'')')
           msdel = 2
-        end if 
-      else if (quar) then 
-        if (.not. odd) then 
+        end if
+      else if (quar) then
+        if (.not. odd) then
           call mopend (&
              'QUARTET SPECIFIED WITH EVEN NUMBER OF ELECTRONS, CORRECT FAULT')
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' QUARTET STATE CALCULATION'')') 
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' QUARTET STATE CALCULATION'')')
           msdel = 3
-        end if 
-      else if (quin) then 
-        if (odd) then 
+        end if
+      else if (quin) then
+        if (odd) then
           call mopend (&
-             'QUINTET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')  
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' QUINTET STATE CALCULATION'')') 
+             'QUINTET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' QUINTET STATE CALCULATION'')')
           msdel = 4
-        end if 
-      else if (sext) then 
-        if (.not. odd) then 
+        end if
+      else if (sext) then
+        if (.not. odd) then
           call mopend (&
-             'SEXTET SPECIFIED WITH EVEN NUMBER OF ELECTRONS, CORRECT FAULT')  
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' SEXTET STATE CALCULATION'')') 
+             'SEXTET SPECIFIED WITH EVEN NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' SEXTET STATE CALCULATION'')')
           msdel = 5
-        end if 
-      else if (sept) then 
-        if (odd) then 
+        end if
+      else if (sept) then
+        if (odd) then
           call mopend (&
-             'SEPTET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT') 
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' SEPTET STATE CALCULATION'')') 
+             'SEPTET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' SEPTET STATE CALCULATION'')')
           msdel = 6
-        end if 
-      else if (octe) then 
-        if (.not. odd) then 
+        end if
+      else if (octe) then
+        if (.not. odd) then
           call mopend (&
-             'OCTET SPECIFIED WITH EVEN NUMBER OF ELECTRONS, CORRECT FAULT')  
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' OCTET STATE CALCULATION'')') 
+             'OCTET SPECIFIED WITH EVEN NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' OCTET STATE CALCULATION'')')
           msdel = 7
-        end if 
-      else if (NONE) then 
-        if (odd) then 
+        end if
+      else if (NONE) then
+        if (odd) then
           call mopend (&
-             'NONET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT') 
-          return  
-        else 
-          if (mode /= 1) write (iw, '(2/'' NONET STATE CALCULATION'')') 
+             'NONET SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')
+          return
+        else
+          if (mode /= 1) write (iw, '(2/'' NONET STATE CALCULATION'')')
           msdel = 8
-        end if 
-      end if 
+        end if
+      end if
 !
 !  Generic declaration of spin state
 !
@@ -503,32 +503,32 @@ subroutine moldat(mode)
           write(iw,"(10x,a,f5.1)")"Value of MS supplied          =  ", i*0.5d0
           if (odd) then
             write(iw,'(10x, a)')"Number of electrons is odd, but MS is integer "//&
-              "implying number of electrons is even." 
+              "implying number of electrons is even."
           else
             write(iw,'(10x, a)')"Number of electrons is even, but MS is not integer "//&
-              "implying number of electrons is odd." 
+              "implying number of electrons is odd."
           end if
           write(iw,"(10x,a)")"Correct the error and re-submit"
           call mopend ("Value of MS not consistent with number of electrons")
           return
         end if
-        i = index(keywrd,' MS') 
-        if (i /= 0) then 
+        i = index(keywrd,' MS')
+        if (i /= 0) then
           msdel = nint(2.d0*reada(keywrd,index(keywrd,' MS')))
           if (Mod(nelecs+msdel,2) == 1) then
             write (iw, '(//10 x, "Impossible value of MS ")')
             call mopend ("Impossible value of MS")
             return
           end if
-        end if 
+        end if
       end if
       if (msdel > 99999) msdel = 0 ! Set default value of msdel
-      
+
 !
 ! At this point, msdel is known. Now work out UHF and RHF quantities
 !
       if (uhf) then
-        nbeta = (nelecs - msdel)/2 
+        nbeta = (nelecs - msdel)/2
         nalpha = nelecs - nbeta
         nopen = 0
         nclose = 0
@@ -537,25 +537,25 @@ subroutine moldat(mode)
         nbeta_open = nbeta
         if (mode /= 1 .and. .not. mozyme) write (iw, &
     '(2/10X,''UHF CALCULATION, NO. OF ALPHA ELECTRONS ='',I5,/27X, &
-    & ''NO. OF BETA  ELECTRONS ='',I5)') nalpha, nbeta 
-        i = index(keywrd,'OPEN(') 
-        if (i /= 0) then 
-          j = index(keywrd(i:i+10),',') + i - 1 
-          nmos = nint(reada(keywrd,j)) 
-          ielec = nint(reada(keywrd,index(keywrd,'OPEN(') + 5))  
-          fract = (ielec*1.d0)/nmos 
-          if (nclose < 0) then 
-            call mopend ('IMPOSSIBLE NUMBER OF FILLED SHELLS') 
-            return   
+    & ''NO. OF BETA  ELECTRONS ='',I5)') nalpha, nbeta
+        i = index(keywrd,'OPEN(')
+        if (i /= 0) then
+          j = index(keywrd(i:i+10),',') + i - 1
+          nmos = nint(reada(keywrd,j))
+          ielec = nint(reada(keywrd,index(keywrd,'OPEN(') + 5))
+          fract = (ielec*1.d0)/nmos
+          if (nclose < 0) then
+            call mopend ('IMPOSSIBLE NUMBER OF FILLED SHELLS')
+            return
           end if
         else
           ielec = 0
           nmos = 0
-        end if 
+        end if
           nalpha = nalpha - ielec
-          if (nalpha < 0) then 
-            call mopend ('NUMBER OF ALPHA ELECTRONS IS LESS THAN ZERO') 
-            return   
+          if (nalpha < 0) then
+            call mopend ('NUMBER OF ALPHA ELECTRONS IS LESS THAN ZERO')
+            return
           end if
          nalpha_open = nalpha + nmos
          nbeta_open = nbeta
@@ -563,137 +563,137 @@ subroutine moldat(mode)
 !
 !   NOW TO DETERMINE OPEN AND CLOSED SHELLS
 !
-        ielec = 0 
-        nmos = 0 
+        ielec = 0
+        nmos = 0
         fract = 0
-        if (exci .or. birad) then 
-          if (mode /= 1) then 
-            if (birad) write (iw, '(2/'' SYSTEM IS A BIRADICAL'')') 
-            if (exci) write (iw, '(2/'' EXCITED STATE CALCULATION'')') 
-          end if 
-          if (odd) then 
+        if (exci .or. birad) then
+          if (mode /= 1) then
+            if (birad) write (iw, '(2/'' SYSTEM IS A BIRADICAL'')')
+            if (exci) write (iw, '(2/'' EXCITED STATE CALCULATION'')')
+          end if
+          if (odd) then
             write (iw, &
-      '(2/10X,''SYSTEM SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT '')') 
+      '(2/10X,''SYSTEM SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT '')')
             call mopend (&
-               'SYSTEM SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT') 
-            return  
-          end if          
-          ielec = 2 
-          nmos = 2 
-        else if ((nelecs/2)*2 /= nelecs) then 
-          ielec = 1 
-          nmos = 1 
-        end if 
-       
-        i = index(keywrd,'OPEN(') 
-        if (i /= 0) then 
-          j = index(keywrd(i:i+10),',') + i - 1 
-          nmos = nint(reada(keywrd,j)) 
-          ielec = nint(reada(keywrd,index(keywrd,'OPEN(') + 5)) 
-        end if 
-        nclose = nelecs/2 
-        nopen = nelecs - nclose*2 
-        if (ielec /= 0 .and. norbs > 0) then 
-          if (((nelecs/2)*2 == nelecs .neqv. (ielec/2)*2 == ielec)) then 
-            write (iw, '(/10x, A,I5)') ' NUMBER OF ELECTRONS IN SYSTEM:    ', nelecs 
-            write (iw, '(10x, A,I5)') ' NUMBER OF ELECTRONS IN OPEN SHELL:', ielec 
-            call mopend ('IMPOSSIBLE NUMBER OF OPEN SHELL ELECTRONS') 
-            return  
-          end if 
-          nclose = nclose - ielec/2 
-          nopen = nmos 
-          if (nclose + nopen > norbs) then 
-            write (iw, '(/10x, A,I5)') 'TOTAL NUMBER OF ELECTRONS:                      ', nelecs 
-            write (iw, '(10x, A,I5)') 'NUMBER OF ELECTRONS IN PARTIALLY-FILLED LEVELS: ', ielec 
-            write (iw, '(10x, A,I5)') 'NUMBER OF DOUBLY FILLED LEVELS:                 ', nclose 
-            write (iw, '(10x, A,I5)') 'NUMBER OF PARTLY FILLED LEVELS:                 ', nopen 
+               'SYSTEM SPECIFIED WITH ODD NUMBER OF ELECTRONS, CORRECT FAULT')
+            return
+          end if
+          ielec = 2
+          nmos = 2
+        else if ((nelecs/2)*2 /= nelecs) then
+          ielec = 1
+          nmos = 1
+        end if
+
+        i = index(keywrd,'OPEN(')
+        if (i /= 0) then
+          j = index(keywrd(i:i+10),',') + i - 1
+          nmos = nint(reada(keywrd,j))
+          ielec = nint(reada(keywrd,index(keywrd,'OPEN(') + 5))
+        end if
+        nclose = nelecs/2
+        nopen = nelecs - nclose*2
+        if (ielec /= 0 .and. norbs > 0) then
+          if (((nelecs/2)*2 == nelecs .neqv. (ielec/2)*2 == ielec)) then
+            write (iw, '(/10x, A,I5)') ' NUMBER OF ELECTRONS IN SYSTEM:    ', nelecs
+            write (iw, '(10x, A,I5)') ' NUMBER OF ELECTRONS IN OPEN SHELL:', ielec
+            call mopend ('IMPOSSIBLE NUMBER OF OPEN SHELL ELECTRONS')
+            return
+          end if
+          nclose = nclose - ielec/2
+          nopen = nmos
+          if (nclose + nopen > norbs) then
+            write (iw, '(/10x, A,I5)') 'TOTAL NUMBER OF ELECTRONS:                      ', nelecs
+            write (iw, '(10x, A,I5)') 'NUMBER OF ELECTRONS IN PARTIALLY-FILLED LEVELS: ', ielec
+            write (iw, '(10x, A,I5)') 'NUMBER OF DOUBLY FILLED LEVELS:                 ', nclose
+            write (iw, '(10x, A,I5)') 'NUMBER OF PARTLY FILLED LEVELS:                 ', nopen
             write (iw, '(10x, A,I3)') 'NUMBER OF DOUBLY FILLED PLUS PARTLY FILLED LEVELS:', &
               nclose + nopen
-            write (iw, '(10x, A,I5)') 'TOTAL NUMBER OF ORBITALS:                       ', nopen 
+            write (iw, '(10x, A,I5)') 'TOTAL NUMBER OF ORBITALS:                       ', nopen
             call mopend (&
-       'NUMBER OF DOUBLY FILLED PLUS PARTLY FILLED LEVELS IS GREATER THAN THE TOTAL NUMBER OF ORBITALS') 
-            return  
-          end if 
-          if (nmos == 0) then 
+       'NUMBER OF DOUBLY FILLED PLUS PARTLY FILLED LEVELS IS GREATER THAN THE TOTAL NUMBER OF ORBITALS')
+            return
+          end if
+          if (nmos == 0) then
             write (iw, *) ' NUMBER OF M.O.s IN OPEN(M,N) IS ZERO!'
-            call mopend (' NUMBER OF ELECTRONS IN OPEN(M,N) IS ZERO!')   
-            return  
-          end if 
-          fract = ielec*1.D0/nmos 
-          if (nclose < 0) then 
-            write (iw, '(A)') ' IMPOSSIBLE NUMBER OF CLOSED SHELLS' 
-            call mopend ('IMPOSSIBLE NUMBER OF CLOSED SHELLS') 
-            return  
-          end if 
-          if (mode /= 1) write (iw, '(/6X,''THERE ARE'',I5,'' DOUBLY FILLED LEVELS'')') nclose 
-        end if 
-        if (mode /= 1 .and. .not. mozyme) then
-          num1 = char(Int(log10(nclose + 0.5)) + ichar("2")) 
-          write (iw, '(2/6X,''RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS ='',I'//num1//',/)') nclose 
-          if (nopen/=0 .and. abs(fract-1.D0)<1.D-4) &
-            write (iw, '(/23X,''NO. OF SINGLY OCCUPIED LEVELS ='',I5)') nopen 
-          if (nopen/=0 .and. abs(fract-1.D0)>1.D-4) &
-            write (iw, '(/23X,''NO. OF LEVELS WITH OCCUPANCY'',F6.3,''  ='',I3)') fract, nopen 
+            call mopend (' NUMBER OF ELECTRONS IN OPEN(M,N) IS ZERO!')
+            return
+          end if
+          fract = ielec*1.D0/nmos
+          if (nclose < 0) then
+            write (iw, '(A)') ' IMPOSSIBLE NUMBER OF CLOSED SHELLS'
+            call mopend ('IMPOSSIBLE NUMBER OF CLOSED SHELLS')
+            return
+          end if
+          if (mode /= 1) write (iw, '(/6X,''THERE ARE'',I5,'' DOUBLY FILLED LEVELS'')') nclose
         end if
-        i = index(keywrd,'C.I.=(') 
-        if (i /= 0) then 
-          j = index(keywrd(i:i+10),',') + i - 1 
-          ndoubl = nint(reada(keywrd,j)) 
-          if (ndoubl > nclose) then 
-            write (iw, '(7x,A,I3)') 'NUMBER OF DOUBLY FILLED LEVELS IN C.I. RESET TO', nclose 
-            ndoubl = nclose 
-          end if 
-          i = nint(reada(keywrd,index(keywrd,'C.I.=(') + 5)) 
-          i = i - ndoubl 
-          if (nopen > i) then 
-            call mopend ('NUMBER OF OPEN-SHELLS ALLOWED IN C.I. IS LESS THAN THAT SPECIFIED BY OTHER KEYWORDS') 
-            return  
-          end if 
-          if (i + nclose > norbs) then 
+        if (mode /= 1 .and. .not. mozyme) then
+          num1 = char(Int(log10(nclose + 0.5)) + ichar("2"))
+          write (iw, '(2/6X,''RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS ='',I'//num1//',/)') nclose
+          if (nopen/=0 .and. abs(fract-1.D0)<1.D-4) &
+            write (iw, '(/23X,''NO. OF SINGLY OCCUPIED LEVELS ='',I5)') nopen
+          if (nopen/=0 .and. abs(fract-1.D0)>1.D-4) &
+            write (iw, '(/23X,''NO. OF LEVELS WITH OCCUPANCY'',F6.3,''  ='',I3)') fract, nopen
+        end if
+        i = index(keywrd,'C.I.=(')
+        if (i /= 0) then
+          j = index(keywrd(i:i+10),',') + i - 1
+          ndoubl = nint(reada(keywrd,j))
+          if (ndoubl > nclose) then
+            write (iw, '(7x,A,I3)') 'NUMBER OF DOUBLY FILLED LEVELS IN C.I. RESET TO', nclose
+            ndoubl = nclose
+          end if
+          i = nint(reada(keywrd,index(keywrd,'C.I.=(') + 5))
+          i = i - ndoubl
+          if (nopen > i) then
+            call mopend ('NUMBER OF OPEN-SHELLS ALLOWED IN C.I. IS LESS THAN THAT SPECIFIED BY OTHER KEYWORDS')
+            return
+          end if
+          if (i + nclose > norbs) then
             write(iw,'(10x,a,i2)')"Number of doubly-occupied levels requested in C.I.:", ndoubl
             write(iw,'(10x,a,i13)')"Total number of M.O.s requested in C.I.:", i + ndoubl
             write(iw,'(10x,a,i2)')"Calculated number of empty M.O.s requested in C.I.:", i
-            write(iw,'(10x,a,i13)')"Index of highest M.O. requested in C.I.:", nclose + i    
-            write(iw,'(10x,a,i13)')"Number of M.O.s in system:              ", norbs         
-            call mopend ('NUMBER OF M.O.s REQUESTED IN C.I. IS GREATER THAN THE NUMBER OF ORBITALS') 
-            return  
-          end if 
-        end if 
-        nopen = nopen + nclose 
-      end if 
+            write(iw,'(10x,a,i13)')"Index of highest M.O. requested in C.I.:", nclose + i
+            write(iw,'(10x,a,i13)')"Number of M.O.s in system:              ", norbs
+            call mopend ('NUMBER OF M.O.s REQUESTED IN C.I. IS GREATER THAN THE NUMBER OF ORBITALS')
+            return
+          end if
+        end if
+        nopen = nopen + nclose
+      end if
       if (index(keywrd, " CIS") /= 0) then
         msdel = 0
         else
 !
 !  WORK OUT IF DEFINED SPIN-STATE ALLOWED
 !
-        
+
       end if
-      if (msdel/=0 .and. .not. uhf) then 
+      if (msdel/=0 .and. .not. uhf) then
 !
 !   MSDEL = NUMBER OF ALPHA ELECTRONS - NUMBER OF BETA ELECTRONS
 !
-        ndoubl = 99 
-        i = index(keywrd,'C.I.=(') 
-        if (i /= 0) then 
-          j = index(keywrd(i:i+10),',') + i - 1 
-          ndoubl = nint(reada(keywrd,j)) 
-          nmos = nint(reada(keywrd,index(keywrd,'C.I.=(') + 5)) 
-        else if (index(keywrd,'C.I.=') /= 0) then 
-          nmos = nint(reada(keywrd,index(keywrd,'C.I.=') + 5)) 
-        else 
-          nmos = nopen - nclose 
-          nmos = min0(norbs,nmos) 
-        end if 
-        if (ndoubl == 99) then 
-          j = max(min((nclose + nopen + 1)/2 - (nmos - 1)/2, norbs - nmos + 1),1) 
-        else 
-          j = nclose - ndoubl + 1 
-        end if 
+        ndoubl = 99
+        i = index(keywrd,'C.I.=(')
+        if (i /= 0) then
+          j = index(keywrd(i:i+10),',') + i - 1
+          ndoubl = nint(reada(keywrd,j))
+          nmos = nint(reada(keywrd,index(keywrd,'C.I.=(') + 5))
+        else if (index(keywrd,'C.I.=') /= 0) then
+          nmos = nint(reada(keywrd,index(keywrd,'C.I.=') + 5))
+        else
+          nmos = nopen - nclose
+          nmos = min0(norbs,nmos)
+        end if
+        if (ndoubl == 99) then
+          j = max(min((nclose + nopen + 1)/2 - (nmos - 1)/2, norbs - nmos + 1),1)
+        else
+          j = nclose - ndoubl + 1
+        end if
         ne = int(max(0.D0,nclose - j + 1.D0)*2.D0 + &
-          max(0.D0,(nopen - nclose)*fract) + 0.5D0) 
+          max(0.D0,(nopen - nclose)*fract) + 0.5D0)
         nupp = (ne + msdel)/2
-        ndown = ne - nupp 
+        ndown = ne - nupp
         if (nmos == 0) then
           nupp = 0
           ndown = 0
@@ -703,93 +703,93 @@ subroutine moldat(mode)
 !  NUPP  = NUMBER OF ALPHA ELECTRONS IN ACTIVE SPACE
 !  NDOWN = NUMBER OF BETA  ELECTRONS IN ACTIVE SPACE
 !
-          if (nupp*ndown < 0 .or. nupp > nmos .or. ndown > nmos .or. nmos == 0) then 
-            write (iw, '(A)')' SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE' 
-            write (iw, '(a,i3)')' Number of alpha electrons in active space:', nupp 
-            write (iw, '(a,i3)')'  Number of beta electrons in active space:', ndown 
-            write (iw, '(a,i3)')'                      Size of active space:', nmos 
+          if (nupp*ndown < 0 .or. nupp > nmos .or. ndown > nmos .or. nmos == 0) then
+            write (iw, '(A)')' SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE'
+            write (iw, '(a,i3)')' Number of alpha electrons in active space:', nupp
+            write (iw, '(a,i3)')'  Number of beta electrons in active space:', ndown
+            write (iw, '(a,i3)')'                      Size of active space:', nmos
             if (Index (keywrd, " MS") /= 0) then
               call web_message(iw,"ms.html")
             else
               call web_message(iw,"active_space.html")
             end if
-            call mopend ('SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE') 
-            return  
-          end if 
-        end if 
+            call mopend ('SPECIFIED SPIN COMPONENT NOT SPANNED BY ACTIVE SPACE')
+            return
+          end if
+        end if
       end if
       halfe = (nopen > nclose .and. Abs(fract -2.D0) > 1.d-20 .and. Abs(fract) > 1.d-20 &
-      & .or. index(keywrd,'C.I.')/=0) 
+      & .or. index(keywrd,'C.I.')/=0)
       if (halfe) halfe = (.not. (index(keywrd,'EXCI') /= 0 .or. &
-                                 index(keywrd,'ROOT') /= 0 .and. index(keywrd,'ROOT=1') == 0)) 
-      if (halfe .and. id /= 0 .and. index(keywrd,' NOANCI') == 0) then 
-        write (iw, *) 
-        write (iw, *) ' ''NOANCI'' MUST BE USED FOR RHF OPEN-SHELL SYSTEMS' 
-        write (iw, *) ' THAT INVOLVE TRANSLATION VECTORS'  
+                                 index(keywrd,'ROOT') /= 0 .and. index(keywrd,'ROOT=1') == 0))
+      if (halfe .and. id /= 0 .and. index(keywrd,' NOANCI') == 0) then
+        write (iw, *)
+        write (iw, *) ' ''NOANCI'' MUST BE USED FOR RHF OPEN-SHELL SYSTEMS'
+        write (iw, *) ' THAT INVOLVE TRANSLATION VECTORS'
         call mopend (&
-       '"NOANCI" MUST BE USED FOR RHF OPEN-SHELL SYSTEMS THAT INVOLVE TRANSLATION VECTORS') 
-        return  
-      end if 
-      yy = dble(kharge)/(norbs + 1.D-10) 
-      pdiag(:norbs) = 0.D0 
-      do i = 1, numat 
-        ni = nat(i) 
-        if (nlast(i) - nfirst(i) == (-1)) cycle  
-        l = nfirst(i) - 1 
-        if (nlast(i) - nfirst(i) == 0) then 
+       '"NOANCI" MUST BE USED FOR RHF OPEN-SHELL SYSTEMS THAT INVOLVE TRANSLATION VECTORS')
+        return
+      end if
+      yy = dble(kharge)/(norbs + 1.D-10)
+      pdiag(:norbs) = 0.D0
+      do i = 1, numat
+        ni = nat(i)
+        if (nlast(i) - nfirst(i) == (-1)) cycle
+        l = nfirst(i) - 1
+        if (nlast(i) - nfirst(i) == 0) then
 !
 !    Hydrogen
 !
-          l = l + 1 
-          pdiag(l) = tore(ni) - yy 
-        else if (nlast(i) - nfirst(i) == 3) then 
+          l = l + 1
+          pdiag(l) = tore(ni) - yy
+        else if (nlast(i) - nfirst(i) == 3) then
 !
 !    Normal heavy atom
 !
-          w = tore(ni)*0.25D0 - yy 
-          pdiag(l+1:4+l) = w 
-        else 
+          w = tore(ni)*0.25D0 - yy
+          pdiag(l+1:4+l) = w
+        else
 !
 !   This atom has a 'd' shell
 !
-          if (ni<21 .or. ni>30 .and. ni<39 .or. ni>48 .and. ni<57) then 
+          if (ni<21 .or. ni>30 .and. ni<39 .or. ni>48 .and. ni<57) then
 !
 !   Main Group Element:  The "d" shell is formally empty.
 !
-            w = tore(ni)*0.25D0 - yy 
-            pdiag(l+1:4+l) = w 
-            l = 4 + l 
-            pdiag(l+1:5+l) = -yy 
-          else if (ni < 99) then 
+            w = tore(ni)*0.25D0 - yy
+            pdiag(l+1:4+l) = w
+            l = 4 + l
+            pdiag(l+1:5+l) = -yy
+          else if (ni < 99) then
 !
 !   Transition metal
 !
-            sum = tore(ni) - 9*yy 
+            sum = tore(ni) - 9*yy
 !   First, put 2 electrons in the 's' shell
-            l = l + 1 
-            pdiag(l) = max(0.D0,min(sum,2.D0)) 
-            sum = sum - 2.D0 
-            if (sum > 0.D0) then 
+            l = l + 1
+            pdiag(l) = max(0.D0,min(sum,2.D0))
+            sum = sum - 2.D0
+            if (sum > 0.D0) then
 !
 !   Now put as many electrons as possible into the 'd' shell
 !
-              l = l + 3 
-              do j = 1, 5 
-                l = l + 1 
-                pdiag(l) = max(0.D0,min(sum*0.2D0,2.D0)) 
-              end do 
-              sum = sum - 10.D0 
-              if (sum > 0) then 
+              l = l + 3
+              do j = 1, 5
+                l = l + 1
+                pdiag(l) = max(0.D0,min(sum*0.2D0,2.D0))
+              end do
+              sum = sum - 10.D0
+              if (sum > 0) then
 !
 !   Put the remaining electrons in the 'p' shell
 !
-                l = l - 8 
-                pdiag(l+1:3+l) = sum/3.D0 
-              end if 
-            end if 
-          end if 
-        end if 
-      end do 
+                l = l - 8
+                pdiag(l+1:3+l) = sum/3.D0
+              end if
+            end if
+          end if
+        end if
+      end do
       call setup_nhco(ii)
 !
 !  Does the system contain a N bonded to three atoms, at least
@@ -863,15 +863,15 @@ subroutine moldat(mode)
             "To correct this, add ""XYZ"" to the keyword line.", &
             "(If internal coordinates should be used, add ""GEO-OK"" to the keyword line.)"
             call mopend("Peptides should be run using Cartesian coordinates")
-            return 
+            return
           end if
         end if
       end if
-      if (mode /= 1 .and. ii > 1) then 
-        write (iw, '(A,I4,2A)') ' THERE ARE', ii/2, ' PEPTIDE LINKAGES IDENTIFIED IN THIS SYSTEM' 
-        write (iw, '(A)') ' Keyword "NOMM" has been used, therefore a Molecular Mechanics correction will not be used' 
+      if (mode /= 1 .and. ii > 1) then
+        write (iw, '(A,I4,2A)') ' THERE ARE', ii/2, ' PEPTIDE LINKAGES IDENTIFIED IN THIS SYSTEM'
+        write (iw, '(A)') ' Keyword "NOMM" has been used, therefore a Molecular Mechanics correction will not be used'
       else if (mode /= 1 .and. nnhco /= 0 .and. (method_RM1 .or. method_pm6 .or. method_PM7) &
-      & .and. (index(keywrd, "MMOK") == 0)) then 
+      & .and. (index(keywrd, "MMOK") == 0)) then
         if (index(keywrd, " LEWIS") + index(keywrd, " RESEQ") + index(keywrd, " CHARGES")== 0) then
           if (method_RM1) line = "RM1"
           if (method_PM6) line = "PM6"
@@ -881,68 +881,68 @@ subroutine moldat(mode)
       !      call mopend("Keyword MMOK or NOMM must be used with "//line(:3)//" for this system")
       !      return
           end if
-      end if            
-      if (mode /= 1 .and. index(keywrd,'PRTINT') /= 0) then  
-        write (iw, '(2/10X,''  INTERATOMIC DISTANCES'')') 
-        call vecprt (rxyz, numat) 
-      end if 
+      end if
+      if (mode /= 1 .and. index(keywrd,'PRTINT') /= 0) then
+        write (iw, '(2/10X,''  INTERATOMIC DISTANCES'')')
+        call vecprt (rxyz, numat)
+      end if
       if (rmin < 0.9D0 .and. index(keywrd,'CHECK') /= 0 .or. &
           rmin < 0.2D0 .and. index(keywrd,'GEO-OK') == 0 .or. &
-          rmin < 1.d-4) then 
-        icount = 0 
-        ireal = iminr 
-        jreal = jminr 
-        do i = 1, natoms 
-          if (labels(i)==99 .or. labels(i)==107) cycle  
-          icount = icount + 1 
-          if (icount == iminr) ireal = i 
-          if (icount /= jminr) cycle  
-          jreal = i 
+          rmin < 1.d-4) then
+        icount = 0
+        ireal = iminr
+        jreal = jminr
+        do i = 1, natoms
+          if (labels(i)==99 .or. labels(i)==107) cycle
+          icount = icount + 1
+          if (icount == iminr) ireal = i
+          if (icount /= jminr) cycle
+          jreal = i
         end do
         write(line,"('ATOMS',i6,' AND',i6,' ARE SEPARATED BY',f7.4,' ANGSTROMS.')")ireal, jreal, rmin
         if (index(keywrd,'CHECK') /= 0) then
           call mopend(trim(line))
           write(iw,'(/10x,a)')'FAULT DETECTED BY KEYWORD "CHECK'
-          if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'FAULT DETECTED BY KEYWORD "CHECK'          
+          if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'FAULT DETECTED BY KEYWORD "CHECK'
         else
           call mopend(trim(line))
           write(iw,'(/10x,a)')'TO CONTINUE CALCULATION SPECIFY "GEO-OK"'
-          num1 = char(Int(log10(max(ireal,jreal)     + 1.0)) + ichar("1")) 
+          num1 = char(Int(log10(max(ireal,jreal)     + 1.0)) + ichar("1"))
           if (pdb_label) then
-            write(iw,"(/10x,a,i"//num1//",a)")"(Label for atom ", ireal, ": """//txtatm(ireal)//""")"   
-            write(iw,"( 10x,a,i"//num1//",a)")"(Label for atom ", jreal, ": """//txtatm(jreal)//""")"  
+            write(iw,"(/10x,a,i"//num1//",a)")"(Label for atom ", ireal, ": """//txtatm(ireal)//""")"
+            write(iw,"( 10x,a,i"//num1//",a)")"(Label for atom ", jreal, ": """//txtatm(jreal)//""")"
           end if
-          if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'TO CONTINUE CALCULATION SPECIFY "GEO-OK"'   
-        end if         
+          if (log) write (ilog, '(//10x,a,//10x,a)')trim(line), 'TO CONTINUE CALCULATION SPECIFY "GEO-OK"'
+        end if
         write (iw, '(/,a)')'   NOTE THAT THE ATOM NUMBERS CORRESPOND TO THE'//&
           ' ''CARTESIAN COORDINATES'' ATOM LIST.'
-        if (index(keywrd,' ADD-H') /= 0) then 
+        if (index(keywrd,' ADD-H') /= 0) then
           write(line,'(a,i6,a,i6)')'SEVERE ERROR IN GEOMETRY, FIX FAULT BEFORE CONTINUING. Atoms:',ireal, ' and', jreal
-          call mopend (trim(line))   
+          call mopend (trim(line))
           numat = 0
           natoms = 0
           return
         end if
-        if (rmin < 1.d-4) then 
+        if (rmin < 1.d-4) then
           write(line,'(a,i6,a,i6)')'GEOMETRY IN ERROR, FIX FAULT BEFORE CONTINUING. Atoms:',ireal, ' and', jreal
           call mopend (trim(line))
         else
           call mopend ("GEOMETRY IN ERROR.  TO CONTINUE CALCULATION SPECIFY 'GEO-OK'.")
         end if
-        return  
-      end if 
-      if (.not.debug) return  
-      write (iw, 290) numat, norbs, ndorbs, natoms 
+        return
+      end if
+      if (.not.debug) return
+      write (iw, 290) numat, norbs, ndorbs, natoms
   290 format('   NUMBER OF REAL ATOMS:',i4,/,'   NUMBER OF ORBITALS:  ',i4,/,&
-        '   NUMBER OF D ORBITALS:',i4,/,'   TOTAL NO. OF ATOMS:  ',i4) 
-      write (iw, 300) (uspd(i),i=1,norbs) 
-  300 format('   ONE-ELECTRON DIAGONAL TERMS',/,10(/,10f8.3)) 
-      write (iw, 310) (pdiag(i),i=1,norbs) 
-  310 format('   INITIAL P FOR ALL ATOMIC ORBITALS',/,10(/,10f8.3)) 
-      return  
-end subroutine moldat 
-      
-subroutine setcup 
+        '   NUMBER OF D ORBITALS:',i4,/,'   TOTAL NO. OF ATOMS:  ',i4)
+      write (iw, 300) (uspd(i),i=1,norbs)
+  300 format('   ONE-ELECTRON DIAGONAL TERMS',/,10(/,10f8.3))
+      write (iw, 310) (pdiag(i),i=1,norbs)
+  310 format('   INITIAL P FOR ALL ATOMIC ORBITALS',/,10(/,10f8.3))
+      return
+end subroutine moldat
+
+subroutine setcup
    !***********************************************************************
    !
    !   SETCUP determines CUTOFP and the number of unit cells in each
@@ -1039,7 +1039,7 @@ subroutine setcup
           write(iw,'(a)')trim(line)
           call mopend (trim(line))
           return
-        else 
+        else
           line = "  Length of third translation vector is too small."
           write(iw,'(a)')trim(line)
           call mopend (trim(line))
@@ -1070,7 +1070,7 @@ subroutine setcup
       if ((tv1 < sum .or. tv2 < sum .or. tv3 < sum) .and. Index (keywrd, " GEO-OK") == 0) then
         write(iw,"(//10x,a,f9.3,a   )") "Translation vector length 1:", r1," Angstroms"
         write(iw,"(  10x,a,f9.3,a   )") "Translation vector length 2:", r2," Angstroms"
-        write(iw,"(  10x,a,f9.3,a,/ )") "Translation vector length 3:", r3," Angstroms"  
+        write(iw,"(  10x,a,f9.3,a,/ )") "Translation vector length 3:", r3," Angstroms"
         if (tv1 < sum) write (iw,'(10X,A,F6.3,A,f6.3)') &
              & "Distance between faces 2 and 3 is unreasonably small:", tv1," Angstroms, min:", sum
         if (tv2 < sum) write (iw,'(10X,A,F6.3,A,f6.3)') &
@@ -1085,7 +1085,7 @@ subroutine setcup
       end if
       l1u = Int ((cutofp*4.d0/3.d0)/tv1) + 1
       l2u = Int ((cutofp*4.d0/3.d0)/tv2) + 1
-      l3u = Int ((cutofp*4.d0/3.d0)/tv3) + 1    
+      l3u = Int ((cutofp*4.d0/3.d0)/tv3) + 1
     end if
     l123 = (2*l1u + 1)*(2*l2u + 1)*(2*l3u + 1)
     l11 = min(l1u,1)
@@ -1155,7 +1155,7 @@ subroutine write_cell(iprt)
     do i = 1, 20
       m = 0
       do l = 1, j
-        if (Abs((i*nel(l))/k - (i*1.d0*nel(l))/k) > 1.d-5) m = 1 
+        if (Abs((i*nel(l))/k - (i*1.d0*nel(l))/k) > 1.d-5) m = 1
       end do
       if (m == 0) exit
     end do
@@ -1177,8 +1177,8 @@ subroutine write_cell(iprt)
   if (index(keywrd, " PRT ") /= 0) then
     write (iprt, '(/10X,A,F15.3,A)') 'VOLUME OF UNIT CELL     =', &
         vol/(max(1,mers(1))*max(1,mers(2))*max(1,mers(3))), ' CUBIC ANGSTROMS'
-    write (iprt, '(/10X,A,F15.3,A)') 'DENSITY                 =', density, ' GRAMS/CC' 
-    
+    write (iprt, '(/10X,A,F15.3,A)') 'DENSITY                 =', density, ' GRAMS/CC'
+
     write (iprt,'(28x, a, 8x, f7.3, a)')"  A   =", tab*ta/max(1,mers(1)), " ANGSTROMS"
     write (iprt,'(28x, a, 8x, f7.3, a)')"  B   =", tab*tb/max(1,mers(2)), " ANGSTROMS"
     write (iprt,'(28x, a, 8x, f7.3, a)')"  C   =", tab*tc/max(1,mers(3)), " ANGSTROMS"
@@ -1186,7 +1186,7 @@ subroutine write_cell(iprt)
     write (iprt,'(28x, a, 8x, f7.3, a)')"BETA  =",tbeta , " DEGREES"
     write (iprt,'(28x, a, 8x, f7.3, a)')"GAMMA =",tgamma, " DEGREES"
     call l_control("PRT", 3, -1)
-  end if       
+  end if
   return
 end subroutine write_cell
 subroutine write_unit_cell_HOF(iprt)
@@ -1230,7 +1230,7 @@ subroutine write_unit_cell_HOF(iprt)
           do i = 1, 10
             m = 0
             do l = 1, j
-              if (Abs((i*nel(l))/k - (i*1.d0*nel(l))/k) > 1.d-5) m = 1 
+              if (Abs((i*nel(l))/k - (i*1.d0*nel(l))/k) > 1.d-5) m = 1
             end do
             if (m == 0) exit
           end do
@@ -1239,9 +1239,9 @@ subroutine write_unit_cell_HOF(iprt)
 !
          z = k/i
        end if
-       num = char(ichar("2") + int(log10(z + 0.05))) 
+       num = char(ichar("2") + int(log10(z + 0.05)))
        write (line, "(10x,'H.o.F. per unit cell    =',f17.5,' KCAL, for',i"//num//",' unit cells')") &
-         & escf/z, z 
+         & escf/z, z
        i = index(formula, ":") + 1
        write(line(len_trim(line) + 1:), '(a)')", unit cell ="
        one_letter = .true.
@@ -1263,7 +1263,7 @@ subroutine write_unit_cell_HOF(iprt)
          else
            l = index(formula(i:), " ") + i
            k = nint(reada(formula, i))/z
-           num = char(ichar("1") + int(log10(k + 0.05))) 
+           num = char(ichar("1") + int(log10(k + 0.05)))
            write(line(len_trim(line) + 1:),'(i'//num//')') k
            i = l
            one_letter = .true.
@@ -1287,7 +1287,7 @@ subroutine write_unit_cell_HOF(iprt)
       double precision :: xi
       double precision, dimension (nvar) :: dsum, dsum1
       double precision, external :: ddot, volume
-      if (iprt < 0) return  
+      if (iprt < 0) return
         m = 0
         i1 = 0
         i2 = 0
@@ -1314,11 +1314,11 @@ subroutine write_unit_cell_HOF(iprt)
                     write(iprt,'(/10x,a)')"The pressure required to constrain translation vectors"
                     write(iprt,'(10x,a)')"can only be calculated if Cartesian coordinates are used."
                   end if
-                end if                
+                end if
                 return
               end if
 !
-!  Determine the scalar of the component of the gradient vector in the 
+!  Determine the scalar of the component of the gradient vector in the
 !  direction of the translation vector
 !
               xi = ddot(3,dsum, 1,dsum1,1)
@@ -1333,7 +1333,7 @@ subroutine write_unit_cell_HOF(iprt)
                   call to_screen(trim(line))
                 else
                   write(iprt,*)trim(line)
-                end if   
+                end if
                 i2 = 1
               end if
               xi = (xi - pressure * (4184.d0*10.d0**30)/ fpc_10)*1.d-9
@@ -1344,11 +1344,11 @@ subroutine write_unit_cell_HOF(iprt)
                   call to_screen(trim(line))
                 else
                   write(iprt,*)trim(line)
-                end if   
+                end if
               m = 0
             end if
           end if
-        end do   
+        end do
   end subroutine write_pressure
   subroutine setup_nhco(ii)
   USE molmec_C, only : nnhco, nhco, htype
@@ -1363,66 +1363,66 @@ subroutine write_unit_cell_HOF(iprt)
   integer :: j, i, k, l, m, jj
   double precision, external :: distance
 
-  nnhco = 0 
+  nnhco = 0
   !
   !   SET UP MOLECULAR-MECHANICS CORRECTION TO -(C=O)-(NH)- LINKAGE
   !   THIS WILL BE USED IF NOMM HAS NOT BEEN SPECIFIED.
   !
                       htype = 0.d0
-    if (method_mndo) htype = 6.1737D0 
-    if (method_am1)  htype = 3.3191D0 
-    if (method_pm3)  htype = 7.1853D0 
-    if (method_rm1)  htype = 2.4127D0 
-    if (method_pm7)  htype = 3.1595D0 
-    if (method_pm6)  htype = 2.5000D0 
-    ii = 0 
-    if (index(keywrd,'NOMM') /= 0) ii = 1 
+    if (method_mndo) htype = 6.1737D0
+    if (method_am1)  htype = 3.3191D0
+    if (method_pm3)  htype = 7.1853D0
+    if (method_rm1)  htype = 2.4127D0
+    if (method_pm7)  htype = 3.1595D0
+    if (method_pm6)  htype = 2.5000D0
+    ii = 0
+    if (index(keywrd,'NOMM') /= 0) ii = 1
   !
   !   IDENTIFY O=C-N-H SYSTEMS VIA THE INTERATOMIC DISTANCES MATRIX
   !
-  l230: do j = 1, numat 
-      if (nat(j) /= 6) cycle  l230 
-      do i = 1, numat 
-        if (nat(i) /= 8) cycle  
-        if (distance(i, j) > 1.3D0) cycle  
-        do k = 1, numat 
-          if (nat(k) /= 7) cycle  
-          if (distance(k, j) > 1.6D0) cycle  
-          do l = 1, numat 
-            if (nat(l) /= 1) cycle  
-            if (distance(k, l) > 1.3D0) cycle  
+  l230: do j = 1, numat
+      if (nat(j) /= 6) cycle  l230
+      do i = 1, numat
+        if (nat(i) /= 8) cycle
+        if (distance(i, j) > 1.3D0) cycle
+        do k = 1, numat
+          if (nat(k) /= 7) cycle
+          if (distance(k, j) > 1.6D0) cycle
+          do l = 1, numat
+            if (nat(l) /= 1) cycle
+            if (distance(k, l) > 1.3D0) cycle
   !
   !   WE HAVE A H-N-C=O SYSTEM.  THE ATOM NUMBERS ARE L-K-J-I
   !   NOW SEARCH OUT ATOM ATTACHED TO NITROGEN, THIS SPECIFIES
   !   THE SYSTEM X-N-C=O
   !
-            l190: do m = 1, numat 
-              if (m==k .or. m==l .or. m==j) cycle  l190 
-              if (distance(m, k) > 1.7D0) cycle  l190 
-              do jj = 1, nnhco, 2 
-                if (nhco(3,jj) /= k) cycle  
-                cycle  l190 
-              end do 
-              nnhco = nnhco + 1 
-              nhco(1,nnhco) = i 
-              nhco(2,nnhco) = j 
-              nhco(3,nnhco) = k 
-              nhco(4,nnhco) = m 
-              nnhco = nnhco + 1 
-              nhco(1,nnhco) = i 
-              nhco(2,nnhco) = j 
-              nhco(3,nnhco) = k 
-              nhco(4,nnhco) = l 
-              if (ii /= 0) then 
-                ii = ii + 2 
-                nnhco = nnhco - 2 
-              end if 
-              cycle  l230 
-            end do l190 
-          end do 
-        end do 
-      end do 
-  end do l230 
+            l190: do m = 1, numat
+              if (m==k .or. m==l .or. m==j) cycle  l190
+              if (distance(m, k) > 1.7D0) cycle  l190
+              do jj = 1, nnhco, 2
+                if (nhco(3,jj) /= k) cycle
+                cycle  l190
+              end do
+              nnhco = nnhco + 1
+              nhco(1,nnhco) = i
+              nhco(2,nnhco) = j
+              nhco(3,nnhco) = k
+              nhco(4,nnhco) = m
+              nnhco = nnhco + 1
+              nhco(1,nnhco) = i
+              nhco(2,nnhco) = j
+              nhco(3,nnhco) = k
+              nhco(4,nnhco) = l
+              if (ii /= 0) then
+                ii = ii + 2
+                nnhco = nnhco - 2
+              end if
+              cycle  l230
+            end do l190
+          end do
+        end do
+      end do
+  end do l230
     end subroutine setup_nhco
 
 

@@ -219,12 +219,12 @@
          !
             do le = nnce(i) + 1, nnce(i) + nce(i)
               mie = icvir(le)
-    
+
               latoms(mie) = .true.
               mlff = iused(mie) + loopj
               if (iused(mie) >= 0) then
                 !
-                !  TWO BY TWO ROTATION OF ATOMS WHICH ARE COMMON 
+                !  TWO BY TWO ROTATION OF ATOMS WHICH ARE COMMON
                 !  TO OCCUPIED LMO J AND VIRTUAL LMO I
                 !
                 do mlee = mle + 1 + loopi, mle + iorbs(mie) + loopi
@@ -269,13 +269,13 @@
               mle = mle + iorbs(mie)
             end do
             !
-            !  NOW CHECK ALL ATOMS WHICH WERE IN THE OCCUPIED LMO 
-            !  WHICH ARE NOT IN THE VIRTUAL LMO, TO SEE IF THEY 
+            !  NOW CHECK ALL ATOMS WHICH WERE IN THE OCCUPIED LMO
+            !  WHICH ARE NOT IN THE VIRTUAL LMO, TO SEE IF THEY
             !  SHOULD BE IN THE VIRTUAL LMO.
             !
             do lf = nncf(j) + 1, nncf(j) + ncf(j)
               ii = icocc(lf)
-              
+
               if ( .not. latoms(ii)) then
                 sum = 0.d0
                 do mlff = iused(ii) + loopj + 1, iused(ii) + loopj + &
@@ -330,7 +330,7 @@
             end do
             if (retry) then
                 !
-                !   HALF THE ROTATION ANGLE.  WILL THIS PREVENT THE 
+                !   HALF THE ROTATION ANGLE.  WILL THIS PREVENT THE
                 !   ARRAY BOUND FROM BEING EXCEEDED?
                 !
               alpha = 0.5d0 * (alpha+1.d0)

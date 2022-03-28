@@ -14,20 +14,20 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine perm(iperm, nels, nmos, nperms, limci) 
+      subroutine perm(iperm, nels, nmos, nperms, limci)
       use meci_C, only : maxci
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer , intent(in) :: nels 
-      integer , intent(in) :: nmos 
-      integer , intent(inout) :: nperms 
-      integer , intent(in) :: limci  
-      integer , intent(inout) :: iperm(nmos,maxci*4) 
+      integer , intent(in) :: nels
+      integer , intent(in) :: nmos
+      integer , intent(inout) :: nperms
+      integer , intent(in) :: limci
+      integer , intent(inout) :: iperm(nmos,maxci*4)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
-!----------------------------------------------- 
+!-----------------------------------------------
       integer :: Upper, Lower, Prm, El, i
       integer, dimension (:), allocatable :: Occ
 !-----------------------------------------------

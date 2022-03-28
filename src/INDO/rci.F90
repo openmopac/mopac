@@ -14,11 +14,11 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-! RMG - subroutine added to control Reimers CI in MOPAC 
+! RMG - subroutine added to control Reimers CI in MOPAC
       subroutine rci ()
 
       USE chanel_C, only: iw
-      USE reimers_C, only: beta, cc0, dd, n, nb2, nvh, nol, & 
+      USE reimers_C, only: beta, cc0, dd, n, nb2, nvh, nol, &
           ndtype, dm, x, y, z, xz, zcore, ion, ndump, gamma, &
           ci, tot, nbtmo, iconf, aocc, bocc, &
           spintr, cimatr, nstop, nconf, ic, id, dmci, &
@@ -55,7 +55,7 @@
       allocate(dm(nb2, 3))
 
 ! Need to compute ground-state dipole to get proper dm matrix for CI
-! dipoles  
+! dipoles
       do i = 1, nb2
         dd(i, 1) = dtmp(i, 1)
         dd(i, 2) = dtmp(i, 2)
@@ -112,7 +112,7 @@
 ! Double excitation active space
       occd = 0
       vird = 0
-      ndoubl = 99      
+      ndoubl = 99
       if (index(keywrd, 'CISD') /= 0 .and. index(keywrd, 'C.I.D.') == 0) then
         ! Set default double excitation active space
         occd = min(5, occ)
@@ -124,7 +124,7 @@
           ndoubl = nint(reada(keywrd, j))
           nmos = nint(reada(keywrd, index(keywrd, 'C.I.D.=(') + 7))
           ndoubl = min(ndoubl, nclose)
-        else 
+        else
           nmos = nint(reada(keywrd, index(keywrd, 'C.I.D.=') + 7))
         end if
         nmos = min(nmos, norbs)
@@ -151,7 +151,7 @@
           ndoubl = nint(reada(keywrd, j))
           nmos = nint(reada(keywrd, index(keywrd, 'C.A.S.=(') + 7))
           ndoubl = min(ndoubl, nclose)
-        else 
+        else
           nmos = nint(reada(keywrd, index(keywrd, 'C.A.S.=') + 7))
         end if
         nmos = min(nmos, norbs)

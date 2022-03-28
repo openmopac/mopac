@@ -50,7 +50,7 @@ double precision function pargeo (grad, wtgeo, refgeo, loc, diffs, ndif)
         else if (loc(2,i) == 3) then  !
                                       !
           relative_weight = 1.d0      !  Relative weight of dihedral
-                                      !                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                                      !
         end if
         diffs(ndif) = grad(i) * wtgeo * relative_weight * wtz
         sum = sum + Abs(diffs(ndif)) ** power

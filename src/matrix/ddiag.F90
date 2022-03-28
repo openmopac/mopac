@@ -21,8 +21,8 @@
       double precision :: a(nm, n), d(n), e(n), z(nm, n)
       double precision :: f, g, h, hh, scale
 
-! 
-!     this subroutine is a translation of the algol procedure tred2, 
+!
+!     this subroutine is a translation of the algol procedure tred2,
 !     num. math. 11, 181 - 195(1968) by martin, reinsch, and wilkinson.
 !     handbook for auto. comp., vol.ii - linear algebra, 212 - 226(1971).
 !
@@ -30,33 +30,33 @@
 !     symmetric tridiagonal matrix using and accumulating
 !     orthogonal similarity transformations.
 !
-!     on input - 
+!     on input -
 !
 !        nm must be set to the row dimension of two - dimensional
 !          array parameters as declared in the calling program
-!          dimension statement, 
+!          dimension statement,
 !
-!        n is the order of the matrix, 
+!        n is the order of the matrix,
 !
 !        a contains the real symmetric input matrix.  only the
 !          lower triangle of the matrix need be supplied.
 !
-!     on output - 
+!     on output -
 !
-!        d contains the diagonal elements of the tridiagonal matrix, 
+!        d contains the diagonal elements of the tridiagonal matrix,
 !
 !        e contains the subdiagonal elements of the tridiagonal
-!          matrix in its last n - 1 positions.  e(1) is set to zero, 
+!          matrix in its last n - 1 positions.  e(1) is set to zero,
 !
 !        z contains the orthogonal transformation matrix
-!          produced in the reduction, 
+!          produced in the reduction,
 !
 !        a and z may coincide.  if distinct, a is unaltered.
 !
-!     questions and comments should be directed to b. s. garbow, 
+!     questions and comments should be directed to b. s. garbow,
 !     applied mathematics division, argonne national laboratory
 !
-!    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+!    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 !
       do i = 1, n
          do j = 1, i
@@ -164,7 +164,7 @@
 !     ********** last card of tred2 **********
       end subroutine tred2e
 !
-!    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+!    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 !
       subroutine tql2e(nm, n, d, e, z, ierr)
 
@@ -173,7 +173,7 @@
       double precision :: d(n), e(n), z(nm, n)
       double precision :: b, c, f, g, h, p, r, s, machep
 !
-!     this subroutine is a translation of the algol procedure tql2, 
+!     this subroutine is a translation of the algol procedure tql2,
 !     num. math. 11, 293 - 306(1968) by bowdler, martin, reinsch, and
 !     wilkinson.
 !     handbook for auto. comp., vol.ii - linear algebra, 227 - 240(1971).
@@ -184,46 +184,46 @@
 !     be found if  tred2  has been used to reduce this
 !     full matrix to tridiagonal form.
 !
-!     on input - 
+!     on input -
 !
 !        nm must be set to the row dimension of two - dimensional
 !          array parameters as declared in the calling program
-!          dimension statement, 
+!          dimension statement,
 !
-!        n is the order of the matrix, 
+!        n is the order of the matrix,
 !
-!        d contains the diagonal elements of the input matrix, 
+!        d contains the diagonal elements of the input matrix,
 !
 !        e contains the subdiagonal elements of the input matrix
-!          in its last n - 1 positions.  e(1) is arbitrary, 
+!          in its last n - 1 positions.  e(1) is arbitrary,
 !
 !        z contains the transformation matrix produced in the
 !          reduction by  tred2, if performed.  if the eigenvectors
 !          of the tridiagonal matrix are desired, z must contain
 !          the identity matrix.
 !
-!      on output - 
+!      on output -
 !
 !        d contains the eigenvalues in ascending order.  if an
 !          error exit is made, the eigenvalues are correct but
-!          unordered for indices 1, 2, ..., ierr - 1, 
+!          unordered for indices 1, 2, ..., ierr - 1,
 !
-!        e has been destroyed, 
+!        e has been destroyed,
 !
 !        z contains orthonormal eigenvectors of the symmetric
-!          tridiagonal (or full) matrix.  if an error exit is made, 
+!          tridiagonal (or full) matrix.  if an error exit is made,
 !          z contains the eigenvectors associated with the stored
-!          eigenvalues, 
+!          eigenvalues,
 !
 !        ierr is set to
-!          zero       for normal return, 
+!          zero       for normal return,
 !          j          if the j - th eigenvalue has not been
 !                     determined after 30 iterations.
 !
-!     questions and comments should be directed to b. s. garbow, 
+!     questions and comments should be directed to b. s. garbow,
 !     applied mathematics division, argonne national laboratory
 !
-!    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+!    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 !
 !     ********** machep is a machine dependent parameter specifying
 !                the relative precision of floating point arithmetic.

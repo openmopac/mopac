@@ -130,7 +130,7 @@ subroutine partab
     sumier = 0.d0
     sumger = 0.d0
     one_scf = (index(contrl, "PKA") + index(contrl, "1SCF")/= 0)
-    do loop = 1, nmols  
+    do loop = 1, nmols
       molnum = molnum + 1
     !
     !  Restore all information for molecule number LOOP
@@ -151,7 +151,7 @@ subroutine partab
     !
 
       if (one_scf) then
-        call compfg (xparam, .true., escf, .true., dummy, .false.)      
+        call compfg (xparam, .true., escf, .true., dummy, .false.)
       else
         call optgeo (xparam, yparam, nvar, refgeo, -0.1d0)
       end if
@@ -159,7 +159,7 @@ subroutine partab
       call parfg (errors, ttype, nerr, loop, .false.)
       if (cp) then
         cp298 = 0.d0
-        s298 = 0.d0                                                                                                                                                                                                                                                                                                         
+        s298 = 0.d0
         call force()
         refher = cp298 - refhof
         refder = s298 - refdip
@@ -256,7 +256,7 @@ subroutine partab
               nzs(3) = labels(nb(k))
               nzs(2) = labels(na(k))
               nzs(1) = labels(k)
-            else              
+            else
               nzs(4) = labels(k)
               nzs(3) = labels(na(k))
               nzs(2) = labels(nb(k))
@@ -323,7 +323,7 @@ subroutine partab
       close (unit=ipfile(4), status="DELETE", iostat=i)
     end if
     close (unit=ir, status="DELETE", iostat=i)
-    if( .not. large) close (unit=iw, status="DELETE") 
+    if( .not. large) close (unit=iw, status="DELETE")
   !
   !  Summarize the errors
   !
@@ -333,7 +333,7 @@ subroutine partab
     aveher = aveher / (nhmols+0.000001d0)
     aveder = aveder / (ndmols+0.000001d0)
     aveier = aveier / (nimols+1.d-4)
-    
+
     write (ifiles_8, "(25x,'  UNSIGNED AVE. ERROR   ',i4,f8.2,i4,f6.2,i3,f5.2,i6,f6.3)")&
     & nhmols,  aveher, ndmols, aveder, nimols, aveier, namols + nbmols, &
     & (aveaer*3.141592653598d0/180 + aveber)/(namols + nbmols + 1.d-4)
@@ -354,7 +354,7 @@ subroutine partab
     write (ifiles_8, "(/,2A)") " All systems calculated; " // "now generating re&
    &ferences"
     do i = 1, 4
-      inquire(unit=ipfile(i), opened=opend) 
+      inquire(unit=ipfile(i), opened=opend)
       if ( .not. opend) cycle
       write(ipfile(i),"(20a)")("****",j=1,20)
       call psort (refers(1, i), 1, nmols, reftxt(1, i), allref(1, i), &

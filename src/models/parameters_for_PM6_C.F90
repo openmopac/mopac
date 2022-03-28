@@ -19,7 +19,7 @@
     betap6, betad6, gss6, gsp6, gpp6, gp26, hsp6, polvo6, poc_6, &
     zsn6, zpn6, zdn6, f0sd6, g2sd6, alp6, &
     CPE_Zet6, CPE_Z06, CPE_B6, CPE_Xlo6, CPE_Xhi6
-    double precision :: v_par6(60) 
+    double precision :: v_par6(60)
     double precision, dimension(107,4) :: gues61, gues62, gues63
 !
 !                    Data for Element   1         Hydrogen

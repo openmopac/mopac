@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-       subroutine ccrep(ni, nj, r, enuclr, gab) 
+       subroutine ccrep(ni, nj, r, enuclr, gab)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use parameters_C, only : alp, tore, guess1, guess2, guess3, alpb, xfac, &
         par1, par2, par3, par4
@@ -27,11 +27,11 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer , intent(in) :: ni 
-      integer , intent(in) :: nj 
-      double precision , intent(inout) :: r 
+      integer , intent(in) :: ni
+      integer , intent(in) :: nj
+      double precision , intent(inout) :: r
       double precision , intent(in) :: gab
-      double precision , intent(out) :: enuclr 
+      double precision , intent(out) :: enuclr
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -40,19 +40,19 @@
       double precision :: alpni, alpnj, enuc, abond, fff, scale, eni, enj, ax
 !-----------------------------------------------
 !     CONVERT TO ANGSTROM AND INITIALIZE VARIABLES.
-      r = r*a0 
-      alpni = alp(ni) 
-      alpnj = alp(nj) 
+      r = r*a0
+      alpni = alp(ni)
+      alpnj = alp(nj)
 !
-!     CALCULATE REPULSIVE TERM. 
+!     CALCULATE REPULSIVE TERM.
 !
-      enuc = tore(ni)*tore(nj)*gab 
-      
+      enuc = tore(ni)*tore(nj)*gab
+
 !
 ! Get bond parameters if defined.
 !
       if (ni < 101 .and. nj < 101) then
-        fff = xfac(ni,nj)        
+        fff = xfac(ni,nj)
       else
         fff = 0.d0
       end if
@@ -78,35 +78,35 @@
         if (abond < 1.d-6) abond = 1.2d0
         if (.not. method_mndod) then
           if (method_pm6 .or. method_pm7 .or. method_pm8) then
-            scale = 1.0d0 + 2.d0 * fff * Exp (-abond*(r + 0.0003*r**6)) 
+            scale = 1.0d0 + 2.d0 * fff * Exp (-abond*(r + 0.0003*r**6))
   !
   !   Put all special handling codes here.  To date, these are:
   !
   !    If an O-H, C-H, or N-H interaction, use a different core-core term
-  !   
+  !
             i = max(ni, nj)
             j = min(ni, nj)
-            select case (j) 
-            case (1)             
+            select case (j)
+            case (1)
               select case (i)
               case (1)
               case (6:7)
-                scale = 1.0d0 + 2.d0 * fff * Exp (-abond*r**2) 
+                scale = 1.0d0 + 2.d0 * fff * Exp (-abond*r**2)
               case (8)
 !
 ! Slow O - H term
 !
                 scale = 1.0d0 + 2.d0 * fff * Exp (-abond*r**2) - par3*exp(-par4*r*2) ! par3*exp(-par4*r*2) used by PM7
-              end select 
+              end select
             case (6)
               select case (i)
               case (6)
-                scale = scale + par1*exp(-par2*r) ! To correct C-C triple bond HoF 
-              end select 
-            case (7) 
+                scale = scale + par1*exp(-par2*r) ! To correct C-C triple bond HoF
+              end select
+            case (7)
               select case (i)
               case (7)
-              end select 
+              end select
             case (8)
              select case (i)
              case (14)
@@ -116,7 +116,7 @@
 !  For R0 = 3.6 Angstroms, energy in kcal/mol per Si-O interaction is (11952/r = 3320) times premultiplier.
 !
                 ax = 1.0d0
-                scale = scale  -0.7d-3*exp(-(r - 2.9d0)**2) ! To correct Si-O weak long-range interaction 
+                scale = scale  -0.7d-3*exp(-(r - 2.9d0)**2) ! To correct Si-O weak long-range interaction
               end select
             end select
           else  ! Not PM6
@@ -153,7 +153,7 @@
        ! Multiply monopole term by scaling factor
        !
         enuclr = enuc * scale
-      else 
+      else
         abond = 0.d0
         if (method_pm6 .or. method_pm7 .or. method_pm8) then
           if (ni .gt. 56 .and. ni  .lt. 72 &
@@ -165,30 +165,30 @@
           eni = 0.d0
           enj = 0.d0
         else
-          eni = exp((-alpni*r)) 
-          enj = exp((-alpnj*r)) 
-          scale = eni + enj 
+          eni = exp((-alpni*r))
+          enj = exp((-alpnj*r))
+          scale = eni + enj
         end if
 !
 !  This is almost certainly dead code.
-        nt = ni + nj 
-        if (nt == 8 .or. nt == 9) then 
-          if (ni == 7 .or. ni == 8) scale = scale + (r - 1.D0)*eni 
-          if (nj == 7 .or. nj == 8) scale = scale + (r - 1.D0)*enj 
-        end if 
+        nt = ni + nj
+        if (nt == 8 .or. nt == 9) then
+          if (ni == 7 .or. ni == 8) scale = scale + (r - 1.D0)*eni
+          if (nj == 7 .or. nj == 8) scale = scale + (r - 1.D0)*enj
+        end if
 !
 !  End of probable dead code
 !
         enuclr = abs(scale*enuc) + enuc
       end if
-      scale = 0.d0 
+      scale = 0.d0
       if (method_pm6 .or. method_pm7 .or. method_pm8) then
   !
   !  VdW term
   !
-        ax = guess2(ni,1)*(r - guess3(ni,1))**2 
-        if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,1)*exp((-ax)) 
-        ax = guess2(nj,1)*(r - guess3(nj,1))**2 
+        ax = guess2(ni,1)*(r - guess3(ni,1))**2
+        if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,1)*exp((-ax))
+        ax = guess2(nj,1)*(r - guess3(nj,1))**2
         if (ax < 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(nj,1)*exp((-ax))
         if (abond > 1.d-4) then
           i = 0
@@ -217,12 +217,12 @@
           end if
           if (ni == 5) then
             do ig = 1, 4
-              ax = guess2(nj,ig)*(r - guess3(nj,ig))**2 
+              ax = guess2(nj,ig)*(r - guess3(nj,ig))**2
               if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(nj,ig)*exp(-ax)
             end do
           else
             do ig = 1, 4
-              ax = guess2(ni,ig)*(r - guess3(ni,ig))**2 
+              ax = guess2(ni,ig)*(r - guess3(ni,ig))**2
               if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,ig)*exp(-ax)
             end do
           end if
@@ -231,28 +231,28 @@
           i = 4
           if (fff > 1.d-4) i = 0
       end if
-      do ig = 1, i 
-        if (abs(guess1(ni,ig)) > 0.D0) then 
-          ax = guess2(ni,ig)*(r - guess3(ni,ig))**2 
+      do ig = 1, i
+        if (abs(guess1(ni,ig)) > 0.D0) then
+          ax = guess2(ni,ig)*(r - guess3(ni,ig))**2
           if (ax <= 25.D0) scale = scale + tore(ni)*tore(nj)/r*guess1(ni,ig)*&
-            exp((-ax)) 
-        end if 
-        if (abs(guess1(nj,ig)) <= 0.D0) cycle  
-        ax = guess2(nj,ig)*(r - guess3(nj,ig))**2 
-        if (ax > 25.D0) cycle  
-        scale = scale + tore(ni)*tore(nj)/r*guess1(nj,ig)*exp((-ax)) 
-      end do  
-      enuclr = enuclr + scale 
+            exp((-ax))
+        end if
+        if (abs(guess1(nj,ig)) <= 0.D0) cycle
+        ax = guess2(nj,ig)*(r - guess3(nj,ig))**2
+        if (ax > 25.D0) cycle
+        scale = scale + tore(ni)*tore(nj)/r*guess1(nj,ig)*exp((-ax))
+      end do
+      enuclr = enuclr + scale
       if (method_pm6 .or. method_pm7 .or. method_pm8) then
 !
 !  The next term is the unpolarizable core - unpolarizable core interaction
 !  It should have no effect on heats of formation or other properties.
 !  Its purpose is to allow systems where the atoms are forced together
 !  to be realistic.  The form of the expression is the Lennard-Jones "12" part
-!  in the "12 - 6" potential. 
+!  in the "12 - 6" potential.
 !
 !  The multiplier "1.d-8" was chosen to make the function negligible at
-!  normal bonding distances. "ax" is proportional to the interatomic distance 
+!  normal bonding distances. "ax" is proportional to the interatomic distance
 !  divided by the sum of the two covalent radii.
 !
         ax = r/(ni**0.3333d0 + nj**0.3333d0)
@@ -260,6 +260,6 @@
           scale = 1.d-8/ax**12
           enuclr = enuclr + min(scale, 1.d5)
         end if
-      end if  
-      return  
-      end subroutine ccrep 
+      end if
+      return
+      end subroutine ccrep

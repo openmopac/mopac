@@ -14,17 +14,17 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module maps_C 
- 
+      module maps_C
+
       double precision, dimension(:), allocatable  :: &
    &  surf,    &
    &  react
 
       integer :: &
-  &  ijlp    , & !  
-  &  ilp,      & !  
-  &  jlp,      & !  
-  &  jlp1,     & !  
+  &  ijlp    , & !
+  &  ilp,      & !
+  &  jlp,      & !
+  &  jlp1,     & !
   &  ione,     & !
   &  latom,    & !
   &  lparam,   & !
@@ -41,4 +41,4 @@
   &  rc_dipo,             &  !  Reaction coordinate dipole
   &  ekin,                &  !  Kinetic energy
   &  dummy
-      end module maps_C 
+      end module maps_C

@@ -176,25 +176,25 @@
       i = i + 5
       line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
       j = i + len_trim(line)
-      if (keywrd(j + 1: j + 1) == '"') j = j + 2  
+      if (keywrd(j + 1: j + 1) == '"') j = j + 2
       if (keywrd(j:j) == ";") then
         write (ifiles_8, '(" *",/," *  SET=n       -  THE LISTS OF COMPOUNDS TO BE USED ARE IN FILES: ")')
       else
         write (ifiles_8, '(" *",/," *  SET=n       -  THE LIST OF COMPOUNDS TO BE USED IS IN FILE: ")')
       end if
       write (ifiles_8, '(" *",17x,a)')'"'//trim(line)//'"'
-      if (keywrd(i + 1: i + 1) == '"') i = i + 2     
+      if (keywrd(i + 1: i + 1) == '"') i = i + 2
       do
         i = i + len_trim(line)
-        if (keywrd(i + 1: i + 1) == '"') i = i + 2  
+        if (keywrd(i + 1: i + 1) == '"') i = i + 2
         if (keywrd(i:i) == ";") then
-          i = i + 1 
+          i = i + 1
           line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit
         end if
-      end do      
+      end do
     end if
     i = Index (keywrd, " REF=")
     if (i /= 0) then
@@ -205,13 +205,13 @@
       do
         j = index(keywrd(i:k), ";")
         if (j /= 0) then
-          i = i + j 
+          i = i + j
           line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit
         end if
-      end do      
+      end do
     end if
     i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
     if (i /= 0) then
@@ -223,13 +223,13 @@
       do
         j = index(keywrd(i:k), ";")
         if (j /= 0) then
-          i = i + j 
+          i = i + j
           line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit
         end if
-      end do      
+      end do
     end if
     return
   end subroutine parkey

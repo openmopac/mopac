@@ -61,7 +61,7 @@
             ihcr = l
             do ii = 1, nbonds(j)
                   !
-                  !   IS THERE A NITROGEN ATTACHED TO THE 
+                  !   IS THERE A NITROGEN ATTACHED TO THE
                   !   CARBON ATTACHED TO THE CARBON ATTACHED TO THE NITROGEN?
                   !
               if (nat(ibonds(ii, j)) == 7) go to 1010
@@ -69,7 +69,7 @@
             kk = 0
             do ii = 1, nbonds(j)
                   !
-                  !   ARE THERE TWO OXYGEN ATOMS ATTACHED TO THE 
+                  !   ARE THERE TWO OXYGEN ATOMS ATTACHED TO THE
                   !   CARBON ATTACHED TO THE CARBON ATTACHED TO THE NITROGEN?
                   !
               if (nat(ibonds(ii, j)) == 8) kk = kk + 1

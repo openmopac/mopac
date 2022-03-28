@@ -70,7 +70,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
 !        inquire (directory=trim(dirnew) , exist = exists)
 !        if (.not. exists) then
 !          write(ifiles_8,'(//10x,a)')"Folder """//trim(dirnew)//""" specified by NEW_REF does not exist"
-!          write(ifiles_8,'(/10x,a)')"(Either edit or delete ""NEW_REF"" or create the folder.)"          
+!          write(ifiles_8,'(/10x,a)')"(Either edit or delete ""NEW_REF"" or create the folder.)"
 !          stop
 !        end if
         call add_path(name)
@@ -95,7 +95,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
        if (i /= 0) then
          do j = i + 2, i + 20
            if ((ichar(title(j:j)) < ichar("0") .or. ichar(title(j:j)) > ichar("9")) .and. &
-              ichar(title(j:j)) /= ichar("-") .and. ichar(title(j:j)) /= ichar(".")) exit 
+              ichar(title(j:j)) /= ichar("-") .and. ichar(title(j:j)) /= ichar(".")) exit
          end do
          line(100:) = title(j:) ! j = end of number
          if (line(i + 3:i + 3) == "-") then
@@ -105,7 +105,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
          end if
          if (title(j:j) == "+") then
 !
-! Re-set escf to difference between calculated error (refher) and that supplied 
+! Re-set escf to difference between calculated error (refher) and that supplied
 !
            escf = reada(title, i + 2) + refher
          end if
@@ -116,7 +116,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
            i = max(int(log10(-escf)),0)
            num = char(ichar("6") + i)
          end if
-         write(title,"(a,f"//num//".3,a)")trim(line(:99)), escf, trim(line(100:199))         
+         write(title,"(a,f"//num//".3,a)")trim(line(:99)), escf, trim(line(100:199))
        end if
      end if
   !

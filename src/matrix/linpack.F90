@@ -161,7 +161,7 @@ subroutine dgefa (a, lda, n, ipvt, info)
     double precision, dimension (lda, n), intent (inout) :: a
     integer :: j, k, kp1, l, nm1
     double precision :: t
-      integer, external :: idamax      
+      integer, external :: idamax
 !
 
    !

@@ -35,7 +35,7 @@ subroutine output_rama
     if (Abs(angles(1,i)) + Abs(angles(3,i))> 1.d-20 .and. res_start(i) > 0 .and. &
       txtatm(res_start(i))(1:4) == "ATOM") then
       if (Abs(angles(1,i)) > 1.d-20 .and. Abs(angles(2,i)) > 1.d-20 ) then
-        write(iw,"(14x,a, 3x, 3f7.1, a)")txtatm(res_start(i))(18:26), (angles(j,i),j = 1,3) 
+        write(iw,"(14x,a, 3x, 3f7.1, a)")txtatm(res_start(i))(18:26), (angles(j,i),j = 1,3)
         else if  (Abs(angles(1,i)) > 1.d-20) then
         write(iw,"(14x,a, 3x,f7.1, 2a)")txtatm(res_start(i))(18:26), angles(1,i), &
         "    -  ","    -  "
@@ -60,7 +60,7 @@ subroutine get_angles ()
 !
   use common_arrays_C, only : nat, txtatm
   use MOZYME_C, only : ions, angles, allres, ib, allr, iopt, &
-    start_res, lstart_res, uni_res   
+    start_res, lstart_res, uni_res
   use molkst_C, only: natoms, numat, moperr, maxatoms
   use atomradii_C, only: atom_radius_covalent
   implicit none
@@ -69,7 +69,7 @@ subroutine get_angles ()
   logical, save :: l_protein
   logical, dimension (:), allocatable :: ioptl
   integer :: i, ires, nfrag, io, j, n1, alloc_stat, mres, &
-    nn1,  delta_res, max_frag  
+    nn1,  delta_res, max_frag
 !
   if (allocated(ions))    deallocate (ions)
   if (allocated(iopt))    deallocate(iopt)
@@ -82,17 +82,17 @@ subroutine get_angles ()
   ib(:) = 0
   mres = 0
   ions = 0
-  call extvdw_for_MOZYME (radius, atom_radius_covalent)  
+  call extvdw_for_MOZYME (radius, atom_radius_covalent)
 !
 !   WORK OUT WHAT ATOMS ARE BONDED TO EACH OTHER.
 !
   call lewis (.true.)
-  if (moperr) return   
+  if (moperr) return
 !
 !  FIND THE NITROGEN ATOM OF THE N END OF THE PROTEIN.
 !
   ioptl(:numat) = .false.
-  call findn1 (n1, ioptl, io, delta_res) 
+  call findn1 (n1, ioptl, io, delta_res)
   txtatm(:numat) = " "
   angles = 0.d0
   allres = " "
@@ -109,10 +109,10 @@ subroutine get_angles ()
   do max_frag = 1, 10000
     if (start_res(max_frag) == -200) exit
   end do
-  max_frag = max_frag - 1  
+  max_frag = max_frag - 1
   lstart_res = .false.
   nfrag = 0
-  do      
+  do
     if (max_frag > 0) then
       do nfrag = 1, max_frag
         if (.not. lstart_res(start_res(nfrag) + 1)) exit
@@ -127,16 +127,16 @@ subroutine get_angles ()
 !
     call names (ioptl, ib, n1, ires, nfrag, io, uni_res, mres)
     if (moperr) return
-!    
+!
     nn1 = n1
     call findn1 (n1, ioptl, io, delta_res)
 !
 ! n1 is the start of the next fragment
 ! delta_res is the distance back along the chain to the start of the next fragment.
-! 
+!
     if (.not. l_protein) nfrag = 0
-    if (n1 == 0) exit  
-    if (n1 == nn1) ioptl(n1) = .true.             
+    if (n1 == 0) exit
+    if (n1 == nn1) ioptl(n1) = .true.
   end do
 !
 !  Re-evaluate all residues
@@ -150,16 +150,16 @@ subroutine get_angles ()
       allres(j) = txtatm(i)(18:20)
     end if
   end do
-  ires = j      
+  ires = j
   iopt(:natoms) = ib(:natoms)
 !
 !   LABEL THE ATOMS IN ANY NON-PROTEIN MOLECULES IN THE SYSTEM
 !
-  nfrag = nfrag + 1  
+  nfrag = nfrag + 1
   if (start_res(max(1,nfrag)) == -200) then
-    if (.not. l_protein) ires = 0       
+    if (.not. l_protein) ires = 0
   else
-    ires = start_res(nfrag)         
+    ires = start_res(nfrag)
   end if
   call ligand (ires, start_res, nfrag)
 !
@@ -168,4 +168,4 @@ subroutine get_angles ()
   call update_txtatm(.true., .true.)
   return
 end subroutine get_angles
- 
+

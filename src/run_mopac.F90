@@ -56,7 +56,7 @@
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
 #ifdef GPU
-      Use iso_c_binding 
+      Use iso_c_binding
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
       Use gpu_info
       Use settingGPUcard
@@ -207,7 +207,7 @@
           i = nint(reada(keywrd, i)) + 1
           if (job_no < i) then
             fepsi = store_fepsi
-            goto 90         
+            goto 90
           end if
         end if
       end if
@@ -259,7 +259,7 @@
         lgpu = .false.
         lgpu_ref = hasGPU
         if (lgpu_ref) lgpu_ref = (index(keywrd, " NOGPU") == 0)
-        if (lgpu_ref) then         
+        if (lgpu_ref) then
           lgpu_ref = .false.
 ! Counting how many GPUs are suitable to perform the calculations or with compute capability 2 (Fermi or Kepler).
           j = 0
@@ -268,18 +268,18 @@
               gpu_ok(i) = .true.
               j = j + 1
             end if
-          end do          
+          end do
           lgpu_ref = (j >= 1)
         end if
         ngpus = 1  ! in this version only single-GPU calculation are performed. This variable control it.
 !       ngpus = j ! in future versions of MOPAC Multi-GPUs calculations should be allowed
-        
-        l = 0; k = 0                       
+
+        l = 0; k = 0
         if (lgpu_ref) then
           l = index(keywrd,' SETGPU=')
-          if (l /= 0) then  ! The user has inserted SETGPU keyword to Select one specific GPU 
-            gpu_id = nint(reada(keywrd,l))    
-            if (gpu_id > nDevices .or. gpu_id < 1 .or. (.not. gpu_ok(gpu_id))) then              
+          if (l /= 0) then  ! The user has inserted SETGPU keyword to Select one specific GPU
+            gpu_id = nint(reada(keywrd,l))
+            if (gpu_id > nDevices .or. gpu_id < 1 .or. (.not. gpu_ok(gpu_id))) then
               ! the user made a wrong choice !!!
               Write(iw,'(/,5x,a)') ' Problem with the definition of SETGPU keyword ! '
               Write(iw,'(5x,a,/)') ' MOPAC will automatically set a valid GPU card for the calculation '
@@ -290,10 +290,10 @@
               if (.not. lstat) then
                 write (6,*) 'Problem to set GPU card ID = ', gpu_id
                 stop
-              end if                             
-            end if                        
+              end if
+            end if
           end if
-          if (l == 0) then   ! Select GPU automatically               
+          if (l == 0) then   ! Select GPU automatically
             do i = 1, nDevices
              if (gpu_ok(i)) then
                 on_off(i) = 'ON '
@@ -302,10 +302,10 @@
                 if (.not. lstat) then
                   write (6,*) 'Problem to set GPU card ID = ', gpu_id
                   stop
-                end if                 
+                end if
                 exit
               end if
-            end do                  
+            end do
           end if
         else
           nDevices = 0
@@ -324,7 +324,7 @@
         call mopend(trim(line))
         write(0,'(5x,a)')" (Check the first few lines of the data-set for an extra blank line."
         write(0,'(5x,a)')"  If there is an extra line, delete it and re-submit.)"
-        inquire(unit=ir, opened=opend)    
+        inquire(unit=ir, opened=opend)
         if (opend) close(ir, status = 'delete', err = 999)
         stop
       end if
@@ -388,7 +388,7 @@
               if (sparkles_available) write(iw,*)" (Parameters are available if SPARKLE is used)"
               call mopend(trim(line))
               goto 100
-            end if 
+            end if
           end if
         end if
       end do
@@ -486,18 +486,18 @@
           "(Keyword RESIDUES can only be used when one of MOZYME, LEWIS, CHARGES, or RESEQ is also present)"
           return
         end if
-      end if   
+      end if
       if (mozyme) then
         if (index(keywrd, " PREC") /= 0) then
-          call l_control("PREC", len_trim("PREC"), -1)   
-          if (index(keywrd, " LET") == 0) call l_control("LET", len_trim("LET"), 1)   
+          call l_control("PREC", len_trim("PREC"), -1)
+          if (index(keywrd, " LET") == 0) call l_control("LET", len_trim("LET"), 1)
         end if
       end if
       if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) nelecs = 0
       if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") + index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
         if (index(keywrd, " DISP") /= 0) then
-          call l_control("0SCF", len_trim("0SCF"), 1)   
-          call l_control("PRT", len_trim("PRT"), 1)   
+          call l_control("0SCF", len_trim("0SCF"), 1)
+          call l_control("PRT", len_trim("PRT"), 1)
           call post_scf_corrections(eat, .false.)
         end if
         if (index(keywrd,' XYZ') /= 0) then
@@ -557,11 +557,11 @@
               call store_and_restore_Tv("RESTORE")
               call lewis(.false.)
               if (moperr) then
-                inquire(unit=iarc, opened=opend) 
-                if (opend) close (iarc, status="DELETE") 
+                inquire(unit=iarc, opened=opend)
+                if (opend) close (iarc, status="DELETE")
                 go to 101
-              end if  
-              if (index(keywrd, " NORESEQ") /= 0) call update_txtatm(.true., .false.) 
+              end if
+              if (index(keywrd, " NORESEQ") /= 0) call update_txtatm(.true., .false.)
               call l_control("ADD-H", len("ADD-H"), -1)
               numat = natoms - id
               numcal = numcal + 1
@@ -573,8 +573,8 @@
             if (moperr) goto 101
             if (size(coorda) >= size(coord)) then
               coorda(:,:numat) = coord(:,:numat)
-              txtatm1(:numat) = txtatm(:numat) 
-            end if 
+              txtatm1(:numat) = txtatm(:numat)
+            end if
             moperr = .false.
             i = index(refkey(1), "ADD-H")
             if (i /= 0) refkey(1) = refkey(1)(:i - 1)//refkey(1)(i + 5:)
@@ -597,7 +597,7 @@
 !  Atoms added, deleted, or re-arranged, so set all optimization parameters to "opt"
 !
               l = 0
-              do i = 1, numat 
+              do i = 1, numat
                 do j = 1,3
                   l = l + 1
                   loc(1,l) = i
@@ -607,7 +607,7 @@
             end if
           end if
           call geout (iarc)
-          if ( index(keywrd," PDBOUT") /= 0) then           
+          if ( index(keywrd," PDBOUT") /= 0) then
             inquire(unit=iarc, opened=opend)
             if (opend) close(iarc)
               line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
@@ -636,9 +636,9 @@
 !
             j = 1
             do i = 1, numat
-              write(line,'(a6,i5,a15)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:) 
+              write(line,'(a6,i5,a15)')txtatm(i)(:6),i + j - 1,txtatm(i)(12:)
               txtatm(i) = trim(line)
-            end do 
+            end do
           end if
           call geout (iarc)
         end if
@@ -648,7 +648,7 @@
       if (moperr) then
         if (index(keywrd," GEO-OK") /= 0) then
           moperr = .false.
-        else     
+        else
           goto 100
         end if
       end if
@@ -738,8 +738,8 @@
 !  available in the arrays.
 !  Now decide what type of calculation is to be done.
 !
-      call l_control("GEO_DAT", len_trim("GEO_DAT"), -1) 
-      call l_control("GEO_REF", len_trim("GEO_REF"), -1) 
+      call l_control("GEO_DAT", len_trim("GEO_DAT"), -1)
+      call l_control("GEO_REF", len_trim("GEO_REF"), -1)
       if (mozyme) then
         call geochk()
         if (moperr) then
@@ -755,7 +755,7 @@
 ! If the current calculation cannot continue, increment numcal to indicate that a partial calculation has already been done.
 !
           numcal = numcal + 1
-          goto 10 
+          goto 10
         end if
         if (index(keywrd, " RESID") + index(keywrd, " RESEQ") + index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) &
           call update_txtatm(.true., .false.)         !  Now that geometry checks are done, switch to input labels
@@ -932,7 +932,7 @@
         else
           close(ilog, status = "keep", iostat = j, err = 98)
         end if
-98      continue  
+98      continue
       end if
       if ( .not. gui) then
         if (allocated(p)) deallocate(p)
@@ -948,8 +948,8 @@
         if (index(keywrd_txt," GEO_DAT") /= 0) then
           i = index(keywrd_txt," GEO_DAT") + 9
           j = index(keywrd_txt(i + 10:),'" ') + i + 9
-          write(line,'(a)')"GEO_DAT="//keywrd_txt(i:j)          
-          call l_control(trim(line), len_trim(line), 1)   
+          write(line,'(a)')"GEO_DAT="//keywrd_txt(i:j)
+          call l_control(trim(line), len_trim(line), 1)
         end if
         call delete_MOZYME_arrays()
 !
@@ -961,7 +961,7 @@
           if (exists) then
             open(unit = iend, file = end_fn(:j - 3)//"den", status='OLD', iostat=i)
             if (i == 0) close(iend, status = 'delete', iostat=i)
-          end if    
+          end if
         end if
         go to 10
       end if
@@ -976,7 +976,7 @@
       if (tim > 1.d7) tim = tim - 1.d7
       write (iw, '(3/,'' TOTAL JOB TIME: '',F16.2,'' SECONDS'')') tim
       write (iw, '(/,'' == MOPAC DONE =='')')
-      call fdate (line) 
+      call fdate (line)
       write(0,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
       line(5:10)//", "//trim(line(21:))//", at"//line(11:16)//"."
 !
@@ -987,7 +987,7 @@
         open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i)
         close(iend, status = 'delete', iostat=i)
       end if
-      inquire(unit=ir, opened=opend) 
+      inquire(unit=ir, opened=opend)
       if (opend) close(ir, status = 'delete', err = 999)
 999   jobnam = " "
       inquire(unit = ilog, opened = opend, name = line)

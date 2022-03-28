@@ -14,18 +14,18 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module parameters_C 
+      module parameters_C
 !
 ! This module holds all the parameters for the elements.  It is filled
-! from the reference parameter sets 
+! from the reference parameter sets
 !
     logical, dimension(107) :: dorbs
-    double precision, dimension(107) :: alp 
-    double precision, dimension(107,4) :: guess1, guess2, guess3 
+    double precision, dimension(107) :: alp
+    double precision, dimension(107,4) :: guess1, guess2, guess3
     double precision, dimension(60) :: v_par = 0.d0
-    double precision, dimension(6,107) :: ddp 
-    double precision, dimension(9,107) :: po = 0.d0 
-    double precision, dimension(107) :: betas = 0.d0, betap = 0.d0, betad = 0.d0 
+    double precision, dimension(6,107) :: ddp
+    double precision, dimension(9,107) :: po = 0.d0
+    double precision, dimension(107) :: betas = 0.d0, betap = 0.d0, betad = 0.d0
     double precision, dimension(107) :: uss = 0.d0, upp = 0.d0, udd = 0.d0
     double precision, dimension(107) :: gpp = 0.d0, gp2 = 0.d0, hsp = 0.d0, gss = 0.d0, gsp = 0.d0
     double precision, dimension(107) :: am, ad, aq, dd, qq
@@ -53,7 +53,7 @@
                         par31, par32, par33, par34, par35, par36, par37, par38, par39, par40, &
                         par41, par42, par43, par44, par45, par46, par47, par48, par49, par50, &
                         par51, par52, par53, par54, par55, par56, par57, par58, par59, par60
-  
+
     character :: partyp(n_partyp)*5
     character (len = 70) :: t_par(60), &
                         tpar1,  tpar2,  tpar3,  tpar4,  tpar5,  tpar6,  tpar7,  tpar8,  tpar9,  tpar10, &
@@ -62,7 +62,7 @@
                         tpar31, tpar32, tpar33, tpar34, tpar35, tpar36, tpar37, tpar38, tpar39, tpar40, &
                         tpar41, tpar42, tpar43, tpar44, tpar45, tpar46, tpar47, tpar48, tpar49, tpar50, &
                         tpar51, tpar52, tpar53, tpar54, tpar55, tpar56, tpar57, tpar58, tpar59, tpar60
-    
+
     equivalence &
       (v_par(1),  par1),  (v_par(2), par2),   (v_par(3), par3),   (v_par(4), par4),   (v_par(5), par5),   &
       (v_par(6),  par6),  (v_par(7), par7),   (v_par(8), par8),   (v_par(9), par9),   (v_par(10), par10), &
@@ -96,7 +96,7 @@
       & 0, 0, 2, 2, 4, 4, 6, 8, 10, 10, 22* 0, &   !  Second transition series
       & 0, 0, 2, 2, 4, 4, 6, 8, 10, 10, 27 * 0 /   !  Third transition series
     double precision, dimension (n_partyp) :: defmax, defmin  ! Used by PARAM, not used in MOPAC
-   
+
     save
 !              H           Initial "s" Orbital Occupancies                     He
 !              Li Be                                            B  C  N  O  F  Ne
@@ -293,8 +293,8 @@ data npq(1:107,3) / &
     data eheat(69) /55.500d0/
     data eheat(70) /36.358d0/
     data eheat(71) /102.199d0/
-    data eheat(72) / 148.000d0 / 
-    data eheat(73) / 186.900d0 / 
+    data eheat(72) / 148.000d0 /
+    data eheat(73) / 186.900d0 /
     data eheat(74) / 203.100d0 /
     data eheat(75) / 185.000d0 /
     data eheat(76) / 188.000d0 /
@@ -419,4 +419,4 @@ data npq(1:107,3) / &
     data partyp (70)                           / "FG22 "/
     data partyp (71)                           / "FG23 "/
     data partyp (72)                           / "FG24 "/
-      end module parameters_C 
+      end module parameters_C

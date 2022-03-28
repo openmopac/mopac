@@ -35,7 +35,7 @@ subroutine convert_mat_packed_to_triangle (matrix_packed, matrix_triangle)
       matrix_triangle(i) = 0.d0
     end do
     do i = 1, numat
-      do j = 1, i 
+      do j = 1, i
         if (ijbo(i, j) >= 0) then
           ij = ijbo (i, j)
           il = nfirst(i)
@@ -57,7 +57,7 @@ subroutine convert_lmo_packed_to_square (c_square)
    !***********************************************************************
    !                                                                      *
    !        Converts LMOs from the storage format used in MOZYME to that  *
-   !        used in MOPAC.  
+   !        used in MOPAC.
    !                                                                      *
    !***********************************************************************
     use molkst_C, only: norbs, nelecs

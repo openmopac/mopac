@@ -88,7 +88,7 @@ double precision function disp_DnX(l_grad)
             Rab = distance(i, j)
             sum2 = a_X(iX(k),jOorN(l))
             sum3 = b_X(iX(k),jOorN(l))
-            sum = sum + sum2*exp(sum3*Rab)         
+            sum = sum + sum2*exp(sum3*Rab)
             if (l_grad) then
               if (connected(i,j, 8.d0**2)) then
   !
@@ -97,15 +97,15 @@ double precision function disp_DnX(l_grad)
                 iii = l123*(i - 1)
                 jjj = l123*(j - 1)
                 kkkk = (l3u - cell_ijk(3)) + (2*l3u + 1)*(l2u - cell_ijk(2) + (2*l2u + 1)*(l1u - cell_ijk(1)))
-                i_cell = iii + kkkk 
-                j_cell = jjj - kkkk             
+                i_cell = iii + kkkk
+                j_cell = jjj - kkkk
                 do l = 1,3
                   dxyz(i_cell*3 + l) = dxyz(i_cell*3 + l) + Vab(l)*sum2*sum3*exp(sum3*Rab)/Rab
                   dxyz(j_cell*3 + l) = dxyz(j_cell*3 + l) - Vab(l)*sum2*sum3*exp(sum3*Rab)/Rab
                 end do
               end if
             end if
-          end select   
+          end select
         end do
       end do
       disp_DnX = sum
@@ -126,7 +126,7 @@ double precision function disp_DnX(l_grad)
       "R(D-H)", "Hydrogen",  "Acceptor", "H-bond energy"
       sum1 = -abs(reada(keywrd, index(keywrd," DISP(") + 5))
       k = 0
-      do 
+      do
         sum = 0.d0
         j = 0
         do i = 1, P_hbonds
@@ -140,7 +140,7 @@ double precision function disp_DnX(l_grad)
         write(iw,'(i5,3x,a)')k, trim(H_txt(j))
         H_energy(j) = 10.d0
       end do
-    end if 
+    end if
     if (index(keywrd, "0SCF") /= 0) then
       write(iw,'(/10x,"DISPERSION ENERGY       =", f17.5, a)') e_disp, " KCAL/MOL"
       write(iw,'(10x,"H-BOND ENERGY           =", f17.5, a,/)') e_hb, " KCAL/MOL"

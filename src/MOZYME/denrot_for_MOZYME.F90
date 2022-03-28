@@ -47,7 +47,7 @@ subroutine denrot_for_MOZYME ()
       write (iw, "(2A)") "   ATOM    ATOM    S-S (Sig) " // &
                        & "  S-P (Sig)   P-P (Sig)    P-P (PI)"
     end if
-    write (iw,*)   
+    write (iw,*)
     imax = maxtxt + 10
     pab(:,:) = 0.d0
     do i = 1, numat

@@ -26,8 +26,8 @@ subroutine rapid2 (xparam, functn, grad, lgrad)
     double precision, intent (out) :: functn
     logical, intent (in) :: lgrad
     double precision, dimension (numvar) :: grad
-!----------------------------------------------------------------  
- 
+!----------------------------------------------------------------
+
     integer :: i, j
     double precision :: curpar, error, sum
     intrinsic Max, Min

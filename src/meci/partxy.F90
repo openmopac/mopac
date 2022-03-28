@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine partxy(c34, pq34, w) 
+      subroutine partxy(c34, pq34, w)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : numcal, numat, lm61
       use common_arrays_C, only : nfirst, nlast
@@ -28,20 +28,20 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      double precision  :: c34(*) 
-      double precision  :: pq34(lm61) 
-      double precision  :: w(*)  
+      double precision  :: c34(*)
+      double precision  :: pq34(lm61)
+      double precision  :: w(*)
 !-----------------------------------------------
 !   L o c a l   P a r a m e t e r s
 !-----------------------------------------------
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer , dimension(-1:8) :: nb 
+      integer , dimension(-1:8) :: nb
       integer :: icalcn, iband, kr, ls, ii, ia, ib, lsp, i, &
         j, lsw, k, l, jband, js, jj
-      double precision :: aa, sum, bb 
-      save nb, icalcn 
+      double precision :: aa, sum, bb
+      save nb, icalcn
 !-----------------------------------------------
 !------------------------------------------------------------------
 !
@@ -57,11 +57,11 @@
 !                AND 'A' RUNS OVER THE ATOMS OF THE SYSTEM.
 !     D.L. (DEWAR GROUP) 1986
 !----------------------------------------------------------------------
-      data nb/ 0, 1, 0, 0, 10, 0, 0, 0, 0, 45/  
-      data icalcn/ 0/  
-      if (numcal /= icalcn) then 
-        icalcn = numcal 
-      end if 
+      data nb/ 0, 1, 0, 0, 10, 0, 0, 0, 0, 45/
+      data icalcn/ 0/
+      if (numcal /= icalcn) then
+        icalcn = numcal
+      end if
 !     KK    : POINTER OF SUPPORTING ATOM, SPARKLES SKIPPED OUT.
  !     KK    : POINTER OF SUPPORTING ATOM, SPARKLES SKIPPED OUT.
    !
@@ -91,7 +91,7 @@
           js = js + jband
           jband = nb(nlast(jj)-nfirst(jj))
           if (jband /= 0) &
-          call formxy (w(kr), kr, pq34(ls), pq34(js), c34(ls), iband,  c34(js), jband) 
+          call formxy (w(kr), kr, pq34(ls), pq34(js), c34(ls), iband,  c34(js), jband)
         end do
         lsp = ls - 1
         do i = ia, ib

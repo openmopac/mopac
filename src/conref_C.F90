@@ -14,8 +14,8 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  module conref_C 
-    double precision, dimension(2,10) :: fpcref 
+  module conref_C
+    double precision, dimension(2,10) :: fpcref
 !
 !   Fundamental physical constants
 !

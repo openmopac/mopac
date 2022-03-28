@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  subroutine set_up_dentate() 
+  subroutine set_up_dentate()
 !
 !   Work out which atoms are connected to which other atoms.
 !   Atoms are assumed to be connected if they are within a certain distance of each other.
@@ -70,7 +70,7 @@
         safety = 1.1d0
         select case (il)
           case (1)
-            if (iu == 6) safety = 1.25d0  ! C-H          
+            if (iu == 6) safety = 1.25d0  ! C-H
           case (5)
             if (iu ==7) safety = 1.0d0   ! B-N bonds are unusually short
           case (6)
@@ -112,7 +112,7 @@
         if (nat(ibonds(j,i)) /= 1) then
           k = k +1
           ibonds(k,i) = ibonds(j,i)
-        end if          
+        end if
       end do
       nbonds(i) = k
     end do
@@ -128,10 +128,10 @@
             k = k + 1
             ibonds(k,i) = l
           end if
-          nbonds(i) = k          
+          nbonds(i) = k
         end do
       end do
-    end if    
+    end if
     return
   end subroutine set_up_dentate
 !
@@ -163,7 +163,7 @@
           sum = nsp2_atom_correction(coord, i, ibonds(1,i), ibonds(2,i), ibonds(3,i))
           correction = correction + sum
          end if
-      end if      
+      end if
     end do
     nsp2_correction = correction
   end function nsp2_correction
@@ -174,13 +174,13 @@
   implicit none
   double precision :: vectors(3,*)
   integer :: n,i,j,k
-  
+
   double precision :: a, b, c, ab, ac, bc, tot, cosa, cosb, cosc
 !
 !  Evaluate the penalty for non-planarity
 !  - done by working out the three angles about the central atom
 !  (here "n") subtended by the lines to atoms "i", "j", and "k".
-!  
+!
   a = sqrt((vectors(1,n) - vectors(1,i))**2 + &
            (vectors(2,n) - vectors(2,i))**2 + &
            (vectors(3,n) - vectors(3,i))**2)
@@ -281,11 +281,11 @@
           do j = 1, nbonds(i)
             k = ibonds(j,i)
             if (nat(k) == 14) Si = k
-            if (nat(k) == 1) H = k              
+            if (nat(k) == 1) H = k
           end do
           if (Si /= 0 .and. H /= 0) then
           sum = sum + Si_O_H_bond_correction(coord, Si, O, H)
-          end if        
+          end if
         end if
       end do
       Si_O_H_Correction = sum
@@ -301,10 +301,10 @@
       double precision :: coord(3,*)
       double precision :: r_Si_O, r_O_H, ref_angle, angle
 !
-!  Assuming that a Si - O - H structure has been identified, now apply a correction.  
+!  Assuming that a Si - O - H structure has been identified, now apply a correction.
 !  The angle should be 115 degrees
 !  Apply a Gaussian when Si - O > 1.7 Angstroms and when O - H > 1.0 Angstroms
-!  Gaussian drops to 0.05 when atoms are no longer considered connected 
+!  Gaussian drops to 0.05 when atoms are no longer considered connected
 !  = 2.02 A for Si -O, and 1.21 A for O - H
 !
         r_Si_O = (coord(1,O) - coord(1,Si))**2 + (coord(2,O) - coord(2,Si))**2 + (coord(3,O) - coord(3,Si))**2 - &
@@ -312,7 +312,7 @@
         r_O_H  = (coord(1,O) - coord(1,H ))**2 + (coord(2,O) - coord(2,H ))**2 + (coord(3,O) - coord(3,H ))**2 - &
               1.d0
         ref_angle = 125.d0*pi/180.d0
-        call bangle (coord, Si, O, H, angle) 
+        call bangle (coord, Si, O, H, angle)
         Si_O_H_bond_correction = 15.d0*(angle - ref_angle)**2*exp(-33.d0*max(0.d0, r_Si_O))*exp(-68.d0*max(0.d0, r_O_H ))
         return
       end function Si_O_H_bond_correction

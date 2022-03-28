@@ -36,7 +36,7 @@ module atomradii_C
     ! ********* van der Waals radii *********
     ! Values taken from
     !  A. Bondi, J.Phys.Chem., 68 (1964) 441.
-    ! Where these are missing, taken from 
+    ! Where these are missing, taken from
     ! table of Andrey Bliznyuk
     ! ***************************************
     data atom_radius_vdw / &

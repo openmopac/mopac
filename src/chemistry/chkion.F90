@@ -25,10 +25,10 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
    !   normal oxidation states (ox_ref_sp) and hypervalent oxidation states
    !   (ox_ref_spd1), the degree of ionization is worked out.  To do this,
    !   the starting oxidation state (ox_calc) is compared to that expected.
-   !  
+   !
    !   This should work for all elements in their common oxidation states.
    !
-   !   A limitation is that the sum of atomic number and oxidation state 
+   !   A limitation is that the sum of atomic number and oxidation state
    !   must be even.  This means that Cr must be Cr(II) and not Cr(III).
    !
    !***********************************************************************
@@ -120,7 +120,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
             m = index(line,cap_elemnt(k)(:jj))
             if (m /= 0) then
               jj = jj + m
-              if (line(jj:jj) == "(") then              
+              if (line(jj:jj) == "(") then
               m = nint(reada(line, m))
               if (mod(m - ox_ref(k), 2) == 1) then
                 write(iw,'(10x, a, i3)')"Formal oxidation state of "//elemnt(k)//" is:   ", ox_ref(k)
@@ -154,7 +154,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
         jj = sign(1, ox_ref(nat(i)))    ! Isolated atom or ion
       else
         jj = sign(1, ox_ref_sp(nat(i))) ! Lowest valence state
-      end if      
+      end if
       do j = 1, Lewis_tot
         if (Lewis_elem(1,j) /= 0 .and. Lewis_elem(2,j) /= 0) then
           if (Lewis_elem(1,j) == i) k = k + jj
@@ -163,7 +163,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
       end do
       ox_calc(i) = k
       if (ib(i) == 0) then
-        ions(i) = iz(i) 
+        ions(i) = iz(i)
         iz(i) = 0
       end if
     end do
@@ -178,9 +178,9 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
 !  such as those on C2H5
 !
       atom_loop: do i = 1, numat
-        loop = 0  
-        do        
-          if (ib(i) <= 0) cycle atom_loop         
+        loop = 0
+        do
+          if (ib(i) <= 0) cycle atom_loop
           loop = loop + 1
           if (loop > 10) goto 1040
           if (nat(i) == 6) then
@@ -216,7 +216,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
                   do j = 1, nbonds(mm)
                     jj = ibonds(j, mm)
                         !
-                        !   IS ANY ATOM ATTACHED TO ANY ATOM ATTACHED 
+                        !   IS ANY ATOM ATTACHED TO ANY ATOM ATTACHED
                         !   TO THE ATOM OF GROUP 5?
                         !
                     if (Nint(tore(nat(jj))) == 5) go to 1010
@@ -239,7 +239,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
                   do j = 1, nbonds(mm)
                     jj = ibonds(j, mm)
                         !
-                        !   IS ANY ATOM ATTACHED TO ANY ATOM ATTACHED 
+                        !   IS ANY ATOM ATTACHED TO ANY ATOM ATTACHED
                         !   TO THE ATOM OF GROUP 6?
                         !
                     if (Nint(tore(nat(jj))) == 6) go to 1011
@@ -251,13 +251,13 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
               end if
             else
   !
-  !  To get here, there are no obvious indications of the charge on 
+  !  To get here, there are no obvious indications of the charge on
   !  carbon, so postpone assigning the charge until after all other
   !  charges are known.
   !
               call add_Lewis_element(-i,0, 0, dummy) ! Anion or cation - decide later
               cycle atom_loop
-            end if                      
+            end if
           else  !  Atom is not a carbon - use generic rules
             if (loop == 1) then
 !
@@ -281,12 +281,12 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
                   jj = -1
                 else if (atom_charge(i) == "0") then
                   jj = 0
-                end if   
+                end if
 !
 !  jj is the presumed charge on the atom.
 !  "presumed" = difference between calculated oxidation state and default oxidation state,
 !               or charge specified by the user.
-!      
+!
                 if (jj == 0) exit
                 if (jj >= 2 .and. nat(i) == 7) then
                   jj = -2 ! Azide
@@ -304,16 +304,16 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
                  else if (jj < -1) then
                   call add_Lewis_element(i,0,-2, n_lone_pairs) ! di-Anion
                   ox_calc(i) = ox_calc(i) - 2
-                end if                
+                end if
               end do
             else  if (iz(i) > 1) then
               call add_Lewis_element(i,0,0, n_lone_pairs)  ! Lone pair
             else
               call add_Lewis_element(0,i,0, dummy)  ! Virtual lone pair
-            end if          
+            end if
           end if
         end do
-      end do atom_loop     
+      end do atom_loop
     end do
     nocc_local = 0
     do i = 1, Lewis_tot
@@ -321,7 +321,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
     end do
     mm = nocc_local - nelecs/2
 !
-!  mm is the number of undetermined Lewis elements that should be 
+!  mm is the number of undetermined Lewis elements that should be
 !  virtual.  These elements are always charged carbon atoms.
 !
     do i = 1, mm
@@ -352,7 +352,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
 !
 ! Convert all remaining unused atomic orbitals into virtual lone pairs
 !
-          do 
+          do
             if (ib(jj) <= 0) exit
             call add_Lewis_element(0,jj,0, dummy)  ! Virtual lone pair
           end do
@@ -394,7 +394,7 @@ subroutine chkion (ox_calc, n_lone_pairs, atom_charge)
         end if
       end if
     end do
-    
+
     return
 1040 write (iw,*) " CHARGE ON ATOM", i, " UNREASONABLE"
     call mopend ("Charge on an atom is unreasonable")

@@ -23,7 +23,7 @@ double precision function dipole_for_MOZYME (dipvec, mode)
     use funcon_C, only: fpc_8, fpc_1, a0
     implicit none
     double precision, intent(out) :: dipvec(3)
-    integer, intent (in) :: mode 
+    integer, intent (in) :: mode
 !.
     logical, save :: chargd, first, force
     integer, save :: icalcn = 0
@@ -50,7 +50,7 @@ double precision function dipole_for_MOZYME (dipvec, mode)
         sum = sum + q(i)
       end do
       chargd = (Abs (sum) > 0.5d0)
-      force = index(keywrd,'FORCE') + index(keywrd," THERMO") + index(keywrd,'IRC') /= 0 
+      force = index(keywrd,'FORCE') + index(keywrd," THERMO") + index(keywrd,'IRC') /= 0
     end if
     if (chargd) then
       !
@@ -110,11 +110,11 @@ double precision function dipole_for_MOZYME (dipvec, mode)
       dip(j, 3) = dip(j, 2) + dip(j, 1)
     end do
     dip(4, :) = Sqrt (dip(1, :)**2+dip(2, :)**2+dip(3, :)**2)
-    if (force) then 
-      dipvec(1) = dip(1,3) 
-      dipvec(2) = dip(2,3) 
-      dipvec(3) = dip(3,3) 
-    end if    
+    if (force) then
+      dipvec(1) = dip(1,3)
+      dipvec(2) = dip(2,3)
+      dipvec(3) = dip(3,3)
+    end if
     dipole_for_MOZYME = dip(4, 3)
     if ( chargd) then
       do i = 1, 3

@@ -16,17 +16,17 @@
 
 subroutine add_more_interactions()
 !
-!   In a MOZYME calculation, during a geometry optimization, the distance between a 
-!  pair of atoms might become less, so that instead of an interaction being considered as a 
-!  point charge it might need to be considered as a point charge plus dipole, or instead of being a 
+!   In a MOZYME calculation, during a geometry optimization, the distance between a
+!  pair of atoms might become less, so that instead of an interaction being considered as a
+!  point charge it might need to be considered as a point charge plus dipole, or instead of being a
 !  point charge plus dipole, it might need to be considered using the full NDDO approximation.
 !
 !  Here, the matrix of interactions is re-evaluated and if an iteraction needs to be promoted,
 !  it would be promoted.
 !
 !  The array nijbo is the only array whose contents are changed.
-!  other arrays might need to be increased in size.  If so, then they would be increased by 
-!  20% more than needed, to leave room for future expansion. 
+!  other arrays might need to be increased in size.  If so, then they would be increased by
+!  20% more than needed, to leave room for future expansion.
 !
   use molkst_C, only: mpack, numcal
 !

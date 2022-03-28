@@ -35,14 +35,14 @@
 ! betaa(2)  = Resonance integral for p orbitals
 ! betaa(3)  = Resonance integral for d orbitals
 !
-! fg(1)     = s ioniz pot from d(n-2)s2 or from sp  
+! fg(1)     = s ioniz pot from d(n-2)s2 or from sp
 ! fg(2)     = s ioniz pot from d(n-1)s1
 ! fg(3)     = p ioniz pot from d(n-2)s2 or sp
 ! fg(4)     = p ioniz pot from d(n-1)s1
 ! fg(5)     = d ioniz pot from d(n-2)s2 or sp
 ! fg(6)     = d ioniz pot from d(n-1)s1
 ! fg(7)     = d ioniz pot from dns0
-! fg(8)     = Probability of d(n-2)s2 or sp 
+! fg(8)     = Probability of d(n-2)s2 or sp
 ! fg(9)     = Probability of d(n-1)s1
 ! fg(10)    = Probability of dns0
 !
@@ -62,7 +62,7 @@
 ! fg(24)    = R2(sdpp)
 
 !
-!                    Data for Element   1     
+!                    Data for Element   1
 !uu
       data        isoki(  1)/    1         /
       data        nbfai(  1)/    1         /
@@ -74,7 +74,7 @@
       data      fgi( 11,  1)/   12.850000d0/
       data      fgi( 12,  1)/   12.850000d0/
 !
-!                    Data for Element   2     
+!                    Data for Element   2
 !
       data        isoki(  2)/    0         /
       data        nbfai(  2)/    1         /
@@ -83,7 +83,7 @@
       data   betaai(  1,  2)/ -100.000000d0/
       data      fgi(  8,  2)/    1.000000d0/
 !
-!                    Data for Element   3     
+!                    Data for Element   3
 !
       data        isoki(  3)/    1         /
       data        nbfai(  3)/    4         /
@@ -99,7 +99,7 @@
       data      fgi( 14,  3)/    2.503730d0/
       data      fgi( 15,  3)/    1.356879d0/
 !
-!                    Data for Element   4     
+!                    Data for Element   4
 !
       data        isoki(  4)/    1         /
       data        nbfai(  4)/    4         /
@@ -115,7 +115,7 @@
       data      fgi( 14,  4)/    3.828126d0/
       data      fgi( 15,  4)/    2.656354d0/
 !
-!                    Data for Element   5     
+!                    Data for Element   5
 !
       data        isoki(  5)/    1         /
       data        nbfai(  5)/    4         /
@@ -131,7 +131,7 @@
       data      fgi( 14,  5)/    5.401481d0/
       data      fgi( 15,  5)/    3.480847d0/
 !
-!                    Data for Element   6     
+!                    Data for Element   6
 !
       data        isoki(  6)/    1         /
       data        nbfai(  6)/    4         /
@@ -147,7 +147,7 @@
       data      fgi( 14,  6)/    6.897842d0/
       data      fgi( 15,  6)/    4.509913d0/
 !
-!                    Data for Element   7     
+!                    Data for Element   7
 !
       data        isoki(  7)/    1         /
       data        nbfai(  7)/    4         /
@@ -163,7 +163,7 @@
       data      fgi( 14,  7)/    8.958454d0/
       data      fgi( 15,  7)/    6.459559d0/
 !
-!                    Data for Element   8     
+!                    Data for Element   8
 !
       data        isoki(  8)/    1         /
       data        nbfai(  8)/    4         /
@@ -179,7 +179,7 @@
       data      fgi( 14,  8)/   11.815414d0/
       data      fgi( 15,  8)/    6.902802d0/
 !
-!                    Data for Element   9     
+!                    Data for Element   9
 !
       data        isoki(  9)/    1         /
       data        nbfai(  9)/    4         /
@@ -195,7 +195,7 @@
       data      fgi( 14,  9)/   14.484415d0/
       data      fgi( 15,  9)/    8.593198d0/
 !
-!                    Data for Element  10     
+!                    Data for Element  10
 !
       data        isoki( 10)/    0         /
       data        nbfai( 10)/    4         /
@@ -207,7 +207,7 @@
       data      fgi( 14, 10)/   12.781917d0/
       data      fgi( 15, 10)/    9.327345d0/
 !
-!                    Data for Element  11     
+!                    Data for Element  11
 !
       data        isoki( 11)/    1         /
       data        nbfai( 11)/    4         /
@@ -224,7 +224,7 @@
       data      fgi( 14, 11)/    1.667583d0/
       data      fgi( 15, 11)/    0.743903d0/
 !
-!                    Data for Element  12     
+!                    Data for Element  12
 !
       data        isoki( 12)/    1         /
       data        nbfai( 12)/    4         /
@@ -241,7 +241,7 @@
       data      fgi( 14, 12)/    2.476454d0/
       data      fgi( 15, 12)/    3.273174d0/
 !
-!                    Data for Element  13     
+!                    Data for Element  13
 !
       data        isoki( 13)/    1         /
       data        nbfai( 13)/    4         /
@@ -258,7 +258,7 @@
       data      fgi( 14, 13)/    3.359095d0/
       data      fgi( 15, 13)/    1.602491d0/
 !
-!                    Data for Element  14     
+!                    Data for Element  14
 !
       data        isoki( 14)/    1         /
       data        nbfai( 14)/    4         /
@@ -275,7 +275,7 @@
       data      fgi( 14, 14)/    4.812310d0/
       data      fgi( 15, 14)/    2.262706d0/
 !
-!                    Data for Element  15     
+!                    Data for Element  15
 !
       data        isoki( 15)/    1         /
       data        nbfai( 15)/    4         /
@@ -292,7 +292,7 @@
       data      fgi( 14, 15)/    1.047788d0/
       data      fgi( 15, 15)/    2.947716d0/
 !
-!                    Data for Element  16     
+!                    Data for Element  16
 !
       data        isoki( 16)/    1         /
       data        nbfai( 16)/    4         /
@@ -309,7 +309,7 @@
       data      fgi( 14, 16)/    3.075668d0/
       data      fgi( 15, 16)/    4.537809d0/
 !
-!                    Data for Element  17     
+!                    Data for Element  17
 !
       data        isoki( 17)/    1         /
       data        nbfai( 17)/    4         /
@@ -326,7 +326,7 @@
       data      fgi( 14, 17)/    8.802854d0/
       data      fgi( 15, 17)/    6.447161d0/
 !
-!                    Data for Element  18     
+!                    Data for Element  18
 !
       data        isoki( 18)/    0         /
       data        nbfai( 18)/    4         /
@@ -338,7 +338,7 @@
       data      fgi( 14, 18)/    7.762259d0/
       data      fgi( 15, 18)/    5.846134d0/
 !
-!                    Data for Element  19     
+!                    Data for Element  19
 !
       data        isoki( 19)/    1         /
       data        nbfai( 19)/    4         /
@@ -355,7 +355,7 @@
       data      fgi( 14, 19)/    1.110895d0/
       data      fgi( 15, 19)/    0.495935d0/
 !
-!                    Data for Element  20     
+!                    Data for Element  20
 !
       data        isoki( 20)/    1         /
       data        nbfai( 20)/    9         /
@@ -390,7 +390,7 @@
       data      fgi( 23, 20)/    2.216599d0/
       data      fgi( 24, 20)/    1.575989d0/
 !
-!                    Data for Element  21     
+!                    Data for Element  21
 !
       data        isoki( 21)/    1         /
       data        nbfai( 21)/    9         /
@@ -427,7 +427,7 @@
       data      fgi( 23, 21)/    2.115305d0/
       data      fgi( 24, 21)/    1.424637d0/
 !
-!                    Data for Element  22     
+!                    Data for Element  22
 !
       data        isoki( 22)/    1         /
       data        nbfai( 22)/    9         /
@@ -464,7 +464,7 @@
       data      fgi( 23, 22)/    1.883618d0/
       data      fgi( 24, 22)/    1.107171d0/
 !
-!                    Data for Element  23     
+!                    Data for Element  23
 !
       data        isoki( 23)/    1         /
       data        nbfai( 23)/    9         /
@@ -501,7 +501,7 @@
       data      fgi( 23, 23)/    1.669320d0/
       data      fgi( 24, 23)/    0.894537d0/
 !
-!                    Data for Element  24     
+!                    Data for Element  24
 !
       data        isoki( 24)/    1         /
       data        nbfai( 24)/    9         /
@@ -538,7 +538,7 @@
       data      fgi( 23, 24)/    1.544197d0/
       data      fgi( 24, 24)/    0.770846d0/
 !
-!                    Data for Element  25     
+!                    Data for Element  25
 !
       data        isoki( 25)/    1         /
       data        nbfai( 25)/    9         /
@@ -575,7 +575,7 @@
       data      fgi( 23, 25)/    1.486488d0/
       data      fgi( 24, 25)/    0.704629d0/
 !
-!                    Data for Element  26     
+!                    Data for Element  26
 !
       data        isoki( 26)/    1         /
       data        nbfai( 26)/    9         /
@@ -612,7 +612,7 @@
       data      fgi( 23, 26)/    1.382743d0/
       data      fgi( 24, 26)/    0.616758d0/
 !
-!                    Data for Element  27     
+!                    Data for Element  27
 !
       data        isoki( 27)/    1         /
       data        nbfai( 27)/    9         /
@@ -649,7 +649,7 @@
       data      fgi( 23, 27)/    1.392741d0/
       data      fgi( 24, 27)/    0.606753d0/
 !
-!                    Data for Element  28     
+!                    Data for Element  28
 !
       data        isoki( 28)/    1         /
       data        nbfai( 28)/    9         /
@@ -686,7 +686,7 @@
       data      fgi( 23, 28)/    1.397009d0/
       data      fgi( 24, 28)/    0.594082d0/
 !
-!                    Data for Element  29     
+!                    Data for Element  29
 !
       data        isoki( 29)/    1         /
       data        nbfai( 29)/    9         /
@@ -723,7 +723,7 @@
       data      fgi( 23, 29)/    1.301797d0/
       data      fgi( 24, 29)/    0.521822d0/
 !
-!                    Data for Element  30     
+!                    Data for Element  30
 !
       data        isoki( 30)/    1         /
       data        nbfai( 30)/    4         /
@@ -742,7 +742,7 @@
       data      fgi( 14, 30)/    2.529271d0/
       data      fgi( 15, 30)/    1.177847d0/
 !
-!                    Data for Element  31     
+!                    Data for Element  31
 !
       data        isoki( 31)/    0         /
       data        nbfai( 31)/    4         /
@@ -753,7 +753,7 @@
       data      fgi(  3, 31)/ -100.000000d0/
       data      fgi(  8, 31)/    1.000000d0/
 !
-!                    Data for Element  32     
+!                    Data for Element  32
 !
       data        isoki( 32)/    0         /
       data        nbfai( 32)/    4         /
@@ -764,7 +764,7 @@
       data      fgi(  3, 32)/ -100.000000d0/
       data      fgi(  8, 32)/    1.000000d0/
 !
-!                    Data for Element  33     
+!                    Data for Element  33
 !
       data        isoki( 33)/    0         /
       data        nbfai( 33)/    4         /
@@ -778,7 +778,7 @@
       data      fgi( 14, 33)/    5.036471d0/
       data      fgi( 15, 33)/    3.802126d0/
 !
-!                    Data for Element  34     
+!                    Data for Element  34
 !
       data        isoki( 34)/    0         /
       data        nbfai( 34)/    4         /
@@ -792,7 +792,7 @@
       data      fgi( 14, 34)/    5.630697d0/
       data      fgi( 15, 34)/    4.230938d0/
 !
-!                    Data for Element  35     
+!                    Data for Element  35
 !
       data        isoki( 35)/    1         /
       data        nbfai( 35)/    4         /
@@ -808,7 +808,7 @@
       data      fgi( 14, 35)/    6.141120d0/
       data      fgi( 15, 35)/    4.608700d0/
 !
-!                    Data for Element  36     
+!                    Data for Element  36
 !
       data        isoki( 36)/    0         /
       data        nbfai( 36)/    4         /
@@ -820,7 +820,7 @@
       data      fgi(  8, 36)/    1.000000d0/
       data      fgi( 13, 36)/    2.480000d0/
 !
-!                    Data for Element  37     
+!                    Data for Element  37
 !
       data        isoki( 37)/    0         /
       data        nbfai( 37)/    4         /
@@ -834,7 +834,7 @@
       data      fgi( 12, 37)/    1.500000d0/
       data      fgi( 13, 37)/    3.380000d0/
 !
-!                    Data for Element  38     
+!                    Data for Element  38
 !
       data        isoki( 38)/    0         /
       data        nbfai( 38)/    9         /
@@ -857,7 +857,7 @@
       data      fgi( 12, 38)/    1.970000d0/
       data      fgi( 13, 38)/    4.280000d0/
 !
-!                    Data for Element  39     
+!                    Data for Element  39
 !
       data        isoki( 39)/    1         /
       data        nbfai( 39)/    9         /
@@ -895,7 +895,7 @@
       data      fgi( 23, 39)/    1.968347d0/
       data      fgi( 24, 39)/    1.458400d0/
 !
-!                    Data for Element  40     
+!                    Data for Element  40
 !
       data        isoki( 40)/    1         /
       data        nbfai( 40)/    9         /
@@ -933,7 +933,7 @@
       data      fgi( 23, 40)/    1.890505d0/
       data      fgi( 24, 40)/    1.315937d0/
 !
-!                    Data for Element  41     
+!                    Data for Element  41
 !
       data        isoki( 41)/    1         /
       data        nbfai( 41)/    9         /
@@ -971,7 +971,7 @@
       data      fgi( 23, 41)/    1.842142d0/
       data      fgi( 24, 41)/    1.226002d0/
 !
-!                    Data for Element  42     
+!                    Data for Element  42
 !
       data        isoki( 42)/    1         /
       data        nbfai( 42)/    9         /
@@ -1009,7 +1009,7 @@
       data      fgi( 23, 42)/    1.807038d0/
       data      fgi( 24, 42)/    1.162179d0/
 !
-!                    Data for Element  43     
+!                    Data for Element  43
 !
       data        isoki( 43)/    1         /
       data        nbfai( 43)/    9         /
@@ -1047,7 +1047,7 @@
       data      fgi( 23, 43)/    1.744914d0/
       data      fgi( 24, 43)/    1.087087d0/
 !
-!                    Data for Element  44     
+!                    Data for Element  44
 !
       data        isoki( 44)/    1         /
       data        nbfai( 44)/    9         /
@@ -1085,7 +1085,7 @@
       data      fgi( 23, 44)/    1.687971d0/
       data      fgi( 24, 44)/    1.025590d0/
 !
-!                    Data for Element  45     
+!                    Data for Element  45
 !
       data        isoki( 45)/    1         /
       data        nbfai( 45)/    9         /
@@ -1123,7 +1123,7 @@
       data      fgi( 23, 45)/    1.608894d0/
       data      fgi( 24, 45)/    0.943435d0/
 !
-!                    Data for Element  46     
+!                    Data for Element  46
 !
       data        isoki( 46)/    0         /
       data        nbfai( 46)/    9         /
@@ -1160,7 +1160,7 @@
       data      fgi( 23, 46)/    1.540221d0/
       data      fgi( 24, 46)/    0.873138d0/
 !
-!                    Data for Element  47     
+!                    Data for Element  47
 !
       data        isoki( 47)/    1         /
       data        nbfai( 47)/    9         /
@@ -1189,7 +1189,7 @@
       data      fgi( 20, 47)/    5.965000d0/
       data      fgi( 21, 47)/    3.828500d0/
 !
-!                    Data for Element  48     
+!                    Data for Element  48
 !
       data        isoki( 48)/    0         /
       data        nbfai( 48)/    4         /
@@ -1205,7 +1205,7 @@
       data      fgi( 14, 48)/    3.793018d0/
       data      fgi( 15, 48)/    2.974203d0/
 !
-!                    Data for Element  49     
+!                    Data for Element  49
 !
       data        isoki( 49)/    0         /
       data        nbfai( 49)/    4         /
@@ -1216,7 +1216,7 @@
       data      fgi(  3, 49)/ -100.000000d0/
       data      fgi(  8, 49)/    1.000000d0/
 !
-!                    Data for Element  50     
+!                    Data for Element  50
 !
       data        isoki( 50)/    0         /
       data        nbfai( 50)/    4         /
@@ -1227,7 +1227,7 @@
       data      fgi(  3, 50)/ -100.000000d0/
       data      fgi(  8, 50)/    1.000000d0/
 !
-!                    Data for Element  51     
+!                    Data for Element  51
 !
       data        isoki( 51)/    0         /
       data        nbfai( 51)/    4         /
@@ -1238,7 +1238,7 @@
       data      fgi(  3, 51)/ -100.000000d0/
       data      fgi(  8, 51)/    1.000000d0/
 !
-!                    Data for Element  52     
+!                    Data for Element  52
 !
       data        isoki( 52)/    0         /
       data        nbfai( 52)/    4         /
@@ -1249,7 +1249,7 @@
       data      fgi(  3, 52)/ -100.000000d0/
       data      fgi(  8, 52)/    1.000000d0/
 !
-!                    Data for Element  53     
+!                    Data for Element  53
 !
       data        isoki( 53)/    1         /
       data        nbfai( 53)/    4         /
@@ -1265,7 +1265,7 @@
       data      fgi( 14, 53)/    4.886521d0/
       data      fgi( 15, 53)/    3.842482d0/
 !
-!                    Data for Element  54     
+!                    Data for Element  54
 !
       data        isoki( 54)/    0         /
       data        nbfai( 54)/    4         /
@@ -1276,7 +1276,7 @@
       data      fgi(  3, 54)/ -100.000000d0/
       data      fgi(  8, 54)/    1.000000d0/
 !
-!                    Data for Element  55     
+!                    Data for Element  55
 !
       data        isoki( 55)/    0         /
       data        nbfai( 55)/    4         /
@@ -1287,7 +1287,7 @@
       data      fgi(  3, 55)/ -100.000000d0/
       data      fgi(  8, 55)/    1.000000d0/
 !
-!                    Data for Element  56     
+!                    Data for Element  56
 !
       data        isoki( 56)/    0         /
       data        nbfai( 56)/    9         /
@@ -1298,7 +1298,7 @@
       data      fgi(  3, 56)/ -100.000000d0/
       data      fgi(  8, 56)/    1.000000d0/
 !
-!                    Data for Element  57     
+!                    Data for Element  57
 !
       data        isoki( 57)/    0         /
       data        nbfai( 57)/    9         /
@@ -1309,7 +1309,7 @@
       data      fgi(  3, 57)/ -100.000000d0/
       data      fgi(  8, 57)/    1.000000d0/
 !
-!                    Data for Element  58     
+!                    Data for Element  58
 !
       data        isoki( 58)/    0         /
       data        nbfai( 58)/    9         /
@@ -1320,7 +1320,7 @@
       data      fgi(  3, 58)/ -100.000000d0/
       data      fgi(  8, 58)/    1.000000d0/
 !
-!                    Data for Element  59     
+!                    Data for Element  59
 !
       data        isoki( 59)/    0         /
       data        nbfai( 59)/    9         /
@@ -1331,7 +1331,7 @@
       data      fgi(  3, 59)/ -100.000000d0/
       data      fgi(  8, 59)/    1.000000d0/
 !
-!                    Data for Element  60     
+!                    Data for Element  60
 !
       data        isoki( 60)/    0         /
       data        nbfai( 60)/    9         /
@@ -1342,7 +1342,7 @@
       data      fgi(  3, 60)/ -100.000000d0/
       data      fgi(  8, 60)/    1.000000d0/
 !
-!                    Data for Element  61     
+!                    Data for Element  61
 !
       data        isoki( 61)/    0         /
       data        nbfai( 61)/    9         /
@@ -1353,7 +1353,7 @@
       data      fgi(  3, 61)/ -100.000000d0/
       data      fgi(  8, 61)/    1.000000d0/
 !
-!                    Data for Element  62     
+!                    Data for Element  62
 !
       data        isoki( 62)/    0         /
       data        nbfai( 62)/    9         /
@@ -1364,7 +1364,7 @@
       data      fgi(  3, 62)/ -100.000000d0/
       data      fgi(  8, 62)/    1.000000d0/
 !
-!                    Data for Element  63     
+!                    Data for Element  63
 !
       data        isoki( 63)/    0         /
       data        nbfai( 63)/    9         /
@@ -1375,7 +1375,7 @@
       data      fgi(  3, 63)/ -100.000000d0/
       data      fgi(  8, 63)/    1.000000d0/
 !
-!                    Data for Element  64     
+!                    Data for Element  64
 !
       data        isoki( 64)/    0         /
       data        nbfai( 64)/    9         /
@@ -1386,7 +1386,7 @@
       data      fgi(  3, 64)/ -100.000000d0/
       data      fgi(  8, 64)/    1.000000d0/
 !
-!                    Data for Element  65     
+!                    Data for Element  65
 !
       data        isoki( 65)/    0         /
       data        nbfai( 65)/    9         /
@@ -1397,7 +1397,7 @@
       data      fgi(  3, 65)/ -100.000000d0/
       data      fgi(  8, 65)/    1.000000d0/
 !
-!                    Data for Element  66     
+!                    Data for Element  66
 !
       data        isoki( 66)/    0         /
       data        nbfai( 66)/    9         /
@@ -1408,7 +1408,7 @@
       data      fgi(  3, 66)/ -100.000000d0/
       data      fgi(  8, 66)/    1.000000d0/
 !
-!                    Data for Element  67     
+!                    Data for Element  67
 !
       data        isoki( 67)/    0         /
       data        nbfai( 67)/    9         /
@@ -1419,7 +1419,7 @@
       data      fgi(  3, 67)/ -100.000000d0/
       data      fgi(  8, 67)/    1.000000d0/
 !
-!                    Data for Element  68     
+!                    Data for Element  68
 !
       data        isoki( 68)/    0         /
       data        nbfai( 68)/    9         /
@@ -1430,7 +1430,7 @@
       data      fgi(  3, 68)/ -100.000000d0/
       data      fgi(  8, 68)/    1.000000d0/
 !
-!                    Data for Element  69     
+!                    Data for Element  69
 !
       data        isoki( 69)/    0         /
       data        nbfai( 69)/    9         /
@@ -1441,7 +1441,7 @@
       data      fgi(  3, 69)/ -100.000000d0/
       data      fgi(  8, 69)/    1.000000d0/
 !
-!                    Data for Element  70     
+!                    Data for Element  70
 !
       data        isoki( 70)/    0         /
       data        nbfai( 70)/    9         /
@@ -1452,7 +1452,7 @@
       data      fgi(  3, 70)/ -100.000000d0/
       data      fgi(  8, 70)/    1.000000d0/
 !
-!                    Data for Element  71     
+!                    Data for Element  71
 !
       data        isoki( 71)/    0         /
       data        nbfai( 71)/    9         /
@@ -1463,7 +1463,7 @@
       data      fgi(  3, 71)/ -100.000000d0/
       data      fgi(  8, 71)/    1.000000d0/
 !
-!                    Data for Element  72     
+!                    Data for Element  72
 !
       data        isoki( 72)/    0         /
       data        nbfai( 72)/    9         /
@@ -1474,7 +1474,7 @@
       data      fgi(  3, 72)/ -100.000000d0/
       data      fgi(  8, 72)/    1.000000d0/
 !
-!                    Data for Element  73     
+!                    Data for Element  73
 !
       data        isoki( 73)/    0         /
       data        nbfai( 73)/    9         /
@@ -1485,7 +1485,7 @@
       data      fgi(  3, 73)/ -100.000000d0/
       data      fgi(  8, 73)/    1.000000d0/
 !
-!                    Data for Element  74     
+!                    Data for Element  74
 !
       data        isoki( 74)/    0         /
       data        nbfai( 74)/    9         /
@@ -1496,7 +1496,7 @@
       data      fgi(  3, 74)/ -100.000000d0/
       data      fgi(  8, 74)/    1.000000d0/
 !
-!                    Data for Element  75     
+!                    Data for Element  75
 !
       data        isoki( 75)/    0         /
       data        nbfai( 75)/    9         /
@@ -1507,7 +1507,7 @@
       data      fgi(  3, 75)/ -100.000000d0/
       data      fgi(  8, 75)/    1.000000d0/
 !
-!                    Data for Element  76     
+!                    Data for Element  76
 !
       data        isoki( 76)/    0         /
       data        nbfai( 76)/    9         /
@@ -1518,7 +1518,7 @@
       data      fgi(  3, 76)/ -100.000000d0/
       data      fgi(  8, 76)/    1.000000d0/
 !
-!                    Data for Element  77     
+!                    Data for Element  77
 !
       data        isoki( 77)/    0         /
       data        nbfai( 77)/    9         /
@@ -1529,7 +1529,7 @@
       data      fgi(  3, 77)/ -100.000000d0/
       data      fgi(  8, 77)/    1.000000d0/
 !
-!                    Data for Element  78     
+!                    Data for Element  78
 !
       data        isoki( 78)/    0         /
       data        nbfai( 78)/    9         /
@@ -1540,7 +1540,7 @@
       data      fgi(  3, 78)/ -100.000000d0/
       data      fgi(  8, 78)/    1.000000d0/
 !
-!                    Data for Element  79     
+!                    Data for Element  79
 !
       data        isoki( 79)/    1         /
       data        nbfai( 79)/    9         /
@@ -1570,7 +1570,7 @@
       data      fgi( 20, 79)/    3.569660d0/
       data      fgi( 21, 79)/    3.530346d0/
 !
-!                    Data for Element  80     
+!                    Data for Element  80
 !
       data        isoki( 80)/    0         /
       data        nbfai( 80)/    4         /

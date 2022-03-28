@@ -27,7 +27,7 @@ subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
     double precision :: energy_test, fmo_test
     double precision, dimension (10) :: escf0
     data escf0 / 10 * 0.d0 /
-    save 
+    save
    !
    ! Test the change in energy on successive iterations and the maximum
    ! element of the occ-vir block of the Fock matrix in the LMO basis
@@ -40,18 +40,18 @@ subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
       okscf = .true.
       iscf = 2
       if (scf1) iscf = 1
-    else 
-      scf1 = (ovmax < fmo_test .and. Abs (energy_diff) < energy_test) 
+    else
+      scf1 = (ovmax < fmo_test .and. Abs (energy_diff) < energy_test)
       if (emin /= 0.d0) then
         !*****************************************************************
         !
-        !  THE FOLLOWING TESTS ARE INTENDED TO ALLOW A FAST EXIT FROM 
-        !  ITER IF THE RESULT IS 'GOOD ENOUGH' FOR THE CURRENT STEP IN 
+        !  THE FOLLOWING TESTS ARE INTENDED TO ALLOW A FAST EXIT FROM
+        !  ITER IF THE RESULT IS 'GOOD ENOUGH' FOR THE CURRENT STEP IN
         !  THE GEOMETRY OPTIMIZATION
         !
         if (escf < emin) then
           !
-          !  THE ENERGY IS LOWER THAN THE PREVIOUS MINIMUM.  
+          !  THE ENERGY IS LOWER THAN THE PREVIOUS MINIMUM.
           !  NOW CHECK THAT IT IS CONSISTENTLY LOWER.
           !
           iemax = 0
@@ -117,7 +117,7 @@ subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
   end subroutine isitsc
   logical function PLS_faulty()
 !
-!  When some systems are run using MOZYME, the DIAGG1 - DIAGG2 combination fails to converge, 
+!  When some systems are run using MOZYME, the DIAGG1 - DIAGG2 combination fails to converge,
 !  and the ovmax converges to a non-zero minimum.  If the job is stopped and a <file>.den
 !  is generated, then on restarting the same job, the fault is automatically corrected.
 !
@@ -131,7 +131,7 @@ subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
     integer :: loop = -1, j = 0
     integer, parameter :: loop_lim = 6
     double precision :: ovmax_old = 0.d0, array_ovmax(loop_lim), escf_old = 0.d0, array_escf(loop_lim)
-    save 
+    save
     if (loop == -1) then
       array_ovmax = 10.d0
       array_escf = 10.d0
@@ -170,7 +170,7 @@ subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
       do j = 1, loop_lim
         array_ovmax(j) = j
         array_escf(j) = j
-      end do  
+      end do
     end if
     return
   end function PLS_faulty

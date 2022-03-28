@@ -18,7 +18,7 @@
 !
 !   MOPEND SHUTS ALL FILES WHICH MAY HAVE BEEN OPENED
 !        AND THEN STARTS A RAPID RETURN TO THE MAIN SEGMENT
-!            
+!
       use chanel_C, only: iend, end_fn
       use param_global_C, only : ifiles_8
       implicit none
@@ -39,6 +39,6 @@
         close(iend, status = 'delete', iostat=i)
         if (i == -100) return
       end if
-      write (ifiles_8, '(/,'' == PARAM DONE =='')') 
+      write (ifiles_8, '(/,'' == PARAM DONE =='')')
       stop
       END

@@ -20,7 +20,7 @@ module meci_C
   &  nmos,           & !  Type        Number of M.O.s in active space in C.I.
                        !  Definition  Number of M.O.s involved in a MECI calculation
                        !  Min. value  0
-                       !  Max. value  norbs  
+                       !  Max. value  norbs
   &  lab,            & !  Number of microstates used in the C.I.
   &  labsiz,         & !  Number of states to be calculated (a subset of lab)
   &  root_requested, & !  Number of the root that was requested
@@ -36,23 +36,23 @@ module meci_C
   &  jloop,          &
   &  k,              &
   &  dummy
-  
+
   double precision ::    &
   &  cif1,           & !
   &  cif2,           & !
   &  cdiagi
 
-  
+
   integer :: nbo(3)
 
   integer, dimension(:), allocatable :: &
   &  nalmat, & !
-  &  ispin     ! Type        Spins of each State (Singlet = 1) 
+  &  ispin     ! Type        Spins of each State (Singlet = 1)
                ! Definition  "S" quantum number for each State
                ! Min. value   0,  0,  0, etc.
-               ! Max. value  10, 10, 10, etc  (9 = Nonet, 10 = "???????")   
+               ! Max. value  10, 10, 10, etc  (9 = Nonet, 10 = "???????")
 
-  integer, dimension(:,:), allocatable :: ispqr 
+  integer, dimension(:,:), allocatable :: ispqr
 
   double precision, dimension(:), allocatable :: &
   &  cdiag,  & !
@@ -60,14 +60,14 @@ module meci_C
                ! Definition  Number of electrons in each M.O. of the SCF in the active space
                ! Units       Electrons
                ! Min. value  0.0, 0.0, etc.
-               ! Max. value  2.0, 2.0, etc                    
+               ! Max. value  2.0, 2.0, etc
   &  conf,   & !  State vectors
   &  eig,    & !  State eigenvalues
   &  vectci    ! Type        State vector of interest
                ! Definition  nstate State vectors, each of length lab, if not degenerate, nstate = 1
 
   double precision, dimension(:,:), allocatable :: &
-  &  rjkaa,  & ! Type  
+  &  rjkaa,  & ! Type
   &  rjkab,  & !
   &  deltap, & ! Type        Change in molecular orbital occupancy as a result of C.I.
                ! Definition  deltap(i,i) = Number of electrons gained or lost in forming the State

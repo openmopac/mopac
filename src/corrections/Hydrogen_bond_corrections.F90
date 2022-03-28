@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-double precision function Hydrogen_bond_corrections(l_grad, prt)  
+double precision function Hydrogen_bond_corrections(l_grad, prt)
 !
 !    Add in hydrogen-bond corrections
 !
@@ -35,9 +35,9 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
   double precision :: EC, ER, vector(numat), sum, sum1, delta = 1.d-5, covrad(94)
   double precision, external :: EC_plus_ER, EH_plus, h_bonds4
   logical, external :: connected
-  
-  save  
-   data covrad /& 
+
+  save
+   data covrad /&
   &0.32d0,  0.46d0,  1.20d0,  0.94d0,  0.77d0,  0.75d0,  0.71d0,  0.63d0,  0.64d0,  0.67d0, &
   &1.40d0,  1.25d0,  1.13d0,  1.04d0,  1.10d0,  1.02d0,  0.99d0,  0.96d0,  1.76d0,  1.54d0, &
   &1.33d0,  1.22d0,  1.21d0,  1.10d0,  1.07d0,  1.04d0,  1.00d0,  0.99d0,  1.01d0,  1.09d0, &
@@ -47,7 +47,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
   &1.56d0,  1.55d0,  1.51d0,  1.52d0,  1.51d0,  1.50d0,  1.49d0,  1.49d0,  1.48d0,  1.53d0, &
   &1.46d0,  1.37d0,  1.31d0,  1.23d0,  1.18d0,  1.16d0,  1.11d0,  1.12d0,  1.13d0,  1.32d0, &
   &1.30d0,  1.30d0,  1.36d0,  1.31d0,  1.38d0,  1.42d0,  2.01d0,  1.81d0,  1.67d0,  1.58d0, &
-  &1.52d0,  1.53d0,  1.54d0,  1.55d0 / 
+  &1.52d0,  1.53d0,  1.54d0,  1.55d0 /
 !
   if (first) then
     covrad = 4.d0/3.d0*covrad !  This must be done once per entire run
@@ -67,11 +67,11 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
   if (max_h_bonds == 0) then
     Hydrogen_bond_corrections = 0.d0
     return
-  end if    
+  end if
   if (allocated(nrbondsa))   deallocate(nrbondsa)
-  if (allocated(nrbondsb))   deallocate(nrbondsb) 
-  if (allocated(hblist))     deallocate(hblist) 
-  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), stat=i)   
+  if (allocated(nrbondsb))   deallocate(nrbondsb)
+  if (allocated(hblist))     deallocate(hblist)
+  allocate (hblist(max_h_bonds,10), nrbondsa(max_h_bonds), nrbondsb(max_h_bonds), stat=i)
     if (i /= 0) then
     line = " Cannot allocate arrays for PM6-DH+"
     call to_screen(trim(line))
@@ -80,17 +80,17 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
     return
   end if
   hblist(:,:) = 0
-  nrpairs = 0   
+  nrpairs = 0
   if (method_pm6_dh_plus .or. method_PM7) then
-    call all_h_bonds(hblist(1,1), hblist(1,9), hblist(1,5), max_h_bonds, nrpairs)   
-    call setup_DH_Plus(nrpairs, nrbondsa, nrbondsb, n_h_bonds, covrad) 
+    call all_h_bonds(hblist(1,1), hblist(1,9), hblist(1,5), max_h_bonds, nrpairs)
+    call setup_DH_Plus(nrpairs, nrbondsa, nrbondsb, n_h_bonds, covrad)
   else
-    call all_h_bonds(hblist(1,1), hblist(1,2), hblist(1,3), max_h_bonds, nrpairs)  
-  end if    
+    call all_h_bonds(hblist(1,1), hblist(1,2), hblist(1,3), max_h_bonds, nrpairs)
+  end if
   if (method_pm6_dh2 .or. method_pm6_dh2x) then
     call chrge (p, vector)  ! PM6-DH2 needs partial charges
-    do i = 1, numat 
-      j = nat(i) 
+    do i = 1, numat
+      j = nat(i)
       q(i) = tore(j) - vector(i)
     end do
   end if
@@ -108,7 +108,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
 !    (7) oxygen interacting with H in a water molecule, and
 !    (8) oxygen interacting with H in a carboxyl group.
 !
-     
+
   N_Hbonds = 0
   E_hb = 0.d0
   do ii = 1, nrpairs
@@ -128,7 +128,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
           if (l > nd_list) then
             nd_list = nd_list + 1
             d_list(nd_list) = hblist(ii,i)
-          end if 
+          end if
         end if
       end do
     else
@@ -142,7 +142,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
         sum = EC_plus_ER(hblist(ii,1), hblist(ii,2), hblist(ii,3), q(hblist(ii,2)), q(hblist(ii,3)), EC, ER, d_list, nd_list)
         E_hb = E_hb + EC + ER
       end if
-      
+
     end if
     if (sum < -1.d0) N_Hbonds = N_Hbonds + 1
     if (prt) call prt_hbonds(D, H, A, sum)
@@ -165,7 +165,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
 !  in the derivatives.  The "ideal" value of delta should be 10^(-4), but 10^(-5) was selected by JJPS as the best compromise,
 !  based on finding the middle of the plateau of constant derivatives.
 !
-          do i = 1, 3             
+          do i = 1, 3
             coord(i,k) = coord(i,k) + delta
             if (method_pm6_dh_plus .or. method_pm7) then
               sum1 = EH_plus(ii, hblist, max_h_bonds, nrbondsa, nrbondsb)
@@ -173,16 +173,16 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
               sum1 = H_bonds4(H, A, D, d_l, l)
             else
               sum1 = EC_plus_ER(D, H, A, q(H), q(A), EC, ER, d_l, l)
-            end if           
+            end if
             if (abs(sum1) > 1.d-5) then
-              sum1 = (sum1 - sum)/delta    
+              sum1 = (sum1 - sum)/delta
               dxyz(i_cell*3 + i) = dxyz(i_cell*3 + i) + sum1
             end if
             coord(i,k) = coord(i,k) - delta
           end do
         end if
       end do
-    end if     
+    end if
   end do
   Hydrogen_bond_corrections = E_hb
   return
@@ -217,9 +217,9 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
 !
 !  Atom j is covalently bonded to atom hblist(i,1) (either the H bond donor or accepter)
 !
-        nrbondsa(i) = nrbondsa(i) + 1 
+        nrbondsa(i) = nrbondsa(i) + 1
         bondlist(nrbondsa(i), 1) = j
-        if (nrbondsa(i) == 5) then 
+        if (nrbondsa(i) == 5) then
 !
 !  Too many bonds - eliminate the longest bond
 !
@@ -239,13 +239,13 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
           nrbondsa(i) = 4
         end if
       end if
-      if (xb_dist < bonding(j, hblist(i, 5), covrad) .and. hblist(i, 5) /= j) then 
+      if (xb_dist < bonding(j, hblist(i, 5), covrad) .and. hblist(i, 5) /= j) then
 !
 !  Atom j is covalently bonded to atom hblist(i,5) (either the H bond donor or accepter)
 !
         nrbondsb(i) = nrbondsb(i) + 1
         bondlist(nrbondsb(i), 2) = j
-        if (nrbondsb(i) == 5) then 
+        if (nrbondsb(i) == 5) then
 !
 !  Too many bonds - eliminate the longest bond
 !
@@ -265,8 +265,8 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
           nrbondsb(i) = 4
         end if
       end if
-    end do 
-! check for 1-3 and 1-4 case - very seldom needed,  but ... 
+    end do
+! check for 1-3 and 1-4 case - very seldom needed,  but ...
 !
 !  Is an atom, attached to hblist(i,1) equal to atom hblist(i,5)
 !  That is, are the donor and accepter atoms the same.
@@ -293,7 +293,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
           old_dist = xh_dist
           hblist(i, 2) = bondlist(k, 1)
         end if
-      end do 
+      end do
       old_dist = -1
       do k = 1, nrbondsa(i)
         xh_dist = distance(bondlist(k, 1), hblist(i, 9))
@@ -324,11 +324,11 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
           hblist(i, 3) = bondlist(k, 1)
         end if
       end do
-      if (distance(hblist(i, 1), hblist(i, 9)) < bonding(hblist(i, 1), hblist(i, 9), covrad)) then ! not needed 
+      if (distance(hblist(i, 1), hblist(i, 9)) < bonding(hblist(i, 1), hblist(i, 9), covrad)) then ! not needed
           hblist(i, 4) = hblist(i, 9)
       else
-          hblist(i, 4) = hblist(i, 1) 
-      end if                  
+          hblist(i, 4) = hblist(i, 1)
+      end if
     else if (nrbondsa(i) == 1) then
       hblist(i, 2) = bondlist(1, 1)
 ! need bonds on first bonded atom here
@@ -355,17 +355,17 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
       end if
     else if (nrbondsa(i) == 0) then
       if (distance(hblist(i, 1), hblist(i, 9)) < bonding(hblist(i, 1), hblist(i, 9), covrad)) then ! not needed
-        hblist(i, 2) = hblist(i, 9) 
+        hblist(i, 2) = hblist(i, 9)
         hblist(i, 3) = hblist(i, 9)
         hblist(i, 4) = hblist(i, 9)
       else
-        hblist(i, 2) = hblist(i, 1) 
+        hblist(i, 2) = hblist(i, 1)
         hblist(i, 3) = hblist(i, 1)
         hblist(i, 4) = hblist(i, 1)
       end if
     else
       hbs1_ok = .false.
-    end if 
+    end if
 ! hbs2 part
     hbs2_ok = .true.
     if (nrbondsb(i) == 3 .or. nrbondsb(i) == 4) then
@@ -376,7 +376,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
           old_dist = xh_dist
           hblist(i, 6) = bondlist(k, 2)
         end if
-      end do 
+      end do
       old_dist = -1
       do k = 1, nrbondsb(i)
         xh_dist = distance(bondlist(k, 2), hblist(i, 9))
@@ -427,7 +427,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
             nrbondsc = nrbondsc + 1
             bondlist(nrbondsc, 3) = k
           end if
-      !  end select            
+      !  end select
       end do
       old_dist = -1
       do k = 1, nrbondsc
@@ -444,24 +444,24 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
       end if
     else if (nrbondsb(i) == 0) then
       if (distance(hblist(i, 5), hblist(i, 9)) < bonding(hblist(i, 5), hblist(i, 9), covrad)) then ! not needed
-          hblist(i, 6) = hblist(i, 9) 
+          hblist(i, 6) = hblist(i, 9)
           hblist(i, 7) = hblist(i, 9)
           hblist(i, 8) = hblist(i, 9)
       else
-          hblist(i, 6) = hblist(i, 5) 
+          hblist(i, 6) = hblist(i, 5)
           hblist(i, 7) = hblist(i, 5)
           hblist(i, 8) = hblist(i, 5)
       end if
     else
       hbs2_ok = .false.
-    end if 
+    end if
   end do
 ! check for problems
   if ( .not. hbs1_ok .or. .not. hbs2_ok ) then
 !
 !  No hydrogen bonds found
 !
-    l_h_bonds = .false.   
+    l_h_bonds = .false.
   end if
 end subroutine setup_DH_Plus
 

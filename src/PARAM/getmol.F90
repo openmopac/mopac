@@ -40,7 +40,7 @@ subroutine getmol (iloop)
     implicit none
 !----------------------------------------------------------------------
     integer, intent (in) :: iloop
-    integer :: i, iatm, igeo, iloc, ips, isym, j 
+    integer :: i, iatm, igeo, iloc, ips, isym, j
     save :: iatm, igeo, iloc, ips, isym
     if (iloop == 1) then
       igeo = 0
@@ -147,12 +147,12 @@ subroutine getmol (iloop)
       nfirst(i) = nfirss(iatm)
       nlast(i) = nlasts(iatm)
       labels(i) = lablss(iatm)
-    end do 
-    j = 1 
-    do i = 1, numat 
-      nw(i) = j 
-      j = j + ((nlast(i)-nfirst(i)+1)*(nlast(i)-nfirst(i)+2))/2 
-    end do 
+    end do
+    j = 1
+    do i = 1, numat
+      nw(i) = j
+      j = j + ((nlast(i)-nfirst(i)+1)*(nlast(i)-nfirst(i)+2))/2
+    end do
     id = 0
   !
   !  RESTORE ORBITAL DATA
@@ -160,7 +160,7 @@ subroutine getmol (iloop)
     call getusp (nat, nfirst, nlast, uspd, atheat)
     do i = 1, mpack
       pa(i) = pas(i+ips)
-      pb(i) = pbs(i+ips) 
+      pb(i) = pbs(i+ips)
       p(i) = pa(i) + pb(i)
     end do
     do i = 1, norbs
@@ -170,7 +170,7 @@ subroutine getmol (iloop)
   !
   !  RESTORE REFERENCE DATA
   !
-    refhof = heats(iloop) 
+    refhof = heats(iloop)
     refips = hions(iloop)
     refdip = dipls(iloop)
     refpka = pkas(iloop)
@@ -216,9 +216,9 @@ subroutine getusp (nat, nfirst, nlast, uspd, atheat)
         end if
       end do
     else
-      atheat = sum(eheat(nat(:numat))) 
+      atheat = sum(eheat(nat(:numat)))
     end if
-    eat = sum(eisol(nat(:numat))) 
+    eat = sum(eisol(nat(:numat)))
     do ii = 1, numat
       ia = nfirst(ii)
       ib = nlast(ii)
@@ -241,7 +241,7 @@ subroutine getusp (nat, nfirst, nlast, uspd, atheat)
       end if
     end do
     atheat = atheat - eat * fpc_9
-    call gmetry (geo, coord) 
+    call gmetry (geo, coord)
     if (id == 0) then
       cutofp = 1.d10
     else

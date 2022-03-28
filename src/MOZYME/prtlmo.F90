@@ -40,18 +40,18 @@ subroutine prtlmo ()
    !                Print the occupied set of LMOs
    !
     write (iw,'(/10x,a,/)') " Occupied Set"
-    write (iw, "("//num_1//"x,'NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS ')")   
-    write (iw, "("//num_1//"x,34x,'(AS PERCENT OF THE LMO)',/)") 
+    write (iw, "("//num_1//"x,'NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS ')")
+    write (iw, "("//num_1//"x,34x,'(AS PERCENT OF THE LMO)',/)")
     call prtlmn (nncf, icocc, ncocc, cocc, ncf, isort, eigs, noccupied, 0)
     if (index(keywrd, " ALLVEC") /= 0) then
    !
    !                Print the virtual set of LMOs
    !
       write (iw,'(/10x,a,/)') " Virtual Set (NOT re-localized!)"
-      write (iw, "("//num_1//"x,'NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS ')")   
-      write (iw, "("//num_1//"x,34x,'(AS PERCENT OF THE LMO)',/)") 
+      write (iw, "("//num_1//"x,'NUMBER OF CENTERS  LMO ENERGY     COMPOSITION OF ORBITALS ')")
+      write (iw, "("//num_1//"x,34x,'(AS PERCENT OF THE LMO)',/)")
       call prtlmn (nnce, icvir, ncvir, cvir, nce, isort(noccupied + 1:), &
-           & eigs(noccupied + 1:), nvirtual, noccupied)   
+           & eigs(noccupied + 1:), nvirtual, noccupied)
     else
       write (iw,'(/10x,a,/)') "To print Virtual Set as well, use keyword ""ALLVEC"""
     end if
@@ -88,13 +88,13 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
     double precision, dimension(:), allocatable :: w, eigs_temp
     integer, dimension(:), allocatable :: iscrch, jat
     character :: num_1*1, num_2*1
-    
+
     allocate (w(Max(1,noccupied*20)), iscrch(Max(1,noccupied*20)), jat(norbs), &
             stat=i)
     if (i /= 0) then
       call memory_error ("prtlmo")
       return
-    end if   
+    end if
 !
 ! Construct map of LMO energy levels
 !
@@ -177,7 +177,7 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
       end do
       loop = loop - 1
       sum = 0.d0
-      do j = 1, loop 
+      do j = 1, loop
         sum = sum + jbig(j)**2
       end do
       k = iunsrt + i_offset
@@ -185,7 +185,7 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
       if (loop == 1) then
         if (jbig(1)*0.01d0> 99.949d0) then
           write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.1)') &
-                & k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0 
+                & k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0
         else
           write (iw, '(i'//num_1//',f10.4,f17.5, 3x,a2,i'//num_2//',f6.2)') &
                 & k, sum,eigs(i), elemnt(nat(ibig(1))),ibig(1),jbig(1)*0.01d0
@@ -193,15 +193,15 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
       else
         if (loop < 6) then
           write (iw, '(i'//num_1//',f10.4,f17.5, 4(5(3x,a2,i'//num_2//',f6.2)))') &
-          k, sum,eigs(i), (elemnt(nat(ibig(j))),ibig(j),jbig(j)*0.01d0, j=1, loop) 
+          k, sum,eigs(i), (elemnt(nat(ibig(j))),ibig(j),jbig(j)*0.01d0, j=1, loop)
         else
           write (iw, '(i'//num_1//',f10.4,f17.5, 4(5(3x,a2,i'//num_2//',f6.2),/,'//num_1//'x,27x))') &
-          k, sum,eigs(i), (elemnt(nat(ibig(j))),ibig(j),jbig(j)*0.01d0, j=1, loop) 
-        end if 
-      end if 
+          k, sum,eigs(i), (elemnt(nat(ibig(j))),ibig(j),jbig(j)*0.01d0, j=1, loop)
+        end if
+      end if
     end do
     deallocate (w, iscrch, jat)
     return
   end subroutine prtlmn
-  
-  
+
+

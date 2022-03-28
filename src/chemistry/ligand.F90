@@ -23,7 +23,7 @@ subroutine ligand (ires, start_res, nfrag)
     use chanel_C, only: log, ilog, iw
     implicit none
     integer, intent (inout) :: ires, nfrag
-    integer, intent (in) :: start_res(*)    
+    integer, intent (in) :: start_res(*)
 !
     integer, parameter :: maxlive = 15000
     integer :: i, j, k, l, m, n, ii, jj, kk, mm, nn, res, change_no, max_comments, &
@@ -36,20 +36,20 @@ subroutine ligand (ires, start_res, nfrag)
     double precision, external :: distance, reada
     character :: het*3, het_group*120, num, num1, el*2, het2*3, line1*120
     save :: l_write
-    allocate (l_used(natoms), inres(natoms), live(maxlive))   
+    allocate (l_used(natoms), inres(natoms), live(maxlive))
     ele_order(1) = 6
     ele_order(2) = 1
     ele_order(3) = 7
     ele_order(4) = 8
     k = 4
-    do i = 2, 107 
+    do i = 2, 107
        select case (i)
-       case (6, 7, 8)     
+       case (6, 7, 8)
        case default
          k = k + 1
          ele_order(k) = i
        end select
-    end do   
+    end do
     j = 0
     do i = 1, ncomments
       if (index(all_comments(i), "REMARK   3") == 0) then
@@ -82,9 +82,9 @@ subroutine ligand (ires, start_res, nfrag)
 !                                 Phosphate
 !
             call inc_res(ires, start_res, nfrag)
-            write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " P ", "PO4", ires    
+            write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " P ", "PO4", ires
             do j = 1, 4
-              write (txtatm(ibonds(j, i)), "(a6,i5,1x,a3,a5,i6)")"HETATM", ibonds(j, i), " O ", "PO4", ires 
+              write (txtatm(ibonds(j, i)), "(a6,i5,1x,a3,a5,i6)")"HETATM", ibonds(j, i), " O ", "PO4", ires
             end do
           end if
         else if (labels(i) == 16) then
@@ -96,9 +96,9 @@ subroutine ligand (ires, start_res, nfrag)
 !                                 Sulfate
 !
             call inc_res(ires, start_res, nfrag)
-            write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " S ", "SO4", ires    
+            write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " S ", "SO4", ires
             do j = 1, 4
-              write (txtatm(ibonds(j, i)), "(a6,i5,1x,a3,a5,i6)")"HETATM", ibonds(j, i), " O ", "SO4", ires 
+              write (txtatm(ibonds(j, i)), "(a6,i5,1x,a3,a5,i6)")"HETATM", ibonds(j, i), " O ", "SO4", ires
             end do
           end if
         else if (labels(i) == 8 .and. nheavy(i) == 0) then
@@ -106,16 +106,16 @@ subroutine ligand (ires, start_res, nfrag)
 !                                 Water
 !
           call inc_res(ires, start_res, nfrag)
-          write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "HOH", ires    
+          write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "HOH", ires
             do j = 1, nbonds(i)
-              write (txtatm(ibonds(j, i)), "(a6,i5,1x,a3,a5,i6)")"HETATM", ibonds(j, i), " H ", "HOH", ires 
+              write (txtatm(ibonds(j, i)), "(a6,i5,1x,a3,a5,i6)")"HETATM", ibonds(j, i), " H ", "HOH", ires
             end do
         else if (labels(i) == 8) then
 !
 !                                     Ethylene glycol and glycerol
-!                                     H-O-CH2-CH2-O-H and HOCH2-HCOH-H2COH 
+!                                     H-O-CH2-CH2-O-H and HOCH2-HCOH-H2COH
 !
-          if (nheavy(i) == 1) then   
+          if (nheavy(i) == 1) then
             do ii = 1, nbonds(i)
               j = ibonds(ii,i)
               if (nat(j) /= 6) cycle
@@ -134,27 +134,27 @@ subroutine ligand (ires, start_res, nfrag)
                     if (nat(l) == 8 .and. l /= j) then
                       l = l
                     end if
-                    if (nat(l) /= 8) cycle  
-                    if (nheavy(l) == 1) then! Oxygen joined to carbon(2) 
+                    if (nat(l) /= 8) cycle
+                    if (nheavy(l) == 1) then! Oxygen joined to carbon(2)
 !
 ! Found O-C-C-O
 !
                       call inc_res(ires, start_res, nfrag)
-                      write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "EDO", ires 
-                      write (txtatm(j), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "EDO", ires 
-                      write (txtatm(k), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "EDO", ires 
-                      write (txtatm(l), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "EDO", ires       
+                      write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "EDO", ires
+                      write (txtatm(j), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "EDO", ires
+                      write (txtatm(k), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "EDO", ires
+                      write (txtatm(l), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "EDO", ires
                     end if
-                  end do  
+                  end do
                 else if (nheavy(k) == 3) then
 
                   do kk = 1,nbonds(k)
                     l = ibonds(kk,k)
-                    if (nat(l) /= 8) cycle  
-                    if (nheavy(l) /= 1) cycle! Oxygen joined to carbon(2)                     
+                    if (nat(l) /= 8) cycle
+                    if (nheavy(l) /= 1) cycle! Oxygen joined to carbon(2)
                     do mm = 1,nbonds(k)
                       m = ibonds(mm,k)
-                      if (nat(m) /= 6) cycle  
+                      if (nat(m) /= 6) cycle
                       if (m == j) cycle
                       if (nheavy(m) /= 2) cycle! Carbon(3) joined to carbon(2)
                       do nn = 1, nbonds(m)
@@ -164,15 +164,15 @@ subroutine ligand (ires, start_res, nfrag)
 ! Found O-C-CO-C-O
 !
                         call inc_res(ires, start_res, nfrag)
-                        write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "GOL", ires 
-                        write (txtatm(j), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "GOL", ires 
-                        write (txtatm(k), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "GOL", ires 
+                        write (txtatm(i), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "GOL", ires
+                        write (txtatm(j), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "GOL", ires
+                        write (txtatm(k), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "GOL", ires
                         write (txtatm(l), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "GOL", ires
                         write (txtatm(m), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " C ", "GOL", ires
-                        write (txtatm(n), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "GOL", ires   
+                        write (txtatm(n), "(a6,i5,1x,a3,a5,i6)")"HETATM", i, " O ", "GOL", ires
                       end do
                     end do
-                  end do  
+                  end do
                 end if
               end do
             end do
@@ -182,19 +182,19 @@ subroutine ligand (ires, start_res, nfrag)
       end if
       n_ele = 0
       ninres = 0
-      i_panic = 0      
+      i_panic = 0
       l_used = .false.
       if (txtatm(i) (26:26) == " " .and. nat(i) /= 1) then
         ninres = 1
-        inres(1) = i 
+        inres(1) = i
         l_used(i) = .true.
         nlive = nbonds(i)
-        live(:nlive) = ibonds(:nlive,i)  
+        live(:nlive) = ibonds(:nlive,i)
         select case (nat(i))
-        case (6:9, 15:17, 34:35, 53)     
+        case (6:9, 15:17, 34:35, 53)
         case default
           nlive = 0
-        end select 
+        end select
         call inc_res(ires, start_res, nfrag)
         outer_loop: do
           l = live(1)
@@ -213,18 +213,18 @@ subroutine ligand (ires, start_res, nfrag)
             l_used(l) = .true.
             do ii = 1, nbonds(l)
               jj = ibonds(ii,l)
-              if (txtatm(jj)(11:14) /= " ") then   
+              if (txtatm(jj)(11:14) /= " ") then
                 select case (nat(i))
-                case (6:9, 15:17, 34:35, 53)   
-                  i_panic = jj  
-                end select             
+                case (6:9, 15:17, 34:35, 53)
+                  i_panic = jj
+                end select
               end if
             end do
             select case (nat(i))
-            case (6:9, 15:17, 34:35, 53)   
+            case (6:9, 15:17, 34:35, 53)
               ninres = ninres + 1
               inres(ninres) = l
-            end select      
+            end select
             if (nbonds(l) /= 0) then
 !
 !  THERE IS AT LEAST ONE ATOM ATTACHED TO THE 'LIVE' ATOM
@@ -284,26 +284,26 @@ subroutine ligand (ires, start_res, nfrag)
           if (n > 0 .and. res /= -10000) then
             if (txtatm(n)(13:16) == " N  " .and. nat(m) == 6) then
 !
-!  Inserting a fragment at the start of a chain - 
+!  Inserting a fragment at the start of a chain -
 !  so move all residue numbers in the rest of the chain up by 1
 !
               k = res
-              do 
+              do
                 j = nint(reada(txtatm(n), 23))
                 if (j == k) then
                   write(txtatm(n)(23:26),'(i4)') k + 1
                 else if (j == k + 1) then
                   k = k + 1
-                  write(txtatm(n)(23:26),'(i4)') k + 1          
+                  write(txtatm(n)(23:26),'(i4)') k + 1
                 else
                   exit
                 end if
                 n = n + 1
-              end do 
+              end do
               k = res
               het  = allres(k)(:3)
               allres(k) = "UNK"
-              do  
+              do
                 het2 = allres(k + 1)(:3)
                 if (het2 == " ") exit
                 allres(k + 1) = het
@@ -359,7 +359,7 @@ subroutine ligand (ires, start_res, nfrag)
                     inres(ninres) = jj
                   end if
                 end if
-              end if                    
+              end if
             end if
           end do
           select case (n_C)
@@ -442,7 +442,7 @@ subroutine ligand (ires, start_res, nfrag)
                   het = "NH3"
                   het_group = "Ammonia"
                 end if
-              end if                
+              end if
               if  (n_N == 0 .and. n_O == 2 .and. n_S == 0 .and. n_P == 0) then
                 het = "O-O"
                 het_group = "Hydrogen peroxide?"
@@ -488,7 +488,7 @@ subroutine ligand (ires, start_res, nfrag)
                 do ii = 1, ninres
                   if (nat(inres(ii)) == 6) exit
                 end do
-                if (nheavy(inres(ii)) == 2) then                
+                if (nheavy(inres(ii)) == 2) then
                   het = "EDO"
                   het_group = "1,2-Ethanediol "
                 else
@@ -527,9 +527,9 @@ subroutine ligand (ires, start_res, nfrag)
                 het_group = "N-Tertiary butyl"
               end if
               if  (n_N == 1 .and. n_O == 3 .and. n_S == 0 .and. n_P == 0) then
-                het = "TRS"                       
+                het = "TRS"
                 het_group = "2-Amino-2-hydroxymethyl-propane-1,3-diol"
-              end if                                             
+              end if
             case (5)
               if  (n_N == 1 .and. n_O == 3 .and. n_S == 0 .and. n_P == 0) then
                 het = "PCA"
@@ -564,19 +564,19 @@ subroutine ligand (ires, start_res, nfrag)
                 het = "HEX"
                 het_group = "A hexose, e.g. glucose or mannose"
                 call identify_hexose(ninres, inres, het, het_group)
-              end if              
+              end if
               if  (n_N == 0 .and. n_O == 2 .and. n_S == 0 .and. n_P == 0) then
-                het = "MPD" 
+                het = "MPD"
                 het_group = "(4S)-2-Methyl-2,4-pentanediol"
               end if
               if  (n_N == 0 .and. n_O == 4 .and. n_S == 0 .and. n_P == 0) then
-                het = "PGE" 
+                het = "PGE"
                 het_group = "Triethylene glycol"
               end if
               if  (n_N == 1 .and. n_O == 4 .and. n_P == 0) then
-                het = "MES" 
+                het = "MES"
                 het_group = "2-(N-Morpholino)-ethanesulfonic acid"
-              end if                            
+              end if
             case (7)
               if  (n_N == 1 .and. n_O == 1 .and. n_S == 0 .and. n_P == 0) then
                 het = "DBZ"
@@ -604,11 +604,11 @@ subroutine ligand (ires, start_res, nfrag)
                 het_group = "N-Acetyl-D-glucosamine"
               end if
               if  (n_N == 1 .and. n_O == 0 .and. n_S == 0 .and. n_P == 0) then
-                het = "TBA"                                      
+                het = "TBA"
                 het_group = "Tetrabutylammonium ion"
               end if
               if  (n_N == 1 .and. n_O == 2 .and. n_P == 0) then
-                het = "AES"                                      
+                het = "AES"
                 het_group = "4-(2-Aminoethyl)benzenesulfonyl fluoride"
               end if
               if  (n_N == 2 .and. n_O == 4 .and. n_P == 0) then
@@ -617,54 +617,54 @@ subroutine ligand (ires, start_res, nfrag)
               end if
             case (9)
               if  (n_N == 1 .and. n_O == 2 .and. n_ele(17) == 1.and. n_S == 0 .and. n_P == 0) then
-                het = "GM5"  
+                het = "GM5"
                 het_group = "4-Chlorocinnamylhydroxamate"
               end if
               if  (n_N == 3 .and. n_O == 13 .and. n_S == 0 .and. n_P == 3) then
-                het = "DCP"  
+                het = "DCP"
                 het_group = "2'-deoxycytidine-5'-triphosphate"
               end if
-              if (n_N == 3 .and. n_O == 14 .and. n_S == 0 .and. n_P == 3) then                                        
-                het = "CTP"  
+              if (n_N == 3 .and. n_O == 14 .and. n_S == 0 .and. n_P == 3) then
+                het = "CTP"
                 het_group = "Cytidine-5'-triphosphate"
-              end if 
-              if (n_N == 2 .and. n_O == 15 .and. n_S == 0 .and. n_P == 3) then                                        
-                het = "UTP"  
+              end if
+              if (n_N == 2 .and. n_O == 15 .and. n_S == 0 .and. n_P == 3) then
+                het = "UTP"
                 het_group = "Uridine-5'-triphosphate"
-              end if 
+              end if
             case (10)
               if  (n_N == 0 .and. n_O == 6 .and. n_S == 0 .and. n_P == 0) then
-                het = "TSA"  
+                het = "TSA"
                 het_group = "Endo-oxabicyclic transition state analogue"
-              end if  
+              end if
               if  (n_N == 1 .and. n_O == 1 .and. n_S == 0 .and. n_P == 0) then
-                het = "T55"   
+                het = "T55"
                 het_group = "8-Methylnonanoic acid"
-              end if                                  
-              if (n_N == 1 .and. n_O == 3 .and. n_S == 0) then                                        
-                het = "VPF"  
+              end if
+              if (n_N == 1 .and. n_O == 3 .and. n_S == 0) then
+                het = "VPF"
                 het_group = "C22 H32 N3 O8 P (incomplete)"
-              end if 
-              if (n_N == 2 .and. n_O == 14 .and. n_S == 0 .and. n_P == 3) then                                        
-                het = "TTP"  
+              end if
+              if (n_N == 2 .and. n_O == 14 .and. n_S == 0 .and. n_P == 3) then
+                het = "TTP"
                 het_group = "Thymidine-5'-triphosphate"
-              end if 
-              if (n_N == 5 .and. n_O == 10 .and. n_S == 0 .and. n_P == 2) then                                        
-                het = "ADP"  
+              end if
+              if (n_N == 5 .and. n_O == 10 .and. n_S == 0 .and. n_P == 2) then
+                het = "ADP"
                 het_group = "Adenosine-5'-diphosphate"
-              end if 
-              if (n_N == 5 .and. n_O == 13 .and. n_S == 0 .and. n_P == 3) then                                        
-                het = "ATP"  
+              end if
+              if (n_N == 5 .and. n_O == 13 .and. n_S == 0 .and. n_P == 3) then
+                het = "ATP"
                 het_group = "Adenosine-5'-triphosphate"
-              end if 
-              if (n_N == 5 .and. n_O == 14 .and. n_S == 0 .and. n_P == 3) then                                        
-                het = "GTP"  
+              end if
+              if (n_N == 5 .and. n_O == 14 .and. n_S == 0 .and. n_P == 3) then
+                het = "GTP"
                 het_group = "Guanosine-5'-triphosphate"
-              end if 
+              end if
               if  (n_N == 6 .and. n_O == 12 .and. n_S == 0) then
-                het = "ANP"   
+                het = "ANP"
                 het_group = "Phosphoaminophosphonic acid-adenylate ester"
-              end if                      
+              end if
             case (13)
               if  (n_N == 2 .and. n_O == 0 .and. n_S == 0 .and. n_P == 0) then
                 het = "THA"
@@ -677,14 +677,14 @@ subroutine ligand (ires, start_res, nfrag)
               end if
             case (15)
               if  (n_N == 1 .and. n_O == 5 .and. n_S == 0) then
-                het = "1CT" 
+                het = "1CT"
                 het_group = "Oxo-trifluoro methyl phenyl ethoxy "// &
                   &"phenyl phosphonic acid"
               end if
               if  (n_N == 2 .and. n_O == 12 .and. n_S == 0 .and. n_P == 2) then
-                het = "5GW"  
+                het = "5GW"
                 het_group = "5-Phenyluridine 5'-(trihydrogen diphosphate)"
-              end if                                  
+              end if
             case (16)
               if  (n_N == 2 .and. n_O == 11 .and. n_S == 0 .and. n_P == 0) then
                 het = "NA2"
@@ -695,97 +695,97 @@ subroutine ligand (ires, start_res, nfrag)
                 het_group = "Hexadecyl-10,12-dien-1-ol"
               end if
             case (17)
-              if (n_N == 4 .and. n_O == 9 .and. n_S == 0 .and. n_P == 1) then                                        
+              if (n_N == 4 .and. n_O == 9 .and. n_S == 0 .and. n_P == 1) then
                 het = "FMN"
                 het_group = "Riboflavin monophosphate "
               end if
-              if (n_N == 2 .and. n_O == 2) then                                        
+              if (n_N == 2 .and. n_O == 2) then
                 het = "641"
                 het_group = "Oxopyrrolidine-3-carboxamide"
               end if
             case (18)
-              if (n_N == 2 .and. n_O == 0) then                                        
+              if (n_N == 2 .and. n_O == 0) then
                 het = "HUX"
                 het_group = "(-)-Huprine X (C18 H19 N2 Cl)"
               end if
             case (19)
-              if (n_N == 0 .and. n_O == 2) then                                        
+              if (n_N == 0 .and. n_O == 2) then
                 het = "ASD"
                 het_group = "4-Androstene-3-17-dione"
               end if
-              if (n_N == 4 .and. n_O == 2) then                                        
-                het = "PNT"  
+              if (n_N == 4 .and. n_O == 2) then
+                het = "PNT"
                 het_group = "1,5-Bis(4-amidinophenoxy)pentane"
               end if
             case (20)
-              if (n_N == 0 .and. n_O == 1) then                                        
-                het = "ARC" 
+              if (n_N == 0 .and. n_O == 1) then
+                het = "ARC"
                 het_group = "3,7,11,15-Tetramethyl-hexadecan-1-ol"
               end if
-              if (n_N == 0 .and. n_O == 10) then                                        
-                het = "BHE"   
+              if (n_N == 0 .and. n_O == 10) then
+                het = "BHE"
                 het_group = "Galactopyranoside"
               end if
-              if (n_N == 4 .and. n_O == 2) then                                        
-                het = "DID"  
+              if (n_N == 4 .and. n_O == 2) then
+                het = "DID"
                 het_group = "4,4'[1,6-Hexanediylbis(oxy)]"// &
                 &"bisbenzenecarboximidamide"
               end if
-              if (n_N == 7 .and. n_O == 9) then                                        
-                het = "BT5"  
+              if (n_N == 7 .and. n_O == 9) then
+                het = "BT5"
                 het_group = "Biotinyl-5-amp"
               end if
             case (21)
-              if (n_N == 2 .and. n_O == 17 .and. n_P == 2) then                                        
-                het = "2GW"  
+              if (n_N == 2 .and. n_O == 17 .and. n_P == 2) then
+                het = "2GW"
                 het_group = "5-Phenyl-uridine-5'-alpha-D-galactosyl-diphosphate"
               end if
-              if (n_N == 7 .and. n_O == 14) then                                        
-                het = "NAD"                              
+              if (n_N == 7 .and. n_O == 14) then
+                het = "NAD"
                 het_group = "Nicotinamide-adenine-dinucleotide"
               end if
-              if (n_N == 7 .and. n_O == 17 .and. n_P > 0) then                                        
-                het = "NAP"                            
+              if (n_N == 7 .and. n_O == 17 .and. n_P > 0) then
+                het = "NAP"
                 het_group = "Nicotinamide-adenine-dinucleotide phosphate"
               end if
-              if (n_N == 10 .and. n_O == 1) then                                        
-                het = "32G"  
+              if (n_N == 10 .and. n_O == 1) then
+                het = "32G"
                 het_group = "C21 H30 N10 O S"
               end if
             case (22)
-              if (n_N == 2 .and. n_O == 2) then                                        
-                het = "CZM"  
+              if (n_N == 2 .and. n_O == 2) then
+                het = "CZM"
                 het_group = "3,3'-Me2-salophen"
               end if
-              if (n_N == 3 .and. n_O == 8) then                                        
-                het = "VPF"  
+              if (n_N == 3 .and. n_O == 8) then
+                het = "VPF"
                 het_group = "C22 H32 N3 O8 P"
-              end if                                         
+              end if
             case (23)
-              if (n_N == 0 .and. n_O == 11) then                                        
-                het = "CM5"  
+              if (n_N == 0 .and. n_O == 11) then
+                het = "CM5"
                 het_group = "5-Cyclohexyy-1-pentyl-beta-d-maltoside"
               end if
-              if (n_N == 3 .and. n_O == 3) then                                        
-                het = "4A2"  
+              if (n_N == 3 .and. n_O == 3) then
+                het = "4A2"
                 het_group = "C23 H17 F4 N3 O3"
               end if
             case (26)
-              if (n_N == 0 .and. n_O == 8) then                                        
-                het = "0DV"  
+              if (n_N == 0 .and. n_O == 8) then
+                het = "0DV"
                 het_group = "Fusicoccin H"
               end if
             case (34)
-              if (n_N == 4 .and. n_O == 4) then                                        
+              if (n_N == 4 .and. n_O == 4) then
                 het = "HEM"
                 het_group = "Heme ring"
-              end if    
+              end if
           end select
           if (n_ele(15) > 3) then
             het = "NUC"
             het_group = "Nucleic acid (DNA or RNA type)"
-          end if         
-          l = index(keywrd, " XENO") 
+          end if
+          l = index(keywrd, " XENO")
           if (l /= 0) then
             l_chain = (index(keywrd, " CHAINS=(") == 0)
             j = index(keywrd(l:), ") ")
@@ -794,7 +794,7 @@ subroutine ligand (ires, start_res, nfrag)
               do
                 do l = 1, 10
                   line = trim(line(2:))
-                  if (line(1:1) == "(" .or. line(1:1) == "," .or. line(1:1) == ";" .or. line(1:1) == ")") exit                 
+                  if (line(1:1) == "(" .or. line(1:1) == "," .or. line(1:1) == ";" .or. line(1:1) == ")") exit
                 end do
                 if (line == " ") exit
                 num = line(2:2)
@@ -811,7 +811,7 @@ subroutine ligand (ires, start_res, nfrag)
                   do l = 1, 10
                     if (line(1:1) == "=") exit
                     line = trim(line(2:))
-                  end do 
+                  end do
                   if (het_group(1:3) /= "Not") then
                     line1 = "Defined using keyword XENO as "//trim(het_group)
                     het_group = trim(line1)
@@ -847,7 +847,7 @@ subroutine ligand (ires, start_res, nfrag)
                 write(all_comments(ncomments),'(a)') "*REMARK   3"//trim(line(j + 7:))
               else
                 write(all_comments(ncomments),'(a)') trim(line)
-              end if             
+              end if
               if (log) then
                  write(ilog,'(a)')  trim(line)
                  if (het == "HET")  write(ilog,'(20x,a,i5,a)')" (Includes atom number:", inres(1),")"
@@ -862,7 +862,7 @@ subroutine ligand (ires, start_res, nfrag)
               else
                 write (txtatm(k), "(a6,i5,a3,a6,i6)")"HETATM", k, " "//el, het, ires
               end if
-            end do 
+            end do
           end if
         else
           do j = 1, ninres
@@ -885,7 +885,7 @@ subroutine ligand (ires, start_res, nfrag)
         if (el == " H" .and. i > 1 .and. nbonds(i) == 1) then
           j = ibonds(1,i)
           write(txtatm(i),"(a6,i5,a3,a6)")txtatm(j)(:6), j, " "//el, txtatm(j)(18:20)
-        else          
+        else
          write(txtatm(i),"(a6,i5,a3,a6)")"HETATM", i, " "//el, "UNK"
         end if
       end if
@@ -985,7 +985,7 @@ subroutine moiety (iopt, lused, istart, new)
           inres(j) = 0
         end if
       end do
-    end do   
+    end do
 !
 !  Put hydrogen atoms at the end of the list
 !
@@ -1015,7 +1015,7 @@ subroutine moiety (iopt, lused, istart, new)
     end do
 !
 !  If more than one hydrogen is attached to an atom, then the order of the hydrogen atoms is incorrect.
-!  To correct this, the sequence of hydrogen atoms is reversed.  This is necessary in order to prevent 
+!  To correct this, the sequence of hydrogen atoms is reversed.  This is necessary in order to prevent
 !  hydrogen atoms being swapped around by repeated calls to RESEQ.
 !
     do j = 1, new
@@ -1027,7 +1027,7 @@ subroutine moiety (iopt, lused, istart, new)
 !
     k = j
     do
-      do 
+      do
         k = k + 1
         if (k == new) exit
         if (ibonds(1,lused(k)) /= ibonds(1,lused(j))) then
@@ -1048,7 +1048,7 @@ subroutine moiety (iopt, lused, istart, new)
       end if
       if (k == new) exit
       j = k
-    end do    
+    end do
     return
 end subroutine moiety
 integer function nheavy(icc)
@@ -1142,7 +1142,7 @@ subroutine identify_hexose(ninres, inres, nam, name)
       end do
       backbone(i) = l
       Cm = backbone(i - 1)
-      Cn = l      
+      Cn = l
     end do
     chiral = 0
 !
@@ -1165,13 +1165,13 @@ subroutine identify_hexose(ninres, inres, nam, name)
           if (inres(l) == m) exit
         end do
         if (l > ninres) On = j
-      end if      
+      end if
       if (nat(j) == 8 .and. nheavy(j) == 1) On = j
       if (nat(j) == 1                     ) Hn = j
     end do
     if (On == 0) return!  Failed to find oxygen
     Cp = backbone(2)
-    call dihed (coord, Hn, Cp, C1, On, torsion) 
+    call dihed (coord, Hn, Cp, C1, On, torsion)
     if (torsion > pi) torsion = torsion - 2*pi
     if (torsion < 0) chiral(1) = 1
 !
@@ -1194,9 +1194,9 @@ subroutine identify_hexose(ninres, inres, nam, name)
           if (nat(j) == 8 .and. nheavy(j) == 1) On = j
         end if
       end do
-      call dihed (coord, Hn, Cn, Cp, On, torsion) 
+      call dihed (coord, Hn, Cn, Cp, On, torsion)
       if (torsion > pi) torsion = torsion - 2*pi
-      if (torsion > 0) chiral(k) = 1     
+      if (torsion > 0) chiral(k) = 1
     end do
 !
 !  Determine the hexose
@@ -1207,7 +1207,7 @@ subroutine identify_hexose(ninres, inres, nam, name)
     else
       i = chiral(3) + 2*chiral(4) + 1
       name = hexose_ketose(i)
-    end if    
+    end if
     if (chiral(5) == 0) then
       name = "D-"//trim(name)
     else
@@ -1224,49 +1224,49 @@ subroutine identify_hexose(ninres, inres, nam, name)
         name = "alpha-"//trim(name)
       else
         name = "beta-"//trim(name)
-      end if      
+      end if
     end if
     select case(name)
       case("alpha-D-Allose")
-        nam = "ALO"   
+        nam = "ALO"
       case("alpha-D-Altrose")
-        nam = "ALT"!  
+        nam = "ALT"!
       case("alpha-D-Glucose")
-        nam = "GLC"   
+        nam = "GLC"
       case("alpha-D-Mannose")
-        nam = "MAN"!  
+        nam = "MAN"!
       case("alpha-D-Gulose")
-        nam = "GUL"!  
+        nam = "GUL"!
       case("alpha-D-Idose")
-        nam = "IDO"!  
+        nam = "IDO"!
       case("alpha-D-Galactose")
-        nam = "GAL"!  
+        nam = "GAL"!
       case("alpha-D-Talose")
-        nam = "TAL"!    
+        nam = "TAL"!
       case("beta-D-Allose")
-        nam = "BAL"   
+        nam = "BAL"
       case("beta-D-Altrose")
-        nam = "BAT"!  
+        nam = "BAT"!
       case("beta-D-Glucose")
-        nam = "BGC"   
+        nam = "BGC"
       case("beta-D-Mannose")
-        nam = "BMA"!  
+        nam = "BMA"!
       case("beta-D-Gulose")
-        nam = "BGU"!  
+        nam = "BGU"!
       case("beta-D-Idose")
-        nam = "BID"! 
+        nam = "BID"!
       case("beta-D-Galactose")
-        nam = "BGA"!  
+        nam = "BGA"!
       case("beta-D-Talose")
-        nam = "BTA"!  
+        nam = "BTA"!
       case("alpha-D-Psicose")
-        nam = "ADP"!  
+        nam = "ADP"!
       case("alpha-D-Fructose")
-        nam = "ADF"!  
+        nam = "ADF"!
       case("alpha-D-Sorbose")
-        nam = "ADS"!  
+        nam = "ADS"!
       case("alpha-D-Tagatose")
-        nam = "ADT"!  
+        nam = "ADT"!
     end select
   end subroutine identify_hexose
   subroutine inc_res(ires, start_res, nfrag)

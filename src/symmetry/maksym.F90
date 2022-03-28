@@ -16,7 +16,7 @@
 
       subroutine maksym(loc, xparam, xstore)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : nvar, ndep, natoms
       use symmetry_C, only : locpar, idepfn, locdep
@@ -36,8 +36,8 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, j, loop, locl 
-      double precision :: twopi, xref 
+      integer :: i, j, loop, locl
+      double precision :: twopi, xref
 !-----------------------------------------------
 !*********************************************************************
 !
@@ -54,49 +54,49 @@
         call mopend("For AUTOSYM to work, geometry must be in internal coordinates")
       end if
       twopi = 2.D0*pi
-      ndep = 0 
-      do i = 1, nvar 
-        if (loc(2,i) == 3) then 
+      ndep = 0
+      do i = 1, nvar
+        if (loc(2,i) == 3) then
 !
 !  FORCE DIHEDRALS INTO SAME HALF-CIRCLE
 !
-          j = int(sign(0.5D0,xparam(i))+xparam(i)/twopi) 
-          xparam(i) = xparam(i) - j*twopi 
-        end if 
-        xstore(i) = xparam(i) 
-      end do 
-      do loop = 1, nvar 
-        if (xstore(loop) < (-1.D4)) cycle  
-        xref = xstore(loop) 
-        locl = loc(2,loop) 
-        do i = loop + 1, nvar 
-          if (abs(xref - xstore(i))>=1.D-3 .or. loc(2,i)/=locl) cycle  
-          ndep = ndep + 1 
-          locpar(ndep) = loc(1,loop) 
-          idepfn(ndep) = locl 
-          locdep(ndep) = loc(1,i) 
-          xstore(i) = -1.D5 
-        end do 
+          j = int(sign(0.5D0,xparam(i))+xparam(i)/twopi)
+          xparam(i) = xparam(i) - j*twopi
+        end if
+        xstore(i) = xparam(i)
+      end do
+      do loop = 1, nvar
+        if (xstore(loop) < (-1.D4)) cycle
+        xref = xstore(loop)
+        locl = loc(2,loop)
+        do i = loop + 1, nvar
+          if (abs(xref - xstore(i))>=1.D-3 .or. loc(2,i)/=locl) cycle
+          ndep = ndep + 1
+          locpar(ndep) = loc(1,loop)
+          idepfn(ndep) = locl
+          locdep(ndep) = loc(1,i)
+          xstore(i) = -1.D5
+        end do
 !
 !   Special, common, dihedral symmetry function
 !
-        do i = loop + 1, nvar 
-          if (abs(xref + xstore(i))>=1.D-3 .or. loc(2,i)/=locl) cycle  
-          ndep = ndep + 1 
-          locpar(ndep) = loc(1,loop) 
-          idepfn(ndep) = 14 
-          locdep(ndep) = loc(1,i) 
-          xstore(i) = -1.D5 
-        end do 
-      end do 
-      j = 0 
-      do i = 1, nvar 
-        if (xstore(i) <= (-1.D4)) cycle  
-        j = j + 1 
-        loc(1,j) = loc(1,i) 
-        loc(2,j) = loc(2,i) 
-        xparam(j) = xparam(i) 
-      end do 
+        do i = loop + 1, nvar
+          if (abs(xref + xstore(i))>=1.D-3 .or. loc(2,i)/=locl) cycle
+          ndep = ndep + 1
+          locpar(ndep) = loc(1,loop)
+          idepfn(ndep) = 14
+          locdep(ndep) = loc(1,i)
+          xstore(i) = -1.D5
+        end do
+      end do
+      j = 0
+      do i = 1, nvar
+        if (xstore(i) <= (-1.D4)) cycle
+        j = j + 1
+        loc(1,j) = loc(1,i)
+        loc(2,j) = loc(2,i)
+        xparam(j) = xparam(i)
+      end do
       nvar = j
-      return  
-      end subroutine maksym 
+      return
+      end subroutine maksym

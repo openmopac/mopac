@@ -16,7 +16,7 @@
 
   subroutine update(iparam, ielmnt, param, c1)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
 !
     use parameters_C, only : natorb, guess1, guess2, guess3, zs, zp, zd, &
@@ -31,9 +31,9 @@
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
-      integer , intent(in) :: iparam 
-      integer , intent(in) :: ielmnt 
-      double precision , intent(in) :: c1, param 
+      integer , intent(in) :: iparam
+      integer , intent(in) :: ielmnt
+      double precision , intent(in) :: c1, param
 !-----------------------------------------------
 !***********************************************************************
 !
@@ -45,7 +45,7 @@
 !         C1 is zero if the parameter is to be re-set to PARAM
 !         C1 is one if the parameter is to be perturbed
 !
-!*********************************************************************** 
+!***********************************************************************
 !------------------------------------------------------------
     integer :: i, kfn, ni, nj, jparam
     intrinsic Nint
@@ -224,6 +224,6 @@
 !
 ! If parameters are read in for an element, assume element is OK to use.
 !
-    if (method_indo) isok(ielmnt) = 1 
+    if (method_indo) isok(ielmnt) = 1
   return
-  end subroutine update 
+  end subroutine update

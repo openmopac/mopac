@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine datin(iw)  
+      subroutine datin(iw)
 !-----------------------------------------------
-!   M o d u l e s 
+!   M o d u l e s
 !-----------------------------------------------
       USE parameters_C, only : partyp, n_partyp, n_partyp_alpb, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
@@ -39,13 +39,13 @@
       logical :: exists, lv_par(60) = .false.
       character (len=500), dimension (10) :: file
       character :: text*80,  ch*1
-      character, dimension(107) :: elemnt*2 
+      character, dimension(107) :: elemnt*2
       character, external :: get_a_name*300
       integer, external :: end_of_keyword
       double precision, external :: reada
 
-      save elemnt 
-!----------------------------------------------- 
+      save elemnt
+!-----------------------------------------------
       data (elemnt(i),i=1,107)/ 'H ', 'HE', 'LI', 'BE', 'B ', 'C ', 'N ', 'O '&
         , 'F ', 'NE', 'NA', 'MG', 'AL', 'SI', 'P ', 'S ', 'CL', 'AR', 'K ', &
         'CA', 'SC', 'TI', 'V ', 'CR', 'MN', 'FE', 'CO', 'NI', 'CU', 'ZN', 'GA'&
@@ -55,7 +55,7 @@
         'DY', 'HO', 'ER', 'TM', 'YB', 'LU', 'HF', 'TA', 'W ', 'RE', 'OS', 'IR'&
         , 'PT', 'AU', 'HG', 'TL', 'PB', 'BI', 'PO', 'AT', 'RN', 'FR', 'RA', &
         'AC', 'TH', 'PA', 'U ', 'NP', 'PU', 'AM', 'CM', 'BK', 'MI', 'XX', 'FM'&
-        , 'MD', 'CB', '++', '+', '--', '-', 'TV'/  
+        , 'MD', 'CB', '++', '+', '--', '-', 'TV'/
     if (.not. allocated(ijpars))  allocate(ijpars(5,5000), parsij(5000))
     i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
     t_par     = "Add a description of this parameter near line 50 in datin.F90  "
@@ -79,7 +79,7 @@
       if (i /= 0) then
         nref = nref + 1
         file(nref) = trim(get_a_name(keywrd(k:j), len_trim(keywrd(k:j))))
-        k = k + i 
+        k = k + i
       end if
       if (i == 0) then
 !
@@ -93,7 +93,7 @@
     if (file(nref)(1:1) == '"') file(nref) = file(nref)(2:)
     i = len_trim(file(nref))
     if (file(nref)(i:i) == '"') file(nref) = file(nref)(:i - 1)
-    
+
   !
   !   Read in parameters from a previous run - these will overwrite
   !   the default values of the parameters.
@@ -128,7 +128,7 @@
         if (loop == 1) then
           write(line,'(a)')" EXTERNAL file """//trim(file(loop))//""" could not be opened"
           write(iw,'(/,a)')trim(line)
-          if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then 
+          if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
             call mopend(trim(line))
             inquire (file=trim(file(loop)), exist = exists)
             if (exists) then
@@ -155,7 +155,7 @@
           i = i + 1
           line = text (1:80)
           if (text(i:i) /= " ")then
-            j = j*10 + ichar(text(i:i)) - ichar("0")    
+            j = j*10 + ichar(text(i:i)) - ichar("0")
             i = i + 1
           end if
           v_par(j) = reada(text, i)
@@ -194,7 +194,7 @@
           end do
           write(iw,'(//,a,//)')" (Edit the EXTERNAL to remove non-standard characters using a primitive editor such as vi)"
           return
-        end if   
+        end if
 !
 ! Clean up line - delete anything after the third set of spaces
 !
@@ -210,7 +210,7 @@
         end do
         i = Index (line, " ")
         i = index(line(i + 1:)," ") + i + 1
-        i = index(line(i + 1:)," ") + i 
+        i = index(line(i + 1:)," ") + i
         text = line(1:i)
 !
 !  Force in spaces needed for parsing
@@ -225,7 +225,7 @@
         end do
         write(iw,"(3a)")" EXTERNAL parameter type: '",trim(text),"' unrecognized"
         close(iext)
-        goto 99 
+        goto 99
 1000    iparam = j
         jelmnt=0
         if (iparam == n_partyp_alpb .or. iparam == n_partyp_alpb + 1) then
@@ -252,13 +252,13 @@
         end do
         write(iw,"(3a)")" EXTERNAL element type: '",trim(text),"' unrecognized"
         close(iext)
-        goto 99 
+        goto 99
 1100    param = reada (text, Index (text, " "//elemnt(j)))
         if (j > jelmnt) then
           ielmnt = j+200*jelmnt
         else
           ielmnt = jelmnt+200*j
-        end if       
+        end if
         do i = 1, lpars
           if (ijpars(1, i) == ielmnt .and. ijpars(2, i) == iparam) go to 1200
         end do
@@ -275,7 +275,7 @@
     if(mpar == 1) then
       write(iw,'(/,3a)')" Parameters read in from file: """, file(loop)(:len_trim(file(loop))),""""
     else
-      if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then 
+      if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
         call mopend("No parameters read in from '"//file(loop)(:len_trim(file(loop)))//"'")
       end if
     end if
@@ -305,7 +305,7 @@
       integer :: i, j, k, l, il, iu, ii, jj, iparam, ielmnt, jelmnt
       character :: elemnt(107)*2, elemnt2*2
       save elemnt, lold
-!----------------------------------------------- 
+!-----------------------------------------------
       data (elemnt(i),i=1,107)/ 'H ', 'HE', 'LI', 'BE', 'B ', 'C ', 'N ', 'O '&
         , 'F ', 'NE', 'NA', 'MG', 'AL', 'SI', 'P ', 'S ', 'CL', 'AR', 'K ', &
         'CA', 'SC', 'TI', 'V ', 'CR', 'MN', 'FE', 'CO', 'NI', 'CU', 'ZN', 'GA'&
@@ -315,7 +315,7 @@
         'DY', 'HO', 'ER', 'TM', 'YB', 'LU', 'HF', 'TA', 'W ', 'RE', 'OS', 'IR'&
         , 'PT', 'AU', 'HG', 'TL', 'PB', 'BI', 'PO', 'AT', 'RN', 'FR', 'RA', &
         'AC', 'TH', 'PA', 'U ', 'NP', 'PU', 'AM', 'CM', 'BK', 'MI', 'XX', 'FM'&
-        , 'MD', 'CB', '++', '+', '--', '-', 'TV'/  
+        , 'MD', 'CB', '++', '+', '--', '-', 'TV'/
       do j = 1, 107
         do k = 1, n_partyp
           if (k == n_partyp_alpb + 1) cycle
@@ -338,7 +338,7 @@
                     write (iw, "(//,8X,A)") " Parameters read in"
                     write (iw, "(/5X, ' Parameter Type  Element    Parameter')")
                     lold = .false.
-                  end if              
+                  end if
                   if(l /= 0) then
                     elemnt2 = elemnt(l)
                     if(elemnt2(2:2) == " ")elemnt2 = elemnt2(1:1)
@@ -386,7 +386,7 @@
       k = k + 1
     end do
     j = k - 1
-    do 
+    do
       j = j + 1
       if (j > len) exit
       if (input(j:j) == ' ') exit
@@ -405,7 +405,7 @@
   end function end_of_keyword
   character(LEN=300) function get_a_name(input, len)
 !
-! Given a string of the type "aaa;bbb;ccc" separate 
+! Given a string of the type "aaa;bbb;ccc" separate
 ! off the first string, here "aaa"
 !
 ! Note: In input, the first character MUST be the first character of the name or
@@ -436,4 +436,4 @@
   return
   end function get_a_name
 
- 
+

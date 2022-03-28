@@ -17,6 +17,6 @@
 program mopac
   implicit none
   call mopac_gui_deactivate
-  call run_mopac 
+  call run_mopac
 end program mopac
-  
+

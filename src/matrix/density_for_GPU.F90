@@ -17,7 +17,7 @@
 subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp, iopc)
 #ifdef GPU
       Use mod_vars_cuda, only: real_cuda, prec, nthreads_gpu, nblocks_gpu
-      Use iso_c_binding    
+      Use iso_c_binding
       Use density_cuda_i
       Use call_gemm_cublas
       Use call_syrk_cublas
@@ -91,7 +91,7 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
           call dtrttp('u', norbs, xmat, norbs, pp, i )
 
           deallocate (xmat,stat=i)
-        case(4)   ! Option to use dsyrk from CUBLAS 
+        case(4)   ! Option to use dsyrk from CUBLAS
 #ifdef GPU
           allocate(xmat(norbs,norbs),stat = i)
           forall (j = 1:norbs, i=1:norbs) xmat(i, j) = 0.d0
@@ -101,7 +101,7 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
           call dtrttp('u', norbs, xmat, norbs, pp, i )
           deallocate(xmat,stat=i)
 #endif
-        case(5)   ! Option to use dsyrk from BLAS 
+        case(5)   ! Option to use dsyrk from BLAS
           if (fract < 1.d-2) then
             allocate(xmat(norbs,norbs),stat = i)
             forall (j = 1:norbs, i=1:norbs) xmat(i, j) = 0.d0
@@ -113,19 +113,19 @@ subroutine density_for_GPU (c, fract, ndubl, nsingl, occ, mpack, norbs, mode, pp
 ! The following block should be re-cast in a modern style "someday"
 ! It's used only infrequently, so updating it is not urgent.
 !
-            l = 0 
-            do i = 1, norbs 
-              do j = 1, i 
-                l = l + 1 
-                sum1 = 0.D0 
-                sum2 = sum(c(i,nl2:nu2)*c(j,nl2:nu2)) 
-                sum2 = sum2*occ 
-                sum1 = sum(c(i,nl1:nu1)*c(j,nl1:nu1)) 
-                pp(l) = (sum2 + sum1*frac)*sign 
-              end do 
-              pp(l) = cst + pp(l) 
-            end do 
-          end if            
+            l = 0
+            do i = 1, norbs
+              do j = 1, i
+                l = l + 1
+                sum1 = 0.D0
+                sum2 = sum(c(i,nl2:nu2)*c(j,nl2:nu2))
+                sum2 = sum2*occ
+                sum1 = sum(c(i,nl1:nu1)*c(j,nl1:nu1))
+                pp(l) = (sum2 + sum1*frac)*sign
+              end do
+              pp(l) = cst + pp(l)
+            end do
+          end if
     End select
     continue
     return

@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-  subroutine setup_mopac_arrays(n, mode) 
+  subroutine setup_mopac_arrays(n, mode)
 !
 !   Create and destroy allocatable arrays used by MOPAC
 !
@@ -51,7 +51,7 @@
       & cdiag, occa, nalmat, conf, &
       & vectci, ispin, eig, ispqr, deltap
 !
-  use drc_C, only: vref, vref0, allxyz, allvel, xyz3, vel3, allgeo, geo3, parref 
+  use drc_C, only: vref, vref0, allxyz, allvel, xyz3, vel3, allgeo, geo3, parref
 !
   use cosmo_C, only : ipiden, idenat, gden, qdenet, &
   phinet, qscnet, qscat, bmat, abcmat, srad, iatsp, &
@@ -114,7 +114,7 @@
 !  Create main arrays - at this point, the array sizes are all known
 !
         j = 0
-        if (allocated(grad))     deallocate(grad) 
+        if (allocated(grad))     deallocate(grad)
         allocate(grad(nvar), stat=i)
           j = j + i
         if ( .not. mozyme) then
@@ -125,10 +125,10 @@
           if (allocated(p))        deallocate(p)
           if (allocated(pa))       deallocate(pa)
           if (allocated(pb))       deallocate(pb)
-          if (allocated(pold))     deallocate(pold) 
+          if (allocated(pold))     deallocate(pold)
           if (allocated(pold2))    deallocate(pold2)
           if (allocated(pold3))    deallocate(pold3)
-          if (allocated(pbold))    deallocate(pbold) 
+          if (allocated(pbold))    deallocate(pbold)
           if (allocated(pbold2))   deallocate(pbold2)
           if (allocated(pbold3))   deallocate(pbold3)
           if (allocated(errfn))    deallocate(errfn)
@@ -141,7 +141,7 @@
           if (allocated(c))        deallocate(c)
           if (allocated(cb))       deallocate(cb)
           if (allocated(eigs))     deallocate(eigs)
-          if (allocated(q))        deallocate(q)         
+          if (allocated(q))        deallocate(q)
           if (allocated(eigb))     deallocate(eigb)
           if (allocated(workmat1)) deallocate(workmat1)
           if (allocated(workmat2)) deallocate(workmat2)
@@ -164,7 +164,7 @@
           j = j + i
           if (uhf) allocate(fb(mpack), cb(norbs, norbs), pbold(npulay*mpack), &
           pbold2(npulay*mpack), pbold3(max(mpack, npulay*npulay)), stat=i)
-          j = j + i          
+          j = j + i
           if (j /= 0) then
             call mopend("A problem occurred during memory assignment, most likely the system is too big to run. ")
             return
@@ -192,12 +192,12 @@
     else
 !
 !  Delete all arrays
-!    
+!
     mpack = 0
     numat = 0
-    n2elec =0 
+    n2elec =0
     if ( meci() < - 1.d0) n2elec = 0
-    if (allocated(f)) call fock2(f, f, f, w, w, w, numat, nfirst, nlast, mode) 
+    if (allocated(f)) call fock2(f, f, f, w, w, w, numat, nfirst, nlast, mode)
     if (allocated(a2))         deallocate(a2, stat = i)
     if (allocated(ab))         deallocate(ab, stat = i)
     if (allocated(abcmat))     deallocate (abcmat, stat = i)
@@ -380,7 +380,7 @@
     if (allocated(conf))       deallocate(conf, stat = i)
     if (allocated(vectci))     deallocate(vectci, stat = i)
     if (allocated(ispin))      deallocate(ispin, stat = i)
-    if (allocated(ispqr))      deallocate(ispqr, stat = i)    
+    if (allocated(ispqr))      deallocate(ispqr, stat = i)
     if (allocated(natm))       deallocate(natm, stat = i)
     if (allocated(nbf))        deallocate(nbf, stat = i)
     if (allocated(ibf))        deallocate(ibf, stat = i)

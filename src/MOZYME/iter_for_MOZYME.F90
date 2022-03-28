@@ -54,7 +54,7 @@ subroutine iter_for_MOZYME (ee)
    !  NCE:      Number of atoms in each empty LMO      Atoms
    !  NNCE:     Starting address of each M.O. in NCE   Atoms
    !
-   !***********************************************************************    
+   !***********************************************************************
     character :: xchar = " "
     logical, save :: prtpls, orthog, times, scf1, bigscf, debug, prtden, &
          & prtfok, okscf, opend, panic = .true., store_useps
@@ -67,7 +67,7 @@ subroutine iter_for_MOZYME (ee)
     double precision, external :: helecz, reada
     add_niter = 0
 !
-        80  continue 
+        80  continue
     if (nmol /= numcal) then
       !
       !  INITIALIZE
@@ -109,10 +109,10 @@ subroutine iter_for_MOZYME (ee)
       end if
       re_local = 100000000
       i = index(keywrd," RE-LOC")
-      if (i /= 0) then 
+      if (i /= 0) then
         j = index(keywrd(i + 7:), " ") + i + 7
         if (index(keywrd(i:j), "=") /= 0) then ! Allow for RE-LOC=, RE-LOCAL=, etc.
-          i = index(keywrd(i:j), "=") + i 
+          i = index(keywrd(i:j), "=") + i
           re_local = nint(reada(keywrd,i))
         end if
       end if
@@ -141,10 +141,10 @@ subroutine iter_for_MOZYME (ee)
           if (moperr) return
           call density_for_MOZYME (p, 0, noccupied, partp)
           partp = p
-      else       
+      else
         useps = .false.
         if (index(keywrd, "OLD_SCF") == 0) call makvec()
-      end if    
+      end if
       if (moperr) return
       !
       !  A NEW MOLECULE, THEREFORE SEARCH FOR ALL WEAK INTERACTIONS.
@@ -156,7 +156,7 @@ subroutine iter_for_MOZYME (ee)
       !  OR VERY WEAK INTERACTIONS.
       !
       nhb = 3
-    end if 
+    end if
     if (mod(nscf + 1, re_local) == 0) then
       write(iw,"(/10x,a,/)")"  LMOs being Re-Localized"
       call local_for_MOZYME("OCCUPIED")
@@ -222,7 +222,7 @@ subroutine iter_for_MOZYME (ee)
 !
 !  During a run of "tidy", the amount of expansion space for the LMO's to use had
 !  become small.  The LMOs were stored to disc.  The old arrays will now be deleted
-!  and re-created 60% larger than before.  Then the LMOs are read off disc 
+!  and re-created 60% larger than before.  Then the LMOs are read off disc
 !
           deallocate (icocc, cocc, icvir, cvir)
 
@@ -296,7 +296,7 @@ subroutine iter_for_MOZYME (ee)
           write (iw, "(' DENSITY MATRIX TO GO INTO PARTP')")
           call vecprt_for_MOZYME (p, norbs)
         end if
-        call setupk (nocc1) ! Work out the atom list to be used in the SCF 
+        call setupk (nocc1) ! Work out the atom list to be used in the SCF
         if (times) call timer (" After SETUPK")
         if (imol == numcal .and. numat > numred+1) then
           call density_for_MOZYME (partp, -1, nocc1, p) ! Remove density due to atoms to be
@@ -320,8 +320,8 @@ subroutine iter_for_MOZYME (ee)
                 escf = escf + solv_energy * fpc_9
           end if
           if (prtpls)  write (iw, "(/,A,F16.6,A,/)") " PLS ESCF USING THE OLD LMOs:", escf, " KCAL/MOL"
-          endfile (iw) 
-          backspace (iw) 
+          endfile (iw)
+          backspace (iw)
         end if
         if (imol == numcal .and. numat > numred+1) call buildf (partf, f, -1)
         icalcn = step_num
@@ -336,12 +336,12 @@ subroutine iter_for_MOZYME (ee)
       if (moperr) return
       if (Mod(niter+1, idnout) == 0) then
         write (iw, "(A)") " .den FILE TO BE WRITTEN OUT"
-        endfile (iw) 
-        backspace (iw) 
+        endfile (iw)
+        backspace (iw)
         call pinout (1, .true.)
         write (iw, "(A)") " .den FILE WRITTEN OUT"
-        endfile (iw) 
-        backspace (iw) 
+        endfile (iw)
+        backspace (iw)
       end if
       call eimp ()
       if (nmol == numcal .and. numat > numred+1) then
@@ -352,7 +352,7 @@ subroutine iter_for_MOZYME (ee)
       if (niter > 10 .and. add_niter == 0) then
         if (PLS_faulty()) then
 !
-!  When some systems are run using MOZYME, the DIAGG1 - DIAGG2 combination fails to converge, 
+!  When some systems are run using MOZYME, the DIAGG1 - DIAGG2 combination fails to converge,
 !  and the ovmax converges to a non-zero minimum.  If the job is stopped and a <file>.den
 !  is generated, then on restarting the same job, the fault is automatically corrected.
 !
@@ -364,7 +364,7 @@ subroutine iter_for_MOZYME (ee)
           add_niter = niter
           call pinout(1, .false.)
           call l_control("OLDEN", len_trim("OLDEN"), 1)
-          call l_control("SILENT", len_trim("SILENT"), 1)   
+          call l_control("SILENT", len_trim("SILENT"), 1)
           nscf = nscf - 1
           goto 80
         end if
@@ -404,7 +404,7 @@ subroutine iter_for_MOZYME (ee)
         call vecprt_for_MOZYME (p, norbs)
       end if
       if (nmol == numcal .and. numat > numred+1) then
-        call buildf (f, partf, 1)  !  
+        call buildf (f, partf, 1)  !
       else
         call buildf (f, partf, 0)
       end if
@@ -428,14 +428,14 @@ subroutine iter_for_MOZYME (ee)
         c_proc = 5.d0*selcon/abs(ovmax)
       end if
       escf = max(-999999.d0, min(999999.d0, escf))
-      if (abs(energy_diff) > 9999.D0) energy_diff = 0.D0 
-      if (prtpls .or. debug .and. niter > itrmax - 20) then 
+      if (abs(energy_diff) > 9999.D0) energy_diff = 0.D0
+      if (prtpls .or. debug .and. niter > itrmax - 20) then
         write (line, "(' ITER.',i7,' PLS=', e10.3,10x,' ENERGY ',f13.5,' DELTAE',f13.7)")  &
-        niter + add_niter, ovmax,   escf, energy_diff 
+        niter + add_niter, ovmax,   escf, energy_diff
         write(iw,"(a)")trim(line)
         call to_screen(line)
-        endfile (iw) 
-        backspace (iw) 
+        endfile (iw)
+        backspace (iw)
         if (debug) then
           write (iw, "(A,F9.6,A,F7.1,A,F9.6,A,F8.2,A,F11.3,A,I7)") "TINY:", &
                & tiny, " SUMT:", sumt, " OVMAX:", ovmax, " SUMB:", sumb, &
@@ -453,7 +453,7 @@ subroutine iter_for_MOZYME (ee)
         write (iw, "(10F8.4)") (ws(i), i=1, numat)
         write (iw, "(A,F12.6)") " Variance:", sum
       end if
-      endfile (iw) 
+      endfile (iw)
       backspace (iw)
       call isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
       if ( .not. bigscf .and. numcal == 1) then

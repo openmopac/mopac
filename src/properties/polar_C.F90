@@ -14,11 +14,11 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module polar_C 
+      module polar_C
       double precision :: &
         omega=0.d0,   & ! Energy of frequency-dependent polarizability
                    ! Units: eV
         alpavg=0.d0,  & ! Average polarizability at frequency omega
                    ! Units: cubic Angstroms
         dummy
-      end module polar_C 
+      end module polar_C

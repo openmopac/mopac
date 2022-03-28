@@ -14,16 +14,16 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module Parameters_for_PM3_C 
+      module Parameters_for_PM3_C
       double precision, dimension(107) :: usspm3, upppm3, zspm3, zppm3, &
         betasp, betapp, betadp, alppm3, gsspm3, gsppm3, gpppm3, gp2pm3, &
         hsppm3, polvolpm3, zsnpm3, zpnpm3, zdnpm3, f0sdpm3, g2sdpm3
-      double precision, dimension(107,4) :: guesp1, guesp2, guesp3 
+      double precision, dimension(107,4) :: guesp1, guesp2, guesp3
 !
 !       Data for Element   1:     Hydrogen
 !
       data      usspm3(  1)/     -13.0733210d0/
-      data      betasp(  1)/      -5.6265120d0/ 
+      data      betasp(  1)/      -5.6265120d0/
       data       zspm3(  1)/       0.9678070d0/
       data      alppm3(  1)/       3.3563860d0/
       data      gsspm3(  1)/      14.7942080d0/
@@ -195,7 +195,7 @@
       data      hsppm3(  9)/       0.7277630d0/
       data   polvolpm3(  9)/       0.2358930d0/
       data    guesp1(  9,1)/      -0.0121660d0/
-      
+
 data    guesp2(  9,1)/       6.0235740d0/
       data    guesp3(  9,1)/       1.8568590d0/
       data    guesp1(  9,2)/      -0.0028520d0/
@@ -859,5 +859,5 @@ data    guesp2(  9,1)/       6.0235740d0/
 !
 !       Data for Element 106:    - Sparkle
 !
-      data      alppm3(106)/       1.5000000d0/ 
+      data      alppm3(106)/       1.5000000d0/
       end module Parameters_for_PM3_C

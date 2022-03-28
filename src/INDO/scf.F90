@@ -365,7 +365,7 @@
       bvec1(0) = avec1(0) / 2.d0
 
       return
-      end subroutine veccou 
+      end subroutine veccou
 
 !     *************************************************************************
 
@@ -396,7 +396,7 @@
       if (nshell == 1) then
         ll(1) = '1'
         ll(2) = 'v'
-      else 
+      else
         ll(1) = '1'
         ll(2) = '2'
         ll(3) = 'v'
@@ -445,7 +445,7 @@
 !     **** first eigenvalues before main dump ****
 
 !     **** dump of molecular orbitals ****
-      call matout(c, aii, n, n, n) 
+      call matout(c, aii, n, n, n)
       return
       end subroutine output
 

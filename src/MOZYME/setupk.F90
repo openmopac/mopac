@@ -45,7 +45,7 @@ subroutine setupk (nocc1)
 !
 !   Now compress kopt, so that all the atoms used for the Fock matrix are in
 !   order.
-! 
+!
     l = 0
     do i = 1, numat
       if (kopt(i) == 1) then

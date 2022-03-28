@@ -118,7 +118,7 @@ subroutine greek (n1)
             l = inext(1)
             inext(1) = inext(2)
             inext(2) = j
-          end if          
+          end if
         end if
       else if (Ile) then
         if (jjj == 1) then
@@ -135,7 +135,7 @@ subroutine greek (n1)
             inext(1) = inext(2)
             inext(2) = j
           end if
-          
+
         end if
       end if
       call txtype (nnext, inext, types(jjj))

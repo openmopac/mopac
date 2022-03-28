@@ -54,7 +54,7 @@
       !                            and number goes in 16:16
       !
       if (m == 1) then
-        txtatm (jtype(k)) (15:15) = letter 
+        txtatm (jtype(k)) (15:15) = letter
         j = jtype(k)
         m = 0
         do i = 1, nbonds(j)
@@ -83,7 +83,7 @@
             if (txtatm(j)(18:20) /= "UNK" .or. txtatm (j) (16:16) == " " &
               .or. txtatm (j) (16:16) > Char (min(9,m)+Ichar ("0"))) then
               txtatm (j) (16:16) = Char (min(9,m)+Ichar ("0"))
-            end if            
+            end if
           end if
         end do
       end if

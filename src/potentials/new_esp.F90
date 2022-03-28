@@ -23,9 +23,9 @@
     use funcon_C, only : a0, pi
     use chanel_C, only : iesp
     use esp_C, only : ixn, iyn, izn, jxn, jyn, jzn
-    USE overlaps_C, only : ccc, zzz 
+    USE overlaps_C, only : ccc, zzz
 !
-    
+
     implicit none
     logical dubl, sames, cube, espgrid
     integer :: i, j, ij, nx, ny, nz, iiz, iiy, iix, &
@@ -34,14 +34,14 @@
     pij, kl, lmax, nxyz, nFit, m, el, nUse, nnx, nny, nnz
 
     real :: rtemp, dx, dy, dz, ep(81)
-    
+
     double precision :: x, y, z, delx, dely, delz,  &
-    iatomx, iatomy, iatomz, jatomx, jatomy, jatomz, px, py, pz, & 
+    iatomx, iatomy, iatomz, jatomx, jatomy, jatomz, px, py, pz, &
     icoeff, jcoeff, dtemp1, dtemp2, dtemp3, rr, iexp, jexp, &
     gamma, gammainverse, kfac, contractionDensity(100), tosp, yz, xyz, &
     rx, u(4), w(4), uu, ww, ttinverse, t, x0, y0, z0, &
     tt, xint, yint, zint, xin(64), yin(64), zin(64), &
-     EUpperRange, &   
+     EUpperRange, &
     inorm, jnorm, &
     xmax = -1.d8, &
     xmin =  1.d8, &
@@ -68,15 +68,15 @@
     nFit = 0
     call get_minus_point_five_overlap(s)
     call mult (c, s, vecs, norbs)
-     
-! For GPU MOPAC  
+
+! For GPU MOPAC
 ! GBR_new_addition
-     
+
 ! ORG      call densit (vecs, norbs, norbs, nclose, 2.d0, nopen, fract, p, 2)
     ij = (norbs*(norbs+1)/2)
         call density_for_GPU (vecs,fract,nclose,nopen, &
                              & 2.d0,ij,norbs,2,p,5)
-! this procedure was replaced with MKL/DSCAL calling 
+! this procedure was replaced with MKL/DSCAL calling
 !    ij = 0
 !    do i = 1, norbs
 !      do j = 1, i - 1
@@ -91,15 +91,15 @@
     do i = 1,norbs
        j = i*(i+1)/2
        p(j) = p(j)/2.d0
-    end do    
-!!!    
-    
+    end do
+!!!
+
     tosp = 2.d0/sqrt(pi)
 !
 !  Convert to AU and work out the upper and lower bounds of the box
 !
     coord = coord/a0
-   
+
     do i = 1, numat
       if (coord(1,i) > xmax) xmax = coord(1,i)
       if (coord(2,i) > ymax) ymax = coord(2,i)
@@ -125,13 +125,13 @@
     nny = max(15, min(25, nint((ymax - ymin))))
     nnz = max(15, min(25, nint((zmax - zmin))))
     allocate (planexy(nnx*nny*nnz), scr2(nnx*nny*nnz))
-    delx = (xmax - xmin)/(nnx - 1)  
-    dely = (ymax - ymin)/(nny - 1)  
-    delz = (zmax - zmin)/(nnz - 1)  
+    delx = (xmax - xmin)/(nnx - 1)
+    dely = (ymax - ymin)/(nny - 1)
+    delz = (zmax - zmin)/(nnz - 1)
 !
 !  Set up arrays for handling the STO6G orbitals
 !
-    call setupg 
+    call setupg
     allocate (itypes(norbs), icoord(norbs), norm(norbs,6))
     nshells = 0
     do i = 1, numat
@@ -178,7 +178,7 @@
       iatomx = coord(1, icoord(i))
       iatomy = coord(2, icoord(i))
       iatomz = coord(3, icoord(i))
-      select case (itype)  
+      select case (itype)
       case (0) !  "s"-type
         isize  = 1
         isizes = 1
@@ -199,7 +199,7 @@
         jatomx = coord(1, icoord(j))
         jatomy = coord(2, icoord(j))
         jatomz = coord(3, icoord(j))
-        select case (jtype)  
+        select case (jtype)
         case (0) !  "s"-type
           jsize  = 1
           jsizes = 1
@@ -224,7 +224,7 @@
               ij = ij + 1
               ijx(ij) = ixn(k) + jxn(l) + 1
               ijy(ij) = iyn(k) + jyn(l) + 1
-              ijz(ij) = izn(k) + jzn(l) + 1  
+              ijz(ij) = izn(k) + jzn(l) + 1
             end do
           end do
         else
@@ -243,7 +243,7 @@
           icoeff = ccc(i,ig)
           inorm = norm(i,ig)
           if (sames) then
-            jgmax = ig 
+            jgmax = ig
           else
             jgmax = 6
           end if
@@ -254,15 +254,15 @@
             jcoeff = ccc(j,jg)
             gamma = iexp + jexp
             gammainverse = 1.d0/gamma
-            dtemp1 = iexp*jexp*rr*gammainverse 
+            dtemp1 = iexp*jexp*rr*gammainverse
             if (dtemp1 < 46.d0) then
-              kfac = exp(-dtemp1)          
+              kfac = exp(-dtemp1)
               px = (iexp*iatomx + jexp*jatomx)*gammainverse
               py = (iexp*iatomy + jexp*jatomy)*gammainverse
               pz = (iexp*iatomz + jexp*jatomz)*gammainverse
               dtemp1 = icoeff*jcoeff*inorm*jnorm*kfac
               idx = 0
-              if (sames) then                  
+              if (sames) then
                 if (dubl) then
                   do k = 1, isize
                     do l = 1, k
@@ -290,13 +290,13 @@
               pij = 1
               do iiz = 1, nnz
                 z = zmin + delz*(iiz - 1)
-                dz = sngl(pz -  z) 
+                dz = sngl(pz -  z)
                 do iiy = 1, nny
                   y = ymin + dely*(iiy - 1)
                   dy = sngl(py - y)
                   yz = dy**2 + dz**2
                   do iix = 1, nnx
-                    x = xmin + delx*(iix - 1)                                
+                    x = xmin + delx*(iix - 1)
                     isize = isizes
                     jsize = jsizes
                     dx = sngl(px - x)
@@ -344,7 +344,7 @@
                       mm = 0
                       do l = 1,nroots
                         dtemp1 = dtemp1 + xin(nx + mm)*yin(ny + mm)*zin(nz + mm)
-                        mm = mm + 16                        
+                        mm = mm + 16
                       end do
                       ep(k) = sngl(contractiondensity(k)*dtemp1)
                     end do
@@ -352,7 +352,7 @@
                     do k = istart(i), istop(i)
                       if (sames) then
                         lmax = k
-                      else 
+                      else
                         lmax = istop(j)
                       end if
                       do l = istart(j), lmax
@@ -368,13 +368,13 @@
                 end do                !  "y" loop
               end do                  !  "z" loop
             end if
-          end do                      ! Outermost "jg" loop          
+          end do                      ! Outermost "jg" loop
         end do                        ! Outermost "ig" loop
       end do                          ! Outermost "j" loop
-    end do           
+    end do
     nxyz = pij - 1                 ! Outermost "i" loop
-    scr2 = planexy    
-    EUpperRange = 0.9d0   
+    scr2 = planexy
+    EUpperRange = 0.9d0
     do
       do i = 1, nxyz
         if (abs(scr2(i)) < EUpperrange .and. abs(scr2(i)) > 1.d-4) nFit = nFit + 1
@@ -382,7 +382,7 @@
       if (nFit > nxyz - 10) exit
       EUpperRange = EUpperRange*2.d0
     end do
-    EUpperRange = EUpperRange*0.5d0 
+    EUpperRange = EUpperRange*0.5d0
     pij = 1
     el = 7*numat
     allocate(amatrix(el*el), qraux(el), bVector(el), aVector(el), &
@@ -405,7 +405,7 @@
               do n = 1, el
                 aMatrix((m - 1)*el + n) =  aMatrix((m - 1)*el + n) + aVector(m)*aVector(n)
               end do
-              bVector(m) =  bVector(m) + aVector(m)*Scr2(l)              
+              bVector(m) =  bVector(m) + aVector(m)*Scr2(l)
             end do
             i = i + 1
           end if
@@ -421,7 +421,7 @@
     dtemp2 = Abs(aMatrix(1))*1.d-5
     do k = 1, el
       dtemp1 = Abs(aMatrix((k - 1)*el + k))
-      if (dtemp1 < dtemp2) exit  
+      if (dtemp1 < dtemp2) exit
     end do
     nUse = k - 1
 !
@@ -439,13 +439,13 @@
 !
     do j = 1, el
       if (jpvt(j) <= 0) then
-        k = -jpvt(j) 
+        k = -jpvt(j)
         do while (k /= j)
           rtemp = aVector(j)
           aVector(j) = aVector(k)
           aVector(k) = rtemp
           jpvt(k) = -jpvt(k)
-          k = jpvt(k)         
+          k = jpvt(k)
         end do
       end if
     end do
@@ -455,7 +455,7 @@
     ymin = ymin - 4.d0
     zmax = zmax + 4.d0
     zmin = zmin - 4.d0
-    i = index(keywrd," ESPGR") 
+    i = index(keywrd," ESPGR")
     if (i /= 0) then
       nnx = max( nint(reada(keywrd, i + 8)), 60)
       nny = nnx
@@ -466,8 +466,8 @@
       nnz = 60
     end if
     allocate(esp_array(nny*nnz))
-    delx = (xmax - xmin)/(nnx - 1)  
-    dely = (ymax - ymin)/(nny - 1)  
+    delx = (xmax - xmin)/(nnx - 1)
+    dely = (ymax - ymin)/(nny - 1)
     delz = (zmax - zmin)/(nnz - 1)
 
     cube = (index(keywrd, " CUBE") /= 0)
@@ -477,7 +477,7 @@
 !  Write out ESP data in format for Jmol
 !
       open (iesp, file=trim(jobnam)//".grd"  , status="UNKNOWN")
-      write (iesp,"(a)") " 4 Density" 
+      write (iesp,"(a)") " 4 Density"
       write (iesp,"(a)") " Electron density from Total SCF Density"
       write (iesp, "(i5,3f12.6)")numat, xmin, ymin, zmin
       write (iesp, "(i5, 3f12.6)") nnx, delx, 0.d0, 0.d0
@@ -488,24 +488,24 @@
       end do
 !
 !   Write out electrostatic values
-!  
+!
       do iix = 1, nnx
       x = xmin + delx*(iix - 1)
       pij = 0
       do iiy = 1, nny
         y = ymin + dely*(iiy - 1)
         do iiz = 1, nnz
-          z = zmin + delz*(iiz - 1)     
+          z = zmin + delz*(iiz - 1)
           pij = pij + 1
           call evec(bVector, x, y, z, coord, numat)
           rtemp = 0.e0
           do k = 1, el
             rtemp = rtemp + aVector(k)*bVector(k)
-          end do 
-          esp_array(pij) = rtemp         
+          end do
+          esp_array(pij) = rtemp
         end do
-      end do     
-      write(iesp, "(5e13.5)") esp_array(:pij)      
+      end do
+      write(iesp, "(5e13.5)") esp_array(:pij)
     end do
     else if (espgrid) then
       open (iesp, file=trim(jobnam)//'.grd', status="UNKNOWN")
@@ -515,31 +515,31 @@
       write (iesp, "(i5, 3f12.6)") nnz, delz*a0, delz*a0, delz*a0
 !
 !   Write out electrostatic values
-!  
+!
       do iiz = 1, nnz
       z = zmin + delz*(iiz - 1)
       pij = 0
       do iiy = 1, nny
         y = ymin + dely*(iiy - 1)
         do iix = 1, nnx
-          x = xmin + delx*(iix - 1)  
+          x = xmin + delx*(iix - 1)
           pij = pij + 1
           call evec(bVector, x, y, z, coord, numat)
           rtemp = 0.e0
           do k = 1, el
             rtemp = rtemp + aVector(k)*bVector(k)
-          end do 
-          esp_array(pij) = rtemp         
+          end do
+          esp_array(pij) = rtemp
         end do
-      end do     
+      end do
       write(iesp, "(e13.5)") esp_array(:pij)
       end do
-    end if   
+    end if
   end subroutine new_esp
 
 
- 
- 
 
 
- 
+
+
+

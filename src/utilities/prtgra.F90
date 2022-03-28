@@ -168,7 +168,7 @@ subroutine prtgra ()
       end if
       glim = sum
       if (i > 9 .and. sum < 50) exit
-    end do      
+    end do
     return
   end subroutine prt_sorted_gradients
 

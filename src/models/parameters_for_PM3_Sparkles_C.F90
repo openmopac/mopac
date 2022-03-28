@@ -14,9 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      module Parameters_for_PM3_Sparkles_C 
+      module Parameters_for_PM3_Sparkles_C
       double precision, dimension(107) :: alpPM3sp, gssPM3sp
-      double precision, dimension(107,4) :: guesPM3sp1, guesPM3sp2, guesPM3sp3         
+      double precision, dimension(107,4) :: guesPM3sp1, guesPM3sp2, guesPM3sp3
 !
 !       Data for Element  57:    Lanthanum
 !
