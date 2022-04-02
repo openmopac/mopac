@@ -1,5 +1,6 @@
-parameter fitting for new semiempirical models
+# PARAM
 
-These files are mostly self-contained to PARAM, but update is called by datin within MOPAC.
+This directory contains subroutines and modules specific to the PARAM program for optimizing
+parameters of MNDO-form models. The rest of its source code is shared with MOPAC.
 
-psort.F90 contains some hard-coded paths that need to be updated in some way.
+*NOTE: psort.F90 contains some hard-coded paths that need to be updated in some way.*

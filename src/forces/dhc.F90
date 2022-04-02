@@ -176,4 +176,3 @@ subroutine dhc (p, pa, pb, xi, nat, if, il, jf, jl, dener, mode)
     end if
     dener = ee + enuclr_loc
 end subroutine dhc
-

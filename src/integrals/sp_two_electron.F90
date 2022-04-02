@@ -47,4 +47,3 @@
       end do
       return
       end subroutine sp_two_electron
-

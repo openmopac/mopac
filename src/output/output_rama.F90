@@ -168,4 +168,3 @@ subroutine get_angles ()
   call update_txtatm(.true., .true.)
   return
 end subroutine get_angles
-

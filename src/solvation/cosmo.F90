@@ -2044,4 +2044,3 @@ subroutine extvdw (vdw, refvdw)
       end if
     end do
 end subroutine extvdw
-

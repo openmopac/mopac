@@ -503,4 +503,3 @@
  98 write(*,*)" Data file '",jobnam(:i),".dat' is locked!"
     call finish
  end subroutine run_param
-

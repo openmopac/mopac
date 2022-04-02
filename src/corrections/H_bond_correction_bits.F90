@@ -366,4 +366,3 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
     H_energy(P_Hbonds) = energy
     return
   end subroutine prt_hbonds
-

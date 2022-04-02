@@ -144,6 +144,3 @@ subroutine Shutdown(checked)
       close(iend)
 1000  return
 end
-
-
-

@@ -196,4 +196,3 @@
       data gues6sp2( 71,2)/          7.3208383861D0/
       data gues6sp3( 71,2)/          2.9270906286D0/
     end module Parameters_for_PM6_Sparkles_C
-

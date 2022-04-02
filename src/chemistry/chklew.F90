@@ -698,35 +698,6 @@ subroutine chklew (mb, numbon, l, large, debug)
     return
 end subroutine chklew
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 subroutine ring5 (i, mb, ir5)
     use common_arrays_C, only : nbonds, ibonds
     use molkst_C, only : numat
@@ -1015,4 +986,3 @@ subroutine add_Lewis_element(atom_i, atom_j, charge, element_type)
     if (charge == 0) return
     ions(atom_i + atom_j) = ions(atom_i + atom_j) + charge
 end subroutine add_Lewis_element
-

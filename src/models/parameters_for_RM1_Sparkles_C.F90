@@ -193,4 +193,3 @@
       data guesrm1sp2( 71,2)/      6.79064346D0/
       data guesrm1sp3( 71,2)/      3.13503362D0/
     end module Parameters_for_RM1_Sparkles_C
-

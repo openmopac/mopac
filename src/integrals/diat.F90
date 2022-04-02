@@ -470,4 +470,3 @@
       sqrt(ua*ub/(fact(na+na)*fact(nb+ nb))*((la+la+1)*(lb+lb+1)))
       return
       end function ss
-

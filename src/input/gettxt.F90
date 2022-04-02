@@ -594,4 +594,3 @@
     if (zero == 0) line(i_start:i + 1) = " "
     return
   end function get_text
-

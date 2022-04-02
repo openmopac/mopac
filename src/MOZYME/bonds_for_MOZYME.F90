@@ -182,4 +182,3 @@
     end if
     write (iw,*)
   end subroutine print_bonds_compact
-

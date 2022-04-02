@@ -171,4 +171,3 @@ subroutine prtgra ()
     end do
     return
   end subroutine prt_sorted_gradients
-

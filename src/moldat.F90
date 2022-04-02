@@ -1424,7 +1424,3 @@ subroutine write_unit_cell_HOF(iprt)
       end do
   end do l230
     end subroutine setup_nhco
-
-
-
-

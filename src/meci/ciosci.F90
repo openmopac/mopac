@@ -345,4 +345,3 @@
       end if
       deallocate (pdpol)
 end subroutine ciosci
-

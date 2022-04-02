@@ -1,9 +1,10 @@
-Fortran 90 source files for the MOPAC executable
+# MOPAC source code
 
-Subdirectories correspond to different features and subsystems within MOPAC
+This directory contains all Fortran source code associated with MOPAC and accompanying programs
+(PARAM, MAKPOL, & BZ). Historically, MOPAC was developed with all source code contained in a single,
+unorganized source directory. The organization of source code into subdirectories here is an attempt
+to identify and reverse-engineer the substructure of distinct features and contributions to MOPAC,
+to make it easier for future open-source developers to understand the codebase.
 
-Modules for storing global data are labeled "*_C.F90"
-
-Interfaces for subroutines with arguments are labeled "*_I.F90"
-
-Larger subroutines are in source files named after the subroutine
+Most source files are named after the first subroutine in the file, and all data modules are contained
+in separate source files with the suffix `*_C.F90`.

@@ -738,4 +738,3 @@ subroutine pdbout (mode1)
     end if
     write(iprt,"(a)")  "</TABLE>"
   end subroutine write_data_to_html
-

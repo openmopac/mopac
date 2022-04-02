@@ -35,4 +35,3 @@
     alpb(13,13) =  1.38788000D0  !     Aluminum - Aluminum
     xfac(13,13) =  1.00000000d0  !     Aluminum - Aluminum
   end subroutine alpb_and_xfac_mndod
-

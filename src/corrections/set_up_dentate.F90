@@ -316,6 +316,3 @@
         Si_O_H_bond_correction = 15.d0*(angle - ref_angle)**2*exp(-33.d0*max(0.d0, r_Si_O))*exp(-68.d0*max(0.d0, r_O_H ))
         return
       end function Si_O_H_bond_correction
-
-
-

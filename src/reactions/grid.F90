@@ -437,4 +437,3 @@
     deallocate (all_nabc, all_points1, all_points2, all_geo)
     iw0 = iw00
 end subroutine grid
-

@@ -986,5 +986,3 @@ ifull = 0
 
 500 return
 end subroutine trstlp
-
-

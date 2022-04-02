@@ -300,4 +300,3 @@ subroutine reverse_aux
   write(hook,'(a)')" ######################################"
   deallocate(start, irc)
 end subroutine reverse_aux
-

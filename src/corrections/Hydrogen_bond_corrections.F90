@@ -464,4 +464,3 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
     l_h_bonds = .false.
   end if
 end subroutine setup_DH_Plus
-

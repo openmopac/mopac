@@ -1279,4 +1279,3 @@
   natoms = natoms + id
   return
   end subroutine site
-

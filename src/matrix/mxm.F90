@@ -29,5 +29,3 @@
       call dgemm ('N', 'N', nar, ncc, nbr, 1.0D0, a, nar, b, nbr, 0.0D0, c, nar)
       return
       end subroutine mxm
-
-

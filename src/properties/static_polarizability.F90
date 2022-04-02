@@ -544,5 +544,3 @@
       return
 !
       end subroutine dipind
-
-

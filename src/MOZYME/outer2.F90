@@ -256,4 +256,3 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
       kr = kr + ki
     end if
 end subroutine outer2
-

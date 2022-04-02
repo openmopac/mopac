@@ -435,5 +435,3 @@
   get_a_name = input(istart:istop)
   return
   end function get_a_name
-
-

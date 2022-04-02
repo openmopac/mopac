@@ -31,4 +31,3 @@
         double precision, dimension(:,:), allocatable  :: b, ab, fb
           double precision, dimension(:), allocatable :: aidref, work2
       end module derivs_C
-

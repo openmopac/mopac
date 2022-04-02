@@ -19,4 +19,3 @@ program mopac
   call mopac_gui_deactivate
   call run_mopac
 end program mopac
-

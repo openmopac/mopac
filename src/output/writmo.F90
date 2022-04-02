@@ -1547,9 +1547,3 @@
      write (iw, '(4/10X,''FINAL HEAT OF FORMATION ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
     return
   end subroutine PM7_TS
-
-
-
-
-
-

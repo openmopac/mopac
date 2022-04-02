@@ -165,5 +165,3 @@
       return
 !
       end subroutine bintgs
-
-

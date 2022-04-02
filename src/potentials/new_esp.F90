@@ -536,10 +536,3 @@
       end do
     end if
   end subroutine new_esp
-
-
-
-
-
-
-

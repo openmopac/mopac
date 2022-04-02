@@ -332,5 +332,3 @@
     call post_scf_corrections(correction, l_grad)
     return
   end subroutine get_H_bonds
-
-

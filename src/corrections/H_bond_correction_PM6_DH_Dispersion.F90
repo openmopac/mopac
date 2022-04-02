@@ -229,4 +229,3 @@ double precision function PM6_DH_Disp(set_a, nsa)
   PM6_DH_Disp = E_disp*cscale
   return
 end function PM6_DH_Disp
-

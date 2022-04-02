@@ -427,4 +427,3 @@
     end if
     return
   end function cvalence_contribution
-

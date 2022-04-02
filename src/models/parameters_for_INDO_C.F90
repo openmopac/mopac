@@ -1582,4 +1582,3 @@
       data      fgi(  8, 80)/    1.000000d0/
 
   end module Parameters_for_INDO_C
-

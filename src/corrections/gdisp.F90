@@ -192,7 +192,3 @@
       dc6j = 0.0d0
     end if
 end subroutine get_dC6_dCNij
-
-
-
-

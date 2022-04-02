@@ -173,4 +173,3 @@ subroutine selmos (nmos_loc, nc, ic, n01, c, n02, nnc_loc, ncmo, ln, mn, iws, &
     norred = norred
     nelred = nelred
 end subroutine selmos
-

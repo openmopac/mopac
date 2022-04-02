@@ -342,4 +342,3 @@ data nos / "1", "2", "3" /
     txtatm(i)(k:k) = nos(nbonds(j) - 1)
   end if
 end subroutine two_atoms
-

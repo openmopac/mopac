@@ -1535,10 +1535,3 @@ subroutine Locate_TS
     end if
     return
   end subroutine minimize_gradient
-
-
-
-
-
-
-

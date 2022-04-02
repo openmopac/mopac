@@ -158,7 +158,3 @@
       tvec = store_tvec
       deallocate(dxyz_temp, store_coord)
   end function dftd3
-
-
-
-

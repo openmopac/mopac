@@ -525,6 +525,3 @@
       end do
       return
       end subroutine gsdip
-
-
-

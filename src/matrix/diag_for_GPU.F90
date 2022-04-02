@@ -230,4 +230,3 @@ subroutine diag_for_GPU (fao, vector, nocc, eig, norbs, mpack)
 #endif
     return
 end subroutine diag_for_GPU
-

@@ -1960,4 +1960,3 @@ subroutine geochk ()
   end if
   return
   end subroutine identify_nearby_counterions
-

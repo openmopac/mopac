@@ -1229,8 +1229,3 @@
       symdec = .FALSE.
       return
       end function symdec
-
-
-
-
-

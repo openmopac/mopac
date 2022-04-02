@@ -569,8 +569,3 @@ subroutine move_hydrogen_atoms
  end if
  return
  end subroutine store_and_restore_Tv
-
-
-
-
-

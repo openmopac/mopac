@@ -203,5 +203,3 @@ subroutine prtlmn (nncx, icxxx, ncxxx, cxxx, ncx, isort, eigs, mmos, i_offset)
     deallocate (w, iscrch, jat)
     return
   end subroutine prtlmn
-
-

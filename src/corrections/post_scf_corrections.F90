@@ -124,4 +124,3 @@ subroutine post_scf_corrections(correction, l_grad)
   end if
   return
 end subroutine post_scf_corrections
-

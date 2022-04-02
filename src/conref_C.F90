@@ -42,4 +42,3 @@
     data fpcref(1, 10) / 6.0221367d23 /         ! Avogadro's number (1/mole)
     data fpcref(2, 10) / 6.02205d23 /
   end module conref_C
-

@@ -193,4 +193,3 @@
       data gues7sp2( 71,2)/       7.21222726D0/
       data gues7sp3( 71,2)/       2.96294393D0/
     end module Parameters_for_PM7_Sparkles_C
-

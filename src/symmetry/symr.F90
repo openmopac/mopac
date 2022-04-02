@@ -260,4 +260,3 @@
 !
       return
       end subroutine symp
-

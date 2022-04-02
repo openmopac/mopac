@@ -364,4 +364,3 @@
       ener = ener * fcon
       return
       end subroutine staticsolv
-

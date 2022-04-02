@@ -652,4 +652,3 @@
         hsp(i) = 0.d0
       end do
       end subroutine fractional_metal_ion
-

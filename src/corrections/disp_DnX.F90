@@ -146,4 +146,3 @@ double precision function disp_DnX(l_grad)
       write(iw,'(10x,"H-BOND ENERGY           =", f17.5, a,/)') e_hb, " KCAL/MOL"
     end if
   end subroutine print_post_scf_corrections
-

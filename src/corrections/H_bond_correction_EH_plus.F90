@@ -357,8 +357,3 @@
     end if
     return
   end function EH_plus
-
-
-
-
-

@@ -31,4 +31,3 @@
       call eigenvectors_LAPACK(vect, a, root, n)
       return
       end subroutine rsp
-

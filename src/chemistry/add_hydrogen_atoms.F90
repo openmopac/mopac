@@ -13,8 +13,7 @@
 !
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
- subroutine add_hydrogen_atoms()
+  subroutine add_hydrogen_atoms()
 !
 !   Adds hydrogen atoms.
 !
@@ -2809,7 +2808,4 @@
     end do
   end do
   return
-end function guanidine
-
-
-
+  end function guanidine

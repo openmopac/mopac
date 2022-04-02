@@ -243,5 +243,3 @@ double precision function trunk (r)
       trunk = r
     end if
 end function trunk
-
-

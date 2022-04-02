@@ -1915,4 +1915,3 @@
           potpt(3, ix) = zgrid
       end do
     end subroutine espplane
-
