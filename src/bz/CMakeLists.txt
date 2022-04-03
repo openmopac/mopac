@@ -18,7 +18,7 @@
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list 
     HEigensystem add_missing_cells blas bz calculate
-    cntour common_common digit draw euler graphics graphics_for_FORCHECK
+    cntour common_common digit draw euler graphics
     kpoint lower make_line minv orient point reada rot rotcel rotsec rsp
     setup solir sort surfac symtrz upcase vastkind
    )
