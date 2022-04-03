@@ -38,8 +38,8 @@ endforeach()
 # Make a list of subdirectories to be added to the build structure  
 set(dir_list
     INDO MOZYME PARAM SCF chemistry corrections forces geometry
-    input integrals interface matrix meci models optimization output
-    potentials properties reactions solvation symmetry utilities
+    input integrals interface makpol matrix meci models optimization
+    output potentials properties reactions solvation symmetry utilities
    )
 #-----------------------------------------------
 # Add the subdirectories to the build directory

@@ -39,11 +39,12 @@ add_library(mopac_core SHARED)
 set_target_properties(mopac_core PROPERTIES OUTPUT_NAME "mopac")
 add_executable(mopac)
 add_executable(param)
+add_executable(makpol)
 target_link_libraries(mopac mopac_core)
 target_link_libraries(param mopac_core)
 
 # WinMOPAC build on Windows w/ the Intel Fortran compiler
-option(BUILD_WINMOPAC "Build MOPAC with QuickWin GUI (ifort required)" OFF)
+option(BUILD_WINMOPAC "Build MOPAC & BZ with QuickWin GUI (ifort required)" OFF)
 if(BUILD_WINMOPAC)
   if(NOT (CMAKE_Fortran_COMPILER_ID STREQUAL "Intel"))
     message(FATAL_ERROR "WinMOPAC compilation requires the Intel Fortran compiler (ifort)")
@@ -55,6 +56,9 @@ if(BUILD_WINMOPAC)
   target_link_libraries(winmopac mopac_core)
   target_compile_options(winmopac PRIVATE /libs:qwin)
   target_link_options(winmopac PRIVATE /subsystem:windows)
+  add_executable(winbz)
+  target_compile_options(winbz PRIVATE /libs:qwin)
+  target_link_options(winbz PRIVATE /subsystem:windows)
 endif()
 
 # MOPAC shared library ABI compatibility version

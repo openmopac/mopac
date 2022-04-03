@@ -1,0 +1,24 @@
+! Molecular Orbital PACkage (MOPAC)
+! Copyright (C) 2021, Virginia Polytechnic Institute and State University
+!
+! MOPAC is free software: you can redistribute it and/or modify it under
+! the terms of the GNU Lesser General Public License as published by
+! the Free Software Foundation, either version 3 of the License, or
+! (at your option) any later version.
+!
+! MOPAC is distributed in the hope that it will be useful,
+! but WITHOUT ANY WARRANTY; without even the implied warranty of
+! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+! GNU Lesser General Public License for more details.
+!
+! You should have received a copy of the GNU Lesser General Public License
+! along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+module common_sizes
+integer, parameter :: numatm = 200000
+integer, parameter :: maxtim = 3600
+integer, parameter :: maxdmp = 3600
+integer, parameter :: isybyl = 1
+integer, parameter :: isafe = 1
+integer, parameter :: maxpar = 3 * numatm
+end module common_sizes
