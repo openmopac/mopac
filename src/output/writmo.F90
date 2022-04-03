@@ -40,8 +40,6 @@
 !
       use maps_C, only : latom, lparam
 !
-      use conref_C, only : fpcref
-!
       use meci_C, only : rjkab
 !
       use parameters_C, only : tore, natorb
@@ -283,7 +281,7 @@
           hpress = -pressure * sum
           write (iw, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress
-          sum = -(4184.d0*10.d0**30)*pressure/fpcref(1,10)
+          sum = -(4184.d0*10.d0**30)*pressure/fpc_10
           if (abs(sum) > 1.d9) then
             write (iw, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
           else
@@ -480,7 +478,7 @@
         if (mers(1) > 1 .or. mers(2) > 1 .or. mers(3) > 1) &
           write (iw, '(/10X,''VOLUME OF CLUSTER       ='',&
           & F17.5,'' ANGSTROMS**3 ='',f9.3, '' CM**3/MOLE'')') &
-        vol,  vol*fpcref(1,10)*1.d-24
+        vol,  vol*fpc_10*1.d-24
         write(iw,*)
         call write_pressure(iw)
         call write_pressure(iw0)
@@ -1069,7 +1067,7 @@
           sum =  volume (tvec, 3)
           write (iwrite, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress
-          sum = -(4184.d0*10.d0**30)*pressure/fpcref(1,10)
+          sum = -(4184.d0*10.d0**30)*pressure/fpc_10
           if (abs(sum) > 1.d9) then
             write (iwrite, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
           else
@@ -1084,7 +1082,7 @@
         if (mers(1) > 1 .or. mers(2) > 1 .or. mers(3) > 1) &
           write (iwrite, '(/10X,''VOLUME OF CLUSTER       ='',&
           & F17.5,'' ANGSTROMS**3 ='',f9.3, '' CM**3/MOLE'')') &
-          vol,  vol*fpcref(1,10)*1.d-24
+          vol,  vol*fpc_10*1.d-24
         write(iwrite,*)
       end if
       if (lprtgra .or. gnorm > 1.D-15 ) write (iwrite, &
