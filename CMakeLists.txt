@@ -152,6 +152,17 @@ endif()
 enable_testing()
 add_subdirectory(tests)
 
+# CPack options
+set(CPACK_PACKAGE_NAME "mopac")
+set(CPACK_PACKAGE_VENDOR "openmopac GitHub organization")
+set(CPACK_PACKAGE_CONTACT "openmopac@gmail.com")
+file(COPY "${CMAKE_SOURCE_DIR}/README.md" DESTINATION CMAKE_BINARY_DIR)
+file(RENAME "${CMAKE_BINARY_DIR}/README.md" "${CMAKE_BINARY_DIR}/README.txt")
+file(COPY "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION CMAKE_BINARY_DIR)
+file(RENAME "${CMAKE_BINARY_DIR}/COPYING.lesser" "${CMAKE_BINARY_DIR}/LICENSE.txt")
+set(CPACK_RESOURCE_FILE_README "README.txt")
+set(CPACK_RESOURCE_FILE_LICENSE "LICENSE.txt")
+
 # Install the executables and library
 set(LIB_SUFFIX "" CACHE STRING "Suffix for library install directory.")
 install(TARGETS mopac RUNTIME)
@@ -164,49 +175,8 @@ if(WIN32)
 else()
   set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR}${LIB_SUFFIX})
   install(TARGETS mopac_core LIBRARY)
-#  if(LIB_SUFFIX)
-#    install(TARGETS mopac_core DESTINATION lib${LIB_SUFFIX})
-#  else()
-#    install(TARGETS mopac_core DESTINATION lib)
-#  endif()
 endif()
-set(CMAKE_INSTALL_OPENMP_LIBRARIES TRUE)
-include(InstallRequiredSystemLibraries)
-message("cpack list: ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}")
-#install(CODE "include(InstallRequiredSystemLibraries)")
 
 # Add packaging
 include(CPack)
-
-# some old stuff that should probably be deleted or cleaned up:
-
-# compiler-specific debug flags
-#if(${CMAKE_Fortran_COMPILER} MATCHES "pgfortran")
-#  target_compile_options(mopac PRIVATE -g -Mbackslash)
-#elseif(${CMAKE_Fortran_COMPILER} MATCHES "gfortran")
-#    target_compile_options(mopac PRIVATE -g -O -Wuninitialized)
-#    target_compile_options(mopac PRIVATE --coverage)
-#  target_compile_options(mopac-lib PUBLIC "-fprofile-arcs" "-ftest-coverage")
-#  target_link_libraries(mopac-lib PUBLIC gcov)
-#     target_compile_options(mopac-all PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
-#     target_compile_options(mopac PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
-#     target_compile_options(param PUBLIC -g -Og -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra)
-#    target_compile_options(mopac-lib PUBLIC -g -static -ffpe-trap=invalid,zero,overflow -fbacktrace -fcheck=all -std=gnu -Wall -Wextra -Wunused-parameter -Waliasing -Wampersand -Wcharacter-truncation -Wreal-q-constant)
-#    target_compile_options(mopac-lib PUBLIC -g -static -finit-local-zero -ffpe-trap=invalid,zero,overflow -fbacktrace -std=gnu -Wall -Wunused-parameter -fcheck=all -Waliasing -Wampersand -Wcharacter-truncation -Wreal-q-constant)
-#    target_compile_options(mopac-lib PRIVATE -g -static -finit-local-zero -ffpe-trap=invalid,zero,overflow -fbacktrace -std=gnu -Wall -Wunused-parameter -fcheck=all -Waliasing -Wampersand -Wcharacter-truncation -Wreal-q-constant)
-#elseif(${CMAKE_Fortran_COMPILER} MATCHES "ifort")
-#     target_compile_options(mopac-all PUBLIC -g -traceback -check all -debug all -fpe0 -warn all)
-#    target_compile_options(mopac PRIVATE -g -traceback -check all -debug all -fpe0 -warn all)
-#    target_compile_options(mopac PRIVATE -g -traceback -check all -debug all -fpe0 -warn all -init=zero,arrays)
-#else()
-#  message("compiler not recognized, using default compiler options")
-#endif()
-
-#target_link_libraries(mopac PUBLIC -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl)
-
-#target_link_libraries(mopac PUBLIC $ENV{MKLROOT}/lib/libmkl_intel_ilp64.a $ENV{MKLROOT}/lib/libmkl_intel_thread.a 
-#                      $ENV{MKLROOT}/lib/libmkl_core.a -liomp5 -lpthread -lm -ldl)
-# ^^^ with -liomp5, which is causing linking problems
-# THIS IS TOO IFORT SPECIFIC: target_link_libraries(mopac PUBLIC -mkl=parallel -Wl,-rpath,/opt/intel/compilers_and_libraries_2018.3.185/mac/compiler/lib)
-# ^^^ embeds path to dynamic OpenMP library
-
+cpack_add_component(Unspecified)
