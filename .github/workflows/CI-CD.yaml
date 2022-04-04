@@ -142,6 +142,12 @@ jobs:
           name: linux-test-output
           path: build/tests
 
+      - name: Package MOPAC with CPack (in development)
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cd build
+          cpack --help
+
       - name: Zip executable & shared libraries (dependencies are temporarily broken until switch to CPack)
         run: |
           zip -j mopac.zip build/mopac
@@ -231,6 +237,12 @@ jobs:
         with:
           name: mac-test-output
           path: build/tests
+
+      - name: Package MOPAC with CPack (in development)
+        run: |
+          source /opt/intel/oneapi/setvars.sh
+          cd build
+          cpack --help
 
       - name: Zip executable & shared libraries (dependencies broken until CPack is added)
         run: |
@@ -325,6 +337,14 @@ jobs:
         with:
           name: windows-test-output
           path: build/tests
+
+      - name: Package MOPAC with CPack (in development)
+        shell: cmd
+        run: |
+          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
+          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
+          cd build
+          cpack --help
 
       - name: Zip executable & shared libraries (dependencies broken until CPack)
         run: |
