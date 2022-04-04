@@ -20,10 +20,18 @@ either as they are or with their reference outputs adjusted with an explanation
 for why they needed to be adjusted. Contributions may be delayed or rejected if they
 fail a test in a meaningful way that is not straightforward to correct.
 
+Historically, major feature contributions to MOPAC were required to be preceded by a journal
+publication to maintain clear attribution. While this is no longer necessary for open-source
+software developed under automated version control, it is still encouraged.
+
+Major feature contributions should include new tests that cover standard use cases of the
+new feature, and corresponding additions to the manual [https://openmopac.github.io],
+particularly if new keywords are introduced.
+
 What to contribute
 ==================
 
-Many types of contributions, including non-software, are welcome:
+Many types of contributions are welcome:
 
 - bug reports (preferably with a representative example)
 - new tests
@@ -31,14 +39,6 @@ Many types of contributions, including non-software, are welcome:
 - performance improvements
 - code quality improvements
 - feature requests
-
-Attribution
-===========
-
-Contributors are welcome to add their names to the `AUTHORS.rst` file as part
-of their pull request if they are not already listed as a contributor.
-Affiliations at the time of the contribution can be included if desired.
-For major contributions, a brief summary of the contribution can also be included.
 
 Developer Certificate of Origin
 ===============================
