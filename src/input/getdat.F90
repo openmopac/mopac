@@ -72,7 +72,7 @@
               write(line,'(2a)')" PARAM is the parameter optimization program for use with MOPAC"
               write(0,'(//10x,a,/)')trim(line)
               write(0,'(10x,a)')" It uses a single argument, the PARAM data-set"
-              write(0,'(10x,a)')" The command to run PARAM is 'param <data-set>.dat'"
+              write(0,'(10x,a)')" The command to run PARAM is 'mopac-param <data-set>.dat'"
              ! call web_message(0,"running_MOPAC.html")
               write(0,'(10x,a)')" Press (return) to continue"
               read(5,*, iostat=i)
