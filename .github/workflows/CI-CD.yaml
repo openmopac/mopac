@@ -154,16 +154,11 @@ jobs:
           cpack -G IFW
           ls -l
 
-      - name: Zip executable & shared libraries (dependencies are temporarily broken until switch to CPack)
-        run: |
-          zip -j mopac.zip build/mopac
-          zip -j mopac.zip build/libmopac.so*
-
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: linux-dist
-          path: mopac.zip
+          path: build/mopac-*-Linux.run
 
   mac-build:
     runs-on: macos-latest
@@ -256,16 +251,11 @@ jobs:
           cpack -G IFW
           ls -l
 
-      - name: Zip executable & shared libraries (dependencies broken until CPack is added)
-        run: |
-          zip -j mopac.zip build/mopac
-          zip -j mopac.zip build/libmopac*.dylib
-
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: mac-dist
-          path: mopac.zip
+          path: mopac-*-Darwin.dmg
 
   windows-build:
     # NOTE: windows-latest has been switched to Visual Studio 2022, which is not yet supported by Intel development tools
@@ -364,16 +354,11 @@ jobs:
           cpack -G IFW
           dir
 
-      - name: Zip executable & shared libraries (dependencies broken until CPack)
-        run: |
-          Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
-          Compress-Archive -Update -Path build/mopac.dll -DestinationPath mopac.zip
-
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: windows-dist
-          path: mopac.zip
+          path: mopac-*-win64.exe
 
   continuous-deployment:
     runs-on: ubuntu-latest
@@ -404,13 +389,10 @@ jobs:
           It is not an official release, and it is not intended for production work.
 
           GHA log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          mv linux-dist/mopac.zip mopac-linux-continuous.zip
-          mv mac-dist/mopac.zip mopac-mac-continuous.zip
-          mv windows-dist/mopac.zip mopac-windows-continuous.zip
           gh release delete continuous --yes
           gh release create continuous --prerelease \
             --title "Continuous Build" \
             --notes "$DESCRIPTION" \
-            mopac-linux-continuous.zip \
-            mopac-mac-continuous.zip \
-            mopac-windows-continuous.zip
+            linux-dist/mopac-*-Linux.run \
+            mac-dist/mopac-*-Darwin.dmg \
+            windows-dist/mopac-*-win64.exe
