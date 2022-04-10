@@ -89,6 +89,11 @@ jobs:
         with:
           python-version: '3.x'
 
+      # Set up the QT installer framework
+      - uses: jmarrec/setup-qtifw@v1
+        with:
+          qtifw-version: '4.x'
+
       - name: Cache Intel dependencies
         id: cache-intel
         uses: actions/cache@v2
@@ -175,6 +180,11 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+
+      # Set up the QT installer framework
+      - uses: jmarrec/setup-qtifw@v1
+        with:
+          qtifw-version: '4.x'
 
       - name: Fix permissions for cache restore
         run: |
@@ -274,6 +284,11 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+
+      # Set up the QT installer framework
+      - uses: jmarrec/setup-qtifw@v1
+        with:
+          qtifw-version: '4.x'
 
       - name: Cache Intel Fortran compiler
         id: cache-intel

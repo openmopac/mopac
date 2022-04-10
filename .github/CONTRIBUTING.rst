@@ -10,12 +10,17 @@ and a valid email address in their git commit statements.
 How to contribute
 =================
 
-The preferred method is to fork the project on `GitHub <https://github.com/openmopac/MOPAC/>`_,
-make your changes starting from the master branch, and then create a pull request.
-MOPAC does not presently have strong stylistic or structural requirements, but
-contributions are encouraged to conform to the existing codebase as much as possible.
+Please create a GitHub `Issue <https://github.com/openmopac/mopac/issues/new>`_ for bug
+reports and feature requests.
 
-While not a strict requirement, contributions should pass all available tests,
+The preferred method of code contribution is to fork the project on
+`GitHub <https://github.com/openmopac/mopac>`_, make your changes in a feature branch
+starting from the main branch, and then create a pull request. Contributions from outside
+of version control will be considered, but they are not preferred. MOPAC does not presently
+have strong stylistic or structural requirements, but contributions are encouraged to
+conform to the existing codebase as much as possible.
+
+While not a strict requirement, code contributions should pass all available tests,
 either as they are or with their reference outputs adjusted with an explanation
 for why they needed to be adjusted. Contributions may be delayed or rejected if they
 fail a test in a meaningful way that is not straightforward to correct.
