@@ -151,7 +151,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          cpack -G "DEB;RPM"
+          cpack -G IFW
           ls -l
 
       - name: Zip executable & shared libraries (dependencies are temporarily broken until switch to CPack)
@@ -253,7 +253,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          cpack -G productbuild
+          cpack -G IFW
           ls -l
 
       - name: Zip executable & shared libraries (dependencies broken until CPack is added)
@@ -361,13 +361,12 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
           call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           cd build
-          cpack -G NSIS64
+          cpack -G IFW
           dir
 
       - name: Zip executable & shared libraries (dependencies broken until CPack)
         run: |
           Compress-Archive -Path build/mopac.exe -DestinationPath mopac.zip
-          Compress-Archive -Update build/winmopac.exe -DestinationPath mopac.zip
           Compress-Archive -Update -Path build/mopac.dll -DestinationPath mopac.zip
 
       - name: Save executable as an artifact
