@@ -70,7 +70,7 @@
           else if (i == 0) then
             if (is_PARAM) then
               write(line,'(2a)')" PARAM is the parameter optimization program for use with MOPAC"
-              write(0,'(//10x,a,/)')trim(line)
+              write(0,'(/10x,a,/)')trim(line)
               write(0,'(10x,a)')" It uses a single argument, the PARAM data-set"
               write(0,'(10x,a)')" The command to run PARAM is 'mopac-param <data-set>.dat'"
              ! call web_message(0,"running_MOPAC.html")
@@ -78,7 +78,7 @@
               read(5,*, iostat=i)
               return
             else
-              write(0,'(//10x,a,/)')" MOPAC is a semiempirical quantum chemistry program"
+              write(0,'(/10x,a,/)')" MOPAC is a semiempirical quantum chemistry program"
               write(0,'(10x,a)')" It uses a single argument, the MOPAC data-set"
               write(0,'(10x,a)')" The command to run MOPAC is 'mopac <data-set>.mop'"
               call web_message(0,"running_MOPAC.html")

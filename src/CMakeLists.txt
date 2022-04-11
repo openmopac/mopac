@@ -32,7 +32,7 @@ set(main_src_list
 #-----------------------------------------------
 # Add a list of source files to the target
 foreach(idx IN LISTS main_src_list)
-	target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+	target_sources(mopac-core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
 endforeach()
 #===============================================
 # Make a list of subdirectories to be added to the build structure  

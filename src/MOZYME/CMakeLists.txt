@@ -29,6 +29,6 @@ set(src_list
 #-----------------------------------------------
 # Add a list of source files to the target
 foreach(idx IN LISTS src_list)
-        target_sources(mopac_core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+        target_sources(mopac-core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
 endforeach()
 #===============================================
