@@ -351,4 +351,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: windows-dist
-          path: build/mopac-*-win64.exe
+          path: build/mopac-*-win.exe
