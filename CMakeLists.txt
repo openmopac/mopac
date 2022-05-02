@@ -211,7 +211,6 @@ endif()
 install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" "${CMAKE_SOURCE_DIR}/.github/INSTALL.txt" DESTINATION "." COMPONENT main)
 
 # Install the executables and library
-set(LIB_SUFFIX "" CACHE STRING "Suffix for library install directory.")
 install(TARGETS mopac RUNTIME COMPONENT main)
 install(TARGETS mopac-param RUNTIME COMPONENT extra)
 install(TARGETS mopac-makpol RUNTIME COMPONENT extra)
@@ -220,7 +219,6 @@ if(WIN32)
 #  install(TARGETS mopac-win RUNTIME COMPONENT extra)
   install(TARGETS mopac-bz RUNTIME COMPONENT extra)
 else()
-  set(CMAKE_INSTALL_LIBDIR ${CMAKE_INSTALL_LIBDIR}${LIB_SUFFIX})
   install(TARGETS mopac-core LIBRARY COMPONENT main)
 endif()
 
