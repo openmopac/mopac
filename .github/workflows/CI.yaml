@@ -314,7 +314,7 @@ jobs:
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^
-            -DBLA_VENDOR=Intel10_64lp --debug-find
+            -DBLA_VENDOR=Intel10_64lp
 
       - name: Build MOPAC with Ninja
         shell: cmd
