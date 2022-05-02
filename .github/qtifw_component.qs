@@ -7,10 +7,12 @@ Component.prototype.installationFinishedPageIsShown = function()
 {
     try {
         if(installer.isInstaller() && (installer.status == QInstaller.Success)) {
-            installer.addWizardPageItem(component, "PathCheckBoxForm", QInstaller.InstallationFinished, 1);
             if(systemInfo.kernelType === "winnt") {
-                installer.addWizardPageItem(component, "IconCheckBoxForm", QInstaller.InstallationFinished, 2);
-                installer.addWizardPageItem(component, "FileCheckBoxForm", QInstaller.InstallationFinished, 3);
+                installer.addWizardPageItem(component, "FileCheckBoxForm", QInstaller.InstallationFinished, 2);
+                installer.addWizardPageItem(component, "IconCheckBoxForm", QInstaller.InstallationFinished, 3);
+            }
+            else {
+                installer.addWizardPageItem(component, "PathCheckBoxForm", QInstaller.InstallationFinished, 1);
             }
         }
     }
@@ -28,10 +30,10 @@ Component.prototype.createOperations = function()
         if(systemInfo.kernelType === "winnt") {
             component.addOperation("Execute",
             "@TargetDir@/add-to-path.bat",
-            "@TargetDir@/bin",
+            "@TargetDir@\bin",
             "UNDOEXECUTE",
             "@TargetDir@/remove-from-path.bat",
-            "@TargetDir@/bin");
+            "@TargetDir@\bin");
         }
         else {
             component.addOperation("Execute",

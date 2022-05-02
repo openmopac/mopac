@@ -6,6 +6,5 @@ set NEW_PATH=%PATH:;%1=%
 set PATH=%NEW_PATH%
 if "%NEW_PATH:~1024%" == "" setx PATH "%NEW_PATH%"
 set NEW_PATH=
-set PATH_BEFORE_MOPAC=0
 
 :do_nothing
