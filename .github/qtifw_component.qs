@@ -5,19 +5,14 @@ function Component()
 
 Component.prototype.installationFinishedPageIsShown = function()
 {
-    try {
-        if(installer.isInstaller() && (installer.status == QInstaller.Success)) {
-            if(systemInfo.kernelType === "winnt") {
-                installer.addWizardPageItem(component, "FileCheckBoxForm", QInstaller.InstallationFinished, 2);
-                installer.addWizardPageItem(component, "IconCheckBoxForm", QInstaller.InstallationFinished, 3);
-            }
-            else {
-                installer.addWizardPageItem(component, "PathCheckBoxForm", QInstaller.InstallationFinished, 1);
-            }
+    if(installer.isInstaller() && (installer.status == QInstaller.Success)) {
+        if(systemInfo.kernelType === "winnt") {
+            installer.addWizardPageItem(component, "FileCheckBoxForm", QInstaller.InstallationFinished, 2);
+            installer.addWizardPageItem(component, "IconCheckBoxForm", QInstaller.InstallationFinished, 3);
         }
-    }
-    catch(e) {
-        console.log(e);
+        else {
+            installer.addWizardPageItem(component, "PathCheckBoxForm", QInstaller.InstallationFinished, 1);
+        }
     }
 }
 
@@ -28,12 +23,14 @@ Component.prototype.createOperations = function()
     var checkboxForm = component.userInterface("PathCheckBoxForm");
     if(checkboxForm && checkboxForm.pathCheckBox.checked) {
         if(systemInfo.kernelType === "winnt") {
+/*
             component.addOperation("Execute",
             "@TargetDir@/add-to-path.bat",
             "@TargetDir@\bin",
             "UNDOEXECUTE",
             "@TargetDir@/remove-from-path.bat",
             "@TargetDir@\bin");
+*/
         }
         else {
             component.addOperation("Execute",

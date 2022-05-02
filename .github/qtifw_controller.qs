@@ -14,5 +14,7 @@ For long-time users, there are some small but important changes to the distribut
 While it will continue to be distributed as a stand-alone package, now with a graphical installer, it will also be increasingly available over various package managers. \
 Also, the main executable has be renamed to \"mopac\", and it is now dependent on a core shared library, \"libmopac\", as well as Intel's OpenMP shared library, \
 both of which are contained in this installer package."); // set the welcome text
+
+        installer.setDefaultPageVisible(QInstaller.StartMenuSelection, false);
     }
 }
