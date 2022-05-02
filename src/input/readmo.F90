@@ -722,7 +722,7 @@
       write (iw,"(1x,a)") "**                              MOPAC v"//verson//"                  **"
       write (iw, '(1X,a)')"**                                                                           **"
       write (iw, '(1X,a)')"*******************************************************************************"
-      write (iw, '(1X,a)')"**         Digital Object Identifier (DOI): 10.5281/zenodo.??????            **"
+      write (iw, '(1X,a)')"**          Digital Object Identifier (DOI): 10.5281/zenodo.6511959          **"
       write (iw, '(1X,a)')"**    Visit the DOI location for information on how to cite this program.    **"
       write (iw, '(1X,a)')"*******************************************************************************"
       j = len_trim(keywrd)
