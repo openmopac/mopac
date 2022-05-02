@@ -5,6 +5,7 @@ function Component()
 
 Component.prototype.installationFinishedPageIsShown = function()
 {
+/*
     if(installer.isInstaller() && (installer.status == QInstaller.Success)) {
         if(systemInfo.kernelType === "winnt") {
             installer.addWizardPageItem(component, "FileCheckBoxForm", QInstaller.InstallationFinished, 2);
@@ -14,23 +15,22 @@ Component.prototype.installationFinishedPageIsShown = function()
             installer.addWizardPageItem(component, "PathCheckBoxForm", QInstaller.InstallationFinished, 1);
         }
     }
+*/
 }
 
 Component.prototype.createOperations = function()
 {
     component.createOperations();
-
+/*
     var checkboxForm = component.userInterface("PathCheckBoxForm");
     if(checkboxForm && checkboxForm.pathCheckBox.checked) {
         if(systemInfo.kernelType === "winnt") {
-/*
             component.addOperation("Execute",
             "@TargetDir@/add-to-path.bat",
             "@TargetDir@\bin",
             "UNDOEXECUTE",
             "@TargetDir@/remove-from-path.bat",
             "@TargetDir@\bin");
-*/
         }
         else {
             component.addOperation("Execute",
@@ -70,4 +70,5 @@ Component.prototype.createOperations = function()
             "@TargetDir@/mopac.ico");
         }
     }
+*/
 }
