@@ -27,9 +27,6 @@ program MOPAC_win
     i4 = setbkcolor(15)
     i4 = settextcolor(0)
     call clearscreen($GCLEARSCREEN)
-    call mopac_gui_get_channel(j)
-    write(0,*)" iw0 = ", j
-
     i = iargc()
     if (i == 0) then
       write(0,*)
