@@ -14,21 +14,23 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-subroutine mopac_gui_activate(channel)
+subroutine mopac_gui_activate
 !dec$ attributes dllexport :: mopac_gui_activate
-  use chanel_C, only : iw0
   use molkst_C, only : gui
-  integer :: channel
   gui = .true.
-  iw0 = channel
   return
 end subroutine mopac_gui_activate
 
 subroutine mopac_gui_deactivate
 !dec$ attributes dllexport :: mopac_gui_deactivate
-  use chanel_C, only : iw0
   use molkst_C, only : gui
   gui = .false.
-  iw0 = -1
   return
 end subroutine mopac_gui_deactivate
+
+subroutine mopac_gui_set_channel(channel)
+!dec$ attributes dllexport :: mopac_gui_set_channel
+  use chanel_C, only : iw0
+  iw0 = channel
+  return
+end subroutine mopac_gui_set_channel

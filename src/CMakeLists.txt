@@ -19,7 +19,7 @@
 target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
 target_sources(mopac-param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
 if(BUILD_WINMOPAC)
-   target_sources(mopac-gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/winmopac.F90)
+   target_sources(mopac-win PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/winmopac.F90)
 endif()
 #===============================================
 # Take a list of source file names

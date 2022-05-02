@@ -22,6 +22,7 @@ program MOPAC_win
   integer i, j, k, loop
   character :: ch
     call mopac_gui_deactivate
+    call mopac_gui_set_channel(0)
     OPEN(0, file='user', title='MOPAC')
     i4 = setbkcolor(15)
     i4 = settextcolor(0)

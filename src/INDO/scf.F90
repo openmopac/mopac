@@ -445,6 +445,7 @@
 !     **** first eigenvalues before main dump ****
 
 !     **** dump of molecular orbitals ****
+      write (iw, "(/,/,20x,' MOLECULAR ORBITALS ',/,/)")
       call matout(c, aii, n, n, n)
       return
       end subroutine output
