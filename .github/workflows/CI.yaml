@@ -158,7 +158,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: linux-dist
-          path: build/mopac-*-Linux.run
+          path: build/mopac-*-linux.run
 
   mac-build:
     runs-on: macos-latest
@@ -255,7 +255,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: mac-dist
-          path: build/mopac-*-Darwin.dmg
+          path: build/mopac-*-mac.dmg
 
   windows-build:
     # NOTE: windows-latest has been switched to Visual Studio 2022, which is not yet supported by Intel development tools
