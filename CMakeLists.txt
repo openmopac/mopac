@@ -203,12 +203,12 @@ set(CPACK_IFW_PACKAGE_MAINTENANCE_TOOL_NAME "uninstall-mopac")
 set(CPACK_IFW_VERBOSE ON)
 if(WIN32)
   set(CPACK_IFW_TARGET_DIRECTORY "C:/Program Files/mopac")
-#  install(PROGRAMS "${CMAKE_SOURCE_DIR}/.github/add-to-path.bat" "${CMAKE_SOURCE_DIR}/.github/remove-from-path.bat" DESTINATION "." COMPONENT main)
+#  install(PROGRAMS "${CMAKE_SOURCE_DIR}/.github/add-to-path.bat" "${CMAKE_SOURCE_DIR}/.github/remove-from-path.bat" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
 else()
   set(CPACK_IFW_TARGET_DIRECTORY "/opt/mopac")
-  install(PROGRAMS "${CMAKE_SOURCE_DIR}/.github/add-to-path.sh" "${CMAKE_SOURCE_DIR}/.github/remove-from-path.sh" DESTINATION "." COMPONENT main)
+  install(PROGRAMS "${CMAKE_SOURCE_DIR}/.github/add-to-path.sh" "${CMAKE_SOURCE_DIR}/.github/remove-from-path.sh" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
 endif()
-install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" "${CMAKE_SOURCE_DIR}/.github/INSTALL.txt" DESTINATION "." COMPONENT main)
+install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" "${CMAKE_SOURCE_DIR}/.github/INSTALL.txt" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
 
 # Install the executables and library
 install(TARGETS mopac RUNTIME COMPONENT main)
@@ -225,11 +225,10 @@ endif()
 # Add packaging
 include(CPack)
 include(CPackIFW)
-cpack_add_component("extra_utilities" DISABLED)
-cpack_add_component("main_program" REQUIRED)
 cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 2 FORCED_INSTALLATION
   LICENSES "primary license (LGPL3)" "${CMAKE_SOURCE_DIR}/COPYING.lesser"
   "secondary license terms (GPL3)" "${CMAKE_SOURCE_DIR}/COPYING"
   SCRIPT "${CMAKE_SOURCE_DIR}/.github/qtifw_component.qs"
   USER_INTERFACES "${CMAKE_SOURCE_DIR}/.github/pathcheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/filecheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/iconcheckboxform.ui")
 cpack_ifw_configure_component(extra DISPLAY_NAME "extra utilities" SORTING_PRIORITY 1 DEFAULT FALSE)
+cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)
