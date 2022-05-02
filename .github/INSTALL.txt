@@ -1,0 +1,3 @@
+To run MOPAC from a shell prompt without specifying its full path,
+users must add the MOPAC directory to their system path through the PATH environment variable.
+We are working to automate this step within the graphical installer, but that feature isn't ready yet.

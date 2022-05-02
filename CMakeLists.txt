@@ -177,7 +177,7 @@ endif()
 
 # Intel-specific CPack options
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
-  find_library(INTEL_OMP_LIB iomp5 HINT CMAKE_Fortran_COMPILER PATH_SUFFIXES ../../compiler/lib ../../compiler/lib/intel64_win)
+  find_library(INTEL_OMP_LIB iomp5 NAMES iomp5md HINT CMAKE_Fortran_COMPILER PATH_SUFFIXES ../../compiler/lib ../../compiler/lib/intel64_win)
   if(INTEL_OMP_LIB STREQUAL "INTEL_OMP_LIB-NOTFOUND")
     message("WARNING: Cannot locate Intel's OpenMP library for packaging")
   else()
@@ -202,7 +202,7 @@ else()
   set(CPACK_IFW_TARGET_DIRECTORY "/opt/mopac")
   install(PROGRAMS "${CMAKE_SOURCE_DIR}/.github/add-to-path.sh" "${CMAKE_SOURCE_DIR}/.github/remove-from-path.sh" DESTINATION "." COMPONENT main)
 endif()
-install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" DESTINATION "." COMPONENT main)
+install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" "${CMAKE_SOURCE_DIR}/.github/INSTALL.txt" DESTINATION "." COMPONENT main)
 
 # Install the executables and library
 set(LIB_SUFFIX "" CACHE STRING "Suffix for library install directory.")
