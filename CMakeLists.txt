@@ -17,7 +17,16 @@
 # Using Cmake version 3.11 for better CUDA & Fortran support
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
-# Follow GNU conventions for installing directories
+# Specify project name & programming languages
+project(openmopac VERSION 22.0.0 LANGUAGES Fortran)
+
+# Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
+option(ENABLE_MKL "Turn on C language support for MKL" ON)
+if(ENABLE_MKL)
+  enable_language(C)
+endif()
+
+# Follow GNU conventions for installing directories (languages need to be enabled at this stage)
 include(GNUInstallDirs)
 
 # Code coverage option
@@ -30,9 +39,6 @@ else()
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build.")
 endif()
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
-
-# Specify project name & programming language
-project(openmopac VERSION 22.0.0 LANGUAGES Fortran)
 
 # location for CMake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -92,12 +98,6 @@ execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_HASH)
 if(GIT_HASH)
   string(STRIP ${GIT_HASH} GIT_HASH)
   target_compile_definitions(mopac-core PRIVATE MOPAC_GIT_HASH="${GIT_HASH}")
-endif()
-
-# Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
-option(ENABLE_MKL "Turn on C language support for MKL" ON)
-if(ENABLE_MKL)
-  enable_language(C)
 endif()
 
 # Try to use CMake's system of finding BLAS & LAPACK libraries
