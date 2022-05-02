@@ -17,6 +17,9 @@
 # Using Cmake version 3.11 for better CUDA & Fortran support
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
+# Follow GNU conventions for installing directories
+include(GNUInstallDirs)
+
 # Code coverage option
 option(ENABLE_COVERAGE "Code coverage flag" OFF)
 
