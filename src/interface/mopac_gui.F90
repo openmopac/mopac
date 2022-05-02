@@ -34,3 +34,10 @@ subroutine mopac_gui_set_channel(channel)
   iw0 = channel
   return
 end subroutine mopac_gui_set_channel
+
+subroutine mopac_gui_get_channel(channel)
+  !dec$ attributes dllexport :: mopac_gui_get_channel
+    use chanel_C, only : iw0
+    channel = iw0
+    return
+  end subroutine mopac_gui_get_channel
