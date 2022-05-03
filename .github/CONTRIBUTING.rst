@@ -20,6 +20,12 @@ of version control will be considered, but they are not preferred. MOPAC does no
 have strong stylistic or structural requirements, but contributions are encouraged to
 conform to the existing codebase as much as possible.
 
+Open pull requests are also welcome, where a pull request is made before a contribution
+is ready to be merged, to open up an active dialogue between the core developers and the
+contributor about details of the contribution in development. This mode of operation is
+particularly useful when a pull request is linked with an issue articulating a problem
+that the pull request intends to solve.
+
 While not a strict requirement, code contributions should pass all available tests,
 either as they are or with their reference outputs adjusted with an explanation
 for why they needed to be adjusted. Contributions may be delayed or rejected if they
