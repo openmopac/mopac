@@ -29,15 +29,31 @@ endif()
 # Follow GNU conventions for installing directories (languages need to be enabled at this stage)
 include(GNUInstallDirs)
 
+# Static or dynamic build
+option(STATIC_BUILD "Build a static executable" OFF)
+if (STATIC_BUILD)
+  message(STATUS "Static executables")
+else()
+  message(STATUS "Shared library and dynamic executables")
+endif()
+
 # Code coverage option
 option(ENABLE_COVERAGE "Code coverage flag" OFF)
 
-# Set a safe default build type
-if(ENABLE_COVERAGE)
-  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build.")
+# Set a safe default build type if ther is no user input
+if(NOT CMAKE_BUILD_TYPE)
+  if (ENABLE_COVERAGE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
+  else()
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  endif()
 else()
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build.")
+# otherwise, check conflict with ENABLE_COVERAGE
+  if(ENABLE_COVERAGE AND NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    message(FATAL_ERROR "Option ENABLE_COVERAGE requires CMAKE_BUILD_TYPE=Debug")
+  endif()
 endif()
+
 message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
 
 # location for CMake modules
@@ -54,7 +70,15 @@ endif()
 
 
 # Define a common library and executables for MOPAC & PARAM
-add_library(mopac-core SHARED)
+if (STATIC_BUILD)
+  # Static build
+  set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
+  set(CMAKE_EXE_LINKER_FLAGS "-static")
+  add_library(mopac-core STATIC)
+  set(BLA_STATIC ON)
+else()
+  add_library(mopac-core SHARED)
+endif()
 set_target_properties(mopac-core PROPERTIES OUTPUT_NAME "mopac")
 add_executable(mopac)
 add_executable(mopac-param)
