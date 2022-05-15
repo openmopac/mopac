@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Using Cmake version 3.11 for better CUDA & Fortran support
-cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+# Using Cmake version 3.13 for target_link_options
+cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 # Specify project name & programming languages
 project(openmopac VERSION 22.0.0 LANGUAGES Fortran)
@@ -73,8 +73,8 @@ endif()
 if (STATIC_BUILD)
   # Static build
   set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
-  set(CMAKE_EXE_LINKER_FLAGS "-static")
   add_library(mopac-core STATIC)
+  target_link_options(mopac-core PUBLIC "-static")
   set(BLA_STATIC ON)
 else()
   add_library(mopac-core SHARED)
@@ -85,6 +85,11 @@ add_executable(mopac-param)
 add_executable(mopac-makpol)
 target_link_libraries(mopac mopac-core)
 target_link_libraries(mopac-param mopac-core)
+if (STATIC_BUILD)
+  target_link_options(mopac PUBLIC "-static")
+  target_link_options(mopac-param PUBLIC "-static")
+  target_link_options(mopac-makpol PUBLIC "-static")
+endif()
 
 # WinMOPAC build on Windows w/ the Intel Fortran compiler
 option(BUILD_WINMOPAC "Build MOPAC & BZ with QuickWin GUI (ifort required)" OFF)
@@ -102,6 +107,10 @@ if(BUILD_WINMOPAC)
   add_executable(mopac-bz)
   target_compile_options(mopac-bz PRIVATE /libs:qwin)
   target_link_options(mopac-bz PRIVATE /subsystem:windows)
+  if (STATIC_BUILD)
+    target_link_options(mopac-win PUBLIC "-static")
+    target_link_options(mopac-bz PUBLIC "-static")
+  endif()
 endif()
 
 # MOPAC shared library ABI compatibility version
