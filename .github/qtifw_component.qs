@@ -1,54 +1,39 @@
 function Component()
 {
-    installer.installationFinished.connect(this, Component.prototype.installationFinishedPageIsShown);
+    component.loaded.connect(this, addCheckBoxes);
 }
 
-Component.prototype.installationFinishedPageIsShown = function()
+addCheckBoxes = function()
 {
-/*
-    if(installer.isInstaller() && (installer.status == QInstaller.Success)) {
+    if(installer.isInstaller()) {
+        installer.addWizardPageItem(component, "PathCheckBoxForm", QInstaller.TargetDirectory, 1);
         if(systemInfo.kernelType === "winnt") {
-            installer.addWizardPageItem(component, "FileCheckBoxForm", QInstaller.InstallationFinished, 2);
-            installer.addWizardPageItem(component, "IconCheckBoxForm", QInstaller.InstallationFinished, 3);
-        }
-        else {
-            installer.addWizardPageItem(component, "PathCheckBoxForm", QInstaller.InstallationFinished, 1);
+            installer.addWizardPageItem(component, "FileCheckBoxForm", QInstaller.TargetDirectory, 2);
+            installer.addWizardPageItem(component, "IconCheckBoxForm", QInstaller.TargetDirectory, 3);
         }
     }
-*/
 }
 
 Component.prototype.createOperations = function()
 {
     component.createOperations();
-/*
+
     var checkboxForm = component.userInterface("PathCheckBoxForm");
     if(checkboxForm && checkboxForm.pathCheckBox.checked) {
         if(systemInfo.kernelType === "winnt") {
             component.addOperation("Execute",
-            "@TargetDir@/add-to-path.bat",
-            "@TargetDir@\bin",
+            "pwsh.exe",
+            "@TargetDir@/add-path.ps1",
             "UNDOEXECUTE",
-            "@TargetDir@/remove-from-path.bat",
-            "@TargetDir@\bin");
+            "pwsh.exe",
+            "@TargetDir@/remove-path.ps1");
         }
         else {
-            component.addOperation("Execute",
-            "bash",
-            "@TargetDir@/add-to-path.sh",
-            "@TargetDir@/bin",
-            "UNDOEXECUTE",
-            "bash",
-            "@TargetDir@/remove-from-path.sh",
-            "@TargetDir@/bin");
-            component.addOperation("Execute",
-            "bash",
-            "@TargetDir@/add-to-path.sh",
-            "@TargetDir@/lib",
-            "UNDOEXECUTE",
-            "bash",
-            "@TargetDir@/remove-from-path.sh",
-            "@TargetDir@/lib");
+            let path_append = ' PATH="$PATH:@TargetDir@/bin"\n';
+            component.addOperation("AppendFile", "@HomeDir@/.bashrc", "export" + path_append);
+            component.addOperation("AppendFile", "@HomeDir@/.cshrc", "setenv" + path_append);
+            component.addOperation("AppendFile", "@HomeDir@/.zshrc", "export" + path_append);
+            component.addOperation("AppendFile", "@HomeDir@/.profile", "export" + path_append);
          }
     }
 
@@ -70,5 +55,4 @@ Component.prototype.createOperations = function()
             "@TargetDir@/mopac.ico");
         }
     }
-*/
 }

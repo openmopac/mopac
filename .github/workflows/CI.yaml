@@ -147,7 +147,12 @@ jobs:
           name: linux-test-output
           path: build/tests
 
-      - name: Package MOPAC with CPack (in development)
+      - name: Local installation test
+        run: |
+          cd build
+          make install
+
+      - name: Package MOPAC with CPack
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
@@ -244,7 +249,12 @@ jobs:
           name: mac-test-output
           path: build/tests
 
-      - name: Package MOPAC with CPack (in development)
+      - name: Local installation test
+        run: |
+          cd build
+          make install
+
+      - name: Package MOPAC with CPack
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
@@ -337,6 +347,11 @@ jobs:
         with:
           name: windows-test-output
           path: build/tests
+
+      - name: Local installation test
+        run: |
+          cd build
+          ninja install
 
       - name: Package MOPAC with CPack (in development)
         shell: cmd
