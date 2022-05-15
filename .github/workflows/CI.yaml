@@ -150,7 +150,7 @@ jobs:
       - name: Local installation test
         run: |
           cd build
-          make install
+          sudo make install
 
       - name: Package MOPAC with CPack
         run: |
@@ -352,7 +352,7 @@ jobs:
         shell: cmd
         run: |
           cd build
-          ninja install
+          cmake --install .
 
       - name: Package MOPAC with CPack (in development)
         shell: cmd
