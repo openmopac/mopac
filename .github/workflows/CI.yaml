@@ -349,6 +349,7 @@ jobs:
           path: build/tests
 
       - name: Local installation test
+        shell: cmd
         run: |
           cd build
           ninja install
