@@ -58,7 +58,7 @@ jobs:
       - name: Test MOPAC with CTest
         run: |
           cd build
-          ctest -j$NUM_CORES
+          ctest -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -138,7 +138,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          ctest -j$NUM_CORES
+          ctest -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -240,7 +240,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          ctest -j$NUM_CORES
+          ctest -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -339,7 +339,7 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
           call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           cd build
-          ctest -j%NUM_CORES%
+          ctest -j %NUM_CORES%
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
