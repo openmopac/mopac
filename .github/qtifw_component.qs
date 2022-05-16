@@ -22,15 +22,13 @@ Component.prototype.createOperations = function()
     if(checkboxForm && checkboxForm.pathCheckBox.checked) {
         if(systemInfo.kernelType === "winnt") {
             let target_dir = installer.value("TargetDir").replace(/\//g,"\\");
-            let add_path = "\"$LiteralPath = '" + target_dir + "\\bin'; $regPath = 'registry::HKEY_CURRENT_USER\\Environment'; $currDirs = (Get-Item -LiteralPath $regPath).GetValue('Path', '', 'DoNotExpandEnvironmentNames') -split ';' -ne ''; $newValue = ($currDirs + $LiteralPath) -join ';'; Set-ItemProperty -Type ExpandString -LiteralPath $regPath Path $newValue; $dummyName = [guid]::NewGuid().ToString(); [Environment]::SetEnvironmentVariable($dummyName, 'foo', 'User'); [Environment]::SetEnvironmentVariable($dummyName, [NullString]::value, 'User');\"";
-            let remove_path = "\"$LiteralPath = '" + target_dir + "\\bin'; $regPath = 'registry::HKEY_CURRENT_USER\\Environment'; $currDirs = (Get-Item -LiteralPath $regPath).GetValue('Path', '', 'DoNotExpandEnvironmentNames') -split ';' -ne ''; $newValue = ($currDirs.Split(';') | Where-Object { $_ -ne $LiteralPath }) -join ';'; Set-ItemProperty -Type ExpandString -LiteralPath $regPath Path $newValue; $dummyName = [guid]::NewGuid().ToString(); [Environment]::SetEnvironmentVariable($dummyName, 'foo', 'User'); [Environment]::SetEnvironmentVariable($dummyName, [NullString]::value, 'User');\"";
+            let add_path = "-Command \"$LiteralPath = '" + target_dir + "\\bin'; $regPath = 'registry::HKEY_CURRENT_USER\\Environment'; $currDirs = (Get-Item -LiteralPath $regPath).GetValue('Path', '', 'DoNotExpandEnvironmentNames') -split ';' -ne ''; $newValue = ($currDirs + $LiteralPath) -join ';'; Set-ItemProperty -Type ExpandString -LiteralPath $regPath Path $newValue; $dummyName = [guid]::NewGuid().ToString(); [Environment]::SetEnvironmentVariable($dummyName, 'foo', 'User'); [Environment]::SetEnvironmentVariable($dummyName, [NullString]::value, 'User');\"";
+            let remove_path = "-Command \"$LiteralPath = '" + target_dir + "\\bin'; $regPath = 'registry::HKEY_CURRENT_USER\\Environment'; $currDirs = (Get-Item -LiteralPath $regPath).GetValue('Path', '', 'DoNotExpandEnvironmentNames') -split ';' -ne ''; $newValue = ($currDirs.Split(';') | Where-Object { $_ -ne $LiteralPath }) -join ';'; Set-ItemProperty -Type ExpandString -LiteralPath $regPath Path $newValue; $dummyName = [guid]::NewGuid().ToString(); [Environment]::SetEnvironmentVariable($dummyName, 'foo', 'User'); [Environment]::SetEnvironmentVariable($dummyName, [NullString]::value, 'User');\"";
             component.addOperation("Execute",
             "powershell.exe",
-            "-Command",
             add_path,
             "UNDOEXECUTE",
             "powershell.exe",
-            "-Command",
             remove_path);
         }
         else {
@@ -44,6 +42,7 @@ Component.prototype.createOperations = function()
     }
 
     if(systemInfo.kernelType === "winnt") {
+        let target_dir = installer.value("TargetDir").replace(/\//g,"\\");
         checkboxForm = component.userInterface("IconCheckBoxForm");
         if(checkboxForm && checkboxForm.iconCheckBox.checked) {
             component.addOperation("CreateShortcut",
@@ -55,10 +54,10 @@ Component.prototype.createOperations = function()
         if(checkboxForm && checkboxForm.fileCheckBox.checked) {
             component.addOperation("RegisterFileType",
             "mop",
-            "@TargetDir@\\bin\\mopac.exe \"%1\"",
+            target_dir + "\\bin\\mopac.exe \"%1\"",
             "MOPAC input file extension",
             "text/plain",
-            "@TargetDir@/mopac.ico",
+            target_dir + "\\mopac.ico",
             "ProgId=mopac.mop");
         }
     }
