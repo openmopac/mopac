@@ -92,7 +92,7 @@ subroutine pdbout (mode1)
         end if
         line(81:) = " "
         write (iprt, "(A)") trim(line)
-        line = "REMARK  MOPAC 2016, Version: "//verson//" Date: "//idate(5:11)//idate(21:)//idate(11:16)
+        line = "REMARK  MOPAC, Version: "//verson//" Date: "//idate(5:11)//idate(21:)//idate(11:16)
         write (iprt, "(A)") trim(line)
       end if
       do i = 1, ncomments
@@ -119,7 +119,7 @@ subroutine pdbout (mode1)
       line(81:) = " "
       write (iprt, "(A)") trim(line)
       if (ncomments == 0) then
-        line = "REMARK  MOPAC 2016, Version: "//verson
+        line = "REMARK  MOPAC, Version: "//verson
         write (iprt, "(A)") trim(line)
         line = "REMARK  Date: "//idate(5:11)//idate(21:)//idate(11:16)
         write (iprt, "(A)") trim(line)

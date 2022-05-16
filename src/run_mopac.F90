@@ -1043,7 +1043,7 @@ subroutine special
     j = index(refkey(i),"     ")
     refkey(i)(j:) = " PM6"
   end do
-  write(iprt,"(a)")"  MOPAC2016"
+  write(iprt,"(a)")"  MOPAC"
   write(iprt,"(a)")" FINAL GEOMETRY OBTAINED"
   call geout (iprt)
 end subroutine special
