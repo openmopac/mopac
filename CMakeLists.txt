@@ -232,7 +232,9 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
     if(INTEL_OMP_LIB STREQUAL "INTEL_OMP_LIB-NOTFOUND")
       message("WARNING: Cannot locate Intel's OpenMP shared library for packaging")
     endif()
-    install(FILES ${INTEL_OMP_LIB} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
+    # resolve symbolic links
+    get_filename_component(INTEL_OMP_LIB_PATH ${INTEL_OMP_LIB} REALPATH)
+    install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
   endif()
 endif()
 
