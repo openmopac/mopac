@@ -11,6 +11,6 @@ Self-contained installers for Linux, Mac, and Windows are available for each rel
 While the installers are meant to be run from a desktop environment by default, they can also be run from a command line without user input.
 On Linux, the basic command-line installation syntax is:
 
-`./mopac-x.y.z-linux.run install --root --accept-licenses --confirm-command --root type_installation_directory_here`
+`./mopac-x.y.z-linux.run install --accept-licenses --confirm-command --root type_installation_directory_here`
 
 For more information on command-line installation, see the [Qt Installer Framework Documentation](https://doc.qt.io/qtinstallerframework/ifw-cli.html).
