@@ -404,6 +404,10 @@
       if (moperr) goto 100
       call to_screen("To_file: Data read in")
 !
+! Try listening from MDI
+!
+      call mdi_listen()
+!
 !  If no SCF calculations are needed, output geometry and quit
 !
       if (.false.) then

@@ -8,10 +8,11 @@ ExternalProject_Add(mdi_build
   CMAKE_ARGS ${CMAKE_REQUEST_PIC}
   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+  -DCMAKE_Fortran_COMPILER=${CMAKE_Fortran_COMPILER}
   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
   -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
   -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
-  -Dlanguage=C
+  -Dlanguage=Fortran
   -Dlibtype=STATIC
   -Dmpi=OFF
   -Dpython_plugins=OFF
@@ -34,4 +35,8 @@ set_target_properties(mdi-lib PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES ${MDI_BINARY_DIR}
   )
 
-target_link_libraries(mopac PUBLIC mdi-lib)
+link_directories(${MDI_BINARY_DIR})
+include_directories(${MDI_BINARY_DIR})
+
+target_link_libraries(mopac mdi-lib dl)
+target_link_libraries(mopac-param mdi-lib dl)
