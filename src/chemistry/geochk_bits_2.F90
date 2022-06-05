@@ -23,7 +23,7 @@
   use molkst_C, only : numat, natoms, line, keywrd, id, moperr,maxtxt
   use funcon_C,  only : pi
   implicit none
-  logical, intent(in) :: neutral(10)
+  logical, intent(in) :: neutral(100)
   integer, intent (in) :: nres, res(nres), max_sites
   character, intent (in) :: chain(nres)*1, alt(nres)*1
   character, intent (inout) :: charge(max_sites,3)*1, allkey*3000
@@ -159,6 +159,51 @@
               end if
             end do
           end if
+        end if
+      end if
+    end if
+    if (neutral(11) .or. neutral(12) .or. l_res) then !  Must be -Lys(+)- or -Lys(0)-
+!
+!  Check for Lys(0) or Lys(+)
+!
+      l_type = (txtatm(i_atom)(18:20) == "LYS")
+      if (l_type .and. txtatm(i_atom)(14:15) == "NZ" ) then
+        if (neutral(12) .or. i_charge == 0) then
+!
+! Found the system -NH3(+), now delete a hydrogen atom
+!
+          do j = 1, 3
+            if (nbonds(ibonds(j, i_atom)) == 3) then
+              l = ibonds(j, i_atom)
+              k = 0
+              if (nat(ibonds(1,l)) == 1) k = k + 1
+              if (nat(ibonds(2,l)) == 1) k = k + 1
+              if (nat(ibonds(3,l)) == 1) k = k + 1
+              if (k == 2) then
+                if (nat(ibonds(1,l)) == 1) then
+                  k = ibonds(1,l)
+                else
+                  k = ibonds(2,l)
+                end if
+                nat(k) = 99
+                ibonds(nbonds(i_atom), i_atom) = 0
+                nbonds(i_atom) = nbonds(i_atom) - 1
+                exit
+              end if
+            end if
+          end do
+        else if ((neutral(11) .or. i_charge == 1) .and. nbonds(i_atom) == 3) then
+!
+!  Nitrogen bonded to three atoms, add a hydrogen atom.
+!
+          if (nbonds(i_atom) == 3 .and. i_charge /= 100) charge(jres,1:2) = charge(jres,2:3)
+          call add_sp3_H(ibonds(1,i_atom), i_atom, ibonds(2,i_atom), ibonds(3,i_atom))
+          nbonds(i_atom) = nbonds(i_atom) + 1
+          ibonds(nbonds(i_atom), i_atom) = numat
+          numat = numat + 1
+          nadd = nadd + 1
+          changes(nadd)(:15) = trim(txtatm(i_atom)(12:))
+          write(txtatm(natoms),'(a,i5," 3H",a)')txtatm(i_atom)(:6), natoms, txtatm(i_atom)(15:)
         end if
       end if
     end if

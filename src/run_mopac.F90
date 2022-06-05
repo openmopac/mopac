@@ -22,7 +22,7 @@
 !
       use common_arrays_C, only : nfirst, nlast, nat, xparam, grad, nw, &
       p, pa, pb, labels, loc, time_start, l_atom, coord, txtatm, coorda, &
-      txtatm1, cell_ijk, eigs, c
+      txtatm1, cell_ijk, eigs, c, breaks
 !
       USE molkst_C, only : gnorm, natoms, numat, nvar, numcal, job_no, nscf, id, &
         escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
@@ -494,7 +494,8 @@
         end if
       end if
       if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) nelecs = 0
-      if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") + index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
+      if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") + index(keywrd, " NEWPDB") + &
+        index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
         if (index(keywrd, " DISP") /= 0) then
           call l_control("0SCF", len_trim("0SCF"), 1)
           call l_control("PRT", len_trim("PRT"), 1)
@@ -508,7 +509,7 @@
           line = ' GEOMETRY OF SYSTEM SUPPLIED'
         end if
         if (prt_coords) write (iw, '(A)') trim(line)
-        xparam(1) = -1.D0
+!        xparam(1) = -1.D0
         if (index(keywrd," OLDEN") /= 0 .and. index(keywrd, " 0SCF") == 0) then
 !
 ! read in density so that charges can be calculated
@@ -534,13 +535,27 @@
           call wrttxt (iarc)
           call geoutg (iarc)
         else if (mozyme .or. index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0  .or. &
-          (index(keywrd," PDBOUT") + index(keywrd," RESEQ") + index(keywrd," RESID") /= 0)) then
+          (index(keywrd," PDBOUT") + index(keywrd," RESEQ") + index(keywrd," NEWPDB") + &
+          index(keywrd," RESID") /= 0)) then
           i = size(coorda)
           j = size(coord)
           if (i /= j) then
             deallocate (coorda)
             allocate(coorda(3,natoms))
             coorda = coord
+          end if
+!
+!  Check the format of hydrogen atoms if SITE is used.  If it is the new formatmake sure that NEWPDB is present
+!
+          if (index(keywrd, " SITE=") /= 0 .and. index(keywrd," NEWPDB") == 0) then
+            j = 0
+            k = 0
+            do i = 1, min(numat,100)
+              if (index(txtatm(i), " 1H") /= 0) j = j + 1
+              if (index(txtatm(i), " HG13") /= 0) k = k + 1
+              line=txtatm(i)(12:15)
+            end do
+            if (k > 0 .and. j == 0) call l_control("NEWPDB", len("NEWPDB"), 1)
           end if
           if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") == 0) call geochk()
           if (index(keywrd, " ADD-H") == 0 .and. index(keywrd, " SITE=") == 0 .and. index(keywrd," RESEQ") /= 0) then
@@ -569,6 +584,10 @@
               moperr = .false.
             end if
             call l_control("0SCF", len("0SCF"), 1)
+!
+! Force the TER's to be re-calculated
+!
+            breaks(1) = -300
             call geochk()
             if (moperr) goto 101
             if (size(coorda) >= size(coord)) then
@@ -578,9 +597,11 @@
             moperr = .false.
             i = index(refkey(1), "ADD-H")
             if (i /= 0) refkey(1) = refkey(1)(:i - 1)//refkey(1)(i + 5:)
+          else
+            if (index(keywrd, " NEWPDB") /= 0) call update_txtatm(.true., .false.)
           end if
           if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0 .and. &
-            index(keywrd," RESEQ") + index(keywrd," RESID") /= 0) &
+            index(keywrd," RESEQ") + index(keywrd," RESID") + index(keywrd, " NEWPDB") /= 0) &
             call update_txtatm(.true., .false.)         !  Now that geometry checks are done, switch to input labels
           if (index(keywrd, " NEWPDB") /= 0) call PDB3()
           call write_sequence
@@ -642,7 +663,10 @@
           end if
           call geout (iarc)
         end if
-        go to 100
+        if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") + index(keywrd, " 0SCF") + &
+          index(keywrd," RESEQ") + index(keywrd," RESID") /= 0) go to 100
+        if (nelecs == 0 .or. index(keywrd, " NEWPDB") == 0) goto 100
+        close (iarc)
       end if
       if (pdb_label) call compare_txtatm(moperr, moperr)
       if (moperr) then

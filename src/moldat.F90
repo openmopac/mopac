@@ -303,9 +303,9 @@ subroutine moldat(mode)
         if (Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") + index(keywrd, " ADD-H") == 0) then
           call mopend(" Data set '"//trim(jobnam)//"' exists, but is too large to run.")
           write(iw,'(10x,a)')"(Maximum number of two-electron integrals allowed: 2,147,483,647)"
-          write(iw,'(10x,a, i10,a)')"(Number of two-electron integrals exceeded this by:", &
+          write(iw,'(10x,a, i12,a)')"(Number of two-electron integrals exceeded this by:", &
             n2elec8 - 2147483647,")"
-          write(iw,'(/10x,a, i10,a)')"(Try using MOZYME on this system)"
+          write(iw,'(/10x,a)')"(Try using MOZYME on this system)"
           return
         end if
       end if
@@ -1004,19 +1004,20 @@ subroutine setcup
       r1 = Sqrt (tvec(1, 1)**2 + tvec(2, 1)**2 + tvec(3, 1)**2)
       r2 = Sqrt (tvec(1, 2)**2 + tvec(2, 2)**2 + tvec(3, 2)**2)
       if (r1 < 1.d0) then
-        line = "  Length of first translation vector is too small."
-        write(iw,'(a)')trim(line)
-        call mopend (trim(line))
+        call mopend ("Length of first translation vector is too small.")
         return
       end if
       if (r1 < 1.d0) then
-         line = "  Length of second translation vector is too small."
-        write(iw,'(a)')trim(line)
-        call mopend (trim(line))
+        call mopend ("Length of second translation vector is too small.")
         return
       end if
       r12 = Sqrt ((tvec(1, 2)-tvec(1, 1))**2 + (tvec(2, 2)-tvec(2, 1))**2 &
            & + (tvec(3, 2)-tvec(3, 1))**2)
+      sum = (r1**2 + r2**2 - r12**2)/(2*r1*r2)
+      if (sum > 0.9d0) then
+        call mopend ("The angle between the two translation vectors is too small")
+        return
+      end if
       tv1 = r1 * Sin (Acos((r1**2 + r2**2 - r12**2)/(2*r1*r2)))
       tv2 = r2 * Sin (Acos((r1**2 + r2**2 - r12**2)/(2*r1*r2)))
       l1u = Int (cutofp*4.d0/3.d0/tv1) + 1

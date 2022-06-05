@@ -157,7 +157,12 @@
 !
 !  Check for " -" signs in setup file
 !
-          if (refkey(2)(1:1) /= " ") refkey(2) = " "//refkey(2)(:len_trim(refkey(2)))
+          i = ichar(refkey(2)(1:1))
+          if (i == 0) then
+            refkey(2) = " "
+          else if (refkey(2)(1:1) /= " ") then
+            refkey(2) = " "//refkey(2)(:len_trim(refkey(2)))
+          end if
           do
             i = index(refkey(2), " -")
             if (i == 0) exit
@@ -219,11 +224,10 @@
 !
 !  Check for " -" signs in keywrd line
 !
+          m = 0
           do
-            i = index(keywrd, " -")
-            if (i == 0) exit
-            i = index(keywrd, " -")
-            if (i == 0) exit
+            i = index(keywrd(m + 1:), " -") + m
+            if (i == m) exit
 !
 ! Is the minus sign inside a quoted text
 !
@@ -235,7 +239,8 @@
 !
 !  Yes, it's inside a quoted string, so protect it and carry on
 !
-              refkey(2)(i:i) = "*"
+              keywrd(i:i) = char(0)
+              m = i
               cycle
             end if
             j = index(keywrd(i + 2:), " ") + i + 1
@@ -248,6 +253,12 @@
             i = index(keywrd, " -")
             j = index(keywrd(i + 2:), " ") + i + 1
             keywrd(i:) = keywrd(j:)
+            m = i
+          end do
+          do
+            i = index(keywrd, char(0))
+            if (i == 0) exit
+            keywrd(i:i) = " "
           end do
           i = len_trim(keywrd)
           keywrd(i + 1:) = " "//refkey(2)(:3000 - 1 - i)

@@ -440,7 +440,6 @@
 ! At this point it's necessary to re-calculate nbonds and ibonds
 !
     call set_up_dentate()
-    call geochk()
     if (index(keywrd, "SITE") /= 0) call geochk()
     call l_control("NOSITE", len("NOSITE"), 1)
     call reset_breaks()

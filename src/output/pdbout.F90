@@ -205,7 +205,7 @@ subroutine pdbout (mode1)
     integer :: nres, i, j, k, nprt, ncol, biggest_res, iprt, icalcn = -1, it
     character :: res_txt(4000)*10, l_res*14, n_res*14, wrt_res*14, num*1, line_1*400
     integer, parameter :: limres = 260
-    logical :: exists, l_prt_res, l_geo_ref, l_compare
+    logical :: exists, l_prt_res, l_geo_ref, l_compare, l_het_only
     double precision, external :: reada
     save :: icalcn
     it = 0
@@ -222,7 +222,9 @@ subroutine pdbout (mode1)
 !   Identify all residues
 !
 
+      l_het_only = .true.
       do i = 1, natoms - id
+        if (txtatm(i)(1:4) == "ATOM") l_het_only = .false.
         if (txtatm(i)(18:20) == "HOH") cycle
         if (txtatm(i)(18:20) == "SO4") cycle
         j = nint(reada(txtatm(i), 23))
@@ -262,6 +264,20 @@ subroutine pdbout (mode1)
           end do
         end if
       end do
+!
+! Remove redundancies
+!
+      j = 0
+      do i = 1, nres
+        do k = 1, j
+          if (res_txt(k) == res_txt(i)) exit
+        end do
+        if (k > j) then
+          j = j + 1
+          res_txt(j) = res_txt(i)
+        end if
+      end do
+      nres = j
     end if
 !
 !  Heading
@@ -580,7 +596,11 @@ subroutine pdbout (mode1)
         if (j > 0) l_res(j:j) = "_"
         if (n_res(2:4) == "UNK") then
           if (res_txt(i)(1:3) == "UNK") then
-            n_res = "[UNK]"//res_txt(i)(4:7)
+            if (l_het_only) then
+              n_res = res_txt(i)(4:7)
+            else
+              n_res = "[UNK]"//res_txt(i)(4:7)
+            end if
           else
             n_res = res_txt(i)(4:7)
           end if

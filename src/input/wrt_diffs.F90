@@ -146,8 +146,9 @@
         write(iw,'(85x,a)')" in "//trim(line)//"      in GEO_REF"
         first = .false.
       end if
-      write(iw,'(i4, f12.3, 4x, a, 3x, a, f11.3, 5x, f12.3)') &
-        i, dist(1,k), elemnt(nat(j))//"("//trim(txtatm(j))//")",  elemnt(nat(l))//"("//trim(txtatm(l))//")", dist(2,k), dist(3,k)
+      write(iw,'(i4, SP, f12.3, S, 4x, a, 3x, a, f11.3, 5x, f12.3)') &
+        i, dist(2,k) - dist(3,k), elemnt(nat(j))//"("//trim(txtatm(j))//")", &
+        elemnt(nat(l))//"("//trim(txtatm(l))//")", dist(2,k), dist(3,k)
       dist(1,k) = -10.d0
     end do
     if ( .not. first) then

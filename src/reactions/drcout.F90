@@ -71,14 +71,6 @@
           if (keywrd(i:i) == '=') iprint = nint(abs(reada(keywrd,i)))
         end if
       end if
-      if (jloop==0 .or. (jloop/iprint)*iprint==jloop) then
-        if (drc) then
-          write (line, '('' FEMTOSECONDS  POINT  POTENTIAL + KINETIC  =   TOTAL     ERROR    REF%   MOVEMENT'')')
-        else
-          write (line, '(''     POINT   POTENTIAL  +  ENERGY LOST   =   TOTAL      ERROR    REF%   MOVEMENT'')')
-        end if
-        write(iw,'(2/,a)')trim(line)
-      end if
       if (drc) then
 !
 ! Sanity check - don't print two points that are the same.
@@ -105,6 +97,14 @@
         else
           last_rxn_coord = rxn_coord
         end if
+      end if
+      if (jloop==0 .or. (jloop/iprint)*iprint==jloop) then
+        if (drc) then
+          write (line, '('' FEMTOSECONDS  POINT  POTENTIAL + KINETIC  =   TOTAL     ERROR    REF%   MOVEMENT'')')
+        else
+          write (line, '(''     POINT   POTENTIAL  +  ENERGY LOST   =   TOTAL      ERROR    REF%   MOVEMENT'')')
+        end if
+        write(iw,'(2/,a)')trim(line)
       end if
       errr = min(9999.99999D0,max(-999.99999D0,rc_escf + ekin - etot))
       if (rc_escf > 99999.d0 .or. rc_escf < -9999.d0) then
