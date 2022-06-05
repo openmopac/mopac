@@ -259,8 +259,7 @@
           call l_control("GEO_DAT", len_trim("GEO_DAT"), -1)
           call l_control("GEO_REF", len_trim("GEO_REF"), -1)
           line = trim(keywrd)
-          if (index(line, " +") /= 0) i = i - 1
-          if (index(line, "++") /= 0) i = i - 1
+          if (index(line, " +") + index(line, "++") /= 0) i = i - 1
         end if
         if (i == 3) exit
       end do
