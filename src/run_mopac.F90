@@ -663,8 +663,8 @@
           end if
           call geout (iarc)
         end if
-        if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") +  index(keywrd, " 0SCF") + &
-          (index(keywrd," RESEQ") + index(keywrd," RESID") /= 0)) go to 100
+        if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") + index(keywrd, " 0SCF") + &
+          index(keywrd," RESEQ") + index(keywrd," RESID") /= 0) go to 100
         if (nelecs == 0 .or. index(keywrd, " NEWPDB") == 0) goto 100
         close (iarc)
       end if
