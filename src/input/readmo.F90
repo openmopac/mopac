@@ -1469,7 +1469,7 @@
           end if
           iend = ireact + 1
           react(iend) = -1.D12
-          if (na(latom) > 0 .and. labels(1) < 99 .and. labels(latom) < 99 ) then
+          if (na(latom) > 0 .and. lparam == 1 .and. labels(1) < 99 .and. labels(latom) < 99 ) then
             do i = 1, ireact
               if (abs(react(i)) < 1.d-3) exit
             end do
@@ -1936,7 +1936,7 @@
       dum1 = sqrt(dum1)
       move(i) = dum1
       sum = sum + dum1
-      if (txtmax == 26) then
+      if (txtmax >= 26) then
         j = max(-100, nint(reada(txtatm(i), 24)))
         ires_l = min(j, ires_l)
         ires_u = max(j, ires_u)
