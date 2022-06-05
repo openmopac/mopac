@@ -305,7 +305,7 @@ subroutine moldat(mode)
           write(iw,'(10x,a)')"(Maximum number of two-electron integrals allowed: 2,147,483,647)"
           write(iw,'(10x,a, i12,a)')"(Number of two-electron integrals exceeded this by:", &
             n2elec8 - 2147483647,")"
-          write(iw,'(/10x,a)')"(Try using MOZYME on this system)
+          write(iw,'(/10x,a)')"(Try using MOZYME on this system)"
           return
         end if
       end if
