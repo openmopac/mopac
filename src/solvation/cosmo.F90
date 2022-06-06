@@ -1858,6 +1858,17 @@ subroutine cosini(l_print)
       allocate(cmat((lm61*(lm61 + 1))/2), stat = i)
       j = j + i
       if (j /= 0) then
+        if (l_print) then
+          write(line, '(a, i5, a)')"Data set '"//trim(jobnam)//"' exists, "
+          write(0, '(//10x, a)')trim(line)
+          call mopend(trim(line))
+          write(line, '(a)')"but is too large to run using COSMO."
+          write(0, '(//10x, a)')trim(line)
+          call mopend(trim(line))
+          write(line, '(a, i5, a)')"(This job might run if MOZYME is used.)"
+          write(0, '(/10x, a, //)')trim(line)
+          write(iw, '(/10x, a, //)')trim(line)
+        end if
         call memory_error("COSINI (2) in Cosmo")
         return
       end if
