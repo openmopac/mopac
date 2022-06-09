@@ -203,8 +203,12 @@ if(GPU)
 endif()
 
 # Add tests
-enable_testing()
-add_subdirectory(tests)
+option(TESTS "Enable tests (needs Python and Numpy)" ON)
+if(TESTS)
+  find_package (Python COMPONENTS Interpreter)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
 
 # CPack options
 set(CPACK_PACKAGE_NAME "mopac")
