@@ -55,6 +55,9 @@
 !
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
+#ifdef OMP_ENABLED
+      USE OMP_LIB
+#endif
 #ifdef GPU
       Use iso_c_binding
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
@@ -67,6 +70,9 @@
       logical :: exists, opend, sparkles_available, l_OLDDEN
       double precision, external :: C_triple_bond_C, reada, seconds
       character :: nokey(20)*10
+#ifdef OMP_ENABLED
+      integer :: num_threads, default_num_threads
+#endif
 #ifdef MKL
       integer :: num_threads
       integer, external :: mkl_get_max_threads
@@ -240,6 +246,17 @@
 90      if (moperr .and. numcal == 1 .and. natoms > 1) goto 101
       if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
+! Adjust maximum number of threads using the OpenMP API
+#ifdef OMP_ENABLED
+      if (numcal == 1) default_num_threads = omp_get_max_threads()
+      i = index(keywrd, " THREADS")
+      if (i > 0) then
+        num_threads = nint(reada(keywrd, i))
+      else
+        num_threads = default_num_threads
+      end if
+      call omp_set_num_threads(num_threads)
+#endif
       if (numcal == 1) then
 #ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
