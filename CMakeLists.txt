@@ -159,6 +159,20 @@ else()
   message(STATUS "AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define compiler link line with MOPAC_LINK)")
 endif()
 
+# Use CMake's system for finding an OpenMP library
+option(ENABLE_OMP "Use OpenMP to enable threading controls" ON)
+if(ENABLE_OMP)
+  find_package(OpenMP)
+  if(OpenMP_Fortran_HAVE_OMPLIB_MODULE)
+    add_definitions(-DOMP_ENABLED)
+
+    # Use OpenMP information provided by CMake's find_package system
+    target_link_libraries(mopac-core PUBLIC ${OpenMP_Fortran_LIBRARIES})
+    target_compile_options(mopac PUBLIC ${OpenMP_Fortran_FLAGS})
+    target_compile_options(mopac-param PUBLIC ${OpenMP_Fortran_FLAGS})
+  endif()
+endif()
+
 # Additional link line
 set(MOPAC_LINK "" CACHE STRING "Additional link line for MOPAC executable.")
 set(MOPAC_LINK_PATH "" CACHE STRING "Path of external dependencies to bundle.")
