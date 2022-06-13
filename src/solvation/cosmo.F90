@@ -1331,6 +1331,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
     tarset = 0.d0
     nipc = 0
     nrs = 0
+    iset = 0
    ! GENERATION OF SEGMENTS ALONG THE INTERSECTION RINGS
     ilipa = 0
     do i = 1, numat
