@@ -31,7 +31,7 @@ subroutine chklew (mb, numbon, l, large, debug)
     use parameters_C, only: tore, ndelec, natorb
     use common_arrays_C, only : txtatm, labels, nat, nbonds, ibonds, &
       nfirst, nlast, pibonds
-    use MOZYME_C, only: icharges, ions, Lewis_elem, Lewis_tot, ib, iz
+    use MOZYME_C, only: icharges, ions, Lewis_elem, Lewis_tot, Lewis_max, ib, iz
     implicit none
     logical, intent (in) :: debug
     integer, intent (in) :: large
@@ -54,7 +54,8 @@ subroutine chklew (mb, numbon, l, large, debug)
 !   number of ions.
 !
     if (allocated(Lewis_elem)) deallocate(Lewis_elem)
-    allocate(Lewis_elem(2,norbs))
+    Lewis_max = norbs
+    allocate(Lewis_elem(2,Lewis_max))
     Lewis_tot = 0
     big = (Index (keywrd, " LARGE") /= 0)
     graphi = .false.
@@ -924,10 +925,22 @@ subroutine add_Lewis_element(atom_i, atom_j, charge, element_type)
 !  charge : The charge implied by this Lewis element (If Na virtual lone pair, then +1)
 !  Element_type : Type of Lewis structural element (sigma, lone pair, pi bond, etc.)
 !
-  use MOZYME_C, only: ions, Lewis_elem, Lewis_tot, iz, ib
+  use MOZYME_C, only: ions, Lewis_elem, Lewis_tot, Lewis_max, iz, ib
   integer, intent (in) :: atom_i, atom_j, charge
   integer, intent (inout) :: element_type
+  integer, dimension(:,:), allocatable :: Lewis_save
     Lewis_tot = Lewis_tot + 1
+! Expand Lewis_elem buffer if maximum size is exceeded
+    if (Lewis_tot > Lewis_max) then
+      Lewis_max = 2*Lewis_max
+      allocate(Lewis_save(2,Lewis_max))
+      Lewis_save(:,:Lewis_max) = Lewis_elem(:,:Lewis_max)
+      deallocate(Lewis_elem)
+      allocate(Lewis_elem(2,2*Lewis_max))
+      Lewis_elem(:,:Lewis_max) = Lewis_save(:,:Lewis_max)
+      deallocate(Lewis_save)
+      Lewis_max = 2*Lewis_max
+    endif
     Lewis_elem(1,Lewis_tot) = atom_i
     Lewis_elem(2,Lewis_tot) = atom_j
     if (atom_i > 0 .and. atom_j > 0) then
