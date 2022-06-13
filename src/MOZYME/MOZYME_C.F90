@@ -32,7 +32,8 @@ module MOZYME_C
     ipad2,       & ! Estimate of the average number of atoms in a LMO
     ipad4,       & ! Estimate of the average number of atomic orbital coefficients in a LMO
     uni_res,     & ! Number of unique residues in a protein
-    Lewis_tot      ! Total number of Lewis elements (occupied plus virtual)
+    Lewis_tot,   & ! Total number of Lewis elements (occupied plus virtual)
+    Lewis_max      ! Maximum number of Lewis elements (size of Lewis_elem buffer)
 !
 !                              Data on atoms
 !
