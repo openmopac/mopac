@@ -511,6 +511,7 @@
         store_coord = coord
         geo(:,:numat) = store_coord(:,:numat)
         na = 0
+        jloop = 0
         this_point = 0
         if (ts) then
           allocate(velocity(3*numat))
@@ -557,7 +558,7 @@
             call reverse_aux
             call l_control("REVERSE", len("REVERSE"), 1)
             last = 1
-            geo(:,:numat) = store_coord
+            geo(:,:numat) = store_coord(:,:numat)
             na = 0
             jloop = 0
             numcal = numcal + 1
