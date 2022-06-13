@@ -54,7 +54,7 @@ subroutine chklew (mb, numbon, l, large, debug)
 !   number of ions.
 !
     if (allocated(Lewis_elem)) deallocate(Lewis_elem)
-    Lewis_max = norbs
+    Lewis_max = max(norbs,1)
     allocate(Lewis_elem(2,Lewis_max))
     Lewis_tot = 0
     big = (Index (keywrd, " LARGE") /= 0)
