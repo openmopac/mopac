@@ -451,18 +451,6 @@
           if(keywrd(i:i) == '"') l_quote = .not. l_quote
         end do
       end if
-      if (gui) then
-        i = index(keywrd,"PM3")  ! Convert PM3 to PM6 for CAChe only
-        if (i /= 0) then
-          keywrd(i:i+2) = "PM6"
-           write (iw, '(A)') ' Keyword PM3 was supplied. PM3 is not supported, so keyword converted to PM6'
-        end if
-        i = index(keywrd,"PM5")  ! Convert PM5 to PM7 for CAChe only
-        if (i /= 0) then
-          keywrd(i:i+2) = "PM7"
-           write (iw, '(A)') ' Keyword PM5 was supplied. PM5 is not supported, so keyword converted to PM7'
-        end if
-      end if
       line = " "
       goto 99
   100 continue
