@@ -405,40 +405,6 @@
         keywrd(i:i+6) = "GEO_REF"
         refkey(1)(i:i+6) = "GEO_REF"
       end if
-!
-!  The following code is specific to very case-sensitive operating systems
-!  such as Red Hat Enterprise Linux.
-!
-!  Preserve case of files that start and end with a quotation mark
-!  The original case is in oldkey.  Allow for keywrd and oldkey to have other differences.
-!
-      line = trim(oldkey)
-      k = 1
-      n = 1
-      do
-        i = index(keywrd(k:), '"')
-        if (i /= 0) then
-!
-! Find closing quotation mark
-!
-          i = i + k - 1
-          j = index(keywrd(i + 1:), '"') + i
-          if (j == i) then
-            call mopend("NUMBER OF QUOTATION MARKS, '""', IN KEYWORDS IS ODD. THIS NUMBER MUST BE EVEN.")
-            return
-          end if
-          l = index(oldkey(n:), '"') + n - 1
-          m = index(oldkey(l + 1:), '"') + l
-          keywrd(i:j) = oldkey(l:m)
-          k = j + 1
-          n = m + 1
-        else
-          exit
-        end if
-      end do
-!
-! End of UNIX-specific code
-!
       do
         i = index(refkey(1), "*-")
         if (i == 0) exit
@@ -494,6 +460,40 @@
         end if
       end if
 99    if (line /= " ") call mopend (trim(line))
+!
+!  The following code is specific to very case-sensitive operating systems
+!  such as Red Hat Enterprise Linux.
+!
+!  Preserve case of files that start and end with a quotation mark
+!  The original case is in oldkey.  Allow for keywrd and oldkey to have other differences.
+!
+line = trim(oldkey)
+k = 1
+n = 1
+do
+  i = index(keywrd(k:), '"')
+  if (i /= 0) then
+!
+! Find closing quotation mark
+!
+    i = i + k - 1
+    j = index(keywrd(i + 1:), '"') + i
+    if (j == i) then
+      call mopend("NUMBER OF QUOTATION MARKS, '""', IN KEYWORDS IS ODD. THIS NUMBER MUST BE EVEN.")
+      return
+    end if
+    l = index(oldkey(n:), '"') + n - 1
+    m = index(oldkey(l + 1:), '"') + l
+    keywrd(i:j) = oldkey(l:m)
+    k = j + 1
+    n = m + 1
+  else
+    exit
+  end if
+end do
+!
+! End of UNIX-specific code
+!
 !
 !  Look for non-standard characters.  If Apple's "text editor" is used,
 !  convert the fancy '"' (four characters) into a normal '"'.
