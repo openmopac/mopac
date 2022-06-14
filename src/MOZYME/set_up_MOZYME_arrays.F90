@@ -117,6 +117,11 @@
   icvir = 0
   jopt = 0
   kopt = 0
+! Initialize LMOs to zero size
+  ncf = 0
+  nce = 0
+  nncf = 0
+  nnce = 0
 !
 !   Create the ijbo array, if it exists?
 !
