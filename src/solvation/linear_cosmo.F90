@@ -1166,6 +1166,8 @@ contains
 
     allocate (r_vec(nps), p_vec(nps), q_vec(Max (numat, nps)), &
          & z_vec(nps), a_diag(nps), stat=alloc_stat)
+    p_vec = 0.d0
+    z_vec = 0.d0
 
     if (alloc_stat /= 0) then
       write (iw, *) " Allocation error in CoscanZ"
