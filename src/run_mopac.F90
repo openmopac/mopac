@@ -204,6 +204,7 @@
       iflepo = 0
       time0 = seconds(1)
       MM_corrections = .false.
+      nelecs = 0
       pdb_label = .false.
       l_normal_html = .true.
       state_Irred_Rep = " "
