@@ -122,6 +122,8 @@
   nce = 0
   nncf = 0
   nnce = 0
+  ncocc = 0
+  ncvir = 0
 !
 !   Create the ijbo array, if it exists?
 !
