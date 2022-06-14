@@ -68,10 +68,10 @@
 !  Allocate the arrays.  If there is not enough memory, it's better to find out before
 !  any real work is done.
 !
-  allocate(h(mpack), w(n2elec), stat = i)
+  allocate(h(mpack), w(n2elec + 2025), stat = i)
   j = i
   if (id > 0) then
-    allocate( wk(n2elec), stat = i)
+    allocate( wk(n2elec + 2025), stat = i)
     j = j + i
   end if
   allocate (pold(mpack), pold2(1), pold3(1), pbold(1), pbold2(1), stat = i)

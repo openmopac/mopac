@@ -158,7 +158,7 @@
           j = j + i
           allocate(errfn(3*natoms*l123), aicorr(nvar), stat=i)
           j = j + i
-          allocate(w(n2elec + 4050), stat=i)
+          allocate(w(n2elec + 2025), stat=i)
           j = j + i
           allocate(dxyz(3*numat*l123), stat=i)
           j = j + i
