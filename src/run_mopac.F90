@@ -210,7 +210,7 @@
       state_Irred_Rep = " "
       if (job_no > 1) then
         i = index(keywrd, " BIGCYCL")
-        if (i /= 0) then
+        if (i /= 0 .and. index(keywrd,' DRC') == 0) then
           i = nint(reada(keywrd, i)) + 1
           if (job_no < i) then
             fepsi = store_fepsi
