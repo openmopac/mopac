@@ -180,6 +180,7 @@ subroutine Locate_TS
       end do
     else
       shell = 0
+      big_xparam = 0.d0
     end if
 !
 ! Delete GEO_REF and LOCATE-TS from the new .mop, .arc, and other files

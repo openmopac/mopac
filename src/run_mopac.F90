@@ -204,12 +204,13 @@
       iflepo = 0
       time0 = seconds(1)
       MM_corrections = .false.
+      nelecs = 0
       pdb_label = .false.
       l_normal_html = .true.
       state_Irred_Rep = " "
       if (job_no > 1) then
         i = index(keywrd, " BIGCYCL")
-        if (i /= 0) then
+        if (i /= 0 .and. index(keywrd,' DRC') == 0) then
           i = nint(reada(keywrd, i)) + 1
           if (job_no < i) then
             fepsi = store_fepsi

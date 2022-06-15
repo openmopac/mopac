@@ -1155,7 +1155,6 @@ contains
     end if
 
     if (allocated (r_vec)) then
-      if (p_vec(1) < -1.d7 .and. z_vec(1) > 1.d7) return ! dummy use of p_vec and z_vec
       deallocate (r_vec, p_vec, q_vec, z_vec, &
            & a_diag, stat=alloc_stat)
       if  (alloc_stat /= 0) then

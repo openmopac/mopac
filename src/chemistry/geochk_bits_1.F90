@@ -1239,6 +1239,7 @@ subroutine update_txtatm(output, sort)
 !  Number hydrogen atoms, if more than one on a heavy atom
 !
   allocate(n_H(numat), nn_H(numat))
+  n_H = 0
   nn_H = 0
   do i = 1, numat
     if (nat(i) > H_Z) then

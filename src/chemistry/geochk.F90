@@ -620,7 +620,7 @@ subroutine geochk ()
     end if
     noccupied = 0
     if (Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") + index(keywrd, " ADD-H") &
-      + index(keywrd, " 0SCF") == 0) then
+      + index(keywrd, " 0SCF") == 0 .and. nelecs /= 0) then
 !
 !  EXAMINE THE GEOMETRY - IDENTIFY THE LEWIS ELEMENTS (SIGMA BONDS,
 !  LONE PAIRS, CATIONS, PI BONDS, ANIONS, OTHER CHARGES)
