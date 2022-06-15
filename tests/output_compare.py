@@ -211,6 +211,60 @@ def parse_mopac_output(path):
 
     return parse_line, parse_list
 
+def compare_outputs(out_line, out_list, ref_line, ref_list):
+    '''Compares the output to the given reference'''
+
+    if len(ref_list) != len(out_list):
+        print(f'WARNING: output file size mismatch, {len(ref_list)} vs. {len(out_list)}')
+
+    for (line, ref, out) in zip(out_line, ref_list, out_list):
+    #    print(ref, "vs.", out)
+        # check that types match
+        assert type(ref) == type(out), f'ERROR: type mismatch between {ref} and {out} on output line {line}'
+
+        # compare strings
+        if type(ref) is str:
+            assert ref == out, f'ERROR: string mismatch between {ref} and {out} on output line {line}'
+
+        # compare floats
+        elif type(ref) is float:
+    #        assert abs(ref - out) < NUMERIC_THRESHOLD, f'ERROR: numerical mismatch between {ref} and {out} on output line {line}'
+            if abs(ref - out) > NUMERIC_THRESHOLD:
+                print(f'WARNING: numerical mismatch between {ref} and {out} on output line {line}')
+
+        # compare heats of formation
+        elif len(ref) == 2:
+    #        assert abs(ref[1] - out[1]) < HEAT_THRESHOLD, f'ERROR: numerical heat mismatch between {ref[1]} and {out[1]} on output line {line}'
+            if abs(ref[1] - out[1]) > HEAT_THRESHOLD:
+                print(f'WARNING: numerical heat mismatch between {ref[1]} and {out[1]} on output line {line}')
+
+        # compare eigenvalues & eigenvectors
+        elif len(ref) == 4:
+            ref_val, ref_vec, ref_begin, ref_end = ref
+            out_val, out_vec, ref_begin, ref_end = out
+
+            for refv, outv in zip(ref_val,out_val):
+    #            assert abs(refv - outv) < NUMERIC_THRESHOLD, f'ERROR: numerical mismatch between {refv} and {outv} on output line {line}'
+                if abs(refv - outv) > NUMERIC_THRESHOLD:
+                    print(f'WARNING: eigenvalue mismatch between {refv} and {outv} on output line {line}')
+
+                # build list of edges denoting degenerate subspaces
+                if ref_begin:
+                    edge_list = [0]
+                else:
+                    edge_list = []
+                edge_list += [ i+1 for i in range(len(ref_val)-1) if np.abs(ref_val[i] - ref_val[i+1]) > DEGENERACY_THRESHOLD ]
+                if ref_end:
+                    edge_list += [len(ref_val)]
+
+                # test the distance between each pair of degenerate subspaces
+                for i in range(len(edge_list)-1):
+                    overlap = ref_vec[:,edge_list[i]:edge_list[i+1]].T @ out_vec[:,edge_list[i]:edge_list[i+1]]
+    #                print("overlap = ",overlap)
+                    sval = np.linalg.svd(overlap, compute_uv=False)
+                    assert (sval[0] < 1.0 + EIGVEC_THRESHOLD) and (sval[-1] > 1.0 - EIGVEC_THRESHOLD), \
+                        f'ERROR: degenerate subspace mismatch on output line {line}, overlap range in [{min(sval)},{max(sval)}]'
+
 # make a local copy of the input & other necessary files
 for file in argv[3:]:
    copyfile(os.path.join(argv[1],file),file)
@@ -231,52 +285,3 @@ ref_path = os.path.join(argv[1],out_name)
 ref_line, ref_list = parse_mopac_output(ref_path)
 out_line, out_list = parse_mopac_output(out_name)
 
-#assert len(ref_list) == len(out_list), f'ERROR: output file size mismatch, {len(ref_list)} vs. {len(out_list)}'
-
-for (line, ref, out) in zip(out_line, ref_list, out_list):
-#    print(ref, "vs.", out)
-    # check that types match
-    assert type(ref) == type(out), f'ERROR: type mismatch between {ref} and {out} on output line {line}'
-
-    # compare strings
-    if type(ref) is str:
-        assert ref == out, f'ERROR: string mismatch between {ref} and {out} on output line {line}'
-
-    # compare floats
-    elif type(ref) is float:
-#        assert abs(ref - out) < NUMERIC_THRESHOLD, f'ERROR: numerical mismatch between {ref} and {out} on output line {line}'
-        if abs(ref - out) > NUMERIC_THRESHOLD:
-            print(f'WARNING: numerical mismatch between {ref} and {out} on output line {line}')
-
-    # compare heats of formation
-    elif len(ref) == 2:
-#        assert abs(ref[1] - out[1]) < HEAT_THRESHOLD, f'ERROR: numerical heat mismatch between {ref[1]} and {out[1]} on output line {line}'
-        if abs(ref[1] - out[1]) > HEAT_THRESHOLD:
-            print(f'WARNING: numerical heat mismatch between {ref[1]} and {out[1]} on output line {line}')
-
-    # compare eigenvalues & eigenvectors
-    elif len(ref) == 4:
-        ref_val, ref_vec, ref_begin, ref_end = ref
-        out_val, out_vec, ref_begin, ref_end = out
-
-        for refv, outv in zip(ref_val,out_val):
-#            assert abs(refv - outv) < NUMERIC_THRESHOLD, f'ERROR: numerical mismatch between {refv} and {outv} on output line {line}'
-            if abs(refv - outv) > NUMERIC_THRESHOLD:
-                print(f'WARNING: eigenvalue mismatch between {refv} and {outv} on output line {line}')
-
-            # build list of edges denoting degenerate subspaces
-            if ref_begin:
-                edge_list = [0]
-            else:
-                edge_list = []
-            edge_list += [ i+1 for i in range(len(ref_val)-1) if np.abs(ref_val[i] - ref_val[i+1]) > DEGENERACY_THRESHOLD ]
-            if ref_end:
-                edge_list += [len(ref_val)]
-
-            # test the distance between each pair of degenerate subspaces
-            for i in range(len(edge_list)-1):
-                overlap = ref_vec[:,edge_list[i]:edge_list[i+1]].T @ out_vec[:,edge_list[i]:edge_list[i+1]]
-#                print("overlap = ",overlap)
-                sval = np.linalg.svd(overlap, compute_uv=False)
-                assert (sval[0] < 1.0 + EIGVEC_THRESHOLD) and (sval[-1] > 1.0 - EIGVEC_THRESHOLD), \
-                    f'ERROR: degenerate subspace mismatch on output line {line}, overlap range in [{min(sval)},{max(sval)}]'
