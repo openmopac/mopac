@@ -285,3 +285,5 @@ ref_path = os.path.join(argv[1],out_name)
 ref_line, ref_list = parse_mopac_output(ref_path)
 out_line, out_list = parse_mopac_output(out_name)
 
+# Run the comparison
+compare_outputs(out_line, out_list, ref_line, ref_list)
