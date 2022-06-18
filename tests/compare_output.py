@@ -1,13 +1,11 @@
 # Portable Python script for numerical output file comparisons of MOPAC
-# Argument list: <path to testing directory> <path to MOPAC executable> <input file> <data file #1> ... <data file #N>
+# Argument list: <output file #1> <output file #2>
 
 from shutil import copyfile
 from sys import argv
 import subprocess
-import difflib
 import os
 import re
-import math
 import numpy as np
 
 # MOPAC testing has historically been based on checking that the output files corresponding
@@ -55,7 +53,7 @@ def to_float(string):
     except ValueError:
         return False
 
-def parse_mopac_output(path):
+def parse_mopac_out_file(path):
     '''parse a MOPAC output file at a given path into a list of basic elements (strings, numbers, matrices)'''
     parse_line = []
     parse_list = []
@@ -211,7 +209,7 @@ def parse_mopac_output(path):
 
     return parse_line, parse_list
 
-def compare_outputs(out_line, out_list, ref_line, ref_list):
+def compare_mopac_out_file(out_line, out_list, ref_line, ref_list):
     '''Compares the output to the given reference'''
 
     if len(ref_list) != len(out_list):
@@ -265,25 +263,12 @@ def compare_outputs(out_line, out_list, ref_line, ref_list):
                     assert (sval[0] < 1.0 + EIGVEC_THRESHOLD) and (sval[-1] > 1.0 - EIGVEC_THRESHOLD), \
                         f'ERROR: degenerate subspace mismatch on output line {line}, overlap range in [{min(sval)},{max(sval)}]'
 
-# make a local copy of the input & other necessary files
-for file in argv[3:]:
-   copyfile(os.path.join(argv[1],file),file)
+# stub main for command-line comparisons
+if __name__ == "__main__":
 
-# run MOPAC in the local directory
-try:
-    subprocess.run([argv[2],argv[3]], check=True)
-except subprocess.CalledProcessError as err:
-    print("In attempting to run: ", err.cmd)
-    print("stdout: ", err.stdout)
-    print("stderr: ", err.stderr)
+    # parse the 2 output files that we are comparing
+    ref_line, ref_list = parse_mopac_out_file(argv[1])
+    out_line, out_list = parse_mopac_out_file(argv[2])
 
-# only compare ".out" output files that have the same name as ".mop" or ".ent" input files
-out_name = argv[3][:-3]+'out'
-ref_path = os.path.join(argv[1],out_name)
-
-# parse the 2 output files that we are comparing
-ref_line, ref_list = parse_mopac_output(ref_path)
-out_line, out_list = parse_mopac_output(out_name)
-
-# Run the comparison
-compare_outputs(out_line, out_list, ref_line, ref_list)
+    # Run the comparison
+    compare_mopac_out_file(out_line, out_list, ref_line, ref_list)
