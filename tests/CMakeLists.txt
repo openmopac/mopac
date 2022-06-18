@@ -16,18 +16,6 @@
 
 #Basic input/output comparison tests
 
-macro(add_mopac_setup _name _files)
-  # _files is not a list, it's a string... Transform it into a list
-  set(files)
-  string(REPLACE ";" " " _files "${_files}")
-  foreach(_label "${_files}")
-    list(APPEND files ${_label})
-  endforeach()
-  unset(_files)
-
-  add_test(NAME "${_name}" COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../mopac${CMAKE_EXECUTABLE_SUFFIX} ${_files} SETUP)
-endmacro()
-
 macro(add_mopac_test _name _files)
   # _files is not a list, it's a string... Transform it into a list
   set(files)
@@ -42,8 +30,7 @@ endmacro()
 
 add_subdirectory(keywords)
 
-add_mopac_setup(port "port.mop;port.parameters;try.txt;aa.txt;mol.in")
-
+add_mopac_test(port "port.mop;port.parameters;try.txt;aa.txt;mol.in;SETUP")
 add_mopac_test(crambin "Crambin_1SCF.mop;Crambin_1SCF.den")
 add_mopac_test(mozyme "test_Lewis_for_Proteins.mop")
 add_mopac_test(xeno "Test_XENO.mop")
