@@ -18,14 +18,14 @@
 
 macro(add_keyword_test _name _files)
  # _files is not a list, it's a string... Transform it into a list
- set(files)
- string(REPLACE ";" " " _files "${_files}")
- foreach(_label "${_files}")
- list(APPEND files ${_label})
- endforeach()
- unset(_files)
+  set(files)
+  string(REPLACE ";" " " _files "${_files}")
+  foreach(_label "${_files}")
+    list(APPEND files ${_label})
+   endforeach()
+  unset(_files)
 
- add_test(NAME "${_name}" COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/../output_compare.py ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../../mopac${CMAKE_EXECUTABLE_SUFFIX} ${_files})
+  add_test(NAME "${_name}" COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/../run_test.py ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/../../mopac${CMAKE_EXECUTABLE_SUFFIX} ${_files})
 endmacro()
 
 add_keyword_test(key-ampersand "ampersand.mop")

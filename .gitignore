@@ -33,6 +33,9 @@
 *.exe
 *.app
 
+# Python intermediates
+__pycache__
+
 # CMake build directories
 build*/
 
