@@ -18,7 +18,7 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 # Specify project name & programming languages
-project(openmopac VERSION 22.0.1 LANGUAGES Fortran)
+project(openmopac VERSION 22.0.2 LANGUAGES Fortran)
 
 # Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
 option(ENABLE_MKL "Turn on C language support for MKL" ON)
