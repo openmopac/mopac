@@ -67,7 +67,7 @@
 !
   use MOZYME_C, only : ncf, ncocc, noccupied, icocc_dim, cocc_dim, nvirtual, icvir_dim, &
   nncf, iorbs, cocc, icocc, ncvir, nnce, nce, icvir, cvir, tyres, size_mres, &
-  cvir_dim
+  cvir_dim, idiag
 !
   use elemts_C, only : elemnt
 !
@@ -487,10 +487,14 @@
     write(hook,"(a,i"//atoms//",a)")" ATOM_CHARGES[",numat,"]="
     write(hook,"(sp,10f"//fmt9p5//")") (q(i), i=1,numat)
     write(hook,"(a,i"//orbs//",a)")" AO_CHARGES[",norbs,"]="
-    write(hook,"(10f"//fmt9p5//")") (p((i*(i+1))/2), i=1,norbs)
-    if (uhf) then
-      write(hook,"(a,i"//orbs//",a)")" AO_SPINS[",norbs,"]="
-      write(hook,"(10f"//fmt9p5//")") (pa((i*(i+1))/2)-pb((i*(i+1))/2), i=1,norbs)
+    if (mozyme) then
+      write(hook,"(10f"//fmt9p5//")") (p(idiag(i)), i=1,norbs)
+    else
+      write(hook,"(10f"//fmt9p5//")") (p((i*(i+1))/2), i=1,norbs)
+      if (uhf) then
+        write(hook,"(a,i"//orbs//",a)")" AO_SPINS[",norbs,"]="
+        write(hook,"(sp,10f"//fmt9p5//")") (pa((i*(i+1))/2)-pb((i*(i+1))/2), i=1,norbs)
+      end if
     end if
     if (nvar > 0) then
       sum = 0.d0
@@ -1252,6 +1256,7 @@
         end do
       end do
       bk = seconds(2) - bk
+      if(numat == 0) write(hook,"(f12.2)") bi ! dummy code to force bi evaluation
       write(hook,"(a,f12.2)")" CPU_TIME:ARBITRARY_UNITS[1]=",time0/bk
     end if
     write(hook,"(a)")" END OF MOPAC FILE"
