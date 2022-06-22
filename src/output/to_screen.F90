@@ -1256,7 +1256,7 @@
         end do
       end do
       bk = seconds(2) - bk
-      if(numat == 0) write(hook,"(a,f12.2)") "DUMMY[1]=",bi ! dummy code to force bi evaluation
+      if(natoms == 0) write(hook,"(a,f12.2)") " DUMMY[1]=",bi ! dummy code to force bi evaluation
       write(hook,"(a,f12.2)")" CPU_TIME:ARBITRARY_UNITS[1]=",time0/bk
     end if
     write(hook,"(a)")" END OF MOPAC FILE"
