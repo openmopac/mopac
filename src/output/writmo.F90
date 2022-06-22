@@ -346,7 +346,7 @@
         end if
       end if
       if (latom == 0) write (iw, '(1X)')
-      if (lprtgra .or. gnorm > 1.D-15 ) &
+      if (lprtgra) &
         write (iw, '(10X,"GRADIENT NORM           =",F17.5, 10x, "=", 7x, f'//num//'.5, '' PER ATOM'')') &
         gnorm, gnorm/sqrt(1.0*numat)
       if (gnorm > 2.D0 .and. fract > 0.05D0 .and. fract < 1.95D0 .and. &
