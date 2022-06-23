@@ -250,7 +250,17 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
     endif()
     install(PROGRAMS ${INTEL_OMP_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
   else()
-    install(TARGETS OpenMP::OpenMP_Fortran LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
+    find_library(INTEL_OMP_LIB iomp5 HINT CMAKE_Fortran_COMPILER PATH_SUFFIXES ../../compiler/lib)
+    if(INTEL_OMP_LIB STREQUAL "INTEL_OMP_LIB-NOTFOUND")
+      message("WARNING: Cannot locate Intel's OpenMP shared library for packaging")
+    endif()
+    # if shared library is a symbolic link, resolve actual shared library
+    get_filename_component(INTEL_OMP_LIB_PATH ${INTEL_OMP_LIB} REALPATH)
+    install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
+    # create an ad-hoc symbolic link to satisfy the Linux executable
+    if(NOT INTEL_OMP_LIB STREQUAL INTEL_OMP_LIB_PATH)
+      INSTALL(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_INSTALL_LIBDIR}/libomp.so.5" "${CMAKE_INSTALL_LIBDIR}/libiomp5.so)")
+    endif()
   endif()
 endif()
 
