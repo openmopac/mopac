@@ -157,24 +157,16 @@ if(AUTO_BLAS)
 
   # Use BLAS/LAPACK information provided by CMake's find_package system
   target_link_libraries(mopac-core PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-  target_compile_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
-  target_compile_options(mopac-param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+  target_link_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
+  target_link_options(mopac-param PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
 else()
   message(STATUS "AUTO_BLAS=OFF, the user is responsible for linking BLAS & LAPACK libraries (e.g. define compiler link line with MOPAC_LINK)")
 endif()
 
-# Use CMake's system for finding an OpenMP library
-option(ENABLE_OMP "Use OpenMP to enable threading controls" ON)
-if(ENABLE_OMP)
-  find_package(OpenMP)
-  if(OpenMP_Fortran_HAVE_OMPLIB_MODULE)
-    add_definitions(-DOMP_ENABLED)
-
-    # Use OpenMP information provided by CMake's find_package system
-    target_link_libraries(mopac-core PUBLIC ${OpenMP_Fortran_LIBRARIES})
-    target_compile_options(mopac PUBLIC ${OpenMP_Fortran_FLAGS})
-    target_compile_options(mopac-param PUBLIC ${OpenMP_Fortran_FLAGS})
-  endif()
+# Use OpenMP API in MOPAC for "THREADS" keyword
+set(MOPAC_OMP "" CACHE STRING "Explicit OpenMP library name if AUTO_BLAS=OFF.")
+if( (NOT MOPAC_OMP STREQUAL "") OR OpenMP_FOUND)
+  add_definitions(-DOMP_ENABLED)
 endif()
 
 # Additional link line
@@ -241,7 +233,7 @@ elseif(UNIX)
   set(CPACK_SYSTEM_NAME "linux")
 endif()
 
-# Intel-specific CPack options
+# Package the Intel OpenMP library for the QT installer
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
   if(WIN32)
     find_file(INTEL_OMP_DLL libiomp5md.dll HINT CMAKE_Fortran_COMPILER PATH_SUFFIXES ../../redist/intel64_win/compiler)
@@ -250,13 +242,19 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
     endif()
     install(PROGRAMS ${INTEL_OMP_DLL} DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
   else()
-    find_library(INTEL_OMP_LIB iomp5 HINT CMAKE_Fortran_COMPILER PATH_SUFFIXES ../../compiler/lib)
-    if(INTEL_OMP_LIB STREQUAL "INTEL_OMP_LIB-NOTFOUND")
-      message("WARNING: Cannot locate Intel's OpenMP shared library for packaging")
+    if(OpenMP_FOUND)
+      # resolve symbolic links
+      get_filename_component(OpenMP_libomp_LIBRARY_REAL ${OpenMP_libomp_LIBRARY} REALPATH)
+      install(FILES ${OpenMP_libomp_LIBRARY_REAL} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
+    elseif(NOT MOPAC_OMP STREQUAL "")
+      find_library(INTEL_OMP_LIB ${MOPAC_OMP} HINT CMAKE_Fortran_COMPILER PATH_SUFFIXES ../../compiler/lib)
+      if(INTEL_OMP_LIB STREQUAL "INTEL_OMP_LIB-NOTFOUND")
+        message("WARNING: Cannot locate Intel's OpenMP shared library for packaging")
+      endif()
+      # resolve symbolic links
+      get_filename_component(INTEL_OMP_LIB_PATH ${INTEL_OMP_LIB} REALPATH)
+      install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
     endif()
-    # resolve symbolic links
-    get_filename_component(INTEL_OMP_LIB_PATH ${INTEL_OMP_LIB} REALPATH)
-    install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
   endif()
 endif()
 
