@@ -155,6 +155,10 @@ if(AUTO_BLAS)
     message(FATAL_ERROR "find_package failed to find BLAS & LAPACK libraries, adjust environment variables & system paths or set AUTO_BLAS=OFF & manually define a link line with MOPAC_LINK")
   endif()
 
+  if(NOT OpenMP_FOUND)
+    message(STATUS "find_package found unthreaded BLAS & LAPACK libraries, threading disabled")
+  endif()
+
   # Use BLAS/LAPACK information provided by CMake's find_package system
   target_link_libraries(mopac-core PUBLIC ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
   target_link_options(mopac PUBLIC ${BLAS_LINKER_FLAGS} ${LAPACK_LINKER_FLAGS})
