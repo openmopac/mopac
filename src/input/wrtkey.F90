@@ -1871,6 +1871,7 @@ subroutine wrtwor (allkey)
     i = Index (keywrd, " THREADS")
     i = nint(reada(keywrd, i))
     i = max(i,1)
+#ifdef OMP_ENABLED
     if (i == 1) then
       write (iw,'(" *  THREADS=1  - MULTI-THREADING NOT USED")')
     else if (i < 10) then
@@ -1878,6 +1879,9 @@ subroutine wrtwor (allkey)
     else
       write (iw,'(" *  THREADS    - USE A MAXIMUM OF", i3, " THREADS")') i
     end if
+#else
+    write (iw,'(" *  THREADS    - INACTIVE KEYWORD (UNTHREADED EXECUTABLE)")')
+#endif
   end if
   !                   Times
   chrono = "SECONDS"
