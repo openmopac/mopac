@@ -1880,7 +1880,7 @@ subroutine wrtwor (allkey)
       write (iw,'(" *  THREADS    - USE A MAXIMUM OF", i3, " THREADS")') i
     end if
 #else
-    write (iw,'(" *  THREADS    - INACTIVE KEYWORD (UNTHREADED EXECUTABLE)")')
+    write (iw,'(" *  THREADS    - INACTIVE (THREAD CONTROLS DISABLED)")')
 #endif
   end if
   !                   Times
