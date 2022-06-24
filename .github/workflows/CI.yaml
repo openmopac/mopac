@@ -49,6 +49,7 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
+            -DTHREADS_KEYWORD=OFF \
             -DENABLE_COVERAGE=ON
 
       - name: Build MOPAC with Make
@@ -126,13 +127,14 @@ jobs:
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
             -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
-            -DBLA_STATIC=ON \
-            -DBLA_VENDOR=Intel10_64lp
+            -DAUTO_BLAS=OFF \
+            -DMOPAC_LINK="-Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -liomp5 -lpthread -lm -ldl"
 
       - name: Build MOPAC with Make
         run: |
           source /opt/intel/oneapi/setvars.sh
           cmake --build build -- -j$NUM_CORES
+          ldd -v build/mopac
 
       - name: Test MOPAC with CTest
         run: |

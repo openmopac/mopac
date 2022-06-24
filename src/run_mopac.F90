@@ -55,9 +55,6 @@
 !
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
-#ifdef OMP_ENABLED
-      USE OMP_LIB
-#endif
 #ifdef GPU
       Use iso_c_binding
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
@@ -72,6 +69,7 @@
       character :: nokey(20)*10
 #ifdef OMP_ENABLED
       integer :: num_threads, default_num_threads
+      integer, external :: omp_get_max_threads
 #endif
 #ifdef MKL
       integer :: num_threads
