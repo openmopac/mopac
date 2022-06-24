@@ -164,7 +164,7 @@ else()
 endif()
 
 # Use OpenMP API in MOPAC for "THREADS" keyword
-set(THREADS_KEYWORD "Enable THREADS keyword using OpenMP API" ON)
+option(THREADS_KEYWORD "Enable THREADS keyword using OpenMP API" ON)
 if(THREADS_KEYWORD)
   add_definitions(-DOMP_ENABLED)
 endif()
