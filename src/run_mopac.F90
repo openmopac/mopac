@@ -67,7 +67,7 @@
       logical :: exists, opend, sparkles_available, l_OLDDEN
       double precision, external :: C_triple_bond_C, reada, seconds
       character :: nokey(20)*10
-#ifdef OMP_ENABLED
+#ifdef _OPENMP
       integer :: num_threads, default_num_threads
       integer, external :: omp_get_max_threads
 #endif
@@ -246,7 +246,7 @@
       if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
 ! Adjust maximum number of threads using the OpenMP API
-#ifdef OMP_ENABLED
+#ifdef _OPENMP
       if (numcal == 1) default_num_threads = omp_get_max_threads()
       i = index(keywrd, " THREADS")
       if (i > 0) then
