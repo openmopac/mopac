@@ -167,9 +167,9 @@ endif()
 option(THREADS_KEYWORD "Enable THREADS keyword using OpenMP API" ON)
 if(THREADS_KEYWORD)
   find_package(OpenMP)
- if(OPENMP_FOUND)
-   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${OpenMP_Fortran_FLAGS}")
- endif()
+  if(OPENMP_FOUND)
+    target_compile_options(mopac-core PUBLIC ${OpenMP_Fortran_FLAGS})
+  endif()
 endif()
 
 # Additional link line
