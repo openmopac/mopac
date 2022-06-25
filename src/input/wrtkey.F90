@@ -1871,7 +1871,7 @@ subroutine wrtwor (allkey)
     i = Index (keywrd, " THREADS")
     i = nint(reada(keywrd, i))
     i = max(i,1)
-#ifdef OMP_ENABLED
+#ifdef _OPENMP
     if (i == 1) then
       write (iw,'(" *  THREADS=1  - MULTI-THREADING NOT USED")')
     else if (i < 10) then

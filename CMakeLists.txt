@@ -166,7 +166,10 @@ endif()
 # Use OpenMP API in MOPAC for "THREADS" keyword
 option(THREADS_KEYWORD "Enable THREADS keyword using OpenMP API" ON)
 if(THREADS_KEYWORD)
-  add_definitions(-DOMP_ENABLED)
+  find_package(OpenMP)
+  if(OpenMP_FOUND)
+    target_compile_options(mopac-core PUBLIC ${OpenMP_Fortran_FLAGS})
+  endif()
 endif()
 
 # Additional link line
