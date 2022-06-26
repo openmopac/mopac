@@ -33,7 +33,7 @@ add_subdirectory(INDO-dev)
 add_subdirectory(keywords)
 
 add_mopac_test(port "port.mop;port.parameters;try.txt;aa.txt;mol.in;SETUP")
-add_mopac_test(crambin "Crambin_1SCF.mop;Crambin_1SCF.den")
+add_mopac_test(crambin "Crambin_1SCF.mop")
 add_mopac_test(mozyme "test_Lewis_for_Proteins.mop")
 add_mopac_test(xeno "Test_XENO.mop")
 add_mopac_test(hetero_group "Test_Hetero_group.mop")
