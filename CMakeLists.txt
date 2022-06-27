@@ -169,6 +169,8 @@ if(THREADS_KEYWORD)
   find_package(OpenMP)
   if(OpenMP_FOUND)
     target_compile_options(mopac-core PUBLIC ${OpenMP_Fortran_FLAGS})
+    target_link_libraries(mopac ${OpenMP_Fortran_LIBRARIES})
+    target_link_libraries(mopac-param ${OpenMP_Fortran_LIBRARIES})
   endif()
 endif()
 
