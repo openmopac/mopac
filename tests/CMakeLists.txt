@@ -43,18 +43,23 @@ add_mopac_test(ters_preserved "Check_that_TERs_are_preserved.mop;Check_TERs.pdb"
 add_mopac_test(compare_proteins "Compare_two_protein_structures.mop;Structure-1.txt;Structure-2.txt")
 add_mopac_test(pdb1cbn "PDB1CBN.ent")
 add_mopac_test(pdb1ejg "PDB1EJG.ent")
-add_mopac_test(pdb_compare "Compare_PDB_1EJG_and_1CBN.mop;PDB1CBN.ent;PDB1EJG.ent")
-add_mopac_test(pdb_compare2 "Compare_PDB_Bacteriorhodopsin_1AP9_and_2AT9.mop;Bacteriorhodopsin_1AP9.ent;Bacteriorhodopsin_2AT9.ent")
-add_mopac_test(pdb_compare3 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1C3W.mop;Bacteriorhodopsin_1AP9.ent;Bacteriorhodopsin_1C3W.ent")
-add_mopac_test(pdb_compare4 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRX.mop;Bacteriorhodopsin_1AP9.ent;Bacteriorhodopsin_1BRX.ent")
-add_mopac_test(pdb_compare5 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRR.mop;Bacteriorhodopsin_1AP9.ent;Bacteriorhodopsin_1BRR.ent")
-add_mopac_test(pdb_compare6 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9.mop;ADD-H_Bacteriorhodopsin_1AP9.arc;ADD-H_Bacteriorhodopsin_1AT9.arc")
+add_mopac_test(compare_add-h "Compare_ADD-H_1EJG_and_1CBN.mop")
+set_tests_properties(compare_add-h PROPERTIES DEPENDS "pdb1cbn;pdb1ejg") # uses PDB1EJG.arc & PDB1CBN.arc
 add_mopac_test(add-h "ADD-H_Bacteriorhodopsin_1AP9.mop;Bacteriorhodopsin_1AP9.ent")
 add_mopac_test(add-h2 "ADD-H_Bacteriorhodopsin_1AT9.mop;Bacteriorhodopsin_1AT9.ent")
 add_mopac_test(add-h3 "Au_Add-H.mop")
-add_mopac_test(compare_add-h "Compare_ADD-H_1EJG_and_1CBN.mop;PDB1EJG.arc;PDB1CBN.arc")
+add_mopac_test(pdb_compare "Compare_PDB_1EJG_and_1CBN.mop;PDB1CBN.ent;PDB1EJG.ent")
+add_mopac_test(pdb_compare2 "Compare_PDB_Bacteriorhodopsin_1AP9_and_2AT9.mop;Bacteriorhodopsin_1AP9.ent;Bacteriorhodopsin_2AT9.ent")
+add_mopac_test(pdb_compare3 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1C3W.mop;Bacteriorhodopsin_1C3W.ent")
+add_mopac_test(pdb_compare4 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRX.mop;Bacteriorhodopsin_1BRX.ent")
+add_mopac_test(pdb_compare5 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1BRR.mop;Bacteriorhodopsin_1BRR.ent")
+set_tests_properties(pdb_compare3 pdb_compare4 pdb_compare5 PROPERTIES DEPENDS pdb_compare2) # use Bacteriorhodopsin_1AP9.ent
+add_mopac_test(pdb_compare6 "Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9.mop")
+set_tests_properties(pdb_compare6 PROPERTIES DEPENDS "add-h;add-h2") # uses ADD-H_Bacteriorhodopsin_1AP9.arc & ADD-H_Bacteriorhodopsin_1AT9.arc
 add_mopac_test(locate_ts "Locate_TS.mop;Cyclobutadiene_1.arc;Cyclobutadiene_2.arc")
 add_mopac_test(ionize "IONIZE.mop;Neutral.mop")
-add_mopac_test(salt "SALT.mop;Neutral2.mop")
+add_mopac_test(salt "SALT.mop")
+set_tests_properties(salt PROPERTIES DEPENDS ionize) # uses Neutral.mop
 add_mopac_test(salt2 "SALT_2.mop")
-add_mopac_test(residues "SITE_Individual_residues.mop;IONIZE.arc")
+add_mopac_test(residues "SITE_Individual_residues.mop")
+set_tests_properties(residues PROPERTIES DEPENDS ionize) # uses IONIZE.arc
