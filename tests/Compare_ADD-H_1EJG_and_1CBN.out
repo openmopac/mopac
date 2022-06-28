@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC, Version: 22.0.0-  , James J. P. Stewart,     **
- **                           web-site: http://openmopac.net                  **
+ **                                                                           **
+ **                              MOPAC v22.0.3                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                   MOPAC                                   **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Feb 28 17:28:11 2022  *
+ *  CALCULATION DONE:                                Tue Jun 28 16:18:22 2022  *
  *  COMPARE    - Compare two geometries
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "PDB1EJG.arc"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "PDB1CBN.arc"
@@ -22,7 +22,7 @@
 geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
  Two PDB structures for Crambin (Atoms in PRO/SER 22, LEU/ILE 25, and others deleted)
 
-
+ 
 
                             Differences in atoms sets
 
@@ -59,15 +59,15 @@ geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
   29   ATOM    358 1HD1 LEU A  25              ATOM    358 1HD1 ILE A  25
   30   ATOM    359 2HD1 LEU A  25              ATOM    359 2HD1 ILE A  25
   31   ATOM    360 3HD1 LEU A  25              ATOM    360 3HD1 ILE A  25
-  32   ATOM    361 1HD2 LEU A  25              HETATM  641  C1  EOH A  66
-  33   ATOM    362 2HD2 LEU A  25              HETATM  642  O   EOH A  66
-  34   ATOM    363 3HD2 LEU A  25              HETATM  643  C2  EOH A  66
-  35                                           HETATM  644  H   EOH A  66
-  36                                           HETATM  645 1H1  EOH A  66
-  37                                           HETATM  646 2H1  EOH A  66
-  38                                           HETATM  647 1H2  EOH A  66
-  39                                           HETATM  648 2H2  EOH A  66
-  40                                           HETATM  649 3H2  EOH A  66
+  32   ATOM    361 1HD2 LEU A  25              HETATM  640  C1  EOH A  66
+  33   ATOM    362 2HD2 LEU A  25              HETATM  641  C2  EOH A  66
+  34   ATOM    363 3HD2 LEU A  25              HETATM  642  O   EOH A  66
+  35                                           HETATM  643 1H1  EOH A  66
+  36                                           HETATM  644 2H1  EOH A  66
+  37                                           HETATM  645 1H2  EOH A  66
+  38                                           HETATM  646 2H2  EOH A  66
+  39                                           HETATM  647 3H2  EOH A  66
+  40                                           HETATM  648  H   EOH A  66
 
           Empirical formulae of data-set and GEO_REF are different
 
@@ -84,9 +84,9 @@ geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
                      Atom Label             GEO_REF Coordinates       Movement    Integral
 
             (ATOM     92 2HD1 ILE A   7)  10.757  -0.683  15.934        3.60         3.60
-            (ATOM    607 1HD2 ASN A  46)  11.403   3.861  16.203        2.54         6.14
+            (ATOM    606 1HD2 ASN A  46)  11.403   3.861  16.203        2.54         6.14
             (ATOM     87 2HG1 ILE A   7)  11.195   0.949  13.414        2.50         8.63
-            (ATOM    608 2HD2 ASN A  46)  12.578   5.003  16.395        2.36        10.99
+            (ATOM    607 2HD2 ASN A  46)  12.578   5.003  16.395        2.36        10.99
             (ATOM    600  ND2 ASN A  46)  11.916   4.601  15.746        2.30        13.29
             (ATOM    599  OD1 ASN A  46)  13.443   3.218  14.924        2.18        15.47
             (ATOM     93 3HD1 ILE A   7)  11.247  -1.323  14.347        1.71        17.18
@@ -125,31 +125,31 @@ geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
 
            Diff.                 Atom 1                       Atom 2                  Bond length      Bond length
                                                                                       in GEO_DAT      in GEO_REF
-   1       0.133     C(ATOM    553  CB  ASP A  43)    C(ATOM    554  CG  ASP A  43)      1.634            1.501
-   2       0.091     C(ATOM    365  CA  TYR A  29)    C(ATOM    368  CB  TYR A  29)      1.492            1.584
-   3       0.089     O(ATOM    599  OD1 ASN A  46)    C(ATOM    598  CG  ASN A  46)      1.219            1.309
-   4       0.082     O(ATOM    509  OG1 THR A  39)    C(ATOM    508  CB  THR A  39)      1.478            1.395
-   5       0.082     C(ATOM     95  CA  VAL A   8)    C(ATOM     98  CB  VAL A   8)      1.530            1.613
-   6       0.082     N(ATOM    600  ND2 ASN A  46)    C(ATOM    598  CG  ASN A  46)      1.327            1.245
-   7       0.082     C(ATOM    439  CB  ILE A  34)    C(ATOM    441  CG2 ILE A  34)      1.607            1.525
-   8       0.081     O(ATOM    313  OE2 GLU A  23)    C(ATOM    311  CD  GLU A  23)      1.216            1.297
-   9       0.069     C(ATOM     80  CG1 ILE A   7)    C(ATOM     82  CD1 ILE A   7)      1.573            1.504
-  10       0.064     C(ATOM    505  CA  THR A  39)    C(ATOM    508  CB  THR A  39)      1.541            1.605
-  11       0.057     O(ATOM     21  OG1 THR A   2)    C(ATOM     20  CB  THR A   2)      1.452            1.396
-  12       0.049     N(ATOM     40  N   CYS A   4)    C(ATOM     32  C   CYS A   3)      1.341            1.292
-  13       0.048     C(ATOM    477  CB  PRO A  36)    C(ATOM    478  CG  PRO A  36)      1.541            1.492
-  14       0.044     C(ATOM     51  CA  PRO A   5)    C(ATOM     52  C   PRO A   5)      1.524            1.480
-  15       0.043     O(ATOM    556  OD2 ASP A  43)    C(ATOM    554  CG  ASP A  43)      1.312            1.269
-  16       0.040     C(ATOM    550  CA  ASP A  43)    C(ATOM    551  C   ASP A  43)      1.540            1.580
-  17       0.039     C(ATOM    407  CA  CYS A  32)    C(ATOM    408  C   CYS A  32)      1.547            1.508
-  18       0.039     N(ATOM    364  N   TYR A  29)    C(ATOM    365  CA  TYR A  29)      1.466            1.427
-  19       0.039     N(ATOM    549  N   ASP A  43)    C(ATOM    544  C   GLY A  42)      1.335            1.374
-  20       0.038     O(ATOM     78  O   ILE A   7)    C(ATOM     77  C   ILE A   7)      1.255            1.217
-  21       0.037     N(ATOM    350  N   THR A  28)    C(ATOM    351  CA  THR A  28)      1.485            1.447
-  22       0.037     C(ATOM    455  CA  ILE A  35)    C(ATOM    458  CB  ILE A  35)      1.539            1.576
-  23       0.036     O(ATOM    294  O   THR A  21)    C(ATOM    293  C   THR A  21)      1.232            1.269
-  24       0.036     C(ATOM    550  CA  ASP A  43)    C(ATOM    553  CB  ASP A  43)      1.539            1.503
-  25       0.036     N(ATOM     30  N   CYS A   3)    C(ATOM     31  CA  CYS A   3)      1.442            1.478
+   1      +0.133     C(ATOM    553  CB  ASP A  43)    C(ATOM    554  CG  ASP A  43)      1.634            1.501
+   2      -0.091     C(ATOM    365  CA  TYR A  29)    C(ATOM    368  CB  TYR A  29)      1.492            1.584
+   3      -0.089     O(ATOM    599  OD1 ASN A  46)    C(ATOM    598  CG  ASN A  46)      1.219            1.309
+   4      +0.082     O(ATOM    509  OG1 THR A  39)    C(ATOM    508  CB  THR A  39)      1.478            1.395
+   5      -0.082     C(ATOM     95  CA  VAL A   8)    C(ATOM     98  CB  VAL A   8)      1.530            1.613
+   6      +0.082     N(ATOM    600  ND2 ASN A  46)    C(ATOM    598  CG  ASN A  46)      1.327            1.245
+   7      +0.082     C(ATOM    439  CB  ILE A  34)    C(ATOM    441  CG2 ILE A  34)      1.607            1.525
+   8      -0.081     O(ATOM    313  OE2 GLU A  23)    C(ATOM    311  CD  GLU A  23)      1.216            1.297
+   9      +0.069     C(ATOM     80  CG1 ILE A   7)    C(ATOM     82  CD1 ILE A   7)      1.573            1.504
+  10      -0.064     C(ATOM    505  CA  THR A  39)    C(ATOM    508  CB  THR A  39)      1.541            1.605
+  11      +0.057     O(ATOM     21  OG1 THR A   2)    C(ATOM     20  CB  THR A   2)      1.452            1.396
+  12      +0.049     N(ATOM     40  N   CYS A   4)    C(ATOM     32  C   CYS A   3)      1.341            1.292
+  13      +0.048     C(ATOM    477  CB  PRO A  36)    C(ATOM    478  CG  PRO A  36)      1.541            1.492
+  14      +0.044     C(ATOM     51  CA  PRO A   5)    C(ATOM     52  C   PRO A   5)      1.524            1.480
+  15      +0.043     O(ATOM    556  OD2 ASP A  43)    C(ATOM    554  CG  ASP A  43)      1.312            1.269
+  16      -0.040     C(ATOM    550  CA  ASP A  43)    C(ATOM    551  C   ASP A  43)      1.540            1.580
+  17      +0.039     C(ATOM    407  CA  CYS A  32)    C(ATOM    408  C   CYS A  32)      1.547            1.508
+  18      +0.039     N(ATOM    364  N   TYR A  29)    C(ATOM    365  CA  TYR A  29)      1.466            1.427
+  19      -0.039     N(ATOM    549  N   ASP A  43)    C(ATOM    544  C   GLY A  42)      1.335            1.374
+  20      +0.038     O(ATOM     78  O   ILE A   7)    C(ATOM     77  C   ILE A   7)      1.255            1.217
+  21      +0.037     N(ATOM    350  N   THR A  28)    C(ATOM    351  CA  THR A  28)      1.485            1.447
+  22      -0.037     C(ATOM    455  CA  ILE A  35)    C(ATOM    458  CB  ILE A  35)      1.539            1.576
+  23      -0.036     O(ATOM    294  O   THR A  21)    C(ATOM    293  C   THR A  21)      1.232            1.269
+  24      +0.036     C(ATOM    550  CA  ASP A  43)    C(ATOM    553  CB  ASP A  43)      1.539            1.503
+  25      -0.036     N(ATOM     30  N   CYS A   3)    C(ATOM     31  CA  CYS A   3)      1.442            1.478
 
     GEO_DAT:  'PDB1EJG.arc'
     GEO_REF:  'PDB1CBN.arc'

@@ -18,6 +18,7 @@ mopac Crambin_1SCF.mop
 rm Crambin_1SCF.arc
 rm Crambin_1SCF.log
 rm Crambin_1SCF.pdb
+rm Crambin_1SCF.den
 
 mopac test_Lewis_for_Proteins.mop
 rm test_Lewis_for_Proteins.html
@@ -106,11 +107,13 @@ rm Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9_ADD-H_Bacteriorhodopsin_1AT9.pdb
 mopac ADD-H_Bacteriorhodopsin_1AP9.mop
 rm ADD-H_Bacteriorhodopsin_1AP9.html
 rm ADD-H_Bacteriorhodopsin_1AP9.log
+rm ADD-H_Bacteriorhodopsin_1AP9.arc
 rm ADD-H_Bacteriorhodopsin_1AP9.pdb
 rm ADD-H_Bacteriorhodopsin_1AP9.txt
 
 mopac ADD-H_Bacteriorhodopsin_1AT9.mop
 rm ADD-H_Bacteriorhodopsin_1AT9.log
+rm ADD-H_Bacteriorhodopsin_1AT9.arc
 
 mopac Au_Add-H.mop
 rm Au_Add-H.arc
@@ -144,6 +147,7 @@ rm "Locate_TS Loop4.mop"
 rm "Locate_TS Loop5.mop"
 
 mopac IONIZE.mop
+rm IONIZE.arc
 rm IONIZE.html
 rm IONIZE.pdb
 rm IONIZE.txt

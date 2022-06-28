@@ -252,7 +252,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
     endif()
     # resolve symbolic links
     get_filename_component(INTEL_OMP_LIB_PATH ${INTEL_OMP_LIB} REALPATH)
-    message("OMP packaging: ${INTEL_OMP_LIB} -> ${INTEL_OMP_LIB_PATH}")
+    message(STATUS "OMP packaging: ${INTEL_OMP_LIB} -> ${INTEL_OMP_LIB_PATH}")
     install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
   endif()
 endif()
