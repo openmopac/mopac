@@ -63,10 +63,12 @@ rm Compare_two_protein_structures_Structure-2.pdb
 mopac PDB1CBN.ent
 rm PDB1CBN.log
 rm PDB1CBN.pdb
+rm PDB1CBN.arc
 
 mopac PDB1EJG.ent
 rm PDB1EJG.log
 rm PDB1EJG.pdb
+rm PDB1EJG.arc
 
 mopac Compare_PDB_1EJG_and_1CBN.mop
 rm Compare_PDB_1EJG_and_1CBN.html
