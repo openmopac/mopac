@@ -120,7 +120,10 @@
       end if
       depmul(1) = 0.D0
    20 continue
-      read (ir, '(A)', end=90) line
+      read (ir, '(A)', iostat=i, end=90) line
+      if (i/=0) then
+        return
+      endif
       call upcase(line, len_trim(line))
       do
         i =index(line, '"')
