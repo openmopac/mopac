@@ -120,7 +120,11 @@
       end if
       depmul(1) = 0.D0
    20 continue
-      read (ir, '(A)', end=90) line
+      read (ir, '(A)', iostat=i, end=90) line
+      if (i) then
+        call mopend ("Error in Symmetry Data")
+        return
+      endif
       call upcase(line, len_trim(line))
       do
         i =index(line, '"')
