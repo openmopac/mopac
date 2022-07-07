@@ -121,8 +121,7 @@
       depmul(1) = 0.D0
    20 continue
       read (ir, '(A)', iostat=i, end=90) line
-      if (i) then
-        call mopend ("Error in Symmetry Data")
+      if (i/=0) then
         return
       endif
       call upcase(line, len_trim(line))
