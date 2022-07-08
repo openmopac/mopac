@@ -1,6 +1,6 @@
 program API_example
   use mopac_API
-   implicit none
+  implicit none
   integer, parameter :: Natom1=3, Natom2=5
   double precision :: XYZ1(3, Natom1), dXYZ1(3, Natom1)
   double precision :: charges1(Natom1),BO1(Natom1,Natom1),energy
