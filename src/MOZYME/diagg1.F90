@@ -42,6 +42,7 @@ subroutine diagg1 (fao, nocc, nvir, eigv, ws, latoms, ifmo, fmo, fmo_dim, nij, i
        tiny, sumt, ijc, ovmax, ncf, nce, nncf, nnce, ncocc, ncvir, &
      & iorbs, icocc, icvir, cocc, cvir
     use common_arrays_C, only : eigs, nfirst, nlast, p
+    use mopac_interface_flags, only : reset_diagg1_L
     implicit none
     integer, intent (in) :: idiagg, nocc, nvir, fmo_dim
     integer, intent (inout) :: nij
@@ -63,7 +64,8 @@ subroutine diagg1 (fao, nocc, nvir, eigv, ws, latoms, ifmo, fmo, fmo_dim, nij, i
     double precision, save :: fref, oldlim, safety
     double precision :: cutoff, sum, sum1
     integer, external :: ijbo
-    if (numcal /= icalcn) then
+    if (numcal /= icalcn .or. reset_diagg1_L) then
+      reset_diagg1_L = .false.
       icalcn = numcal
       fref = 10.0d0
       safety = 1.0d0

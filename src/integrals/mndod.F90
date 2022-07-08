@@ -1088,6 +1088,8 @@
       use mndod_C, only : indx, indexd, sp, sd, pp, dp, d_d, cored, inddd
       use parameters_C, only : natorb, iod, tore
       use molkst_C, only : numcal, l_feather, method_PM7
+      use mopac_interface_flags, only : reset_rotatd_L
+
 !     *
 !     CALCULATION OF TWO-CENTER TWO-ELECTRON INTEGRALS
 !     IN THE MOLECULAR COODINATE SYSTEM BY 2.d0-STEP PROCEDURE
@@ -1127,7 +1129,8 @@
       data met/ 1, 2, 3, 2, 3, 3, 2, 3, 3, 3, 4, 5, 5, 5, 6, 4, 5, 5, 5, 6, 6, &
         4, 5, 5, 5, 6, 6, 6, 4, 5, 5, 5, 6, 6, 6, 6, 4, 5, 5, 5, 5*6/
 !
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_rotatd_L) then
+         reset_rotatd_L = .false.
         icalcn = numcal
       end if
 !

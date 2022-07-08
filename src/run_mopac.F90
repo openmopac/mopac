@@ -20,7 +20,8 @@
 !   M o d u l e s
 !-----------------------------------------------
 !
-      use common_arrays_C, only : nfirst, nlast, nat, xparam, grad, nw, &
+    use mopac_interface_flags
+    use common_arrays_C, only : nfirst, nlast, nat, xparam, grad, nw, &
       p, pa, pb, labels, loc, time_start, l_atom, coord, txtatm, coorda, &
       txtatm1, cell_ijk, eigs, c, breaks
 !
@@ -129,7 +130,18 @@
       filenm = trim(jobnam)
       lenf = i+1
       l = 0
- 11   open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat = i)
+!
+! If using API, direct output to NUL or /dev/null      
+      if (use_api) then
+#ifdef _WIN32
+         output_fn='NUL'
+#elif __LINUX
+         output_fn='/dev/null'
+#elif __APPLE__
+         output_fn='/dev/null'
+#endif
+      end if
+11    open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat = i)
       if (i /= 0) then
         l = l + 1
         write(0,"(i3,3a)")21 - l," File """,output_fn(:len_trim(output_fn)),""" is unavailable for use"
@@ -156,6 +168,16 @@
       natoms = natoms + 200
       call setup_mopac_arrays(natoms, 1)
       maxatoms = natoms
+!
+! Make sure mopac thinks this is the first time through
+!
+      if (use_api) then
+         numcal = 0
+         job_no = 0
+         step_num = 0
+         call mopac_interface_flags_set_true()
+      end if
+         
    10 continue
       numcal = numcal + 1      ! A new calculation
       job_no = job_no + 1      ! A new job
@@ -414,7 +436,11 @@
 !
 ! Set up all the data for the molecule
 !
-      call moldat (0)  ! data dependent on the system
+      if (.not. use_api) then
+         call moldat (0)  ! data dependent on the system
+      else
+         call moldat (1) ! data dependent on the system; silent printing
+      end if
       if (index(keywrd, " 0SCF") /= 0) moperr = .FALSE.
       call calpar      ! Calculate derived parameters
       if (moperr) goto 100
@@ -753,7 +779,7 @@
           allocate(evalmo(norbs))
           allocate(nbt(norbs))
         end if
-      end if
+     end if
 !
 !  CALCULATE THE ATOMIC ENERGY
 !
@@ -773,6 +799,12 @@
       atheat = atheat - eat*fpc_9
       atheat = atheat + C_triple_bond_C()
       rxn_coord = 1.d9
+
+!
+!  All of the setup has been completed, return if using the API
+!
+      if (use_api) return
+
 !
 !  All data for the current job are now read in, and all parameters are
 !  available in the arrays.

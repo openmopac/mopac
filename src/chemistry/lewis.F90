@@ -242,6 +242,7 @@ subroutine remove_bond(i)
     use elemts_C, only: elemnt
     use atomradii_C, only: radius
     use common_arrays_C, only: nat, labels, nbonds, ibonds, txtatm
+    use mopac_interface_flags, only: reset_check_h_L
     implicit none
     integer, intent (out) :: ibad
     integer :: i, j, m, n, k, l, ii, heavy(10), icalcn = -1
@@ -255,8 +256,11 @@ subroutine remove_bond(i)
       ibad = 0
       return
     end if
-    prt = (icalcn /= numcal)
-    if (prt) icalcn = numcal
+    prt = (icalcn /= numcal .or. reset_check_h_L)
+    if (prt) then
+       reset_check_h_L = .false.
+       icalcn = numcal
+    end if
     allocate (im(natoms))
     inquire(unit=ilog, opened=opend)
     if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis')
@@ -422,6 +426,7 @@ subroutine remove_bond(i)
   use elemts_C, only: elemnt
   use atomradii_C, only: radius, is_metal
   use chanel_C, only: iw
+  use mopac_interface_flags, only : reset_check_CVS_L
   implicit none
   logical, intent (in) :: let
   integer :: i, j, k, l, n, m, ii, ncvb, icalcn = -1, ik, cvb_atoms(60)
@@ -437,9 +442,12 @@ subroutine remove_bond(i)
 !
 ! Most of the time, LET should be false, the commonest exceptions being 0SCF and RESEQ
 !
-    if (allocated (store_coord) .and. icalcn /= numcal) then
-      deallocate (store_coord)
-      icalcn = numcal
+  if (allocated (store_coord)) then
+     if (icalcn /= numcal .or. reset_check_CVS_L)  then
+        reset_check_CVS_L = .false.
+        deallocate (store_coord)
+        icalcn = numcal
+     end if
     end if
     if (.not. allocated (store_coord)) then
       i = size(coord)/3

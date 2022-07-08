@@ -40,6 +40,7 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
     use parameters_C, only: am, dd, ad, tore
     use funcon_C, only: ev, a0
     use MOZYME_C, only : direct, semidr
+    use mopac_interface_flags, only : reset_fock2z_L
     implicit none
    !***********************************************************************
    !
@@ -88,7 +89,8 @@ subroutine fz2 (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, kopt, &
     nj = 0
    !
    !
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_fock2z_L) then
+       reset_fock2z_L = .false.
       icalcn = numcal
       !
       !   SET UP GATHER-SCATTER TYPE ARRAYS FOR USE WITH TWO-ELECTRON
@@ -679,7 +681,7 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
    !      & qdenet, qscnet, gden, qscat
 
      use linear_cosmo, only: addfckz
-
+     use mopac_interface_flags, only : reset_fock2zn_L
     implicit none
    !***********************************************************************
    !
@@ -726,7 +728,8 @@ subroutine fz2n (f, ptot, iorbs, nat, ifact, q, qe, wj, wk, ptot2, mode, &
     ni = 0
     nj = 0
    !
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_fock2zn_L) then
+       reset_fock2zn_L = .false.
       icalcn = numcal
       !
       !   SET UP GATHER-SCATTER TYPE ARRAYS FOR USE WITH TWO-ELECTRON

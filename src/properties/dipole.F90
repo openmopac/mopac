@@ -25,6 +25,7 @@
       USE funcon_C, only : fpc_8, fpc_1, a0
       USE chanel_C, only : iw
       use common_arrays_C, only : nfirst, nlast, nat, atmass, q
+      use mopac_interface_flags, only : reset_dipole_L
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -73,12 +74,13 @@
 !     S.P.MCGLYNN, ET AL: APPLIED QUANTUM CHEMISTRY
 !
       data icalcn/ 0/
-      first = icalcn /= numcal
+      first = (icalcn /= numcal .or. reset_dipole_L)
       icalcn = numcal
 !
 !   CONST = c.C.a0.2
 !
       if (first) then
+         reset_dipole_L = .false.
         sum = 0.D0
         do i = 1, numat
           sum = sum + q(i)

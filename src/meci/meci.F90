@@ -29,6 +29,7 @@
       USE chanel_C, only : ir, iw
       use cosmo_C, only : iseps
       USE mndod_C, only : fx
+      use mopac_interface_flags, only : reset_meci_L
       implicit none
 !
       integer , dimension(:), allocatable :: nfa
@@ -107,7 +108,8 @@
         meci = 0.d0
         return
       end if
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_meci_L) then
+         reset_meci_L = .false.
         icalcn = numcal
         first1 = .TRUE.
         limci = 0

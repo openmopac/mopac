@@ -29,6 +29,7 @@
   use chanel_C, only : iw
   use elemts_C, only: elemnt
   use parameters_C, only: par7, par8, par9, par10, par11
+  use mopac_interface_flags, only: reset_dftd3_L
   implicit none
   double precision, intent (inout) ::  dxyz(3, numat)
   logical, intent (in):: l_grad
@@ -83,7 +84,8 @@
       1.46d0, 1.37d0, 1.31d0, 1.23d0, 1.18d0, 1.16d0, 1.11d0, 1.12d0, 1.13d0, 1.32d0, &
       1.30d0, 1.30d0, 1.36d0, 1.31d0, 1.38d0, 1.42d0, 2.01d0, 1.81d0, 1.67d0, 1.58d0, &
       1.52d0, 1.53d0, 1.54d0, 1.55d0/
-     if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_dftd3_L) then
+         reset_dftd3_L = .false.
         icalcn = numcal
         if (first) then
           first = .false.

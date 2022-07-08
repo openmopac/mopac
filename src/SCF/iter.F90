@@ -35,6 +35,7 @@
       Use mod_vars_cuda, only: lgpu, real_cuda, prec
       use density_cuda_i
 #endif
+      use mopac_interface_flags, only : reset_iter_L
       implicit none
       double precision , intent(out) :: ee
       logical , intent(in) :: fulscf
@@ -89,7 +90,8 @@
       sellim = 0.d0
       opendd = .false.
       glow = .FALSE.
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_iter_L) then
+         reset_iter_L = .false.
         call delete_iter_arrays
         l_param = .true.
         enrgy = fpc_9

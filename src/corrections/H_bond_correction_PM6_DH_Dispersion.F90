@@ -60,6 +60,7 @@ double precision function PM6_DH_Disp(set_a, nsa)
   use molkst_C, only : Rij => Rab, method_PM7, numcal, line, id, l11, l21, l31, numat
   use chanel_C, only : iw
   use elemts_C, only : atom_names
+  use mopac_interface_flags, only : reset_PM6_DH_Disp_L
   implicit none
   integer :: nsa
   integer :: set_a
@@ -136,7 +137,8 @@ double precision function PM6_DH_Disp(set_a, nsa)
     if (ni > 86) cycle
     if (R(ni) == 0.d0 .or. C(ni) == 0.d0 .or. N(ni) == 0.d0) then
       if (method_PM7) cycle
-      if (icalcn /= numcal .and. l_eles(ni)) then
+      if ((icalcn /= numcal .or. reset_PM6_DH_Disp_L) .and. l_eles(ni)) then
+         reset_PM6_DH_Disp_L = .false.
         l_eles(ni) = .false.
         line = atom_names(ni)
         do

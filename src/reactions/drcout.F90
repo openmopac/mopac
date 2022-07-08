@@ -24,6 +24,7 @@
       use maps_C, only : rxn_coord, rc_escf, ekin, rc_dipo
       use elemts_C, only : elemnt
       use chanel_C, only : iw
+      use mopac_interface_flags, only : reset_drcout_L
       implicit none
       integer, intent(in) :: nvar, iloop, ii
       integer, intent(inout) :: jloop
@@ -54,7 +55,8 @@
 !                                                           *
 !************************************************************
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_drcout_L) then
+         reset_drcout_L = .false.
         icalcn = numcal
         last_point = -1.d8
         graph = (index(keywrd,' GRAPH') /= 0)

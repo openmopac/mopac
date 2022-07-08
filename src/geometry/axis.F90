@@ -20,6 +20,7 @@
       USE chanel_C, only : iw
       use to_screen_C, only : rot, xyzmom
       USE funcon_C, only : fpc_6, fpc_8, fpc_10, pi
+      use mopac_interface_flags, only : reset_axis_L
       implicit none
       double precision , intent(out) :: a
       double precision , intent(out) :: b
@@ -43,7 +44,8 @@
 !***********************************************************************
       data t/ 6*0.D0/
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_axis_L) then
+         reset_axis_L = .false.
         icalcn = numcal
         first = .TRUE.
       end if

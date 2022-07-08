@@ -45,6 +45,7 @@
       use reimers_C, only: x, y, z, xz, zcore, beta, gamma, s, betao, ibf, &
       & natm, r, nbf, nbt, nprn, iat, natt, zcorea, betaa, matind, n, &
       & nprin, vnn, dm, ef, dd, ff, cc0, aa, dtmp, nb2, ppg, pg, nsym
+      use mopac_interface_flags, only : reset_compfg_L
 !
 !***********************************************************************
 !-----------------------------------------------
@@ -114,7 +115,8 @@
           return
         end if
       end if
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_compfg_L) then
+         reset_compfg_L = .false.
         icalcn = numcal
         hpress = 0.d0
         nsp2_corr = 0.d0

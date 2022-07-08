@@ -18,6 +18,7 @@
       use chanel_C, only : iw
       use molkst_C, only : numcal, keywrd, mpack, npulay
       use Common_arrays_C, only : workmat1, workmat2, workmat3
+      use mopac_interface_flags, only : reset_pulay_L
       implicit none
       integer  :: n
       integer , intent(inout) :: lfock
@@ -64,7 +65,8 @@
 !
 !***********************************************************************
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_pulay_L) then
+         reset_pulay_L = .false.
         icalcn = numcal
         maxlim = npulay
         debug = index(keywrd,'DEBUGPULAY') /= 0

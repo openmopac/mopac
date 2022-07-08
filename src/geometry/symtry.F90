@@ -68,6 +68,7 @@
       use molkst_C, only : numcal
       use common_arrays_C, only : na
       use funcon_C, only : pi
+      use mopac_interface_flags, only : reset_haddon_L
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -88,7 +89,8 @@
       save icalcn
 !-----------------------------------------------
       data icalcn/ 0/
-      if (numcal /= icalcn) then
+      if (numcal /= icalcn .or. reset_haddon_L) then
+         reset_haddon_L = .false.
         icalcn = numcal
       end if
      !**********************************************************************

@@ -22,6 +22,7 @@ subroutine ef (xparam, funct)
     use ef_C, only: nstep, negreq, iprnt, ef_mode, ddx, xlamd, &
        & xlamd0, skal, rmin, rmax
     use maps_C, only : latom
+    use mopac_interface_flags, only : reset_ef_L
     implicit none
     double precision, dimension (nvar), intent (inout) :: xparam
     double precision, intent (inout) :: funct
@@ -133,7 +134,8 @@ subroutine ef (xparam, funct)
       i = 0
     end if
     l_geo_ok = (index(keywrd, " GEO-OK") /= 0)
-    if (icalcn /= numcal .or. nvar*nvar /= i) then
+    if (icalcn /= numcal .or. nvar*nvar /= i .or. reset_ef_L) then
+       reset_ef_L = .false.
       newhes = .true.
       old = (index(keywrd, " OLD_HESS") /= 0)
       if (old) then
@@ -1109,6 +1111,7 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
     use chanel_C, only: iw
     use ef_C, only: skal, ef_mode, iprnt, ddx, xlamd, xlamd0
     use molkst_C, only: numcal, numat
+    use mopac_interface_flags, only : reset_formd_L
     implicit none
     logical, intent (in) :: donr, rrscal, ts
     logical, intent (inout) :: lorjk
@@ -1141,7 +1144,8 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
    !
    ! ... Executable Statements ...
    !
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_formd_L) then
+       reset_formd_L = .false.
       icalcn = numcal
       store_ddx = 0.d0
       d = 0.d0
@@ -1803,6 +1807,7 @@ subroutine overlp (dmax, ddmin, newmod, nvar, lorjk, u, vmode)
     use molkst_C, only: numcal
     use chanel_C, only: iw
     use ef_C, only: ef_mode, iprnt, omin
+    use mopac_interface_flags, only : reset_overlp_L
     implicit none
     logical, intent (inout) :: lorjk
     integer, intent (in) :: nvar
@@ -1821,7 +1826,8 @@ subroutine overlp (dmax, ddmin, newmod, nvar, lorjk, u, vmode)
    !  ON THE FIRST STEP SIMPLY DETERMINE WHICH MODE TO FOLLOW
    !
    !     IF(NSTEP.EQ.1) THEN
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_overlp_L) then
+       reset_overlp_L = .false.
       icalcn = numcal !
       if (ef_mode > nvar) then
         write (iw,*) "ERROR!! MODE IS LARGER THAN NVAR", ef_mode
@@ -2178,6 +2184,7 @@ subroutine updhes (svec, tvec, grad, nvar, iupd, hess, oldf, d)
     use molkst_C, only: numcal
     use chanel_C, only: iw
     use ef_C, only: iprnt, ddx
+    use mopac_interface_flags, only : reset_updhes_L
     implicit none
     integer, intent (in) :: iupd, nvar
     double precision, dimension (nvar), intent (in) :: d, grad, oldf
@@ -2216,7 +2223,8 @@ subroutine updhes (svec, tvec, grad, nvar, iupd, hess, oldf, d)
    !       IUPD = 1  :  POWELL
    !       IUPD = 2  :  BFGS
    !
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_updhes_L) then
+       reset_updhes_L = .false.
       icalcn = numcal
       if (iprnt >= 2) then
         if (iupd == 0) then

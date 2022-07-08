@@ -36,7 +36,8 @@
 !
   use common_arrays_C, only: coord, nat
   use molkst_C, only : numat, N_Hbonds, numcal, method_PM6_D3H4, method_PM7, method_PM8, &
-    method_pm6_d3h4x
+       method_pm6_d3h4x
+  use mopac_interface_flags, only : reset_H_bonds4_L
   implicit none
   integer, intent (in) :: H_i, i, j
   integer, intent (out) :: d_list(20), nd_list
@@ -54,7 +55,8 @@
   double precision, external :: distance, cvalence_contribution
   save :: icalcn
     cv_cc = 0.d0
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_H_bonds4_L) then
+       reset_H_bonds4_L = .false.
 !
 !   Variables that change depending on the method
 !

@@ -17,6 +17,7 @@
       subroutine locmin(m, xparam, nvar, p, ssq, alf, efs, ncount)
       use molkst_C, only : numcal, keywrd, escf
       use chanel_C, only : iw
+      use mopac_interface_flags, only : reset_locmin_L
       implicit none
       integer , intent(in) :: m, nvar
       integer  :: ncount
@@ -42,7 +43,8 @@
 !    FOR MORE DETAILS
 !
 !***********************************************************************
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_locmin_L) then
+         reset_locmin_L = .false.
         icalcn = numcal
         xmaxm = 1.D9
         scale = 1.D0

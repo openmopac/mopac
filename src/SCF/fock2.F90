@@ -20,6 +20,7 @@
 !-----------------------------------------------
       use molkst_C, only : numcal, norbs, mpack, n2elec, id, numat_ref => numat
       use cosmo_C, only : useps
+      use mopac_interface_flags, only : reset_fock2_L
 
 !***********************************************************************
 !-----------------------------------------------
@@ -78,7 +79,8 @@
         if (allocated(i1fact)) deallocate(i1fact)
          return
       end if
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_fock2_L) then
+         reset_fock2_L = .false.
         if (allocated(ptot2))  deallocate(ptot2)
         if (allocated(ifact))  deallocate(ifact)
         if (allocated(i1fact)) deallocate(i1fact)

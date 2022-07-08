@@ -39,6 +39,8 @@
 !
       USE cosmo_C, only : useps
 !
+      use mopac_interface_flags, only : reset_dcart_L
+!
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -88,7 +90,8 @@
 ! CHNGE IS A MACHINE-PRECISION DEPENDENT CONSTANT
 ! CHNGE2=CHNGE/2
 !
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_dcart_L) then
+         reset_dcart_L = .true.
         icalcn = numcal
         const = fpc_9
         if (id == 0) then
@@ -457,13 +460,15 @@
       end subroutine dcart
 !
       double precision function derp (r)
-      use molkst_C, only: numcal, clower, cutofp, cupper
+        use molkst_C, only: numcal, clower, cutofp, cupper
+        use mopac_interface_flags, only : reset_derp_L
       implicit none
       double precision, intent (in) :: r
       integer, save :: icalcn = 0
       double precision, save :: bound1, bound2, c, cr, cr2, range
 !
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_derp_L) then
+         reset_derp_L = .false.
       !
       ! Set constants for truncation function.
       !

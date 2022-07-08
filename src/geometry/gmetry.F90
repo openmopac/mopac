@@ -24,6 +24,7 @@
       use elemts_C, only : elemnt
       use chanel_C, only : iw
       use funcon_C, only : pi
+      use mopac_interface_flags, only : reset_gmetry_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -276,7 +277,10 @@
         end if
       end do
       k = k + 1
-      if (icalcn /= numcal) id = 0
+      if (icalcn /= numcal .or. reset_gmetry_L) then
+         id = 0
+         if (k > natoms) reset_gmetry_L = .false.
+      end if
       if (k <= natoms) then
 !
 !   SYSTEM IS A SOLID, OF DIMENSION NATOMS+1-K
@@ -290,7 +294,8 @@
           tvec(3,l) = coord(3,i)
         end do
         id = l
-        if (icalcn /= numcal) then
+        if (icalcn /= numcal .or. reset_gmetry_L) then
+          reset_gmetry_L = .false.
           if (counter < 1) then
           counter = counter + 1
           go to 170

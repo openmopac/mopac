@@ -20,6 +20,7 @@
       use common_arrays_C, only :
       use chanel_C, only : iw
       use funcon_C, only : fpc_9, pi
+      use mopac_interface_flags, only : reset_interp_L
       implicit none
       integer  :: np
       integer  :: nq
@@ -65,7 +66,8 @@
       data icalcn/ 0/
       data zero, ff/ 0.0D0, 0.9D0/
       data xold/ 0.D0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_interp_L) then
+         reset_interp_L = .false.
         debug = index(keywrd,'INTERP') /= 0
         icalcn = numcal
         emin = 0.d0

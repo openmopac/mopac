@@ -24,6 +24,7 @@
       USE funcon_C, only : fpc_9
       USE chanel_C, only : iw
       USE molmec_C, only : nnhco, nhco, htype
+      use mopac_interface_flags, only : reset_deritr_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -64,7 +65,8 @@
       data icalcn/ 0/
   !    precise = .false.
   !    PM6_H = .false.
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_deritr_L) then
+         reset_deritr_L = .false.
         debug = (index(keywrd,'DERITR') /= 0)
         precise = (index(keywrd,'PRECISE') /= 0)
         PM6_H = (method_pm7 .or. index(keywrd,'PM6-D') + index(keywrd,'PM6-H') /= 0)

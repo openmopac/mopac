@@ -18,7 +18,8 @@
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-      use molkst_C, only : norbs, numcal, keywrd, mpack, method_indo
+       use molkst_C, only : norbs, numcal, keywrd, mpack, method_indo
+       use mopac_interface_flags, only : reset_cnvg_L 
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -49,7 +50,8 @@
 !                    MATRIX DIAGONAL ELEMENTS
 !***********************************************************************
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_cnvg_L) then
+         reset_cnvg_L = .false.
         icalcn = numcal
         if (index(keywrd,' UHF') /= 0) then
           rhfuhf = 1.d0
