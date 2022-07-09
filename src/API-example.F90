@@ -22,7 +22,7 @@ program API_example
   labels1(2) = 'H'
   labels1(3) = 'H'
 
-  ! define geometry - dimension of XYZ1 is (Natom, 3)
+  ! define geometry - dimension of XYZ1 is (3, Natom)
   XYZ1(:,1) = (/0.d0, 0.d0, 0.d0/)
   XYZ1(:,2) = (/0.758602d0, 0.000000d0,  0.504284d0/)
   XYZ1(:,3) = (/0.758602d0, 0.000000d0,  -0.504284d0/)
