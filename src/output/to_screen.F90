@@ -908,7 +908,8 @@
       end if
       write(hook,"(10f"//fmt9p3//")") (eigs(eigs_map(i)), i=moa_lower, moa_upper)
       if (compressed) then
-        deallocate (icomp, comp)
+        if (allocated(icomp)) deallocate (icomp)
+        if (allocated(comp)) deallocate (comp)
       else
         if (allocated(overlap2)) deallocate (overlap2)
       end if
