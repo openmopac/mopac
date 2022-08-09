@@ -52,7 +52,7 @@ endif()
 # Code coverage option
 option(ENABLE_COVERAGE "Code coverage flag" OFF)
 
-# Set a safe default build type if ther is no user input
+# Set a safe default build type if there is no user input
 if(NOT CMAKE_BUILD_TYPE)
   if (ENABLE_COVERAGE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
@@ -102,6 +102,9 @@ if (STATIC_BUILD)
   target_link_options(mopac-param PUBLIC "-static")
   target_link_options(mopac-makpol PUBLIC "-static")
 endif()
+
+# Add CITATION.cff to source files so that version updates are not ignored
+target_sources(mopac-core PRIVATE CITATION.cff)
 
 # WinMOPAC build on Windows w/ the Intel Fortran compiler
 option(BUILD_WINMOPAC "Build MOPAC & BZ with QuickWin GUI (ifort required)" OFF)

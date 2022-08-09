@@ -216,7 +216,6 @@
           end if
         end if
       end if
-      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
       if (numcal > 1 .and. numcal < 4 .and. index(keywrd_txt," GEO_DAT") /= 0) then
 !
 !  Quickly jump over first three lines
@@ -227,6 +226,7 @@
         natoms = i
         call gettxt
       end if
+      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
 !
 !    Read in all the data for the current job
 !
