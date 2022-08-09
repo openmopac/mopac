@@ -140,13 +140,6 @@
         labels(numat + 1:numat + id) = 107
       end if
       na = 0
-      if (nvar > 9000) then
-        call mopend("Insufficient memory to run FORCE")
-        if ((index(keywrd, " FORCE ") /= 0 .or. index(keywrd, " IRC=") /= 0 .or. index(keywrd, " RESTART") /= 0) .and. &
-          nvar == numat*3 .and. index(keywrd, " FORCETS") == 0) &
-          write(iw,'(10x,a)')"If only the atoms that are flagged for optimization are to be used, add keyword ""FORCETS"""
-        return
-      end if
       if (ts) then
         i = nvar
       else
