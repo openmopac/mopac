@@ -49,6 +49,10 @@
       use funcon_C, only : fpc_10, fpc_9
 !
       use chanel_C, only : iw0, iw, iarc, ibrz, brillouin_fn, archive_fn, log
+!
+#if MOPAC_IEEE         
+      USE, INTRINSIC :: IEEE_ARITHMETIC
+#endif
 !-----------------------------------------------
       implicit none
 !-----------------------------------------------
@@ -356,7 +360,7 @@
       still = .TRUE.
       if (latom == 0) then
         if (index(keywrd,' AIDER') == 0 .and. nvar > 0) then
-          if (.not. isnan(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then
+          if (.not. MOPAC_ISNAN(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then
 !
 !   CHECK THAT THE CARTESIAN COORDINATE GRADIENT IS ALSO SMALL
 !

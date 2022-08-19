@@ -32,7 +32,7 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer, parameter :: from_data_set = 7
-      integer :: i, j, io_stat, l, nlines, iargc
+      integer :: i, j, io_stat, l, nlines
       logical :: exists, arc_file, comments = .true.
       character :: line1*3000, num1*1, num2*1
       character, allocatable :: tmp_comments(:)*120
@@ -53,9 +53,9 @@
         natoms = 1
       else
         if (run /= 2 .or.jobnam ==" ") then
-          i = iargc()
+          i = MOPAC_IARGC()
           if (i >= run) then
-            call getarg (run, jobnam)
+            call MOPAC_GETARG (run, jobnam)
             natoms = 1
             do i = len_trim(jobnam), 1, -1   !  Remove any unprintable characters from the end of the file-name
               if (ichar(jobnam(i:i)) > 39 .and. ichar(jobnam(i:i)) < 126 .or. jobnam(i:i) =="'") exit
@@ -370,7 +370,7 @@
 1000  if (nlines < 3 .and. .not. is_PARAM) then
         inquire(unit=output, opened=exists)
         if (.not. exists) open(unit=output, file=trim(jobnam)//'.out')
-        call getarg (run, jobnam)
+        call MOPAC_GETARG (run, jobnam)
         write (0, '(A)') ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY'
         call mopend ( ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY')
         return

@@ -84,6 +84,10 @@
 !
   use drc_C, only: time
 !
+#if MOPAC_IEEE         
+  USE, INTRINSIC :: IEEE_ARITHMETIC
+#endif
+!
   implicit none
   character (len=*) :: text
 
@@ -433,7 +437,7 @@
         write(hook,"(3f"//fmt13p5//")")(press(i),i=1,3)
       end if
     end if
-    if (.not. isnan(dip(4,3))) then
+    if (.not. MOPAC_ISNAN(dip(4,3))) then
       if (Abs(dip(4,3)) > 1.d-20) then
         write(hook,"(a,sp, d"//fmt13p6//", a)")" DIPOLE:DEBYE=",dip(4,3)
         write(hook,"(a,sp, 3d"//fmt13p5//", a)")" DIP_VEC:DEBYE[3]=",(dip(i,3), i = 1, 3)
