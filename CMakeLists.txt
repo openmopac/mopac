@@ -130,10 +130,13 @@ endif()
 # MOPAC shared library ABI compatibility version
 set_target_properties(mopac-core PROPERTIES SOVERSION 1)
 
-# Disable C-style backslash characters
+# Adjust legacy PGI compiler behavior: disable C-style backslash characters & warn about CRLF handling
 if(CMAKE_Fortran_COMPILER_ID MATCHES "PGI|Flang")
   target_compile_options(mopac-core PUBLIC "-fno-backslash")
   target_compile_options(mopac-makpol PUBLIC "-fno-backslash")
+  if(UNIX)
+    message(NOTICE "Legacy PGI compiler detected. Set FORTRANOPT=crlf at build time to parse Windows-style CRLF endline sequences in MOPAC input files.")
+  endif()
 endif()
 
 # Pass OS information to MOPAC's Fortran source
