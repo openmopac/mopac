@@ -21,7 +21,7 @@
     character (len=*), intent (in) :: keywrd
     integer :: i, j, k
     character :: num*1, line*300
-    character, external :: get_a_name*300
+    character(len=300), external :: get_a_name
     integer, external :: end_of_keyword
     double precision, external :: reada
      if (Index (keywrd, " MNDO ") /= 0) &
