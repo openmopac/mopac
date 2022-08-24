@@ -805,7 +805,7 @@ subroutine wrtcon (allkey)
   integer :: i, ielec, ilevel, j, k, l
   logical :: l_add_H = .false., l_temp
   character :: num*1, num1*1
-  character, external :: get_a_name*300, get_text*300
+  character(len=300), external :: get_a_name, get_text
   integer, external :: end_of_keyword
   logical, external :: myword
   double precision, external :: reada

@@ -80,7 +80,6 @@ elseif(UNIX)
   set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib")
 endif()
 
-
 # Define a common library and executables for MOPAC & PARAM
 if (STATIC_BUILD)
   # Static build
@@ -131,6 +130,12 @@ endif()
 # MOPAC shared library ABI compatibility version
 set_target_properties(mopac-core PROPERTIES SOVERSION 1)
 
+# Disable C-style backslash characters
+if(CMAKE_Fortran_COMPILER_ID MATCHES "PGI|Flang")
+  target_compile_options(mopac-core PUBLIC "-fno-backslash")
+  target_compile_options(mopac-makpol PUBLIC "-fno-backslash")
+endif()
+
 # Pass OS information to MOPAC's Fortran source
 if(APPLE)
   target_compile_definitions(mopac-core PRIVATE MOPAC_OS="MacOS")
@@ -138,6 +143,40 @@ elseif(WIN32)
   target_compile_definitions(mopac-core PRIVATE MOPAC_OS="Windows")
 elseif(UNIX)
   target_compile_definitions(mopac-core PRIVATE MOPAC_OS="Linux")
+endif()
+
+# Pass compiler information to MOPAC's Fortran source
+if(CMAKE_Fortran_COMPILER_ID MATCHES "Flang")
+  option(F2003_INTRINSICS "Replace non-standard intrinsics w/ Fortran 2003 standards" ON)
+else()
+  option(F2003_INTRINSICS "Replace non-standard intrinsics w/ Fortran 2003 standards" OFF)
+endif()
+if(F2003_INTRINSICS)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_IARGC=command_argument_count)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_GETARG=get_command_argument)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_ISNAN=ieee_is_nan)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_IEEE=1)
+  target_compile_definitions(mopac-makpol PRIVATE MOPAC_IARGC=command_argument_count)
+  target_compile_definitions(mopac-makpol PRIVATE MOPAC_GETARG=get_command_argument)
+  if(BUILD_WINMOPAC)
+    target_compile_definitions(mopac-win PRIVATE MOPAC_IARGC=command_argument_count)
+    target_compile_definitions(mopac-win PRIVATE MOPAC_GETARG=get_command_argument)
+    target_compile_definitions(mopac-bz PRIVATE MOPAC_IARGC=command_argument_count)
+    target_compile_definitions(mopac-bz PRIVATE MOPAC_GETARG=get_command_argument)
+  endif()
+else()
+  target_compile_definitions(mopac-core PRIVATE MOPAC_IARGC=iargc)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_GETARG=getarg)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_ISNAN=isnan)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_IEEE=0)
+  target_compile_definitions(mopac-makpol PRIVATE MOPAC_IARGC=iargc)
+  target_compile_definitions(mopac-makpol PRIVATE MOPAC_GETARG=getarg)
+  if(BUILD_WINMOPAC)
+    target_compile_definitions(mopac-win PRIVATE MOPAC_IARGC=iargc)
+    target_compile_definitions(mopac-win PRIVATE MOPAC_GETARG=getarg)
+    target_compile_definitions(mopac-bz PRIVATE MOPAC_IARGC=iargc)
+    target_compile_definitions(mopac-bz PRIVATE MOPAC_GETARG=getarg)
+  endif()
 endif()
 
 # Pass version & commit information to MOPAC's Fortran source

@@ -36,7 +36,7 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -44,7 +44,7 @@ jobs:
         run: sudo apt-get install lcov
 
       - name: Install dependencies with PyPI
-        run: python -m pip install numpy
+        run: pip install numpy
 
       - name: Configure MOPAC with CMake
         run: |
@@ -59,7 +59,7 @@ jobs:
       - name: Test MOPAC with CTest
         run: |
           cd build
-          ctest -j $NUM_CORES
+          ctest -V -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -86,7 +86,7 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -117,7 +117,7 @@ jobs:
           path: glibc
 
       - name: Install dependencies with PyPI
-        run: python -m pip install numpy
+        run: pip install numpy
 
       - name: Configure MOPAC with CMake
         run: |
@@ -140,7 +140,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          ctest -j $NUM_CORES
+          ctest -V -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -179,7 +179,7 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -211,7 +211,7 @@ jobs:
           sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
 
       - name: Install dependencies with PyPI
-        run: python -m pip install numpy
+        run: pip3 install numpy
 
       # AUTO_BLAS=OFF because find_package(BLAS) has a bug with static BLAS libraries on Mac
       - name: Configure MOPAC with CMake
@@ -242,7 +242,7 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          ctest -j $NUM_CORES
+          ctest -V -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -283,7 +283,7 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
@@ -311,7 +311,7 @@ jobs:
           mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2019_INTEGRATION=0
 
       - name: Install dependencies with PyPI
-        run: python -m pip install numpy
+        run: pip3 install numpy
 
       # The main Intel\oneAPI\setvars.bat script is not setting up the correct version of ifort, so using component-level scripts
       - name: Configure MOPAC with CMake
@@ -341,7 +341,7 @@ jobs:
           call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
           call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           cd build
-          ctest -j %NUM_CORES%
+          ctest -V -j %NUM_CORES%
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}

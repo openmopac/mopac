@@ -38,7 +38,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
     character :: num*1
     intrinsic Index
     double precision, external :: reada
-    character, external :: get_a_name*300
+    character(len=300), external :: get_a_name
     save :: iatm, igeo
 !--------------------------------------------------------------------
   !

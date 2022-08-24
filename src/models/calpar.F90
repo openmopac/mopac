@@ -27,6 +27,9 @@
       USE molkst_C, only : keywrd, method_indo
       USE reimers_C, only: zetad, zetawt, nbfa
       USE chanel_C, only : iw
+#if MOPAC_IEEE         
+      USE, INTRINSIC :: IEEE_ARITHMETIC
+#endif
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -46,9 +49,9 @@
 !
       if (method_indo) then
         do i = 1, 107
-          if (isnan(zs(i))) zs(i) = 0.d0
-          if (isnan(zp(i))) zp(i) = 0.d0
-          if (isnan(zd(i))) zd(i) = 1.d-6
+          if (MOPAC_ISNAN(zs(i))) zs(i) = 0.d0
+          if (MOPAC_ISNAN(zp(i))) zp(i) = 0.d0
+          if (MOPAC_ISNAN(zd(i))) zd(i) = 1.d-6
           if(zd(i) == 0.d0) zd(i) = 1.d-6
         end do
       end if

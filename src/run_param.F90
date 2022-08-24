@@ -70,8 +70,8 @@
     git_hash = MOPAC_GIT_HASH
 #endif
   ! parse command-line flags
-    do i = 1, iargc()
-      call getarg (i, jobnam)
+    do i = 1, MOPAC_IARGC()
+      call MOPAC_GETARG (i, jobnam)
       if (jobnam == '-V' .OR. jobnam == '--version') then
         write(*,"(a)") "PARAM version "//trim(verson)//" commit "//trim(git_hash)
         stop
