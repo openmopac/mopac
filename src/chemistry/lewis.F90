@@ -813,7 +813,7 @@ subroutine remove_bond(i)
   character :: text*(*)
   integer, intent (in) :: j_in
   logical, intent (in) :: let
-  integer :: i, j, l, n, k, m
+  integer :: i, j, l, n, k, m, p, q
   character :: line*80, txt*30, num*1, txt2*30
   if (.not. pdb_label) then
     call mopend("Labeled atoms can only be used when atoms have labels")
@@ -824,10 +824,6 @@ subroutine remove_bond(i)
   l = index(text(j:),"""") + j
   call upcase(text, len_trim(text))
   line = text(j:l - 2)
-  if (j > 2) then
-    num = text(j - 2:j - 2)
-    if (num >= "0" .and. num <= "9") call mopend("ERROR DETECTED IN CVB KEYWORD IMMEDIATELY BEFORE """//trim(line)//"""")
-  end if
   txt2 = trim(line)
   if (line(1:1) == "[") then
     k = len_trim(line)
@@ -869,6 +865,7 @@ subroutine remove_bond(i)
      return
   end if
   line(m + 1:m + 5) = " "
+  q = 0
   do i = 1, natoms
     txt = txtatm(i)
     call upcase(txt, len_trim(txt))
@@ -885,13 +882,26 @@ subroutine remove_bond(i)
       if (txt(k:k) /= line(k:k) .and. line(k:k) /= "*") exit
     end do
     if (k > n) then
-      num = char(ichar("1") + int(log10(i*1.0001)))
-      write(line,'(i'//num//')')i
-      text(j - 1:) = trim(line)//text(l:)
-      exit
+      q = q + 1
+      if (q == 2) then
+          write(iw,'(/1x,a)')"An atom has been defined using a PDB label, "// &
+            "but more than one atom in the data-set has this label:"
+          write(iw,'(/10x,a)')"Atom number      PDB label"
+          write(iw,'(10x, i5, 4x, a)')p, '"'//txtatm(p)//'"'
+          write(iw,'(10x, i5, 4x, a)')i, '"'//txtatm(i)//'"'        
+          call mopend("TWO ATOMS HAVE THE SAME PDB LABEL")
+          return
+      end if
+      p = i
     end if
   end do
-  if (i > natoms) then
+  if (q == 1) then
+    i = p
+    num = char(ichar("1") + int(log10(i*1.0001)))
+    write(line,'(i'//num//')')i
+    text(j - 1:) = trim(line)//text(l:)          
+  end if
+  if (q == 0) then
     k = len_trim(line)
     if (index(txt2,"[") /= 0) then
       write(line,'(a)')"Atom defined by JSmol label '"//trim(txt2)//"' was not found in the data set"
