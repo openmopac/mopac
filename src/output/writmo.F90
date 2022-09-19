@@ -1139,7 +1139,7 @@
       if (ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20) &
          write (iwrite, '(  10X,''CONFIGURATION INTERACTION WAS USED'')')
       if (kchrge /= 0) write (iwrite, &
-        '(  10X,''CHARGE ON SYSTEM        =  '',I9)') kchrge
+        '(  SP, 10X,''CHARGE ON SYSTEM        =  '',I9)') kchrge
       if ( .not. mozyme ) then
         if (state_Irred_Rep /= " ") then
           write(line, '(11x, "STATE:  ",i2,1x,3A)') state_QN, state_spin, state_Irred_Rep
