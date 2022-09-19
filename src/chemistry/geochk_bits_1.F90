@@ -1200,7 +1200,7 @@ subroutine update_txtatm(output, sort)
 !
   if (index(keywrd," ADD-H") + index(keywrd," SITE=") + index(keywrd," RESEQ") /= 0) &
     call set_up_dentate()
-  if (index(keywrd, "0SCF") == 0 .or. index(keywrd, "SITE") /= 0) call check_cvs(.true.)
+  if (index(keywrd, "0SCF") == 0 .and. index(keywrd, "SITE") == 0) call check_cvs(.true.)
   call check_H(i)
   update_chain = (index(keywrd, " CHAINS=(") == 0)
   do i = 1, numat
