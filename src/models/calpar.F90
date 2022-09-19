@@ -27,7 +27,7 @@
       USE molkst_C, only : keywrd, method_indo
       USE reimers_C, only: zetad, zetawt, nbfa
       USE chanel_C, only : iw
-#if MOPAC_IEEE         
+#if MOPAC_F2003
       USE, INTRINSIC :: IEEE_ARITHMETIC
 #endif
       implicit none
@@ -49,9 +49,15 @@
 !
       if (method_indo) then
         do i = 1, 107
-          if (MOPAC_ISNAN(zs(i))) zs(i) = 0.d0
-          if (MOPAC_ISNAN(zp(i))) zp(i) = 0.d0
-          if (MOPAC_ISNAN(zd(i))) zd(i) = 1.d-6
+#ifdef MOPAC_F2003
+          if (ieee_is_nan(zs(i))) zs(i) = 0.d0
+          if (ieee_is_nan(zp(i))) zp(i) = 0.d0
+          if (ieee_is_nan(zd(i))) zd(i) = 1.d-6
+#else
+          if (isnan(zs(i))) zs(i) = 0.d0
+          if (isnan(zp(i))) zp(i) = 0.d0
+          if (isnan(zd(i))) zd(i) = 1.d-6
+#endif
           if(zd(i) == 0.d0) zd(i) = 1.d-6
         end do
       end if

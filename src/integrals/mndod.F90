@@ -253,7 +253,7 @@
 !   M o d u l e s
 !-----------------------------------------------
       USE chanel_C, only : iw
-#if MOPAC_IEEE
+#if MOPAC_F2003
       USE, INTRINSIC :: IEEE_ARITHMETIC
 #endif
       implicit none
@@ -268,7 +268,11 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       double precision :: loc_value
-      if (MOPAC_ISNAN(value)) then
+#ifdef MOPAC_F2003
+      if (ieee_is_nan(value)) then
+#else
+      if (isnan(value)) then
+#endif
         loc_value = 0.d0
       else
         loc_value = value
@@ -289,7 +293,7 @@
       zpn, zdn, gpp, gp2, hsp, gss, gsp, eisol, eheat, betas, betap, betad, &
       po, ddp, f0dd, f2dd, f4dd, f0sd, g2sd, f0pd, f2pd, alpb, xfac, &
       & g1pd, g3pd, guess1, guess2, guess3
-#if MOPAC_IEEE
+#if MOPAC_F2003
       USE, INTRINSIC :: IEEE_ARITHMETIC
 #endif
 !***********************************************************************
@@ -405,7 +409,11 @@
         call printp(i, 'FN24 ', guess2(i,4), 'CORE-CORE VDW EXPONENT 4')
         call printp(i, 'FN34 ', guess3(i,4), 'CORE-CORE VDW POSITION 4')
         do j = 1, 100
-          if (MOPAC_ISNAN(alpb(i,j))) alpb(i,j)= 0.d0
+#ifdef MOPAC_F2003
+          if (ieee_is_nan(alpb(i,j))) alpb(i,j)= 0.d0
+#else
+          if (isnan(alpb(i,j))) alpb(i,j)= 0.d0
+#endif
         if (Abs (alpb(i,j)) > 1.d-5 .and. used(j)) then
             write (iw, "(I4,A6,i2,F13.8,2X,A)") i, "ALPB_", j,alpb(i,j), "ALPB factor"
             write (iw, "(I4,A6,i2,F13.8,2X,A)") i, "XFAC_", j,xfac(i,j), "XFAC factor"
