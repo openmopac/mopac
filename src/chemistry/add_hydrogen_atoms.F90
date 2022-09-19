@@ -381,6 +381,7 @@
             call add_a_sp3_hydrogen_atom(icc, nb_icc, nc_icc, nd_icc, bond_length, metals, nmetals)
           else
             call add_a_generic_hydrogen_atom(icc, nb_icc, nc_icc, bond_length, angle, dihedral, metals, nmetals)
+            if (moperr) return
 !
 !  Check to see if the system is water
 !
@@ -2059,8 +2060,9 @@
 !  Add a single hydrogen atom to a heavy atom.
 !  (This subroutine is generic, and is derived from subroutine geout)
 !
-    use common_arrays_C, only : coord, nbonds, ibonds, nat
-    use molkst_C, only : numat, id, temp_1, temp_2, temp_3
+    use common_arrays_C, only : coord, nbonds, ibonds, nat, txtatm
+    use molkst_C, only : numat, id, temp_1, temp_2, temp_3, line
+    use chanel_C, only: iw
     implicit none
     double precision, intent (in) :: bond_length, angle, dihedral
     integer, intent (in) :: na, nb, nc, nmetals, metals(nmetals)
@@ -2083,6 +2085,16 @@
         zb = coord(3,nb) - coord(3,na)
       end if
       rbc = xb*xb + yb*yb + zb*zb
+      if (rbc < 1.d-4) then
+        write(line,'(a, i6, a, i6, a)')"Atoms",na, " and", nb, " have the same coordinates."
+        call mopend(trim(line))
+        write(iw,'(/10x, a, i6, a, a, 3f10.3)') &
+          "Atom No.:", na, "  Label: """//trim(txtatm(na))//"""", " Coordinates:", coord(:,na)
+        write(iw,'(10x, a, i6, a, a, 3f10.3)') &
+          "Atom No.:", nb, "  Label: """//trim(txtatm(nb))//"""", " Coordinates:", coord(:,nb)
+        write(iw,'(/10x,a)')"Correct error before continuing."
+        return
+      end if
       rbc = 1.0D00/sqrt(rbc)
       if (nc /= 0) then
         if (id > 0) then
