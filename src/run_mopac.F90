@@ -589,6 +589,11 @@
             if (index(keywrd, " ADD-H") /= 0) then
               call store_and_restore_Tv("STORE")
               call add_hydrogen_atoms()
+              if (moperr) then
+                inquire(unit=iarc, opened=opend) 
+                if (opend) close (iarc, status="DELETE") 
+                go to 101
+              end if
               call move_hydrogen_atoms
               call store_and_restore_Tv("RESTORE")
               call lewis(.false.)
@@ -849,6 +854,7 @@
         call to_screen(" Force constant calculation")
         last = 1
         call force ()
+        keywrd = " "
         iflepo = -1
       else if (index(keywrd,' DRC') + index(keywrd,' IRC') /= 0) then
         call to_screen(" Reaction coordinate calculation")
