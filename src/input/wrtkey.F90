@@ -995,11 +995,17 @@ subroutine wrtcon (allkey)
       write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
     else
       sum = reada(keywrd(j:), 1)
-      if (sum < 0.1d0) then
+      if (sum < 0.001d0) then
         write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
       else
-        num = char(ichar("4") + int(log10(sum)))
-        write(iw,'(a, f'//num//'.1, a)') " *               (A BIAS OF",sum, &
+        i = nint(log10(sum))
+        num = char(ichar("4") + abs(i))
+        if (i < 0) then
+          num1 = char(ichar("1") - i)
+        else
+          num1 = "1"
+        end if
+        write(iw,'(a, f'//num//'.'//num1//', a)') " *               (A BIAS OF",sum, &
         " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
         do
           j = j + 1
@@ -1022,10 +1028,7 @@ subroutine wrtcon (allkey)
                                  write (iw, '(" *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED")')
                                  write (iw, '(" *  Keyword:     ",a)')keywrd(i:j)
   end if
-  if (myword(allkey, " NEWPDB")) then
-    write (iw, '(" *  NEWPDB     - CONVERT PDB ATOM FORMAT INTO THE MODERN PDB VERSION, VERSION-3")')
-    if (index(keywrd, " SITE") == 0) call l_control("SITE=()", len("SITE=()"), 1)
-  end if
+  if (myword(allkey, " NEWPDB")) write (iw, '(" *  NEWPDB     - CONVERT PDB ATOM FORMAT INTO THE MODERN PDB VERSION, VERSION-3")')
   if (myword(allkey, " GEOCHK")) write (iw, '(" *  GEOCHK     - PRINT WORKING IN SUBROUTINE GEOCHK")')
   if (myword(allkey, " LEWIS"))  write (iw, '(" *  LEWIS      - PRINT OUT LEWIS STRUCTURE, THEN STOP")')
   if (myword(allkey, " SETPI"))  write (iw, '(" *  SETPI      - SOME OR ALL PI BONDS EXPLICITLY SET BY USER")')
@@ -1568,7 +1571,7 @@ subroutine wrtcon (allkey)
       i = index(keywrd(i:), "=") + i
       k = end_of_keyword(keywrd, len_trim(keywrd), i)
       line = get_a_name(keywrd(i:k), len_trim(keywrd(i:k)))
-      write (iw, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
+      write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
       do
         j = index(keywrd(i:k), ";")
         if (j /= 0) then
@@ -1584,7 +1587,7 @@ subroutine wrtcon (allkey)
 end subroutine wrtcon
 subroutine wrtout (allkey)
   use molkst_C, only : keywrd, mozyme, maxtxt, line, prt_coords, prt_gradients, prt_cart, prt_charges, prt_pops, &
-    prt_topo, prt_force, prt_normal_coords, prt_orientation, prt_velocity, backslash
+    prt_topo, prt_force, prt_normal_coords, prt_orientation, prt_velocity, backslash, is_PARAM
   use chanel_C, only: iw0, iw, log, input_fn
   implicit none
   character (len=1000), intent (inout) :: allkey
@@ -1754,18 +1757,20 @@ subroutine wrtout (allkey)
         end if
       end if
     end if
+    if ( .not. is_PARAM) then
 !
 !  Check that file-name is okay
 !
-    do j = len_trim(input_fn) - 5, 2, -1
-      if (input_fn(j:j) == "/" .or. input_fn(j:j) == backslash) exit
-    end do
-    do i = j, len_trim(input_fn) - 5
-      if (input_fn(i:i) == "'") exit
-    end do
-    if (i < len_trim(input_fn) - 6) then
-       call mopend("When HTML is present, the file-name must not contain an apostrophe.")
-       write(iw,'(/10x,a)')"(File name = """//input_fn(:len_trim(input_fn) - 5)//""")"
+      do j = len_trim(input_fn) - 5, 2, -1
+        if (input_fn(j:j) == "/" .or. input_fn(j:j) == backslash) exit
+      end do
+      do i = j, len_trim(input_fn) - 5
+        if (input_fn(i:i) == "'") exit
+      end do
+      if (i < len_trim(input_fn) - 6) then
+         call mopend("When HTML is present, the file-name must not contain an apostrophe.")
+         write(iw,'(/10x,a)')"(File name = """//input_fn(:len_trim(input_fn) - 5)//""")"
+      end if
     end if
   end if
   if (myword(allkey, " NORJSMOL")) write (iw,'(" *  HTML(NORES)- SUPPRESS LIST OF RESIDUES IN HTML FILE")')
