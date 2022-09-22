@@ -18,7 +18,7 @@
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list 
     parameters_for_RM1_C parameters_for_PM3_Sparkles_C
-    parameters_for_PM7_C parameters_for_PM8_C
+    parameters_for_PM7_C parameters_for_PM6_ORG_C parameters_for_PM8_C
     alpb_and_xfac_mndod refer alpb_and_xfac_mndo
     calpar journal_references_C alpb_and_xfac_pm3
     parameters_for_AM1_C parameters_for_PM7_Sparkles_C

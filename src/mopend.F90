@@ -62,7 +62,7 @@
 !
            inquire(unit=hook, opened=opend)
            if (opend) then
-             write(hook,"(a)")" END OF MOPAC PROGRAM"
+!             write(hook,"(a)")" END OF MOPAC PROGRAM"
            end if
         end if
         if (ntxt == 1) then
