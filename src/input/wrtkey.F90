@@ -119,7 +119,7 @@ end subroutine wrtkey
 subroutine wrtchk (allkey)
   use molkst_C, only: keywrd, is_PARAM, uhf, method_mndo, method_am1, &
   method_pm3, method_mndod, method_pm6, method_rm1, rhf, mozyme, line, &
-  method_pm7, method_pm8, method_indo, koment, title, refkey
+  method_pm7, method_pm6_org, method_pm8, method_indo, koment, title, refkey
   use chanel_C, only: iw, input_fn
   implicit none
   logical :: birad, exci, ci, trip
@@ -257,7 +257,8 @@ subroutine wrtchk (allkey)
     if (method_am1)     i = i + 1
     if (method_pm3)     i = i + 1
     if (method_pm6)     i = i + 1
-    if (method_pm7 .or. method_PM8)     i = i + 1
+    if (method_pm7)     i = i + 1
+    if (method_PM8)     i = i + 1
     if (method_mndo)    i = i + 1
     if (method_mndod)   i = i + 1
     if (method_rm1)     i = i + 1
@@ -852,6 +853,7 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " PM6 "))   write (iw, '(" *  PM6        - The PM6 Hamiltonian to be used")')
   if (myword(allkey, " PM7-TS")) write (iw, '(" *  PM7-TS     - Calculate barrier height using PM7-TS")')
   if (myword(allkey, " PM7"))    write (iw, '(" *  PM7        - The PM7 Hamiltonian to be used")')
+  if (myword(allkey, " PM6-ORG"))write (iw, '(" *  PM6-ORG    - The PM6-ORG Hamiltonian to be used (IN DEVELOPMENT)")')
   if (myword(allkey, " PM8"))    write (iw, '(" *  PM8        - The PM8 Hamiltonian to be used (IN DEVELOPMENT)")')
   if (myword(allkey, " SPARKL")) write (iw, '(" *  SPARKLE    - Use SPARKLES when they exist.")')
   if (myword(allkey, " RM1 "))   write (iw, '(" *  RM1        - The RM1 Hamiltonian to be used")')

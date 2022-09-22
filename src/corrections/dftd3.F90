@@ -24,11 +24,11 @@
 !
 !
   use funcon_C, only : a0, fpc_9, fpc_2
-  use molkst_C, only : numat, keywrd, E_hb, E_disp, numcal, method_pm8, l123
+  use molkst_C, only : numat, keywrd, E_hb, E_disp, numcal, method_pm8, method_pm6_org, l123
   use common_arrays_C, only: coord, nat, tvec
   use chanel_C, only : iw
   use elemts_C, only: elemnt
-  use parameters_C, only: par7, par8, par9, par10, par11
+  use parameters_C, only: par7, par8, par9, par10
   implicit none
   double precision, intent (inout) ::  dxyz(3, numat)
   logical, intent (in):: l_grad
@@ -96,7 +96,7 @@
           call copyc6(maxc, max_elem, c6ab, mxc)
         end if
       end if
-      D3H4 = (method_PM8 .or. index(keywrd, "D3H4") + index(keywrd, "D3(H4)") /= 0)
+      D3H4 = (method_pm6_org .or. method_PM8 .or. index(keywrd, "D3H4") + index(keywrd, "D3(H4)") /= 0)
       if (D3H4) then
 ! The D3H4 version of the dispersion
 ! Used in PM6-D3H4 and its variants PM6-D3H4X, PM6-D3(H4)
@@ -106,7 +106,7 @@
         alp  = par8
         rs6 = par9
         s18 = par10
-        rs18 = par11
+        rs18 = 1.d-10
       else ! hard-wired
 !
 ! Grimme, S. (2012). "Supramolecular Binding Thermodynamics

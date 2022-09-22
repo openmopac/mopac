@@ -20,7 +20,7 @@
 !-----------------------------------------------
       USE molkst_C, ONLY: numat, norbs, nclose, nopen, fract, natoms, numcal, &
       & ndep, nvar, keywrd, cosine, moperr, mpack, isok, id, l123, line, nscf, &
-      pressure, l1u, l2u, l3u, method_PM7, method_pm8
+      pressure, l1u, l2u, l3u, method_PM7, method_pm8, method_pm6_org
       use common_arrays_C, only : dxyz, loc, errfn, aicorr, tvec
       USE symmetry_C, ONLY: locpar, idepfn
       USE chanel_C, only : iw, ir, job_fn
@@ -78,7 +78,7 @@
         field = index(keywrd,' FIELD') /= 0
         precis = index(keywrd,' PREC') /= 0
         DH_correction = (index(keywrd,' PM6-D') + index(keywrd,' PM6-H') /= 0 .or. &
-          method_PM7 .or. method_pm8 )
+          method_PM7 .or. method_pm6_org .or. method_pm8 )
         intn = index(keywrd,'  XYZ') == 0
         if (saddle) then
           nw2 = max(mpack, 9*natoms**2)

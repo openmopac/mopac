@@ -37,7 +37,7 @@
       atheat, id, pressure, method_pm6, density, stress, N_3_present, Si_O_H_present, &
       use_ref_geo, hpress, nsp2_corr, Si_O_H_corr, sum_dihed, method_PM6_D3H4X, method_PM6_D3H4, &
       method_PM6_D3, method_pm7_minus, method_pm6_dh_plus, method_pm7_hh, method_pm8, &
-      method_indo, mpack, e_disp
+      method_pm6_org, method_indo, mpack, e_disp
 !
       use cosmo_C, only : iseps, useps, noeps, solv_energy
 !
@@ -147,7 +147,7 @@
         dh = (method_pm6_d3h4x .or. method_pm6_d3h4    .or. &
               method_pm6_d3    .or. method_pm6_dh_plus .or. &
               method_pm7_hh    .or. method_pm7_minus   .or. &
-              method_PM7 .or. method_pm8)
+              method_PM7 .or. method_pm6_org .or. method_pm8)
         emin = 0.D0
         xparef(:nvar) = xparam(:nvar)
       end if

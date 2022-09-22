@@ -34,7 +34,7 @@
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &
-      method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
+      method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, method_pm6_org, &
       method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label, gui
 !
       use meci_C, only : maxci
@@ -794,7 +794,7 @@
         method_pm7 = (method_PM7 .or. method_PM7_ts .or. method_pm7_hh .or. method_pm7_minus)
         method_pm6 = (method_PM6 .or. method_pm6_dh2 .or. method_pm6_d3h4 .or. method_pm6_dh_plus .or. &
        & method_pm6_dh2x .or. method_pm6_d3h4x .or. method_pm6_d3 .or. method_pm6_d3_not_h4)
-        l_feather = (method_PM7 .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
+        l_feather = (method_PM7 .or. method_pm6_org .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
         l_feather_1 = (index(keywrd, " MACRO") /= 0)
         dh = " "
         i = index(keywrd, " PM6-D")
