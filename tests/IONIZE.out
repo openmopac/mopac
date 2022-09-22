@@ -33,7 +33,7 @@ geo_dat="Neutral.mop"  OUTPUT   site=(ionize) HTML
 
        Changes in Ionization caused by keyword SITE
 
-       Keyword: SITE=(COO,NH3,LYS(+),ARG(+),SO4,PO4)
+       Keyword: SITE=(COO,NH3,ARG(+),SO4,PO4)
 
       Hydrogen atoms added to     Hydrogen atoms deleted from
 
