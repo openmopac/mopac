@@ -98,7 +98,7 @@ subroutine current_version (text)
   character, dimension (23) :: tyr
   save :: first, opt_hook, atoms, paras, orbs, compressed, fmt8p4, fmt9p3, fmt9p4, fmt10p4, &
   fmt9p5, fmt13p5, fmt13p6, fmt7p4, mos, irc, irc_or_drc, moa_lower, moa_upper, &
-  mob_lower, mob_upper, lnmoas, lnmobs, loc_mos, new_calcn
+  mob_lower, mob_upper, lnmoas, lnmobs, loc_mos, new_calcn, orbs2, fmt, fmt1
   data atorbs/ ' S', 'PX', 'PY', 'PZ', 'X2', 'XZ', 'Z2', 'YZ', 'XY'/
   data tyr / "G", "A", "V", "L", "I", "S", "T", "D", "N", "K", "E", "Q", &
      & "R", "H", "F", "C", "W", "Y", "M", "P", "P", "P", "?" /
