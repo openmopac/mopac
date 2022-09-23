@@ -62,10 +62,33 @@
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
     t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."
     t_par(3)  = "Used in ccrep for scalar correction of O-H term."
-    t_par(4)  = "Used in ccrep for exponent correction of C-C triple bonds."
+    t_par(4)  = "Used in ccrep for exponent correction of O-H term."
+    t_par(5)  = "Used in ccrep for offset correction of O-H term."
     t_par(7)  = "Used in dftd3 to set ""s6""  in D3H4"
     t_par(8)  = "Used in dftd3 to set ""alp"" in D3H4"
     t_par(9)  = "Used in dftd3 to set ""rs6"" in D3H4"
+    t_par(10) = "Used in dftd3 to set ""s18"" in D3H4."
+    t_par(11) = "Used in ccrep for exponent correction of C-H term."
+    t_par(12) = "Used in ccrep for offset correction of C-H term."
+    t_par(13) = "Used in ccrep for scalar correction of C-C term."
+    t_par(14) = "Used in ccrep for exponent correction of C-C term."
+    t_par(15) = "Used in ccrep for offset correction of C-C term."
+    t_par(16) = "Used in ccrep for scalar correction of H-H term."
+    t_par(17) = "Used in ccrep for exponent correction of H-H term."
+    t_par(18) = "Used in ccrep for offset correction of H-H term."
+    t_par(19) = "Used in ccrep for scalar correction of C-H term."
+    t_par(20) = "Used in ccrep for scalar correction of C-O term."
+    t_par(21) = "Used in ccrep for exponent correction of C-O term."
+    t_par(22) = "Used in ccrep for offset correction of C-O term."
+    t_par(23) = "Used in ccrep for scalar correction of S-O term."
+    t_par(24) = "Used in ccrep for exponent correction of S-O term."
+    t_par(25) = "Used in ccrep for offset correction of S-O term."
+    t_par(26) = "Used in ccrep for scalar correction of O-N term."
+    t_par(27) = "Used in ccrep for exponent correction of O-N term."
+    t_par(28) = "Used in ccrep for offset correction of O-N term."
+    t_par(29) = "Used in ccrep for scalar correction of F-H term."
+    t_par(30) = "Used in ccrep for exponent correction of F-H term."
+    t_par(31) = "Used in ccrep for offset correction of F-H term."
     nref = 0
     k = Index (keywrd(i:), "=") + i
     j = end_of_keyword(keywrd, len_trim(keywrd), k)
@@ -419,6 +442,10 @@
   integer :: istart, istop
   logical :: quotation_marks
   istart = 1
+  do 
+    if (input(istart:istart) /= " ") exit
+    istart = istart + 1
+  end do
   quotation_marks = (input(istart:istart) == '"')
   if (quotation_marks) then
 !

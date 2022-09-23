@@ -92,10 +92,13 @@
       end if
 !
 ! Search for '" ' or '"x' where "x" is one of ., 0 - 9
+!
+      l = 1000
       do k = 1, 12
         j = index(keywrd(i + 2:),'"'//txt(k)) + i
-        if (j /= i) exit
+        if (j /= i) l = min(l,j)
       end do
+      if (l /= 1000) j = l
       if (j == i) then
         write(line,'(a)')" File name after GEO_REF must end with a quotation mark."
         call mopend(trim(line))

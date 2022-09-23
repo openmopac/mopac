@@ -31,7 +31,7 @@
   integer :: i, j, k, l, m, n, o(2), jres, metals(1), nmetals = 0, nadd, ndel, p, ncarbon, &
     nb_icc, nc_icc, nd_icc
   logical :: l_res, bug = .false., first, let, l_type, first_2
-  character :: res_txt*14, txt*26, num*1, line_1*1200
+  character :: res_txt*16, txt*26, num*1, line_1*1200
   character, allocatable :: changes(:)*30
   double precision :: bond_length, angle, dihedral, internal_dihedral, tetrahedral, sum
   logical, allocatable :: l_used(:)
@@ -42,7 +42,7 @@
   l_used = .false.
   labels(numat + 1:) = 0
   tetrahedral = 109.4712206d0
-  let = (index(keywrd," LET") /= 0)
+  let = (index(keywrd," LET ") /= 0)
   first = (.not. let)
   first_2 = .true.
   i = index(keywrd," SITE=")
@@ -71,6 +71,7 @@
       txtatm(i_atom)(22:22) = "A"
     end do
   end if
+  call check_cvs(.true.)
   jres = 0
   do i_atom = 1, numat
     l_res = .false.
@@ -703,6 +704,14 @@
     do j = i + 1, len_trim(line)
       if (line(j:j) == """") exit
     end do
+!
+! Convert one PDB label into an atom-number
+! First, run a check to confirm that the PDB label exists in the data-set
+! and that it is only used for one atom.
+!
+    line_1 = trim(line)
+    call txt_to_atom_no(line_1, i, .false.)
+    if (moperr) return
     res_txt = line(i + 1: j - 1)
     if (line(j + 2:j + 2) == "+") i_charge = 1
     if (line(j + 2:j + 2) == "0") i_charge = 0
@@ -793,14 +802,25 @@
       first_2 = .false.
       cycle
     end if
+    if (abs(i_charge) > 1 .and. nat(i) /= 6) then
+      call mopend("IN ""SITE"" THE USE OF MULTIPLE CHARGES IS ONLY ALLOWED FOR CARBON ATOMS")
+      return
+    end if
     if (l_used(i)) then
       num = char(ichar("2") + int(log10(i*1.0001)))
-      write(iw,'(/5x, a, i'//num//', a)')"Two requests were made to modify the number of hydrogen atoms on atom", i, &
-        ", a carbon atom, PDB label: """//txtatm(i)(:26)//"""."
-      write(iw,'(5x, a)')"When more than one hydrogen atom is to be added or deleted use "// &
-        """+3"" or ""+2"" or ""-2"" or ""-3"" instead of ""+"" or ""-""."
-      call mopend("MULTIPLE REQUESTS WERE MADE USING ""SITE"" TO CHANGE THE NUMBER "// &
-        "OF HYDROGEN ATOMS ON AN ATOM.  THIS IS NOT ALLOWED")
+      if (nat(i) == 6) then
+        num = char(ichar("2") + int(log10(i*1.0001))) 
+        write(iw,'(/5x, a, i'//num//', a)')"Two requests were made to modify the number of hydrogen atoms on atom", i, &
+          ", a carbon atom, PDB label: """//txtatm(i)(:26)//"""."
+        write(iw,'(5x, a)')"When more than one hydrogen atom is to be added or deleted use "// &
+          """+3"" or ""+2"" or ""-2"" or ""-3"" instead of ""+"" or ""-""."
+        call mopend("MULTIPLE REQUESTS WERE MADE USING ""SITE"" TO CHANGE THE NUMBER "// &
+        "OF HYDROGEN ATOMS ON A CARBON ATOM.")
+      else
+        call mopend("MULTIPLE REQUESTS WERE MADE USING ""SITE"" TO CHANGE THE NUMBER "// &
+        "OF HYDROGEN ATOMS ON A NON-CARBON ATOM.") 
+        call mopend("THIS IS NOT ALLOWED.  USE SEPARATE JOBS.") 
+      end if
       return
     else
       l_used(i) = .true.
@@ -846,7 +866,7 @@
             write(iw,'(i5, i11, a, f12.4, a)')j, ibonds(j,i), "      """//txtatm(ibonds(j,i))(:26)//"""", bond_length, " Angstroms"
           end do
           write(iw,'(/2x,a)')"[ The simplest way to correct this fault would be to use the"// &
-            & " CVB keyword, e.g., CVB=("""//txtatm(i)(14:26)//""":-"""//txtatm(k)(14:26)//""") ]"
+            & " CVB keyword, e.g., CVB=("""//txtatm(i)(13:26)//""":-"""//txtatm(k)(13:26)//""") ]"
           if (index(keywrd, " HTML") + index(keywrd, "PDBOUT") /= 0) then
             line = job_fn(:len_trim(job_fn) - 3)//"pdb"
             call add_path(line)

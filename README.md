@@ -1,9 +1,10 @@
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![DOI](https://zenodo.org/badge/177640376.svg)](https://zenodo.org/badge/latestdoi/177640376)
 ![build](https://github.com/openmopac/mopac/actions/workflows/CI.yaml/badge.svg)
 [![codecov](https://codecov.io/gh/openmopac/mopac/branch/main/graph/badge.svg?token=qM2KeRvw06)](https://codecov.io/gh/openmopac/mopac)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mopac/badges/version.svg)](https://anaconda.org/conda-forge/mopac)
 
-The modern open-source version of the Molecular Orbital PACkage (MOPAC).
+The modern open-source version of the Molecular Orbital PACkage (MOPAC) released under the LGPL license.
 
 This version contains a CMake build script and compiles a shared library in addition to an executable for integration with other software.
 

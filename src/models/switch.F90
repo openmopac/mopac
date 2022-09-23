@@ -26,7 +26,7 @@
 !
 !
       USE molkst_C, only : keywrd, method_mndo, method_pm3, method_indo, &
-      & method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm8
+      & method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm6_org, method_pm8
 !
 !
       USE parameters_for_INDO_C, only: isoki, nbfai, zetai, zetadi, &
@@ -55,6 +55,11 @@
       USE parameters_for_PM7_C, only :  uss7, upp7, udd7, zs7, zp7, zd7, betas7, &
         betap7, betad7, gss7, gsp7, gpp7, gp27, hsp7, polvo7, gues71, f0sd7, g2sd7, &
         gues72, gues73, poc_7, zsn7, zpn7, zdn7, alpb_and_xfac_pm7, alp7, v_par7
+!
+!
+        USE parameters_for_PM6_ORG_C, only :  uss_org, upp_org, udd_org, zs_org, zp_org, zd_org, betas_org, &
+        betap_org, betad_org, gss_org, gsp_org, gpp_org, gp2_org, hsp_org, polvo_org, gues_org1, f0sd_org, g2sd_org, &
+        gues_org2, gues_org3, poc__org, zsn_org, zpn_org, zdn_org, alpb_and_xfac_pm6_org, alp_org, v_par_org
 !
 !
       USE parameters_for_PM8_C, only :  uss8, upp8, udd8, zs8, zp8, zd8, betas8, &
@@ -228,6 +233,37 @@
             xfac(:100,57:71) = 0.d0
             xfac(57:71,:100) = 0.d0
           end if
+        else if (method_pm6_org) then
+!
+!    SWITCH IN PM6-ORG PARAMETERS
+!
+          guess1 = gues_org1 
+          guess2 = gues_org2 
+          guess3 = gues_org3 
+          zs = zs_org 
+          zp = zp_org 
+          zd = zd_org 
+          zsn = zsn_org 
+          zpn = zpn_org 
+          zdn = zdn_org 
+          uss = uss_org 
+          upp = upp_org 
+          udd = udd_org 
+          betas = betas_org 
+          betap = betap_org 
+          betad = betad_org
+          gss = gss_org 
+          gpp = gpp_org 
+          gsp = gsp_org 
+          gp2 = gp2_org 
+          hsp = hsp_org 
+          f0sd = f0sd_org
+          g2sd = g2sd_org
+          alp = alp_org
+          pocord = poc__org
+          polvol = polvo_org
+          v_par = v_par_org
+          call alpb_and_xfac_pm6_org
         else if (method_pm8) then
 !
 !    SWITCH IN PM8 PARAMETERS

@@ -27,7 +27,11 @@ program MOPAC_win
     i4 = setbkcolor(15)
     i4 = settextcolor(0)
     call clearscreen($GCLEARSCREEN)
-    i = MOPAC_IARGC()
+#ifdef MOPAC_F2003
+    i = command_argument_count()
+#else
+    i = iargc()
+#endif
     if (i == 0) then
       write(0,*)
       write(0,*)"  MOPAC in WINDOWS: To run MOPAC within WINDOWS, see:"

@@ -50,7 +50,7 @@
 !
       use chanel_C, only : iw0, iw, iarc, ibrz, brillouin_fn, archive_fn, log
 !
-#if MOPAC_IEEE         
+#if MOPAC_F2003
       USE, INTRINSIC :: IEEE_ARITHMETIC
 #endif
 !-----------------------------------------------
@@ -360,7 +360,11 @@
       still = .TRUE.
       if (latom == 0) then
         if (index(keywrd,' AIDER') == 0 .and. nvar > 0) then
-          if (.not. MOPAC_ISNAN(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then
+#ifdef MOPAC_F2003
+          if (.not. ieee_is_nan(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then
+#else
+          if (.not. isnan(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then
+#endif
 !
 !   CHECK THAT THE CARTESIAN COORDINATE GRADIENT IS ALSO SMALL
 !
@@ -1135,7 +1139,7 @@
       if (ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20) &
          write (iwrite, '(  10X,''CONFIGURATION INTERACTION WAS USED'')')
       if (kchrge /= 0) write (iwrite, &
-        '(  10X,''CHARGE ON SYSTEM        =  '',I9)') kchrge
+        '(  SP, 10X,''CHARGE ON SYSTEM        =  '',I9)') kchrge
       if ( .not. mozyme ) then
         if (state_Irred_Rep /= " ") then
           write(line, '(11x, "STATE:  ",i2,1x,3A)') state_QN, state_spin, state_Irred_Rep

@@ -115,6 +115,17 @@
       int = (index(keywrd, " INT ") > 0)
       velo = (index(keywrd,' VELO') > 0)
       lmop = (Index (keywrd, " MOPAC") /= 0)
+      if (lmop) then
+!
+! Don't set lmop if " MOPAC" is inside a quoted string
+! 
+        i = 0
+        j = Index (keywrd, " MOPAC") 
+        do k = j, len_trim(keywrd)
+          if (keywrd(k:k) == '"') i = i + 1
+        end do
+        lmop = (mod(i, 2) == 0)
+      end if
       max_atoms = size(txtatm)
       maxtxt = 0
       istart(1:1) = shape(simbol)

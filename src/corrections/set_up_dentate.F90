@@ -143,12 +143,12 @@
 !   three ligands.
 !
     use common_arrays_C, only : nat, coord, nbonds, ibonds
-    use molkst_C, only : numat, method_pm6, method_pm7, method_pm8
+    use molkst_C, only : numat, method_pm6, method_pm7, method_pm6_org, method_pm8
     implicit none
     integer :: i, j
     double precision :: correction, sum
     double precision, external :: nsp2_atom_correction
-    if ( .not. (method_pm6 .or. method_pm7 .or. method_pm8)) then
+    if ( .not. (method_pm6 .or. method_pm7 .or. method_pm6_org .or. method_pm8)) then
       nsp2_correction = 0.d0
       return
     end if
@@ -218,11 +218,11 @@
 ! a correction to account for the extra stabilization of yne bonds
 !
   use common_arrays_C, only : nat, coord, nbonds, ibonds
-  use molkst_C, only : numat, method_pm6, method_pm7, method_pm8
+  use molkst_C, only : numat, method_pm6, method_pm7, method_pm6_org, method_pm8
   implicit none
   integer :: i, j, k, isum
   double precision :: rab
-    if ( .not. (method_pm6 .or. method_pm7 .or. method_pm8)) then
+    if ( .not. (method_pm6 .or. method_pm7 .or. method_pm6_org .or. method_pm8)) then
       C_triple_bond_C = 0.d0
       return
     end if
