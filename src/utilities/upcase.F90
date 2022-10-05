@@ -24,7 +24,7 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: icapa, ilowa, ilowz, i, iline, j
+      integer :: icapa, ilowa, ilowz, i, iline, j, k
       character :: keybuf*3000
 !-----------------------------------------------
 !
@@ -50,9 +50,13 @@
 !   character string.
 !
       i = index(keywrd,'EXTERNAL=')
+      k = index(keywrd,'INTERNAL=')
       if (i /= 0) then
         j = index(keywrd(i+1:),' ') + i
         keywrd(i+9:j) = keybuf(i+9:j)
+      else if (k /= 0) then
+        j = index(keywrd(k+1:),' ') + k
+        keywrd(k+9:j) = keybuf(k+9:j)
       end if
       return
       end subroutine upcase

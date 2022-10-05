@@ -18,10 +18,11 @@ subroutine wrtkey
   use molkst_C, only : moperr, allkey, keywrd
   implicit none
   integer :: i, j, k, l
-  integer, parameter :: n_protected_keywords = 14
+  integer, parameter :: n_protected_keywords = 15
   character :: protected_keywords(n_protected_keywords)*10
-  data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", &
-    "EXTERNAL=", "C.A.S.=", "C.I.D.=", "C.I.="/
+  data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", &
+       "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", "EXTERNAL=", "INTERNAL=", &
+       "C.A.S.=", "C.I.D.=", "C.I.="/
 !**********************************************************************
 !
 !  WRTKEY CHECKS ALL KEY-WORDS AND PRINTS THOSE IT RECOGNIZES.  IF IT
@@ -1564,6 +1565,10 @@ subroutine wrtcon (allkey)
     write (iw,'(" *  DRC        - DYNAMIC REACTION COORDINATE CALCULATION")')
   end if
    mozyme = l_temp
+    !
+    !                  Internal parameters read from input
+    ! don't need to do anything, but myword must be called, so just continue
+   if (myword(allkey, " INTERNAL")) continue
 !
 !                       External parameters read from file
 !

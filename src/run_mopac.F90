@@ -383,6 +383,7 @@
       call switch
     !  if (method_PM8) method_PM7 = .true.
       if (index(keywrd,' EXTERNAL') /= 0) call datin (iw)
+      if (index(keywrd,' INTERNAL') /= 0) call datex (ir, iw)
       if (moperr) go to 100
       sparkle = (index(keywrd, " SPARKL") /= 0)
 !
