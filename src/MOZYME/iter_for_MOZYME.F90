@@ -29,6 +29,9 @@ subroutine iter_for_MOZYME (ee)
 !
     use funcon_C, only: fpc_9
     use common_arrays_C, only : f, p
+#ifdef MOZYME_DUMP
+    use common_arrays_C, only : nfirst, nlast
+#endif
     use iter_C, only : pold
     use cosmo_C, only: useps, lpka, solv_energy
     use linear_cosmo, only : c_proc
@@ -209,6 +212,41 @@ subroutine iter_for_MOZYME (ee)
     if (times) then
       call timer (" At start of ITER")
     end if
+! developer dump of initial LMOs in CSC-like format
+#ifdef MOZYME_DUMP
+    if(nscf == 1) then
+      open(unit=777, file="mozyme.dump")
+      write(777,"(I6,I6)") noccupied, nvirtual
+      do i = 1, noccupied
+        j = 0
+        do k = nncf(i) + 1, nncf(i) + ncf(i)
+          j = j + 1 + nlast(icocc(k)) - nfirst(icocc(k))
+        end do
+        write(777,"(I6)") j
+        j = ncocc(i)
+        do k = nncf(i) + 1, nncf(i) + ncf(i)
+          do l = nfirst(icocc(k)), nlast(icocc(k))
+            j = j + 1
+            write(777,"(I6,E12.4)") l, cocc(j)
+          end do
+        end do
+      end do
+      do i = 1, nvirtual
+        j = 0
+        do k = nnce(i) + 1, nnce(i) + nce(i)
+          j = j + 1 + nlast(icvir(k)) - nfirst(icvir(k))
+        end do
+        write(777,"(I6)") j
+        j = ncvir(i)
+        do k = nnce(i) + 1, nnce(i) + nce(i)
+          do l = nfirst(icvir(k)), nlast(icvir(k))
+            j = j + 1
+            write(777,"(I6,E12.4)") l, cvir(j)
+          end do
+        end do
+      end do
+    end if
+#endif
 !***********************************************************
 !
 !   Everything is now set up to allow the SCF to be run
@@ -475,6 +513,41 @@ subroutine iter_for_MOZYME (ee)
         end if
       end if
     end do
+! developer dump of final Fock matrix for 1st SCF cycle in CSC-like format
+#ifdef MOZYME_DUMP
+    if(nscf == 1) then
+      do i = 1, numat
+        do j = 0, nlast(i) - nfirst(i)
+          k = 0
+          do l = 1, numat
+            if(ijbo(i, l) >= 0) then
+              k = k + 1 + nlast(l) - nfirst(l)
+            end if
+          end do
+          write(777,"(I6)") k
+          do k = 1, numat
+            niter = ijbo(i, k)
+            if(niter >= 0) then
+              do l = 0, nlast(k) - nfirst(k)
+                if(i == k) then
+                  if(l <= j) then
+                    write(777,"(I6,E12.4)") nfirst(k) + l, f(niter+1 + l + j*(j+1)/2)
+                  else
+                    write(777,"(I6,E12.4)") nfirst(k) + l, f(niter+1 + j + l*(l+1)/2)
+                  end if
+                else if(i < k) then
+                  write(777,"(I6,E12.4)") nfirst(k) + l, f(niter+1 + j + l*(nlast(i)-nfirst(i)+1))
+                else
+                  write(777,"(I6,E12.4)") nfirst(k) + l, f(niter+1 + l + j*(nlast(k)-nfirst(k)+1))
+                end if
+              end do
+            end if
+          end do
+        end do
+      end do
+      close(unit=777)
+    end if
+#endif
 !************************************************************
 !
 !   The SCF equations are now solved
