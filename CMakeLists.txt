@@ -17,6 +17,15 @@
 # Using Cmake version 3.13 for target_link_options
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
+# Ensure we are building out-of-source so that the tests work (issue 120)
+get_filename_component(srcdir "${CMAKE_SOURCE_DIR}" REALPATH)
+get_filename_component(bindir "${CMAKE_BINARY_DIR}" REALPATH)
+if("${srcdir}" STREQUAL "${bindir}")
+  message(FATAL_ERROR "MOPAC should not be configured & built in the source directory
+Please create another directory and rerun cmake
+For example: mkdir objdir; cd objdir; cmake ..")
+endif()
+
 # Read version number
 file(READ "CITATION.cff" CITATION)
 string(REGEX MATCH "[^-]version: ([0-9\.]*)" _ ${CITATION})
