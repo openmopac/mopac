@@ -22,8 +22,8 @@ get_filename_component(srcdir "${CMAKE_SOURCE_DIR}" REALPATH)
 get_filename_component(bindir "${CMAKE_BINARY_DIR}" REALPATH)
 if("${srcdir}" STREQUAL "${bindir}")
   message(FATAL_ERROR "MOPAC should not be configured & built in the source directory
-Please create another directory and rerun cmake
-For example: mkdir objdir; cd objdir; cmake ..")
+Please create a separate build directory and rerun cmake from the build directory
+For example: mkdir build; cd build; cmake ..")
 endif()
 
 # Read version number
