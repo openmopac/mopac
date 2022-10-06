@@ -130,8 +130,7 @@
       call add_path(file(loop))
       inquire (file=trim(file(loop)), exist = exists)
       if (.not. exists) then
-         ! first look for BEGIN EXTERNAL block fartehr down in the file
-         write(0, *) "looking for external block"
+         ! first look for BEGIN EXTERNAL block farther down in the file
          rewind(ir)
          do 2
             read(ir, '(A)', end=3) infile
