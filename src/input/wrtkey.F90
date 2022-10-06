@@ -1565,10 +1565,6 @@ subroutine wrtcon (allkey)
     write (iw,'(" *  DRC        - DYNAMIC REACTION COORDINATE CALCULATION")')
   end if
    mozyme = l_temp
-    !
-    !                  Internal parameters read from input
-    ! don't need to do anything, but myword must be called, so just continue
-   if (myword(allkey, " INTERNAL")) continue
 !
 !                       External parameters read from file
 !
