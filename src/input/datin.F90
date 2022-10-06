@@ -398,7 +398,7 @@
     j = end_of_keyword(keywrd, len_trim(keywrd), k)
 
     ! internal parameter specification must take place after a line containing
-    ! INTERNAL and continues until the end of the file
+    ! INTERNAL and continues until a blank line or END
     rewind(ir)
     do 2
        read(ir, '(A)', end=3) infile
