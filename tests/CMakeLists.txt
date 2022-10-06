@@ -25,7 +25,7 @@ macro(add_mopac_test _name _files)
   endforeach()
   unset(_files)
 
-  add_test(NAME "${_name}" COMMAND ${Python_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/run_test.py ${CMAKE_CURRENT_SOURCE_DIR}
+  add_test(NAME "${_name}" COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/run_test.py ${CMAKE_CURRENT_SOURCE_DIR}
            ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} ${_files})
 endmacro()
 

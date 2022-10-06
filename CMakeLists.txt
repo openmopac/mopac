@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Using Cmake version 3.13 for target_link_options
-cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
+# Using Cmake version 3.14 for NumPy support
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 # Read version number
 file(READ "CITATION.cff" CITATION)
@@ -243,9 +243,12 @@ if(GPU)
 endif()
 
 # Add tests
-option(TESTS "Enable tests (needs Python and Numpy)" ON)
+option(TESTS "Enable tests (needs Python3 and Numpy)" ON)
 if(TESTS)
-  find_package (Python COMPONENTS Interpreter)
+  find_package (Python3 COMPONENTS Interpreter NumPy)
+  if(NOT Python3_FOUND)
+    message(FATAL_ERROR "Python3 and Numpy are required for MOPAC testing")
+  endif()
   enable_testing()
   add_subdirectory(tests)
 endif()
