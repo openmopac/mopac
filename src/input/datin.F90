@@ -60,7 +60,7 @@
         'AC', 'TH', 'PA', 'U ', 'NP', 'PU', 'AM', 'CM', 'BK', 'MI', 'XX', 'FM'&
         , 'MD', 'CB', '++', '+', '--', '-', 'TV'/
     if (.not. allocated(ijpars))  allocate(ijpars(5,5000), parsij(5000))
-    i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
+    i = Index(keywrd, "EXTERNAL") + Index(keywrd, "PARAMS=")
     t_par     = "Add a description of this parameter near line 50 in datin.F90  "
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
     t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."
@@ -130,69 +130,56 @@
       call add_path(file(loop))
       inquire (file=trim(file(loop)), exist = exists)
       if (.not. exists) then
-         ! first look for BEGIN EXTERNAL block farther down in the file
-         rewind(ir)
-         do 2
-            read(ir, '(A)', end=3) infile
-            if (first) then
-               first = .false.
-               goto 2
-            end if
-            call upcase(infile, 80)
-            i = Index(infile, "BEGIN EXTERNAL")
-            if (i /= 0) then
-               ! found the parameters, move on
-               found = .true.
-               goto 3
-            end if
-2           continue
-3           continue
-            if (.not. found) then
-        if (index(keywrd,' 0SCF') == 0) call mopend("EXTERNAL file: '"//trim(file(loop))//"' does not exist!")
-        line = trim(file(loop))
-        do i = len_trim(line), 1, -1
-          if (line(i:i) == backslash .or. line(i:i) == "/") then
-!  using inquire to check for the existence of a directory is a non-standard Intel extension to Fortran 90
-!  there is no standard, system-independent way to do this as directories do not exist in Fortran language specifications
-!  I'm just commenting this out for now, since it is just some extra error messages [JEM 2019.05.24]
-!            inquire (directory = line(:i), exist = exists)
-!            if (exists) then
-!              write(iw,"(10x,a)")"  (but folder: '"//line(:i)//"' does exist.)"
-!            else
-!              if (verson(7:7) == "W") write(iw,"(5x,a)")" (Note: the folder: '"//line(:i)//"'  also does not exist.)"
-!            end if
-            exit
+        ! first look for BEGIN EXTERNAL block farther down in the file
+        rewind(ir)
+        do 2
+          read(ir, '(A)', end=3) infile
+          if (first) then
+            first = .false.
+            goto 2
           end if
-        end do
-        return
-     end if
-  end if
-  if (found) then
-     iext = ir
-  else
-     open (unit=iext, form="FORMATTED", status="OLD", file=trim(file(loop)), action="READ", iostat = i)
-     if (i /= 0) then
-        if (lpars > 0) exit
-        if (loop == 1) then
-           write(line,'(a)')" EXTERNAL file """//trim(file(loop))//""" could not be opened"
-           write(iw,'(/,a)')trim(line)
-           if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
+          call upcase(infile, 80)
+          i = Index(infile, "BEGIN EXTERNAL")
+          if (i /= 0) then
+            ! found the parameters, move on
+            found = .true.
+            goto 3
+          end if
+2       continue
+3       continue
+        if (.not. found) then
+          if (index(keywrd,' 0SCF') == 0) call mopend("EXTERNAL file: '"//trim(file(loop))//"' does not exist!")
+          exit
+        end if
+      end if
+! Read from beginning of external block in input file
+      if (found) then
+        iext = ir
+! Read from external file
+      else
+        open (unit=iext, form="FORMATTED", status="OLD", file=trim(file(loop)), action="READ", iostat = i)
+        if (i /= 0) then
+          if (lpars > 0) exit
+          if (loop == 1) then
+            write(line,'(a)')" EXTERNAL file """//trim(file(loop))//""" could not be opened"
+            write(iw,'(/,a)')trim(line)
+            if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
               call mopend(trim(line))
               inquire (file=trim(file(loop)), exist = exists)
               if (exists) then
-                 write(line,'(a)')" (The EXTERNAL file exists, but could not be read)"
-                 write(iw,'(a)')trim(line)
-                 call mopend(trim(line))
+                write(line,'(a)')" (The EXTERNAL file exists, but could not be read)"
+                write(iw,'(a)')trim(line)
+                call mopend(trim(line))
               else
-                 write(line,'(a)')" (The EXTERNAL file does not exist)"
-                 write(iw,'(a)')trim(line)
-                 call mopend(trim(line))
+                write(line,'(a)')" (The EXTERNAL file does not exist)"
+                write(iw,'(a)')trim(line)
+                call mopend(trim(line))
               end if
-           end if
+            end if
+          end if
         end if
-     end if
-     rewind (iext,err = 10)
-  end if
+        rewind (iext,err = 10)
+      end if
       do
         read (iext, "(A60)", err=11, end=11) text
         call upcase (text, 80)

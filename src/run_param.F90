@@ -382,7 +382,7 @@
 !
     j = iw
     iw = ifiles_8
-    if (index(keywrd, " PARAMS=") + index(keywrd, " EXTERNAL=") /= 0) call datin(ir, ifiles_8)
+    if (index(keywrd, " PARAMS=") + index(keywrd, " EXTERNAL") /= 0) call datin(ir, ifiles_8)
     iw = j
     if (moperr) stop
     call getpar

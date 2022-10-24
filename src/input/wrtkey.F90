@@ -18,10 +18,10 @@ subroutine wrtkey
   use molkst_C, only : moperr, allkey, keywrd
   implicit none
   integer :: i, j, k, l
-  integer, parameter :: n_protected_keywords = 15
+  integer, parameter :: n_protected_keywords = 14
   character :: protected_keywords(n_protected_keywords)*10
   data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", &
-       "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", "EXTERNAL=", "INTERNAL=", &
+       "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", "EXTERNAL=", &
        "C.A.S.=", "C.I.D.=", "C.I.="/
 !**********************************************************************
 !
@@ -1585,6 +1585,8 @@ subroutine wrtcon (allkey)
           exit
         end if
       end do
+    else
+      write (iw, '(" *  EXTERNAL   -  DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
     end if
   return
 end subroutine wrtcon

@@ -1,4 +1,4 @@
-scfcrt=1.D-21 aux(precision=14) PM6 charge=0 external=
+scfcrt=1.D-21 aux(precision=14) PM6 charge=0 external
 Comment line 1
 Comment line 2
 C
