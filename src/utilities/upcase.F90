@@ -24,7 +24,7 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: icapa, ilowa, ilowz, i, iline, j, k
+      integer :: icapa, ilowa, ilowz, i, iline, j
       character :: keybuf*3000
 !-----------------------------------------------
 !
