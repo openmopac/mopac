@@ -309,7 +309,7 @@
       end do
 11  continue
     if(mpar == 1) then
-      write(iw,'(/,3a)')" Parameters read in from file: """, file(loop)(:len_trim(file(loop))),""""
+      if(.not. found) write(iw,'(/,3a)')" Parameters read in from file: """, file(loop)(:len_trim(file(loop))),""""
     else
       if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
         call mopend("No parameters read in from '"//file(loop)(:len_trim(file(loop)))//"'")

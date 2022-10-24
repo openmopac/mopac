@@ -1586,7 +1586,7 @@ subroutine wrtcon (allkey)
         end if
       end do
     else
-      write (iw, '(" *  EXTERNAL   -  DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
+      write (iw, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
     end if
   return
 end subroutine wrtcon
