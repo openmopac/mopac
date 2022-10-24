@@ -14,7 +14,7 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine datin(iw)
+      subroutine datin(ir, iw)
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
@@ -27,7 +27,7 @@
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
       implicit none
-      integer, intent(in) :: iw
+      integer, intent(in) :: iw, ir
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -44,6 +44,9 @@
       integer, external :: end_of_keyword
       double precision, external :: reada
 
+      character :: infile * 100
+      logical :: first = .true., found = .false.
+
       save elemnt
 !-----------------------------------------------
       data (elemnt(i),i=1,107)/ 'H ', 'HE', 'LI', 'BE', 'B ', 'C ', 'N ', 'O '&
@@ -57,7 +60,7 @@
         'AC', 'TH', 'PA', 'U ', 'NP', 'PU', 'AM', 'CM', 'BK', 'MI', 'XX', 'FM'&
         , 'MD', 'CB', '++', '+', '--', '-', 'TV'/
     if (.not. allocated(ijpars))  allocate(ijpars(5,5000), parsij(5000))
-    i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
+    i = Index(keywrd, "EXTERNAL") + Index(keywrd, "PARAMS=")
     t_par     = "Add a description of this parameter near line 50 in datin.F90  "
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
     t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."
@@ -127,46 +130,56 @@
       call add_path(file(loop))
       inquire (file=trim(file(loop)), exist = exists)
       if (.not. exists) then
-        if (index(keywrd,' 0SCF') == 0) call mopend("EXTERNAL file: '"//trim(file(loop))//"' does not exist!")
-        line = trim(file(loop))
-        do i = len_trim(line), 1, -1
-          if (line(i:i) == backslash .or. line(i:i) == "/") then
-!  using inquire to check for the existence of a directory is a non-standard Intel extension to Fortran 90
-!  there is no standard, system-independent way to do this as directories do not exist in Fortran language specifications
-!  I'm just commenting this out for now, since it is just some extra error messages [JEM 2019.05.24]
-!            inquire (directory = line(:i), exist = exists)
-!            if (exists) then
-!              write(iw,"(10x,a)")"  (but folder: '"//line(:i)//"' does exist.)"
-!            else
-!              if (verson(7:7) == "W") write(iw,"(5x,a)")" (Note: the folder: '"//line(:i)//"'  also does not exist.)"
-!            end if
-            exit
+        ! first look for BEGIN EXTERNAL block farther down in the file
+        rewind(ir)
+        do 2
+          read(ir, '(A)', end=3) infile
+          if (first) then
+            first = .false.
+            goto 2
           end if
-        end do
-        return
+          call upcase(infile, 80)
+          i = Index(infile, "BEGIN EXTERNAL")
+          if (i /= 0) then
+            ! found the parameters, move on
+            found = .true.
+            goto 3
+          end if
+2       continue
+3       continue
+        if (.not. found) then
+          if (index(keywrd,' 0SCF') == 0) call mopend("EXTERNAL file: '"//trim(file(loop))//"' does not exist!")
+          exit
+        end if
       end if
-      open (unit=iext, form="FORMATTED", status="OLD", file=trim(file(loop)), action="READ", iostat = i)
-      if (i /= 0) then
-        if (lpars > 0) exit
-        if (loop == 1) then
-          write(line,'(a)')" EXTERNAL file """//trim(file(loop))//""" could not be opened"
-          write(iw,'(/,a)')trim(line)
-          if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
-            call mopend(trim(line))
-            inquire (file=trim(file(loop)), exist = exists)
-            if (exists) then
-              write(line,'(a)')" (The EXTERNAL file exists, but could not be read)"
-              write(iw,'(a)')trim(line)
+! Read from beginning of external block in input file
+      if (found) then
+        iext = ir
+! Read from external file
+      else
+        open (unit=iext, form="FORMATTED", status="OLD", file=trim(file(loop)), action="READ", iostat = i)
+        if (i /= 0) then
+          if (lpars > 0) exit
+          if (loop == 1) then
+            write(line,'(a)')" EXTERNAL file """//trim(file(loop))//""" could not be opened"
+            write(iw,'(/,a)')trim(line)
+            if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
               call mopend(trim(line))
-            else
-              write(line,'(a)')" (The EXTERNAL file does not exist)"
-              write(iw,'(a)')trim(line)
-              call mopend(trim(line))
+              inquire (file=trim(file(loop)), exist = exists)
+              if (exists) then
+                write(line,'(a)')" (The EXTERNAL file exists, but could not be read)"
+                write(iw,'(a)')trim(line)
+                call mopend(trim(line))
+              else
+                write(line,'(a)')" (The EXTERNAL file does not exist)"
+                write(iw,'(a)')trim(line)
+                call mopend(trim(line))
+              end if
             end if
           end if
         end if
+        rewind (iext,err = 10)
       end if
-      rewind (iext,err = 10)
       do
         read (iext, "(A60)", err=11, end=11) text
         call upcase (text, 80)
@@ -247,7 +260,7 @@
           if (Index(" "//text, " "//partyp(j)) /= 0) go to 1000
         end do
         write(iw,"(3a)")" EXTERNAL parameter type: '",trim(text),"' unrecognized"
-        close(iext)
+        if (.not. found) close(iext)
         goto 99
 1000    iparam = j
         jelmnt=0
@@ -274,7 +287,7 @@
           if (Index (text, " "//elemnt(j)) /= 0) go to 1100
         end do
         write(iw,"(3a)")" EXTERNAL element type: '",trim(text),"' unrecognized"
-        close(iext)
+        if (.not. found) close(iext)
         goto 99
 1100    param = reada (text, Index (text, " "//elemnt(j)))
         if (j > jelmnt) then
@@ -296,24 +309,24 @@
       end do
 11  continue
     if(mpar == 1) then
-      write(iw,'(/,3a)')" Parameters read in from file: """, file(loop)(:len_trim(file(loop))),""""
+      if(.not. found) write(iw,'(/,3a)')" Parameters read in from file: """, file(loop)(:len_trim(file(loop))),""""
     else
       if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
         call mopend("No parameters read in from '"//file(loop)(:len_trim(file(loop)))//"'")
       end if
     end if
 10  continue
-    close (iext, status="KEEP")
+    if (.not. found) close (iext, status="KEEP")
     call write_params(iw, lv_par)
     do i = 1, lpars
       call update(ijpars(2, i), ijpars(1, i), parsij(i), 0.d0)
     end do
-    close(iext)
+    if (.not. found) close(iext)
  99   return
     end subroutine datin
-!
-!
-!
+    !
+    !
+    !
     subroutine write_params(iw, lv_par)
       USE parameters_C, only : partyp, n_partyp_alpb, n_partyp, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
