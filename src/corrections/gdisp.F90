@@ -20,8 +20,8 @@
 ! based on material provided by Stefan Grimme, University of Muenster, Germany
 ! v3.1 of the DFTD3 library
 !
-  use common_arrays_C, only: nat, Vab
-  use molkst_C, only : numat
+  use common_arrays_C, only: nat, cell_ijk, Vab
+  use molkst_C, only : numat, l123, l1u, l2u, l3u
   implicit none
   double precision, parameter :: k1 = 16.d0
   integer, parameter :: max_elem = 94, maxc = 5 ! maximum coordination number references per element
@@ -36,7 +36,7 @@
 !
 !  Local variables
 !
-  integer :: i, j, linij
+  integer :: i, j, linij, iii, jjj, i_cell, j_cell, kkkk
   double precision :: R0, r2, damp6, damp8, c6, tmp1, tmp2, r, dc6_rest, rij(3), dc6iji, dc6ijj, r6, r7, t6, t8, &
   rcovij, expterm, dcn,x1, r42, r8, r9
   double precision, allocatable :: drij(:), dc6i(:)
@@ -107,8 +107,13 @@
         dcn = 0.d0
       end if
       x1 = drij(linij) + dcn*(dc6i(i) + dc6i(j))
-      dxyz_temp(:,i) = dxyz_temp(:,i) + x1*rij/r
-      dxyz_temp(:,j) = dxyz_temp(:,j) - x1*rij/r
+      iii = l123*(i - 1)
+      jjj = l123*(j - 1)
+      kkkk = (l3u - cell_ijk(3)) + (2*l3u + 1)*(l2u - cell_ijk(2) + (2*l2u + 1)*(l1u - cell_ijk(1))) + 1
+      i_cell = iii + kkkk 
+      j_cell = jjj + kkkk       
+      dxyz_temp(:,i_cell) = dxyz_temp(:,i_cell) + x1*rij/r
+      dxyz_temp(:,j_cell) = dxyz_temp(:,j_cell) - x1*rij/r
     end do
   end do
   return
