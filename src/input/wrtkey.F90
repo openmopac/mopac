@@ -34,7 +34,7 @@ subroutine wrtkey
 !
 !  Do not tidy up allkey earlier in the job, instead fill allkey here from keywrd,
 !  and do all the tidying up at this one point.  The old style of tidying up allkey
-!  as the job progressed was very error-prone and hadr to debug.
+!  as the job progressed was very error-prone and hard to debug.
 !
   allkey = trim(keywrd)
   j = 1
@@ -58,6 +58,9 @@ subroutine wrtkey
       do
         i = index(allkey, "(")
         if (i == 0) exit
+        if (i > 6) then
+          if (allkey(i-6:i) == "OUTPUT(") exit
+        end if
         j = index(allkey(i + 1:), ')') + i
         allkey(i:j) = " "
       end do
@@ -1461,8 +1464,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP1      - FIRST STEP-SIZE IN GRID =", f7.2)') &
    reada (keywrd, Index (keywrd, "STEP1")+6)
    if (index(keywrd, " POINT1") == 0) then
-     write (iw,'("*",/," *             - **** KEYWORD POINT1 MISSING ****",/,"*")')
-     call mopend("KEYWORD POINT1 MISSING")
+    call l_control("POINT1=11", len_trim("POINT1=11"), 1)
    end if
    i = 2
  end if
@@ -1470,8 +1472,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP2      - SECOND STEP-SIZE IN GRID =", f7.2)') &
    reada (keywrd, Index (keywrd, "STEP2")+6)
    if (index(keywrd, " POINT2") == 0) then
-     write (iw,'("*",/," *             - **** KEYWORD POINT2 MISSING ****",/,"*")')
-     call mopend("KEYWORD POINT2 MISSING")
+    call l_control("POINT2=11", len_trim("POINT2=11"), 1)
    end if
  end if
  if (myword(allkey, " STEP="))  then
