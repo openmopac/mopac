@@ -153,8 +153,7 @@ jobs:
         run: |
           cd build
           sudo make install
-          cpack --help
-          cpack -G TGZ
+          sudo cpack -G TGZ
 
       - name: Package MOPAC with CPack
         run: |
