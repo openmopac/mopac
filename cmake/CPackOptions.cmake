@@ -1,0 +1,5 @@
+set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+
+if("${CPACK_GENERATOR}" MATCHES "TGZ")
+   set(CPACK_COMPONENTS_ALL Unspecified redist)
+endif()

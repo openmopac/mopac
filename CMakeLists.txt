@@ -274,6 +274,7 @@ elseif(WIN32)
 elseif(UNIX)
   set(CPACK_SYSTEM_NAME "linux")
 endif()
+set(CPACK_PROJECT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/cmake/CPackOptions.cmake")
 
 # Package the Intel OpenMP library for the QT installer (hard-coded for each OS)
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
@@ -291,7 +292,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
     # resolve symbolic links
     get_filename_component(INTEL_OMP_LIB_PATH ${INTEL_OMP_LIB} REALPATH)
     message(STATUS "OMP packaging: ${INTEL_OMP_LIB} -> ${INTEL_OMP_LIB_PATH}")
-    install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
+    install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT redist EXCLUDE_FROM_ALL)
   endif()
 endif()
 
@@ -306,7 +307,10 @@ if(WIN32)
 else()
   set(CPACK_IFW_TARGET_DIRECTORY "/opt/mopac")
 endif()
-install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" "${CMAKE_SOURCE_DIR}/CITATION.cff" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff"
+              "${CMAKE_SOURCE_DIR}/COPYING"
+              "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION "." COMPONENT redist EXCLUDE_FROM_ALL)
 
 # Install the executables and library
 install(TARGETS mopac RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
@@ -332,8 +336,6 @@ cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 
   USER_INTERFACES "${CMAKE_SOURCE_DIR}/.github/pathcheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/filecheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/iconcheckboxform.ui")
 cpack_ifw_configure_component(extra DISPLAY_NAME "extra utilities" SORTING_PRIORITY 1 DEFAULT FALSE)
 cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)
-
-# Adjust TGZ packaging
-if(CPACK_GENERATOR MATCHES "TGZ")
-  install(FILES "${CMAKE_SOURCE_DIR}/COPYING" "${CMAKE_SOURCE_DIR}/COPYING.lesser" "${CMAKE_SOURCE_DIR}/CITATION.cff" DESTINATION ".")
+cpack_ifw_configure_component(redist VIRTUAL FORCED_INSTALLATION)
+  
 endif()
