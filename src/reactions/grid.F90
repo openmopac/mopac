@@ -21,8 +21,10 @@
       use chanel_C, only : iw0, iw, iarc, ires, iump, archive_fn, ump_fn, &
       restart_fn
 !
-      use common_arrays_C, only : geo, xparam, geoa, &
+      use common_arrays_C, only : geo, xparam, geoa, labels, coord, &
       na, nb, nc, pa, pb, p
+!      
+      use elemts_C, only : elemnt
 !
       use molkst_C, only : nvar, keywrd, tleft, line, norbs, &
       natoms, moperr, uhf, numat, mpack, gui
@@ -359,6 +361,16 @@
           write (iw, "(/'       FIRST VARIABLE   ',  'SECOND VARIABLE FUNCTION')")
           write (iw, "(' :',F16.5,F16.5,F16.6)") geo(lpara1, latom1)*c1, geo(lpara2, latom2)*c2, escf
           call geout (iw)
+          if (index(keywrd, " PRTXYZ") /= 0) then
+            write (iw, '(29X,''CARTESIAN COORDINATES '',/)')
+            call gmetry(geo, coord)
+            l = 0 
+            do i = 1, natoms 
+              if (labels(i) == 99 .or. labels(i) == 107) cycle
+              l = l + 1
+              write (iw, '(I4,3X,A2,3x, 3F16.9)') l, elemnt(labels(i)), (coord(k,l),k=1,3) 
+            end do
+          end if
           if (gui) then
             if (use_p) then
               ij = 0
