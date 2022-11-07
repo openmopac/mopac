@@ -149,18 +149,18 @@ jobs:
           name: linux-test-output
           path: build/tests
 
-      - name: Local installation test
-        run: |
-          cd build
-          sudo make install
-          sudo cpack -G TGZ
-
       - name: Package MOPAC with CPack
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          sudo cpack -G IFW
+          cpack -G IFW
           ls -l
+
+      - name: Local installation test & minimal packaging
+        run: |
+          cd build
+          sudo make install
+          sudo cpack -G TGZ
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
