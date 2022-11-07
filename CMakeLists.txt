@@ -274,6 +274,7 @@ elseif(WIN32)
 elseif(UNIX)
   set(CPACK_SYSTEM_NAME "linux")
 endif()
+install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff" DESTINATION ".")
 
 # Package the Intel OpenMP library for the QT installer (hard-coded for each OS)
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
@@ -322,7 +323,7 @@ else()
   install(TARGETS mopac-core LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT main)
 endif()
 
-# Add packaging
+# Add IFW packaging
 include(CPack)
 include(CPackIFW)
 cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 2 FORCED_INSTALLATION
@@ -332,3 +333,8 @@ cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 
   USER_INTERFACES "${CMAKE_SOURCE_DIR}/.github/pathcheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/filecheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/iconcheckboxform.ui")
 cpack_ifw_configure_component(extra DISPLAY_NAME "extra utilities" SORTING_PRIORITY 1 DEFAULT FALSE)
 cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)
+
+# Adjust TGZ packaging
+if(CPACK_GENERATOR MATCHES "TGZ")
+  install(FILES "${CMAKE_SOURCE_DIR}/COPYING" "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION ".")
+endif()
