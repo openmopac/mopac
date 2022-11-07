@@ -274,7 +274,6 @@ elseif(WIN32)
 elseif(UNIX)
   set(CPACK_SYSTEM_NAME "linux")
 endif()
-install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff" DESTINATION ".")
 
 # Package the Intel OpenMP library for the QT installer (hard-coded for each OS)
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
@@ -307,7 +306,7 @@ if(WIN32)
 else()
   set(CPACK_IFW_TARGET_DIRECTORY "/opt/mopac")
 endif()
-install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" "${CMAKE_SOURCE_DIR}/CITATION.cff" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
 
 # Install the executables and library
 install(TARGETS mopac RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
@@ -336,5 +335,5 @@ cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)
 
 # Adjust TGZ packaging
 if(CPACK_GENERATOR MATCHES "TGZ")
-  install(FILES "${CMAKE_SOURCE_DIR}/COPYING" "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION ".")
+  install(FILES "${CMAKE_SOURCE_DIR}/COPYING" "${CMAKE_SOURCE_DIR}/COPYING.lesser" "${CMAKE_SOURCE_DIR}/CITATION.cff" DESTINATION ".")
 endif()
