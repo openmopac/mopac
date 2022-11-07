@@ -158,14 +158,14 @@ jobs:
         run: |
           source /opt/intel/oneapi/setvars.sh
           cd build
-          cpack -G IFW
+          cpack -G IFW;TGZ
           ls -l
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: linux-dist
-          path: build/mopac-*-linux.run
+          path: build/mopac-*-linux.*
 
   mac-build:
     runs-on: macos-latest
