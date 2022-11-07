@@ -337,5 +337,3 @@ cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 
 cpack_ifw_configure_component(extra DISPLAY_NAME "extra utilities" SORTING_PRIORITY 1 DEFAULT FALSE)
 cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)
 cpack_ifw_configure_component(redist VIRTUAL FORCED_INSTALLATION)
-  
-endif()
