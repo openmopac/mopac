@@ -213,7 +213,7 @@
           write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
           (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION"
         end if
-        write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL" 
+        write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         write(iw,'(10x,"                    SUM =",f17.5,a)') &
         (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
         if (abs(hpress) > 1.d-5)      write(iw,'(10x,"ENERGY DUE TO PRESSURE  =",f17.5,a)') hpress, " KCAL/MOL"
