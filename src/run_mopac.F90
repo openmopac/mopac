@@ -36,7 +36,7 @@
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
 !
-      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi, edeil
+      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi, ediel
 !
       USE funcon_C, only : fpc_9
 !

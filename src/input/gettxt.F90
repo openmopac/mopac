@@ -16,7 +16,7 @@
 
       subroutine gettxt
       use chanel_C, only: ir, iw, isetup, input_fn
-      use molkst_C, only: keywrd, keywrd_quoted, koment, title, refkey, numcal, line, &
+      use molkst_C, only: keywrd, keywrd_quoted, koment, title, refkey, gui, numcal, line, &
         moperr, allkey, backslash
       implicit none
 !-----------------------------------------------
