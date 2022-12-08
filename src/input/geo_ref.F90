@@ -258,12 +258,12 @@
         if (keywrd_quoted(i:i) == '"' .or. keywrd_quoted(i:i) == "'") exit
         i = i + 1
       end do
-      if (keywrd(i + 1: i + 1) == " ") then
+      if (keywrd_quoted(i + 1: i + 1) == " ") then
         if (.not. l_0SCF_HTML .and. index(keywrd, "LOCATE-TS") + index(keywrd, "SADDLE") == 0) &
           write(iw,'(/10x,a)')"By default, no restraining force will be used"
         density = 0.d0
       else
-        density = reada(keywrd, i + 1)
+        density = reada(keywrd_quoted, i + 1)
         write(iw,'(/10x,a,f8.3,a)')"A restraining force of",density," kcal/mol/A^2 will be used"
       end if
       if (id == 3 .and. abs(density) > 1.d-10 .and. index(keywrd, " 0SCF") == 0) then
