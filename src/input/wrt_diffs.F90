@@ -22,7 +22,7 @@
 ! The two geometries are in geo and geoa
 !
    use chanel_C, only : iw, job_fn
-   use molkst_C, only : numat, refkey, line, geo_dat_name, keywrd_txt, maxtxt
+   use molkst_C, only : numat, refkey, line, geo_dat_name, maxtxt
 !
    use elemts_C, only : elemnt
 !
@@ -35,6 +35,7 @@
    double precision :: sum, sum_a, sum_b, sum_aa, sum_bb
    double precision, allocatable :: dist(:,:)
    integer, allocatable :: jbonds(:,:), njbonds(:)
+   integer, external :: quoted
      allocate(pairs(2,numat*10), dist(3,numat*10), jbonds(15,numat), njbonds(numat))
 !
 ! Work out connectivity twice - the sequence of atoms on one set might be
@@ -152,7 +153,7 @@
       dist(1,k) = -10.d0
     end do
     if ( .not. first) then
-      i = index(keywrd_txt," GEO_DAT")
+      i = quoted(" GEO_DAT")
       if (i > 0) then
         do k = 1, 6
           line = " "//trim(refkey(k))

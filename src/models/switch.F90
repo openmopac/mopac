@@ -25,7 +25,7 @@
       ams, npq, natorb
 !
 !
-      USE molkst_C, only : keywrd, method_mndo, method_pm3, method_indo, &
+      USE molkst_C, only : keywrd, keywrd_quoted, method_mndo, method_pm3, method_indo, &
       & method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm6_org, method_pm8
 !
 !
@@ -237,26 +237,26 @@
 !
 !    SWITCH IN PM6-ORG PARAMETERS
 !
-          guess1 = gues_org1 
-          guess2 = gues_org2 
-          guess3 = gues_org3 
-          zs = zs_org 
-          zp = zp_org 
-          zd = zd_org 
-          zsn = zsn_org 
-          zpn = zpn_org 
-          zdn = zdn_org 
-          uss = uss_org 
-          upp = upp_org 
-          udd = udd_org 
-          betas = betas_org 
-          betap = betap_org 
+          guess1 = gues_org1
+          guess2 = gues_org2
+          guess3 = gues_org3
+          zs = zs_org
+          zp = zp_org
+          zd = zd_org
+          zsn = zsn_org
+          zpn = zpn_org
+          zdn = zdn_org
+          uss = uss_org
+          upp = upp_org
+          udd = udd_org
+          betas = betas_org
+          betap = betap_org
           betad = betad_org
-          gss = gss_org 
-          gpp = gpp_org 
-          gsp = gsp_org 
-          gp2 = gp2_org 
-          hsp = hsp_org 
+          gss = gss_org
+          gpp = gpp_org
+          gsp = gsp_org
+          gp2 = gp2_org
+          hsp = hsp_org
           f0sd = f0sd_org
           g2sd = g2sd_org
           alp = alp_org
@@ -654,7 +654,7 @@
         xfac(:i,i) = xfac(i,:i)
       end do
       call fractional_metal_ion
-      if (index(keywrd,' EXTERNAL') /= 0) return
+      if (index(keywrd_quoted,'EXTERNAL') /= 0) return
       if (.not. method_indo .and. uss(1) > (-1.D0)) then
         call mopend (&
           'THE HAMILTONIAN REQUESTED IS NOT AVAILABLE IN THIS PROGRAM')

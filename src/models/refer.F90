@@ -21,7 +21,7 @@
       USE journal_references_C, only : allref
       use chanel_C, only : iw
       use common_arrays_C, only : nat
-      use molkst_C, only : numat, keywrd, is_PARAM, method_rm1, &
+      use molkst_C, only : numat, keywrd, keywrd_quoted, is_PARAM, method_rm1, &
       method_mndo, method_am1, method_pm3, method_pm6, method_mndod, &
       method_pm7, sparkle, method_pm6_org, method_pm8, method_indo
       use parameters_C, only : gss
@@ -149,7 +149,7 @@
         return
       end if
       mixok = index(keywrd,'PARASOK') /= 0
-      exter = index(keywrd," EXTERNAL") /= 0
+      exter = index(keywrd_quoted,"EXTERNAL") /= 0
 
       if (method_pm7)   mode = 7
       if (method_rm1)   then

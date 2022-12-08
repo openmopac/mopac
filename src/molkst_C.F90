@@ -264,7 +264,7 @@ module molkst_C
   & line*3000         !
   character :: backslash = achar(92) ! portable way of representing the backslash character
   character :: keywrd*3000, koment*200, title*200, refkey(6)*3000, geo_ref_name*241, geo_dat_name*241, &
-    allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000
+    allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000, keywrd_quoted*3000
   character :: errtxt*200, dh*20
 !
   logical ::            &

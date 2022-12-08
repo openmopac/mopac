@@ -30,7 +30,7 @@
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
       & verson, is_PARAM, line, nl_atoms, l_feather, backslash, &
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
-      isok, method_pm6_dh2, caltyp, &
+      isok, method_pm6_dh2, caltyp, keywrd_quoted, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &
@@ -64,6 +64,7 @@
       integer , dimension(19,2) :: idepco
       integer :: naigin, i, j, k, iflag, nreact, ij, iend, l, ii, jj, &
         i4, j4, ir_temp, l_iw, from_data_set = 14, i_loop, setpi_limit = 50
+      integer, external :: quoted
       double precision, dimension(40) :: value
       double precision, dimension(400) :: xyzt
       double precision :: degree, convrt, dum1, dum2, sum, Rab
@@ -155,7 +156,7 @@
       refkey_ref(2) = title
       call gettxt
       if (moperr) return
-      if (index(keywrd, "GEO_DAT")  > 0) then
+      if (quoted('GEO_DAT=')  > 0) then
         if (moperr) then
           title = " "
           koment = " "
@@ -164,41 +165,7 @@
 !
 !     Use geometry in file defined by GEO_DAT
 !
-        j = index(keywrd,"GEO_DAT")
-        i = index(keywrd(j:j + 10), '"') + j
-        if (i == j) then
-          write(line,'(a)')" File name after GEO_DAT must be in quotation marks."
-          call mopend(trim(line))
-          return
-        end if
-        j = index(keywrd(i + 2:),'" ') + i
-        if (j == i) then
-          write(line,'(a)')" File name after GEO_DAT must end with a quotation mark."
-          call mopend(trim(line))
-          return
-        end if
-        line = keywrd(i:j)
-        call upcase(line, len_trim(line))
-        k = index(line, "SELF")
-        if (k /= 0) then
-          ii = len_trim(job_fn)
-          if (index(job_fn, "/") /= 0) then
-            do l = ii, 2, -1
-              if (job_fn(l:l) == "/") exit
-            end do
-            line_1 = line(:k - 2)//job_fn(l:ii - 4)//trim(line(k + 4:))
-            if (line_1(1:1) == "/") then
-              line = trim(line_1(2:))
-              line_1 = trim(line)
-            end if
-          else
-            line_1 = line(:k - 2)//"/"//job_fn(1:ii - 4)//trim(line(k + 4:))
-          end if
-          line = trim(line_1)
-          call add_path(line)
-        else
-          line = keywrd(i:j)
-        end if
+        line_2 = trim(line)
         line_1 = trim(line)
         call upcase(line_1, len_trim(line_1))
         line_2 = job_fn
@@ -422,7 +389,7 @@
         call gettxt
         if (moperr) return
       end if
-      if (keywrd(1:6) == "HEADER") keywrd(7:) = " "
+      if (keywrd(1:7) == " HEADER") keywrd(8:) = " "
       if (keywrd(1:1) /= space) keywrd = " "//trim(keywrd)
       if (koment(1:1) /= space) koment = " "//trim(koment)
       if (title(1:1) /= space)  title  = " "//trim(title)
@@ -543,7 +510,7 @@
 !  Convert any "SELF" into file-names
 !
       do
-        line = trim(keywrd)
+        line = trim(keywrd_quoted)
         call upcase(line, len_trim(line))
         i = index(line, "SELF")
         if (i == 0) exit
@@ -551,20 +518,20 @@
 ! Isolate the path
 !
         do l = i, 1, -1
-          if (keywrd(l:l) == '"') exit
+          if (keywrd_quoted(l:l) == '"') exit
         end do
         if (l == 0) then
           call mopend(" KEYWORD OPTION ""SELF"" FOUND, BUT IT WAS NOT IN DOUBLE QUOTATION MARKS")
           return
         end if
-        line_2 = keywrd(l + 1:i - 1)
+        line_2 = keywrd_quoted(l + 1:i - 1)
 !
 ! If "SELF" without a suffix, use the name of the job.
 !
         do k = len_trim(job_fn), 1, -1
             if (job_fn(k:k) == "/" .or. job_fn(k:k) == "\") exit
         end do
-        if (keywrd(i + 4:i + 4) == '"') then
+        if (keywrd_quoted(i + 4:i + 4) == '"') then
 !
 !  "SELF" without a suffix, so use the name of the job.
 !
@@ -577,15 +544,15 @@
           do j = len_trim(job_fn), k + 1, -1
             if (job_fn(j:j) == ".") exit
           end do
-          line_1 = keywrd(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd(i + 4:i + 7)
-          i = i + index(keywrd(i:), '"') - 1
+          line_1 = keywrd_quoted(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd_quoted(i + 4:i + 7)
+          i = i + index(keywrd_quoted(i:), '"') - 1
         end if
         call add_path(line_1)
 !
 ! Replace "SELF"
 !
-        line = keywrd(1:l)//trim(line_1)//trim(keywrd(i:))
-        keywrd = trim(line)
+        line = keywrd_quoted(1:l)//trim(line_1)//trim(keywrd_quoted(i:))
+        keywrd_quoted = trim(line)
       end do
           if (index(keywrd, " HTML") + index(keywrd, " PDBOUT") /= 0 .and. maxtxt == 0) then
             if (index(keywrd," ADD-H") + index(keywrd," SITE=") /= 0) then
@@ -740,9 +707,9 @@
           l = l + 20
           k = min(l,i)
           if (k < l - 19) exit
-          write(iw,'(a,i3,30i4)')"Position:", (j, j = l - 19, k)
-          write(iw,'(a,i3,30i4)')"   ASCII:", (ichar(keywrd(j:j)), j = l - 19, k)
-          write(iw,'(a,a3,29a4)')"    Char:", (keywrd(j:j), j = l - 19, k)
+          write(iw,'(a,i4,30i4)')"Position: ", (j, j = l - 19, k)
+          write(iw,'(a,i4,30i4)')"   ASCII: ", (ichar(keywrd(j:j)), j = l - 19, k)
+          write(iw,'(a,a4,29a4)')"    Char: ", (keywrd(j:j), j = l - 19, k)
           write(iw,*)
           if (k == i) exit
         end do
@@ -1583,7 +1550,7 @@
       end if
       if (moperr) return
       pdb_label = (maxtxt > 25)
-      use_ref_geo = (index(keywrd_txt," GEO_REF") /= 0)
+      use_ref_geo = (quoted('GEO_REF="')  > 0)
       if (use_ref_geo) then
 !
 !  "GEO-OK+" is used only by COMPARE.  It can be read as "If one or more hydrogen atoms in the two systems have different labels,

@@ -29,14 +29,14 @@
         time0, atheat, errtxt, isok, mpack, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
-        sparkle, itemp_1, maxtxt, koment, sz, ss2, &
+        sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
 !
-      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi
+      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi, edeil
 !
       USE funcon_C, only : fpc_9
 !
@@ -178,6 +178,7 @@
       moperr = .FALSE.
       name = " "
       escf   = 0.d0
+      ediel  = 0.d0
       gnorm  = 0.D0
       press  = 0.d0
       E_disp = 0.d0
@@ -382,7 +383,7 @@
 !
       call switch
     !  if (method_PM8) method_PM7 = .true.
-      if (index(keywrd,' EXTERNAL') /= 0) call datin (iw)
+      if (index(keywrd_quoted,' EXTERNAL') /= 0) call datin (iw)
       if (moperr) go to 100
       sparkle = (index(keywrd, " SPARKL") /= 0)
 !

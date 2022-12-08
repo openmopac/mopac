@@ -20,7 +20,7 @@
 !-----------------------------------------------
       USE parameters_C, only : partyp, n_partyp, n_partyp_alpb, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
-      use molkst_C, only : keywrd, lpars, line, backslash
+      use molkst_C, only : keywrd, keywrd_quoted, lpars, line, backslash
       use chanel_C, only : iext
 !***********************************************************************
 !-----------------------------------------------
@@ -57,7 +57,7 @@
         'AC', 'TH', 'PA', 'U ', 'NP', 'PU', 'AM', 'CM', 'BK', 'MI', 'XX', 'FM'&
         , 'MD', 'CB', '++', '+', '--', '-', 'TV'/
     if (.not. allocated(ijpars))  allocate(ijpars(5,5000), parsij(5000))
-    i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
+    i = Index(keywrd, "EXTERNAL=")
     t_par     = "Add a description of this parameter near line 50 in datin.F90  "
     t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
     t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."
@@ -90,18 +90,18 @@
     t_par(30) = "Used in ccrep for exponent correction of F-H term."
     t_par(31) = "Used in ccrep for offset correction of F-H term."
     nref = 0
-    k = Index (keywrd(i:), "=") + i
-    j = end_of_keyword(keywrd, len_trim(keywrd), k)
+    k = Index (keywrd_quoted(i:), "=") + i
+    j = end_of_keyword(keywrd_quoted, len_trim(keywrd_quoted), k)
 !
 ! k = start of reference data directory list
 ! j = end of list.
 ! in between are the names of the reference directories, separated by ";"
 !
     do l = 1, 20
-      i = Index(keywrd(k:j),";")
+      i = Index(keywrd_quoted(k:j),";")
       if (i /= 0) then
         nref = nref + 1
-        file(nref) = trim(get_a_name(keywrd(k:j), len_trim(keywrd(k:j))))
+        file(nref) = trim(get_a_name(keywrd_quoted(k:j), len_trim(keywrd_quoted(k:j))))
         k = k + i
       end if
       if (i == 0) then
@@ -109,7 +109,7 @@
 !  Last entry
 !
         nref = nref + 1
-        file(nref) = keywrd(k:j)
+        file(nref) = keywrd_quoted(k:j)
         exit
       end if
     end do
