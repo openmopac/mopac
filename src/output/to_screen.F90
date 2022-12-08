@@ -1126,7 +1126,7 @@
     write(hook,"(a,i"//atoms//",a)")" MULLIKEN_ATOM_CHARGES[",numat,"]="
     write(hook,"(sp,10f9.5)") (chrg(i), i=1,numat)
   else if (esp) then
-    write(hook,"(a,i"//atoms//",a)")" ELECTOSTATIC_POTENTIAL_CHARGES[",numat,"]="
+    write(hook,"(a,i"//atoms//",a)")" ELECTROSTATIC_POTENTIAL_CHARGES[",numat,"]="
     write(hook,"(sp,10f9.5)") (q(i), i=1,numat)
   else if (loc_mos) then
     if (uhf) then
