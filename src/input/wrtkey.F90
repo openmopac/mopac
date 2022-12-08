@@ -20,8 +20,9 @@ subroutine wrtkey
   integer :: i, j, k, l
   integer, parameter :: n_protected_keywords = 14
   character :: protected_keywords(n_protected_keywords)*10
-  data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", &
-    "EXTERNAL=", "C.A.S.=", "C.I.D.=", "C.I.="/
+  data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", &
+       "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", "EXTERNAL=", &
+       "C.A.S.=", "C.I.D.=", "C.I.="/
 !**********************************************************************
 !
 !  WRTKEY CHECKS ALL KEY-WORDS AND PRINTS THOSE IT RECOGNIZES.  IF IT
@@ -34,7 +35,7 @@ subroutine wrtkey
 !
 !  Do not tidy up allkey earlier in the job, instead fill allkey here from keywrd,
 !  and do all the tidying up at this one point.  The old style of tidying up allkey
-!  as the job progressed was very error-prone and hadr to debug.
+!  as the job progressed was very error-prone and hard to debug.
 !
   allkey = trim(keywrd)
   j = 1
@@ -58,6 +59,9 @@ subroutine wrtkey
       do
         i = index(allkey, "(")
         if (i == 0) exit
+        if (i > 6) then
+          if (allkey(i-6:i) == "OUTPUT(") exit
+        end if
         j = index(allkey(i + 1:), ')') + i
         allkey(i:j) = " "
       end do
@@ -1450,8 +1454,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP1      - FIRST STEP-SIZE IN GRID =", f7.2)') &
    reada (keywrd, Index (keywrd, "STEP1")+6)
    if (index(keywrd, " POINT1") == 0) then
-     write (iw,'("*",/," *             - **** KEYWORD POINT1 MISSING ****",/,"*")')
-     call mopend("KEYWORD POINT1 MISSING")
+    call l_control("POINT1=11", len_trim("POINT1=11"), 1)
    end if
    i = 2
  end if
@@ -1459,8 +1462,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP2      - SECOND STEP-SIZE IN GRID =", f7.2)') &
    reada (keywrd, Index (keywrd, "STEP2")+6)
    if (index(keywrd, " POINT2") == 0) then
-     write (iw,'("*",/," *             - **** KEYWORD POINT2 MISSING ****",/,"*")')
-     call mopend("KEYWORD POINT2 MISSING")
+    call l_control("POINT2=11", len_trim("POINT2=11"), 1)
    end if
  end if
  if (myword(allkey, " STEP="))  then
@@ -1556,20 +1558,25 @@ subroutine wrtcon (allkey)
 !
 !                       External parameters read from file
 !
-   if (quoted('EXTERNAL=')  > 0) then
-    i = index(keywrd_quoted," EXTERNAL")
-    write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
-    k = len_trim(line)
-    do
-      j = index(keywrd_quoted(i:k), ";")
-      if (j /= 0) then
-        i = i + j
-        line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
-        write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
-      else
-        exit
-      end if
-    end do
+  if (quoted('EXTERNAL')  > 0) then
+    i = index(keywrd_quoted," EXTERNAL=")
+    if (i /= 0) then
+      i = i + 10
+      line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+      write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
+      do
+        j = index(keywrd_quoted(i:), ";")
+        if (j /= 0) then
+          i = i + j
+          line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+          write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
+        else
+          exit
+        end if
+      end do
+    else
+      write (iw, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
+    end if
   end if
   return
 end subroutine wrtcon

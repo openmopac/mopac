@@ -34,7 +34,7 @@ jobs:
           lscpu | grep "CPU(s):                  " | awk '{print $2}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v4
         with:
@@ -84,7 +84,7 @@ jobs:
           lscpu | grep "CPU(s):                  " | awk '{print $2}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v4
         with:
@@ -97,7 +97,7 @@ jobs:
 
       - name: Cache Intel dependencies
         id: cache-intel
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /opt/intel
           key: cache-${{ env.IFORT_LINUX_URL }}-${{ env.MKL_LINUX_URL }}
@@ -111,7 +111,7 @@ jobs:
           sudo sh mkl_download.sh -a --silent --eula accept
 
       - name: Clone glibc compatibility library
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: wheybags/glibc_version_header
           path: glibc
@@ -149,11 +149,6 @@ jobs:
           name: linux-test-output
           path: build/tests
 
-      - name: Local installation test
-        run: |
-          cd build
-          sudo make install
-
       - name: Package MOPAC with CPack
         run: |
           source /opt/intel/oneapi/setvars.sh
@@ -161,11 +156,17 @@ jobs:
           cpack -G IFW
           ls -l
 
+      - name: Local installation test & minimal packaging
+        run: |
+          cd build
+          sudo make install
+          sudo cpack -G TGZ
+
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: linux-dist
-          path: build/mopac-*-linux.run
+          path: build/mopac-*-linux.*
 
   mac-build:
     runs-on: macos-latest
@@ -177,7 +178,7 @@ jobs:
           system_profiler SPHardwareDataType | grep "Total Number of Cores" | awk '{print $5}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v4
         with:
@@ -195,7 +196,7 @@ jobs:
 
       - name: Cache Intel Fortran compiler
         id: cache-intel
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /opt/intel
           key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}
@@ -281,7 +282,7 @@ jobs:
           WMIC CPU Get NumberOfLogicalProcessors | head -2 | tail -1 > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v4
         with:
@@ -294,7 +295,7 @@ jobs:
 
       - name: Cache Intel Fortran compiler
         id: cache-intel
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: C:\Program Files (x86)\Intel
           key: cache-${{ env.IFORT_WINDOWS_URL }}-${{ env.MKL_WINDOWS_URL }}

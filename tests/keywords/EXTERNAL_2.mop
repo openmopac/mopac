@@ -1,0 +1,32 @@
+scfcrt=1.D-21 aux(precision=14) PM6 charge=0 external
+Comment line 1
+Comment line 2
+C
+C 1 CC
+C 1 CC 2 CCC
+H 2 CH 1 HCC 3 180.0
+H 3 CH 1 HCC 2 180.0
+
+CC =                  1.42101898
+CCC =                55.60133141
+CH =                  1.07692776
+HCC =               147.81488230
+
+BEGIN EXTERNAL
+USS           H     -13.711609
+ZS            H       1.148203
+BETAS         H     -10.606771
+GSS           H      16.016876
+USS           C     -52.820746
+UPP           C     -39.386342
+ZS            C       1.101355
+ZP            C       1.638194
+BETAS         C     -15.676494
+BETAP         C     -10.108905
+GSS           C      11.722262
+GSP           C      12.174014
+GPP           C      10.441486
+GP2           C      11.356823
+HSP           C       3.218765
+FN11          C       0.080251
+END EXTERNAL

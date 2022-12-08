@@ -230,6 +230,8 @@
           exit
         end if
       end do
+    else if (Index(keywrd, "EXTERNAL") /= 0) then
+      write (ifiles_8, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
     end if
     return
   end subroutine parkey

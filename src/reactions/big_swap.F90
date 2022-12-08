@@ -870,7 +870,7 @@ subroutine Locate_TS
     end do
     store = " "
     if (mode == 1) then
-      i = index(keywrd, store(:mt + 2))
+      i = index(keywrd, store(:mt + 50))
       keywrd = keywrd(:i)//line(:mt)//trim(keywrd(i + mt + 1:))
     end if
     if (local_txt == " ") exit

@@ -383,7 +383,7 @@
 !
       call switch
     !  if (method_PM8) method_PM7 = .true.
-      if (index(keywrd_quoted,' EXTERNAL') /= 0) call datin (iw)
+      if (index(keywrd_quoted,' EXTERNAL') /= 0) call datin (ir, iw)
       if (moperr) go to 100
       sparkle = (index(keywrd, " SPARKL") /= 0)
 !
@@ -1029,7 +1029,7 @@
       write (iw, '(3/,'' TOTAL JOB TIME: '',F16.2,'' SECONDS'')') tim
       write (iw, '(/,'' == MOPAC DONE =='')')
       call fdate (line)
-      write(0,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
+      write(*,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
       line(5:10)//", "//trim(line(21:))//", at"//line(11:16)//"."
 !
 !  Delete files that are definitely not wanted

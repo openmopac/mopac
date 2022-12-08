@@ -202,6 +202,15 @@
         end if
         call to_screen("To_file: Reaction path")
         call geout (iw)
+        if (index(keywrd, " PRTXYZ") /= 0) then
+          write (iw, '(29X,''CARTESIAN COORDINATES '',/)')
+          l = 0 
+          do i = 1, natoms
+            if (labels(i) == 99 .or. labels(i) == 107) cycle
+            l = l + 1
+            write (iw, '(I4,3X,A2,3x, 3F16.9)') l, elemnt(labels(i)), (coord(k,l),k=1,3)
+          end do
+        end if
         if (index(keywrd, " PDBOUT") /= 0) then
           imodel = imodel + 1
           write(line,'(F13.5)') escf

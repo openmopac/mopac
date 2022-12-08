@@ -62,3 +62,5 @@ set_tests_properties(salt PROPERTIES DEPENDS ionize) # uses Neutral.mop
 add_mopac_test(salt2 "SALT_2.mop")
 add_mopac_test(residues "SITE_Individual_residues.mop")
 set_tests_properties(residues PROPERTIES DEPENDS ionize) # uses IONIZE.arc
+add_mopac_test(erratic-1 "erratic1.mop")
+add_mopac_test(erratic-2 "erratic2.mop")
