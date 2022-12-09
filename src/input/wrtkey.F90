@@ -1558,25 +1558,22 @@ subroutine wrtcon (allkey)
 !
 !                       External parameters read from file
 !
-  if (quoted('EXTERNAL')  > 0) then
+  if (myword(allkey, " EXTERNAL")) write (iw, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
+  if (quoted('EXTERNAL=')  > 0) then
     i = index(keywrd_quoted," EXTERNAL=")
-    if (i /= 0) then
-      i = i + 10
-      line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
-      write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
-      do
-        j = index(keywrd_quoted(i:), ";")
-        if (j /= 0) then
-          i = i + j
-          line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
-          write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
-        else
-          exit
-        end if
-      end do
-    else
-      write (iw, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
-    end if
+    i = i + 10
+    line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+    write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
+    do
+      j = index(keywrd_quoted(i:), ";")
+      if (j /= 0) then
+        i = i + j
+        line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+        write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
+      else
+        exit
+      end if
+    end do
   end if
   return
 end subroutine wrtcon

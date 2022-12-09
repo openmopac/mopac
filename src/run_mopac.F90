@@ -383,7 +383,7 @@
 !
       call switch
     !  if (method_PM8) method_PM7 = .true.
-      if (index(keywrd_quoted,' EXTERNAL') /= 0) call datin (ir, iw)
+      if (index(keywrd_quoted,' EXTERNAL=') + index(keywrd,' EXTERNAL') /= 0) call datin (ir, iw)
       if (moperr) go to 100
       sparkle = (index(keywrd, " SPARKL") /= 0)
 !
