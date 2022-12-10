@@ -60,7 +60,7 @@
 !-----------------------------------------------
       integer , dimension(40) :: istart
       integer :: i, icapa, icapz, iserr, k, icomma, khar, nvalue, label, j, ndmy, &
-      jj, ltl, max_atoms, ii
+      jj, ltl, max_atoms, ii, ios
       double precision :: weight, real, sum
       logical :: lxyz, velo, leadsp, ircdrc, saddle, mini, l_gaussian
       character , dimension(107) :: elemnt*2
@@ -157,7 +157,7 @@
       end if
       ii = 0
    20 continue
-      read (iread, '(A241)', end=120, err=210) line
+      read (iread, '(A241)', iostat=ios, end=120, err=210) line
       if (line == '$coord') go to 20
       if (line == '$end') go to 20
       if (line(1:1) == '*') go to 20
@@ -170,7 +170,7 @@
           rewind (iread)
           sum = 0.d0
           do i = 1, 10000
-            read (iread, '(A)', end=120, err=210) line
+            read (iread, '(A)', iostat=ios, end=120, err=210) line
             if (index(line, "HEAT OF FORMATION") > 0) sum = reada(line,20)
             if (index(line, "FINAL GEOMETRY OBTAINED") > 0) exit
             if (index(line, "GEOMETRY IN CARTESIAN COORDINATE") > 0) exit
@@ -197,7 +197,7 @@
             int = (index(keywrd, " INT ") > 0)
             velo = (index(keywrd,' VELO') > 0)
             lmop = (Index (keywrd, " MOPAC") /= 0)
-            read (iread, '(A)', end=120, err=210) line
+            read (iread, '(A)', iostat=ios, end=120, err=210) line
             ii = 3
           else
             natoms = -3
@@ -829,6 +829,8 @@
       return
 ! ERROR CONDITIONS
   210 continue
+! gfortran flags all EOF reads past the first one as a 5001 error, and MOPAC doesn't avoid this behavior at the moment
+      if (ios == 5001) goto 120
       j = natoms - 1
       write (iw, '('' DATA CURRENTLY READ IN ARE: '',/)')
       do k = 1, j
