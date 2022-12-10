@@ -348,6 +348,6 @@ module molkst_C
     & (methods(7),  method_PM6_DH_plus), (methods(8),  method_PM6_DH2), (methods(9),  method_PM6_D3H4), &
     & (methods(10),  method_PM6_DH2X), (methods(11),  method_PM6_D3H4X), (methods(12),method_PM6_D3), &
     & (methods(13),  method_PM6_D3_not_H4), (methods(14), method_PM7), (methods(15),  method_pm7_ts), &
-    & (methods(16),  method_PM7_HH), (methods(17),  method_PM7_minus), (methods(19),  method_pm6_org), &
+    & (methods(16),  method_PM7_HH), (methods(17),  method_PM7_minus), (methods(18),  method_pm6_org), &
     & (methods(19),  method_PM8), (methods(20), method_indo)
 end module molkst_C

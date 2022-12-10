@@ -135,10 +135,11 @@
           if (.not.elemns(i)) cycle
           select case(i)
             case (1, 6, 7, 8, 9, 11, 12, 15, 16, 17, 19, 20, 26, 27, 29, 30, 34, 35, 53)
+              continue
             case default
-            if (allok) write (iw, *)
-            write (iw, '(10x, A,I3)') 'DATA ARE NOT AVAILABLE FOR ELEMENT NO.', i
-            allok = .FALSE.
+              if (allok) write (iw, *)
+              write (iw, '(10x, A,I3)') 'DATA ARE NOT AVAILABLE FOR ELEMENT NO.', i
+              allok = .FALSE.
           end select
         end do
         if (.not. allok) then
