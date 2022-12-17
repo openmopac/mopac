@@ -797,7 +797,7 @@ end subroutine wrtchk
 
 
 subroutine wrtcon (allkey)
-  use molkst_C, only: keywrd, numat, pressure, id, mozyme, mers, natoms, maxtxt, txtmax, &
+  use molkst_C, only: keywrd, keywrd_quoted, numat, pressure, id, mozyme, mers, natoms, maxtxt, txtmax, &
     line, old_chrge
   use cosmo_C, only : fepsi, nspa
   use chanel_C, only: iw, job_fn
@@ -810,8 +810,8 @@ subroutine wrtcon (allkey)
   integer :: i, ielec, ilevel, j, k, l
   logical :: l_add_H = .false., l_temp
   character :: num*1, num1*1
-  character(len=300), external :: get_a_name, get_text
-  integer, external :: end_of_keyword
+  character(len=300), external :: get_a_name
+  integer, external :: quoted
   logical, external :: myword
   double precision, external :: reada
   save :: l_add_H
@@ -971,36 +971,28 @@ subroutine wrtcon (allkey)
       return
     end if
   end if
-  if (myword(allkey, " GEO_DAT")) then
-    i = index(keywrd," GEO_DAT")
-    j = index(keywrd(i + 10:),'"') + i + 9
-    write (iw, '(" *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE """,a,"""")')keywrd(i + 10:j   - 1)
-    if (index(keywrd(i + 10:j   - 1), " ADD-H") /= 0) then
-!
-! Force the "DD" to be "dd"
-!
-      k = index(keywrd(i + 10:j   - 1), " ADD-H") + i + 10
-      do k = k, j - 1
-        if (keywrd(k:k) == "D") keywrd(k:k) = "d"
-      end do
-    end if
-    allkey(i:j) = " "
+
+  if (quoted('GEO_DAT=')  > 0) then
+    i = index(keywrd_quoted," GEO_DAT")
+    j = index(keywrd_quoted(i + 10:),'"') + i + 9 
+    write (iw, '(" *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE """,a,"""")') &
+      keywrd_quoted(i + 10:j - 1)
   end if
-  if (myword(allkey, " GEO_REF")) then
-    i = index(keywrd," GEO_REF")
-    j = index(keywrd(i + 10:),'"') + i + 9
-    k = index(keywrd(i:j), "SELF")
-    if (index(keywrd(i:j), "SELF") /= 0) then
-      line = " *  GEO_REF=""SELF""    - USE MOPAC DATA SET """//keywrd(i + 10:j - 5) &
+  if (quoted('GEO_REF=')  > 0) then
+    i = index(keywrd_quoted," GEO_REF")
+    j = index(keywrd_quoted(i + 10:),'"') + i + 9 
+    k = index(keywrd_quoted(i:j), "SELF")
+    if (index(keywrd_quoted(i:j), "SELF") /= 0) then
+      line = " *  GEO_REF=""SELF""    - USE MOPAC DATA SET """//keywrd_quoted(i + 10:j - 5) &
         //trim(job_fn)//""" AS REFERENCE GEOMETRY"
        write (iw, '(a)')trim(line)
     else
-      write (iw, '(" *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE """,a,"""")')keywrd(i + 10:j - 1)
+      write (iw, '(" *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE """,a,"""")')keywrd_quoted(i + 10:j - 1)
     end if
-    if (keywrd(j + 1:j + 1) == " ") then
+    if (keywrd_quoted(j + 1:j + 1) == " ") then
       write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
     else
-      sum = reada(keywrd(j:), 1)
+      sum = reada(keywrd_quoted(j:), 1)
       if (sum < 0.001d0) then
         write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
       else
@@ -1013,11 +1005,6 @@ subroutine wrtcon (allkey)
         end if
         write(iw,'(a, f'//num//'.'//num1//', a)') " *               (A BIAS OF",sum, &
         " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
-        do
-          j = j + 1
-          if (allkey(j:j) == " ") exit
-          allkey(j:j) = " "
-        end do
       end if
     end if
   end if
@@ -1055,10 +1042,12 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " UHF"))    write (iw, '(" *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION")')
   if (myword(allkey, " RHF"))    write (iw, '(" *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION")')
   if (myword(allkey, " STATIC")) write (iw, '(" *  STATIC     - CALCULATE STATIC FIELD POLARIZABILITIES")')
-  i = index(allkey," SETUP=")
+  i = quoted(' SETUP=')
   if (i /= 0) then
-    line = trim(get_text(allkey, i + 7, 0))  ! delete file name plus delimiter, if any.
-    allkey(i:i + 7) = " "
+    if (len_trim(line) == 0) then
+      allkey(i:i + 7) = " " 
+      line = "SETUP or SETUP.TXT"
+    end if
     i = len_trim(line)
     if (i < 26) then
       write (iw, '(" *  SETUP      - EXTRA KEYWORDS TO BE READ FROM FILE """, a, """")') trim(line)
@@ -1164,7 +1153,7 @@ subroutine wrtcon (allkey)
     if (i /= 0) line(i + 4:) = line(i + 5:)
     l = 0
     do
-      i = index(line, " OPT")
+      i = index(line, " OPT-") + index(line, " OPT ") + index(line, " OPT(") + index(line, " OPT=(")
       if (i == 0) exit
       j = index(line(i + 4:)," ") + i + 2
       if (index(line, " OPT-") /= 0) then
@@ -1569,26 +1558,23 @@ subroutine wrtcon (allkey)
 !
 !                       External parameters read from file
 !
-  if ( .not. myword(allkey, " EXTERNAL")) return
-  i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
-    if (i /= 0) then
-      i = index(keywrd(i:), "=") + i
-      k = end_of_keyword(keywrd, len_trim(keywrd), i)
-      line = get_a_name(keywrd(i:k), len_trim(keywrd(i:k)))
-      write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
-      do
-        j = index(keywrd(i:k), ";")
-        if (j /= 0) then
-          i = i + j
-          line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
-          write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
-        else
-          exit
-        end if
-      end do
-    else
-      write (iw, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
-    end if
+  if (myword(allkey, " EXTERNAL")) write (iw, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
+  if (quoted('EXTERNAL=')  > 0) then
+    i = index(keywrd_quoted," EXTERNAL=")
+    i = i + 10
+    line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+    write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
+    do
+      j = index(keywrd_quoted(i:), ";")
+      if (j /= 0) then
+        i = i + j
+        line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+        write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
+      else
+        exit
+      end if
+    end do
+  end if
   return
 end subroutine wrtcon
 subroutine wrtout (allkey)

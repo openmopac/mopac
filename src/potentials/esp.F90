@@ -517,6 +517,10 @@
         do i = 1, numat
           write (iw, '(9X,I4,9X,A2,1X,F10.4,2X,F10.4)') i, elemnt(nat(i)), q(i), qsc(i)
         end do
+!     Temporarily scale charges in q for AUX printing
+        q(:numat) = qsc(:numat)
+        call to_screen("To_file: Esp")
+        q(:numat) = qsc(:numat)/slope
       end if
       write (iw, '(/12X,A,4X,I6)') 'THE NUMBER OF POINTS IS:', nesp
       write (iw, '(12X,A,4X,F9.4)') 'THE RMS DEVIATION IS:', rms

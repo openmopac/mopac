@@ -21,7 +21,7 @@
       USE journal_references_C, only : allref
       use chanel_C, only : iw
       use common_arrays_C, only : nat
-      use molkst_C, only : numat, keywrd, is_PARAM, method_rm1, &
+      use molkst_C, only : numat, keywrd, keywrd_quoted, is_PARAM, method_rm1, &
       method_mndo, method_am1, method_pm3, method_pm6, method_mndod, &
       method_pm7, sparkle, method_pm6_org, method_pm8, method_indo
       use parameters_C, only : gss
@@ -135,10 +135,11 @@
           if (.not.elemns(i)) cycle
           select case(i)
             case (1, 6, 7, 8, 9, 11, 12, 15, 16, 17, 19, 20, 26, 27, 29, 30, 34, 35, 53)
+              continue
             case default
-            if (allok) write (iw, *)
-            write (iw, '(10x, A,I3)') 'DATA ARE NOT AVAILABLE FOR ELEMENT NO.', i
-            allok = .FALSE.
+              if (allok) write (iw, *)
+              write (iw, '(10x, A,I3)') 'DATA ARE NOT AVAILABLE FOR ELEMENT NO.', i
+              allok = .FALSE.
           end select
         end do
         if (.not. allok) then
@@ -149,7 +150,7 @@
         return
       end if
       mixok = index(keywrd,'PARASOK') /= 0
-      exter = index(keywrd," EXTERNAL") /= 0
+      exter = index(keywrd_quoted,"EXTERNAL") /= 0
 
       if (method_pm7)   mode = 7
       if (method_rm1)   then

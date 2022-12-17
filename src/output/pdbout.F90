@@ -661,7 +661,7 @@ subroutine pdbout (mode1)
     close (iprt)
   end subroutine write_html
   subroutine write_data_to_html(iprt)
-    use molkst_C, only : numat, formula, escf, nelecs, keywrd, arc_hof_1, arc_hof_2, keywrd_txt, &
+    use molkst_C, only : numat, formula, escf, nelecs, keywrd, arc_hof_1, arc_hof_2, &
       density, id, mol_weight, stress
     USE parameters_C, only : tore
     use common_arrays_C, only: nat, tvec
@@ -673,6 +673,7 @@ subroutine pdbout (mode1)
     character :: idate*24, line*120
     logical :: store_log
     double precision :: sum
+    integer, external :: quoted
     double precision, external :: volume
 !
 !  Print out information on the system: formula, number of atoms, heat of formation, date, etc.
@@ -703,7 +704,7 @@ subroutine pdbout (mode1)
       end if
     end do
     write(iprt,"(a)")  "<TR><TD> Formula:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>"//trim(line)//"</TD></TR>"
-    if (index(keywrd, " 0SCF") == 0 .or. index(keywrd_txt, " GEO_REF") == 0) then
+    if (index(keywrd, " 0SCF") == 0 .or. quoted('GEO_REF="') == 0) then
        if (id == 3) then
         sum = volume(tvec,3)
         density = mol_weight*1.D24/fpc_10/sum
@@ -712,7 +713,7 @@ subroutine pdbout (mode1)
       end if
     else
       if (abs(arc_hof_1) > 1.d-4) then
-        if (index(keywrd_txt, " GEO_DAT") /= 0) then
+        if ( quoted('GEO_DAT="') /= 0) then
           write(iprt,"(a,f12.3,a)")  "<TR><TD> GEO_DAT:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>", &
           arc_hof_1," kcal/mol</TD></TR>"
         else

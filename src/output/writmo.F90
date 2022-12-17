@@ -203,17 +203,17 @@
         write (iw, &
       '(4/10X,''FINAL HEAT OF FORMATION ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
       end if
+      elect = elect + solv_energy
+      solv_energy = 0.d0
       if (index(keywrd," DISP") /= 0) then
-        write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-        (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION "
-        write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         if (index(keywrd,' EPS') /= 0) then
-          if (abs(solv_energy) > 1.d-1) then
-            write (iw, '(    10X,''SOLVATION ENERGY        ='',F17.5,'' KCAL/MOL''   )') solv_energy*fpc_9
-          else if (.not. mozyme) then
-            write (iw, '(/10X,"SOLVATION ENERGY CAN ONLY BE PRINTED WHEN MOZYME IS USED",/)')
-          end if
+          write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION + SOLVATION ENERGY"
+        else
+          write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION"
         end if
+        write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         write(iw,'(10x,"                    SUM =",f17.5,a)') &
         (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
         if (abs(hpress) > 1.d-5)      write(iw,'(10x,"ENERGY DUE TO PRESSURE  =",f17.5,a)') hpress, " KCAL/MOL"
@@ -1024,8 +1024,13 @@
       '(/10X,''HEAT OF FORMATION       ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
       end if
       if (index(keywrd," DISP") /= 0) then
-        write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION "
+        if (index(keywrd,' EPS') /= 0) then
+          write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION + SOLVATION ENERGY"
+        else
+          write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION"
+        end if
         write(iwrite,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         if (index(keywrd,' EPS') /= 0) then
           if (abs(solv_energy) > 1.d-1) then
@@ -1065,9 +1070,8 @@
         if (abs(solv_energy) > 1.d-1) &
           write (iwrite, '(    10X,''SOLVATION ENERGY        ='',F17.5,'' EV''   )') solv_energy
       end if
-      if (iseps) then
+      if (abs(ediel) > 1.d-5) then
         write (iwrite, '(    10X,''DIELECTRIC ENERGY       ='',F17.5,'' EV''   )') ediel
-      !  if (Index (keywrd, "COSWRT") /= 0) call coswrt()
       end if
       if (Abs (pressure) > 1.d-4) then
         if (id == 1) then

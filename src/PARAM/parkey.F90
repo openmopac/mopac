@@ -16,7 +16,7 @@
 
  subroutine parkey (keywrd)
     use param_global_C, only : ifiles_8
-    use molkst_C, only : method_PM7, method_PM8
+    use molkst_C, only : method_PM7, method_PM8, keywrd_quoted
     implicit none
     character (len=*), intent (in) :: keywrd
     integer :: i, j, k
@@ -213,18 +213,18 @@
         end if
       end do
     end if
-    i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
+    i = Index(keywrd_quoted, "EXTERNAL=")
     if (i /= 0) then
-      i = index(keywrd(i:), "=") + i
-      k = end_of_keyword(keywrd, len_trim(keywrd), i)
-      line = get_a_name(keywrd(i:k), len_trim(keywrd(i:k)))
+      i = index(keywrd_quoted(i:), "=") + i
+      k = end_of_keyword(keywrd_quoted, len_trim(keywrd_quoted), i)
+      line = get_a_name(keywrd_quoted(i:k), len_trim(keywrd_quoted(i:k)))
       write (ifiles_8, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING&
                         & DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
       do
-        j = index(keywrd(i:k), ";")
+        j = index(keywrd_quoted(i:k), ";")
         if (j /= 0) then
           i = i + j
-          line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
+          line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit

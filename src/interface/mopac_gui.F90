@@ -17,6 +17,7 @@
 subroutine mopac_gui_activate
 !dec$ attributes dllexport :: mopac_gui_activate
   use molkst_C, only : gui
+  implicit none
   gui = .true.
   return
 end subroutine mopac_gui_activate
@@ -24,6 +25,7 @@ end subroutine mopac_gui_activate
 subroutine mopac_gui_deactivate
 !dec$ attributes dllexport :: mopac_gui_deactivate
   use molkst_C, only : gui
+  implicit none
   gui = .false.
   return
 end subroutine mopac_gui_deactivate
@@ -31,13 +33,17 @@ end subroutine mopac_gui_deactivate
 subroutine mopac_gui_set_channel(channel)
 !dec$ attributes dllexport :: mopac_gui_set_channel
   use chanel_C, only : iw0
+  implicit none
+  integer :: channel
   iw0 = channel
   return
 end subroutine mopac_gui_set_channel
 
 subroutine mopac_gui_get_channel(channel)
-  !dec$ attributes dllexport :: mopac_gui_get_channel
-    use chanel_C, only : iw0
-    channel = iw0
-    return
-  end subroutine mopac_gui_get_channel
+!dec$ attributes dllexport :: mopac_gui_get_channel
+  use chanel_C, only : iw0
+  implicit none
+  integer :: channel
+  channel = iw0
+  return
+end subroutine mopac_gui_get_channel
