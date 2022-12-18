@@ -647,7 +647,10 @@ subroutine coscl1 (a, id, n)
       id(i) = indi
       indi = indi + i
     end do
-    call dpotrf('L', n, a, n, info)
+    call dpptrf('U', n, a, info)
+    do i = 1, n
+      a(i+id(i)) = 1.0d0/a(i+id(i))
+    end do
 end subroutine coscl1
 subroutine coscl2 (a, id, x, y, n)
    ! THIS ROUTINE SOLVES THE LINEAR SYSTEM CX = Y BASED ON
