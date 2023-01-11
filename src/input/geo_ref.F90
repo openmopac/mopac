@@ -36,7 +36,7 @@
 !
       use molkst_C, only : numat, keywrd, nvar, id, natoms, moperr, line, refkey, density, &
         maxtxt, numat_old, koment, title, geo_ref_name, geo_dat_name, arc_hof_2, arc_hof_1, &
-        keywrd_txt, pdb_label, ncomments, refkey_ref, backslash, formula
+        keywrd_txt, pdb_label, ncomments, refkey_ref, backslash, formula, keywrd_quoted
 !
       use parameters_C, only : ams
 !
@@ -48,6 +48,7 @@
 !
       integer :: i, j, k, l, ii, jj, i4, j4, k4, iquit, numat_dat, numat_ref, ub
       integer, allocatable :: map_atoms_A(:), atom_no(:)
+      integer, external :: quoted
       character, allocatable :: tmp_txt(:)*27, diffs(:)*80
       double precision, allocatable :: tmp_geoa(:,:)
       double precision :: dum1, dum2, sum, rms, rms_min, sum1, sum2, sum3, &
@@ -55,8 +56,7 @@
       double precision, external :: reada
       logical :: intern = .true., exists, bug, any_bug, swap, first, let, l_0SCF_HTML, opend
       logical, allocatable :: same(:), ok(:)
-      character :: line_1*1000, line_2*1000, num*2, geo_dat*7, txt(12)*1
-      data txt /" ",".","0","1","2","3","4","5","6","7","8","9"/
+      character :: line_1*1000, line_2*1000, num*2, geo_dat*7
 !
 !   For Geo-Ref to work, some very specific conditions must be satisfied.
 !   So before attempting a GEO_REF calculation, check that the data are okay
@@ -83,33 +83,18 @@
       id = 0
       if (moperr) return
       allocate(geoa(3,natoms + 300), c(3,natoms + 300)) ! Generous safety factor for second geometry
-      j = index(keywrd," GEO_REF")
-      i = index(keywrd(j:j + 10), '"') + j
-      if (i == j) then
-        write(line,'(a)')" File name after GEO_REF must be in quotation marks."
-        call mopend(trim(line))
-        return
-      end if
-!
-! Search for '" ' or '"x' where "x" is one of ., 0 - 9
-      do k = 1, 12
-        j = index(keywrd(i + 2:),'"'//txt(k)) + i
-        if (j /= i) exit
-      end do
-      if (j == i) then
-        write(line,'(a)')" File name after GEO_REF must end with a quotation mark."
-        call mopend(trim(line))
-        return
-      end if
-      line = keywrd(i:j)
+      i = quoted('GEO_REF=')
+      if (i < -10) stop ! dummy use of "i" to prevent FORCHECK from flagging a possible error
+      j = len_trim(line)
+      if (line(j:j) == '"') line(j:j) = " "
       line_1 = trim(line)
       call upcase(line_1, len_trim(line_1))
       geo_ref_name = trim(line)
-      i = index(keywrd," GEO_DAT")
+      i = index(keywrd_quoted," GEO_DAT")
       if (i > 0) then
-        i = index(keywrd(i:), '"') + i
-        j = index(keywrd(i + 2:),'" ') + i
-        geo_dat_name = keywrd(i:j)
+        i = index(keywrd_quoted(i:), '"') + i
+        j = index(keywrd_quoted(i + 2:),'" ') + i
+        geo_dat_name = keywrd_quoted(i:j)
       else
         geo_dat_name = trim(job_fn)
       end if
@@ -217,14 +202,14 @@
         if (ii /= 0) rewind(99)
       end if
       line_1 = trim(keywrd)
-      if (index(keywrd,"GEO_DAT") /= 0) then
+      if (index(keywrd_quoted,"GEO_DAT") /= 0) then
         if (geo_ref_name == job_fn) then
-          i = index(keywrd," GEO_REF") + 11
+          i = index(keywrd_quoted," GEO_REF") + 11
           do
-            if (keywrd(i:i) == '"' .or. keywrd(i:i) == "'") exit
+            if (keywrd_quoted(i:i) == '"' .or. keywrd_quoted(i:i) == "'") exit
             i = i + 1
           end do
-          density = reada(keywrd, i + 1)
+          density = reada(keywrd_quoted, i + 1)
           write(iw,'(/10x,a,f8.3,a)')"A restraining force of",density," kcal/mol/A^2 will be used"
           geoa(:,:numat) = geo(:,:numat)
           ii = numat
@@ -268,17 +253,17 @@
       goto 97
 99    write(iw,*)" File' "//trim(line)//"' is faulty"
       return
-97    i = index(keywrd," GEO_REF") + 11
+97    i = quoted('GEO_REF=') + 11
       do
-        if (keywrd(i:i) == '"' .or. keywrd(i:i) == "'") exit
+        if (keywrd_quoted(i:i) == '"' .or. keywrd_quoted(i:i) == "'") exit
         i = i + 1
       end do
-      if (keywrd(i + 1: i + 1) == " ") then
+      if (keywrd_quoted(i + 1: i + 1) == " ") then
         if (.not. l_0SCF_HTML .and. index(keywrd, "LOCATE-TS") + index(keywrd, "SADDLE") == 0) &
           write(iw,'(/10x,a)')"By default, no restraining force will be used"
         density = 0.d0
       else
-        density = reada(keywrd, i + 1)
+        density = reada(keywrd_quoted, i + 1)
         write(iw,'(/10x,a,f8.3,a)')"A restraining force of",density," kcal/mol/A^2 will be used"
       end if
       if (id == 3 .and. abs(density) > 1.d-10 .and. index(keywrd, " 0SCF") == 0) then
@@ -345,6 +330,7 @@
       if (index(keywrd, " 0SCF") == 0 .and. ii /= numat) then
         num = char(ichar("1") +int(log10(ii + 0.05)))
         write(iw,'(/10x,a,i'//num//')')"Number of atoms in """//trim(geo_dat_name)//""" = ", ii
+        num = char(ichar("1") +int(log10(numat + 0.05)))
         write(iw,'(/10x,a,i'//num//')')"Number of atoms in """//trim(geo_ref_name)//""" = ", numat
         call mopend("Number of atoms in both systems must be the same, unless keyword ""0SCF"" is present")
         return

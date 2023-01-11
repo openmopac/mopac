@@ -36,8 +36,9 @@
 !
   use common_arrays_C, only: coord, nat
   use molkst_C, only : numat, N_Hbonds, numcal, method_PM6_D3H4, method_PM7, method_PM8, &
-       method_pm6_d3h4x
+       method_pm6_d3h4x, method_pm6_org
   use mopac_interface_flags, only : reset_H_bonds4_L
+
   implicit none
   integer, intent (in) :: H_i, i, j
   integer, intent (out) :: d_list(20), nd_list
@@ -60,7 +61,7 @@
 !
 !   Variables that change depending on the method
 !
-      if (method_PM6_D3H4 .or. method_pm6_d3h4x) then
+      if (method_PM6_D3H4 .or. method_pm6_d3h4x .or. method_pm6_org) then
         icalcn = numcal
         para_oh_o = 2.32d0
         para_oh_n = 3.10d0

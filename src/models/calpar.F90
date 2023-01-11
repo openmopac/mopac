@@ -26,7 +26,9 @@
       USE funcon_C, only : ev
       USE molkst_C, only : keywrd, method_indo
       USE reimers_C, only: zetad, zetawt, nbfa
-      USE chanel_C, only : iw
+#if MOPAC_F2003
+      USE, INTRINSIC :: IEEE_ARITHMETIC
+#endif
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -34,21 +36,25 @@
 
       integer , dimension(107) :: nspqn
       integer :: i, k, l, jmax, j
-      character :: num*1, file_name*120
       double precision, dimension(107) :: gssc, gspc, hspc, gp2c, gppc
       double precision :: p, p4,  hpp, qn, gdd1, d1, d2, df, hsp1, hsp2, d3, &
         gqq, q1, q2, qf, hpp1, hpp2, q3
       double precision :: zda, zdb, zwa, zwb, dsda, dsdb, dpda, dpdb, ddda, dddb
-      double precision, external :: reada
       save nspqn
 !-----------------------------------------------
       data nspqn/ 2*1, 8*2, 8*3, 18*4, 18*5, 32*6, 21*0/
 !
       if (method_indo) then
         do i = 1, 107
+#ifdef MOPAC_F2003
+          if (ieee_is_nan(zs(i))) zs(i) = 0.d0
+          if (ieee_is_nan(zp(i))) zp(i) = 0.d0
+          if (ieee_is_nan(zd(i))) zd(i) = 1.d-6
+#else
           if (isnan(zs(i))) zs(i) = 0.d0
           if (isnan(zp(i))) zp(i) = 0.d0
           if (isnan(zd(i))) zd(i) = 1.d-6
+#endif
           if(zd(i) == 0.d0) zd(i) = 1.d-6
         end do
       end if
@@ -212,46 +218,62 @@
 !     THIS IS FORMATTED FOR DIRECT INSERTION INTO 'PARAM'
 !
       if (index(keywrd,' DEP ') == 0) return
-      num = "8"
-    !  if (method_pm7) num = "7"
-      file_name = "parameters_for_PM"//num//"_C.F90"
-      i = index(keywrd, "ifiles_8")
-      if (i > 0) then
-        i = nint(reada(keywrd, i))
-      else
-        i = iw
-      end if
-      write (i, '(//10x, a, /)')" A new file called '"//trim(file_name)//"' will be written"
-      call add_path(file_name)
-      call create_parameters_for_PMx_C(file_name, num)
+      call create_parameters_for_PMx_C
       return
     end subroutine calpar
 !
 !
 !
 !
-  subroutine create_parameters_for_PMx_C(file_name, num)
+  subroutine create_parameters_for_PMx_C
 !
-    USE molkst_C, only : line
-!
+    USE molkst_C, only : line, keywrd
     USE parameters_C, only : guess1, guess2, guess3, gpp, gp2, hsp, gss, gsp, betas, betap, betad, &
     zs, zp, zd, uss, upp, udd, zsn, zpn, zdn, pocord, alpb, xfac, &
     f0sd, g2sd, main_group, alp, polvol, CPE_Zeta, CPE_Z0, CPE_B, CPE_Xlo, CPE_Xhi, v_par, t_par
-!
     USE chanel_C, only : iw, param_out
-!
     USE elemts_C, only : atom_names
 !
     implicit none
-    character :: file_name*120, num*1, num1*2, num2*2
 !
 !  Local
 !
-    integer :: i, j
+    integer :: i, j, l1, l2, l3
     logical :: lnew
+    character :: num1*2, num2*2, name_1*10, name_2*10, name_3*10, file_name*120
     double precision :: abond, fff
+    double precision, external :: reada
+!
+!   Define all text variables here
+!
+! Module names
+!
+    name_1 = "6_ORG"  ! PM6_ORG
+    l1 = len_trim(name_1)
+!
+! Name of parameter set
+!
+    name_2 = "_org"
+    l2 = len_trim(name_2)
+!
+! Name of parameter set for global parameters
+!
+    name_3 = "_org("
+    l3 = len_trim(name_3)
+!
+!  End if definitions
+!
+    file_name = "parameters_for_PM"//name_1(:l1)//"_C.F90"
+    i = index(keywrd, "ifiles_8")
+    if (i > 0) then
+      i = nint(reada(keywrd, i))
+    else
+      i = iw
+    end if
+    write (i, '(//10x, a, /)')" A new file called '"//trim(file_name)//"' will be written"
+    call add_path(file_name)
     j = 0
-97   open (unit=param_out, file=trim(file_name), status="UNKNOWN", iostat=i)
+97  open (unit=param_out, file=trim(file_name), status="UNKNOWN", iostat=i)
     if ( i /= 0 .and. j < 10)then
 !
 !  The file can exist, but is not currently accessible
@@ -261,137 +283,140 @@
       j = j + 1
       goto 97
     end if
-    if (j < 10) then
-      rewind (param_out)
-      write (param_out,"(a)") "  module Parameters_for_PM"//num//"_C"
-      write (param_out,"(a)") "    double precision, dimension(107) :: uss"//num//", upp"//num//", udd" &
-      //num//", zs"//num//", zp"//num//", zd"//num//", betas"//num//", &"
-      write (param_out,"(a)") "    betap"//num//", betad"//num//", gss"//num//", gsp"//num//", gpp" &
-      //num//", gp2"//num//", hsp"//num//", polvo"//num//", poc_"//num//", &"
-      write (param_out,"(a)") "    zsn"//num//", zpn"//num//", zdn"//num//", f0sd"//num//", g2sd"//num//", alp"//num//", &"
-      write (param_out,"(a)") "    CPE_Zet"//num//", CPE_Z0"//num//", CPE_B"//num//", CPE_Xlo"//num//", CPE_Xhi"//num//""
-      write (param_out,"(a)") "    double precision :: v_par"//num//"(60) "
-      write (param_out,"(a)") "    double precision, dimension(107,4) :: gues"//num//"1, gues"//num//"2, gues"//num//"3"
-      do i = 1, 107
-        if (zs(i) < 1.d-20 .and. gss(i) < 1.d-20 .and. Abs(guess1(i,1)) &
-        + Abs(alp(i)) < 1.d-20) cycle
-        write (param_out,"('!')")
-        write (param_out, '("!",20X,"Data for Element ",I3,5x,a)') i, atom_names(i)
-        write (param_out,"('!')")
-        if (uss(i) /= 0.D0) write (param_out, &
-          '(6X,"data     uss'//num//'(",I3,")/",F17.6,"D0/")') i, uss(i)
-        if (upp(i) /= 0.D0) write (param_out, &
-          '(6X,"data     upp'//num//'(",I3,")/",F17.6,"D0/")') i, upp(i)
-        if (udd(i) /= 0.D0) write (param_out, &
-          '(6X,"data     udd'//num//'(",I3,")/",F17.6,"D0/")') i, udd(i)
-        if (betas(i) /= 0.D0) write (param_out, &
-          '(6X,"data   betas'//num//'(",I3,")/",F17.6,"D0/")') i, betas(i)
-        if (betap(i) /= 0.D0) write (param_out, &
-          '(6X,"data   betap'//num//'(",I3,")/",F17.6,"D0/")') i, betap(i)
-        if (betad(i) /= 0.D0) write (param_out, &
-          '(6X,"data   betad'//num//'(",I3,")/",F17.6,"D0/")') i, betad(i)
-        if (zs(i) /= 0.D0) write (param_out, &
-          '(6X,"data      zs'//num//'(",I3,")/",F17.6,"D0/")') i, zs(i)
-        if (zp(i) /= 0.D0) write (param_out, &
-          '(6X,"data      zp'//num//'(",I3,")/",F17.6,"D0/")') i, zp(i)
-        if (zd(i) /= 0.D0) write (param_out, &
-          '(6X,"data      zd'//num//'(",I3,")/",F17.6,"D0/")') i, zd(i)
-        if (zsn(i) /= 0.D0) write (param_out, &
-          '(6X,"data     zsn'//num//'(",I3,")/",F17.6,"D0/")') i, zsn(i)
-        if (zpn(i) /= 0.D0) write (param_out, &
-          '(6X,"data     zpn'//num//'(",I3,")/",F17.6,"D0/")') i, zpn(i)
-        if (zdn(i) /= 0.D0) write (param_out, &
-          '(6X,"data     zdn'//num//'(",I3,")/",F17.6,"D0/")') i, zdn(i)
-        if (alp(i) /= 0.D0) write (param_out, &
-          '(6X,"data     alp'//num//'(",I3,")/",F17.6,"D0/")') i, alp(i)
-        if (gss(i) /= 0.D0) write (param_out, &
-          '(6X,"data     gss'//num//'(",I3,")/",F17.6,"D0/")') i, gss(i)
-        if (gsp(i) /= 0.D0) write (param_out, &
-          '(6X,"data     gsp'//num//'(",I3,")/",F17.6,"D0/")') i, gsp(i)
-        if (gpp(i) /= 0.D0) write (param_out, &
-          '(6X,"data     gpp'//num//'(",I3,")/",F17.6,"D0/")') i, gpp(i)
-        if (gp2(i) /= 0.D0) write (param_out, &
-          '(6X,"data     gp2'//num//'(",I3,")/",F17.6,"D0/")') i, gp2(i)
-        if (hsp(i) /= 0.D0) write (param_out, &
-          '(6X,"data     hsp'//num//'(",I3,")/",F17.6,"D0/")') i, hsp(i)
-        if (pocord(i) /= 0.D0) write (param_out, &
-          '(6X,"data    poc_'//num//'(",I3,")/",F17.6,"D0/")') i, pocord(i)
-        if (polvol(i) /= 0.D0) write (param_out, &
-          '(6X,"data   polvo'//num//'(",I3,")/",F17.6,"D0/")') i, polvol(i)
-        if (CPE_Zeta(i) /= 0.D0) write (param_out, &
-          '(6X,"data CPE_Zet'//num//'(",I3,")/",F17.6,"D0/")') i, CPE_Zeta(i)
-        if (CPE_Z0(i) /= 0.D0) write (param_out, &
-          '(6X,"data  CPE_Z0'//num//'(",I3,")/",F17.6,"D0/")') i, CPE_Z0(i)
-        if (CPE_B(i) /= 0.D0) write (param_out, &
-          '(6X,"data   CPE_B'//num//'(",I3,")/",F17.6,"D0/")') i, CPE_B(i)
-        if (CPE_Xlo(i) /= 0.D0) write (param_out, &
-          '(6X,"data CPE_Xlo'//num//'(",I3,")/",F17.6,"D0/")') i, CPE_Xlo(i)
-        if (CPE_Xhi(i) /= 0.D0) write (param_out, &
-          '(6X,"data CPE_Xhi'//num//'(",I3,")/",F17.6,"D0/")') i, CPE_Xhi(i)
-        if (.not. main_group(i) .and. f0sd(i) /= 0.D0) write (param_out, &
-          '(6X,"data    f0sd'//num//'(",I3,")/",F17.6,"D0/")') i, f0sd(i)
-        if (.not. main_group(i) .and. g2sd(i) /= 0.D0) write (param_out, &
-          '(6X,"data    g2sd'//num//'(",I3,")/",F17.6,"D0/")') i, g2sd(i)
-        do j = 1, 4
-          if (guess1(i,j) /= 0.D0) &
-          write (param_out, &
-          '(6X,"data gues'//num//'1(",I3,",",I1,")/",          F17.6,"D0/")')&
-            i, j, guess1(i,j)
-          if (guess2(i,j) /= 0.D0) &
-          write (param_out, &
-          '(6X,"data gues'//num//'2(",I3,",",I1,")/",          F17.6,"D0/")')&
-            i, j, guess2(i,j)
-          if (guess3(i,j) /= 0.D0) &
-          write (param_out, &
-          '(6X,"data gues'//num//'3(",I3,",",I1,")/",          F17.6,"D0/")')&
-            i, j, guess3(i,j)
-        end do
+    if (j > 9) return
+    rewind (param_out)
+    write (param_out,"(a)") "  module Parameters_for_PM"//name_1(:l1)//"_C"
+    write (param_out,"(a)") "    double precision, dimension(107) :: uss"//name_2(:l2)//", upp"//name_2(:l2)//", udd" &
+      //name_2(:l2)//", zs"//name_2(:l2)//", zp"//name_2(:l2)//", zd"//name_2(:l2)//", betas"//name_2(:l2)//", &"
+    write (param_out,"(a)") "    betap"//name_2(:l2)//", betad"//name_2(:l2)//", gss"//name_2(:l2)//", gsp" &
+      //name_2(:l2)//", gpp"//name_2(:l2)//", gp2"//name_2(:l2)//", hsp"//name_2(:l2)//", polvo" &
+      //name_2(:l2)//", poc_"//name_2(:l2)//", &"
+    write (param_out,"(a)") "    zsn"//name_2(:l2)//", zpn"//name_2(:l2)//", zdn"//name_2(:l2)//", f0sd" &
+      //name_2(:l2)//", g2sd"//name_2(:l2)//", alp"//name_2(:l2)//", &"
+    write (param_out,"(a)") "    CPE_Zet"//name_2(:l2)//", CPE_Z0"//name_2(:l2)//", CPE_B"//name_2(:l2)//", CPE_Xlo" &
+      //name_2(:l2)//", CPE_Xhi"//name_2(:l2)//""
+    write (param_out,"(a)") "    double precision :: v_par"//name_2(:l2)//"(60) "
+    write (param_out,"(a)") "    double precision, dimension(107,4) :: gues"//name_2(:l2)//"1, gues" &
+      //name_2(:l2)//"2, gues"//name_2(:l2)//"3"
+    do i = 1, 107
+      if (zs(i) < 1.d-20 .and. gss(i) < 1.d-20 .and. Abs(guess1(i,1)) &
+      + Abs(alp(i)) < 1.d-20) cycle
+      write (param_out,"('!')")
+      write (param_out, '("!",20X,"Data for Element ",I3,5x,a)') i, atom_names(i)
+      write (param_out,"('!')")
+      if (uss(i) /= 0.D0) write (param_out, &
+        '(6X,"data     uss'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, uss(i)
+      if (upp(i) /= 0.D0) write (param_out, &
+        '(6X,"data     upp'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, upp(i)
+      if (udd(i) /= 0.D0) write (param_out, &
+        '(6X,"data     udd'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, udd(i)
+      if (betas(i) /= 0.D0) write (param_out, &
+        '(6X,"data   betas'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, betas(i)
+      if (betap(i) /= 0.D0) write (param_out, &
+        '(6X,"data   betap'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, betap(i)
+      if (betad(i) /= 0.D0) write (param_out, &
+        '(6X,"data   betad'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, betad(i)
+      if (zs(i) /= 0.D0) write (param_out, &
+        '(6X,"data      zs'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, zs(i)
+      if (zp(i) /= 0.D0) write (param_out, &
+        '(6X,"data      zp'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, zp(i)
+      if (zd(i) /= 0.D0) write (param_out, &
+        '(6X,"data      zd'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, zd(i)
+      if (zsn(i) /= 0.D0) write (param_out, &
+        '(6X,"data     zsn'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, zsn(i)
+      if (zpn(i) /= 0.D0) write (param_out, &
+        '(6X,"data     zpn'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, zpn(i)
+      if (zdn(i) /= 0.D0) write (param_out, &
+        '(6X,"data     zdn'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, zdn(i)
+      if (alp(i) /= 0.D0) write (param_out, &
+        '(6X,"data     alp'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, alp(i)
+      if (gss(i) /= 0.D0) write (param_out, &
+        '(6X,"data     gss'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, gss(i)
+      if (gsp(i) /= 0.D0) write (param_out, &
+        '(6X,"data     gsp'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, gsp(i)
+      if (gpp(i) /= 0.D0) write (param_out, &
+        '(6X,"data     gpp'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, gpp(i)
+      if (gp2(i) /= 0.D0) write (param_out, &
+        '(6X,"data     gp2'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, gp2(i)
+      if (hsp(i) /= 0.D0) write (param_out, &
+        '(6X,"data     hsp'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, hsp(i)
+      if (pocord(i) /= 0.D0) write (param_out, &
+        '(6X,"data    poc_'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, pocord(i)
+      if (polvol(i) /= 0.D0) write (param_out, &
+        '(6X,"data   polvo'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, polvol(i)
+      if (CPE_Zeta(i) /= 0.D0) write (param_out, &
+        '(6X,"data CPE_Zet'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, CPE_Zeta(i)
+      if (CPE_Z0(i) /= 0.D0) write (param_out, &
+        '(6X,"data  CPE_Z0'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, CPE_Z0(i)
+      if (CPE_B(i) /= 0.D0) write (param_out, &
+        '(6X,"data   CPE_B'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, CPE_B(i)
+      if (CPE_Xlo(i) /= 0.D0) write (param_out, &
+        '(6X,"data CPE_Xlo'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, CPE_Xlo(i)
+      if (CPE_Xhi(i) /= 0.D0) write (param_out, &
+        '(6X,"data CPE_Xhi'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, CPE_Xhi(i)
+      if (.not. main_group(i) .and. f0sd(i) /= 0.D0) write (param_out, &
+        '(6X,"data    f0sd'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, f0sd(i)
+      if (.not. main_group(i) .and. g2sd(i) /= 0.D0) write (param_out, &
+        '(6X,"data    g2sd'//name_2(:l2)//'(",I3,")/",f17.8,"D0/")') i, g2sd(i)
+      do j = 1, 4
+        if (guess1(i,j) /= 0.D0) &
+        write (param_out, &
+        '(6X,"data gues'//name_2(:l2)//'1(",I3,",",I1,")/",          f17.8,"D0/")')&
+          i, j, guess1(i,j)
+        if (guess2(i,j) /= 0.D0) &
+        write (param_out, &
+        '(6X,"data gues'//name_2(:l2)//'2(",I3,",",I1,")/",          f17.8,"D0/")')&
+          i, j, guess2(i,j)
+        if (guess3(i,j) /= 0.D0) &
+        write (param_out, &
+        '(6X,"data gues'//name_2(:l2)//'3(",I3,",",I1,")/",          f17.8,"D0/")')&
+          i, j, guess3(i,j)
       end do
+    end do
 !
 ! Write out the global parameters
 !
-      write (param_out,'(2("!",/),"!",21x,a,2(/,"!"))')"Global parameters"
-      do i = 1, 60
-        if (abs(v_par(i)) > 1.d-10) then
-            num1 = "2"
-            num2 = "1"
-          line = " "
-          if (t_par(i) /= " ") line = "  ! "//trim(t_par(i))
-          if (i > 9) then
-            num1 = "1"
-            num2 = "2"
-          end if
-          write(param_out,'(6x, "data  ", a8, i'//num2//', a2, f1'//num1//'.6,"d0/", a)') &
-            "v_par"//num//"(", i, ")/", v_par(i), trim(line)
+    write (param_out,'(2("!",/),"!",21x,a,2(/,"!"))')"Global parameters"
+    do i = 1, 60
+      if (abs(v_par(i)) > 1.d-10) then
+          num1 = "2"
+          num2 = "1"
+        line = " "
+        if (t_par(i) /= " ") line = "  ! "//trim(t_par(i))
+        if (i > 9) then
+          num1 = "1"
+          num2 = "2"
         end if
-      end do
-      write (param_out,"(a)") '  contains'
+        write(param_out,'(6x, "data  ", a, i'//num2//', a2, f1'//num1//'.8,"d0/", a)') &
+          "v_par"//name_3(:l3), i, ")/", v_par(i), trim(line)
+      end if
+    end do
+    write (param_out,"(a)") '  contains'
 
-      write (param_out,"(a)") &
-      & '  subroutine alpb_and_xfac_pm'//num//'', &
-      & '    use parameters_C, only : xfac, alpb'
+    write (param_out,"(a)") &
+    & '  subroutine alpb_and_xfac_pm'//name_1(:l1)//'', &
+    & '    use parameters_C, only : xfac, alpb'
 !
 !  Write out all the diatomic parameters
 !
-      do i = 1, 100
-        lnew = .true.
-        do j = 1, i
-          abond = alpb(i,j)
-          if (abond > 1.d-4) then
-            fff = xfac(i,j)
-            if ( lnew ) then
-            lnew = .false.
-            write (param_out,*)"!"
-            end if
-              write(param_out,"(6x,a,i2,a,i2,a,f12.6,a)") &
-              "alpb(",i,",",j,") = ", abond,"d0 !"//atom_names(i)//" - "//atom_names(j)
-              write(param_out,"(6x,a,i2,a,i2,a,f12.6,a)") &
-              "xfac(",i,",",j,") = ", fff,"d0 !"//atom_names(i)//" - "//atom_names(j)
+    do i = 1, 100
+      lnew = .true.
+      do j = 1, i
+        abond = alpb(i,j)
+        if (abond > 1.d-4) then
+          fff = xfac(i,j)
+          if ( lnew ) then
+          lnew = .false.
+          write (param_out,*)"!"
           end if
-        end do
+            write(param_out,"(6x,a,i2,a,i2,a,f14.8,a)") &
+            "alpb(",i,",",j,") = ", abond,"d0 !"//atom_names(i)//" - "//atom_names(j)
+            write(param_out,"(6x,a,i2,a,i2,a,f14.8,a)") &
+            "xfac(",i,",",j,") = ", fff,"d0 !"//atom_names(i)//" - "//atom_names(j)
+        end if
       end do
-      write (param_out,"(a)") '    end subroutine alpb_and_xfac_pm'//num
-      write (param_out,"(a)") "  end module Parameters_for_PM"//num//"_C"
-    end if
+    end do
+    write (param_out,"(a)") '    end subroutine alpb_and_xfac_pm'//name_1(:l1)
+    write (param_out,"(a)") "  end module Parameters_for_PM"//name_1(:l1)//"_C"
     return
   end subroutine create_parameters_for_PMx_C

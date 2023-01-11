@@ -949,7 +949,15 @@ contains
                & (xx(2) - coord(2, k))**2 + &
                & (xx(3) - coord(3, k))**2
           dist = Sqrt (dist) - rsolv - srad(k)
-          if (dist < 0) cycle loop
+!
+! jjps 8-22-2022:  An intermittent error caused the solvent-accessible surface to
+! change size significantly, e.g., by 6 square Angstroms in a 1300 atom protein,
+! on making a small change, 0.1 Angstroms total, in geometry.
+! This error was traced to a special case when "dist" was almost zero.  The error
+! was corrected by replacing the original test "if (dist < 0) cycle loop" with
+! the text on the next line.  Surprisingly, this appears to have fixed the bug!
+!
+          if (dist < -0.001d0) cycle loop
         end do
 
         narea = narea + 1

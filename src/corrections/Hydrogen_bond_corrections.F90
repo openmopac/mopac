@@ -20,7 +20,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
 !
   use molkst_C, only : numat, E_hb, N_Hbonds, method_pm7, l123, l1u, l2u, l3u, &
     method_pm6_dh_plus, method_pm6_dh2, method_pm6_d3h4, method_pm6_d3h4x, method_pm6_dh2x, &
-    line, id, numcal
+    line, id, numcal, method_pm6_org
   use parameters_C, only : tore
   use common_arrays_C, only: coord, nat, q, p, hblist, dxyz, cell_ijk
   use mopac_interface_flags, only : reset_Hydrogen_bond_corrections_L
@@ -137,7 +137,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
       H = hblist(ii,2)
       A = hblist(ii,3)
       D = hblist(ii,1)
-      if (method_pm6_d3h4 .or. method_pm6_d3h4x) then
+      if (method_pm6_d3h4 .or. method_pm6_d3h4x .or. method_pm6_org) then
         sum = H_bonds4(H, A, D, d_list, nd_list)
         E_hb = E_hb + sum
       else
@@ -171,7 +171,7 @@ double precision function Hydrogen_bond_corrections(l_grad, prt)
             coord(i,k) = coord(i,k) + delta
             if (method_pm6_dh_plus .or. method_pm7) then
               sum1 = EH_plus(ii, hblist, max_h_bonds, nrbondsa, nrbondsb)
-            else if (method_pm6_d3h4 .or. method_pm6_d3h4x) then
+            else if (method_pm6_d3h4 .or. method_pm6_d3h4x .or. method_pm6_org) then
               sum1 = H_bonds4(H, A, D, d_l, l)
             else
               sum1 = EC_plus_ER(D, H, A, q(H), q(A), EC, ER, d_l, l)

@@ -641,32 +641,15 @@ subroutine coscl1 (a, id, n)
     integer, intent (in) :: n
     double precision, dimension (*), intent (inout) :: a
     integer, dimension (n), intent (inout) :: id
-    integer :: i, indi, indk, j, k, kk
-    double precision :: summe
+    integer :: i, indi, info
     indi = 0
     do i = 1, n
       id(i) = indi
       indi = indi + i
     end do
-    do k = 1, n
-      indk = id(k)
-      kk = k + indk
-      do i = k, n
-        indi = id(i)
-        summe = 0.d0
-        do j = 1, k - 1
-          summe = summe + a(j + indi) * a(j + indk)
-        end do
-        summe = a(k + indi) - summe
-        if (i == k) then
-          if (summe < 0.0d0) then
-            summe = a(kk)
-          end if
-          a(kk) = 1.d0 / Sqrt (summe)
-        else
-          a(k + indi) = summe * a(kk)
-        end if
-      end do
+    call dpptrf('U', n, a, info)
+    do i = 1, n
+      a(i+id(i)) = 1.0d0/a(i+id(i))
     end do
 end subroutine coscl1
 subroutine coscl2 (a, id, x, y, n)

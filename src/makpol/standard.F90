@@ -282,10 +282,14 @@ subroutine getdat
 
     ir = 25
     iw = 26
+#ifdef MOPAC_F2003
+    i = command_argument_count()
+#else
     i = iargc()
+#endif
     if (i == 0) then
       write(*,"(a)")"                        Program MAKPOL"
-      write(*,"(a)")"  	"
+      write(*,"(a)")" "
       write(*,"(a)")"  MAKPOL constructs a MOPAC data set for a polymer, layer system, or solid."
       write(*,"(a)")"  It uses either a MOPAC-type data set that contains information about "
       write(*,"(a)")"  the size of the cluster to be built or a raw "".pdb"" or "".ent"" file.  "
@@ -301,23 +305,39 @@ subroutine getdat
       write(*,'(//10x,a,/)') "Makpol only uses one argument, more than one was supplied"
       stop
     end if
+#ifdef MOPAC_F2003
+    call get_command_argument (1, jobnam)
+#else
     call getarg (1, jobnam)
+#endif
     write(*,*)trim(jobnam)
 !
 ! allow for up to 3 commas in data set file name
 !
     if (i >= 2) then
+#ifdef MOPAC_F2003
+      call get_command_argument (2, jobnam_c)
+#else
       call getarg (2, jobnam_c)
+#endif
       j = len_trim(jobnam)
       if (jobnam(j:j) == ",") jobnam(j:j) = " "
       jobnam=trim(jobnam)//","//jobnam_c
     end if
     if (i >= 3) then
+#ifdef MOPAC_F2003
+      call get_command_argument (3, jobnam_c)
+#else
       call getarg (3, jobnam_c)
+#endif
       jobnam=trim(jobnam)//","//jobnam_c
     end if
     if (i == 4) then
+#ifdef MOPAC_F2003
+      call get_command_argument (4, jobnam_c)
+#else
       call getarg (4, jobnam_c)
+#endif
       jobnam=trim(jobnam)//","//jobnam_c
     end if
 !

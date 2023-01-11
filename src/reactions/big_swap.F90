@@ -870,7 +870,7 @@ subroutine Locate_TS
     end do
     store = " "
     if (mode == 1) then
-      i = index(keywrd, store(:mt + 2))
+      i = index(keywrd, store(:mt + 50))
       keywrd = keywrd(:i)//line(:mt)//trim(keywrd(i + mt + 1:))
     end if
     if (local_txt == " ") exit
@@ -1209,10 +1209,10 @@ subroutine Locate_TS
     do i = 1, nsite
       k = max(k,nbonds_b(active_site(i)))
     end do
-    write(ch,'(i2)')k*6
+    write(ch,'(i2)')max(1, k*6 - 6)
 
     if (pdb_label) then
-      write(iw,'(/,a,'//ch//'x,a)') &
+      write(iw,'(/,a,'//ch//'x,a,/16x,a)') &
       " Set 1: Atoms involved in covalent bond-breaking and bond-making", "Connectivity of atoms"
       write(iw,'(77x,a,'//ch//'x,a)')"Data-set", "Reference"
       write(iw,'(37x,a)')"(PDB labels from GEO-REF)"
@@ -1220,7 +1220,7 @@ subroutine Locate_TS
       write(iw,'(/6x,a,'//ch//'x,a)')" Set 1: Atoms involved in covalent", "Connectivity of atoms"
       write(iw,'(7x, a,21x,a,/)')"bond-breaking and bond-making            Data-set", "Reference"
     end if
-    write(ch,'(i2)')k*6 + 6
+    write(ch,'(i2)')k*6
     do i = 1, nsite
       write(line,'(i12,10i6)')(ibonds_b(j, active_site(i)), j = 1, nbonds_b(active_site(i)))
       write(line(k*6 + 10:),'(i6,10i6)')(ibonds(j, active_site(i)), j = 1, nbonds(active_site(i)))

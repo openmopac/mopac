@@ -14,8 +14,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Using Cmake version 3.13 for target_link_options
-cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
+# Using Cmake version 3.14 for NumPy support
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+
+# Ensure we are building out-of-source so that the tests work (issue 120)
+get_filename_component(srcdir "${CMAKE_SOURCE_DIR}" REALPATH)
+get_filename_component(bindir "${CMAKE_BINARY_DIR}" REALPATH)
+if("${srcdir}" STREQUAL "${bindir}")
+  message(FATAL_ERROR "MOPAC should not be configured & built in the source directory
+Please create a separate build directory and rerun cmake from the build directory
+For example: mkdir build; cd build; cmake ..")
+endif()
 
 # Read version number
 file(READ "CITATION.cff" CITATION)
@@ -52,7 +61,7 @@ endif()
 # Code coverage option
 option(ENABLE_COVERAGE "Code coverage flag" OFF)
 
-# Set a safe default build type if ther is no user input
+# Set a safe default build type if there is no user input
 if(NOT CMAKE_BUILD_TYPE)
   if (ENABLE_COVERAGE)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
@@ -80,7 +89,6 @@ elseif(UNIX)
   set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib")
 endif()
 
-
 # Define a common library and executables for MOPAC & PARAM
 if (STATIC_BUILD)
   # Static build
@@ -105,6 +113,9 @@ if (STATIC_BUILD)
   target_link_options(mopac-makpol PUBLIC "-static")
   target_link_options(API-example PUBLIC "-static")
 endif()
+
+# Add CITATION.cff to source files so that version updates are not ignored
+target_sources(mopac-core PRIVATE CITATION.cff)
 
 # WinMOPAC build on Windows w/ the Intel Fortran compiler
 option(BUILD_WINMOPAC "Build MOPAC & BZ with QuickWin GUI (ifort required)" OFF)
@@ -131,6 +142,15 @@ endif()
 # MOPAC shared library ABI compatibility version
 set_target_properties(mopac-core PROPERTIES SOVERSION 1)
 
+# Adjust legacy PGI compiler behavior: disable C-style backslash characters & warn about CRLF handling
+if(CMAKE_Fortran_COMPILER_ID MATCHES "PGI|Flang")
+  target_compile_options(mopac-core PUBLIC "-fno-backslash")
+  target_compile_options(mopac-makpol PUBLIC "-fno-backslash")
+  if(UNIX)
+    message(NOTICE "Legacy PGI compiler detected. Set environment variable FORTRANOPT=crlf at compile time to parse Windows-style CRLF endline sequences in MOPAC input files.")
+  endif()
+endif()
+
 # Pass OS information to MOPAC's Fortran source
 if(APPLE)
   target_compile_definitions(mopac-core PRIVATE MOPAC_OS="MacOS")
@@ -138,6 +158,21 @@ elseif(WIN32)
   target_compile_definitions(mopac-core PRIVATE MOPAC_OS="Windows")
 elseif(UNIX)
   target_compile_definitions(mopac-core PRIVATE MOPAC_OS="Linux")
+endif()
+
+# Pass compiler information to MOPAC's Fortran source
+if(CMAKE_Fortran_COMPILER_ID MATCHES "Flang")
+  option(F2003_INTRINSICS "Replace non-standard intrinsics w/ Fortran 2003 standards" ON)
+else()
+  option(F2003_INTRINSICS "Replace non-standard intrinsics w/ Fortran 2003 standards" OFF)
+endif()
+if(F2003_INTRINSICS)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_F2003)
+  target_compile_definitions(mopac-makpol PRIVATE MOPAC_F2003)
+  if(BUILD_WINMOPAC)
+    target_compile_definitions(mopac-win PRIVATE MOPAC_F2003)
+    target_compile_definitions(mopac-bz PRIVATE MOPAC_F2003)
+  endif()
 endif()
 
 # Pass version & commit information to MOPAC's Fortran source
@@ -221,9 +256,12 @@ if(GPU)
 endif()
 
 # Add tests
-option(TESTS "Enable tests (needs Python and Numpy)" ON)
+option(TESTS "Enable tests (needs Python3 and Numpy)" ON)
 if(TESTS)
-  find_package (Python COMPONENTS Interpreter)
+  find_package (Python3 COMPONENTS Interpreter NumPy)
+  if(NOT Python3_FOUND)
+    message(FATAL_ERROR "Python3 and Numpy are required for MOPAC testing (testing can be disabled with -DTESTS=OFF)")
+  endif()
   enable_testing()
   add_subdirectory(tests)
 endif()
@@ -240,6 +278,7 @@ elseif(WIN32)
 elseif(UNIX)
   set(CPACK_SYSTEM_NAME "linux")
 endif()
+set(CPACK_PROJECT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/cmake/CPackOptions.cmake")
 
 # Package the Intel OpenMP library for the QT installer (hard-coded for each OS)
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
@@ -257,7 +296,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
     # resolve symbolic links
     get_filename_component(INTEL_OMP_LIB_PATH ${INTEL_OMP_LIB} REALPATH)
     message(STATUS "OMP packaging: ${INTEL_OMP_LIB} -> ${INTEL_OMP_LIB_PATH}")
-    install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT qtifw EXCLUDE_FROM_ALL)
+    install(FILES ${INTEL_OMP_LIB_PATH} DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT redist EXCLUDE_FROM_ALL)
   endif()
 endif()
 
@@ -273,6 +312,9 @@ else()
   set(CPACK_IFW_TARGET_DIRECTORY "/opt/mopac")
 endif()
 install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" DESTINATION "." COMPONENT qtifw EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff"
+              "${CMAKE_SOURCE_DIR}/COPYING"
+              "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION "." COMPONENT redist EXCLUDE_FROM_ALL)
 
 # Install the executables and library
 install(TARGETS mopac RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
@@ -289,7 +331,7 @@ else()
   install(TARGETS mopac-core LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT main)
 endif()
 
-# Add packaging
+# Add IFW packaging
 include(CPack)
 include(CPackIFW)
 cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 2 FORCED_INSTALLATION
@@ -299,3 +341,4 @@ cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 
   USER_INTERFACES "${CMAKE_SOURCE_DIR}/.github/pathcheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/filecheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/iconcheckboxform.ui")
 cpack_ifw_configure_component(extra DISPLAY_NAME "extra utilities" SORTING_PRIORITY 1 DEFAULT FALSE)
 cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)
+cpack_ifw_configure_component(redist VIRTUAL FORCED_INSTALLATION)

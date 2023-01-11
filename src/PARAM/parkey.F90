@@ -16,12 +16,12 @@
 
  subroutine parkey (keywrd)
     use param_global_C, only : ifiles_8
-    use molkst_C, only : method_PM7, method_PM8
+    use molkst_C, only : method_PM7, method_PM8, keywrd_quoted
     implicit none
     character (len=*), intent (in) :: keywrd
     integer :: i, j, k
     character :: num*1, line*300
-    character, external :: get_a_name*300
+    character(len=300), external :: get_a_name
     integer, external :: end_of_keyword
     double precision, external :: reada
      if (Index (keywrd, " MNDO ") /= 0) &
@@ -213,23 +213,25 @@
         end if
       end do
     end if
-    i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
+    i = Index(keywrd_quoted, "EXTERNAL=")
     if (i /= 0) then
-      i = index(keywrd(i:), "=") + i
-      k = end_of_keyword(keywrd, len_trim(keywrd), i)
-      line = get_a_name(keywrd(i:k), len_trim(keywrd(i:k)))
+      i = index(keywrd_quoted(i:), "=") + i
+      k = end_of_keyword(keywrd_quoted, len_trim(keywrd_quoted), i)
+      line = get_a_name(keywrd_quoted(i:k), len_trim(keywrd_quoted(i:k)))
       write (ifiles_8, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING&
                         & DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
       do
-        j = index(keywrd(i:k), ";")
+        j = index(keywrd_quoted(i:k), ";")
         if (j /= 0) then
           i = i + j
-          line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
+          line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit
         end if
       end do
+    else if (Index(keywrd, "EXTERNAL") /= 0) then
+      write (ifiles_8, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
     end if
     return
   end subroutine parkey

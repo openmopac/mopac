@@ -205,7 +205,7 @@ subroutine geochk ()
 !
     i =  index(keywrd," SITE=(IONIZE)")
     if (i > 0) then
-      line = "SITE=(COO,NH3,LYS(+),ARG(+),SO4,PO4)"
+      line = "SITE=(COO,NH3,ARG(+),SO4,PO4)"
       keywrd = keywrd(:i)//trim(line)//keywrd(i + 14:)
     end if
     i = index(keywrd," SITE=")
@@ -1587,7 +1587,8 @@ subroutine geochk ()
       rewind iarc
       if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
       call geout (iarc)
-      if (index(keywrd, " PDBOUT") /= 0 .and. index(keywrd, " RESEQ") == 0) then
+      if (index(keywrd, " PDBOUT") + index(keywrd, " HTML") /= 0 .and. &
+        index(keywrd, " RESEQ") == 0) then
         line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
         i = iarc
         inquire(unit=i, opened=opend)

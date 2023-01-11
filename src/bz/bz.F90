@@ -42,7 +42,11 @@ program BZ
   character      :: num
   ! 
   iw = 6
+#ifdef MOPAC_F2003
+  i = command_argument_count()
+#else
   i = iargc()
+#endif
   l_read_dat = (i < 2)
   if (i == 0) then
     call graphics(0.0, 0.0, 1)
@@ -60,7 +64,11 @@ program BZ
     call graphics(0.0, 0.0, 100)
     stop
   else
+#ifdef MOPAC_F2003
+    call get_command_argument(1, jobnam)
+#else
     call getarg(1, jobnam)
+#endif
     j = len_trim(jobnam) 
     if (jobnam(j - 3:j - 3) == ".") then
       suffix = .true.
@@ -71,7 +79,11 @@ program BZ
     end if
     if (i > 1) then
       ir = 25
+#ifdef MOPAC_F2003
+      call get_command_argument(2, data_set_name)
+#else
       call getarg(2, data_set_name)
+#endif
       i = len_trim(data_set_name) 
       if (i > 4) then
         if (data_set_name(i - 3:i - 3) == ".") then

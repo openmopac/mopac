@@ -30,14 +30,14 @@
         time0, atheat, errtxt, isok, mpack, line, na1, refkey, keywrd_txt, &
         press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
-        sparkle, itemp_1, maxtxt, koment, sz, ss2, &
+        sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
 !
-      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi
+      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi, ediel
 !
       USE funcon_C, only : fpc_9
 !
@@ -99,8 +99,13 @@
       git_hash = MOPAC_GIT_HASH
 #endif
 ! parse command-line flags
+#ifdef MOPAC_F2003
+      do i = 1, command_argument_count()
+        call get_command_argument (i, jobnam)
+#else
       do i = 1, iargc()
         call getarg (i, jobnam)
+#endif
         if (jobnam == '-V' .OR. jobnam == '--version') then
           write(*,"(a)") "MOPAC version "//trim(verson)//" commit "//trim(git_hash)
           stop
@@ -195,6 +200,7 @@
       moperr = .FALSE.
       name = " "
       escf   = 0.d0
+      ediel  = 0.d0
       gnorm  = 0.D0
       press  = 0.d0
       E_disp = 0.d0
@@ -238,7 +244,6 @@
           end if
         end if
       end if
-      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
       if (numcal > 1 .and. numcal < 4 .and. index(keywrd_txt," GEO_DAT") /= 0) then
 !
 !  Quickly jump over first three lines
@@ -249,6 +254,7 @@
         natoms = i
         call gettxt
       end if
+      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
 !
 !    Read in all the data for the current job
 !
@@ -399,7 +405,7 @@
 !
       call switch
     !  if (method_PM8) method_PM7 = .true.
-      if (index(keywrd,' EXTERNAL') /= 0) call datin (iw)
+      if (index(keywrd_quoted,' EXTERNAL=') + index(keywrd,' EXTERNAL') /= 0) call datin (ir, iw)
       if (moperr) go to 100
       sparkle = (index(keywrd, " SPARKL") /= 0)
 !
@@ -610,6 +616,11 @@
             if (index(keywrd, " ADD-H") /= 0) then
               call store_and_restore_Tv("STORE")
               call add_hydrogen_atoms()
+              if (moperr) then
+                inquire(unit=iarc, opened=opend) 
+                if (opend) close (iarc, status="DELETE") 
+                go to 101
+              end if
               call move_hydrogen_atoms
               call store_and_restore_Tv("RESTORE")
               call lewis(.false.)
@@ -876,6 +887,7 @@
         call to_screen(" Force constant calculation")
         last = 1
         call force ()
+        keywrd = " "
         iflepo = -1
       else if (index(keywrd,' DRC') + index(keywrd,' IRC') /= 0) then
         call to_screen(" Reaction coordinate calculation")
@@ -1049,7 +1061,7 @@
       write (iw, '(3/,'' TOTAL JOB TIME: '',F16.2,'' SECONDS'')') tim
       write (iw, '(/,'' == MOPAC DONE =='')')
       call fdate (line)
-      write(0,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
+      write(*,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
       line(5:10)//", "//trim(line(21:))//", at"//line(11:16)//"."
 !
 !  Delete files that are definitely not wanted

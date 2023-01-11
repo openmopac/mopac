@@ -21,9 +21,9 @@
       USE journal_references_C, only : allref
       use chanel_C, only : iw
       use common_arrays_C, only : nat
-      use molkst_C, only : numat, keywrd, is_PARAM, method_rm1, &
+      use molkst_C, only : numat, keywrd, keywrd_quoted, is_PARAM, method_rm1, &
       method_mndo, method_am1, method_pm3, method_pm6, method_mndod, &
-      method_pm7, sparkle, method_pm8, method_indo
+      method_pm7, sparkle, method_pm6_org, method_pm8, method_indo
       use parameters_C, only : gss
       use parameters_for_PM6_Sparkles_C, only : gss6sp
       use parameters_for_AM1_Sparkles_C, only : gssam1sp
@@ -129,8 +129,28 @@
         call mopend("Parameters for some elements are missing")
         return
       end if
+      if (method_pm6_org) then
+        allok = .true.
+        do i = 1, 102 
+          if (.not.elemns(i)) cycle
+          select case(i)
+            case (1, 6, 7, 8, 9, 11, 12, 15, 16, 17, 19, 20, 26, 27, 29, 30, 34, 35, 53)
+              continue
+            case default
+              if (allok) write (iw, *)
+              write (iw, '(10x, A,I3)') 'DATA ARE NOT AVAILABLE FOR ELEMENT NO.', i
+              allok = .FALSE.
+          end select
+        end do
+        if (.not. allok) then
+          call mopend("Parameters for some elements are missing")
+          return
+        end if
+        write (iw, '(/,a)') " General Reference for PM6-ORG will be added when available."
+        return
+      end if
       mixok = index(keywrd,'PARASOK') /= 0
-      exter = index(keywrd," EXTERNAL") /= 0
+      exter = index(keywrd_quoted,"EXTERNAL") /= 0
 
       if (method_pm7)   mode = 7
       if (method_rm1)   then
@@ -141,12 +161,13 @@
         end if
         mode = 6
       end if
-      if (method_mndod) mode = 5
-      if (method_pm3)   mode = 4
-      if (method_am1)   mode = 3
-      if (method_pm6)   mode = 2
-      if (method_mndo)  mode = 1
-      if (method_pm8)   mode = 9
+      if (method_mndod)   mode = 5
+      if (method_pm3)     mode = 4
+      if (method_am1)     mode = 3
+      if (method_pm6)     mode = 2
+      if (method_mndo)    mode = 1
+      if (method_pm6_org) mode = 9
+      if (method_pm8)     mode = 10
       allref(99,mode) = &
         ' DUMMY ATOMS ARE USED; THESE DO NOT AFFECT THE CALCULATION'
       allref(100,mode) = ' '
@@ -166,7 +187,7 @@
           allok = .FALSE.
           end if
         else
-          write (iw, '(A)') allref(i,mode)(:len_trim(allref(i,mode)))
+          write (iw, '(A)') trim(allref(i,mode))
           if (mode == 7) exit
         end if
       end do

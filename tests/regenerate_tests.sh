@@ -163,3 +163,8 @@ rm SALT_2.arc
 mopac SITE_Individual_residues.mop
 rm SITE_Individual_residues.arc
 
+mopac erratic1.mop
+rm erratic1.arc
+
+mopac erratic2.mop
+rm erratic2.arc

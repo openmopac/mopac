@@ -70,7 +70,7 @@
 !  The weights given to each reference datum depend on the elements present.
 !  Weights are assigned according to the type of element
    double precision, dimension (107) :: element_weights
-   character, external :: get_a_name*300
+   character(len=300), external :: get_a_name
    integer, external :: end_of_keyword
    double precision, external :: seconds, reada
    double precision, parameter :: &

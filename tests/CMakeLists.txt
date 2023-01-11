@@ -25,7 +25,7 @@ macro(add_mopac_test _name _files)
   endforeach()
   unset(_files)
 
-  add_test(NAME "${_name}" COMMAND ${Python_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/run_test.py ${CMAKE_CURRENT_SOURCE_DIR}
+  add_test(NAME "${_name}" COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/run_test.py ${CMAKE_CURRENT_SOURCE_DIR}
            ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} ${_files})
 endmacro()
 
@@ -62,3 +62,5 @@ set_tests_properties(salt PROPERTIES DEPENDS ionize) # uses Neutral.mop
 add_mopac_test(salt2 "SALT_2.mop")
 add_mopac_test(residues "SITE_Individual_residues.mop")
 set_tests_properties(residues PROPERTIES DEPENDS ionize) # uses IONIZE.arc
+add_mopac_test(erratic-1 "erratic1.mop")
+add_mopac_test(erratic-2 "erratic2.mop")
