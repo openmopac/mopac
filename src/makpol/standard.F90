@@ -16,9 +16,6 @@
 
 subroutine bangle (xyz, i, j, k, angle)
 !
-! 'All Rights Reserved, Copyright (C) Fujitsu Limited 1993.'
-!
-!
 !.. Implicit Declarations ..
     implicit none
 !
