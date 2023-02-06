@@ -75,7 +75,8 @@ jobs:
           files: coverage.info
 
   linux-build:
-    runs-on: ubuntu-latest
+    # Ubuntu 22+ switched to newer glibc (2.34) that breaks the compatibility library right now
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Check number of cores
