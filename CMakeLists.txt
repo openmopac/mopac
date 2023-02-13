@@ -54,6 +54,8 @@ endif()
 option(STATIC_BUILD "Build a static executable" OFF)
 if (STATIC_BUILD)
   message(STATUS "Static executables")
+  message(WARNING "CMake cannot verify the ability to link static executables in the pre-build phase. "
+    "Please verify that you are able to link static executables with a \"-static\" linker flag.")
 else()
   message(STATUS "Shared library and dynamic executables")
 endif()
