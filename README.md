@@ -12,7 +12,7 @@ Commercial versions of MOPAC are no longer supported, and all MOPAC users are en
 
 ## Installation
 
-Self-contained installers for Linux, Mac, and Windows are available on GitHub for each release,
+Self-contained graphical installers for Linux, Mac, and Windows are available on GitHub for each release,
 which are constructed using the [Qt Installer Framework](https://doc.qt.io/qtinstallerframework/).
 
 While the installers are meant to be run from a desktop environment by default, they can also be run from a command line without user input.
@@ -21,6 +21,11 @@ On Linux, the basic command-line installation syntax is:
 `./mopac-x.y.z-linux.run install --accept-licenses --confirm-command --root type_installation_directory_here`
 
 For more information on command-line installation, see the [Qt Installer Framework Documentation](https://doc.qt.io/qtinstallerframework/ifw-cli.html).
+
+Linux installations without a desktop environment may not have the shared libraries required for the graphical installers,
+and a minimal tarball is available for Linux users as an alternative.
+
+The minimum glibc version required for the precompiled version of MOPAC on Linux is 2.17.
 
 ### Package managers
 
