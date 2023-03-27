@@ -435,7 +435,7 @@
          if (index(line,"ATOM") + index(line,"HETATM") + index(line,"TITLE") + index(line,"HEADER") + &
         index(line,"ANISOU") + index(line,"COMPND") + index(line,"SOURCE") + index(line,"KEYWDS") + &
         index(line,"HELIX") + index(line,"SHEET") + index(line,"REMARK") + index(line,"USER ")  + &
-        index(line, "SEQRES") /= 0) goto 70
+        index(line, "SEQRES") + index(line,"ENDMDL") /= 0) goto 70
         if (trim(line) == " *                    *") return
         write (iw, '(''  UNRECOGNIZED ELEMENT NAME: ('',A,'')'')') ele
         write(iw,'(/,"  Faulty line: """,a,"""",/)')trim(line)
