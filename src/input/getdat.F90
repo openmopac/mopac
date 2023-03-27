@@ -228,22 +228,29 @@
           if (j > 0) exit
         end if
         if (line(1:1) /= '*') then
-            line1 = trim(line)
-            i = 0
-            do j = 1, len_trim(line1)
-              if (ichar(line1(j:j)) == 9) then
-      !
-      ! convert tab to space(s).  Align with 8 character boundary
-      !
-                i = i + 1
-                l = mod(i,8)
-                line(i:) = " "
-                if (l /= 0) i = i + 8 - l
-              else
-                i = i + 1
-                line(i:i) = line1(j:j)
-              end if
-            end do
+           line1 = trim(line)    
+          i = 0
+          do j = 1, len_trim(line1)
+            if (ichar(line1(j:j)) == 9) then
+    !
+    ! convert tab to space(s).  Align with 8 character boundary
+    !
+              i = i + 1
+              l = mod(i,8)
+              line(i:) = " "
+              if (l /= 0) i = i + 8 - l                    
+            else
+              i = i + 1
+              line(i:i) = line1(j:j)
+            end if
+          end do
+!
+! Replace ASCII 194 and 160 with spaces
+!
+          i = len_trim(line)
+          do j = 1, i
+            if (ichar(line(j:j)) == 194 .or. ichar(line(j:j)) == 160) line(j:j) = " "
+          end do
           write (input, '(A)', iostat=io_stat) trim(line)
           if (io_stat /= 0) then
             write (line, '(a)') ' The run-time temporary file "'//trim(jobnam)//'.temp" cannot be written to.'
