@@ -226,6 +226,7 @@ subroutine pdbout (mode1)
       do i = 1, natoms - id
         if (txtatm(i)(1:4) == "ATOM") l_het_only = .false.
         if (txtatm(i)(18:20) == "HOH") cycle
+        if (txtatm(i)(18:20) == "DOD") cycle
         if (txtatm(i)(18:20) == "SO4") cycle
         j = nint(reada(txtatm(i), 23))
         if (j < 0) then
@@ -635,9 +636,7 @@ subroutine pdbout (mode1)
 !
 !   Element(1,1) and (2,1)
 !
-   !   write(iprt,"(a)") "<TD colspan=""2"">"
       call write_data_to_html(iprt)
-   !   write(iprt,"(a)") "</TD></TR><TR>"
     end if
     write(iprt,"(a)") "<span id=mydiv></span><a href=""javascript:Jmol.script(jmolApplet0)""></a></TD></TABLE>"
     write(iprt,"(a)") "</BODY>"
@@ -646,7 +645,7 @@ subroutine pdbout (mode1)
 !  Write out a simple script file
 !
     close (iprt)
-    line = line(:len_trim(line) - 3)
+    line = input_fn(:len_trim(input_fn) - 4)
     call add_path(line)
     inquire (file=trim(line)//"txt", exist = exists)
     if (.not. exists) then

@@ -418,5 +418,6 @@
     end do
     write (param_out,"(a)") '    end subroutine alpb_and_xfac_pm'//name_1(:l1)
     write (param_out,"(a)") "  end module Parameters_for_PM"//name_1(:l1)//"_C"
+    close (param_out)
     return
   end subroutine create_parameters_for_PMx_C

@@ -454,6 +454,7 @@
             call getpdb(geo)
             coorda(:,:numat) = geo(:,:numat)
             numat_old = numat
+            intern = .false.
           else
             call getgeo (ir, labels, geo, coord, lopt, na, nb, nc, intern)
             if (numcal == 1 .and. natoms == 0) then
@@ -684,7 +685,7 @@
           if (numcal == 1 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
         end if
       end if
-      maxci = 16000
+      maxci = 10000
       write (iw, '(1X,a)')"**                                                                           **"
       write (iw,"(1x,a)") "**                              MOPAC v"//verson//"                  **"
       write (iw, '(1X,a)')"**                                                                           **"
@@ -761,8 +762,6 @@
         method_pm7 = (method_PM7 .or. method_PM7_ts .or. method_pm7_hh .or. method_pm7_minus)
         method_pm6 = (method_PM6 .or. method_pm6_dh2 .or. method_pm6_d3h4 .or. method_pm6_dh_plus .or. &
        & method_pm6_dh2x .or. method_pm6_d3h4x .or. method_pm6_d3 .or. method_pm6_d3_not_h4)
-        l_feather = (method_PM7 .or. method_pm6_org .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
-        l_feather_1 = (index(keywrd, " MACRO") /= 0)
         dh = " "
         i = index(keywrd, " PM6-D")
         if (i /= 0) then
@@ -773,6 +772,8 @@
         end if
         keywrd = trim(keywrd_txt)
       end if
+      l_feather = (method_PM7 .or. method_pm6_org .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
+      l_feather_1 = (index(keywrd, " MACRO") /= 0)
       write (iw, &
       '(/24X,A,'' CALCULATION RESULTS'',2/1X,15(''*****''),''****'' )') "     "//trim(caltyp)
       write (iw,'(" *  CALCULATION DONE: ",31x,2a)') idate,"  *"
