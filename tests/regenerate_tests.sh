@@ -168,3 +168,7 @@ rm erratic1.arc
 
 mopac erratic2.mop
 rm erratic2.arc
+
+mopac erratic3.mop
+rm erratic3.arc
+

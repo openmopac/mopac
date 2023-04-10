@@ -1,0 +1,7 @@
+open(1,2) 1SCF   MNDO     GRADIENTS  PRECISE
+             SIH  HEAT OF FORMATION (MNDO)= 90.215
+
+ Si    0.00000000  0    0.0000000  0    0.0000000  0    0    0    0      0.4169
+  H    1.37437054  1    0.0000000  0    0.0000000  0    1    0    0     -0.4169
+
+
