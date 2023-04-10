@@ -27,6 +27,7 @@ import numpy as np
 
 NUMERIC_THRESHOLD = 1e-4 # large because of numerical errors in unoccupied orbital energies, energy gradients, & relaxed geometries
 HEAT_THRESHOLD = 1e-4
+HEAT_THRESHOLD_ERROR = 1e-2 # looser threshold that flags an error
 DEGENERACY_THRESHOLD = 1e-3
 EIGVEC_THRESHOLD = 1e-3
 
@@ -232,10 +233,10 @@ def compare_mopac_out_file(out_line, out_list, ref_line, ref_list):
 
         # compare heats of formation
         elif len(ref) == 2:
-    #        assert abs(ref[1] - out[1]) < HEAT_THRESHOLD, f'ERROR: numerical heat mismatch between {ref[1]} and {out[1]} on output line {line}'
+            assert abs(ref[1] - out[1]) < HEAT_THRESHOLD_ERROR, f'ERROR: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and {out[1]} on output line {out_line0}'
             if abs(ref[1] - out[1]) > HEAT_THRESHOLD:
                 print(f'WARNING: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and {out[1]} on output line {out_line0}')
-
+ 
         # compare eigenvalues & eigenvectors
         elif len(ref) == 4:
             ref_val, ref_vec, ref_begin, ref_end = ref
