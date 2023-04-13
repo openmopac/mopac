@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                MOPAC2016                                  **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:43 2021  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:03:59 2023  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(7A 300) 
@@ -26,7 +26,7 @@
  START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_1BRR.ent" Compare output
  Compare 1AP9 and 1BRR Bacteriorhodopsin
 
- 
+
 
                             Differences in atoms sets
 
@@ -455,31 +455,31 @@
 
            Diff.                 Atom 1                       Atom 2                  Bond length      Bond length
                                                                                       in GEO_DAT      in GEO_REF
-   1       0.058     S(ATOM    472  SD  MET A  68)    C(ATOM    473  CE  MET A  68)      1.782            1.841
-   2       0.046     S(ATOM    379  SD  MET A  56)    C(ATOM    380  CE  MET A  56)      1.821            1.775
-   3       0.046     S(ATOM   1216  SD  MET A 163)    C(ATOM   1215  CG  MET A 163)      1.793            1.839
-   4       0.045     C(ATOM   1093  CG1 ILE A 148)    C(ATOM   1095  CD1 ILE A 148)      1.472            1.517
-   5       0.042     N(ATOM      1  N   ARG A   7)    C(ATOM      2  CA  ARG A   7)      1.500            1.458
-   6       0.039     C(ATOM   1101  CG  LEU A 149)    C(ATOM   1103  CD2 LEU A 149)      1.552            1.513
-   7       0.038     S(ATOM    413  SD  MET A  60)    C(ATOM    414  CE  MET A  60)      1.772            1.810
-   8       0.038     C(ATOM     49  CB  TRP A  12)    C(ATOM     50  CG  TRP A  12)      1.536            1.497
-   9       0.037     C(ATOM    887  CG  LEU A 123)    C(ATOM    889  CD2 LEU A 123)      1.532            1.495
-  10       0.037     C(ATOM    486  CG  PRO A  70)    C(ATOM    487  CD  PRO A  70)      1.482            1.519
-  11       0.037     C(ATOM    478  CB  VAL A  69)    C(ATOM    480  CG2 VAL A  69)      1.493            1.530
-  12       0.036     C(ATOM   1422  CB  TRP A 189)    C(ATOM   1423  CG  TRP A 189)      1.480            1.516
-  13       0.035     C(ATOM    780  CA  THR A 107)    C(ATOM    783  CB  THR A 107)      1.534            1.570
-  14       0.035     C(ATOM   1034  CG1 ILE A 140)    C(ATOM   1036  CD1 ILE A 140)      1.535            1.500
-  15       0.035     C(ATOM    887  CG  LEU A 123)    C(ATOM    888  CD1 LEU A 123)      1.548            1.513
-  16       0.034     C(ATOM     77  CG  LEU A  15)    C(ATOM     78  CD1 LEU A  15)      1.547            1.512
-  17       0.033     S(ATOM    413  SD  MET A  60)    C(ATOM    412  CG  MET A  60)      1.785            1.818
-  18       0.033     C(ATOM    377  CB  MET A  56)    C(ATOM    378  CG  MET A  56)      1.502            1.535
-  19       0.031     C(ATOM    927  CD  LYS A 129)    C(ATOM    928  CE  LYS A 129)      1.521            1.552
-  20       0.031     C(ATOM    545  CG1 ILE A  78)    C(ATOM    547  CD1 ILE A  78)      1.524            1.493
-  21       0.031     C(ATOM    564  CB  TRP A  80)    C(ATOM    565  CG  TRP A  80)      1.505            1.475
-  22       0.030     C(ATOM    926  CG  LYS A 129)    C(ATOM    927  CD  LYS A 129)      1.526            1.557
-  23       0.029     C(ATOM   1441  CA  ILE A 191)    C(ATOM   1444  CB  ILE A 191)      1.564            1.535
-  24       0.029     S(ATOM   1216  SD  MET A 163)    C(ATOM   1217  CE  MET A 163)      1.790            1.819
-  25       0.029     C(ATOM   1412  CA  VAL A 188)    C(ATOM   1415  CB  VAL A 188)      1.569            1.541
+   1      -0.058     S(ATOM    472  SD  MET A  68)    C(ATOM    473  CE  MET A  68)      1.782            1.841
+   2      +0.046     S(ATOM    379  SD  MET A  56)    C(ATOM    380  CE  MET A  56)      1.821            1.775
+   3      -0.046     S(ATOM   1216  SD  MET A 163)    C(ATOM   1215  CG  MET A 163)      1.793            1.839
+   4      -0.045     C(ATOM   1093  CG1 ILE A 148)    C(ATOM   1095  CD1 ILE A 148)      1.472            1.517
+   5      +0.042     N(ATOM      1  N   ARG A   7)    C(ATOM      2  CA  ARG A   7)      1.500            1.458
+   6      +0.039     C(ATOM   1101  CG  LEU A 149)    C(ATOM   1103  CD2 LEU A 149)      1.552            1.513
+   7      -0.038     S(ATOM    413  SD  MET A  60)    C(ATOM    414  CE  MET A  60)      1.772            1.810
+   8      +0.038     C(ATOM     49  CB  TRP A  12)    C(ATOM     50  CG  TRP A  12)      1.536            1.497
+   9      +0.037     C(ATOM    887  CG  LEU A 123)    C(ATOM    889  CD2 LEU A 123)      1.532            1.495
+  10      -0.037     C(ATOM    486  CG  PRO A  70)    C(ATOM    487  CD  PRO A  70)      1.482            1.519
+  11      -0.037     C(ATOM    478  CB  VAL A  69)    C(ATOM    480  CG2 VAL A  69)      1.493            1.530
+  12      -0.036     C(ATOM   1422  CB  TRP A 189)    C(ATOM   1423  CG  TRP A 189)      1.480            1.516
+  13      -0.035     C(ATOM    780  CA  THR A 107)    C(ATOM    783  CB  THR A 107)      1.534            1.570
+  14      +0.035     C(ATOM   1034  CG1 ILE A 140)    C(ATOM   1036  CD1 ILE A 140)      1.535            1.500
+  15      +0.035     C(ATOM    887  CG  LEU A 123)    C(ATOM    888  CD1 LEU A 123)      1.548            1.513
+  16      +0.034     C(ATOM     77  CG  LEU A  15)    C(ATOM     78  CD1 LEU A  15)      1.547            1.512
+  17      -0.033     S(ATOM    413  SD  MET A  60)    C(ATOM    412  CG  MET A  60)      1.785            1.818
+  18      -0.033     C(ATOM    377  CB  MET A  56)    C(ATOM    378  CG  MET A  56)      1.502            1.535
+  19      -0.031     C(ATOM    927  CD  LYS A 129)    C(ATOM    928  CE  LYS A 129)      1.521            1.552
+  20      +0.031     C(ATOM    545  CG1 ILE A  78)    C(ATOM    547  CD1 ILE A  78)      1.524            1.493
+  21      +0.031     C(ATOM    564  CB  TRP A  80)    C(ATOM    565  CG  TRP A  80)      1.505            1.475
+  22      -0.030     C(ATOM    926  CG  LYS A 129)    C(ATOM    927  CD  LYS A 129)      1.526            1.557
+  23      +0.029     C(ATOM   1441  CA  ILE A 191)    C(ATOM   1444  CB  ILE A 191)      1.564            1.535
+  24      -0.029     S(ATOM   1216  SD  MET A 163)    C(ATOM   1217  CE  MET A 163)      1.790            1.819
+  25      +0.029     C(ATOM   1412  CA  VAL A 188)    C(ATOM   1415  CB  VAL A 188)      1.569            1.541
 
     GEO_DAT:  'Bacteriorhodopsin_1AP9.ent'
     GEO_REF:  'Bacteriorhodopsin_1BRR.ent'

@@ -12,7 +12,7 @@ rm port.res
 rm port.txt
 rm port.ump
 rm port.xyz
-rm parameters_for_PM8_C.F90
+rm parameters_for_PM6_ORG_C.F90
 
 mopac Crambin_1SCF.mop
 rm Crambin_1SCF.arc
@@ -21,6 +21,7 @@ rm Crambin_1SCF.pdb
 rm Crambin_1SCF.den
 
 mopac test_Lewis_for_Proteins.mop
+rm test_Lewis_for_Proteins.arc
 rm test_Lewis_for_Proteins.html
 rm test_Lewis_for_Proteins.pdb
 rm test_Lewis_for_Proteins.txt
@@ -133,15 +134,15 @@ rm Locate_TS.log
 rm Locate_TS.pdb
 rm Locate_TS.arc
 rm Locate_TS.txt
-rm "Locate_TS 30p0 first.mop"
-rm "Locate_TS 60p0 first.mop"
-rm "Locate_TS 120p0 first.mop"
-rm "Locate_TS 30p0 second.mop"
-rm "Locate_TS 60p0 second.mop"
-rm "Locate_TS 120p0 second.mop"
-rm "Locate_TS 30p0 average.mop"
-rm "Locate_TS 60p0 average.mop"
-rm "Locate_TS 120p0 average.mop"
+rm "Locate_TS bias=120.0 average.mop"
+rm "Locate_TS bias=120.0 first.mop"
+rm "Locate_TS bias=120.0 second.mop"
+rm "Locate_TS bias=30.0 average.mop"
+rm "Locate_TS bias=30.0 first.mop"
+rm "Locate_TS bias=30.0 second.mop"
+rm "Locate_TS bias=60.0 average.mop"
+rm "Locate_TS bias=60.0 first.mop"
+rm "Locate_TS bias=60.0 second.mop"
 rm "Locate_TS Loop1.mop"
 rm "Locate_TS Loop2.mop"
 rm "Locate_TS Loop3.mop"

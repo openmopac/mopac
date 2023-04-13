@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                MOPAC2016                                  **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:39 2021  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:03:57 2023  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(10B 20B 16B 30B 30B) 
@@ -26,7 +26,7 @@
  START_RES=(10B 20B 16B 30B 30B)  CHAINS=(BBBBB) geo_dat="Structure-1.txt" geo_ref="Structure-2.txt" compare output
  Compare two very similar geometries (compare residue 10)
 
- 
+
 
                         After docking
 
@@ -51,9 +51,9 @@
 
            Diff.                 Atom 1                       Atom 2                  Bond length      Bond length
                                                                                       in GEO_DAT      in GEO_REF
-   1       0.500     N(ATOM      1  N   ASP B  10)    C(ATOM      2  CA  ASP B  10)      0.963            1.463
-   2       0.254     N(ATOM      1  N   ASP B  10)    H(ATOM    112 1H   ASP B  10)      1.265            1.010
-   3       0.254     N(ATOM      1  N   ASP B  10)    H(ATOM    113 2H   ASP B  10)      1.265            1.010
+   1      -0.500     N(ATOM      1  N   ASP B  10)    C(ATOM      2  CA  ASP B  10)      0.963            1.463
+   2      +0.254     N(ATOM      1  N   ASP B  10)    H(ATOM    112 1H   ASP B  10)      1.265            1.010
+   3      +0.254     N(ATOM      1  N   ASP B  10)    H(ATOM    113 2H   ASP B  10)      1.265            1.010
 
     GEO_DAT:  'Structure-1.txt'
     GEO_REF:  'Structure-2.txt'

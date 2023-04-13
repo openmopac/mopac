@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                MOPAC2016                                  **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:40 2021  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:03:57 2023  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -24,7 +24,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.88500000  *  14.07800000  *   3.42700000  *
      2       C(ATOM      3  CA  THR A   1)   16.93800000  *  12.83400000  *   4.23400000  *
      3       C(ATOM      5  C   THR A   1)   15.64200000  *  12.76000000  *   4.98500000  *
@@ -662,7 +662,7 @@
    635       H(ATOM    839  HB3 ASN A  46)   11.92300000  *   3.91500000  *  12.68400000  *
    636       H(ATOM    840 HD21 ASN A  46)   13.76400000  *   2.76200000  *  15.69500000  *
    637       H(ATOM    842 HD22 ASN A  46)   14.03200000  *   2.88000000  *  13.97200000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -1582,7 +1582,7 @@
   H(ATOM    839  HB3 ASN A  46)  11.92300000 +1   3.91500000 +1  12.68400000 +1
   H(ATOM    840 HD21 ASN A  46)  13.76400000 +1   2.76200000 +1  15.69500000 +1
   H(ATOM    842 HD22 ASN A  46)  14.03200000 +1   2.88000000 +1  13.97200000 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
 
@@ -1610,6 +1610,6 @@
 
 
 
- TOTAL JOB TIME:             0.13 SECONDS
+ TOTAL JOB TIME:             0.09 SECONDS
 
  == MOPAC DONE ==

@@ -1,6 +1,6 @@
  *******************************************************************************
  **                                                                           **
- **                              MOPAC v22.0.1                                **
+ **                              MOPAC v22.0.6                                **
  **                                                                           **
  *******************************************************************************
  **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
@@ -10,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Jun  5 00:18:28 2022  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:03:57 2023  *
  *  COMPARE    - Compare two geometries
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(7A 300) 
@@ -26,7 +26,7 @@
  START_RES=(7A 300)  CHAINS=(A) geo_dat="Bacteriorhodopsin_1AP9.ent" geo_ref="Bacteriorhodopsin_2AT9.ent" Compare Output
  Compare 1AP9 and 2AT9 Bacteriorhodopsin
 
- 
+
 
                             Differences in atoms sets
 

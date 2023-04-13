@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                MOPAC2016                                  **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:38 2021  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:03:56 2023  *
  *  XENO       - RENAME PROTEIN FRAGMENTS AND SMALL MOLECULES
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(10B 20B 30B 31B 32B 33B) 
@@ -27,7 +27,7 @@
 
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N          0.00000000  *   0.00000000  *   0.00000000  *
      2       C          1.46300000  *   0.00000000  *   0.00000000  *
      3       C          2.06000000  *   1.42400000  *   0.00000000  *
@@ -250,7 +250,7 @@
    220       H         -4.98400000  *  23.67400000  *   8.66900000  *
    221       H         -5.49500000  *  25.34000000  *   4.63600000  *
    222       H         -5.52400000  *  25.59000000  *   7.25400000  *
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -757,7 +757,7 @@
   H(HETATM  220  H5  BEN B  33)  -4.98400000 +1  23.67400000 +1   8.66900000 +1
   H(HETATM  221  H1  BEN B  33)  -5.49500000 +1  25.34000000 +1   4.63600000 +1
   H(HETATM  222  H6  BEN B  33)  -5.52400000 +1  25.59000000 +1   7.25400000 +1
- 
+
 
       Residue names that have been changed
 
@@ -772,6 +772,6 @@
 
 
 
- TOTAL JOB TIME:             0.02 SECONDS
+ TOTAL JOB TIME:             0.03 SECONDS
 
  == MOPAC DONE ==
