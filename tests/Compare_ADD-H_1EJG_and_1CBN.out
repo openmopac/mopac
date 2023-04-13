@@ -1,6 +1,6 @@
  *******************************************************************************
  **                                                                           **
- **                              MOPAC v22.0.3                                **
+ **                              MOPAC v22.0.6                                **
  **                                                                           **
  *******************************************************************************
  **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
@@ -10,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Tue Jun 28 16:18:22 2022  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:25:46 2023  *
  *  COMPARE    - Compare two geometries
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "PDB1EJG.arc"
  *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE "PDB1CBN.arc"
@@ -22,7 +22,7 @@
 geo_dat="PDB1EJG.arc" geo_ref="PDB1CBN.arc" compare output
  Two PDB structures for Crambin (Atoms in PRO/SER 22, LEU/ILE 25, and others deleted)
 
- 
+
 
                             Differences in atoms sets
 

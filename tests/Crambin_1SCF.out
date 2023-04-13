@@ -1,6 +1,6 @@
  *******************************************************************************
  **                                                                           **
- **                              MOPAC v22.0.2                                **
+ **                              MOPAC v22.0.6                                **
  **                                                                           **
  *******************************************************************************
  **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
@@ -10,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Jun 26 00:28:48 2022  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:24:41 2023  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A 66) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -28,7 +28,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -679,7 +679,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
    648       H(HETATM  648 1H2  EOH A  66)   16.47100000  *   1.10900000  *  13.51600000  *
    649       H(HETATM  649 2H2  EOH A  66)   16.16500000  *   0.57400000  *  11.84100000  *
    650       H(HETATM  650  H   EOH A  66)   14.08500000  *   2.06100000  *  12.73200000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -1355,7 +1355,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
     648          H (HETATM  648 1H2  EOH A  66)     329
     649          H (HETATM  649 2H2  EOH A  66)     329
     650          H (HETATM  650  H   EOH A  66)     330
- 
+
 
                  All other ions
     1     (ATOM    301  OD2 ASP A  43)   -1
@@ -1367,47 +1367,47 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
  PLS ESCF USING THE OLD LMOs:    43475.128596 KCAL/MOL
 
  ITER.      1 PLS= 0.790E+01           ENERGY   15112.41451 DELTAE    0.0000000
- ITER.      2 PLS= 0.308E+01           ENERGY    6429.58363 DELTAE-8682.8308781
+ ITER.      2 PLS= 0.308E+01           ENERGY    6429.58363 DELTAE-8682.8308780
  ITER.      3 PLS= 0.462E+01           ENERGY   -4836.93782 DELTAE    0.0000000
- ITER.      4 PLS= 0.461E+01           ENERGY    -708.05798 DELTAE 4128.8798371
- ITER.      5 PLS= 0.215E+01           ENERGY    -789.24871 DELTAE  -81.1907301
+ ITER.      4 PLS= 0.461E+01           ENERGY    -708.05798 DELTAE 4128.8798372
+ ITER.      5 PLS= 0.215E+01           ENERGY    -789.24871 DELTAE  -81.1907302
  ITER.      6 PLS= 0.158E+01           ENERGY   -1216.50072 DELTAE -427.2520033
- ITER.      7 PLS= 0.224E+01           ENERGY   -1144.94277 DELTAE   71.5579443
- ITER.      8 PLS= 0.863E+00           ENERGY   -1356.05198 DELTAE -211.1092091
+ ITER.      7 PLS= 0.224E+01           ENERGY   -1144.94277 DELTAE   71.5579444
+ ITER.      8 PLS= 0.863E+00           ENERGY   -1356.05198 DELTAE -211.1092092
  ITER.      9 PLS= 0.110E+01           ENERGY   -2614.41428 DELTAE-1258.3623002
- ITER.     10 PLS= 0.165E+01           ENERGY   -2118.01776 DELTAE  496.3965181
- ITER.     11 PLS= 0.864E+00           ENERGY   -2251.31408 DELTAE -133.2963139
+ ITER.     10 PLS= 0.165E+01           ENERGY   -2118.01776 DELTAE  496.3965182
+ ITER.     11 PLS= 0.864E+00           ENERGY   -2251.31408 DELTAE -133.2963138
  ITER.     12 PLS= 0.625E+00           ENERGY   -2421.51909 DELTAE -170.2050080
- ITER.     13 PLS= 0.723E+00           ENERGY   -2498.85412 DELTAE  -77.3350333
- ITER.     14 PLS= 0.244E+00           ENERGY   -2572.78826 DELTAE  -73.9341412
- ITER.     15 PLS= 0.246E+00           ENERGY   -2684.12782 DELTAE -111.3395601
- ITER.     16 PLS= 0.381E+00           ENERGY   -2703.61332 DELTAE  -19.4855045
- ITER.     17 PLS= 0.158E+00           ENERGY   -2734.77828 DELTAE  -31.1649557
+ ITER.     13 PLS= 0.723E+00           ENERGY   -2498.85412 DELTAE  -77.3350332
+ ITER.     14 PLS= 0.244E+00           ENERGY   -2572.78826 DELTAE  -73.9341413
+ ITER.     15 PLS= 0.246E+00           ENERGY   -2684.12782 DELTAE -111.3395599
+ ITER.     16 PLS= 0.381E+00           ENERGY   -2703.61332 DELTAE  -19.4855044
+ ITER.     17 PLS= 0.158E+00           ENERGY   -2734.77828 DELTAE  -31.1649558
  ITER.     18 PLS= 0.186E+00           ENERGY   -2757.86873 DELTAE  -23.0904468
- ITER.     19 PLS= 0.300E+00           ENERGY   -2778.49937 DELTAE  -20.6306433
- ITER.     20 PLS= 0.154E+00           ENERGY   -2799.25765 DELTAE  -20.7582783
+ ITER.     19 PLS= 0.300E+00           ENERGY   -2778.49937 DELTAE  -20.6306436
+ ITER.     20 PLS= 0.154E+00           ENERGY   -2799.25765 DELTAE  -20.7582782
  ITER.     21 PLS= 0.168E+00           ENERGY   -2816.03724 DELTAE  -16.7795908
- ITER.     22 PLS= 0.278E+00           ENERGY   -2828.00529 DELTAE  -11.9680495
+ ITER.     22 PLS= 0.278E+00           ENERGY   -2828.00529 DELTAE  -11.9680497
  ITER.     23 PLS= 0.145E+00           ENERGY   -2844.86546 DELTAE  -16.8601746
- ITER.     24 PLS= 0.147E+00           ENERGY   -2853.29364 DELTAE   -8.4281780
- ITER.     25 PLS= 0.251E+00           ENERGY   -2868.98915 DELTAE  -15.6955059
+ ITER.     24 PLS= 0.147E+00           ENERGY   -2853.29364 DELTAE   -8.4281778
+ ITER.     25 PLS= 0.251E+00           ENERGY   -2868.98915 DELTAE  -15.6955060
  ITER.     26 PLS= 0.109E+00           ENERGY   -2883.40463 DELTAE  -14.4154781
- ITER.     27 PLS= 0.116E+00           ENERGY   -2892.21830 DELTAE   -8.8136757
+ ITER.     27 PLS= 0.116E+00           ENERGY   -2892.21830 DELTAE   -8.8136758
  ITER.     28 PLS= 0.198E+00           ENERGY   -2907.09810 DELTAE  -14.8798033
- ITER.     29 PLS= 0.779E-01           ENERGY   -2920.78812 DELTAE  -13.6900199
- ITER.     30 PLS= 0.795E-01           ENERGY   -2928.42623 DELTAE   -7.6381078
+ ITER.     29 PLS= 0.779E-01           ENERGY   -2920.78812 DELTAE  -13.6900198
+ ITER.     30 PLS= 0.795E-01           ENERGY   -2928.42623 DELTAE   -7.6381080
  ITER.     31 PLS= 0.138E+00           ENERGY   -2944.69336 DELTAE  -16.2671300
- ITER.     32 PLS= 0.675E-01           ENERGY   -2959.26643 DELTAE  -14.5730635
- ITER.     33 PLS= 0.757E-01           ENERGY   -2967.07645 DELTAE   -7.8100287
- ITER.     34 PLS= 0.147E+00           ENERGY   -2981.68727 DELTAE  -14.6108169
- ITER.     35 PLS= 0.817E-01           ENERGY   -2989.22475 DELTAE   -7.5374803
+ ITER.     32 PLS= 0.675E-01           ENERGY   -2959.26643 DELTAE  -14.5730639
+ ITER.     33 PLS= 0.757E-01           ENERGY   -2967.07645 DELTAE   -7.8100283
+ ITER.     34 PLS= 0.147E+00           ENERGY   -2981.68727 DELTAE  -14.6108170
+ ITER.     35 PLS= 0.817E-01           ENERGY   -2989.22475 DELTAE   -7.5374802
  ITER.     36 PLS= 0.499E-01           ENERGY   -2994.24054 DELTAE   -5.0157875
- ITER.     37 PLS= 0.736E-01           ENERGY   -2991.94637 DELTAE    2.2941665
- ITER.     38 PLS= 0.201E-01           ENERGY   -2991.98525 DELTAE   -0.0388806
- ITER.     39 PLS= 0.159E-01           ENERGY   -2992.00775 DELTAE   -0.0224953
- ITER.     40 PLS= 0.125E-01           ENERGY   -2992.02162 DELTAE   -0.0138724
- ITER.     41 PLS= 0.102E-01           ENERGY   -2992.03048 DELTAE   -0.0088624
- ITER.     42 PLS= 0.815E-02           ENERGY   -2992.03611 DELTAE   -0.0056305
+ ITER.     37 PLS= 0.736E-01           ENERGY   -2991.94637 DELTAE    2.2941663
+ ITER.     38 PLS= 0.201E-01           ENERGY   -2991.98525 DELTAE   -0.0388803
+ ITER.     39 PLS= 0.159E-01           ENERGY   -2992.00775 DELTAE   -0.0224956
+ ITER.     40 PLS= 0.125E-01           ENERGY   -2992.02162 DELTAE   -0.0138723
+ ITER.     41 PLS= 0.102E-01           ENERGY   -2992.03048 DELTAE   -0.0088625
+ ITER.     42 PLS= 0.815E-02           ENERGY   -2992.03611 DELTAE   -0.0056306
 
  -------------------------------------------------------------------------------
  START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue CHARGE=-1
@@ -1420,8 +1420,8 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
 
 
                               PM7 CALCULATION
-                                                       MOPAC v22.0.2 MacOS
-                                                       Sun Jun 26 00:29:13 2022
+                                                       MOPAC v22.0.6 MacOS
+                                                       Thu Apr 13 11:25:09 2023
 
 
 
@@ -1442,16 +1442,16 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
 
 
           SCF CALCULATIONS        =          1
- 
-          WALL-CLOCK TIME         =     24.703 SECONDS
-          COMPUTATION TIME        =     24.633 SECONDS
+
+          WALL-CLOCK TIME         =     28.035 SECONDS
+          COMPUTATION TIME        =     28.612 SECONDS
 
 
 
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -3466,7 +3466,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
       ALA A  45       +0.051
       ASN A  46       -0.089
       EOH A  66       -0.001
- 
+
 
 
  DIPOLE           X         Y         Z       TOTAL
@@ -4130,7 +4130,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
   650  H(HETATM  650  H   EOH A  66)   0.69165
  *******************************************************************************
  **                                                                           **
- **                              MOPAC v22.0.2                                **
+ **                              MOPAC v22.0.6                                **
  **                                                                           **
  *******************************************************************************
  **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
@@ -4140,7 +4140,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Sun Jun 26 00:29:13 2022  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:25:09 2023  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A 66) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -4159,7 +4159,7 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -4810,7 +4810,7 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
    648       H(HETATM  648 1H2  EOH A  66)   16.47100000  *   1.10900000  *  13.51600000  *
    649       H(HETATM  649 2H2  EOH A  66)   16.16500000  *   0.57400000  *  11.84100000  *
    650       H(HETATM  650  H   EOH A  66)   14.08500000  *   2.06100000  *  12.73200000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -5486,7 +5486,7 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
     648          H (HETATM  648 1H2  EOH A  66)     329
     649          H (HETATM  649 2H2  EOH A  66)     329
     650          H (HETATM  650  H   EOH A  66)     330
- 
+
 
                  All other ions
     1     (ATOM    301  OD2 ASP A  43)   -1
@@ -5497,10 +5497,10 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
  PLS ESCF USING THE OLD LMOs:    -2992.036113 KCAL/MOL
 
- ITER.      1 PLS= 0.659E-02           ENERGY   -2992.03959 DELTAE-2992.0395944
+ ITER.      1 PLS= 0.659E-02           ENERGY   -2992.03959 DELTAE-2992.0395943
  ITER.      2 PLS= 0.532E-02           ENERGY   -2992.04184 DELTAE   -0.0022455
  ITER.      3 PLS= 0.431E-02           ENERGY   -2992.04312 DELTAE   -0.0012815
- ITER.      4 PLS= 0.642E-02           ENERGY   -2992.04361 DELTAE   -0.0004933
+ ITER.      4 PLS= 0.642E-02           ENERGY   -2992.04361 DELTAE   -0.0004932
 
  -------------------------------------------------------------------------------
  START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue CHARGE=-1
@@ -5513,8 +5513,8 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
 
                               PM7 CALCULATION
-                                                       MOPAC v22.0.2 MacOS
-                                                       Sun Jun 26 00:29:20 2022
+                                                       MOPAC v22.0.6 MacOS
+                                                       Thu Apr 13 11:25:17 2023
 
 
 
@@ -5535,16 +5535,16 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
 
           SCF CALCULATIONS        =          1
- 
-          WALL-CLOCK TIME         =     31.873 SECONDS
-          COMPUTATION TIME        =     31.770 SECONDS
+
+          WALL-CLOCK TIME         =     35.473 SECONDS
+          COMPUTATION TIME        =     35.883 SECONDS
 
 
 
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   THR A   1)   16.86400000  *  14.05900000  *   3.44200000  *
      2       C(ATOM      2  CA  THR A   1)   16.86800000  *  12.81400000  *   4.23300000  *
      3       C(ATOM      3  C   THR A   1)   15.58300000  *  12.77500000  *   4.99000000  *
@@ -7023,7 +7023,7 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
   164          O(ATOM    164  O   GLU A  23)          -0.574275        6.5743     1.88191     4.69236
   165          C(ATOM    165  CB  GLU A  23)          -0.267292        4.2673     1.05957     3.20773
   166          C(ATOM    166  CG  GLU A  23)          -0.324810        4.3248     1.06164     3.26317
-  167          C(ATOM    167  CD  GLU A  23)           0.625487        3.3745     1.11558     2.25894
+  167          C(ATOM    167  CD  GLU A  23)           0.625486        3.3745     1.11558     2.25894
   168          O(ATOM    168  OE1 GLU A  23)          -0.573462        6.5735     1.88746     4.68600
   169          O(ATOM    169  OE2 GLU A  23)          -0.452842        6.4528     1.82908     4.62376
   170          N(ATOM    170  N   ALA A  24)          -0.586319        5.5863     1.55238     4.03394
@@ -7559,7 +7559,7 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
       ALA A  45       +0.051
       ASN A  46       -0.089
       EOH A  66       -0.001
- 
+
 
 
  DIPOLE           X         Y         Z       TOTAL
@@ -8230,6 +8230,6 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
 
 
- TOTAL JOB TIME:            56.67 SECONDS
+ TOTAL JOB TIME:            63.57 SECONDS
 
  == MOPAC DONE ==

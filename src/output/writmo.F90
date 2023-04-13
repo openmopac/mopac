@@ -200,8 +200,10 @@
           return
         end if
         stress = -1.1d-6
-        write (iw, &
-      '(4/10X,''FINAL HEAT OF FORMATION ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
+        if(.not. method_indo) then
+          write (iw, &
+          '(4/10X,''FINAL HEAT OF FORMATION ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
+        endif
       end if
       elect = elect + solv_energy
       solv_energy = 0.d0

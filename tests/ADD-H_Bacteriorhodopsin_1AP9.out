@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                MOPAC2016                                  **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:46 2021  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:25:40 2023  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(7A 300) 
  *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE "Bacteriorhodopsin_1AP9.ent"
@@ -26,7 +26,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       N(ATOM      1  N   ARG A   7)   22.95200000  *  32.41500000  * -14.49200000  *
      2       C(ATOM      2  CA  ARG A   7)   23.93200000  *  31.31300000  * -14.76400000  *
      3       C(ATOM      3  C   ARG A   7)   25.12900000  *  31.38300000  * -13.80700000  *
@@ -1767,7 +1767,7 @@
   1738       O(HETATM 1739  O   HOH B 423)   25.30200000  *  17.48100000  *   9.46100000  *
   1739       O(HETATM 1740  O   HOH B 424)   28.06100000  *  21.80900000  *  -6.60800000  *
   1740       O(HETATM 1741  O   HOH B 425)   11.49400000  *  22.97900000  *  10.69000000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -3901,7 +3901,7 @@
   O(HETATM 1739  O   HOH B 423)  25.30200000 +1  17.48100000 +1   9.46100000 +1
   O(HETATM 1740  O   HOH B 424)  28.06100000 +1  21.80900000 +1  -6.60800000 +1
   O(HETATM 1741  O   HOH B 425)  11.49400000 +1  22.97900000 +1  10.69000000 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
 
@@ -3951,6 +3951,6 @@
 
 
 
- TOTAL JOB TIME:             0.80 SECONDS
+ TOTAL JOB TIME:             0.40 SECONDS
 
  == MOPAC DONE ==

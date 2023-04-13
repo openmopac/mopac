@@ -16,6 +16,8 @@
 
 #Basic input/output comparison tests
 
+set(HOF_ERROR 0.01) # Default numerical threshold to flag HOF errors
+
 macro(add_mopac_test _name _files)
   # _files is not a list, it's a string... Transform it into a list
   set(files)
@@ -26,7 +28,7 @@ macro(add_mopac_test _name _files)
   unset(_files)
 
   add_test(NAME "${_name}" COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/run_test.py ${CMAKE_CURRENT_SOURCE_DIR}
-           ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} ${_files})
+           ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} ${HOF_ERROR} ${_files})
 endmacro()
 
 add_subdirectory(INDO-dev)
@@ -62,5 +64,8 @@ set_tests_properties(salt PROPERTIES DEPENDS ionize) # uses Neutral.mop
 add_mopac_test(salt2 "SALT_2.mop")
 add_mopac_test(residues "SITE_Individual_residues.mop")
 set_tests_properties(residues PROPERTIES DEPENDS ionize) # uses IONIZE.arc
+
+set(HOF_ERROR 1.0) # Raise threshold, these tests are only looking for crashes
 add_mopac_test(erratic-1 "erratic1.mop")
 add_mopac_test(erratic-2 "erratic2.mop")
+add_mopac_test(erratic-3 "erratic3.mop")

@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                MOPAC2016                                  **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:38 2021  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:25:40 2023  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A 1B 1) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -24,7 +24,7 @@
 
    ATOM                 CHEMICAL                   X               Y               Z
   NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       C(HETATM    1  CA  MPR A   1)   19.39200000  *   5.71400000  *   9.14700000  *
      2       C(HETATM    2  C   MPR A   1)   18.13100000  *   5.09100000  *   8.58700000  *
      3       O(HETATM    3  O   MPR A   1)   17.48800000  *   4.19100000  *   9.06000000  *
@@ -302,7 +302,7 @@
    275       O(HETATM  285  O   HOH C  11)   19.02300000  *   3.84700000  *   1.88700000  *
    276       O(HETATM  286  O   HOH C  12)   19.96900000  *   3.53500000  *   4.39400000  *
    277       O(HETATM  287  O   HOH C  13)   22.47500000  *   2.48500000  *   4.18000000  *
- 
+
 
  General Reference for PM7:
  "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
@@ -747,7 +747,7 @@
   O(HETATM  285  O   HOH C  11)  19.02300000 +1   3.84700000 +1   1.88700000 +1
   O(HETATM  286  O   HOH C  12)  19.96900000 +1   3.53500000 +1   4.39400000 +1
   O(HETATM  287  O   HOH C  13)  22.47500000 +1   2.48500000 +1   4.18000000 +1
- 
+
 
                 RESIDUE SEQUENCE IN PROTEIN Chain: A
 
@@ -780,6 +780,6 @@
 
 
 
- TOTAL JOB TIME:             0.08 SECONDS
+ TOTAL JOB TIME:             0.07 SECONDS
 
  == MOPAC DONE ==
