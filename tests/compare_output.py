@@ -27,7 +27,6 @@ import numpy as np
 
 NUMERIC_THRESHOLD = 1e-4 # large because of numerical errors in unoccupied orbital energies, energy gradients, & relaxed geometries
 HEAT_THRESHOLD = 1e-4
-HEAT_THRESHOLD_ERROR = 1e-2 # looser threshold that flags an error
 DEGENERACY_THRESHOLD = 1e-3
 EIGVEC_THRESHOLD = 1e-3
 
@@ -210,7 +209,7 @@ def parse_mopac_out_file(path):
 
     return parse_line, parse_list
 
-def compare_mopac_out_file(out_line, out_list, ref_line, ref_list):
+def compare_mopac_out_file(out_line, out_list, ref_line, ref_list, heat_error_threshold):
     '''Compares the output to the given reference'''
 
     if len(ref_list) != len(out_list):
@@ -233,7 +232,8 @@ def compare_mopac_out_file(out_line, out_list, ref_line, ref_list):
 
         # compare heats of formation
         elif len(ref) == 2:
-            assert abs(ref[1] - out[1]) < HEAT_THRESHOLD_ERROR, f'ERROR: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and {out[1]} on output line {out_line0}'
+            assert abs(ref[1] - out[1]) < heat_error_threshold, f'ERROR: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and 
+{out[1]} on output line {out_line0}'
             if abs(ref[1] - out[1]) > HEAT_THRESHOLD:
                 print(f'WARNING: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and {out[1]} on output line {out_line0}')
  
