@@ -27,7 +27,7 @@ import numpy as np
 
 NUMERIC_THRESHOLD = 1e-4 # large because of numerical errors in unoccupied orbital energies, energy gradients, & relaxed geometries
 HEAT_THRESHOLD = 1e-4
-HEAT_THRESHOLD_ERROR = 1e-2 # looser threshold that flags an error
+HEAT_THRESHOLD_ERROR = 1e-3 # looser threshold that flags an error
 DEGENERACY_THRESHOLD = 1e-3
 EIGVEC_THRESHOLD = 1e-3
 

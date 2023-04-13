@@ -10,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu Apr 13 11:03:07 2023  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:24:41 2023  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A 66) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -1421,7 +1421,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
 
                               PM7 CALCULATION
                                                        MOPAC v22.0.6 MacOS
-                                                       Thu Apr 13 11:03:30 2023
+                                                       Thu Apr 13 11:25:09 2023
 
 
 
@@ -1443,8 +1443,8 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
 
           SCF CALCULATIONS        =          1
 
-          WALL-CLOCK TIME         =     23.402 SECONDS
-          COMPUTATION TIME        =     24.662 SECONDS
+          WALL-CLOCK TIME         =     28.035 SECONDS
+          COMPUTATION TIME        =     28.612 SECONDS
 
 
 
@@ -4140,7 +4140,7 @@ START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl denout residue
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu Apr 13 11:03:30 2023  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:25:09 2023  *
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(1A 66) 
  *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED
@@ -5514,7 +5514,7 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
                               PM7 CALCULATION
                                                        MOPAC v22.0.6 MacOS
-                                                       Thu Apr 13 11:03:36 2023
+                                                       Thu Apr 13 11:25:17 2023
 
 
 
@@ -5536,8 +5536,8 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
           SCF CALCULATIONS        =          1
 
-          WALL-CLOCK TIME         =     29.602 SECONDS
-          COMPUTATION TIME        =     30.849 SECONDS
+          WALL-CLOCK TIME         =     35.473 SECONDS
+          COMPUTATION TIME        =     35.883 SECONDS
 
 
 
@@ -8230,6 +8230,6 @@ oldgeo START_RES=(1A 66)  CHAINS=(A)  1SCF MOZYME pl oldens residue
 
 
 
- TOTAL JOB TIME:            53.05 SECONDS
+ TOTAL JOB TIME:            63.57 SECONDS
 
  == MOPAC DONE ==

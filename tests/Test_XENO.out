@@ -10,7 +10,7 @@
                               PM7 CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Thu Apr 13 11:03:56 2023  *
+ *  CALCULATION DONE:                                Thu Apr 13 11:25:40 2023  *
  *  XENO       - RENAME PROTEIN FRAGMENTS AND SMALL MOLECULES
  *  START_RES  - STARTING RESIDUE NUMBERS DEFINED
  *  Keyword:     START_RES=(10B 20B 30B 31B 32B 33B) 
@@ -772,6 +772,6 @@
 
 
 
- TOTAL JOB TIME:             0.03 SECONDS
+ TOTAL JOB TIME:             0.02 SECONDS
 
  == MOPAC DONE ==

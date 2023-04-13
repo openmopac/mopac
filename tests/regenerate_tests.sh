@@ -55,21 +55,17 @@ rm Check_that_TERs_are_preserved.html
 rm Check_that_TERs_are_preserved.pdb
 rm Check_that_TERs_are_preserved.txt
 
+# other tests depend on outputs
+mopac ADD-H_Bacteriorhodopsin_1AP9.mop
+mopac ADD-H_Bacteriorhodopsin_1AT9.mop
+mopac PDB1CBN.ent
+mopac PDB1EJG.ent
+
 mopac Compare_two_protein_structures.mop
 rm Compare_two_protein_structures.html
 rm Compare_two_protein_structures.txt
 rm Compare_two_protein_structures_Structure-1.pdb
 rm Compare_two_protein_structures_Structure-2.pdb
-
-mopac PDB1CBN.ent
-rm PDB1CBN.log
-rm PDB1CBN.pdb
-rm PDB1CBN.arc
-
-mopac PDB1EJG.ent
-rm PDB1EJG.log
-rm PDB1EJG.pdb
-rm PDB1EJG.arc
 
 mopac Compare_PDB_1EJG_and_1CBN.mop
 rm Compare_PDB_1EJG_and_1CBN.html
@@ -107,17 +103,6 @@ rm Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9.txt
 rm Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9_ADD-H_Bacteriorhodopsin_1AP9.pdb
 rm Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9_ADD-H_Bacteriorhodopsin_1AT9.pdb
 
-mopac ADD-H_Bacteriorhodopsin_1AP9.mop
-rm ADD-H_Bacteriorhodopsin_1AP9.html
-rm ADD-H_Bacteriorhodopsin_1AP9.log
-rm ADD-H_Bacteriorhodopsin_1AP9.arc
-rm ADD-H_Bacteriorhodopsin_1AP9.pdb
-rm ADD-H_Bacteriorhodopsin_1AP9.txt
-
-mopac ADD-H_Bacteriorhodopsin_1AT9.mop
-rm ADD-H_Bacteriorhodopsin_1AT9.log
-rm ADD-H_Bacteriorhodopsin_1AT9.arc
-
 mopac Au_Add-H.mop
 rm Au_Add-H.arc
 rm Au_Add-H.log
@@ -127,6 +112,21 @@ rm Compare_ADD-H_1EJG_and_1CBN.html
 rm Compare_ADD-H_1EJG_and_1CBN.txt
 rm Compare_ADD-H_1EJG_and_1CBN_PDB1CBN.pdb
 rm Compare_ADD-H_1EJG_and_1CBN_PDB1EJG.pdb
+
+# remove intermediate files later
+rm ADD-H_Bacteriorhodopsin_1AP9.html
+rm ADD-H_Bacteriorhodopsin_1AP9.log
+rm ADD-H_Bacteriorhodopsin_1AP9.arc
+rm ADD-H_Bacteriorhodopsin_1AP9.pdb
+rm ADD-H_Bacteriorhodopsin_1AP9.txt
+rm ADD-H_Bacteriorhodopsin_1AT9.log
+rm ADD-H_Bacteriorhodopsin_1AT9.arc
+rm PDB1CBN.log
+rm PDB1CBN.pdb
+rm PDB1CBN.arc
+rm PDB1EJG.log
+rm PDB1EJG.pdb
+rm PDB1EJG.arc
 
 mopac Locate_TS.mop
 rm Locate_TS.html
@@ -149,11 +149,8 @@ rm "Locate_TS Loop3.mop"
 rm "Locate_TS Loop4.mop"
 rm "Locate_TS Loop5.mop"
 
+#delay removal of intermediate files
 mopac IONIZE.mop
-rm IONIZE.arc
-rm IONIZE.html
-rm IONIZE.pdb
-rm IONIZE.txt
 
 mopac SALT.mop
 rm SALT.arc
@@ -163,6 +160,12 @@ rm SALT_2.arc
 
 mopac SITE_Individual_residues.mop
 rm SITE_Individual_residues.arc
+
+#delayed removal
+rm IONIZE.arc
+rm IONIZE.html
+rm IONIZE.pdb
+rm IONIZE.txt
 
 mopac erratic1.mop
 rm erratic1.arc
