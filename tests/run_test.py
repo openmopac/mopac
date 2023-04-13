@@ -29,4 +29,4 @@ ref_line, ref_list = parse_mopac_out_file(ref_path)
 out_line, out_list = parse_mopac_out_file(out_name)
 
 # Run the comparison
-compare_mopac_out_file(out_line, out_list, ref_line, ref_list, argv[3])
+compare_mopac_out_file(out_line, out_list, ref_line, ref_list, float(argv[3]))

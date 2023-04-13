@@ -28,7 +28,7 @@ macro(add_mopac_test _name _files)
   unset(_files)
 
   add_test(NAME "${_name}" COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/run_test.py ${CMAKE_CURRENT_SOURCE_DIR}
-           ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} HOF_ERROR ${_files})
+           ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} ${HOF_ERROR} ${_files})
 endmacro()
 
 add_subdirectory(INDO-dev)

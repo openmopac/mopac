@@ -232,8 +232,7 @@ def compare_mopac_out_file(out_line, out_list, ref_line, ref_list, heat_error_th
 
         # compare heats of formation
         elif len(ref) == 2:
-            assert abs(ref[1] - out[1]) < heat_error_threshold, f'ERROR: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and 
-{out[1]} on output line {out_line0}'
+            assert abs(ref[1] - out[1]) < heat_error_threshold, f'ERROR: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and {out[1]} on output line {out_line0}'
             if abs(ref[1] - out[1]) > HEAT_THRESHOLD:
                 print(f'WARNING: numerical heat mismatch between {ref[1]} on reference line {ref_line0} and {out[1]} on output line {out_line0}')
  
