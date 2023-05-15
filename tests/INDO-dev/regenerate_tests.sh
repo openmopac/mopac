@@ -52,3 +52,13 @@ mopac noparam.mop
 mopac poly_c8.mop
 
 mopac poly_c8_mr.mop
+
+mopac co_cis_wrtconf.mop
+
+mopac co_cisd.mop
+
+mopac co_cisd_quin.mop
+
+mopac co_cisd_solv.mop
+
+mopac co_cisd_trip.mop

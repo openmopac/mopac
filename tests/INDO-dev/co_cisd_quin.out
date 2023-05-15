@@ -1,25 +1,21 @@
  *******************************************************************************
- ** Site#:    0         For non-commercial use only    Version 20.173L 64BITS **
- *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 20.173L, James J. P. Stewart,   **
- ** Stewart Computational Chemistry, web-site: HTTP://OpenMOPAC.net.          **
- *******************************************************************************
  **                                                                           **
- **                                MOPAC2016                                  **
+ **                              MOPAC v22.0.6                                **
  **                                                                           **
+ *******************************************************************************
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               INDO CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Mon Jun 29 13:01:58 2020  *
+ *  CALCULATION DONE:                                Mon May 15 10:16:29 2023  *
  *  INDO       - The INDO Hamiltonian to be used
  *  CISD       - C.I. USES 1 AND 2 ELECTRON EXCITATIONS
  *  QUINTET    - SPIN STATE DEFINED AS A QUINTET
- * C.I.=(N,M)-  3 DOUBLY FILLED LEVELS USED IN A
- *             C.I. INVOLVING  6 M.O.'S
- * C.I.D.=(N,M)-  1 DOUBLY FILLED LEVELS USED IN A
- *             CI DOUBLES INVOLVING  3 M.O.'S
+ * C.I.D.=(N,M)- 1 DOUBLY FILLED LEVELS USED IN A CI DOUBLES INVOLVING 3 M.O.'S
+ *  C.I.=(N,M) - 3 DOUBLY FILLED LEVELS USED IN A C.I. INVOLVING 6 M.O.'S
  *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
  *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
 
@@ -43,7 +39,3 @@
  TOTAL JOB TIME:             0.00 SECONDS
 
  == MOPAC DONE ==
-
-
-          MOPAC Job: "co_cisd_quin.mop" ended normally on Jun 29, 2020, at 13:01.
-

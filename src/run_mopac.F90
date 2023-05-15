@@ -932,7 +932,6 @@
           end do
         end do
         call rci()
-        go to 100
       end if
 !
 !  Calculation done, now print results
