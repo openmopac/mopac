@@ -23,9 +23,21 @@ On Linux, the basic command-line installation syntax is:
 For more information on command-line installation, see the [Qt Installer Framework Documentation](https://doc.qt.io/qtinstallerframework/ifw-cli.html).
 
 Linux installations without a desktop environment may not have the shared libraries required for the graphical installers,
-and a minimal tarball is available for Linux users as an alternative.
+and there have also been isolated reports of problems with the Qt installer on other platforms. A minimal archive installer
+is available for each platform as an alternative for users that have problems with the Qt installer.
 
 The minimum glibc version required for the precompiled version of MOPAC on Linux is 2.17.
+
+### Library path issues
+
+The pre-built MOPAC executables use the RPATH system on Mac and Linux to connect with its shared libraries,
+including the `libiomp5` Intel OpenMP redistributable library. The `libiomp5` library is not properly versioned, and the recent version used by
+MOPAC is not compatible with older versions that might also exist on a user's machine. If a directory containing an old version of `libiomp5`
+is in the shared library path (`LD_LIBRARY_PATH` on Linux, `DYLD_LIBRARY_PATH` on Mac), this will override the RPATH system, link MOPAC to the
+wrong library, and cause an error in MOPAC execution. On Mac, this can be fixed by switching the offending directories to the failsafe shared library
+path, `DYLD_FALLBACK_LIBRARY_PATH`. On Linux, the use of `LD_LIBRARY_PATH` is generally discouraged for widespread use, and there is no simple
+workaround available. The newer version of `libiomp5` is backwards compatible, so replacing the offending version with the version used by MOPAC
+should preserve the functionality of other software that depends on the library.
 
 ### Package managers
 
