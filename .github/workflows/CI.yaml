@@ -265,11 +265,17 @@ jobs:
           cpack -G IFW
           ls -l
 
+      - name: Local installation test & minimal packaging
+        run: |
+          cd build
+          sudo make install
+          sudo cpack -G TGZ
+
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: mac-dist
-          path: build/mopac-*-mac.dmg
+          path: build/mopac-*-mac.*
 
   windows-build:
     # NOTE: windows-latest has been switched to Visual Studio 2022, which is not yet supported by Intel development tools
@@ -367,8 +373,16 @@ jobs:
           cpack -G IFW
           dir
 
+      - name: Local installation test & minimal packaging
+        run: |
+          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
+          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
+          cd build
+          make install
+          cpack -G ZIP
+
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
         with:
           name: windows-dist
-          path: build/mopac-*-win.exe
+          path: build/mopac-*-win.*
