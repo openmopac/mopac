@@ -16,7 +16,7 @@
 
   subroutine to_screen(text0)
   use chanel_C, only : iw0
-  use molkst_C, only : keywrd
+  use molkst_C, only : keywrd, keywrd_txt
   implicit none
   character (len=*) :: text0
   character (len=200) :: text
@@ -38,7 +38,7 @@
       call flush (iw0)
     end if
   else
-    if (index(keywrd, " AUX") == 0) return
+    if (index(keywrd, " AUX") == 0 .and. index(keywrd_txt, " AUX") == 0) return
     call current_version(text)
   end if
   end subroutine to_screen
