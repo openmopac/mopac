@@ -113,6 +113,10 @@ if (STATIC_BUILD)
   target_link_options(mopac-makpol PUBLIC "-static")
 endif()
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(mopac-core PUBLIC -g)
+endif()
+
 # Add CITATION.cff to source files so that version updates are not ignored
 target_sources(mopac-core PRIVATE CITATION.cff)
 
