@@ -114,7 +114,11 @@ if (STATIC_BUILD)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  if(WIN32)
+    target_compile_options(mopac-core PUBLIC /debug:full)
+  else()
     target_compile_options(mopac-core PUBLIC -g)
+  endif()
 endif()
 
 # Add CITATION.cff to source files so that version updates are not ignored
