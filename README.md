@@ -68,6 +68,11 @@ or the path (`-DMOPAC_LINK_PATH=...`) and linker options (`-DMOPAC_LINK=...`) to
 
 The CTest-based testing requires Python 3.x and Numpy.
 
+## Docker/Apptainer Containers
+
+The official [Docker](https://www.docker.com) and [Apptainer](https://apptainer.org) ([Singularity](https://sylabs.io)) containers for MOPAC 22.0.6 ([Conda version](https://anaconda.org/conda-forge/mopac)) are developed and
+maintained by [MolSSI Container Hub](https://molssi.github.io/molssi-hub/index.html) and are distributed by the MolSSI Docker Hub [repository](https://hub.docker.com/r/molssi/mopac220-mamba141).
+
 ## Documentation
 
 The main source for MOPAC documentation is presently its old [online user manual](http://openmopac.net/manual/index.html).
