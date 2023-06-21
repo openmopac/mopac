@@ -331,7 +331,7 @@
 !
           read (ir, '(A)', end=100, err=100) refkey(3)
           allkey = refkey(3)
-          i = index(allkey, " + ")
+          i = index(allkey, " +")
           if (i /= 0) then
             write(iw,"(a)")" A maximum of three lines of keywords are allowed."
             write(iw,"(a)")" On the third line of keywords is a '+' sign, implying more lines of keywords."
@@ -341,11 +341,12 @@
             return
           end if
           i = index(keywrd(1:len_trim(keywrd)),' +')
-          keywrd(i:i + 1) = " "
+          keywrd(i:i + 1) = "  "
           i = len_trim(keywrd)
           keywrd(i + 2:) = refkey(3)(:1001 - i)
-          i = len_trim(oldkey) + 1
-          oldkey(i:) = trim(refkey(3))
+          i = len_trim(oldkey)
+          oldkey(i:i) = " "
+          oldkey(i+1:) = trim(refkey(3))
           call upcase (keywrd, len_trim(keywrd))
         end if
 !
@@ -413,7 +414,7 @@
       if (numcal > 1) then
         if (index(keywrd,"OLDGEO") /= 0) return ! User forgot to add extra lines for title and comment
         if (aux) keywrd = " AUX"
-        line = "JOB ENDED NORMALLY"       
+        line = "JOB ENDED NORMALLY"
         if (quoted('GEO_DAT"') == 0) then
           line = ' ERROR IN READ OF FIRST THREE LINES' 
         else
@@ -578,17 +579,17 @@
         j = i + k
         if (keywrd(j:j) /= '"') then
           quotation = '"'
-          j = index(keywrd(j:), ' ') + j - 1     
+          j = index(keywrd(j:), ' ') + j - 1
         else
           quotation = ' '
           j = index(keywrd(j + 1:), '"') + j + 1
-          j = index(keywrd(j:), ' ') + j - 1     
-        end if                
+          j = index(keywrd(j:), ' ') + j - 1
+        end if
 !
 ! Copy the keyword that contains quotation marks to keywrd_quoted
 !    
         if (first) then
-          line = trim(keywrd_quoted)        
+          line = trim(keywrd_quoted)
           keywrd_quoted = trim(line)//keywrd(i:i + k -1)//trim(quotation)//old(i + k:j - 1)//trim(quotation)  
           first = .false.
         end if
@@ -646,7 +647,7 @@
             if (keywrd_quoted(j:j) == '"') exit
           end do
         end if
-      end if        
+      end if
       line = keywrd_quoted(i:j)
       end if
     quoted = i
