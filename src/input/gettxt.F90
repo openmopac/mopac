@@ -345,8 +345,8 @@
           i = len_trim(keywrd)
           keywrd(i + 2:) = refkey(3)(:1001 - i)
           i = len_trim(oldkey)
-          oldkey(i:i) = " "
-          oldkey(i+1:) = trim(refkey(3))
+          oldkey(i+1:i+1) = " "
+          oldkey(i+2:) = trim(refkey(3))
           call upcase (keywrd, len_trim(keywrd))
         end if
 !
