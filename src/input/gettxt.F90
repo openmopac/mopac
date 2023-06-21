@@ -344,7 +344,7 @@
           keywrd(i:i + 1) = " "
           i = len_trim(keywrd)
           keywrd(i + 2:) = refkey(3)(:1001 - i)
-          i = len_trim(oldkey)
+          i = len_trim(oldkey) + 1
           oldkey(i:) = trim(refkey(3))
           call upcase (keywrd, len_trim(keywrd))
         end if
@@ -629,14 +629,24 @@
 ! for keywords.
 !
     line = " "
-      i = index(keywrd_quoted, trim(key))
-      if (i /= 0) then
- !
-  ! Keyword contains quotation marks, so:
-  !
+    i = index(keywrd_quoted, trim(key))
+    if (i /= 0) then
+!
+! Keyword contains quotation marks, so:
+!
       k = Index (keywrd_quoted(i:), "=") + i
       j = end_of_keyword(keywrd_quoted, len_trim(keywrd_quoted), k) - 2
       i = i + 1 + len_trim(key) 
+      if (trim(key) == "GEO_REF=") then
+        if (index(keywrd_quoted(i:j), '"') /= 0) then
+!
+! Special treatment for "GEO_REF="
+!
+          do j = j, 1, -1
+            if (keywrd_quoted(j:j) == '"') exit
+          end do
+        end if
+      end if        
       line = keywrd_quoted(i:j)
       end if
     quoted = i
