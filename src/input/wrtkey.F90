@@ -750,9 +750,9 @@ subroutine wrtchk (allkey)
        !    DUMMY IF STATEMENT TO REMOVE AMPERSAND, PLUS SIGNS AND OBSOLETE KEYWORDS, IF PRESENT
        !
       if (myword(allkey, " SETUP"))       i = 1
-      if (myword(allkey, "&"))            i = 2
-      if (myword(allkey, " +"))           i = 3
-      if (myword(allkey, " CONTROL"))     i = 3
+      if (myword(allkey, " &"))           write (iw,'(" *  &         - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
+      if (myword(allkey, " +"))           write (iw,'(" *  +          - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
+      if (myword(allkey, " CONTROL"))     i = 2
       if (myword(allkey, " DIIS"))    write (iw,'(" *  DIIS       - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
       if (myword(allkey, " NODIIS"))  write (iw,'(" *  NODIIS     - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
       if (myword(allkey, " ROT"))     write (iw,'(" *  ROT        - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
