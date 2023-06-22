@@ -749,14 +749,14 @@ subroutine wrtchk (allkey)
        !
        !    DUMMY IF STATEMENT TO REMOVE AMPERSAND, PLUS SIGNS AND OBSOLETE KEYWORDS, IF PRESENT
        !
-      if (Index (keywrd, " SETUP"))       i = 1
-      if (Index (keywrd, " &"))           write (iw,'(" *  &          - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
-      if (Index (keywrd, " +"))           write (iw,'(" *  +          - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
-      if (Index (keywrd, " CONTROL"))     i = 2
-      if (Index (keywrd, " DIIS"))    write (iw,'(" *  DIIS       - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
-      if (Index (keywrd, " NODIIS"))  write (iw,'(" *  NODIIS     - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
-      if (Index (keywrd, " ROT"))     write (iw,'(" *  ROT        - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
-      if (Index (keywrd, " HEADER") .or. (Index (keywrd, " USER"))  then
+      if (Index (keywrd, " SETUP")    /= 0) i = 1
+      if (Index (keywrd, " &")        /= 0) write (iw,'(" *  &          - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
+      if (Index (keywrd, " +")        /= 0) write (iw,'(" *  +          - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
+      if (Index (keywrd, " CONTROL")  /= 0) i = 2
+      if (Index (keywrd, " DIIS")     /= 0) write (iw,'(" *  DIIS       - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
+      if (Index (keywrd, " NODIIS")   /= 0) write (iw,'(" *  NODIIS     - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
+      if (Index (keywrd, " ROT")      /= 0) write (iw,'(" *  ROT        - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
+      if (Index (keywrd, " HEADER") /= 0 .or. Index (keywrd, " USER") /= 0)  then
         write (iw,'(" *  HEADER     - DATA SET IS IN PROTEIN DATA BANK FORMAT")')
         i = index(keywrd, " HEADER")
         keywrd = " ADD-H PDBOUT "//keywrd(:i)
