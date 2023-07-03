@@ -70,9 +70,11 @@ subroutine parfg (errors, ttype, nerr, loop, do_scf)
     last = 3
     emin = escf
     nscf=0
+    calhof = 0.d0
     if (do_scf) then
       grad(1:nvar) = 0.d0
       call compfg (xparam, .true., calhof, .true., grad, wtgeo > 1.d-4)
+      escf = calhof
     else
       calhof = escf
     end if

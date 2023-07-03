@@ -13,15 +13,15 @@
 !
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+ 
  subroutine parkey (keywrd)
     use param_global_C, only : ifiles_8
-    use molkst_C, only : method_PM7, method_PM8, keywrd_quoted
+    use molkst_C, only : method_PM7, method_PM6_ORG
     implicit none
     character (len=*), intent (in) :: keywrd
     integer :: i, j, k
     character :: num*1, line*300
-    character(len=300), external :: get_a_name
+    character, external :: get_a_name*300
     integer, external :: end_of_keyword
     double precision, external :: reada
      if (Index (keywrd, " MNDO ") /= 0) &
@@ -42,13 +42,13 @@
      else if (Index (keywrd, " PM6-D3(H4)") /= 0)  then
        write (ifiles_8, "(' *  PM6-D3(H4)  -  Default parameter set: PM6-D3(H4)')")
 ! Gallo
-     else  if (Index (keywrd, " PM6") /= 0)  then
+     else  if (Index (keywrd, " PM6 ") /= 0)  then
        write (ifiles_8, "(' *  PM6         -  Default parameter set: PM6')")
      end if
      if (Index (keywrd, " MNDOD") /= 0) &
        write (ifiles_8, "(' *  MNDOD       -  Default parameter set: MNDOD')")
-     if (method_PM7) write (ifiles_8, "(' *  PM7         -  Default parameter set: PM7')")
-     if (method_PM8) write (ifiles_8, "(' *  PM8         -  Default parameter set: PM8')")
+     if (method_PM7) write (ifiles_8,     "(' *  PM7         -  Default parameter set: PM7')")
+     if (method_PM6_ORG) write (ifiles_8, "(' *  PM6-ORG     -  Default parameter set: PM6-ORG')")
      if (Index (keywrd, " PM5D ") /= 0) &
        write (ifiles_8, "(' *  PM5D        -  Default parameter set: PM5D')")
       if (Index (keywrd, "LARGE") /= 0) then
@@ -85,8 +85,7 @@
     if (Index (keywrd, "CLEAN") /= 0) write(ifiles_8,'(a)') &
     & " * CLEAN       -  REMOVE DIAGNOSTIC KEYWORDS FROM REFERENCE DATA SETS"
     if (Index (keywrd, "ALL") /= 0) then
-10042 format (" *  ALL        -  USE ALL REFERENCE DATA, INCLUDING SYSTEMS &
-     &NOT BEING OPTIMIZED")
+10042 format (" *  ALL         -  USE ALL REFERENCE DATA, INCLUDING SYSTEMS NOT BEING OPTIMIZED")
       write (ifiles_8, 10042)
     end if
     if (Index (keywrd, "ONLY") /= 0) then
@@ -103,7 +102,7 @@
     end if
     i = Index (keywrd, " PARAB=")
     if (i /= 0) then
-10061 format (" *  PARAB=n    -  DAMPENING FACTOR OF",f13.2," USED")
+10061 format (" *  PARAB=n     -  DAMPENING FACTOR OF",f13.2," USED")
       write (ifiles_8, 10061) Reada(keywrd,i)
     end if
      i = Index (keywrd, " POWER=")
@@ -131,11 +130,19 @@
 10054 format (" *  RELG=n     -  Relative weight for Geometries:",f4.1)
       write (ifiles_8, 10054) Reada(keywrd,i)
     end if
+    if (Index (keywrd, " NOSCALE") /= 0)  write (ifiles_8, '(a)') &
+        " *  NOSCALE     -  DO NOT REDUCE WEIGHTING WHEN PREDICTED VALUES ARE IN ERROR"
     i = Index (keywrd, " CYCLES=")
     if (i /= 0) then
       j = Nint(Reada(keywrd,i))
       num = char(ichar("2") +int(log10(j + 0.05)))
       write (ifiles_8, '(" *  CYCLES=n    -  RUN A MAXIMUM OF",I'//num//'," CYCLES")') j
+    end if
+     i = Index (keywrd, " NUMOPT=")
+    if (i /= 0) then
+      j = Nint(Reada(keywrd,i))
+      num = char(ichar("2") +int(log10(j + 0.05)))
+      write (ifiles_8, '(" *  NUMOPT=n    -  USE THE",I'//num//'," PARAMETERS WITH THE LARGEST WEIGHTED GRADIENTS")') j
     end if
     i = Index (keywrd, " OUT=")
     if (i /= 0) then
@@ -169,6 +176,7 @@
 10091 format (" *  SURVEY      -  GENERATE TABLES FOR STATISTICS, ETC")
       write (ifiles_8, 10091)
     end if
+    if (Index (keywrd, "NOLIM") /= 0) write(ifiles_8,'(" *  NOLIM       -  REMOVE LIMIT CONSTRAINTS ON PARAMETER VALUES")')
     if (index(keywrd, " SET") + index(keywrd, " REF") /= 0) &
       write (ifiles_8, "(' *',/1X,15('*****'))")
     i = Index (keywrd, " SET")
@@ -176,25 +184,25 @@
       i = i + 5
       line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
       j = i + len_trim(line)
-      if (keywrd(j + 1: j + 1) == '"') j = j + 2
+      if (keywrd(j + 1: j + 1) == '"') j = j + 2  
       if (keywrd(j:j) == ";") then
         write (ifiles_8, '(" *",/," *  SET=n       -  THE LISTS OF COMPOUNDS TO BE USED ARE IN FILES: ")')
       else
         write (ifiles_8, '(" *",/," *  SET=n       -  THE LIST OF COMPOUNDS TO BE USED IS IN FILE: ")')
       end if
       write (ifiles_8, '(" *",17x,a)')'"'//trim(line)//'"'
-      if (keywrd(i + 1: i + 1) == '"') i = i + 2
+      if (keywrd(i + 1: i + 1) == '"') i = i + 2     
       do
         i = i + len_trim(line)
-        if (keywrd(i + 1: i + 1) == '"') i = i + 2
+        if (keywrd(i + 1: i + 1) == '"') i = i + 2  
         if (keywrd(i:i) == ";") then
-          i = i + 1
+          i = i + 1 
           line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit
         end if
-      end do
+      end do      
     end if
     i = Index (keywrd, " REF=")
     if (i /= 0) then
@@ -205,33 +213,30 @@
       do
         j = index(keywrd(i:k), ";")
         if (j /= 0) then
-          i = i + j
+          i = i + j 
           line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit
         end if
-      end do
+      end do      
     end if
-    i = Index(keywrd_quoted, "EXTERNAL=")
+    i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
     if (i /= 0) then
-      i = index(keywrd_quoted(i:), "=") + i
-      k = end_of_keyword(keywrd_quoted, len_trim(keywrd_quoted), i)
-      line = get_a_name(keywrd_quoted(i:k), len_trim(keywrd_quoted(i:k)))
-      write (ifiles_8, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING&
-                        & DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
+      i = index(keywrd(i:), "=") + i
+      k = end_of_keyword(keywrd, len_trim(keywrd), i)
+      line = get_a_name(keywrd(i:k), len_trim(keywrd(i:k)))
+      write (ifiles_8, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
       do
-        j = index(keywrd_quoted(i:k), ";")
+        j = index(keywrd(i:k), ";")
         if (j /= 0) then
-          i = i + j
-          line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+          i = i + j 
+          line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
           write (ifiles_8, '(" *", 10x, a)')'   and "'//trim(line)//'"'
         else
           exit
         end if
-      end do
-    else if (Index(keywrd, "EXTERNAL") /= 0) then
-      write (ifiles_8, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
+      end do      
     end if
     return
   end subroutine parkey

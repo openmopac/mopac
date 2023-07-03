@@ -204,6 +204,7 @@ subroutine getusp (nat, nfirst, nlast, uspd, atheat)
     integer :: ia, ib, ii, j, k, k1, ni, i
     double precision :: eat
     double precision, external :: C_triple_bond_C
+    save :: eat
 !----------------------------------------------------------------
     atheat = 0.d0
     if (index(keywrd, " SPARKL") /= 0) then

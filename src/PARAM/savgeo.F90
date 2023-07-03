@@ -13,14 +13,14 @@
 !
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+ 
 subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
 !
     use param_global_C, only : contrl, nas, nbs, ncs, geos, &
-    names, refher !, ifiles_8
+    names, refher, ifiles_8
 !
     use molkst_C, only : natoms, nvar, keywrd, title, refkey, escf, &
-      line, ncomments
+      line, ncomments, backslash
 !
     use common_arrays_C, only : all_comments
 
@@ -33,12 +33,12 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
 !--------------------------------------------------------------------
     character (len=100) :: dirnew
     character (len=100) :: name
-    logical :: opend, lsav !, exists
+    logical :: opend, lsav, exists
     integer :: i, iatm, igeo, j, k, iw
     character :: num*1
     intrinsic Index
     double precision, external :: reada
-    character(len=300), external :: get_a_name
+    character, external :: get_a_name*300
     save :: iatm, igeo
 !--------------------------------------------------------------------
   !
@@ -48,14 +48,14 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
       iw = 14
       k = Index (contrl, " NEW_REF=")
       if (k /= 0) then
-        dirnew = get_a_name(contrl(k + 9:), len_trim(contrl(k + 9:)))
+        dirnew = trim(get_a_name(trim(contrl(k + 9:)), len_trim(contrl(k + 9:))))
         k = len_trim(dirnew)
-        if (dirnew(k:k) /= "/")then
+        if (dirnew(k:k) /= backslash .and. dirnew(k:k) /= "/")then
 !
 ! The directory name for the new reference data needs a "/"
 !
           k = k + 1
-          dirnew(k:k) = "/"
+          dirnew(k:k) = backslash
         end if
         do i = 80, 2, -1
           if (names(loop)(i:i) /= " ") exit
@@ -66,7 +66,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
           close (unit=iw, status="KEEP")
         end if
         call add_path(dirnew)
-! the directory feature of inquire is specific to the Intel compiler and not standard Fortran, ignoring this for now
+! the directory checking feature of inquire is specific to the Intel compiler, remove for now
 !        inquire (directory=trim(dirnew) , exist = exists)
 !        if (.not. exists) then
 !          write(ifiles_8,'(//10x,a)')"Folder """//trim(dirnew)//""" specified by NEW_REF does not exist"
@@ -79,10 +79,18 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
         rewind (iw)
         lsav = .true.
       end if
+1000  continue
 !
-!  keywrd is 248 characters long, refkey is 360 characters long
+! Remove all keywords added by PARAM.  These should not be printed to MOPAC data-sets.
 !
- 1000 refkey(1) = trim(keywrd)
+     line = trim(keywrd)
+     call l_control("CONTROL_no_MOZYME", len_trim("CONTROL_no_MOZYME"), -1)
+     call l_control("NORJSMOL", len_trim("NORJSMOL"), -1)
+     refkey(1) = trim(keywrd)
+!
+! Restore keyword
+!
+     keywrd = trim(line)
      do i = 1, nvar
       geo(loc(2, i), loc(1, i)) = xparam(i)
      end do
