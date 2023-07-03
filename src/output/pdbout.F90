@@ -156,8 +156,8 @@ subroutine pdbout (mode1)
       nline = nline + 1
       if (ter_ok) ter = (i == breaks(nbreaks))
       if (ter) nbreaks = nbreaks + 1
-      if (i1 == 0) cycle
-      if ( .not. l_atom(i1)) cycle
+      if (i1 == 0 .and. i /= 1) cycle
+      if ( .not. l_atom(max(1,i1))) cycle
       if (elemnt(labels(i)) (1:1) == " " .or. labels(i) == 99) then
         ele_pdb(1:1) = " "
         ele_pdb(2:2) = elemnt(labels(i)) (2:2)
@@ -226,6 +226,7 @@ subroutine pdbout (mode1)
       do i = 1, natoms - id
         if (txtatm(i)(1:4) == "ATOM") l_het_only = .false.
         if (txtatm(i)(18:20) == "HOH") cycle
+        if (txtatm(i)(18:20) == "WAT") cycle
         if (txtatm(i)(18:20) == "DOD") cycle
         if (txtatm(i)(18:20) == "SO4") cycle
         j = nint(reada(txtatm(i), 23))

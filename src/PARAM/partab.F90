@@ -13,7 +13,7 @@
 !
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+ 
 subroutine partab
 !
     use param_global_C, only : power, ifiles_8, refers, names, is_a_ref, &
@@ -48,8 +48,8 @@ subroutine partab
     integer, dimension (4) :: ipfile
     integer, dimension (4) :: nzs
     integer, dimension (4) :: sortl
-    double precision :: errors(300), yparam(300), dummy(2)
-    double precision, external :: seconds
+    double precision :: errors(300) = 0.d0, yparam(300), dummy(2)
+    double precision, external :: second
     intrinsic Abs, Index, Int, Min
     data ipfile / 16, 17, 18, 19 /
 !------------------------------------------------------------------------
@@ -83,24 +83,15 @@ subroutine partab
    &     Dipole         Diff. Ref.')")
     write (ipfile(3), "(67X,'Exp.     Calc.')")
     write (ifiles_8, "(a,26x,2A)") "   Molecule     ","         Time  Heat      ", "Dipole   I.P.     Geometry     Total"
-    itime = Int (seconds (1))
+    itime = Int (second (1))
      if (large) then
         inquire (unit=iw, opened=opend)
         if (.not. opend) then
-        i = Index (jobnam, " ") - 1
-        open (unit=iw, file=jobnam(:i)//".arc", status="UNKNOWN")
-        rewind (iw)
+          i = Index (jobnam, " ") - 1
+          open (unit=iw, file=jobnam(:i)//".arc", status="UNKNOWN")
+          rewind (iw)
         end if
-        else
-        open (unit=iw, status="SCRATCH", form="FORMATTED")
-      !
-      !  Standard MOPAC output is NOT wanted, therefore send it to scratch.
-      !
-        inquire (unit=iw, opened=opend)
-        if (opend) then
-          close (unit=iw, status="DELETE")
-        end if
-        open (unit=iw, status="SCRATCH", form="FORMATTED")
+      else
       !
       !  Standard MOPAC LOG files are NOT wanted, therefore send
       !  them to scratch.
@@ -130,7 +121,7 @@ subroutine partab
     sumier = 0.d0
     sumger = 0.d0
     one_scf = (index(contrl, "PKA") + index(contrl, "1SCF")/= 0)
-    do loop = 1, nmols
+    do loop = 1, nmols  
       molnum = molnum + 1
     !
     !  Restore all information for molecule number LOOP
@@ -151,7 +142,7 @@ subroutine partab
     !
 
       if (one_scf) then
-        call compfg (xparam, .true., escf, .true., dummy, .false.)
+        call compfg (xparam, .true., escf, .true., dummy, .false.)      
       else
         call optgeo (xparam, yparam, nvar, refgeo, -0.1d0)
       end if
@@ -159,17 +150,17 @@ subroutine partab
       call parfg (errors, ttype, nerr, loop, .false.)
       if (cp) then
         cp298 = 0.d0
-        s298 = 0.d0
+        s298 = 0.d0                                                                                                                                                                                                                                                                                                         
         call force()
         refher = cp298 - refhof
         refder = s298 - refdip
       end if
-      endfile (ifiles_8)
-      backspace (ifiles_8)
+  !    endfile (ifiles_8)
+  !    backspace (ifiles_8)
     !
     !  Write out information on this system
     !
-      i = Int (seconds (1))
+      i = Int (second (1))
       if (is_a_ref(loop)) then
       write (ifiles_8, "(A48,I5)") koment, i - itime
         cycle
@@ -231,6 +222,7 @@ subroutine partab
 !
           k = loc(1, i)
           j = loc(2, i) + 1
+          nzs = 0
           select case (j)
           case (2)  !  Bond length
             if (labels(na(k)) > labels(k)) then
@@ -256,7 +248,7 @@ subroutine partab
               nzs(3) = labels(nb(k))
               nzs(2) = labels(na(k))
               nzs(1) = labels(k)
-            else
+            else              
               nzs(4) = labels(k)
               nzs(3) = labels(na(k))
               nzs(2) = labels(nb(k))
@@ -280,17 +272,15 @@ subroutine partab
 !  yparam:  calculated geometric parameter
 !
               if (sum > 5.d0) then
-              write (ipfile(4), "(A47,A12,F8.3,F8.3,1X,A5,7X,F8.3,4I3)") wrk, &
+              write (ipfile(4), "(A47,A12,F8.3,F8.3,1X,A5,7X,F8.3,4I3, 2x, a)") wrk, &
              & refgeo(i), xparam(i) * sum, yparam(i) * sum, wrk2, &
-             & (yparam(i)-xparam(i)) * sum, (nzs(k), k=1, j)
-  !           if (method_pm6)    write(50,"(a)")wrk(16:len_trim(wrk))
+             & (yparam(i)-xparam(i)) * sum, (nzs(k), k=1, 4), trim(names(loop))
              namols = namols + 1
              aveaer = aveaer + Abs((yparam(i)-xparam(i)) * sum)
             else
-              write (ipfile(4), "(A47,A12,2F8.3,1X,A5,F7.3,8X,4I3)") wrk, &
+              write (ipfile(4), "(A47,A12,2F8.3,1X,A5,F7.3,8X,4I3, 2x, a)") wrk, &
              & refgeo(i), xparam(i) * sum, yparam(i) * sum, wrk2, &
-             & (yparam(i)-xparam(i)) * sum, (nzs(k), k=1, j)
-  !           if (method_pm6) write(50,"(a)")wrk(16:len_trim(wrk))
+             & (yparam(i)-xparam(i)) * sum, (nzs(k), k=1, 4), trim(names(loop))
              nbmols = nbmols + 1
              aveber = aveber + Abs((yparam(i)-xparam(i)) * sum)
             end if
@@ -323,8 +313,6 @@ subroutine partab
       close (unit=ipfile(4), status="DELETE", iostat=i)
     end if
     close (unit=ir, status="DELETE", iostat=i)
-    if( .not. large) close (unit=iw, status="DELETE")
-  !
   !  Summarize the errors
   !
     sumerr = sumher + sumder + sumier + sumger
@@ -333,7 +321,7 @@ subroutine partab
     aveher = aveher / (nhmols+0.000001d0)
     aveder = aveder / (ndmols+0.000001d0)
     aveier = aveier / (nimols+1.d-4)
-
+    
     write (ifiles_8, "(25x,'  UNSIGNED AVE. ERROR   ',i4,f8.2,i4,f6.2,i3,f5.2,i6,f6.3)")&
     & nhmols,  aveher, ndmols, aveder, nimols, aveier, namols + nbmols, &
     & (aveaer*3.141592653598d0/180 + aveber)/(namols + nbmols + 1.d-4)
@@ -354,7 +342,7 @@ subroutine partab
     write (ifiles_8, "(/,2A)") " All systems calculated; " // "now generating re&
    &ferences"
     do i = 1, 4
-      inquire(unit=ipfile(i), opened=opend)
+      inquire(unit=ipfile(i), opened=opend) 
       if ( .not. opend) cycle
       write(ipfile(i),"(20a)")("****",j=1,20)
       call psort (refers(1, i), 1, nmols, reftxt(1, i), allref(1, i), &

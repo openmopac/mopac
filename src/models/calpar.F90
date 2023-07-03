@@ -285,6 +285,22 @@
     end if
     if (j > 9) return
     rewind (param_out)
+    write (param_out,"(a)") "! Molecular Orbital PACkage (MOPAC)"
+    write (param_out,"(a)") "! Copyright (C) 2021, Virginia Polytechnic Institute and State University"
+    write (param_out,"(a)") "!"
+    write (param_out,"(a)") "! MOPAC is free software: you can redistribute it and/or modify it under"
+    write (param_out,"(a)") "! the terms of the GNU Lesser General Public License as published by"
+    write (param_out,"(a)") "! the Free Software Foundation, either version 3 of the License, or"
+    write (param_out,"(a)") "! (at your option) any later version."
+    write (param_out,"(a)") "!"
+    write (param_out,"(a)") "! MOPAC is distributed in the hope that it will be useful,"
+    write (param_out,"(a)") "! but WITHOUT ANY WARRANTY; without even the implied warranty of"
+    write (param_out,"(a)") "! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+    write (param_out,"(a)") "! GNU Lesser General Public License for more details."
+    write (param_out,"(a)") "!"
+    write (param_out,"(a)") "! You should have received a copy of the GNU Lesser General Public License"
+    write (param_out,"(a)") "! along with this program.  If not, see <https://www.gnu.org/licenses/>."
+    write (param_out,"(a)") " "
     write (param_out,"(a)") "  module Parameters_for_PM"//name_1(:l1)//"_C"
     write (param_out,"(a)") "    double precision, dimension(107) :: uss"//name_2(:l2)//", upp"//name_2(:l2)//", udd" &
       //name_2(:l2)//", zs"//name_2(:l2)//", zp"//name_2(:l2)//", zd"//name_2(:l2)//", betas"//name_2(:l2)//", &"

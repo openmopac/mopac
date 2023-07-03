@@ -293,7 +293,8 @@ subroutine remove_bond(i)
           ibonds(nbonds(k),k) = i
           if (rmin < max(1.3d0, 2.d0*radius(k))) cycle
           if (ibad < 20 .and. &
-            index(keywrd, " 0SCF") + index(keywrd, " LET") + index(keywrd, " ADD-H") + index(keywrd, " RESEQ") == 0) then
+            index(keywrd, " 0SCF") + index(keywrd, " LET") + index(keywrd, " ADD-H") + index(keywrd, " RESEQ") + &
+            index(keywrd, " SITE") == 0) then
             num1 = char(Int(log10(i     + 1.0)) + ichar("1"))
             num2 = char(Int(log10(rmin  + 0.05d0)) + ichar("5"))
             num3 = char(Int(log10(im(k) + 1.0)) + ichar("1"))
