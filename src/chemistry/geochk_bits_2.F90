@@ -18,7 +18,7 @@
   use common_arrays_C, only : geo, coord, labels, nat, nbonds, ibonds, &
     atmass, txtatm, tvec, lopt
   use parameters_C, only : ams
-  use chanel_C, only : iw, job_fn
+  use chanel_C, only : iw
   use elemts_C, only : elemnt
   use molkst_C, only : numat, natoms, line, keywrd, id, moperr,maxtxt
   use funcon_C,  only : pi
@@ -867,12 +867,6 @@
           end do
           write(iw,'(/2x,a)')"[ The simplest way to correct this fault would be to use the"// &
             & " CVB keyword, e.g., CVB=("""//txtatm(i)(13:26)//""":-"""//txtatm(k)(13:26)//""") ]"
-          if (index(keywrd, " HTML") + index(keywrd, "PDBOUT") /= 0) then
-            line = job_fn(:len_trim(job_fn) - 3)//"pdb"
-            call add_path(line)
-            open(unit = 99, file = trim(line), iostat = i)
-            call pdbout(99)
-          end if
           call mopend("ATTEMPT WAS MADE TO ADD A HYDROGEN ATOM TO A CARBON ATOM THAT WAS ALREADY SATURATED")
           return
         end if
