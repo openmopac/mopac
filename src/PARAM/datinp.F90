@@ -50,8 +50,8 @@
 !----------------------------------------------------------------------------
     implicit none
     character :: dr, gr, hr, jr
-    character (len=200) :: name, refnam
-    character (len=80), dimension (maxmol) :: safety
+    character (len=300) :: name, refnam
+    character (len=80), dimension (maxmol*3) :: safety
     logical :: case, exists, let, opend, refok, precise, large, all, survey, &
     & clean, hof_type, deadly = .false., l_only, method_pm5 = .false., &
     &  cp, solid, nocore
@@ -70,9 +70,9 @@
 !  The weights given to each reference datum depend on the elements present.
 !  Weights are assigned according to the type of element
    double precision, dimension (107) :: element_weights
-   character(len=300), external :: get_a_name
-   integer, external :: end_of_keyword
+   character, external :: get_a_name*300
    double precision, external :: seconds, reada
+   integer, external :: end_of_keyword
    double precision, parameter :: &
    & org = 1.d0,      &! Organic elements
    & mg1 = 0.9d0,     &! Main-group elements (important in biochemistry)
@@ -107,19 +107,18 @@
 !
     maxpab = 10000000
     do
-      maxpab = (maxpab*6)/5
       allocate (pas(maxpab), pbs(maxpab), stat = i)
       if (i /= 0) then
         maxpab = (maxpab*5)/6
         if (allocated(pas)) deallocate(pas)
-        allocate (pas(maxpab), pbs(maxpab), stat = i)
+      else
         exit
       end if
-      if (maxpab > 40000000) exit
       deallocate (pas, pbs, stat = i)
     end do
+    pas = 0.d0
+    pbs = 0.d0
     refnam = " "
-    refok = .false.
 !
 !  JFILES(1) = Normal MOPAC output - this will be deleted.
 !  JFILES(2) = Faulty MOPAC output - to be saved.
@@ -137,7 +136,6 @@
     iatm = 0
     ilin = 0
     is   = 0
-    itype = 0
     ilowa = Ichar ("a")
     ilowz = Ichar ("z")
     icapa = Ichar ("A")
@@ -219,7 +217,6 @@
     contrl = trim(keywrd)
     i = 0
     m = 0
-    n = 0
     loop = Index(contrl, " SET=")
     if (loop /= 0) then
       n = loop
@@ -281,9 +278,15 @@
         names(i) = keywrd(j:k)
         j = Index(line(j:k), ".mop")!  Remove ".mop" if it exists
         if (j /= 0) names(i)(j:j+3) = " "
+        name = trim(names(i))
+        call upcase(name, len_trim(name))
         do j = 1, i - 1
-          if (names(i) == names(j)) then
+          line = trim(names(j))
+          call upcase(line, len_trim(line))
+          if (trim(name) == trim(line)) then
             write(ifiles_8,"(5x,3a)")" File: """,trim(names(i)),""" already specified."
+            if (names(i) /= names(j))  write(ifiles_8,"(5x,3a)") &
+              " (The only difference is in the case.  The other file was: """,trim(names(j)),""")"
             i = i - 1
             exit
           end if
@@ -292,6 +295,7 @@
       cycle
  1200 continue
       if (m == 1) then
+        write(ifiles_8,'(//10x,a)')"No file-names provided!"
         call finish !  no data on file-names
       end if
     end do
@@ -306,7 +310,7 @@
     if (Ichar(names(i)(1:1)) == 0) i = i - 1
     nmolmx = i
     write (ifiles_8, "(//10X,' FILE NAMES OF MOLECULES USED',/)")
-    write (ifiles_8, "(2x,a)") (names(i), i=1, nmolmx)
+    write (ifiles_8, "(2x,a)") (trim(names(i)), i=1, nmolmx)
     write (ifiles_8, "('1',//,'     MOLECULE         ',25x,'           H-EXP','   WT'&
    &,'   D-EXP   WT   I-EXP   WT  GEO-WT')")
     ndips = 0
@@ -337,7 +341,7 @@
           nref = nref + 1
           refdir(nref) = trim(get_a_name(contrl(k:j), len_trim(contrl(k:j))))//"/"
           n = len_trim(refdir(nref))
-          if (refdir(nref)(n:n) /= "/") refdir(nref)(n + 1:n + 1) = "/"
+          if (refdir(nref)(n:n) /= backslash .and. refdir(nref)(n:n) /= "/" ) refdir(nref)(n + 1:n + 1) = backslash
           k = k + i
         end if
         if (i == 0) exit
@@ -345,41 +349,46 @@
       nref = nref + 1
       refdir(nref) = trim(get_a_name(contrl(k:j), j - k + 1))
       n = len_trim(refdir(nref))
-      if (refdir(nref)(n:n) /= "/") refdir(nref)(n + 1:n + 1) = "/"
+      if (l > 1 .and. n == 0) then
+        write(ifiles_8,'(//10x, a, /)')"Reference folder list ends in "";"""//&
+          &" Delete the semicolon at the end of the list."
+        stop
+      end if
+      if (refdir(nref)(n:n) == backslash) refdir(nref)(n + 1:n + 1) = "/"
     else
       nref = nref + 1
-      refdir(nref) = "."//"/"
+      refdir(nref) = "."//backslash
     end if
     m = 0
     do i = 1, nref
       n = len_trim(refdir(i))
       if (n /= 2) then
-        if (refdir(i)(n:n) /= "/") refdir(i)(n + 1:n + 1) = "/"
+        if (refdir(i)(n:n) /= "/" .and. refdir(i)(n:n) /= backslash) refdir(i)(n + 1:n + 1) = "/"
         call add_path(refdir(i))
       else
-        if (index(job_fn, "/") > 0) then
+        if (index(job_fn, backslash) > 0) then
           refdir(i) = " "
           call add_path(refdir(i))
         end if
       end if
-! the directory checking feature of inquire is specific to the Intel compiler, remove for now
-!      inquire (directory = refdir(i), exist = exists)
-!      if (.not. exists) then
-!        write(ifiles_8,'(//10x,a)')"Reference folder """//trim(refdir(i))//""" does not exist"
-!        do n =  len_trim(refdir(i)) - 1, 1, -1
-!          if (refdir(i)(n:n) == "\") then
-!            inquire (directory = refdir(i)(:n), exist = exists)
-!            if (.not. exists) then
-!              write(ifiles_8,'(10x,a)')"Reference folder """//refdir(i)(:n)//""" also does not exist"
-!            else
-!              write(ifiles_8,'(10x,a)')"But reference folder """//refdir(i)(:n)//""" does exist"
-!              exit
-!            end if
-!          end if
-!        end do
-!        m = 1
-!      end if
-    end do
+ ! the directory checking feature of inquire is specific to the Intel compiler, remove for now
+ !     inquire (directory = refdir(i), exist = exists)
+ !     if (.not. exists) then
+ !       write(ifiles_8,'(//10x,a)')"Reference folder """//trim(refdir(i))//""" does not exist"
+ !       do n =  len_trim(refdir(i)) - 1, 1, -1
+ !         if (refdir(i)(n:n) == backslash) then
+ !           inquire (directory = refdir(i)(:n), exist = exists)
+ !           if (.not. exists) then
+ !             write(ifiles_8,'(10x,a)')"Reference folder """//refdir(i)(:n)//""" also does not exist"
+ !           else
+ !             write(ifiles_8,'(10x,a)')"But reference folder """//refdir(i)(:n)//""" does exist"
+ !             exit
+ !           end if
+ !         end if
+ !       end do
+ !       m = 1
+ !     end if
+    end do 
  !   call finish
     if (m == 1) call finish
     i = Index (jobnam, " ") - 1
@@ -410,7 +419,7 @@
 !
           if (names(nmols) (1:1) == " ") exit
           do iref = 1, nref
-            refnam = trim(refdir(iref)) // trim(names (nmols))
+            refnam = trim(refdir(iref)) // trim(names (nmols)) 
             if (Index(refnam,".mop") == 0) refnam = trim(refnam)//".mop"
             inquire (unit=igpt, opened=opend)
             if (opend) then
@@ -418,6 +427,7 @@
             end if
             i = 0
 98          i = i + 1
+            call add_path(refnam)
             open (igpt, status="OLD", file=trim(refnam), blank="ZERO", iostat=l)
             if (l /= 0) then
               continue
@@ -473,9 +483,13 @@
             i = itype
             id = 0
             call readmo ()
-              if (nmols == 223) then
-               itype = i
-              end if
+            if (index(keywrd, " OPT") /= 0) then
+              write(ifiles_8, '(/,a,/)')" ***** File: """//trim(names(nmols))// &
+                ".mop"" uses keyword OPT.  This is not allowed in PARAM. *****"
+              faulty = faulty + 1
+              deadly = .true.
+            end if
+
             itype = i
 !***********************************************************************
 !
@@ -503,7 +517,7 @@
             call l_control("NEW", len("NEW"), -1)
             call l_control("AM1", len("AM1"), -1)
             call l_control("1SCF", len("1SCF"), -1)
-            call l_control("1SCF", len("1SCF"), -1)
+            call l_control("0SCF", len("0SCF"), -1)
             call l_control("1SCF", len("1SCF"), -1)
             call l_control("EXTERNAL", len("EXTERNAL"), -1)
             if (index(contrl," LET") /= 0) then
@@ -512,7 +526,7 @@
             end if
             i = index(keywrd," GNORM")
             if ( i == 0) then
-              i = Index (contrl, "GNORM")
+              i = Index (contrl, "GNORM") 
               if (i /= 0) then
                 k = index(contrl(i:)," ")
                 j = index(keywrd,"            ")
@@ -789,7 +803,7 @@
                   end if
                   l = j - i
                   name = title (i+1:j)
-                end if
+                endif
                 do k = 1, len_trim(name)
                   iline = Ichar (name(k:k))
                   if (iline >= icapa .and. iline <= Ichar ("Z")) then
@@ -1127,8 +1141,8 @@
 !         if (heats (nmols) < -999.9950d0) then
 !          write(55,"(f9.2)",err=95) heats (nmols)
 !        end if
-            endfile (ifiles_8)
-            backspace (ifiles_8)
+    !        endfile (ifiles_8)
+    !        backspace (ifiles_8)
             if (moperr) then
               write (ifiles_8, "(//, A)") " (READMO) There is an error in data-set", &
               names (nmols)
@@ -1157,8 +1171,8 @@
                     moperr=.false.
                     exit loop1
                   end if
-                  write (ifiles_8, "(//,3A)") " ++++ FAULT DETECTED IN FILE ++++ (MOLDAT)&
-                                               & There is an error in data-set ", names (nmols)
+                  write (ifiles_8, "(//,3A)") " ++++ FAULT DETECTED IN FILE ++++ (MOLDAT) There is an error in data-set ", &
+                    names (nmols)
                   write(ifiles_8, "(a,//)")" Error message: """//trim(errtxt)//""". System deleted."
                   moperr = .false.
                   go to 1600
@@ -1257,6 +1271,8 @@
       nopens(lnmols) = nopen+nbeta
       nnalpha_open(lnmols) = nalpha_open
       nnbeta_open(lnmols) = nbeta_open
+      call l_control("CONTROL_NABC_in_PDB", len("CONTROL_NABC_in_PDB"), -1)
+      call l_control("HTML", len("HTML"), -1)
       keys(lnmols) = trim(keywrd)
       msdels(lnmols) = msdel
       titls(lnmols) = title
@@ -1538,6 +1554,9 @@ end if
       valold(j) = valold(i)
     end if
   end do
+  do numvar = 1, j
+      call print_par
+  end do
   numvar = j
   write(ifiles_8,"(a,i5)")" Number of reference data:",nfns
   if (index(contrl, " CYCLES=0") /= 0) numvar = 0
@@ -1581,10 +1600,11 @@ end if
 end subroutine datinp
 logical function core_core_OK(geo, nat, numat, ni, nj, ccp)
   use parameters_C, only : alpb
+  implicit none
   integer :: numat, ni, nj
   integer, dimension (numat) :: nat
   integer, dimension (107,107) :: ccp
-  double precision, dimension (3,*) :: geo
+  double precision, dimension (3,*) :: geo 
   logical :: first = .true.
   logical, save, dimension (107,107) :: cc_OK
   integer :: i, j
@@ -1597,6 +1617,7 @@ logical function core_core_OK(geo, nat, numat, ni, nj, ccp)
     cc_OK = .true.
     do i = 1, 100
       do j = 1, i
+        if (isnan(alpb(i,j))) alpb(i,j) = 0.d0
         cc_OK(i,j) = (alpb(i,j) > 1.d-4)
         cc_OK(j,i) = cc_OK(i,j)
       end do
