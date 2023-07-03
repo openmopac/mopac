@@ -45,7 +45,8 @@ subroutine getpdb (geo)
     character :: typea, typer, ch
     character :: ele*3, letter*26
     logical :: leadsp, lxyz, lchain, last_atom = .true., l_pdb, first = .true., &
-      l_letter(26)
+      l_letter(26), l_BABEL
+
     integer :: i, icomma, ii, j, k, khar, label, nline, npdb, nvalue, n_water = 0, &
       old_natoms = 0, numerr
     integer :: new_elements, defined_elements, previous_res, current_res
@@ -156,20 +157,21 @@ subroutine getpdb (geo)
     lchain = .true.
     if (.not. allocated(tmp_comments)) allocate(tmp_comments(10000))
 !
+    l_BABEL = .false.
     outer_loop: do
 !
       read (ir, "(A)", end=1020, err=1020) line
 !
       nline = nline + 1
       if (natoms > 0 .and. line == " ") exit
-      if( .not. ( line(1:4) == "ATOM" .or. line(1:6) == "HETATM" ) ) then
+      if ( .not. ( line(1:4) == "ATOM" .or. line(1:6) == "HETATM" ) ) then
         if (index(line,"ATOM  ") + index(line,"HETATM") + index(line,"TITLE ") + index(line,"HEADER") + &
                                    index(line,"COMPND") + index(line,"SOURCE") + index(line,"KEYWDS") + &
             index(line,"HELIX ") + index(line,"SHEET ") + index(line,"REMARK") + index(line,"USER  ") + &
             index(line,"EXPDTA") + index(line,"AUTHOR") + index(line,"REVDAT") + index(line,"JRNL  ") + &
             index(line,"DBREF ") + index(line,"SEQRES") + index(line,"HET   ") + index(line,"HETNAM") + &
             index(line,"LINK  ") + index(line,"CRYST1") + index(line,"SCALE" ) + index(line,"ORIGX" ) + &
-            index(line,"FORMUL") + index(line,"SEQRES") + index(line,"CONECT") /= 0 ) then
+            index(line,"FORMUL") + index(line,"SEQRES") + index(line,"CONECT")+ index(line,"ENDMDL") /= 0 ) then
           if (line(1:6) /= "CONECT") then
             ncomments = ncomments + 1
             tmp_comments(ncomments) = "*"//line(:80)
@@ -207,6 +209,33 @@ subroutine getpdb (geo)
         end if
         cycle
       end if
+!
+! Special code for BABEL
+!
+      if (natoms == 0) then
+!
+! Test atom 1 to see if it's in BABEL format
+!
+        if (line(10:10) /= " " .and. line(11:11) == " ") l_BABEL = .true.
+      end if
+      if (l_BABEL) then
+!
+! Edit line to convert it into standard PDB format
+!
+        line1 = trim(line)
+        line = line1(1:6)//" "//line1(7:66)//" "//line1(67:78)            
+      end if
+      line1 = trim(line)
+      if (line1(14:14) >= '0' .and. line1(14:14) <= '9') then
+        if (line1(13:13) == " ") then ! Another non-standard possibility 
+          line = line1(1:12)//line1(14:17)//" "//trim(line1(18:))
+          continue
+        end if
+      end if
+        
+!
+! End of special code for BABEL
+!
       if (letter /= " " .and. index(letter, line(22:22)) == 0) cycle
       if (line(17:17) /= " ") then
         if (typea == " ") then
