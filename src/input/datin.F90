@@ -106,7 +106,6 @@
     t_par(44)  = "S-H scalar                 correction."
     t_par(45)  = "S-H       exponent         correction."
     t_par(46)  = "S-H               offset   correction."
-    if (quoted(" EXTERNAL=") == 0) return
     if (.not. allocated(ijpars))  allocate(ijpars(5,5000), parsij(5000))
     i = Index(keywrd_quoted, "EXTERNAL=")
     nref = 0
