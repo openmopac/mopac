@@ -226,7 +226,8 @@
       i = index(keywrd(i:), "=") + i
       k = end_of_keyword(keywrd, len_trim(keywrd), i)
       line = get_a_name(keywrd(i:k), len_trim(keywrd(i:k)))
-      write (ifiles_8, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
+      write (ifiles_8, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'&
+      &//trim(line)//'"'
       do
         j = index(keywrd(i:k), ";")
         if (j /= 0) then
