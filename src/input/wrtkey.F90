@@ -17,7 +17,7 @@
 subroutine wrtkey
   use molkst_C, only : moperr, allkey, keywrd
   implicit none
-  integer :: i, j, k, l
+  integer :: i, j, k, l, m
   integer, parameter :: n_protected_keywords = 14
   character :: protected_keywords(n_protected_keywords)*10
   data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", &
@@ -88,14 +88,30 @@ subroutine wrtkey
     do
       i = index(keywrd(j:), " "//trim(protected_keywords(k))) + j
       if (i == j) exit
-      j = index(keywrd(i:), ") ")
-      l = index(keywrd(i:), '" ')
+      m = i + len_trim(protected_keywords(k)) 
+      if (keywrd(m:m) == "(" .or. keywrd(m - 1:m - 1) == "(") then
+!
+! Keyword starts with "(" so search for closing ")"
+!
+        j = 1
+        do
+          m = m + 1
+          if (keywrd(m:m) == "(") j = j + 1
+          if (keywrd(m:m) == ")") j = j - 1
+          if (j == 0) exit
+        end do
+        j = m   
+        l = 1000
+      else
+        l = index(keywrd(i:), ' ') 
+        l = index(keywrd(i:l), '" ')    
+        if (l == 0) exit
+      endif
       if (j > 0 .and. l > 0) then
         j = min(j,l)
       else if (l > 0) then
         j = l
       end if
-      j = j + i
       allkey(i - 1:j) = keywrd(i - 1:j)
     end do
   end do
