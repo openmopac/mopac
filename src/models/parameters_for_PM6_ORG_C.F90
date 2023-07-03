@@ -5,7 +5,7 @@
 ! the terms of the GNU Lesser General Public License as published by
 ! the Free Software Foundation, either version 3 of the License, or
 ! (at your option) any later version.
-!
+! 
 ! MOPAC is distributed in the hope that it will be useful,
 ! but WITHOUT ANY WARRANTY; without even the implied warranty of
 ! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -13,7 +13,7 @@
 !
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+ 
   module Parameters_for_PM6_ORG_C
     double precision, dimension(107) :: uss_org, upp_org, udd_org, zs_org, zp_org, zd_org, betas_org, &
     betap_org, betad_org, gss_org, gsp_org, gpp_org, gp2_org, hsp_org, polvo_org, poc__org, &
@@ -24,14 +24,14 @@
 !
 !                    Data for Element   1         Hydrogen
 !
-      data     uss_org(  1)/     -11.51804056D0/
-      data   betas_org(  1)/      -9.02609740D0/
-      data      zs_org(  1)/       1.25406043D0/
-      data     gss_org(  1)/      15.86493302D0/
+      data     uss_org(  1)/     -12.55594289D0/
+      data   betas_org(  1)/      -8.78462079D0/
+      data      zs_org(  1)/       1.22600545D0/
+      data     gss_org(  1)/      16.51220819D0/
       data   polvo_org(  1)/       0.26211400D0/
-      data gues_org1(  1,1)/      -0.00065824D0/
-      data gues_org2(  1,1)/       3.59078585D0/
-      data gues_org3(  1,1)/       2.35426666D0/
+      data gues_org1(  1,1)/      -0.00418845D0/
+      data gues_org2(  1,1)/       4.53239266D0/
+      data gues_org3(  1,1)/       2.02900589D0/
 !
 !                    Data for Element   2           Helium
 !
@@ -94,75 +94,75 @@
 !
 !                    Data for Element   6           Carbon
 !
-      data     uss_org(  6)/     -50.21748281D0/
-      data     upp_org(  6)/     -40.24936947D0/
-      data   betas_org(  6)/     -13.19290435D0/
-      data   betap_org(  6)/      -8.12535240D0/
-      data      zs_org(  6)/       2.06257083D0/
-      data      zp_org(  6)/       1.68590132D0/
-      data     gss_org(  6)/      12.54662491D0/
-      data     gsp_org(  6)/      12.05342723D0/
-      data     gpp_org(  6)/      11.51643967D0/
-      data     gp2_org(  6)/       9.58468368D0/
-      data     hsp_org(  6)/       0.77526172D0/
+      data     uss_org(  6)/     -49.97894304D0/
+      data     upp_org(  6)/     -40.45461533D0/
+      data   betas_org(  6)/     -11.51865824D0/
+      data   betap_org(  6)/      -8.49404612D0/
+      data      zs_org(  6)/       2.05935067D0/
+      data      zp_org(  6)/       1.70277718D0/
+      data     gss_org(  6)/      13.65002631D0/
+      data     gsp_org(  6)/      11.89475833D0/
+      data     gpp_org(  6)/      11.68748408D0/
+      data     gp2_org(  6)/       9.87880661D0/
+      data     hsp_org(  6)/       0.86511600D0/
       data   polvo_org(  6)/       0.48507100D0/
-      data gues_org1(  6,1)/       0.02622155D0/
-      data gues_org2(  6,1)/       5.74556494D0/
-      data gues_org3(  6,1)/       1.55433422D0/
+      data gues_org1(  6,1)/       0.02037941D0/
+      data gues_org2(  6,1)/       5.86041774D0/
+      data gues_org3(  6,1)/       1.61433014D0/
 !
 !                    Data for Element   7         Nitrogen
 !
-      data     uss_org(  7)/     -59.39873932D0/
-      data     upp_org(  7)/     -46.29419110D0/
-      data   betas_org(  7)/     -21.25148749D0/
-      data   betap_org(  7)/     -16.80968497D0/
-      data      zs_org(  7)/       2.24595554D0/
-      data      zp_org(  7)/       2.10239125D0/
-      data     gss_org(  7)/      10.36135750D0/
-      data     gsp_org(  7)/      10.45048800D0/
-      data     gpp_org(  7)/      12.06395930D0/
-      data     gp2_org(  7)/      10.44042562D0/
-      data     hsp_org(  7)/       7.54400703D0/
+      data     uss_org(  7)/     -58.46660524D0/
+      data     upp_org(  7)/     -44.93993591D0/
+      data   betas_org(  7)/     -22.38999733D0/
+      data   betap_org(  7)/     -16.84861487D0/
+      data      zs_org(  7)/       2.26444238D0/
+      data      zp_org(  7)/       2.15161849D0/
+      data     gss_org(  7)/       8.49212330D0/
+      data     gsp_org(  7)/       9.35824093D0/
+      data     gpp_org(  7)/      11.15955253D0/
+      data     gp2_org(  7)/       9.83500604D0/
+      data     hsp_org(  7)/       4.37603155D0/
       data   polvo_org(  7)/       0.20474300D0/
-      data gues_org1(  7,1)/       0.02396931D0/
-      data gues_org2(  7,1)/       2.64054835D0/
-      data gues_org3(  7,1)/       1.63598591D0/
+      data gues_org1(  7,1)/       0.02761821D0/
+      data gues_org2(  7,1)/       2.15056844D0/
+      data gues_org3(  7,1)/       1.57143677D0/
 !
 !                    Data for Element   8           Oxygen
 !
-      data     uss_org(  8)/     -92.44667207D0/
-      data     upp_org(  8)/     -68.88994307D0/
-      data   betas_org(  8)/     -63.94814293D0/
-      data   betap_org(  8)/     -19.65680718D0/
-      data      zs_org(  8)/       5.46670031D0/
-      data      zp_org(  8)/       2.36483491D0/
-      data     gss_org(  8)/      15.44708890D0/
-      data     gsp_org(  8)/      15.62015275D0/
-      data     gpp_org(  8)/      12.61015274D0/
-      data     gp2_org(  8)/      10.67382310D0/
-      data     hsp_org(  8)/       7.13812989D0/
+      data     uss_org(  8)/     -92.29368783D0/
+      data     upp_org(  8)/     -68.63750130D0/
+      data   betas_org(  8)/     -62.84670430D0/
+      data   betap_org(  8)/     -17.60167625D0/
+      data      zs_org(  8)/       4.84901421D0/
+      data      zp_org(  8)/       2.22296191D0/
+      data     gss_org(  8)/      15.79259941D0/
+      data     gsp_org(  8)/      14.90978302D0/
+      data     gpp_org(  8)/      13.21455827D0/
+      data     gp2_org(  8)/      11.40301293D0/
+      data     hsp_org(  8)/       8.87691264D0/
       data   polvo_org(  8)/       0.15430100D0/
-      data gues_org1(  8,1)/      -0.00407258D0/
-      data gues_org2(  8,1)/       0.92192926D0/
-      data gues_org3(  8,1)/       1.87329535D0/
+      data gues_org1(  8,1)/      -0.00991525D0/
+      data gues_org2(  8,1)/       2.33011528D0/
+      data gues_org3(  8,1)/       2.21804989D0/
 !
 !                    Data for Element   9         Fluorine
 !
-      data     uss_org(  9)/    -137.46462929D0/
-      data     upp_org(  9)/     -98.88187919D0/
-      data   betas_org(  9)/     -76.27545211D0/
-      data   betap_org(  9)/     -27.95305669D0/
-      data      zs_org(  9)/       7.11585740D0/
-      data      zp_org(  9)/       2.77565793D0/
-      data     gss_org(  9)/       9.11675979D0/
-      data     gsp_org(  9)/      20.42916477D0/
-      data     gpp_org(  9)/      10.61179864D0/
-      data     gp2_org(  9)/      12.12433246D0/
-      data     hsp_org(  9)/       6.24805955D0/
+      data     uss_org(  9)/    -137.49084253D0/
+      data     upp_org(  9)/     -98.60644823D0/
+      data   betas_org(  9)/     -76.00423918D0/
+      data   betap_org(  9)/     -27.48652426D0/
+      data      zs_org(  9)/       6.88765955D0/
+      data      zp_org(  9)/       2.72983077D0/
+      data     gss_org(  9)/       8.83106915D0/
+      data     gsp_org(  9)/      20.76644115D0/
+      data     gpp_org(  9)/      11.64269222D0/
+      data     gp2_org(  9)/      12.12267483D0/
+      data     hsp_org(  9)/       6.70622637D0/
       data   polvo_org(  9)/       0.19961100D0/
-      data gues_org1(  9,1)/      -0.00904697D0/
-      data gues_org2(  9,1)/       3.93358548D0/
-      data gues_org3(  9,1)/       1.87267339D0/
+      data gues_org1(  9,1)/      -0.00784070D0/
+      data gues_org2(  9,1)/       4.54137015D0/
+      data gues_org3(  9,1)/       1.56706840D0/
 !
 !                    Data for Element  10             Neon
 !
@@ -180,34 +180,34 @@
 !
 !                    Data for Element  11           Sodium
 !
-      data     uss_org( 11)/      -4.83260447D0/
-      data     upp_org( 11)/      -2.73144016D0/
-      data   betas_org( 11)/      -0.19109424D0/
-      data   betap_org( 11)/      -5.89251999D0/
-      data      zs_org( 11)/       0.76390472D0/
-      data      zp_org( 11)/       0.67900479D0/
-      data     gss_org( 11)/       5.05187143D0/
-      data     gsp_org( 11)/       6.58150063D0/
-      data     gpp_org( 11)/      12.12326108D0/
-      data     gp2_org( 11)/      13.88371923D0/
-      data     hsp_org( 11)/       1.67398150D0/
-      data gues_org1( 11,1)/      -0.17685775D0/
-      data gues_org2( 11,1)/       3.48357540D0/
-      data gues_org3( 11,1)/       1.88145523D0/
+      data     uss_org( 11)/      -4.95173405D0/
+      data     upp_org( 11)/      -2.85030259D0/
+      data   betas_org( 11)/      -0.10258029D0/
+      data   betap_org( 11)/      -5.30239870D0/
+      data      zs_org( 11)/       0.89075745D0/
+      data      zp_org( 11)/       0.84312659D0/
+      data     gss_org( 11)/       5.50902119D0/
+      data     gsp_org( 11)/       6.41933250D0/
+      data     gpp_org( 11)/      12.04894719D0/
+      data     gp2_org( 11)/      14.01273067D0/
+      data     hsp_org( 11)/       1.90534477D0/
+      data gues_org1( 11,1)/      -0.20214451D0/
+      data gues_org2( 11,1)/       3.59261867D0/
+      data gues_org3( 11,1)/       2.03002270D0/
 !
 !                    Data for Element  12        Magnesium
 !
-      data     uss_org( 12)/     -12.58764527D0/
-      data     upp_org( 12)/     -13.64783717D0/
-      data   betas_org( 12)/      -3.06349561D0/
-      data   betap_org( 12)/      -1.61715918D0/
-      data      zs_org( 12)/       1.36341647D0/
-      data      zp_org( 12)/       1.49515190D0/
-      data     gss_org( 12)/       4.79939024D0/
-      data     gsp_org( 12)/       6.80385889D0/
-      data     gpp_org( 12)/       9.71740128D0/
-      data     gp2_org( 12)/       8.37871633D0/
-      data     hsp_org( 12)/       0.63119158D0/
+      data     uss_org( 12)/     -11.96334304D0/
+      data     upp_org( 12)/     -11.69107988D0/
+      data   betas_org( 12)/      -5.01124807D0/
+      data   betap_org( 12)/      -1.14370715D0/
+      data      zs_org( 12)/       1.17743010D0/
+      data      zp_org( 12)/       1.14720276D0/
+      data     gss_org( 12)/       4.80798289D0/
+      data     gsp_org( 12)/       7.18851244D0/
+      data     gpp_org( 12)/      11.14377866D0/
+      data     gp2_org( 12)/       6.66068989D0/
+      data     hsp_org( 12)/       0.11765466D0/
 !
 !                    Data for Element  13         Aluminum
 !
@@ -259,75 +259,75 @@
 !
 !                    Data for Element  15       Phosphorus
 !
-      data     uss_org( 15)/     -47.86742323D0/
-      data     upp_org( 15)/     -39.20419043D0/
-      data     udd_org( 15)/      -7.37596714D0/
-      data   betas_org( 15)/      -9.80027923D0/
-      data   betap_org( 15)/     -12.28361682D0/
-      data   betad_org( 15)/     -22.86588191D0/
-      data      zs_org( 15)/       2.04739172D0/
-      data      zp_org( 15)/       1.82112954D0/
-      data      zd_org( 15)/       1.27956078D0/
-      data     zsn_org( 15)/       3.26632817D0/
-      data     zpn_org( 15)/       1.32382922D0/
-      data     zdn_org( 15)/       7.00631004D0/
-      data     gss_org( 15)/       8.62371066D0/
-      data     gsp_org( 15)/       8.30807318D0/
-      data     gpp_org( 15)/       8.70036212D0/
-      data     gp2_org( 15)/       7.86508651D0/
-      data     hsp_org( 15)/       1.84450770D0/
+      data     uss_org( 15)/     -48.75635103D0/
+      data     upp_org( 15)/     -39.47147070D0/
+      data     udd_org( 15)/      -7.09971722D0/
+      data   betas_org( 15)/      -9.08367246D0/
+      data   betap_org( 15)/     -12.08969359D0/
+      data   betad_org( 15)/     -22.22987996D0/
+      data      zs_org( 15)/       1.97679584D0/
+      data      zp_org( 15)/       1.81471099D0/
+      data      zd_org( 15)/       1.38655362D0/
+      data     zsn_org( 15)/       4.21416730D0/
+      data     zpn_org( 15)/       1.16554745D0/
+      data     zdn_org( 15)/       7.95024299D0/
+      data     gss_org( 15)/       8.39197936D0/
+      data     gsp_org( 15)/       8.59076849D0/
+      data     gpp_org( 15)/       8.89666101D0/
+      data     gp2_org( 15)/       7.84071729D0/
+      data     hsp_org( 15)/       1.76922744D0/
       data   polvo_org( 15)/       2.31461000D0/
-      data gues_org1( 15,1)/      -0.01765766D0/
-      data gues_org2( 15,1)/       4.32287106D0/
-      data gues_org3( 15,1)/       2.47010191D0/
+      data gues_org1( 15,1)/      -0.00588080D0/
+      data gues_org2( 15,1)/       5.47368452D0/
+      data gues_org3( 15,1)/       2.51534669D0/
 !
 !                    Data for Element  16           Sulfur
 !
-      data     uss_org( 16)/     -52.81945777D0/
-      data     upp_org( 16)/     -36.87335599D0/
-      data     udd_org( 16)/     -46.14171619D0/
-      data   betas_org( 16)/     -13.40463493D0/
-      data   betap_org( 16)/      -9.26738586D0/
-      data   betad_org( 16)/     -12.98139394D0/
-      data      zs_org( 16)/       1.84968731D0/
-      data      zp_org( 16)/       1.94369437D0/
-      data      zd_org( 16)/       2.88026287D0/
-      data     zsn_org( 16)/       1.57989965D0/
-      data     zpn_org( 16)/       0.69868617D0/
-      data     zdn_org( 16)/       2.30608926D0/
-      data     gss_org( 16)/       8.86729470D0/
-      data     gsp_org( 16)/       6.19182172D0/
-      data     gpp_org( 16)/       7.55957479D0/
-      data     gp2_org( 16)/       6.72917030D0/
-      data     hsp_org( 16)/       5.33308599D0/
+      data     uss_org( 16)/     -52.84384720D0/
+      data     upp_org( 16)/     -36.96356507D0/
+      data     udd_org( 16)/     -46.28679594D0/
+      data   betas_org( 16)/     -13.46369626D0/
+      data   betap_org( 16)/     -10.31738995D0/
+      data   betad_org( 16)/     -13.24600677D0/
+      data      zs_org( 16)/       1.83414635D0/
+      data      zp_org( 16)/       2.01054933D0/
+      data      zd_org( 16)/       3.28706036D0/
+      data     zsn_org( 16)/       2.10174879D0/
+      data     zpn_org( 16)/       0.64664107D0/
+      data     zdn_org( 16)/       1.75166002D0/
+      data     gss_org( 16)/       8.84550473D0/
+      data     gsp_org( 16)/       6.39148567D0/
+      data     gpp_org( 16)/       7.26625310D0/
+      data     gp2_org( 16)/       6.61407354D0/
+      data     hsp_org( 16)/       4.97868817D0/
       data   polvo_org( 16)/       1.45331000D0/
-      data gues_org1( 16,1)/      -0.11203409D0/
-      data gues_org2( 16,1)/       1.02612340D0/
-      data gues_org3( 16,1)/       1.61268145D0/
+      data gues_org1( 16,1)/      -0.34813009D0/
+      data gues_org2( 16,1)/       0.56686034D0/
+      data gues_org3( 16,1)/       0.70475091D0/
 !
 !                    Data for Element  17         Chlorine
 !
-      data     uss_org( 17)/     -66.46128618D0/
-      data     upp_org( 17)/     -62.24794228D0/
-      data     udd_org( 17)/     -43.46840998D0/
-      data   betas_org( 17)/       1.24470145D0/
-      data   betap_org( 17)/     -12.27639617D0/
-      data   betad_org( 17)/      -4.93751724D0/
-      data      zs_org( 17)/       2.37132118D0/
-      data      zp_org( 17)/       2.09554394D0/
-      data      zd_org( 17)/       1.21389223D0/
-      data     zsn_org( 17)/       0.76291736D0/
-      data     zpn_org( 17)/       2.19897547D0/
-      data     zdn_org( 17)/       8.62093236D0/
-      data     gss_org( 17)/      10.99267343D0/
-      data     gsp_org( 17)/       9.50390305D0/
-      data     gpp_org( 17)/       9.62518424D0/
-      data     gp2_org( 17)/       8.38049254D0/
-      data     hsp_org( 17)/       2.32744386D0/
+      data     uss_org( 17)/     -66.26070535D0/
+      data     upp_org( 17)/     -62.26023080D0/
+      data     udd_org( 17)/     -43.70187019D0/
+      data   betas_org( 17)/       1.37962037D0/
+      data   betap_org( 17)/     -12.15978875D0/
+      data   betad_org( 17)/      -5.34992632D0/
+      data      zs_org( 17)/       2.25268102D0/
+      data      zp_org( 17)/       2.08518895D0/
+      data      zd_org( 17)/       1.21815745D0/
+      data     zsn_org( 17)/       1.16718094D0/
+      data     zpn_org( 17)/       2.37662942D0/
+      data     zdn_org( 17)/       8.52113127D0/
+      data     gss_org( 17)/      11.42538436D0/
+      data     gsp_org( 17)/       9.47705295D0/
+      data     gpp_org( 17)/      10.42961146D0/
+      data     gp2_org( 17)/       8.59200761D0/
+      data     hsp_org( 17)/       3.13144591D0/
       data   polvo_org( 17)/       1.23621000D0/
-      data gues_org1( 17,1)/      -0.07781945D0/
-      data gues_org2( 17,1)/       0.98368004D0/
-      data gues_org3( 17,1)/       1.82890575D0/
+      data gues_org1( 17,1)/      -0.06645192D0/
+      data gues_org2( 17,1)/       0.99319979D0/
+      data gues_org3( 17,1)/       1.80535831D0/
 !
 !                    Data for Element  18            Argon
 !
@@ -345,37 +345,37 @@
 !
 !                    Data for Element  19        Potassium
 !
-      data     uss_org( 19)/      -3.52807031D0/
-      data     upp_org( 19)/       0.24886472D0/
-      data   betas_org( 19)/      -5.70393556D0/
-      data   betap_org( 19)/      -8.97131501D0/
-      data      zs_org( 19)/       7.76683045D0/
-      data      zp_org( 19)/       1.16903706D0/
-      data     gss_org( 19)/       2.25960503D0/
-      data     gsp_org( 19)/       6.68884024D0/
-      data     gpp_org( 19)/       5.49931070D0/
-      data     gp2_org( 19)/      23.41230341D0/
-      data     hsp_org( 19)/       0.00000010D0/
-      data gues_org1( 19,1)/       0.23946479D0/
-      data gues_org2( 19,1)/       7.66204824D0/
-      data gues_org3( 19,1)/       2.07367453D0/
+      data     uss_org( 19)/      -4.48852441D0/
+      data     upp_org( 19)/      -2.55854938D0/
+      data   betas_org( 19)/       2.83518288D0/
+      data   betap_org( 19)/      -5.45250990D0/
+      data      zs_org( 19)/      20.79243083D0/
+      data      zp_org( 19)/       1.18451908D0/
+      data     gss_org( 19)/       8.89475202D0/
+      data     gsp_org( 19)/       7.91937666D0/
+      data     gpp_org( 19)/       5.82876802D0/
+      data     gp2_org( 19)/      14.55099039D0/
+      data     hsp_org( 19)/       0.20023681D0/
+      data gues_org1( 19,1)/      -2.46232435D0/
+      data gues_org2( 19,1)/       7.26344700D0/
+      data gues_org3( 19,1)/       0.39859888D0/
 !
 !                    Data for Element  20          Calcium
 !
-      data     uss_org( 20)/     -11.47553748D0/
-      data     upp_org( 20)/     -11.34698800D0/
-      data   betas_org( 20)/     -13.58930464D0/
-      data   betap_org( 20)/      -0.77954077D0/
-      data      zs_org( 20)/       1.20624088D0/
-      data      zp_org( 20)/       1.77240549D0/
-      data     gss_org( 20)/       5.36170799D0/
-      data     gsp_org( 20)/       7.01307557D0/
-      data     gpp_org( 20)/      10.22493218D0/
-      data     gp2_org( 20)/       8.89140215D0/
-      data     hsp_org( 20)/       0.69547543D0/
-      data gues_org1( 20,1)/      -0.08613230D0/
-      data gues_org2( 20,1)/       2.25318729D0/
-      data gues_org3( 20,1)/       2.41309577D0/
+      data     uss_org( 20)/     -11.30040321D0/
+      data     upp_org( 20)/     -11.24709193D0/
+      data   betas_org( 20)/     -13.95200982D0/
+      data   betap_org( 20)/      -1.03687937D0/
+      data      zs_org( 20)/       1.13633888D0/
+      data      zp_org( 20)/       1.36391661D0/
+      data     gss_org( 20)/       5.27215378D0/
+      data     gsp_org( 20)/       8.01812014D0/
+      data     gpp_org( 20)/      10.40294168D0/
+      data     gp2_org( 20)/       9.61343941D0/
+      data     hsp_org( 20)/       0.57750655D0/
+      data gues_org1( 20,1)/      -0.05481494D0/
+      data gues_org2( 20,1)/       3.06482279D0/
+      data gues_org3( 20,1)/       2.55875837D0/
 !
 !                    Data for Element  21         Scandium
 !
@@ -392,11 +392,11 @@
       data     zpn_org( 21)/       2.45172900D0/
       data     zdn_org( 21)/       0.78937200D0/
       data     alp_org( 21)/       0.81655600D0/
-      data     gss_org( 21)/       4.63821534D0/
-      data     gsp_org( 21)/       5.73916362D0/
-      data     gpp_org( 21)/      14.60487239D0/
-      data     gp2_org( 21)/      12.80259529D0/
-      data     hsp_org( 21)/       0.19383456D0/
+      data     gss_org( 21)/       4.63821583D0/
+      data     gsp_org( 21)/       5.73916422D0/
+      data     gpp_org( 21)/      14.60487391D0/
+      data     gp2_org( 21)/      12.80259663D0/
+      data     hsp_org( 21)/       0.19383458D0/
       data    poc__org( 21)/       3.17373400D0/
       data    f0sd_org( 21)/       4.79831300D0/
       data    g2sd_org( 21)/       5.38013600D0/
@@ -415,11 +415,11 @@
       data     zsn_org( 22)/       1.04590400D0/
       data     zpn_org( 22)/       1.07684400D0/
       data     zdn_org( 22)/       0.71794500D0/
-      data     gss_org( 22)/       5.71785132D0/
-      data     gsp_org( 22)/       5.80001498D0/
-      data     gpp_org( 22)/       6.41472577D0/
-      data     gp2_org( 22)/       5.62313287D0/
-      data     hsp_org( 22)/       1.40373164D0/
+      data     gss_org( 22)/       5.71785192D0/
+      data     gsp_org( 22)/       5.80001559D0/
+      data     gpp_org( 22)/       6.41472644D0/
+      data     gp2_org( 22)/       5.62313345D0/
+      data     hsp_org( 22)/       1.40373178D0/
       data    f0sd_org( 22)/       6.56056200D0/
       data    g2sd_org( 22)/       3.39623500D0/
 !
@@ -437,11 +437,11 @@
       data     zsn_org( 23)/       1.09442600D0/
       data     zpn_org( 23)/       0.75537800D0/
       data     zdn_org( 23)/       1.09936700D0/
-      data     gss_org( 23)/       5.98311618D0/
-      data     gsp_org( 23)/       4.73676949D0/
-      data     gpp_org( 23)/       4.49976294D0/
-      data     gp2_org( 23)/       3.94448115D0/
-      data     hsp_org( 23)/       0.90110519D0/
+      data     gss_org( 23)/       5.98311681D0/
+      data     gsp_org( 23)/       4.73676999D0/
+      data     gpp_org( 23)/       4.49976341D0/
+      data     gp2_org( 23)/       3.94448156D0/
+      data     hsp_org( 23)/       0.90110528D0/
       data    f0sd_org( 23)/       6.81002100D0/
       data    g2sd_org( 23)/       1.83140700D0/
 !
@@ -459,11 +459,11 @@
       data     zsn_org( 24)/       1.61985300D0/
       data     zpn_org( 24)/       0.84826600D0/
       data     zdn_org( 24)/       1.40501500D0/
-      data     gss_org( 24)/       8.85557242D0/
-      data     gsp_org( 24)/       5.58863066D0/
-      data     gpp_org( 24)/       5.05309383D0/
-      data     gp2_org( 24)/       4.42952965D0/
-      data     hsp_org( 24)/       0.64803936D0/
+      data     gss_org( 24)/       8.85557334D0/
+      data     gsp_org( 24)/       5.58863124D0/
+      data     gpp_org( 24)/       5.05309436D0/
+      data     gp2_org( 24)/       4.42953011D0/
+      data     hsp_org( 24)/       0.64803943D0/
       data    f0sd_org( 24)/       6.15013600D0/
       data    g2sd_org( 24)/       2.00030000D0/
 !
@@ -481,58 +481,58 @@
       data     zsn_org( 25)/       1.13245000D0/
       data     zpn_org( 25)/       1.39074000D0/
       data     zdn_org( 25)/       0.96255000D0/
-      data     gss_org( 25)/       6.19098954D0/
-      data     gsp_org( 25)/       6.75742701D0/
-      data     gpp_org( 25)/       8.28459435D0/
-      data     gp2_org( 25)/       7.26225507D0/
-      data     hsp_org( 25)/       1.52051823D0/
+      data     gss_org( 25)/       6.19099019D0/
+      data     gsp_org( 25)/       6.75742772D0/
+      data     gpp_org( 25)/       8.28459522D0/
+      data     gp2_org( 25)/       7.26225583D0/
+      data     hsp_org( 25)/       1.52051839D0/
       data    f0sd_org( 25)/       7.69092000D0/
       data    g2sd_org( 25)/       1.10533000D0/
 !
 !                    Data for Element  26             Iron
 !
-      data     uss_org( 26)/     -63.58803126D0/
-      data     upp_org( 26)/     -56.75246939D0/
-      data     udd_org( 26)/     -86.87882209D0/
-      data   betas_org( 26)/      -7.00398257D0/
-      data   betap_org( 26)/      -6.50486868D0/
-      data   betad_org( 26)/      -5.50434298D0/
-      data      zs_org( 26)/       1.28927823D0/
-      data      zp_org( 26)/       4.34287794D0/
-      data      zd_org( 26)/       1.38098203D0/
-      data     zsn_org( 26)/       1.19929712D0/
-      data     zpn_org( 26)/       1.19788000D0/
-      data     zdn_org( 26)/       1.67720640D0/
-      data     gss_org( 26)/       6.55643598D0/
-      data     gsp_org( 26)/       6.55255788D0/
-      data     gpp_org( 26)/       7.13573341D0/
-      data     gp2_org( 26)/       6.25516639D0/
-      data     hsp_org( 26)/       1.58823536D0/
-      data    poc__org( 26)/       1.45706296D0/
-      data    f0sd_org( 26)/       7.54776190D0/
-      data    g2sd_org( 26)/       1.39266710D0/
+      data     uss_org( 26)/     -63.11378305D0/
+      data     upp_org( 26)/     -55.17003417D0/
+      data     udd_org( 26)/     -92.79635767D0/
+      data   betas_org( 26)/     -11.89674547D0/
+      data   betap_org( 26)/      -6.15606271D0/
+      data   betad_org( 26)/      -4.53813034D0/
+      data      zs_org( 26)/       0.88051290D0/
+      data      zp_org( 26)/       3.86416580D0/
+      data      zd_org( 26)/       1.47143813D0/
+      data     zsn_org( 26)/       0.87572725D0/
+      data     zpn_org( 26)/       1.18049638D0/
+      data     zdn_org( 26)/       1.97150826D0/
+      data     gss_org( 26)/       4.78751275D0/
+      data     gsp_org( 26)/       5.38521983D0/
+      data     gpp_org( 26)/       7.03218047D0/
+      data     gp2_org( 26)/       6.16439214D0/
+      data     hsp_org( 26)/       1.11548030D0/
+      data    poc__org( 26)/       1.47728348D0/
+      data    f0sd_org( 26)/       8.08211779D0/
+      data    g2sd_org( 26)/       2.28344696D0/
 !
 !                    Data for Element  27           Cobalt
 !
-      data     uss_org( 27)/     -21.23671841D0/
-      data     upp_org( 27)/       9.84676450D0/
-      data     udd_org( 27)/     -28.26385032D0/
-      data   betas_org( 27)/      -5.78517148D0/
-      data   betap_org( 27)/      -3.49202346D0/
-      data   betad_org( 27)/      -2.68166071D0/
-      data      zs_org( 27)/       1.33517899D0/
-      data      zp_org( 27)/       1.25921162D0/
-      data      zd_org( 27)/       1.70611919D0/
-      data     zsn_org( 27)/       0.53706986D0/
-      data     zpn_org( 27)/       1.67470244D0/
-      data     zdn_org( 27)/       0.36428989D0/
-      data     gss_org( 27)/       2.93610657D0/
-      data     gsp_org( 27)/       3.63927114D0/
-      data     gpp_org( 27)/       9.97614966D0/
-      data     gp2_org( 27)/       8.74506830D0/
-      data     hsp_org( 27)/       0.09223269D0/
-      data    f0sd_org( 27)/       1.28975559D0/
-      data    g2sd_org( 27)/       1.76910311D0/
+      data     uss_org( 27)/     -22.47045814D0/
+      data     upp_org( 27)/       9.61831967D0/
+      data     udd_org( 27)/     -28.60773321D0/
+      data   betas_org( 27)/      -5.66619572D0/
+      data   betap_org( 27)/      -4.26404529D0/
+      data   betad_org( 27)/      -2.93416835D0/
+      data      zs_org( 27)/       1.56886152D0/
+      data      zp_org( 27)/       1.54218792D0/
+      data      zd_org( 27)/       1.49767547D0/
+      data     zsn_org( 27)/       0.54524491D0/
+      data     zpn_org( 27)/       1.75774350D0/
+      data     zdn_org( 27)/       0.37542882D0/
+      data     gss_org( 27)/       2.98079905D0/
+      data     gsp_org( 27)/       3.69684549D0/
+      data     gpp_org( 27)/      10.47082373D0/
+      data     gp2_org( 27)/       9.17869838D0/
+      data     hsp_org( 27)/       0.08217134D0/
+      data    f0sd_org( 27)/       1.30529985D0/
+      data    g2sd_org( 27)/       1.76269441D0/
 !
 !                    Data for Element  28           Nickel
 !
@@ -549,11 +549,11 @@
       data     zpn_org( 28)/       0.75332700D0/
       data     zdn_org( 28)/       1.46134500D0/
       data     alp_org( 28)/       2.89496000D0/
-      data     gss_org( 28)/       4.08087594D0/
-      data     gsp_org( 28)/       4.09945168D0/
-      data     gpp_org( 28)/       4.48754520D0/
-      data     gp2_org( 28)/       3.93377111D0/
-      data     hsp_org( 28)/       0.99349774D0/
+      data     gss_org( 28)/       4.08087637D0/
+      data     gsp_org( 28)/       4.09945211D0/
+      data     gpp_org( 28)/       4.48754567D0/
+      data     gp2_org( 28)/       3.93377152D0/
+      data     hsp_org( 28)/       0.99349784D0/
       data    poc__org( 28)/       1.58697900D0/
       data    f0sd_org( 28)/       4.65166400D0/
       data    g2sd_org( 28)/       1.88050200D0/
@@ -572,27 +572,27 @@
       data     zsn_org( 29)/       1.89959800D0/
       data     zpn_org( 29)/       3.00000000D0/
       data     zdn_org( 29)/       1.48431700D0/
-      data     gss_org( 29)/      10.38491002D0/
-      data     gsp_org( 29)/      12.14536058D0/
-      data     gpp_org( 29)/      17.87090545D0/
-      data     gp2_org( 29)/      15.66559186D0/
-      data     hsp_org( 29)/       2.03739400D0/
+      data     gss_org( 29)/      10.38491111D0/
+      data     gsp_org( 29)/      12.14536185D0/
+      data     gpp_org( 29)/      17.87090732D0/
+      data     gp2_org( 29)/      15.66559350D0/
+      data     hsp_org( 29)/       2.03739422D0/
       data    f0sd_org( 29)/       9.84880700D0/
       data    g2sd_org( 29)/       9.84757700D0/
 !
 !                    Data for Element  30             Zinc
 !
-      data     uss_org( 30)/     -18.08806266D0/
-      data     upp_org( 30)/      -9.67029382D0/
-      data   betas_org( 30)/     -13.10860471D0/
-      data   betap_org( 30)/       1.85795151D0/
-      data      zs_org( 30)/       1.59949465D0/
-      data      zp_org( 30)/       1.60377982D0/
-      data     gss_org( 30)/       8.79420586D0/
-      data     gsp_org( 30)/       4.78518617D0/
-      data     gpp_org( 30)/      14.37082405D0/
-      data     gp2_org( 30)/       6.06638427D0/
-      data     hsp_org( 30)/       0.16164719D0/
+      data     uss_org( 30)/     -18.23240645D0/
+      data     upp_org( 30)/     -11.46772746D0/
+      data   betas_org( 30)/     -14.24021703D0/
+      data   betap_org( 30)/       1.36108212D0/
+      data      zs_org( 30)/       1.42059168D0/
+      data      zp_org( 30)/       1.74700301D0/
+      data     gss_org( 30)/       9.12311506D0/
+      data     gsp_org( 30)/       6.12338449D0/
+      data     gpp_org( 30)/      15.82159114D0/
+      data     gp2_org( 30)/       7.49082352D0/
+      data     hsp_org( 30)/       0.00000010D0/
 !
 !                    Data for Element  31          Gallium
 !
@@ -644,41 +644,41 @@
 !
 !                    Data for Element  34         Selenium
 !
-      data     uss_org( 34)/     -37.28591885D0/
-      data     upp_org( 34)/     -33.59240043D0/
-      data   betas_org( 34)/      -6.24107962D0/
-      data   betap_org( 34)/      -5.03066509D0/
-      data      zs_org( 34)/       2.14361983D0/
-      data      zp_org( 34)/       1.83381324D0/
-      data     gss_org( 34)/       5.24788145D0/
-      data     gsp_org( 34)/       3.97949564D0/
-      data     gpp_org( 34)/       5.90315008D0/
-      data     gp2_org( 34)/       5.90414302D0/
-      data     hsp_org( 34)/       0.53718015D0/
+      data     uss_org( 34)/     -45.41143600D0/
+      data     upp_org( 34)/     -31.48645829D0/
+      data   betas_org( 34)/     -18.63044575D0/
+      data   betap_org( 34)/      -6.48230673D0/
+      data      zs_org( 34)/       2.00088084D0/
+      data      zp_org( 34)/       1.83033932D0/
+      data     gss_org( 34)/       5.35353800D0/
+      data     gsp_org( 34)/       4.63343348D0/
+      data     gpp_org( 34)/       6.92575107D0/
+      data     gp2_org( 34)/       6.25703133D0/
+      data     hsp_org( 34)/       5.23183164D0/
 !
 !                    Data for Element  35          Bromine
 !
-      data     uss_org( 35)/     -58.74432465D0/
-      data     upp_org( 35)/     -48.18471406D0/
-      data     udd_org( 35)/      11.72958259D0/
-      data   betas_org( 35)/     -28.01073019D0/
-      data   betap_org( 35)/     -12.42223445D0/
-      data   betad_org( 35)/     -12.37839387D0/
-      data      zs_org( 35)/       3.43573316D0/
-      data      zp_org( 35)/       2.31387649D0/
-      data      zd_org( 35)/       2.25611310D0/
-      data     zsn_org( 35)/       0.98875815D0/
-      data     zpn_org( 35)/       6.76856856D0/
-      data     zdn_org( 35)/       1.74468307D0/
-      data     gss_org( 35)/      12.80570147D0/
-      data     gsp_org( 35)/       6.74334750D0/
-      data     gpp_org( 35)/       9.47123235D0/
-      data     gp2_org( 35)/       8.23187235D0/
-      data     hsp_org( 35)/       9.71494721D0/
+      data     uss_org( 35)/     -58.73303903D0/
+      data     upp_org( 35)/     -47.96135197D0/
+      data     udd_org( 35)/      11.95670453D0/
+      data   betas_org( 35)/     -28.11981180D0/
+      data   betap_org( 35)/     -12.08697290D0/
+      data   betad_org( 35)/     -12.28177003D0/
+      data      zs_org( 35)/       3.31096356D0/
+      data      zp_org( 35)/       2.31454673D0/
+      data      zd_org( 35)/       2.05905955D0/
+      data     zsn_org( 35)/       1.27562087D0/
+      data     zpn_org( 35)/       6.89411237D0/
+      data     zdn_org( 35)/       1.64387242D0/
+      data     gss_org( 35)/      12.24747271D0/
+      data     gsp_org( 35)/       7.50538389D0/
+      data     gpp_org( 35)/       9.63134303D0/
+      data     gp2_org( 35)/       7.99752064D0/
+      data     hsp_org( 35)/      10.02797159D0/
       data   polvo_org( 35)/       2.14242000D0/
-      data gues_org1( 35,1)/      -0.00113945D0/
-      data gues_org2( 35,1)/       0.87257533D0/
-      data gues_org3( 35,1)/       3.42097381D0/
+      data gues_org1( 35,1)/       0.00058420D0/
+      data gues_org2( 35,1)/       0.87506795D0/
+      data gues_org3( 35,1)/       3.35644944D0/
 !
 !                    Data for Element  36          Krypton
 !
@@ -740,11 +740,11 @@
       data     zpn_org( 39)/       1.48440000D0/
       data     zdn_org( 39)/       1.38423800D0/
       data     alp_org( 39)/       0.50072700D0/
-      data     gss_org( 39)/       4.04673328D0/
-      data     gsp_org( 39)/       4.72627720D0/
-      data     gpp_org( 39)/       7.27875241D0/
-      data     gp2_org( 39)/       6.34328112D0/
-      data     hsp_org( 39)/       0.67922805D0/
+      data     gss_org( 39)/       4.04673370D0/
+      data     gsp_org( 39)/       4.72627769D0/
+      data     gpp_org( 39)/       7.27875317D0/
+      data     gp2_org( 39)/       6.34328179D0/
+      data     hsp_org( 39)/       0.67922812D0/
       data    poc__org( 39)/       2.77370300D0/
       data    f0sd_org( 39)/       4.97271600D0/
       data    g2sd_org( 39)/       5.01636400D0/
@@ -763,11 +763,11 @@
       data     zsn_org( 40)/       1.18910900D0/
       data     zpn_org( 40)/       0.80909200D0/
       data     zdn_org( 40)/       1.19024900D0/
-      data     gss_org( 40)/       5.33120797D0/
-      data     gsp_org( 40)/       4.15057919D0/
-      data     gpp_org( 40)/       3.96738099D0/
-      data     gp2_org( 40)/       3.45748990D0/
-      data     hsp_org( 40)/       0.74367621D0/
+      data     gss_org( 40)/       5.33120853D0/
+      data     gsp_org( 40)/       4.15057962D0/
+      data     gpp_org( 40)/       3.96738141D0/
+      data     gp2_org( 40)/       3.45749026D0/
+      data     hsp_org( 40)/       0.74367629D0/
       data    f0sd_org( 40)/       5.01070400D0/
       data    g2sd_org( 40)/       2.94365200D0/
 !
@@ -786,11 +786,11 @@
       data     zpn_org( 41)/       0.89276000D0/
       data     zdn_org( 41)/       1.44383700D0/
       data     alp_org( 41)/       0.84397400D0/
-      data     gss_org( 41)/       6.68359218D0/
-      data     gsp_org( 41)/       4.68533917D0/
-      data     gpp_org( 41)/       4.37764686D0/
-      data     gp2_org( 41)/       3.81502806D0/
-      data     hsp_org( 41)/       0.65067949D0/
+      data     gss_org( 41)/       6.68359288D0/
+      data     gsp_org( 41)/       4.68533966D0/
+      data     gpp_org( 41)/       4.37764732D0/
+      data     gp2_org( 41)/       3.81502846D0/
+      data     hsp_org( 41)/       0.65067956D0/
       data    f0sd_org( 41)/       6.55067400D0/
       data    g2sd_org( 41)/       1.06557700D0/
 !
@@ -808,11 +808,11 @@
       data     zsn_org( 42)/       1.91299500D0/
       data     zpn_org( 42)/       1.35505500D0/
       data     zdn_org( 42)/       1.87623100D0/
-      data     gss_org( 42)/       8.57665210D0/
-      data     gsp_org( 42)/       6.88829273D0/
-      data     gpp_org( 42)/       6.64450947D0/
-      data     gp2_org( 42)/       5.79055161D0/
-      data     hsp_org( 42)/       1.31736764D0/
+      data     gss_org( 42)/       8.57665299D0/
+      data     gsp_org( 42)/       6.88829345D0/
+      data     gpp_org( 42)/       6.64451016D0/
+      data     gp2_org( 42)/       5.79055221D0/
+      data     hsp_org( 42)/       1.31736778D0/
       data    f0sd_org( 42)/      10.00060800D0/
       data    g2sd_org( 42)/       1.21675200D0/
 !
@@ -830,11 +830,11 @@
       data     zsn_org( 43)/       1.41103300D0/
       data     zpn_org( 43)/       1.14131300D0/
       data     zdn_org( 43)/       1.15931200D0/
-      data     gss_org( 43)/       6.32617395D0/
-      data     gsp_org( 43)/       5.58713806D0/
-      data     gpp_org( 43)/       5.59642600D0/
-      data     gp2_org( 43)/       4.87716869D0/
-      data     hsp_org( 43)/       1.25898912D0/
+      data     gss_org( 43)/       6.32617461D0/
+      data     gsp_org( 43)/       5.58713864D0/
+      data     gpp_org( 43)/       5.59642658D0/
+      data     gp2_org( 43)/       4.87716920D0/
+      data     hsp_org( 43)/       1.25898925D0/
       data    f0sd_org( 43)/       5.43488600D0/
       data    g2sd_org( 43)/       1.10687500D0/
 !
@@ -852,10 +852,10 @@
       data     zsn_org( 44)/       0.98444900D0/
       data     zpn_org( 44)/       4.58661300D0/
       data     zdn_org( 44)/       0.76533200D0/
-      data     gss_org( 44)/       4.41364279D0/
-      data     gsp_org( 44)/       5.35699582D0/
-      data     gpp_org( 44)/      22.49044761D0/
-      data     gp2_org( 44)/      19.59995666D0/
+      data     gss_org( 44)/       4.41364325D0/
+      data     gsp_org( 44)/       5.35699638D0/
+      data     gpp_org( 44)/      22.49044997D0/
+      data     gp2_org( 44)/      19.59995871D0/
       data     hsp_org( 44)/       0.00805809D0/
       data    f0sd_org( 44)/       5.91740400D0/
       data    g2sd_org( 44)/       5.85973800D0/
@@ -874,10 +874,10 @@
       data     zsn_org( 45)/       0.80992300D0/
       data     zpn_org( 45)/       6.89825900D0/
       data     zdn_org( 45)/       0.64313400D0/
-      data     gss_org( 45)/       3.63117927D0/
-      data     gsp_org( 45)/       4.40781970D0/
-      data     gpp_org( 45)/      33.82559912D0/
-      data     gp2_org( 45)/      29.47830511D0/
+      data     gss_org( 45)/       3.63117965D0/
+      data     gsp_org( 45)/       4.40782017D0/
+      data     gpp_org( 45)/      33.82560266D0/
+      data     gp2_org( 45)/      29.47830820D0/
       data     hsp_org( 45)/       0.00009171D0/
       data    f0sd_org( 45)/       1.77549700D0/
       data    g2sd_org( 45)/       1.85157100D0/
@@ -896,11 +896,11 @@
       data     zsn_org( 46)/       1.79408500D0/
       data     zpn_org( 46)/       6.15877800D0/
       data     zdn_org( 46)/       1.63091300D0/
-      data     gss_org( 46)/       8.04353534D0/
-      data     gsp_org( 46)/       9.75504166D0/
-      data     gpp_org( 46)/      30.19955553D0/
-      data     gp2_org( 46)/      26.31828364D0/
-      data     hsp_org( 46)/       0.08612136D0/
+      data     gss_org( 46)/       8.04353618D0/
+      data     gsp_org( 46)/       9.75504268D0/
+      data     gpp_org( 46)/      30.19955869D0/
+      data     gp2_org( 46)/      26.31828640D0/
+      data     hsp_org( 46)/       0.08612137D0/
       data    f0sd_org( 46)/       8.00444700D0/
       data    g2sd_org( 46)/       2.61314800D0/
 !
@@ -918,10 +918,10 @@
       data     zsn_org( 47)/       0.69551400D0/
       data     zpn_org( 47)/       4.72994900D0/
       data     zdn_org( 47)/       0.50652200D0/
-      data     gss_org( 47)/       3.11824213D0/
-      data     gsp_org( 47)/       3.78515183D0/
-      data     gpp_org( 47)/      23.19329540D0/
-      data     gp2_org( 47)/      20.21247387D0/
+      data     gss_org( 47)/       3.11824246D0/
+      data     gsp_org( 47)/       3.78515223D0/
+      data     gpp_org( 47)/      23.19329783D0/
+      data     gp2_org( 47)/      20.21247598D0/
       data     hsp_org( 47)/       0.00043152D0/
       data    f0sd_org( 47)/       1.93832700D0/
       data    g2sd_org( 47)/       1.07190100D0/
@@ -1007,27 +1007,27 @@
 !
 !                    Data for Element  53           Iodine
 !
-      data     uss_org( 53)/     -61.73780525D0/
-      data     upp_org( 53)/     -54.91097768D0/
-      data     udd_org( 53)/     -65.06725189D0/
-      data   betas_org( 53)/     -31.10448815D0/
-      data   betap_org( 53)/     -10.41671111D0/
-      data   betad_org( 53)/      -4.83328024D0/
-      data      zs_org( 53)/       3.80693109D0/
-      data      zp_org( 53)/       2.10056853D0/
-      data      zd_org( 53)/       1.66121671D0/
-      data     zsn_org( 53)/       7.75109882D0/
-      data     zpn_org( 53)/       8.70927258D0/
-      data     zdn_org( 53)/       2.35542871D0/
-      data     gss_org( 53)/       3.45548116D0/
-      data     gsp_org( 53)/       9.51671899D0/
-      data     gpp_org( 53)/       8.92941421D0/
-      data     gp2_org( 53)/       7.08111703D0/
-      data     hsp_org( 53)/       2.82920092D0/
+      data     uss_org( 53)/     -61.69244154D0/
+      data     upp_org( 53)/     -55.13439277D0/
+      data     udd_org( 53)/     -65.04069571D0/
+      data   betas_org( 53)/     -31.14463941D0/
+      data   betap_org( 53)/     -10.76751616D0/
+      data   betad_org( 53)/      -4.81221672D0/
+      data      zs_org( 53)/       3.74098444D0/
+      data      zp_org( 53)/       2.21844850D0/
+      data      zd_org( 53)/       1.62850317D0/
+      data     zsn_org( 53)/       7.74949192D0/
+      data     zpn_org( 53)/       8.63689255D0/
+      data     zdn_org( 53)/       2.25617191D0/
+      data     gss_org( 53)/       4.08688508D0/
+      data     gsp_org( 53)/       9.33452677D0/
+      data     gpp_org( 53)/       8.65093086D0/
+      data     gp2_org( 53)/       7.19759291D0/
+      data     hsp_org( 53)/       2.71872356D0/
       data   polvo_org( 53)/       3.82316000D0/
-      data gues_org1( 53,1)/       0.24432378D0/
-      data gues_org2( 53,1)/       1.89315782D0/
-      data gues_org3( 53,1)/       1.25922210D0/
+      data gues_org1( 53,1)/       0.23917435D0/
+      data gues_org2( 53,1)/       1.83312789D0/
+      data gues_org3( 53,1)/       1.16079631D0/
 !
 !                    Data for Element  54            Xenon
 !
@@ -1086,11 +1086,11 @@
       data     zpn_org( 57)/       4.33162000D0/
       data     zdn_org( 57)/       2.28573800D0/
       data     alp_org( 57)/       5.94044300D0/
-      data     gss_org( 57)/       6.15444012D0/
-      data     gsp_org( 57)/       7.32270386D0/
-      data     gpp_org( 57)/      18.07746454D0/
-      data     gp2_org( 57)/      15.67905690D0/
-      data     hsp_org( 57)/       0.13860106D0/
+      data     gss_org( 57)/       6.15444076D0/
+      data     gsp_org( 57)/       7.32270462D0/
+      data     gpp_org( 57)/      18.07746643D0/
+      data     gp2_org( 57)/      15.67905854D0/
+      data     hsp_org( 57)/       0.13860107D0/
       data    poc__org( 57)/       2.51170100D0/
       data    f0sd_org( 57)/       8.85685800D0/
       data    g2sd_org( 57)/       7.92558500D0/
@@ -1109,11 +1109,11 @@
       data     zsn_org( 71)/       1.63233500D0/
       data     zpn_org( 71)/       4.03312800D0/
       data     zdn_org( 71)/       0.92199900D0/
-      data     gss_org( 71)/       6.20979563D0/
-      data     gsp_org( 71)/       7.37910233D0/
-      data     gpp_org( 71)/      16.83174619D0/
-      data     gp2_org( 71)/      14.59861286D0/
-      data     hsp_org( 71)/       0.20900816D0/
+      data     gss_org( 71)/       6.20979628D0/
+      data     gsp_org( 71)/       7.37910311D0/
+      data     gpp_org( 71)/      16.83174795D0/
+      data     gp2_org( 71)/      14.59861438D0/
+      data     hsp_org( 71)/       0.20900818D0/
       data    poc__org( 71)/       2.74326200D0/
       data    f0sd_org( 71)/       3.92492700D0/
       data    g2sd_org( 71)/       1.00094600D0/
@@ -1132,10 +1132,10 @@
       data     zsn_org( 72)/       0.94692700D0/
       data     zpn_org( 72)/       3.53891100D0/
       data     zdn_org( 72)/       0.94028300D0/
-      data     gss_org( 72)/       3.60233846D0/
-      data     gsp_org( 72)/       4.29372878D0/
-      data     gpp_org( 72)/      14.76919446D0/
-      data     gp2_org( 72)/      12.80970790D0/
+      data     gss_org( 72)/       3.60233883D0/
+      data     gsp_org( 72)/       4.29372923D0/
+      data     gpp_org( 72)/      14.76919601D0/
+      data     gp2_org( 72)/      12.80970924D0/
       data     hsp_org( 72)/       0.01102838D0/
       data    f0sd_org( 72)/       4.84290000D0/
       data    g2sd_org( 72)/       4.38610100D0/
@@ -1154,11 +1154,11 @@
       data     zsn_org( 73)/       1.74136700D0/
       data     zpn_org( 73)/       3.43015700D0/
       data     zdn_org( 73)/       2.31119800D0/
-      data     gss_org( 73)/       6.62457962D0/
-      data     gsp_org( 73)/       7.80532092D0/
-      data     gpp_org( 73)/      14.31532349D0/
-      data     gp2_org( 73)/      12.41605376D0/
-      data     hsp_org( 73)/       0.57726330D0/
+      data     gss_org( 73)/       6.62458032D0/
+      data     gsp_org( 73)/       7.80532174D0/
+      data     gpp_org( 73)/      14.31532499D0/
+      data     gp2_org( 73)/      12.41605506D0/
+      data     hsp_org( 73)/       0.57726336D0/
       data    f0sd_org( 73)/       8.54442700D0/
       data    g2sd_org( 73)/       2.07425400D0/
 !
@@ -1176,11 +1176,11 @@
       data     zsn_org( 74)/       1.49886000D0/
       data     zpn_org( 74)/       1.96590000D0/
       data     zdn_org( 74)/       1.87645000D0/
-      data     gss_org( 74)/       5.70202457D0/
-      data     gsp_org( 74)/       6.32314460D0/
-      data     gpp_org( 74)/       8.20443334D0/
-      data     gp2_org( 74)/       7.11591921D0/
-      data     hsp_org( 74)/       1.31991216D0/
+      data     gss_org( 74)/       5.70202516D0/
+      data     gsp_org( 74)/       6.32314526D0/
+      data     gpp_org( 74)/       8.20443420D0/
+      data     gp2_org( 74)/       7.11591995D0/
+      data     hsp_org( 74)/       1.31991230D0/
       data    f0sd_org( 74)/       7.78818000D0/
       data    g2sd_org( 74)/       1.68494000D0/
 !
@@ -1198,11 +1198,11 @@
       data     zsn_org( 75)/       1.68082300D0/
       data     zpn_org( 75)/       1.33121800D0/
       data     zdn_org( 75)/       1.49062300D0/
-      data     gss_org( 75)/       6.39425566D0/
-      data     gsp_org( 75)/       5.55557053D0/
-      data     gpp_org( 75)/       5.55566882D0/
-      data     gp2_org( 75)/       4.81857660D0/
-      data     hsp_org( 75)/       1.22091294D0/
+      data     gss_org( 75)/       6.39425633D0/
+      data     gsp_org( 75)/       5.55557111D0/
+      data     gpp_org( 75)/       5.55566941D0/
+      data     gp2_org( 75)/       4.81857710D0/
+      data     hsp_org( 75)/       1.22091307D0/
       data    f0sd_org( 75)/       5.44281800D0/
       data    g2sd_org( 75)/       2.37627900D0/
 !
@@ -1220,11 +1220,11 @@
       data     zsn_org( 76)/       1.84470000D0/
       data     zpn_org( 76)/       1.56422000D0/
       data     zdn_org( 76)/       1.77001000D0/
-      data     gss_org( 76)/       7.01768325D0/
-      data     gsp_org( 76)/       6.38419982D0/
-      data     gpp_org( 76)/       6.52807300D0/
-      data     gp2_org( 76)/       5.66196813D0/
-      data     hsp_org( 76)/       1.50892580D0/
+      data     gss_org( 76)/       7.01768399D0/
+      data     gsp_org( 76)/       6.38420049D0/
+      data     gpp_org( 76)/       6.52807369D0/
+      data     gp2_org( 76)/       5.66196872D0/
+      data     hsp_org( 76)/       1.50892596D0/
       data    f0sd_org( 76)/       2.02117000D0/
       data    g2sd_org( 76)/       1.39213000D0/
 !
@@ -1242,11 +1242,11 @@
       data     zsn_org( 77)/       0.92724600D0/
       data     zpn_org( 77)/       3.19189200D0/
       data     zdn_org( 77)/       0.66200700D0/
-      data     gss_org( 77)/       3.52746719D0/
-      data     gsp_org( 77)/       4.20381991D0/
-      data     gpp_org( 77)/      13.32095485D0/
-      data     gp2_org( 77)/      11.55361188D0/
-      data     hsp_org( 77)/       0.01850052D0/
+      data     gss_org( 77)/       3.52746756D0/
+      data     gsp_org( 77)/       4.20382035D0/
+      data     gpp_org( 77)/      13.32095625D0/
+      data     gp2_org( 77)/      11.55361309D0/
+      data     hsp_org( 77)/       0.01850053D0/
       data    f0sd_org( 77)/       2.62717000D0/
       data    g2sd_org( 77)/       2.99602900D0/
 !
@@ -1264,11 +1264,11 @@
       data     zsn_org( 78)/       2.27069900D0/
       data     zpn_org( 78)/       1.94989600D0/
       data     zdn_org( 78)/       1.71385600D0/
-      data     gss_org( 78)/       8.63828609D0/
-      data     gsp_org( 78)/       7.92225366D0/
-      data     gpp_org( 78)/       8.13764268D0/
-      data     gp2_org( 78)/       7.05798993D0/
-      data     hsp_org( 78)/       1.89261714D0/
+      data     gss_org( 78)/       8.63828699D0/
+      data     gsp_org( 78)/       7.92225448D0/
+      data     gpp_org( 78)/       8.13764354D0/
+      data     gp2_org( 78)/       7.05799067D0/
+      data     hsp_org( 78)/       1.89261734D0/
       data    f0sd_org( 78)/       7.09859100D0/
       data    g2sd_org( 78)/       4.48418300D0/
 !
@@ -1286,11 +1286,11 @@
       data     zsn_org( 79)/       2.44468000D0/
       data     zpn_org( 79)/       7.01499000D0/
       data     zdn_org( 79)/       1.77708900D0/
-      data     gss_org( 79)/       9.30015173D0/
-      data     gsp_org( 79)/      11.07344344D0/
-      data     gpp_org( 79)/      29.27616758D0/
-      data     gp2_org( 79)/      25.39198438D0/
-      data     hsp_org( 79)/       0.14438427D0/
+      data     gss_org( 79)/       9.30015270D0/
+      data     gsp_org( 79)/      11.07344460D0/
+      data     gpp_org( 79)/      29.27617064D0/
+      data     gp2_org( 79)/      25.39198704D0/
+      data     hsp_org( 79)/       0.14438428D0/
       data    f0sd_org( 79)/       8.82725700D0/
       data    g2sd_org( 79)/       4.91562500D0/
 !
@@ -1427,41 +1427,56 @@
 !                     Global parameters
 !
 !
-      data  v_par_org(1)/  9.27846500d0/  ! Used in ccrep for scalar correction of C-C triple bonds.
+      data  v_par_org(1)/  9.27846500d0/  ! Used in ccrep C-C triple bonds.
       data  v_par_org(2)/  5.98375200d0/  ! Used in ccrep for exponent correction of C-C triple bonds.
-      data  v_par_org(3)/  0.80182891d0/  ! Used in ccrep for scalar correction of O-H term.
-      data  v_par_org(4)/  5.06345816d0/  ! Used in ccrep for exponent correction of O-H term.
-      data  v_par_org(5)/  1.71474407d0/  ! Used in ccrep for offset correction of O-H term.
-      data  v_par_org(7)/  0.52610950d0/  ! Used in dftd3 to set "s6"  in D3H4
-      data  v_par_org(8)/ 21.75352387d0/  ! Used in dftd3 to set "alp" in D3H4
-      data  v_par_org(9)/  0.68676676d0/  ! Used in dftd3 to set "rs6" in D3H4
-      data  v_par_org(11)/ 1.93360969d0/  ! Used in ccrep for exponent correction of C-H term.
-      data  v_par_org(12)/ 1.70212501d0/  ! Used in ccrep for offset correction of C-H term.
-      data  v_par_org(13)/ 0.00491400d0/  ! Used in ccrep for scalar correction of C-C term.
-      data  v_par_org(14)/ 4.79512600d0/  ! Used in ccrep for exponent correction of C-C term.
-      data  v_par_org(15)/ 3.13542300d0/  ! Used in ccrep for offset correction of C-C term.
-      data  v_par_org(16)/ 2.59803786d0/  ! Used in ccrep for scalar correction of H-H term.
-      data  v_par_org(17)/ 6.27278958d0/  ! Used in ccrep for exponent correction of H-H term.
-      data  v_par_org(18)/ 1.44426992d0/  ! Used in ccrep for offset correction of H-H term.
-      data  v_par_org(19)/ 0.76974534d0/  ! Used in ccrep for scalar correction of C-H term.
-      data  v_par_org(20)/ 0.07499093d0/  ! Used in ccrep for scalar correction of C-O term.
-      data  v_par_org(21)/15.81072083d0/  ! Used in ccrep for exponent correction of C-O term.
-      data  v_par_org(22)/ 2.52666184d0/  ! Used in ccrep for offset correction of C-O term.
-      data  v_par_org(23)/ 0.18520409d0/  ! Used in ccrep for scalar correction of S-O term.
-      data  v_par_org(24)/ 5.00121981d0/  ! Used in ccrep for exponent correction of S-O term.
-      data  v_par_org(25)/ 2.42896530d0/  ! Used in ccrep for offset correction of S-O term.
-      data  v_par_org(26)/ 0.04567638d0/  ! Used in ccrep for scalar correction of O-N term.
-      data  v_par_org(27)/ 6.14689078d0/  ! Used in ccrep for exponent correction of O-N term.
-      data  v_par_org(28)/ 2.10448237d0/  ! Used in ccrep for offset correction of O-N term.
-      data  v_par_org(29)/ 0.06917316d0/  ! Used in ccrep for scalar correction of F-H term.
-      data  v_par_org(30)/ 5.86395123d0/  ! Used in ccrep for exponent correction of F-H term.
-      data  v_par_org(31)/ 2.08820430d0/  ! Used in ccrep for offset correction of F-H term.
+      data  v_par_org(3)/  1.88549346d0/  ! O-H scalar                 correction.
+      data  v_par_org(4)/  1.29663856d0/  ! O-H       exponent         correction.
+      data  v_par_org(5)/  1.12465557d0/  ! O-H               offset   correction.
+      data  v_par_org(7)/  0.69935551d0/  ! Used in dftd3 to set "s6"  in D3H4
+      data  v_par_org(8)/ 22.90643249d0/  ! Used in dftd3 to set "alp" in D3H4
+      data  v_par_org(9)/  0.63309647d0/  ! Used in dftd3 to set "rs6" in D3H4
+      data  v_par_org(11)/ 3.16312327d0/  ! C-H       exponent         correction.
+      data  v_par_org(12)/ 1.85191308d0/  ! C-H               offset   correction.
+      data  v_par_org(13)/ 0.03076443d0/  ! C-C scalar                 correction.
+      data  v_par_org(14)/ 5.89911268d0/  ! C-C       exponent         correction.
+      data  v_par_org(15)/ 2.54117311d0/  ! C-C               offset   correction.
+      data  v_par_org(16)/ 1.95072008d0/  ! H-H scalar                 correction.
+      data  v_par_org(17)/ 9.93668160d0/  ! H-H       exponent         correction.
+      data  v_par_org(18)/ 1.73448743d0/  ! H-H               offset   correction.
+      data  v_par_org(19)/ 0.97353953d0/  ! C-H scalar                 correction.
+      data  v_par_org(20)/ 0.11796327d0/  ! O-C scalar                 correction.
+      data  v_par_org(21)/ 4.71122155d0/  ! O-C       exponent         correction.
+      data  v_par_org(22)/ 2.33136344d0/  ! O-C               offset   correction.
+      data  v_par_org(23)/-0.01163876d0/  ! S-O scalar                 correction.
+      data  v_par_org(24)/ 7.15357690d0/  ! S-O       exponent         correction.
+      data  v_par_org(25)/ 2.75878894d0/  ! S-O               offset   correction.
+      data  v_par_org(26)/ 0.06759169d0/  ! O-N scalar                 correction.
+      data  v_par_org(27)/ 7.83635303d0/  ! O-N       exponent         correction.
+      data  v_par_org(28)/ 2.39364886d0/  ! O-N               offset   correction.
+      data  v_par_org(29)/ 0.06917316d0/  ! F-H scalar                 correction.
+      data  v_par_org(30)/ 5.86395123d0/  ! F-H       exponent         correction.
+      data  v_par_org(31)/ 2.08820430d0/  ! F-H               offset   correction.
+      data  v_par_org(32)/ 0.22070756d0/  ! O-O scalar                 correction.
+      data  v_par_org(33)/ 6.65530337d0/  ! O-O       exponent         correction.
+      data  v_par_org(34)/ 2.28968120d0/  ! O-O               offset   correction.
+      data  v_par_org(35)/ 0.07450271d0/  ! N-C scalar                 correction.
+      data  v_par_org(36)/ 7.59405828d0/  ! N-C       exponent         correction.
+      data  v_par_org(37)/ 2.83228505d0/  ! N-C               offset   correction.
+      data  v_par_org(38)/ 0.99964027d0/  ! N-H scalar                 correction.
+      data  v_par_org(39)/ 4.85532734d0/  ! N-H       exponent         correction.
+      data  v_par_org(40)/ 1.78032801d0/  ! N-H               offset   correction.
+      data  v_par_org(41)/ 0.15560543d0/  ! S-N scalar                 correction.
+      data  v_par_org(42)/ 4.94373969d0/  ! S-N       exponent         correction.
+      data  v_par_org(43)/ 3.15741465d0/  ! S-N               offset   correction.
+      data  v_par_org(44)/ 0.22855618d0/  ! S-H scalar                 correction.
+      data  v_par_org(45)/ 6.08398751d0/  ! S-H       exponent         correction.
+      data  v_par_org(46)/ 2.44074236d0/  ! S-H               offset   correction.
   contains
   subroutine alpb_and_xfac_pm6_ORG
     use parameters_C, only : xfac, alpb
  !
-      alpb( 1, 1) =     3.86761310d0 !    Hydrogen -     Hydrogen
-      xfac( 1, 1) =     2.57164124d0 !    Hydrogen -     Hydrogen
+      alpb( 1, 1) =     5.50167002d0 !    Hydrogen -     Hydrogen
+      xfac( 1, 1) =     4.96873740d0 !    Hydrogen -     Hydrogen
  !
       alpb( 2, 1) =     2.98988100d0 !      Helium -     Hydrogen
       xfac( 2, 1) =     2.37119900d0 !      Helium -     Hydrogen
@@ -1495,8 +1510,8 @@
       alpb( 5, 5) =     3.31862400d0 !       Boron -        Boron
       xfac( 5, 5) =     3.59361900d0 !       Boron -        Boron
  !
-      alpb( 6, 1) =     0.99864555d0 !      Carbon -     Hydrogen
-      xfac( 6, 1) =     0.20175360d0 !      Carbon -     Hydrogen
+      alpb( 6, 1) =     1.09926251d0 !      Carbon -     Hydrogen
+      xfac( 6, 1) =     0.20244255d0 !      Carbon -     Hydrogen
       alpb( 6, 2) =     3.04270500d0 !      Carbon -       Helium
       xfac( 6, 2) =     3.21397100d0 !      Carbon -       Helium
       alpb( 6, 3) =     3.24187400d0 !      Carbon -      Lithium
@@ -1505,11 +1520,11 @@
       xfac( 6, 4) =    25.03587900d0 !      Carbon -    Beryllium
       alpb( 6, 5) =     2.91900700d0 !      Carbon -        Boron
       xfac( 6, 5) =     1.87485900d0 !      Carbon -        Boron
-      alpb( 6, 6) =     2.57231839d0 !      Carbon -       Carbon
-      xfac( 6, 6) =     0.88750253d0 !      Carbon -       Carbon
+      alpb( 6, 6) =     2.49174033d0 !      Carbon -       Carbon
+      xfac( 6, 6) =     0.75827957d0 !      Carbon -       Carbon
  !
-      alpb( 7, 1) =     0.91440427d0 !    Nitrogen -     Hydrogen
-      xfac( 7, 1) =     0.16692722d0 !    Nitrogen -     Hydrogen
+      alpb( 7, 1) =     1.18019929d0 !    Nitrogen -     Hydrogen
+      xfac( 7, 1) =     0.19459121d0 !    Nitrogen -     Hydrogen
       alpb( 7, 2) =     2.81433900d0 !    Nitrogen -       Helium
       xfac( 7, 2) =     1.07786100d0 !    Nitrogen -       Helium
       alpb( 7, 3) =     2.64062300d0 !    Nitrogen -      Lithium
@@ -1518,13 +1533,13 @@
       xfac( 7, 4) =     1.74060500d0 !    Nitrogen -    Beryllium
       alpb( 7, 5) =     2.47700400d0 !    Nitrogen -        Boron
       xfac( 7, 5) =     0.95288200d0 !    Nitrogen -        Boron
-      alpb( 7, 6) =     2.75419777d0 !    Nitrogen -       Carbon
-      xfac( 7, 6) =     0.99512536d0 !    Nitrogen -       Carbon
-      alpb( 7, 7) =     3.02637026d0 !    Nitrogen -     Nitrogen
-      xfac( 7, 7) =     1.11212861d0 !    Nitrogen -     Nitrogen
+      alpb( 7, 6) =     2.91019769d0 !    Nitrogen -       Carbon
+      xfac( 7, 6) =     1.19919594d0 !    Nitrogen -       Carbon
+      alpb( 7, 7) =     3.26594309d0 !    Nitrogen -     Nitrogen
+      xfac( 7, 7) =     1.56001466d0 !    Nitrogen -     Nitrogen
  !
-      alpb( 8, 1) =     1.35972470d0 !      Oxygen -     Hydrogen
-      xfac( 8, 1) =     0.15119107d0 !      Oxygen -     Hydrogen
+      alpb( 8, 1) =     1.60341671d0 !      Oxygen -     Hydrogen
+      xfac( 8, 1) =     0.14777972d0 !      Oxygen -     Hydrogen
       alpb( 8, 2) =     3.65377500d0 !      Oxygen -       Helium
       xfac( 8, 2) =     6.68452500d0 !      Oxygen -       Helium
       alpb( 8, 3) =     2.58444200d0 !      Oxygen -      Lithium
@@ -1533,15 +1548,15 @@
       xfac( 8, 4) =     3.21815500d0 !      Oxygen -    Beryllium
       alpb( 8, 5) =     2.69535100d0 !      Oxygen -        Boron
       xfac( 8, 5) =     1.26980100d0 !      Oxygen -        Boron
-      alpb( 8, 6) =     2.96304092d0 !      Oxygen -       Carbon
-      xfac( 8, 6) =     0.92566298d0 !      Oxygen -       Carbon
-      alpb( 8, 7) =     3.16879398d0 !      Oxygen -     Nitrogen
-      xfac( 8, 7) =     0.95083801d0 !      Oxygen -     Nitrogen
-      alpb( 8, 8) =     2.70452075d0 !      Oxygen -       Oxygen
-      xfac( 8, 8) =     0.43220577d0 !      Oxygen -       Oxygen
+      alpb( 8, 6) =     2.83076261d0 !      Oxygen -       Carbon
+      xfac( 8, 6) =     0.76483641d0 !      Oxygen -       Carbon
+      alpb( 8, 7) =     3.22126658d0 !      Oxygen -     Nitrogen
+      xfac( 8, 7) =     1.02400611d0 !      Oxygen -     Nitrogen
+      alpb( 8, 8) =     3.22832635d0 !      Oxygen -       Oxygen
+      xfac( 8, 8) =     0.75857042d0 !      Oxygen -       Oxygen
  !
-      alpb( 9, 1) =     3.24193702d0 !    Fluorine -     Hydrogen
-      xfac( 9, 1) =     0.72809348d0 !    Fluorine -     Hydrogen
+      alpb( 9, 1) =     3.00908696d0 !    Fluorine -     Hydrogen
+      xfac( 9, 1) =     0.57468838d0 !    Fluorine -     Hydrogen
       alpb( 9, 2) =     2.85654300d0 !    Fluorine -       Helium
       xfac( 9, 2) =     0.74510700d0 !    Fluorine -       Helium
       alpb( 9, 3) =     3.04390100d0 !    Fluorine -      Lithium
@@ -1550,14 +1565,14 @@
       xfac( 9, 4) =     3.88299300d0 !    Fluorine -    Beryllium
       alpb( 9, 5) =     2.82383700d0 !    Fluorine -        Boron
       xfac( 9, 5) =     0.86276100d0 !    Fluorine -        Boron
-      alpb( 9, 6) =     3.03392715d0 !    Fluorine -       Carbon
-      xfac( 9, 6) =     0.78711266d0 !    Fluorine -       Carbon
-      alpb( 9, 7) =     3.57433335d0 !    Fluorine -     Nitrogen
-      xfac( 9, 7) =     1.48863535d0 !    Fluorine -     Nitrogen
-      alpb( 9, 8) =     3.42309777d0 !    Fluorine -       Oxygen
-      xfac( 9, 8) =     1.02434853d0 !    Fluorine -       Oxygen
-      alpb( 9, 9) =     3.72590569d0 !    Fluorine -     Fluorine
-      xfac( 9, 9) =     1.38536051d0 !    Fluorine -     Fluorine
+      alpb( 9, 6) =     2.99751365d0 !    Fluorine -       Carbon
+      xfac( 9, 6) =     0.76790658d0 !    Fluorine -       Carbon
+      alpb( 9, 7) =     3.70135239d0 !    Fluorine -     Nitrogen
+      xfac( 9, 7) =     1.83973176d0 !    Fluorine -     Nitrogen
+      alpb( 9, 8) =     3.04821245d0 !    Fluorine -       Oxygen
+      xfac( 9, 8) =     0.62903055d0 !    Fluorine -       Oxygen
+      alpb( 9, 9) =     4.01574430d0 !    Fluorine -     Fluorine
+      xfac( 9, 9) =     2.09551890d0 !    Fluorine -     Fluorine
  !
       alpb(10, 1) =     5.99968000d0 !        Neon -     Hydrogen
       xfac(10, 1) =     5.53502100d0 !        Neon -     Hydrogen
@@ -1580,31 +1595,31 @@
       alpb(10,10) =     3.97456700d0 !        Neon -         Neon
       xfac(10,10) =     2.79483000d0 !        Neon -         Neon
  !
-      alpb(11, 1) =     0.51527161d0 !      Sodium -     Hydrogen
-      xfac(11, 1) =     0.37076659d0 !      Sodium -     Hydrogen
+      alpb(11, 1) =     1.27239598d0 !      Sodium -     Hydrogen
+      xfac(11, 1) =     1.79556240d0 !      Sodium -     Hydrogen
       alpb(11, 2) =     1.70302900d0 !      Sodium -       Helium
       xfac(11, 2) =     4.28251700d0 !      Sodium -       Helium
-      alpb(11, 3) =     1.13682830d0 !      Sodium -      Lithium
-      xfac(11, 3) =     3.87369093d0 !      Sodium -      Lithium
+      alpb(11, 3) =     1.13708570d0 !      Sodium -      Lithium
+      xfac(11, 3) =     3.87394833d0 !      Sodium -      Lithium
       alpb(11, 4) =     1.25548000d0 !      Sodium -    Beryllium
       xfac(11, 4) =     3.12162000d0 !      Sodium -    Beryllium
-      alpb(11, 5) =     3.32368357d0 !      Sodium -        Boron
-      xfac(11, 5) =     3.02021725d0 !      Sodium -        Boron
-      alpb(11, 6) =     0.47556435d0 !      Sodium -       Carbon
-      xfac(11, 6) =     0.18435042d0 !      Sodium -       Carbon
-      alpb(11, 7) =     2.03351686d0 !      Sodium -     Nitrogen
-      xfac(11, 7) =     7.12402246d0 !      Sodium -     Nitrogen
-      alpb(11, 8) =     1.11150192d0 !      Sodium -       Oxygen
-      xfac(11, 8) =     0.33426088d0 !      Sodium -       Oxygen
-      alpb(11, 9) =     1.67842921d0 !      Sodium -     Fluorine
-      xfac(11, 9) =     0.42914701d0 !      Sodium -     Fluorine
-      alpb(11,10) =     1.60620354d0 !      Sodium -         Neon
-      xfac(11,10) =     1.41555315d0 !      Sodium -         Neon
-      alpb(11,11) =     0.19848982d0 !      Sodium -       Sodium
-      xfac(11,11) =     0.36490548d0 !      Sodium -       Sodium
+      alpb(11, 5) =     3.32394097d0 !      Sodium -        Boron
+      xfac(11, 5) =     3.02047465d0 !      Sodium -        Boron
+      alpb(11, 6) =     0.72742814d0 !      Sodium -       Carbon
+      xfac(11, 6) =     0.33826248d0 !      Sodium -       Carbon
+      alpb(11, 7) =     2.03351539d0 !      Sodium -     Nitrogen
+      xfac(11, 7) =     7.11947177d0 !      Sodium -     Nitrogen
+      alpb(11, 8) =     1.07417163d0 !      Sodium -       Oxygen
+      xfac(11, 8) =     0.46593554d0 !      Sodium -       Oxygen
+      alpb(11, 9) =     1.50126936d0 !      Sodium -     Fluorine
+      xfac(11, 9) =     0.48884039d0 !      Sodium -     Fluorine
+      alpb(11,10) =     1.60646094d0 !      Sodium -         Neon
+      xfac(11,10) =     1.41581055d0 !      Sodium -         Neon
+      alpb(11,11) =     0.49603378d0 !      Sodium -       Sodium
+      xfac(11,11) =     0.52981333d0 !      Sodium -       Sodium
  !
-      alpb(12, 1) =     1.95625469d0 !   Magnesium -     Hydrogen
-      xfac(12, 1) =     2.62124083d0 !   Magnesium -     Hydrogen
+      alpb(12, 1) =     1.74026385d0 !   Magnesium -     Hydrogen
+      xfac(12, 1) =     1.64641220d0 !   Magnesium -     Hydrogen
       alpb(12, 2) =     2.21060300d0 !   Magnesium -       Helium
       xfac(12, 2) =     3.72585000d0 !   Magnesium -       Helium
       alpb(12, 3) =     1.18438000d0 !   Magnesium -      Lithium
@@ -1613,20 +1628,20 @@
       xfac(12, 4) =     2.06639200d0 !   Magnesium -    Beryllium
       alpb(12, 5) =     2.52744100d0 !   Magnesium -        Boron
       xfac(12, 5) =     6.14670100d0 !   Magnesium -        Boron
-      alpb(12, 6) =     2.78987067d0 !   Magnesium -       Carbon
-      xfac(12, 6) =     7.96134202d0 !   Magnesium -       Carbon
-      alpb(12, 7) =     2.04885974d0 !   Magnesium -     Nitrogen
-      xfac(12, 7) =     1.79455363d0 !   Magnesium -     Nitrogen
-      alpb(12, 8) =     2.74355805d0 !   Magnesium -       Oxygen
-      xfac(12, 8) =     3.88906745d0 !   Magnesium -       Oxygen
-      alpb(12, 9) =     3.97448921d0 !   Magnesium -     Fluorine
-      xfac(12, 9) =    18.30661744d0 !   Magnesium -     Fluorine
+      alpb(12, 6) =     1.91332801d0 !   Magnesium -       Carbon
+      xfac(12, 6) =     1.56070554d0 !   Magnesium -       Carbon
+      alpb(12, 7) =     1.24194361d0 !   Magnesium -     Nitrogen
+      xfac(12, 7) =     0.42400581d0 !   Magnesium -     Nitrogen
+      alpb(12, 8) =     1.64306809d0 !   Magnesium -       Oxygen
+      xfac(12, 8) =     0.64270914d0 !   Magnesium -       Oxygen
+      alpb(12, 9) =     4.10107545d0 !   Magnesium -     Fluorine
+      xfac(12, 9) =    16.89931519d0 !   Magnesium -     Fluorine
       alpb(12,10) =     2.03167600d0 !   Magnesium -         Neon
       xfac(12,10) =     1.21485900d0 !   Magnesium -         Neon
       alpb(12,11) =     1.50677300d0 !   Magnesium -       Sodium
       xfac(12,11) =     8.67561900d0 !   Magnesium -       Sodium
-      alpb(12,12) =     1.35402211d0 !   Magnesium -    Magnesium
-      xfac(12,12) =     1.74715966d0 !   Magnesium -    Magnesium
+      alpb(12,12) =     0.25961712d0 !   Magnesium -    Magnesium
+      xfac(12,12) =     0.17210861d0 !   Magnesium -    Magnesium
  !
       alpb(13, 1) =     2.02599600d0 !    Aluminum -     Hydrogen
       xfac(13, 1) =     2.95837900d0 !    Aluminum -     Hydrogen
@@ -1684,8 +1699,8 @@
       alpb(14,14) =     1.32900000d0 !     Silicon -      Silicon
       xfac(14,14) =     0.27347700d0 !     Silicon -      Silicon
  !
-      alpb(15, 1) =     1.63770846d0 !  Phosphorus -     Hydrogen
-      xfac(15, 1) =     0.81812089d0 !  Phosphorus -     Hydrogen
+      alpb(15, 1) =     1.77701283d0 !  Phosphorus -     Hydrogen
+      xfac(15, 1) =     0.92231547d0 !  Phosphorus -     Hydrogen
       alpb(15, 2) =     2.09315800d0 !  Phosphorus -       Helium
       xfac(15, 2) =     1.49021800d0 !  Phosphorus -       Helium
       alpb(15, 3) =     1.39454400d0 !  Phosphorus -      Lithium
@@ -1694,29 +1709,29 @@
       xfac(15, 4) =     1.68483100d0 !  Phosphorus -    Beryllium
       alpb(15, 5) =     1.92316800d0 !  Phosphorus -        Boron
       xfac(15, 5) =     1.45088600d0 !  Phosphorus -        Boron
-      alpb(15, 6) =     1.79751022d0 !  Phosphorus -       Carbon
-      xfac(15, 6) =     0.76432343d0 !  Phosphorus -       Carbon
-      alpb(15, 7) =     1.92145817d0 !  Phosphorus -     Nitrogen
-      xfac(15, 7) =     0.70889722d0 !  Phosphorus -     Nitrogen
-      alpb(15, 8) =     2.24757842d0 !  Phosphorus -       Oxygen
-      xfac(15, 8) =     0.81247514d0 !  Phosphorus -       Oxygen
-      alpb(15, 9) =     2.24534369d0 !  Phosphorus -     Fluorine
-      xfac(15, 9) =     0.54703350d0 !  Phosphorus -     Fluorine
+      alpb(15, 6) =     1.94273921d0 !  Phosphorus -       Carbon
+      xfac(15, 6) =     0.86185262d0 !  Phosphorus -       Carbon
+      alpb(15, 7) =     2.08046079d0 !  Phosphorus -     Nitrogen
+      xfac(15, 7) =     0.85814293d0 !  Phosphorus -     Nitrogen
+      alpb(15, 8) =     2.22358855d0 !  Phosphorus -       Oxygen
+      xfac(15, 8) =     0.77229960d0 !  Phosphorus -       Oxygen
+      alpb(15, 9) =     2.40049800d0 !  Phosphorus -     Fluorine
+      xfac(15, 9) =     0.68791787d0 !  Phosphorus -     Fluorine
       alpb(15,10) =     2.21903600d0 !  Phosphorus -         Neon
       xfac(15,10) =     0.77495400d0 !  Phosphorus -         Neon
       alpb(15,11) =     1.50032000d0 !  Phosphorus -       Sodium
       xfac(15,11) =     2.83709500d0 !  Phosphorus -       Sodium
-      alpb(15,12) =     1.22015396d0 !  Phosphorus -    Magnesium
-      xfac(15,12) =     1.23302173d0 !  Phosphorus -    Magnesium
+      alpb(15,12) =     1.33601450d0 !  Phosphorus -    Magnesium
+      xfac(15,12) =     1.19491696d0 !  Phosphorus -    Magnesium
       alpb(15,13) =     1.98072700d0 !  Phosphorus -     Aluminum
       xfac(15,13) =     5.05081600d0 !  Phosphorus -     Aluminum
       alpb(15,14) =     3.31346600d0 !  Phosphorus -      Silicon
       xfac(15,14) =    13.23912100d0 !  Phosphorus -      Silicon
-      alpb(15,15) =     1.22886287d0 !  Phosphorus -   Phosphorus
-      xfac(15,15) =     0.54734266d0 !  Phosphorus -   Phosphorus
+      alpb(15,15) =     1.31423390d0 !  Phosphorus -   Phosphorus
+      xfac(15,15) =     0.53298471d0 !  Phosphorus -   Phosphorus
  !
-      alpb(16, 1) =     1.79726324d0 !      Sulfur -     Hydrogen
-      xfac(16, 1) =     0.61549662d0 !      Sulfur -     Hydrogen
+      alpb(16, 1) =     1.99051064d0 !      Sulfur -     Hydrogen
+      xfac(16, 1) =     0.87147940d0 !      Sulfur -     Hydrogen
       alpb(16, 2) =     1.95914900d0 !      Sulfur -       Helium
       xfac(16, 2) =     0.43761800d0 !      Sulfur -       Helium
       alpb(16, 3) =     2.29427500d0 !      Sulfur -      Lithium
@@ -1725,31 +1740,31 @@
       xfac(16, 4) =     3.79156500d0 !      Sulfur -    Beryllium
       alpb(16, 5) =     2.40369600d0 !      Sulfur -        Boron
       xfac(16, 5) =     1.12539400d0 !      Sulfur -        Boron
-      alpb(16, 6) =     1.95864281d0 !      Sulfur -       Carbon
-      xfac(16, 6) =     0.60266499d0 !      Sulfur -       Carbon
-      alpb(16, 7) =     1.97016067d0 !      Sulfur -     Nitrogen
-      xfac(16, 7) =     0.55284773d0 !      Sulfur -     Nitrogen
-      alpb(16, 8) =     2.24141697d0 !      Sulfur -       Oxygen
-      xfac(16, 8) =     0.63787106d0 !      Sulfur -       Oxygen
-      alpb(16, 9) =     1.90325343d0 !      Sulfur -     Fluorine
-      xfac(16, 9) =     0.33697482d0 !      Sulfur -     Fluorine
+      alpb(16, 6) =     2.04551959d0 !      Sulfur -       Carbon
+      xfac(16, 6) =     0.81385984d0 !      Sulfur -       Carbon
+      alpb(16, 7) =     2.38647451d0 !      Sulfur -     Nitrogen
+      xfac(16, 7) =     1.24545127d0 !      Sulfur -     Nitrogen
+      alpb(16, 8) =     2.00418133d0 !      Sulfur -       Oxygen
+      xfac(16, 8) =     0.57116134d0 !      Sulfur -       Oxygen
+      alpb(16, 9) =     2.02072554d0 !      Sulfur -     Fluorine
+      xfac(16, 9) =     0.53705603d0 !      Sulfur -     Fluorine
       alpb(16,10) =     2.78705800d0 !      Sulfur -         Neon
       xfac(16,10) =     3.29616000d0 !      Sulfur -         Neon
-      alpb(16,11) =     0.57939050d0 !      Sulfur -       Sodium
-      xfac(16,11) =     0.25066746d0 !      Sulfur -       Sodium
-      alpb(16,12) =     2.17697792d0 !      Sulfur -    Magnesium
-      xfac(16,12) =     3.78289700d0 !      Sulfur -    Magnesium
+      alpb(16,11) =     1.24987406d0 !      Sulfur -       Sodium
+      xfac(16,11) =     0.96273055d0 !      Sulfur -       Sodium
+      alpb(16,12) =     1.65688125d0 !      Sulfur -    Magnesium
+      xfac(16,12) =     1.64556653d0 !      Sulfur -    Magnesium
       alpb(16,13) =     1.97670500d0 !      Sulfur -     Aluminum
       xfac(16,13) =     2.34738400d0 !      Sulfur -     Aluminum
       alpb(16,14) =     1.88591600d0 !      Sulfur -      Silicon
       xfac(16,14) =     0.87665800d0 !      Sulfur -      Silicon
-      alpb(16,15) =     1.56670499d0 !      Sulfur -   Phosphorus
-      xfac(16,15) =     0.66196577d0 !      Sulfur -   Phosphorus
-      alpb(16,16) =     1.67096453d0 !      Sulfur -       Sulfur
-      xfac(16,16) =     0.59310014d0 !      Sulfur -       Sulfur
+      alpb(16,15) =     1.72980793d0 !      Sulfur -   Phosphorus
+      xfac(16,15) =     0.92899705d0 !      Sulfur -   Phosphorus
+      alpb(16,16) =     1.82481904d0 !      Sulfur -       Sulfur
+      xfac(16,16) =     0.95994800d0 !      Sulfur -       Sulfur
  !
-      alpb(17, 1) =     1.70789841d0 !    Chlorine -     Hydrogen
-      xfac(17, 1) =     0.36046457d0 !    Chlorine -     Hydrogen
+      alpb(17, 1) =     1.77202317d0 !    Chlorine -     Hydrogen
+      xfac(17, 1) =     0.35128616d0 !    Chlorine -     Hydrogen
       alpb(17, 2) =     1.67167700d0 !    Chlorine -       Helium
       xfac(17, 2) =     0.27296400d0 !    Chlorine -       Helium
       alpb(17, 3) =     2.78300100d0 !    Chlorine -      Lithium
@@ -1758,30 +1773,30 @@
       xfac(17, 4) =     2.50727500d0 !    Chlorine -    Beryllium
       alpb(17, 5) =     2.25932300d0 !    Chlorine -        Boron
       xfac(17, 5) =     0.82212900d0 !    Chlorine -        Boron
-      alpb(17, 6) =     1.69392115d0 !    Chlorine -       Carbon
-      xfac(17, 6) =     0.29258663d0 !    Chlorine -       Carbon
-      alpb(17, 7) =     1.73250222d0 !    Chlorine -     Nitrogen
-      xfac(17, 7) =     0.30394869d0 !    Chlorine -     Nitrogen
-      alpb(17, 8) =     1.74133731d0 !    Chlorine -       Oxygen
-      xfac(17, 8) =     0.25638696d0 !    Chlorine -       Oxygen
-      alpb(17, 9) =     1.66575401d0 !    Chlorine -     Fluorine
-      xfac(17, 9) =     0.18656760d0 !    Chlorine -     Fluorine
+      alpb(17, 6) =     1.77000810d0 !    Chlorine -       Carbon
+      xfac(17, 6) =     0.31362264d0 !    Chlorine -       Carbon
+      alpb(17, 7) =     1.88009782d0 !    Chlorine -     Nitrogen
+      xfac(17, 7) =     0.37268446d0 !    Chlorine -     Nitrogen
+      alpb(17, 8) =     1.72179335d0 !    Chlorine -       Oxygen
+      xfac(17, 8) =     0.23922164d0 !    Chlorine -       Oxygen
+      alpb(17, 9) =     1.75531626d0 !    Chlorine -     Fluorine
+      xfac(17, 9) =     0.20571654d0 !    Chlorine -     Fluorine
       alpb(17,10) =     1.70315100d0 !    Chlorine -         Neon
       xfac(17,10) =     0.12513300d0 !    Chlorine -         Neon
       alpb(17,11) =     1.81642900d0 !    Chlorine -       Sodium
       xfac(17,11) =     1.35789400d0 !    Chlorine -       Sodium
-      alpb(17,12) =     2.32537421d0 !    Chlorine -    Magnesium
-      xfac(17,12) =     3.15279932d0 !    Chlorine -    Magnesium
+      alpb(17,12) =     1.92937720d0 !    Chlorine -    Magnesium
+      xfac(17,12) =     1.41507295d0 !    Chlorine -    Magnesium
       alpb(17,13) =     2.12593900d0 !    Chlorine -     Aluminum
       xfac(17,13) =     2.15345100d0 !    Chlorine -     Aluminum
       alpb(17,14) =     1.68497800d0 !    Chlorine -      Silicon
       xfac(17,14) =     0.51300000d0 !    Chlorine -      Silicon
-      alpb(17,15) =     1.41706691d0 !    Chlorine -   Phosphorus
-      xfac(17,15) =     0.37570275d0 !    Chlorine -   Phosphorus
-      alpb(17,16) =     1.55645719d0 !    Chlorine -       Sulfur
-      xfac(17,16) =     0.39562708d0 !    Chlorine -       Sulfur
-      alpb(17,17) =     1.60269643d0 !    Chlorine -     Chlorine
-      xfac(17,17) =     0.37280371d0 !    Chlorine -     Chlorine
+      alpb(17,15) =     1.52465837d0 !    Chlorine -   Phosphorus
+      xfac(17,15) =     0.40850293d0 !    Chlorine -   Phosphorus
+      alpb(17,16) =     1.63061304d0 !    Chlorine -       Sulfur
+      xfac(17,16) =     0.48323910d0 !    Chlorine -       Sulfur
+      alpb(17,17) =     1.68012133d0 !    Chlorine -     Chlorine
+      xfac(17,17) =     0.38845132d0 !    Chlorine -     Chlorine
  !
       alpb(18, 1) =     4.05616700d0 !       Argon -     Hydrogen
       xfac(18, 1) =     3.93344500d0 !       Argon -     Hydrogen
@@ -1820,8 +1835,8 @@
       alpb(18,18) =     2.30643200d0 !       Argon -        Argon
       xfac(18,18) =     0.97269900d0 !       Argon -        Argon
  !
-      alpb(19, 1) =     1.26382808d0 !   Potassium -     Hydrogen
-      xfac(19, 1) =     3.92136315d0 !   Potassium -     Hydrogen
+      alpb(19, 1) =     0.92695277d0 !   Potassium -     Hydrogen
+      xfac(19, 1) =     0.99027410d0 !   Potassium -     Hydrogen
       alpb(19, 2) =     1.41850100d0 !   Potassium -       Helium
       xfac(19, 2) =     2.89504500d0 !   Potassium -       Helium
       alpb(19, 3) =     1.03648700d0 !   Potassium -      Lithium
@@ -1830,14 +1845,14 @@
       xfac(19, 4) =     6.73222100d0 !   Potassium -    Beryllium
       alpb(19, 5) =     2.03176800d0 !   Potassium -        Boron
       xfac(19, 5) =     8.90054100d0 !   Potassium -        Boron
-      alpb(19, 6) =     1.50263562d0 !   Potassium -       Carbon
-      xfac(19, 6) =     2.61589246d0 !   Potassium -       Carbon
-      alpb(19, 7) =     1.78547490d0 !   Potassium -     Nitrogen
-      xfac(19, 7) =     2.96745329d0 !   Potassium -     Nitrogen
-      alpb(19, 8) =     1.02003042d0 !   Potassium -       Oxygen
-      xfac(19, 8) =     0.28228579d0 !   Potassium -       Oxygen
-      alpb(19, 9) =     3.51882956d0 !   Potassium -     Fluorine
-      xfac(19, 9) =     6.83779848d0 !   Potassium -     Fluorine
+      alpb(19, 6) =     1.51170545d0 !   Potassium -       Carbon
+      xfac(19, 6) =     1.50180357d0 !   Potassium -       Carbon
+      alpb(19, 7) =     1.52806612d0 !   Potassium -     Nitrogen
+      xfac(19, 7) =     1.85579457d0 !   Potassium -     Nitrogen
+      alpb(19, 8) =     1.52565876d0 !   Potassium -       Oxygen
+      xfac(19, 8) =     1.09688509d0 !   Potassium -       Oxygen
+      alpb(19, 9) =     2.89600597d0 !   Potassium -     Fluorine
+      xfac(19, 9) =     6.96328886d0 !   Potassium -     Fluorine
       alpb(19,10) =     1.13802100d0 !   Potassium -         Neon
       xfac(19,10) =     0.23399500d0 !   Potassium -         Neon
       alpb(19,11) =     0.88430700d0 !   Potassium -       Sodium
@@ -1850,29 +1865,29 @@
       xfac(19,14) =     8.27920000d0 !   Potassium -      Silicon
       alpb(19,15) =     1.44373800d0 !   Potassium -   Phosphorus
       xfac(19,15) =     4.47538400d0 !   Potassium -   Phosphorus
-      alpb(19,16) =     2.20715908d0 !   Potassium -       Sulfur
-      xfac(19,16) =    29.40272366d0 !   Potassium -       Sulfur
-      alpb(19,17) =     1.07718412d0 !   Potassium -     Chlorine
-      xfac(19,17) =     0.66754058d0 !   Potassium -     Chlorine
+      alpb(19,16) =     2.34162192d0 !   Potassium -       Sulfur
+      xfac(19,16) =    28.74098661d0 !   Potassium -       Sulfur
+      alpb(19,17) =     1.56138261d0 !   Potassium -     Chlorine
+      xfac(19,17) =     1.76932814d0 !   Potassium -     Chlorine
       alpb(19,18) =     2.30280300d0 !   Potassium -        Argon
       xfac(19,18) =     9.71050800d0 !   Potassium -        Argon
-      alpb(19,19) =     1.62207850d0 !   Potassium -    Potassium
-      xfac(19,19) =     5.77267253d0 !   Potassium -    Potassium
+      alpb(19,19) =     1.14821680d0 !   Potassium -    Potassium
+      xfac(19,19) =     4.60699839d0 !   Potassium -    Potassium
  !
-      alpb(20, 1) =     1.75280570d0 !     Calcium -     Hydrogen
-      xfac(20, 1) =     4.44935744d0 !     Calcium -     Hydrogen
+      alpb(20, 1) =     1.69147617d0 !     Calcium -     Hydrogen
+      xfac(20, 1) =     4.09412903d0 !     Calcium -     Hydrogen
       alpb(20, 2) =     1.71984700d0 !     Calcium -       Helium
       xfac(20, 2) =     2.91385200d0 !     Calcium -       Helium
       alpb(20, 5) =     1.70001000d0 !     Calcium -        Boron
       xfac(20, 5) =     1.70001000d0 !     Calcium -        Boron
-      alpb(20, 6) =     1.35726415d0 !     Calcium -       Carbon
-      xfac(20, 6) =     0.62878644d0 !     Calcium -       Carbon
-      alpb(20, 7) =     1.66602298d0 !     Calcium -     Nitrogen
-      xfac(20, 7) =     1.17109711d0 !     Calcium -     Nitrogen
-      alpb(20, 8) =     1.71094766d0 !     Calcium -       Oxygen
-      xfac(20, 8) =     0.67980812d0 !     Calcium -       Oxygen
-      alpb(20, 9) =     3.52091284d0 !     Calcium -     Fluorine
-      xfac(20, 9) =    10.98966965d0 !     Calcium -     Fluorine
+      alpb(20, 6) =     1.05066825d0 !     Calcium -       Carbon
+      xfac(20, 6) =     0.32236564d0 !     Calcium -       Carbon
+      alpb(20, 7) =     1.11272184d0 !     Calcium -     Nitrogen
+      xfac(20, 7) =     0.36106406d0 !     Calcium -     Nitrogen
+      alpb(20, 8) =     1.00032461d0 !     Calcium -       Oxygen
+      xfac(20, 8) =     0.16930809d0 !     Calcium -       Oxygen
+      alpb(20, 9) =     3.85224570d0 !     Calcium -     Fluorine
+      xfac(20, 9) =    10.98269271d0 !     Calcium -     Fluorine
       alpb(20,10) =     0.95453000d0 !     Calcium -         Neon
       xfac(20,10) =     0.33258600d0 !     Calcium -         Neon
       alpb(20,11) =     3.10710400d0 !     Calcium -       Sodium
@@ -1885,16 +1900,16 @@
       xfac(20,14) =     0.33623300d0 !     Calcium -      Silicon
       alpb(20,15) =     1.02414200d0 !     Calcium -   Phosphorus
       xfac(20,15) =     0.41084000d0 !     Calcium -   Phosphorus
-      alpb(20,16) =     0.75537722d0 !     Calcium -       Sulfur
-      xfac(20,16) =     0.27652269d0 !     Calcium -       Sulfur
-      alpb(20,17) =     1.03798455d0 !     Calcium -     Chlorine
-      xfac(20,17) =     0.31117199d0 !     Calcium -     Chlorine
+      alpb(20,16) =     0.54371148d0 !     Calcium -       Sulfur
+      xfac(20,16) =     0.20200309d0 !     Calcium -       Sulfur
+      alpb(20,17) =     0.81998389d0 !     Calcium -     Chlorine
+      xfac(20,17) =     0.16380876d0 !     Calcium -     Chlorine
       alpb(20,18) =     1.03488100d0 !     Calcium -        Argon
       xfac(20,18) =     0.29107200d0 !     Calcium -        Argon
       alpb(20,19) =     1.11920000d0 !     Calcium -    Potassium
       xfac(20,19) =     1.24032000d0 !     Calcium -    Potassium
-      alpb(20,20) =     1.16372040d0 !     Calcium -      Calcium
-      xfac(20,20) =    29.49299918d0 !     Calcium -      Calcium
+      alpb(20,20) =     1.14828793d0 !     Calcium -      Calcium
+      xfac(20,20) =    29.47195357d0 !     Calcium -      Calcium
  !
       alpb(21, 1) =     1.17948500d0 !    Scandium -     Hydrogen
       xfac(21, 1) =     0.35119900d0 !    Scandium -     Hydrogen
@@ -2021,49 +2036,49 @@
       alpb(25,25) =     2.66542000d0 !   Manganese -    Manganese
       xfac(25,25) =     2.46004000d0 !   Manganese -    Manganese
  !
-      alpb(26, 1) =     1.40315740d0 !        Iron -     Hydrogen
-      xfac(26, 1) =     0.29604424d0 !        Iron -     Hydrogen
-      alpb(26, 6) =     3.14575186d0 !        Iron -       Carbon
-      xfac(26, 6) =     2.62934167d0 !        Iron -       Carbon
-      alpb(26, 7) =     3.37932899d0 !        Iron -     Nitrogen
-      xfac(26, 7) =     2.09260038d0 !        Iron -     Nitrogen
-      alpb(26, 8) =     3.98069771d0 !        Iron -       Oxygen
-      xfac(26, 8) =     5.69691446d0 !        Iron -       Oxygen
-      alpb(26, 9) =     3.35802534d0 !        Iron -     Fluorine
-      xfac(26, 9) =     1.53997079d0 !        Iron -     Fluorine
-      alpb(26,15) =     1.42597541d0 !        Iron -   Phosphorus
-      xfac(26,15) =     0.59756052d0 !        Iron -   Phosphorus
-      alpb(26,16) =     1.06819377d0 !        Iron -       Sulfur
-      xfac(26,16) =     0.11563478d0 !        Iron -       Sulfur
-      alpb(26,17) =     1.84765876d0 !        Iron -     Chlorine
-      xfac(26,17) =     0.21314306d0 !        Iron -     Chlorine
+      alpb(26, 1) =     0.79193667d0 !        Iron -     Hydrogen
+      xfac(26, 1) =     0.05838526d0 !        Iron -     Hydrogen
+      alpb(26, 6) =     3.99017141d0 !        Iron -       Carbon
+      xfac(26, 6) =     5.33514976d0 !        Iron -       Carbon
+      alpb(26, 7) =     4.02796928d0 !        Iron -     Nitrogen
+      xfac(26, 7) =     5.63401184d0 !        Iron -     Nitrogen
+      alpb(26, 8) =     3.23501120d0 !        Iron -       Oxygen
+      xfac(26, 8) =     1.61877513d0 !        Iron -       Oxygen
+      alpb(26, 9) =     3.27029865d0 !        Iron -     Fluorine
+      xfac(26, 9) =     1.57958147d0 !        Iron -     Fluorine
+      alpb(26,15) =     1.42597278d0 !        Iron -   Phosphorus
+      xfac(26,15) =     0.59759172d0 !        Iron -   Phosphorus
+      alpb(26,16) =     2.39883900d0 !        Iron -       Sulfur
+      xfac(26,16) =     1.26086296d0 !        Iron -       Sulfur
+      alpb(26,17) =     1.96664930d0 !        Iron -     Chlorine
+      xfac(26,17) =     0.31495551d0 !        Iron -     Chlorine
       alpb(26,19) =     2.00000000d0 !        Iron -    Potassium
       xfac(26,19) =     6.00000000d0 !        Iron -    Potassium
-      alpb(26,26) =     4.84293092d0 !        Iron -         Iron
-      xfac(26,26) =    24.87954318d0 !        Iron -         Iron
+      alpb(26,26) =     3.56505839d0 !        Iron -         Iron
+      xfac(26,26) =    24.92536659d0 !        Iron -         Iron
  !
-      alpb(27, 1) =     2.17108831d0 !      Cobalt -     Hydrogen
-      xfac(27, 1) =     0.76194642d0 !      Cobalt -     Hydrogen
+      alpb(27, 1) =     2.34165801d0 !      Cobalt -     Hydrogen
+      xfac(27, 1) =     1.94845346d0 !      Cobalt -     Hydrogen
       alpb(27, 5) =     3.20000000d0 !      Cobalt -        Boron
       xfac(27, 5) =     1.00000000d0 !      Cobalt -        Boron
-      alpb(27, 6) =     3.58818631d0 !      Cobalt -       Carbon
-      xfac(27, 6) =     4.27873559d0 !      Cobalt -       Carbon
-      alpb(27, 7) =     3.09432046d0 !      Cobalt -     Nitrogen
-      xfac(27, 7) =     1.96214158d0 !      Cobalt -     Nitrogen
-      alpb(27, 8) =     3.21946846d0 !      Cobalt -       Oxygen
-      xfac(27, 8) =     2.17460434d0 !      Cobalt -       Oxygen
-      alpb(27, 9) =     3.55245306d0 !      Cobalt -     Fluorine
-      xfac(27, 9) =     3.58467454d0 !      Cobalt -     Fluorine
+      alpb(27, 6) =     3.55962148d0 !      Cobalt -       Carbon
+      xfac(27, 6) =     5.07784400d0 !      Cobalt -       Carbon
+      alpb(27, 7) =     3.10684864d0 !      Cobalt -     Nitrogen
+      xfac(27, 7) =     2.57511613d0 !      Cobalt -     Nitrogen
+      alpb(27, 8) =     3.12463554d0 !      Cobalt -       Oxygen
+      xfac(27, 8) =     2.40385387d0 !      Cobalt -       Oxygen
+      alpb(27, 9) =     3.44800954d0 !      Cobalt -     Fluorine
+      xfac(27, 9) =     3.53698290d0 !      Cobalt -     Fluorine
       alpb(27,14) =     2.46980500d0 !      Cobalt -      Silicon
       xfac(27,14) =     1.09024000d0 !      Cobalt -      Silicon
-      alpb(27,15) =     1.15791919d0 !      Cobalt -   Phosphorus
-      xfac(27,15) =     0.05332018d0 !      Cobalt -   Phosphorus
-      alpb(27,16) =     2.33607740d0 !      Cobalt -       Sulfur
-      xfac(27,16) =     1.34289480d0 !      Cobalt -       Sulfur
-      alpb(27,17) =     1.98024559d0 !      Cobalt -     Chlorine
-      xfac(27,17) =     0.18647888d0 !      Cobalt -     Chlorine
-      alpb(27,27) =     3.44775733d0 !      Cobalt -       Cobalt
-      xfac(27,27) =     3.99903614d0 !      Cobalt -       Cobalt
+      alpb(27,15) =     1.15939687d0 !      Cobalt -   Phosphorus
+      xfac(27,15) =     0.05506725d0 !      Cobalt -   Phosphorus
+      alpb(27,16) =     2.11118270d0 !      Cobalt -       Sulfur
+      xfac(27,16) =     1.15338065d0 !      Cobalt -       Sulfur
+      alpb(27,17) =     1.95752618d0 !      Cobalt -     Chlorine
+      xfac(27,17) =     0.34957665d0 !      Cobalt -     Chlorine
+      alpb(27,27) =     3.43844100d0 !      Cobalt -       Cobalt
+      xfac(27,27) =     3.99349531d0 !      Cobalt -       Cobalt
  !
       alpb(28, 1) =     2.63528000d0 !      Nickel -     Hydrogen
       xfac(28, 1) =     1.76312400d0 !      Nickel -     Hydrogen
@@ -2105,28 +2120,28 @@
       alpb(29,29) =     3.61684600d0 !      Copper -       Copper
       xfac(29,29) =     5.18437600d0 !      Copper -       Copper
  !
-      alpb(30, 1) =     1.91652557d0 !        Zinc -     Hydrogen
-      xfac(30, 1) =     2.67852675d0 !        Zinc -     Hydrogen
-      alpb(30, 6) =     1.91622954d0 !        Zinc -       Carbon
-      xfac(30, 6) =     1.45805800d0 !        Zinc -       Carbon
-      alpb(30, 7) =     1.67976867d0 !        Zinc -     Nitrogen
-      xfac(30, 7) =     0.78960720d0 !        Zinc -     Nitrogen
-      alpb(30, 8) =     2.19645641d0 !        Zinc -       Oxygen
-      xfac(30, 8) =     1.49579306d0 !        Zinc -       Oxygen
+      alpb(30, 1) =     2.09471205d0 !        Zinc -     Hydrogen
+      xfac(30, 1) =     3.90267492d0 !        Zinc -     Hydrogen
+      alpb(30, 6) =     1.61726178d0 !        Zinc -       Carbon
+      xfac(30, 6) =     0.69422546d0 !        Zinc -       Carbon
+      alpb(30, 7) =     1.53345218d0 !        Zinc -     Nitrogen
+      xfac(30, 7) =     0.58920321d0 !        Zinc -     Nitrogen
+      alpb(30, 8) =     1.93125665d0 !        Zinc -       Oxygen
+      xfac(30, 8) =     0.87718124d0 !        Zinc -       Oxygen
       alpb(30, 9) =     2.41002100d0 !        Zinc -     Fluorine
       xfac(30, 9) =     1.22554500d0 !        Zinc -     Fluorine
-      alpb(30,14) =     1.41074308d0 !        Zinc -      Silicon
-      xfac(30,14) =     2.81658103d0 !        Zinc -      Silicon
+      alpb(30,14) =     1.41140544d0 !        Zinc -      Silicon
+      xfac(30,14) =     2.81724339d0 !        Zinc -      Silicon
       alpb(30,15) =     1.22048000d0 !        Zinc -   Phosphorus
       xfac(30,15) =     0.58153000d0 !        Zinc -   Phosphorus
-      alpb(30,16) =     1.46484141d0 !        Zinc -       Sulfur
-      xfac(30,16) =     0.82618049d0 !        Zinc -       Sulfur
-      alpb(30,17) =     1.57853485d0 !        Zinc -     Chlorine
-      xfac(30,17) =     0.71210113d0 !        Zinc -     Chlorine
+      alpb(30,16) =     1.37971732d0 !        Zinc -       Sulfur
+      xfac(30,16) =     0.77139403d0 !        Zinc -       Sulfur
+      alpb(30,17) =     1.31543174d0 !        Zinc -     Chlorine
+      xfac(30,17) =     0.35258456d0 !        Zinc -     Chlorine
       alpb(30,20) =     1.11918000d0 !        Zinc -      Calcium
       xfac(30,20) =     1.24029000d0 !        Zinc -      Calcium
-      alpb(30,30) =     0.73736738d0 !        Zinc -         Zinc
-      xfac(30,30) =     0.19303833d0 !        Zinc -         Zinc
+      alpb(30,30) =     0.63690130d0 !        Zinc -         Zinc
+      xfac(30,30) =     0.20744744d0 !        Zinc -         Zinc
  !
       alpb(31, 1) =     1.84735000d0 !     Gallium -     Hydrogen
       xfac(31, 1) =     1.38665200d0 !     Gallium -     Hydrogen
@@ -2203,39 +2218,39 @@
       alpb(33,33) =     1.58826400d0 !     Arsenic -      Arsenic
       xfac(33,33) =     0.73730700d0 !     Arsenic -      Arsenic
  !
-      alpb(34, 1) =     1.91168436d0 !    Selenium -     Hydrogen
-      xfac(34, 1) =     0.61962704d0 !    Selenium -     Hydrogen
-      alpb(34, 6) =     1.99722384d0 !    Selenium -       Carbon
-      xfac(34, 6) =     0.40774439d0 !    Selenium -       Carbon
-      alpb(34, 7) =     1.42047963d0 !    Selenium -     Nitrogen
-      xfac(34, 7) =     0.14955363d0 !    Selenium -     Nitrogen
-      alpb(34, 8) =     2.55201064d0 !    Selenium -       Oxygen
-      xfac(34, 8) =     0.70452922d0 !    Selenium -       Oxygen
-      alpb(34, 9) =     1.81182997d0 !    Selenium -     Fluorine
-      xfac(34, 9) =     0.18328066d0 !    Selenium -     Fluorine
+      alpb(34, 1) =     1.48506586d0 !    Selenium -     Hydrogen
+      xfac(34, 1) =     0.47959118d0 !    Selenium -     Hydrogen
+      alpb(34, 6) =     2.03352801d0 !    Selenium -       Carbon
+      xfac(34, 6) =     0.53659777d0 !    Selenium -       Carbon
+      alpb(34, 7) =     1.73268900d0 !    Selenium -     Nitrogen
+      xfac(34, 7) =     0.22936373d0 !    Selenium -     Nitrogen
+      alpb(34, 8) =     1.97750067d0 !    Selenium -       Oxygen
+      xfac(34, 8) =     0.30794027d0 !    Selenium -       Oxygen
+      alpb(34, 9) =     1.91312772d0 !    Selenium -     Fluorine
+      xfac(34, 9) =     0.20007031d0 !    Selenium -     Fluorine
       alpb(34,14) =     1.52981700d0 !    Selenium -      Silicon
       xfac(34,14) =     0.51822700d0 !    Selenium -      Silicon
-      alpb(34,15) =     1.09337576d0 !    Selenium -   Phosphorus
-      xfac(34,15) =     0.24826135d0 !    Selenium -   Phosphorus
-      alpb(34,16) =     1.40169306d0 !    Selenium -       Sulfur
-      xfac(34,16) =     0.45309356d0 !    Selenium -       Sulfur
-      alpb(34,17) =     1.39667869d0 !    Selenium -     Chlorine
-      xfac(34,17) =     0.19163082d0 !    Selenium -     Chlorine
+      alpb(34,15) =     1.14004774d0 !    Selenium -   Phosphorus
+      xfac(34,15) =     0.26921054d0 !    Selenium -   Phosphorus
+      alpb(34,16) =     1.39091004d0 !    Selenium -       Sulfur
+      xfac(34,16) =     0.46848253d0 !    Selenium -       Sulfur
+      alpb(34,17) =     1.36119988d0 !    Selenium -     Chlorine
+      xfac(34,17) =     0.23519901d0 !    Selenium -     Chlorine
       alpb(34,25) =     2.64803800d0 !    Selenium -    Manganese
       xfac(34,25) =     2.18072000d0 !    Selenium -    Manganese
       alpb(34,27) =     2.52345000d0 !    Selenium -       Cobalt
       xfac(34,27) =     2.20241000d0 !    Selenium -       Cobalt
-      alpb(34,30) =     1.18241520d0 !    Selenium -         Zinc
-      xfac(34,30) =     0.53118428d0 !    Selenium -         Zinc
+      alpb(34,30) =     1.08896205d0 !    Selenium -         Zinc
+      xfac(34,30) =     0.59959280d0 !    Selenium -         Zinc
       alpb(34,32) =     2.66905700d0 !    Selenium -    Germanium
       xfac(34,32) =     5.87205100d0 !    Selenium -    Germanium
       alpb(34,33) =     1.66528000d0 !    Selenium -      Arsenic
       xfac(34,33) =     0.71126100d0 !    Selenium -      Arsenic
-      alpb(34,34) =     1.04604879d0 !    Selenium -     Selenium
-      xfac(34,34) =     0.08287186d0 !    Selenium -     Selenium
+      alpb(34,34) =     1.06068552d0 !    Selenium -     Selenium
+      xfac(34,34) =     0.15281377d0 !    Selenium -     Selenium
  !
-      alpb(35, 1) =     2.32330237d0 !     Bromine -     Hydrogen
-      xfac(35, 1) =     1.16256718d0 !     Bromine -     Hydrogen
+      alpb(35, 1) =     2.19042544d0 !     Bromine -     Hydrogen
+      xfac(35, 1) =     0.95776729d0 !     Bromine -     Hydrogen
       alpb(35, 2) =     2.12827500d0 !     Bromine -       Helium
       xfac(35, 2) =     1.06204300d0 !     Bromine -       Helium
       alpb(35, 3) =     2.07444100d0 !     Bromine -      Lithium
@@ -2244,36 +2259,36 @@
       xfac(35, 4) =     1.94093300d0 !     Bromine -    Beryllium
       alpb(35, 5) =     2.30789000d0 !     Bromine -        Boron
       xfac(35, 5) =     1.22642000d0 !     Bromine -        Boron
-      alpb(35, 6) =     2.28910440d0 !     Bromine -       Carbon
-      xfac(35, 6) =     1.00298419d0 !     Bromine -       Carbon
-      alpb(35, 7) =     4.02853661d0 !     Bromine -     Nitrogen
-      xfac(35, 7) =    27.79959282d0 !     Bromine -     Nitrogen
-      alpb(35, 8) =     3.17944225d0 !     Bromine -       Oxygen
-      xfac(35, 8) =     2.68460222d0 !     Bromine -       Oxygen
-      alpb(35, 9) =     2.88334772d0 !     Bromine -     Fluorine
-      xfac(35, 9) =     1.12242172d0 !     Bromine -     Fluorine
+      alpb(35, 6) =     2.28719180d0 !     Bromine -       Carbon
+      xfac(35, 6) =     1.00009158d0 !     Bromine -       Carbon
+      alpb(35, 7) =     3.97658112d0 !     Bromine -     Nitrogen
+      xfac(35, 7) =    27.73297436d0 !     Bromine -     Nitrogen
+      alpb(35, 8) =     2.87622656d0 !     Bromine -       Oxygen
+      xfac(35, 8) =     1.81002542d0 !     Bromine -       Oxygen
+      alpb(35, 9) =     2.75170253d0 !     Bromine -     Fluorine
+      xfac(35, 9) =     0.99530599d0 !     Bromine -     Fluorine
       alpb(35,10) =     2.46417200d0 !     Bromine -         Neon
       xfac(35,10) =     1.00615900d0 !     Bromine -         Neon
       alpb(35,11) =     1.62221800d0 !     Bromine -       Sodium
       xfac(35,11) =     1.75293700d0 !     Bromine -       Sodium
-      alpb(35,12) =     2.12290506d0 !     Bromine -    Magnesium
-      xfac(35,12) =     4.26099410d0 !     Bromine -    Magnesium
+      alpb(35,12) =     1.76836414d0 !     Bromine -    Magnesium
+      xfac(35,12) =     2.24092055d0 !     Bromine -    Magnesium
       alpb(35,13) =     1.89414100d0 !     Bromine -     Aluminum
       xfac(35,13) =     2.35713000d0 !     Bromine -     Aluminum
       alpb(35,14) =     1.57082500d0 !     Bromine -      Silicon
       xfac(35,14) =     0.58951100d0 !     Bromine -      Silicon
-      alpb(35,15) =     1.61508016d0 !     Bromine -   Phosphorus
-      xfac(35,15) =     0.73579343d0 !     Bromine -   Phosphorus
-      alpb(35,16) =     2.27133539d0 !     Bromine -       Sulfur
-      xfac(35,16) =     1.76382187d0 !     Bromine -       Sulfur
-      alpb(35,17) =     1.56815388d0 !     Bromine -     Chlorine
-      xfac(35,17) =     0.30249893d0 !     Bromine -     Chlorine
+      alpb(35,15) =     1.73435576d0 !     Bromine -   Phosphorus
+      xfac(35,15) =     0.86422011d0 !     Bromine -   Phosphorus
+      alpb(35,16) =     2.24818777d0 !     Bromine -       Sulfur
+      xfac(35,16) =     1.83250480d0 !     Bromine -       Sulfur
+      alpb(35,17) =     1.47106975d0 !     Bromine -     Chlorine
+      xfac(35,17) =     0.20035006d0 !     Bromine -     Chlorine
       alpb(35,18) =     2.45080100d0 !     Bromine -        Argon
       xfac(35,18) =     3.26266800d0 !     Bromine -        Argon
-      alpb(35,19) =     1.42409156d0 !     Bromine -    Potassium
-      xfac(35,19) =     4.68569482d0 !     Bromine -    Potassium
-      alpb(35,20) =     1.31539226d0 !     Bromine -      Calcium
-      xfac(35,20) =     1.03360637d0 !     Bromine -      Calcium
+      alpb(35,19) =     1.58047134d0 !     Bromine -    Potassium
+      xfac(35,19) =     4.76810610d0 !     Bromine -    Potassium
+      alpb(35,20) =     1.04553736d0 !     Bromine -      Calcium
+      xfac(35,20) =     0.53031339d0 !     Bromine -      Calcium
       alpb(35,21) =     1.79348600d0 !     Bromine -     Scandium
       xfac(35,21) =     2.09825100d0 !     Bromine -     Scandium
       alpb(35,22) =     1.67484700d0 !     Bromine -     Titanium
@@ -2284,26 +2299,26 @@
       xfac(35,24) =     0.21785300d0 !     Bromine -     Chromium
       alpb(35,25) =     2.28382000d0 !     Bromine -    Manganese
       xfac(35,25) =     1.18358000d0 !     Bromine -    Manganese
-      alpb(35,26) =     2.58821794d0 !     Bromine -         Iron
-      xfac(35,26) =     1.95368018d0 !     Bromine -         Iron
-      alpb(35,27) =     0.51635973d0 !     Bromine -       Cobalt
-      xfac(35,27) =     0.03830792d0 !     Bromine -       Cobalt
+      alpb(35,26) =     3.16463530d0 !     Bromine -         Iron
+      xfac(35,26) =     4.41099184d0 !     Bromine -         Iron
+      alpb(35,27) =     0.42328296d0 !     Bromine -       Cobalt
+      xfac(35,27) =     0.03509636d0 !     Bromine -       Cobalt
       alpb(35,28) =     2.77213600d0 !     Bromine -       Nickel
       xfac(35,28) =     0.63214500d0 !     Bromine -       Nickel
       alpb(35,29) =     5.82640700d0 !     Bromine -       Copper
       xfac(35,29) =     0.76851700d0 !     Bromine -       Copper
-      alpb(35,30) =     1.42314736d0 !     Bromine -         Zinc
-      xfac(35,30) =     0.93939095d0 !     Bromine -         Zinc
+      alpb(35,30) =     1.47179767d0 !     Bromine -         Zinc
+      xfac(35,30) =     0.85333446d0 !     Bromine -         Zinc
       alpb(35,31) =     1.81910500d0 !     Bromine -      Gallium
       xfac(35,31) =     1.26103600d0 !     Bromine -      Gallium
       alpb(35,32) =     1.60236600d0 !     Bromine -    Germanium
       xfac(35,32) =     0.62773700d0 !     Bromine -    Germanium
       alpb(35,33) =     1.52017000d0 !     Bromine -      Arsenic
       xfac(35,33) =     0.51415300d0 !     Bromine -      Arsenic
-      alpb(35,34) =     2.16491691d0 !     Bromine -     Selenium
-      xfac(35,34) =     2.15588763d0 !     Bromine -     Selenium
-      alpb(35,35) =     2.17381413d0 !     Bromine -      Bromine
-      xfac(35,35) =     1.21049397d0 !     Bromine -      Bromine
+      alpb(35,34) =     2.60066785d0 !     Bromine -     Selenium
+      xfac(35,34) =     5.81873823d0 !     Bromine -     Selenium
+      alpb(35,35) =     2.24012626d0 !     Bromine -      Bromine
+      xfac(35,35) =     1.64245682d0 !     Bromine -      Bromine
  !
       alpb(36, 1) =     3.77045300d0 !     Krypton -     Hydrogen
       xfac(36, 1) =     5.12589700d0 !     Krypton -     Hydrogen
@@ -2325,8 +2340,8 @@
       xfac(36, 9) =     4.13440700d0 !     Krypton -     Fluorine
       alpb(36,10) =     2.81367900d0 !     Krypton -         Neon
       xfac(36,10) =     1.43372200d0 !     Krypton -         Neon
-      alpb(36,11) =     2.29428745d0 !     Krypton -       Sodium
-      xfac(36,11) =     8.35794790d0 !     Krypton -       Sodium
+      alpb(36,11) =     2.29454485d0 !     Krypton -       Sodium
+      xfac(36,11) =     8.35820530d0 !     Krypton -       Sodium
       alpb(36,12) =     1.39148700d0 !     Krypton -    Magnesium
       xfac(36,12) =     0.88843600d0 !     Krypton -    Magnesium
       alpb(36,13) =     2.46713100d0 !     Krypton -     Aluminum
@@ -2666,8 +2681,8 @@
       xfac(49,31) =     2.42198700d0 !      Indium -      Gallium
       alpb(49,33) =     2.29955200d0 !      Indium -      Arsenic
       xfac(49,33) =     6.20835000d0 !      Indium -      Arsenic
-      alpb(49,34) =     1.90657200d0 !      Indium -     Selenium
-      xfac(49,34) =     2.31932300d0 !      Indium -     Selenium
+      alpb(49,34) =     1.90658644d0 !      Indium -     Selenium
+      xfac(49,34) =     2.31933744d0 !      Indium -     Selenium
       alpb(49,35) =     2.25795700d0 !      Indium -      Bromine
       xfac(49,35) =     3.72859800d0 !      Indium -      Bromine
       alpb(49,49) =     2.07324100d0 !      Indium -       Indium
@@ -2689,8 +2704,8 @@
       xfac(50,17) =     0.80778200d0 !         Tin -     Chlorine
       alpb(50,32) =     2.52463300d0 !         Tin -    Germanium
       xfac(50,32) =    12.34341100d0 !         Tin -    Germanium
-      alpb(50,34) =     2.12737700d0 !         Tin -     Selenium
-      xfac(50,34) =     3.06188500d0 !         Tin -     Selenium
+      alpb(50,34) =     2.12739144d0 !         Tin -     Selenium
+      xfac(50,34) =     3.06189944d0 !         Tin -     Selenium
       alpb(50,35) =     1.53508900d0 !         Tin -      Bromine
       xfac(50,35) =     0.66879800d0 !         Tin -      Bromine
       alpb(50,50) =     0.92100000d0 !         Tin -          Tin
@@ -2749,14 +2764,14 @@
       xfac(52,16) =     0.94392500d0 !   Tellurium -       Sulfur
       alpb(52,17) =     1.30026000d0 !   Tellurium -     Chlorine
       xfac(52,17) =     0.28547800d0 !   Tellurium -     Chlorine
-      alpb(52,30) =     1.17728821d0 !   Tellurium -         Zinc
-      xfac(52,30) =     1.76233190d0 !   Tellurium -         Zinc
+      alpb(52,30) =     1.17795057d0 !   Tellurium -         Zinc
+      xfac(52,30) =     1.76299426d0 !   Tellurium -         Zinc
       alpb(52,32) =     2.34237200d0 !   Tellurium -    Germanium
       xfac(52,32) =     7.01904900d0 !   Tellurium -    Germanium
       alpb(52,33) =     1.18925300d0 !   Tellurium -      Arsenic
       xfac(52,33) =     0.68577400d0 !   Tellurium -      Arsenic
-      alpb(52,34) =     1.56600800d0 !   Tellurium -     Selenium
-      xfac(52,34) =     1.18782600d0 !   Tellurium -     Selenium
+      alpb(52,34) =     1.56602244d0 !   Tellurium -     Selenium
+      xfac(52,34) =     1.18784044d0 !   Tellurium -     Selenium
       alpb(52,35) =     1.25094000d0 !   Tellurium -      Bromine
       xfac(52,35) =     0.39420200d0 !   Tellurium -      Bromine
       alpb(52,48) =     1.30726200d0 !   Tellurium -      Cadmium
@@ -2768,8 +2783,8 @@
       alpb(52,52) =     1.16497800d0 !   Tellurium -    Tellurium
       xfac(52,52) =     0.64248600d0 !   Tellurium -    Tellurium
  !
-      alpb(53, 1) =     1.93208961d0 !      Iodine -     Hydrogen
-      xfac(53, 1) =     1.45911551d0 !      Iodine -     Hydrogen
+      alpb(53, 1) =     1.94902615d0 !      Iodine -     Hydrogen
+      xfac(53, 1) =     1.47134700d0 !      Iodine -     Hydrogen
       alpb(53, 2) =     2.17298400d0 !      Iodine -       Helium
       xfac(53, 2) =     1.63072100d0 !      Iodine -       Helium
       alpb(53, 3) =     2.12125100d0 !      Iodine -      Lithium
@@ -2778,14 +2793,14 @@
       xfac(53, 4) =     2.35189800d0 !      Iodine -    Beryllium
       alpb(53, 5) =     2.66760500d0 !      Iodine -        Boron
       xfac(53, 5) =     3.16138500d0 !      Iodine -        Boron
-      alpb(53, 6) =     1.74356688d0 !      Iodine -       Carbon
-      xfac(53, 6) =     0.70734286d0 !      Iodine -       Carbon
-      alpb(53, 7) =     1.70203519d0 !      Iodine -     Nitrogen
-      xfac(53, 7) =     0.43292581d0 !      Iodine -     Nitrogen
-      alpb(53, 8) =     2.26759981d0 !      Iodine -       Oxygen
-      xfac(53, 8) =     1.24722053d0 !      Iodine -       Oxygen
-      alpb(53, 9) =     1.38492211d0 !      Iodine -     Fluorine
-      xfac(53, 9) =     0.04921958d0 !      Iodine -     Fluorine
+      alpb(53, 6) =     1.72883329d0 !      Iodine -       Carbon
+      xfac(53, 6) =     0.67010339d0 !      Iodine -       Carbon
+      alpb(53, 7) =     1.86835747d0 !      Iodine -     Nitrogen
+      xfac(53, 7) =     0.67927566d0 !      Iodine -     Nitrogen
+      alpb(53, 8) =     2.18711213d0 !      Iodine -       Oxygen
+      xfac(53, 8) =     1.18789570d0 !      Iodine -       Oxygen
+      alpb(53, 9) =     1.63514432d0 !      Iodine -     Fluorine
+      xfac(53, 9) =     0.14136200d0 !      Iodine -     Fluorine
       alpb(53,10) =     2.41441500d0 !      Iodine -         Neon
       xfac(53,10) =     1.50356800d0 !      Iodine -         Neon
       alpb(53,11) =     1.40309000d0 !      Iodine -       Sodium
@@ -2796,18 +2811,18 @@
       xfac(53,13) =     2.92908000d0 !      Iodine -     Aluminum
       alpb(53,14) =     1.55957900d0 !      Iodine -      Silicon
       xfac(53,14) =     0.70029900d0 !      Iodine -      Silicon
-      alpb(53,15) =     1.61394058d0 !      Iodine -   Phosphorus
-      xfac(53,15) =     2.29228806d0 !      Iodine -   Phosphorus
-      alpb(53,16) =     1.74862139d0 !      Iodine -       Sulfur
-      xfac(53,16) =     1.22089065d0 !      Iodine -       Sulfur
-      alpb(53,17) =     0.92363033d0 !      Iodine -     Chlorine
-      xfac(53,17) =     0.06592143d0 !      Iodine -     Chlorine
+      alpb(53,15) =     1.66521677d0 !      Iodine -   Phosphorus
+      xfac(53,15) =     2.28682057d0 !      Iodine -   Phosphorus
+      alpb(53,16) =     1.67014636d0 !      Iodine -       Sulfur
+      xfac(53,16) =     0.85601074d0 !      Iodine -       Sulfur
+      alpb(53,17) =     1.02092096d0 !      Iodine -     Chlorine
+      xfac(53,17) =     0.08612306d0 !      Iodine -     Chlorine
       alpb(53,18) =     1.57658700d0 !      Iodine -        Argon
       xfac(53,18) =     0.30536700d0 !      Iodine -        Argon
-      alpb(53,19) =     0.95633287d0 !      Iodine -    Potassium
-      xfac(53,19) =     2.85564328d0 !      Iodine -    Potassium
-      alpb(53,20) =     1.13608897d0 !      Iodine -      Calcium
-      xfac(53,20) =     1.55760575d0 !      Iodine -      Calcium
+      alpb(53,19) =     1.09923911d0 !      Iodine -    Potassium
+      xfac(53,19) =     2.79051582d0 !      Iodine -    Potassium
+      alpb(53,20) =     0.82340461d0 !      Iodine -      Calcium
+      xfac(53,20) =     0.77638091d0 !      Iodine -      Calcium
       alpb(53,21) =     1.81488400d0 !      Iodine -     Scandium
       xfac(53,21) =     3.11428200d0 !      Iodine -     Scandium
       alpb(53,22) =     1.93346900d0 !      Iodine -     Titanium
@@ -2818,24 +2833,24 @@
       xfac(53,24) =     2.59859000d0 !      Iodine -     Chromium
       alpb(53,25) =     2.26660000d0 !      Iodine -    Manganese
       xfac(53,25) =     1.19341000d0 !      Iodine -    Manganese
-      alpb(53,26) =     0.82428922d0 !      Iodine -         Iron
-      xfac(53,26) =     0.09398336d0 !      Iodine -         Iron
-      alpb(53,27) =     0.78587225d0 !      Iodine -       Cobalt
-      xfac(53,27) =     0.07897620d0 !      Iodine -       Cobalt
+      alpb(53,26) =     1.48387437d0 !      Iodine -         Iron
+      xfac(53,26) =     0.31060459d0 !      Iodine -         Iron
+      alpb(53,27) =     1.06507565d0 !      Iodine -       Cobalt
+      xfac(53,27) =     0.15484143d0 !      Iodine -       Cobalt
       alpb(53,28) =     1.08534300d0 !      Iodine -       Nickel
       xfac(53,28) =     0.01745900d0 !      Iodine -       Nickel
       alpb(53,29) =     0.83430500d0 !      Iodine -       Copper
       xfac(53,29) =     0.00678100d0 !      Iodine -       Copper
-      alpb(53,30) =     1.34495474d0 !      Iodine -         Zinc
-      xfac(53,30) =     2.03209735d0 !      Iodine -         Zinc
+      alpb(53,30) =     1.21426495d0 !      Iodine -         Zinc
+      xfac(53,30) =     1.28262860d0 !      Iodine -         Zinc
       alpb(53,31) =     1.67172900d0 !      Iodine -      Gallium
       xfac(53,31) =     1.25216800d0 !      Iodine -      Gallium
       alpb(53,32) =     1.81742500d0 !      Iodine -    Germanium
       xfac(53,32) =     1.32326700d0 !      Iodine -    Germanium
       alpb(53,33) =     1.24526200d0 !      Iodine -      Arsenic
       xfac(53,33) =     0.31082400d0 !      Iodine -      Arsenic
-      alpb(53,35) =     1.47849596d0 !      Iodine -      Bromine
-      xfac(53,35) =     0.52925630d0 !      Iodine -      Bromine
+      alpb(53,35) =     1.39681514d0 !      Iodine -      Bromine
+      xfac(53,35) =     0.39866350d0 !      Iodine -      Bromine
       alpb(53,36) =     1.23857400d0 !      Iodine -      Krypton
       xfac(53,36) =     0.20113600d0 !      Iodine -      Krypton
       alpb(53,37) =     1.43267500d0 !      Iodine -     Rubidium
@@ -2870,8 +2885,8 @@
       xfac(53,51) =     0.31819000d0 !      Iodine -     Antimony
       alpb(53,52) =     1.49395100d0 !      Iodine -    Tellurium
       xfac(53,52) =     1.10111600d0 !      Iodine -    Tellurium
-      alpb(53,53) =     1.13078270d0 !      Iodine -       Iodine
-      xfac(53,53) =     0.39946436d0 !      Iodine -       Iodine
+      alpb(53,53) =     1.12526239d0 !      Iodine -       Iodine
+      xfac(53,53) =     0.39109687d0 !      Iodine -       Iodine
  !
       alpb(54, 1) =     1.35686100d0 !       Xenon -     Hydrogen
       xfac(54, 1) =     0.70101600d0 !       Xenon -     Hydrogen
@@ -2893,8 +2908,8 @@
       xfac(54, 9) =     0.06501100d0 !       Xenon -     Fluorine
       alpb(54,10) =     1.33020200d0 !       Xenon -         Neon
       xfac(54,10) =     0.29386200d0 !       Xenon -         Neon
-      alpb(54,11) =     2.12828932d0 !       Xenon -       Sodium
-      xfac(54,11) =     8.36612980d0 !       Xenon -       Sodium
+      alpb(54,11) =     2.12854672d0 !       Xenon -       Sodium
+      xfac(54,11) =     8.36638720d0 !       Xenon -       Sodium
       alpb(54,12) =     2.69841400d0 !       Xenon -    Magnesium
       xfac(54,12) =     9.72357200d0 !       Xenon -    Magnesium
       alpb(54,13) =     2.41203900d0 !       Xenon -     Aluminum
@@ -3349,8 +3364,8 @@
       xfac(82,24) =     1.02911000d0 !        Lead -     Chromium
       alpb(82,30) =     1.50000000d0 !        Lead -         Zinc
       xfac(82,30) =     1.00000000d0 !        Lead -         Zinc
-      alpb(82,34) =     2.00000000d0 !        Lead -     Selenium
-      xfac(82,34) =     0.11119500d0 !        Lead -     Selenium
+      alpb(82,34) =     2.00001444d0 !        Lead -     Selenium
+      xfac(82,34) =     0.11120944d0 !        Lead -     Selenium
       alpb(82,35) =     0.86555000d0 !        Lead -      Bromine
       xfac(82,35) =     0.14822900d0 !        Lead -      Bromine
       alpb(82,41) =     1.50000000d0 !        Lead -      Niobium
@@ -3380,8 +3395,8 @@
       xfac(83,16) =     0.62099700d0 !     Bismuth -       Sulfur
       alpb(83,17) =     1.27297500d0 !     Bismuth -     Chlorine
       xfac(83,17) =     0.32687100d0 !     Bismuth -     Chlorine
-      alpb(83,34) =     1.34474600d0 !     Bismuth -     Selenium
-      xfac(83,34) =     0.65120800d0 !     Bismuth -     Selenium
+      alpb(83,34) =     1.34476044d0 !     Bismuth -     Selenium
+      xfac(83,34) =     0.65122244d0 !     Bismuth -     Selenium
       alpb(83,35) =     1.14623300d0 !     Bismuth -      Bromine
       xfac(83,35) =     0.38117000d0 !     Bismuth -      Bromine
       alpb(83,53) =     1.30217100d0 !     Bismuth -       Iodine
