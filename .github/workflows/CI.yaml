@@ -134,7 +134,7 @@ jobs:
       - name: Build MOPAC with Make
         run: |
           source /opt/intel/oneapi/setvars.sh
-          cmake --build build -- -j$NUM_CORES
+          cmake --build build -- -j$NUM_CORES VERBOSE=1
           ldd -v build/mopac
 
       - name: Test MOPAC with CTest
