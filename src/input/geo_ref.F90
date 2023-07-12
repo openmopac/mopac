@@ -253,7 +253,7 @@
       goto 97
 99    write(iw,*)" File' "//trim(line)//"' is faulty"
       return
-97    i = quoted('GEO_REF=') + 11
+97    i = quoted('GEO_REF=')
       do
         if (keywrd_quoted(i:i) == '"' .or. keywrd_quoted(i:i) == "'") exit
         i = i + 1
