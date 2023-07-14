@@ -116,6 +116,7 @@
       call fordd                          ! More constants, for use by MNDO-d
       trunc_1 = 7.0d0    ! Beyond 7.0 Angstroms, use exact point-charge
       trunc_2 = 0.22d0   ! Multiplier in Gaussian: exp(-trunc_2*(trunc_1 - Rab)^2)
+      fepsi = 0.d0       ! for correct initialization of store_fepsi
 !
 ! Read in all data; put it into a scratch file, "ir"
 !
