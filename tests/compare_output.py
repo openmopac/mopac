@@ -213,7 +213,8 @@ def compare_mopac_out_file(out_line, out_list, ref_line, ref_list, heat_error_th
     '''Compares the output to the given reference'''
 
     if len(ref_list) != len(out_list):
-        print(f'WARNING: output file size mismatch, {len(ref_list)} vs. {len(out_list)}')
+        assert len(ref_list) == len(out_list), f'ERROR: output file size mismatch, {len(ref_list)} vs. {len(out_list)}'
+        #print(f'WARNING: output file size mismatch, {len(ref_list)} vs. {len(out_list)}')
 
     for (out_line0, out, ref_line0, ref) in zip(out_line, out_list, ref_line, ref_list):
     #    print(ref, "vs.", out)

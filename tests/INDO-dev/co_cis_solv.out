@@ -1,16 +1,16 @@
  *******************************************************************************
- ** Cite this program as: MOPAC2016, Version: 21.298M, James J. P. Stewart,   **
- **                           web-site: HTTP://OpenMOPAC.net.                 **
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
  *******************************************************************************
- **                                                                           **
- **                                MOPAC2016                                  **
- **                                                                           **
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
  *******************************************************************************
 
                               INDO CALCULATION RESULTS
 
  *******************************************************************************
- *  CALCULATION DONE:                                Fri Oct 29 13:44:59 2021  *
+ *  CALCULATION DONE:                                Wed Jul 12 16:25:33 2023  *
  *  INDO       - The INDO Hamiltonian to be used
  *  CIS        - C.I. USES 1 ELECTRON EXCITATIONS ONLY
  *  EPS=20.0   - USE ANDREAS KLAMT'S COSMO IMPLICIT SOLVATION MODEL
@@ -23,10 +23,10 @@ INDO CIS EPS=20.0 N**2=2.5
  INDO
    ATOM   CHEMICAL          X               Y               Z
   NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
- 
+
      1       C          0.00000000      0.00000000      0.00000000   
      2       O          1.17300000      0.00000000      0.00000000   
- 
+
 
 
           CARTESIAN COORDINATES 
@@ -55,6 +55,11 @@ INDO CIS EPS=20.0 N**2=2.5
  TOTAL   8
 
 
+                     MOLECULAR ORBITALS 
+
+
+
+
 
 
     ROOT NO.    1           2           3           4           5           6
@@ -64,13 +69,13 @@ INDO CIS EPS=20.0 N**2=2.5
   
   S  C   1   0.44067    -0.58014    -0.00000    -0.00000     0.61050     0.00000
  PX  C   1   0.36235     0.01059     0.00000     0.00000    -0.61007     0.00000
- PY  C   1  -0.00000    -0.00000    -0.00000     0.47913     0.00000     0.00000
- PZ  C   1  -0.00000    -0.00000     0.47911     0.00000     0.00000     0.87775
+ PY  C   1  -0.00000    -0.00000     0.00000     0.47913     0.00000     0.00000
+ PZ  C   1  -0.00000    -0.00000     0.47911    -0.00000     0.00000     0.87775
   
   S  O   2   0.77935     0.52897    -0.00000    -0.00000     0.10284    -0.00000
  PX  O   2  -0.25907     0.61928     0.00000     0.00000     0.49450    -0.00000
- PY  O   2   0.00000    -0.00000    -0.00000     0.87775    -0.00000    -0.00000
- PZ  O   2   0.00000    -0.00000     0.87775     0.00000    -0.00000    -0.47911
+ PY  O   2   0.00000    -0.00000     0.00000     0.87775    -0.00000    -0.00000
+ PZ  O   2   0.00000    -0.00000     0.87775    -0.00000    -0.00000    -0.47911
 
 
 
@@ -93,13 +98,13 @@ INDO CIS EPS=20.0 N**2=2.5
 
  Reference determinate nber   1 is ALPHA 1 -   5
  SINGLE excitations FROM orbs   1 to   5 INTO orbs   6 to   8
- 
+
 
  CI excitations=   16:        = 16
  The lowest   16 spin-adapted configurations of multiplicity=  1
      sym   eV   cm**-1 -dets- dipole oscilator X FRAG ....Excitations named from first reference determinate
                        tot  #  Debye  strength
- 
+
    1      0.000      0.  1  1  0.6697 0.000000 0  0 (    )->(       )
    2      6.923  55841.  1  1  2.0434 0.067092 1  1 (   5)->(   6   )
    3      6.924  55848.  1  1  2.0435 0.067098 1  1 (   5)->(   7   )
@@ -136,7 +141,7 @@ INDO CIS EPS=20.0 N**2=2.5
     15       36.41688       36.52356       36.41697
     16       50.35688       50.39038       50.35774
 
- Depression of ground-state after CI=          0. cm**-1 Energy=    31.7192091 eV
+ Depression of ground-state after CI=          0. cm**-1 Energy=    31.7192807 eV
  Dipole moment= -0.669737  0.000000  0.000000 tot=  0.669737 Debyes
 
 
@@ -151,20 +156,20 @@ INDO CIS EPS=20.0 N**2=2.5
    7     12.0049194    96826.    103.28  0.511267   1.000000  -0.000000  -0.000000  1.850532   1.851  -0.000  -0.000
    8     12.5014940   100832.     99.18  0.248576   0.000000   0.000000   1.000000  2.402986   2.403  -0.000  -0.000
    9     12.5018487   100834.     99.17  0.248586  -0.000000  -1.000000   0.000000  2.402871   2.403  -0.000  -0.000
-  10     17.4031037   140366.     71.24  0.001794   0.000000   1.000000   0.000000  0.959877   0.960  -0.000  -0.000
-  11     17.4034936   140369.     71.24  0.001794  -0.000000   0.000000  -1.000000  0.959951   0.960  -0.000  -0.000
+  10     17.4031037   140366.     71.24  0.001794   0.000000   1.000000  -0.000000  0.959877   0.960  -0.000  -0.000
+  11     17.4034936   140369.     71.24  0.001794  -0.000000  -0.000000  -1.000000  0.959951   0.960  -0.000  -0.000
   12     19.0872496   153949.     64.96  0.938874  -1.000000   0.000000   0.000000  4.175453  -4.175   0.000   0.000
   13     23.5172115   189680.     52.72  0.269739   1.000000  -0.000000  -0.000000  2.774449   2.774  -0.000  -0.000
-  14     36.4166991   293721.     34.05  0.021131   0.000000  -0.000000   1.000000  1.947118   1.947  -0.000  -0.000
-  15     36.4169745   293723.     34.05  0.021127   0.000000   1.000000   0.000000  1.947047   1.947  -0.000  -0.000
-  16     50.3577435   406164.     24.62  0.322497  -1.000000   0.000000   0.000000  0.336822   0.337  -0.000  -0.000
- 
+  14     36.4166991   293721.     34.05  0.021131   0.000000   0.000000   1.000000  1.947118   1.947  -0.000  -0.000
+  15     36.4169745   293723.     34.05  0.021127   0.000000   1.000000  -0.000000  1.947047   1.947  -0.000  -0.000
+  16     50.3577434   406164.     24.62  0.322497  -1.000000   0.000000   0.000000  0.336822   0.337  -0.000  -0.000
+
  Polarizability (au  ) xx=   14.97 xy=   -0.00 yy=    6.23 xz=   -0.00 yz=    0.00 zz=    6.23
  Polarizability (A**3) xx=    2.22 xy=   -0.00 yy=    0.92 xz=   -0.00 yz=    0.00 zz=    0.92
- 
- 
+
+
  Major CI contributions to CI states
- 
+
 State    1  0.0000     CI coeff  CI percent
     Config       1   1.00000000  1.00000000
  Total coeff printed             1.00000000
@@ -231,7 +236,7 @@ State   12 19.0872     CI coeff  CI percent
 State   13 23.5172     CI coeff  CI percent
     Config       6  -0.15222366  0.02317204
     Config       7  -0.15222048  0.02317107
-    Config      12   0.20002849  0.04001140
+    Config      12   0.20002848  0.04001139
     Config      13   0.95171450  0.90576049
     Config      16   0.08879752  0.00788500
  Total coeff printed             1.00000000
@@ -253,6 +258,88 @@ State   16 50.3577     CI coeff  CI percent
  Total coeff printed             1.00000000
   
 
+ -------------------------------------------------------------------------------
+ INDO CIS EPS=20.0 N**2=2.5
+ Carbon Monoxide
+ INDO
+
+
+     NO PARAMETERS MARKED FOR OPTIMIZATION, SO 1SCF WAS USED  
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              INDO CALCULATION
+                                                       MOPAC v22.0.6 MacOS
+                                                       Wed Jul 12 16:25:33 2023
+          VAN DER WAALS AREA      =         57.92 SQUARE ANGSTROMS
+
+
+
+          DIELECTRIC ENERGY       =         -0.07380 EV
+          COSMO AREA              =         57.92 SQUARE ANGSTROMS
+          COSMO VOLUME            =         40.40 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         14.510645 EV
+          HOMO LUMO ENERGIES (EV) =        -14.511  0.109
+          NO. OF FILLED LEVELS    =          5
+          MOLECULAR WEIGHT        =         28.0104         POINT GROUP:  C*v 
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            O     2    C     1     1.17300
+            O     2    C     1     0.00000
+            C     1    O     2     0.00000
+
+
+          SCF CALCULATIONS        =          2
+
+          WALL-CLOCK TIME         =      0.047 SECONDS
+          COMPUTATION TIME        =      0.041 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+
+     1       C          0.00000000      0.00000000      0.00000000   
+     2       O          1.17300000      0.00000000      0.00000000   
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    O        1.173000000     0.000000000     0.000000000
+
+
+           Empirical Formula: C O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+                  EIGENVALUES  
+ -43.14527 -19.34695 -14.87322 -14.87226 -14.51064   0.10937   0.11016  10.45157
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C           0.266643        3.7334     1.80694     1.92642
+    2          O          -0.266643        6.2666     1.79552     4.47113
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -1.502     0.000     0.000     1.502
+ HYBRID         0.838    -0.000    -0.000     0.838
+ SUM           -0.665    -0.000    -0.000     0.665
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.80694   1.00747   0.45948   0.45946
+    2  O   1.79552   1.39007   1.54052   1.54054
+
  **********************
  *                    *
  * JOB ENDED NORMALLY *
@@ -261,6 +348,6 @@ State   16 50.3577     CI coeff  CI percent
 
 
 
- TOTAL JOB TIME:             0.02 SECONDS
+ TOTAL JOB TIME:             0.08 SECONDS
 
  == MOPAC DONE ==
