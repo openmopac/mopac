@@ -1009,18 +1009,23 @@ subroutine wrtcon (allkey)
       write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
     else
       sum = reada(keywrd_quoted(j:), 1)
-      if (sum < 0.001d0) then
+      if (sum < 1.d-15) then
         write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
       else
         i = nint(log10(sum))
-        num = char(ichar("4") + abs(i))
-        if (i < 0) then
-          num1 = char(ichar("1") - i)
-        else
-          num1 = "1"
+        if (abs(i) > 5) then
+          write(iw,'(a, g11.4, a)') " *               (A BIAS OF",sum, &
+          " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
+        else         
+          num = char(ichar("4") + abs(i))
+          if (i < 0) then
+            num1 = char(ichar("1") - i)
+          else
+            num1 = "1"
+          end if 
+          write(iw,'(a, f'//num//'.'//num1//', a)') " *               (A BIAS OF",sum, &
+          " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
         end if
-        write(iw,'(a, f'//num//'.'//num1//', a)') " *               (A BIAS OF",sum, &
-        " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
       end if
     end if
   end if
