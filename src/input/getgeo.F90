@@ -64,7 +64,7 @@
       double precision :: weight, real, sum
       logical :: lxyz, velo, leadsp, ircdrc, saddle, mini, l_gaussian
       character , dimension(107) :: elemnt*2
-      character :: space, nine, zero, comma, string*120, ele*2, no
+      character :: space, nine, zero, comma, string*200, ele*2, no
       double precision, external :: reada
       save elemnt, space, nine, zero, comma
 !-----------------------------------------------
@@ -207,6 +207,18 @@
         if (ii == 0) goto 120
         ii = 0
       end if
+!
+!   If two quotation marks are side-by-side, force a space in between them
+!
+      do
+        i = index(line, '""')
+        if (i /= 0) then
+          string = trim(line)
+          line = string(:i)//" "//trim(string(i + 1:))
+        else
+          exit
+        end if
+      end do
       ltl = len_trim(line)
       icomma = ichar(comma)
       do i = 1, ltl
