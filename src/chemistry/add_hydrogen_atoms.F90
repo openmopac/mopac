@@ -1390,6 +1390,22 @@
                 hybrid(icc) = 1
                 return
               end if
+              ! primary amide group, -C(=O)-NH2
+              if (nbonds(ii) == 3) then
+                l_tmp = .false.
+                do i = 1,3
+                  if (nat(ibonds(i,ii)) == 8 .and. nbonds(ibonds(i,ii)) == 1) then
+                    l_tmp = .true.
+                    nc_icc = ibonds(i,ii)
+                  end if
+                end do
+                if (l_tmp) then
+                  angle = 120.d0
+                  internal_dihedral = 180.d0
+                  dihedral = 180.d0
+                  return
+                end if
+              end if
 !
 !  For Arg, make one -N -NH2, then decide on the other later on.
 !
