@@ -162,7 +162,6 @@ subroutine moldat(mode)
       end if
       allocate(rxyz((numat*(numat + 1))/2), stat = i)
       if (i /= 0) then
-        if (mode /= 1) write(iw,*)" The interatomic distance array could not be assigned"
         if (mode /= 1) call mopend("The interatomic distance array could not be assigned")
 !
 !  Do not attempt to check interatomic distances, or anything related to the geometry
@@ -181,7 +180,7 @@ subroutine moldat(mode)
 !
 !  Check H, C, N, and O, only
 !
-            if (txtatm(i)(14:14) >= 'a' .and. txtatm(i)(14:14) <= 'z') &
+              if (txtatm(i)(14:14) >= 'a' .and. txtatm(i)(14:14) <= 'z') &
               txtatm(i)(14:14) = char(ichar(txtatm(i)(14:14)) + ichar("A") - ichar("a"))
             if(elemnt(j)(2:2) /= txtatm(i)(14:14) .and. elemnt(j)(2:2) /= txtatm(i)(13:13)) then
               if (j == 1 .and. txtatm(i)(13:13) == "D") then

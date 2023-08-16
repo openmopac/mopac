@@ -201,6 +201,7 @@ subroutine geochk ()
 !
 !   Add or remove hydrogen atoms, as necessary.
 !
+    if (index(keywrd," SITE=") /= 0) call l_control("NEWPDB", len_trim("NEWPDB"), 1)
     i =  index(keywrd," SITE=(IONIZE)")
     if (i > 0) then
       line = "SITE=(COO,NH3,ARG(+),SO4,PO4)"

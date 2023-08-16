@@ -517,6 +517,7 @@
         end if
       end if
       if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) nelecs = 0
+      if (index(keywrd, " ADD-H") /= 0 ) call l_control("NEWPDB", len_trim("NEWPDB"), 1)
       if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") + index(keywrd, " NEWPDB") + &
         index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
         if (index(keywrd, " DISP") /= 0) then

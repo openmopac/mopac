@@ -245,6 +245,8 @@
           j = 21
         end if
       end if
+      if (j == 11 .and. txtatm(icc)(14:15) == "ND") j = 21 ! force planarity of primary amide in Asn
+      if (j == 15 .and. txtatm(icc)(14:15) == "NE") j = 21 ! force planarity of primary amide in Gln
       if (j == 17 .and. (txtatm(icc)(14:15) == "ND" .or. txtatm(icc)(14:15) == "NE")) j = 21  ! His' imidazole N are too hard - solve directly
       if (nat(icc) == 8 .and. nbonds(icc) == 1) then    ! Carboxylic acid
     cooh: do i = 1, nbonds(icc)
@@ -1389,6 +1391,22 @@
                 dihedral = 0.d0
                 hybrid(icc) = 1
                 return
+              end if
+              ! primary amide group, -C(=O)-NH2
+              if (nbonds(ii) == 3) then
+                l_tmp = .false.
+                do i = 1,3
+                  if (nat(ibonds(i,ii)) == 8 .and. nbonds(ibonds(i,ii)) == 1) then
+                    l_tmp = .true.
+                    nc_icc = ibonds(i,ii)
+                  end if
+                end do
+                if (l_tmp) then
+                  angle = 120.d0
+                  internal_dihedral = 180.d0
+                  dihedral = 180.d0
+                  return
+                end if
               end if
 !
 !  For Arg, make one -N -NH2, then decide on the other later on.
