@@ -245,6 +245,8 @@
           j = 21
         end if
       end if
+      if (j == 11 .and. txtatm(icc)(14:15) == "ND") j = 21 ! force planarity of primary amide in Asn
+      if (j == 15 .and. txtatm(icc)(14:15) == "NE") j = 21 ! force planarity of primary amide in Gln
       if (j == 17 .and. (txtatm(icc)(14:15) == "ND" .or. txtatm(icc)(14:15) == "NE")) j = 21  ! His' imidazole N are too hard - solve directly
       if (nat(icc) == 8 .and. nbonds(icc) == 1) then    ! Carboxylic acid
     cooh: do i = 1, nbonds(icc)
