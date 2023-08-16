@@ -223,6 +223,24 @@ data nos / "1", "2", "3" /
   if (txtatm(j)(18:20) == "ARG" .and. txtatm(j)(14:15) == "NH") then
     do jj = 1, nbonds(j)
       k = ibonds(jj,j)
+!
+! If a hydrogen atom on atom j, i.e., NH, has already been defined, then
+! automatically assign the current hydrogen atom, atom i.
+!
+      if (txtatm(k)(13:14) == "HH") then
+        if (k < i) then
+          line = txtatm(i)(14:16)
+          if (txtatm(k)(16:16) == "1") then
+            txtatm(i)(13:16) = line(1:3)//"2"
+          else
+            txtatm(i)(13:16) = line(1:3)//"1"
+          end if
+          return
+        end if
+      end if
+    end do
+    do jj = 1, nbonds(j)
+      k = ibonds(jj,j)
       if (txtatm(k)(14:15) == "CZ") then
         do l = 1, nbonds(k)
           m = ibonds(l,k)
@@ -291,6 +309,24 @@ data nos / "1", "2", "3" /
   end if
   !
   if (txtatm(j)(18:20) == "GLN" .and. txtatm(j)(14:15) == "NE") then
+    do jj = 1, nbonds(j)
+      k = ibonds(jj,j)
+!
+! If a hydrogen atom on atom j, i.e., NE, has already been defined, then
+! automatically assign the current hydrogen atom, atom i.
+!
+      if (txtatm(k)(13:14) == "HE") then
+        if (k < i) then
+          line = txtatm(i)(14:16)
+          if (txtatm(k)(16:16) == "1") then
+            txtatm(i)(13:16) = line(1:3)//"2"
+          else
+            txtatm(i)(13:16) = line(1:3)//"1"
+          end if
+          return
+        end if
+      end if
+    end do
     do jj = 1, nbonds(j)
       k = ibonds(jj,j)
       if (txtatm(k)(14:15) == "CD") then
