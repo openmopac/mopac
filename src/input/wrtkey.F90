@@ -893,7 +893,7 @@ subroutine wrtcon (allkey)
 !
   if (myword(allkey, "QMMM "))   write (iw, '(" *  QMMM       - Generate energies and gradients for use in MM codes")')
   if (myword(allkey, " COMPAR")) write (iw, '(" *  COMPARE    - Compare two geometries")')
-  if (myword(allkey, " BRZ"))    write (iw, '(" *  BRZ         - Write file <name>.brz for use by program BZ")')
+  if (myword(allkey, " BZ"))     write (iw, '(" *  BZ         - Write file <name>.brz for use by program BZ")')
   if (myword(allkey, " BIRAD"))  write (iw, '(" *  BIRADICAL  - SYSTEM HAS TWO UNPAIRED ELECTRONS")')
   if (myword(allkey, " EXCI"))   write (iw, '(" *  EXCITED    - FIRST EXCITED STATE IS TO BE OPTIMIZED")')
   if (myword(allkey, " VELO"))   write (iw, '(" *  VELOCITY   - INPUT STARTING VELOCITIES FOR DRC")')

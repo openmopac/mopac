@@ -732,7 +732,7 @@
           write (iw, '('' FOCK MATRIX '')')
           call vecprt (f, norbs)
         end if
-        if (mers(1) /= 0 .and. .not. mozyme .and. index(keywrd, " BRZ") /= 0) then
+        if (mers(1) /= 0 .and. .not. mozyme .and. index(keywrd, " BZ") /= 0) then
           bcc = index(keywrd,' BCC') /= 0
           open(unit=ibrz, file=brillouin_fn, status='UNKNOWN')
           write (ibrz,*) norbs, (max(mers(i),1), i = 1,3), bcc
