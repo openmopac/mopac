@@ -1609,7 +1609,7 @@ subroutine wrtout (allkey)
   double precision, external :: reada
   intrinsic Index, Nint
   if (myword(allkey, " PRTINT"))  write (iw,'(" *  PRTINT     - INTERATOMIC DISTANCES TO BE PRINTED")')
-  if (myword(allkey, " PRTCHAR")) write (iw,'(" *  PRTCHARGE  - PRINT CHARGES IN ARC FILE")')
+  if (myword(allkey, " PRTCHAR")) write (iw,'(" *  PRTCHARGE  - PRINT CHARGES IN ARC FILE AND PDB OUTPUT")')
   if (index(allkey, " AUX") > 0) then
     i = index(allkey, " AUX(") + 1
     if (i > 1) then
