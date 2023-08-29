@@ -42,10 +42,10 @@ should preserve the functionality of other software that depends on the library.
 ### Package managers
 
 The officially supported package manager for MOPAC is the [conda-forge channel of Conda](https://anaconda.org/conda-forge/mopac).
-MOPAC is also available on [Fedora](https://packages.fedoraproject.org/pkgs/mopac/mopac/)
-and the [Google Play store](https://play.google.com/store/apps/details?id=cz.m).
-
-We welcome the addition of MOPAC to other package managers and will add them to this list as they are made available and known.
+MOPAC also has been packaged for example by
+[Fedora](https://packages.fedoraproject.org/pkgs/mopac/mopac/), or
+[Debian](https://tracker.debian.org/pkg/mopac) and equally is available in the
+[Google Play store](https://play.google.com/store/apps/details?id=cz.m).
 
 ### CMake
 
