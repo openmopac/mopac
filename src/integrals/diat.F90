@@ -25,6 +25,7 @@
       use funcon_C, only : a0
       use overlaps_C, only : cutof1
       use parameters_C, only : natorb, zs, zp, zd, npq
+      use mopac_interface_flags, only: reset_diat_L
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -79,7 +80,8 @@
         s(1,1,2)), (s3(1,1), s(1,1,3))
       data ival/ 1, 0, 9, 1, 3, 8, 1, 4, 7, 1, 2, 6, 0, 0, 5/
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_diat_L) then
+         reset_diat_L = .false.
         icalcn = numcal
         use_diat2 = .false.
         do i = 1, 17

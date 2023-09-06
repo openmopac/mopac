@@ -21,6 +21,7 @@ double precision function dipole_for_MOZYME (dipvec, mode)
     use common_arrays_C, only : nat, q, p, coord
     use parameters_C, only: dd, ams, ddp
     use funcon_C, only: fpc_8, fpc_1, a0
+    use mopac_interface_flags, only : reset_dipole_for_MOZYME_L
     implicit none
     double precision, intent(out) :: dipvec(3)
     integer, intent (in) :: mode
@@ -36,6 +37,10 @@ double precision function dipole_for_MOZYME (dipvec, mode)
     integer, external :: ijbo
     data hyf(1) / 0.0d00 /
     first = (icalcn /= numcal)
+    if (reset_dipole_for_MOZYME_L) then
+       first = .true.
+       reset_dipole_for_MOZYME_L = .false.
+    end if
     icalcn = numcal
    !
    !   CONST = c.C.a0.2

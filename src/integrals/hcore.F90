@@ -28,6 +28,7 @@
       use MOZYME_C, only : cutofs
       use overlaps_C, only : cutof1, cutof2
       USE chanel_C, only : iw
+      use mopac_interface_flags, only : reset_hcore_L
 
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -61,9 +62,10 @@
       data icalcn/ 0/
       fnuc = 0.d0
       fldcon = 0.d0
-      first = icalcn /= numcal
+      first = icalcn /= numcal .or. reset_hcore_L 
       icalcn = numcal
       if (first) then
+         reset_hcore_L = .false.
         ione = 1
         cutofs = 1.d4
         cutof2 = 1.D10

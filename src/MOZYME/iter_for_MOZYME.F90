@@ -32,6 +32,7 @@ subroutine iter_for_MOZYME (ee)
     use iter_C, only : pold
     use cosmo_C, only: useps, lpka, solv_energy
     use linear_cosmo, only : c_proc
+    use mopac_interface_flags, only: reset_iter_for_MOZYME_L
     implicit none
 !
     double precision, intent (out) :: ee
@@ -68,7 +69,7 @@ subroutine iter_for_MOZYME (ee)
     add_niter = 0
 !
         80  continue
-    if (nmol /= numcal) then
+    if (nmol /= numcal .or. reset_iter_for_MOZYME_L) then
       !
       !  INITIALIZE
       !
@@ -284,7 +285,9 @@ subroutine iter_for_MOZYME (ee)
       !   REMOVE ELECTRON DENSITY DUE TO LMO'S INVOLVED IN SCF FROM
       !   THE DENSITY MATRIX
       !
-      if (imol /= numcal .or. icalcn /= step_num .and. numat > numred+1) then
+      if (imol /= numcal .or. reset_iter_for_MOZYME_L &
+           .or. icalcn /= step_num .and. numat > numred+1) then
+         reset_iter_for_MOZYME_L = .false.
         !---------------------------------------------------------
         !
         !   THIS PART IS ONLY RUN WHEN ICALCN IS INCREMENTED

@@ -34,6 +34,7 @@
 !
       use chanel_C, only : igpt, gpt_fn, iw
 !
+      use mopac_interface_flags, only : reset_mullik_L
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -76,7 +77,8 @@
 !  FIRST, RE-CALCULATE THE OVERLAP MATRIX
 !
 !*********************************************************************
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_mullik_L) then
+         reset_mullik_L = .false.
         icalcn = numcal
         graph = index(keywrd,'GRAPH') /= 0
         graph_formatted = index(keywrd,'GRAPHF') /= 0

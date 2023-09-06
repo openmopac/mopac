@@ -38,7 +38,7 @@ logical function connected(atom_i, atom_j, criterion)
   integer :: atom_i, atom_j
   double precision, external :: distance
 !
-  if (id == 0) then
+  if (id == 0) then 
     Vab = coord(:,atom_i) - coord(:,atom_j)
     Rab = Vab(1)**2 + Vab(2)**2 + Vab(3)**2
   else
@@ -326,6 +326,7 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
   use common_arrays_C, only: nat, txtatm, H_txt, H_energy
   use molkst_C, only : numat, keywrd, numcal, P_hbonds, maxtxt
   use elemts_C, only: elemnt
+  use mopac_interface_flags, only : reset_prt_hbonds_L
   implicit none
   integer, intent (in) :: D, H, A
   double precision, intent (in) :: energy
@@ -337,7 +338,8 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
   double precision, external :: distance, reada
   logical :: prt_first
   save :: prt_first, cutoff, icalcn
-    if (icalcn /= numcal) then
+  if (icalcn /= numcal .or. reset_prt_hbonds_L) then
+     reset_prt_hbonds_L = .false.
       icalcn = numcal
       if (allocated(H_txt)) deallocate (H_txt, H_energy)
       prt_first = .true.

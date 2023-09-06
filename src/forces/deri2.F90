@@ -23,6 +23,7 @@
       USE chanel_C, only : iw
       use derivs_C, only : b, ab, fb
       use common_arrays_C, only : c, w, eigs
+      use mopac_interface_flags, only : reset_deri2_L
       implicit none
       integer  :: minear
       integer  :: ninear
@@ -112,7 +113,8 @@
 !     * * * STEP 1 * * *
 !     BUILD UP THE INITIAL ORTHONORMALIZED BASIS.
 !
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_deri2_L) then
+         reset_deri2_L = .false.
         limci = nmos*norbs*20/ninear
         ib = max(lab,20)
         debug = index(keywrd,' DERI2') /= 0

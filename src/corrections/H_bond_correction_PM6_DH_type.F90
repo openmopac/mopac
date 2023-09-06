@@ -24,6 +24,7 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
     line, id, numcal
   use parameters_C, only : tore
   use common_arrays_C, only: coord, nat, q, p, hblist, dxyz, cell_ijk
+  use mopac_interface_flags, only : reset_Hbond_corr_PM6_DH_L
   implicit none
   logical, intent (in) :: l_grad, prt
 !
@@ -55,7 +56,8 @@ double precision function PM6_DH_H_bond_corrections(l_grad, prt)
     covrad = 4.d0/3.d0*covrad !  This must be done once per entire run
     first = .false.
   end if
-  if (icalcn /= numcal) then
+  if (icalcn /= numcal .or. reset_Hbond_corr_PM6_DH_L) then
+     reset_Hbond_corr_PM6_DH_L = .false.
     max_h_bonds = 0
     do j = 1, numat
       if (nat(j) == 8 .or. nat(j) == 7) max_h_bonds = max_h_bonds + 1

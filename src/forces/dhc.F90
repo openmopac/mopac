@@ -15,7 +15,8 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 subroutine dhc (p, pa, pb, xi, nat, if, il, jf, jl, dener, mode)
-    use molkst_C, only : numcal, cutofp, id, uhf, clower
+  use molkst_C, only : numcal, cutofp, id, uhf, clower
+  use mopac_interface_flags, only : reset_dhc_L
     implicit none
     integer, intent (in) :: if, il, jf, jl, mode
     double precision, intent (out) :: dener
@@ -35,7 +36,8 @@ subroutine dhc (p, pa, pb, xi, nat, if, il, jf, jl, dener, mode)
     double precision, dimension (9, 9) :: shmat
     double precision, dimension (2026), save :: w = 0.d0, wk = 0.d0
     double precision, external :: helect
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_dhc_L) then
+       reset_dhc_L = .false.
       !
       !  Switch to point charges for separations of more than 14 Angstroms
       !  (This is related to FACT in subroutine REPPD)

@@ -17,6 +17,7 @@
 subroutine scfcri (selcon)
     use molkst_C, only: numcal, keywrd, efield
     use chanel_C, only: iw
+    use mopac_interface_flags, only : reset_scfcri_L
  !   use common_convrg, only: scfref
    !
    !.. Implicit Declarations ..
@@ -31,7 +32,8 @@ subroutine scfcri (selcon)
     integer :: icalcn = 0
     double precision, save  :: scfcrt, scfref
     double precision, external :: reada
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_scfcri_L) then
+       reset_scfcri_L = .false.
       icalcn = numcal
       !
       !   DETERMINE THE SELF-CONSISTENCY CRITERION

@@ -23,6 +23,7 @@
       use meci_C, only : nbo, nmos, nelec, lab
       use common_arrays_C, only : eigs, dxyz
       use chanel_C, only : iw
+      use mopac_interface_flags, only : reset_dernvo_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -124,7 +125,8 @@
 !     SELECT THE REQUIRED OPTION AND READ KEYWORDS
 !     --------------------------------------------
 !
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_dernvo_L) then
+           reset_dernvo_L = .false.
         icalcn = numcal
         debug = index(keywrd,'DERNVO') /= 0
         large = index(keywrd,'LARGE') /= 0

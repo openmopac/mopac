@@ -24,7 +24,8 @@
       USE parameters_C, only : tore
       use chanel_C, only : iw, ires
       use drc_C, only: vref, vref0, allxyz, allvel, xyz3, vel3, allgeo, geo3, parref, &
-        time, now
+           time, now
+      use mopac_interface_flags, only : reset_prtdrc_L
       implicit none
       double precision , intent(in) :: deltt, escf, ekin, dip
       double precision , intent(inout) :: gtot
@@ -73,7 +74,8 @@
       data refscf/ 0.D0/
       data cotype/ 'BL', 'BA', 'DI'/
       geo = 0.d0
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_prtdrc_L) then
+         reset_prtdrc_L = .false.
         if (allocated(vref)) deallocate(vref)
         if (allocated(vref0)) deallocate(vref0)
         if (allocated(allxyz)) deallocate(allxyz)

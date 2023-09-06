@@ -18,6 +18,7 @@ subroutine tidy (nmos_loc, nc, ic, n01, c, n02, nnc_loc, ncmo, ln, mn, mode)
     use MOZYME_C, only: iorbs, jopt, thresh, numred
     use molkst_C, only: numat, step_num, norbs, moperr, keywrd, numcal
     use chanel_C, only: iw
+    use mopac_interface_flags, only : reset_tidy_L
     implicit none
     integer, intent (in) :: mode,  n02, nmos_loc
     integer, intent (inout) :: n01
@@ -44,7 +45,8 @@ subroutine tidy (nmos_loc, nc, ic, n01, c, n02, nnc_loc, ncmo, ln, mn, mode)
       goto 100
     end if
    !
-    if (numcal /= icalcn) then
+    if (numcal /= icalcn .or. reset_tidy_L) then
+      reset_tidy_L = .false. 
       icalcn = numcal
       debug = (Index (keywrd, " TIDY") /= 0)
       large = (Index (keywrd, " LARGE") /= 0)

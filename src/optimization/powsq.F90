@@ -20,6 +20,7 @@
       use funcon_C, only : a0
       use common_arrays_C, only : loc, grad, xparam, gnext1, gmin1
       use chanel_C, only : iw0, iw, ilog, log
+      use mopac_interface_flags, only : reset_powsq_L
       implicit none
       double precision  :: hess(nvar,nvar)
       double precision  :: bmat(nvar,nvar)
@@ -62,7 +63,8 @@
       maxcyc = 0
       tleft = tleft - seconds(1) + time0
       tstep = 0.d0
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_powsq_L) then
+         reset_powsq_L = .false.
         icalcn = numcal
         if (allocated(gnext1)) deallocate(gnext1)
         if (allocated(gmin1)) deallocate(gmin1)
@@ -414,6 +416,7 @@
       USE common_arrays_C, only : gmin1, gnext1
       use chanel_C, only : iw
       use molkst_C, only : numcal, keywrd
+      use mopac_interface_flags, only : reset_search_L
       implicit none
       integer  :: nvar
       double precision , intent(inout) :: alpha
@@ -442,7 +445,8 @@
 !           GMIN   = GRADIENT NORM AT MINIMUM.
 !***********************************************************************
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_search_L) then
+         reset_search_L = .false.
         icalcn = numcal
 !
 !    TOLG   = CRITERION FOR EXIT BY RELATIVE CHANGE IN GRADIENT.

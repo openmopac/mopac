@@ -20,6 +20,7 @@
 !-----------------------------------------------
       use common_arrays_C, only : tvec
       use molkst_C, only : numcal, l1u, l2u, l3u, clower
+      use mopac_interface_flags, only : reset_solrot_L
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -59,7 +60,8 @@
 !***********************************************************************
       data icalcn/ 0/
       data xdumy/ 3*0.D0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_solrot_L) then
+         reset_solrot_L = .false.
         icalcn = numcal
         cutof2 = clower**2
       end if
@@ -199,11 +201,13 @@ double precision function trunk (r)
 !   r: Distance in Angstroms
 !
     use molkst_C, only: numcal, clower, cutofp, cupper
+    use mopac_interface_flags, only : reset_trunk_L
     implicit none
     double precision, intent (in) :: r
     integer, save :: icalcn = 0
     double precision, save :: bound1, bound2, c, clim, cr, cr2, range
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_trunk_L) then
+       reset_trunk_L = .false.
       bound1 = clower / cutofp
       !
       !   CUPPER = upper bound of truncation function, as a function of CUTOFP

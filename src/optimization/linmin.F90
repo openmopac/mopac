@@ -22,6 +22,7 @@
       use common_arrays_C, only : loc
       use chanel_C, only : iw
       use funcon_C, only : pi
+      use mopac_interface_flags, only : reset_linmin_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -76,7 +77,8 @@
 !  OPTIMIZED WAVE-FUNCTION IS BEING USED.
       data icalcn/ 0/
       data alpold/ 0.D0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_linmin_L) then
+         reset_linmin_L = .false.
         xmaxm = 0.4D0
         delta2 = 0.001D0
         if (index(keywrd,'NOTH') == 0) then

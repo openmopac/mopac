@@ -20,6 +20,7 @@
 !-----------------------------------------------
       use common_arrays_C, only : ifact, i1fact, ptot2
       use molkst_C, only : numcal, norbs, mpack
+      use mopac_interface_flags, only : reset_dfock2_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -69,7 +70,8 @@
 !***********************************************************************
       data itype/ 1/
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_dfock2_L) then
+         reset_dfock2_L = .false.
         if (allocated(ifact))  deallocate(ifact)
         if (allocated(i1fact)) deallocate(i1fact)
         if (allocated(ptot2))  deallocate(ptot2)

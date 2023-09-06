@@ -32,6 +32,7 @@
     use common_arrays_C, only : eigs, nat
     use parameters_C, only: main_group
     use chanel_C, only: iw
+    use mopac_interface_flags, only : reset_diagg2_L
     implicit none
     integer, intent (in) :: idiagg, nij, nocc, nvir
     logical, dimension (numat), intent (out) :: latoms
@@ -50,7 +51,8 @@
     double precision, external :: reada
     integer, dimension (2) :: nrejct
     data nrejct / 2 * 0 /
-    if (numcal /= icalcn) then
+    if (numcal /= icalcn .or. reset_diagg2_L) then
+       reset_diagg2_L = .false.
       icalcn = numcal
       times = (Index (keywrd, " TIMES") /= 0)
       debug = (Index (keywrd, " DIAGG2") /= 0)

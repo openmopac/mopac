@@ -48,6 +48,7 @@ subroutine geochk ()
     use atomradii_C, only: atom_radius_covalent
     use parameters_C, only : ams, natorb, tore, main_group
     use elemts_C, only : elemnt
+    use mopac_interface_flags, only : reset_geochk_L
     implicit none
 !
     integer, parameter :: max_sites = 400
@@ -89,7 +90,8 @@ subroutine geochk ()
       "More than +5" /
 !
     intrinsic Abs, Index, Min, Nint, Allocated
-    if (icalcn /= numcal) then
+    if (icalcn /= numcal .or. reset_geochk_L) then
+       reset_geochk_L = .false.
       first_prt = .true.
       icalcn = numcal
     end if

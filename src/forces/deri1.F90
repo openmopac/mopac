@@ -25,6 +25,7 @@
       USE funcon_C, only : fpc_9
       use derivs_C, only : wmat, hmat, fmat
       use meci_C, only : nelec, nmos, lab, nbo, nstate, maxci, xy, vectci
+      use mopac_interface_flags, only : reset_deri1_L
       implicit none
       integer , intent(in) :: number
       integer , intent(in) :: minear
@@ -69,7 +70,8 @@
       data icalcn/ 0/
       n2 = 0
 !
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_deri1_L) then
+         reset_deri1_L = .false.
         if(allocated(wmat)) deallocate(wmat)
         i = Max (n2elec + mpack, (lab*(lab+1))/2, 20*mpack, maxci*(maxci+1)/2)
         allocate(wmat(i))

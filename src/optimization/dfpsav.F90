@@ -24,6 +24,7 @@
       USE molkst_C, ONLY: natoms, numcal, nvar, keywrd, mozyme, koment, title, norbs, numat, &
         prt_gradients
       USE chanel_C, only : iw, ires, restart_fn
+      use mopac_interface_flags, only : reset_dfpsav_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -68,8 +69,11 @@
 !           MDFP(9)= 1 FOR DUMP, 0 FOR RESTORE.
 !*********************************************************************
       data icalcn/ 0/
-      first = icalcn /= numcal
-      if (first) icalcn = numcal
+      first = icalcn /= numcal .or. reset_dfpsav_L
+      if (first) then
+         reset_dfpsav_L = .false.
+         icalcn = numcal
+      end if
       inquire(unit=ires, opened=opend)
       if (opend) close(unit=ires, status='KEEP')
       open(unit=ires, file=restart_fn, status='UNKNOWN', form=&

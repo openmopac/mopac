@@ -19,6 +19,7 @@
       & time0, moperr, nscf, limscf, tdump, last, cosine, line
       use common_arrays_C, only : hesinv, grad
       USE chanel_C, only : iw, ilog, log, input_fn
+      use mopac_interface_flags, only : reset_flepo_L
       implicit none
       integer  :: nvar
       double precision  :: funct1
@@ -149,7 +150,8 @@
       beta = 0.d0
       therb = 0.d0
       icyc = 0
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_flepo_L) then
+         reset_flepo_L = .false.
         if (allocated(hesinv)) deallocate(hesinv)
         allocate (hesinv((nvar*(nvar+1))/2))
         hesinv = 0.0d0

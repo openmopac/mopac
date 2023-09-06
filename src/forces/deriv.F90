@@ -26,6 +26,7 @@
       USE chanel_C, only : iw, ir, job_fn
       use funcon_C, only : pi
       use derivs_C, only : aidref, work2
+      use mopac_interface_flags, only : reset_deriv_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -71,7 +72,8 @@
 !
 !***********************************************************************
       data icalcn/ 0/
-      if (icalcn /= numcal) then
+      if (icalcn /= numcal .or. reset_deriv_L) then
+         reset_deriv_L = .false.
         aifrst = index(keywrd,' RESTART') == 0
         saddle = index(keywrd, " SADDLE") /= 0
         debug = index(keywrd,' DERIV') /= 0

@@ -1025,6 +1025,7 @@
       & nallop,ntbs, ntab, nallg, name, nirred, ielem, jx, jy
       use molkst_C, only : numcal, keywrd
       use chanel_C, only : iw
+      use mopac_interface_flags, only : reset_molsym_L
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
@@ -1076,7 +1077,8 @@
         ' S4', ' S6', ' S8', ' S10', ' S12', ' ?? ', 'C(Inf)'/
       data icalcn/ 0/
 !
-      if (numcal /= icalcn) then
+      if (numcal /= icalcn .or. reset_molsym_L) then
+         reset_molsym_L = .false.
         icalcn = numcal
         debug = index(keywrd,'CARTAB') /= 0
         large = index(keywrd,'LARGE')/=0 .and. debug

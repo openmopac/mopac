@@ -18,6 +18,7 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
     use molkst_C, only: numcal, l1u, l2u, l3u, clower
     use parameters_C, only: natorb, tore
     use common_arrays_C, only: tvec
+    use mopac_interface_flags, only : reset_outer2_L
     implicit none
     logical, intent (in) :: direct
     integer, intent (in) :: mode, ni, nj
@@ -153,7 +154,8 @@ subroutine outer2 (ni, nj, xi, xj, w, kr, e1b, e2a, enuc, mode, direct)
 !
 !   SOLID SYSTEM
 !
-      if (icalcn /= numcal) then
+       if (icalcn /= numcal .or. reset_outer2_L) then
+          reset_outer2_L = .false.
         icalcn = numcal
         cutof2 = clower**2
       end if
