@@ -269,7 +269,7 @@ jobs:
         run: |
           cd build
           sudo make install
-          sudo cpack -G TGZ
+          sudo cpack -G ZIP
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
