@@ -18,7 +18,6 @@
 # source files for the executable stubs
 target_sources(mopac PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/mopac.F90)
 target_sources(mopac-param PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/param.F90)
-endif()
 #===============================================
 # Take a list of source file names
 set(main_src_list 
