@@ -314,12 +314,12 @@ install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff"
 
 # Install the executables and library
 install(TARGETS mopac RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
-install(TARGETS mopac-param RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT extra)
-install(TARGETS mopac-makpol RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT extra)
+install(TARGETS mopac-param RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
+install(TARGETS mopac-makpol RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
 if(WIN32)
   install(TARGETS mopac-core RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
   if(BUILD_BZ)
-    install(TARGETS mopac-bz RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT extra)
+    install(TARGETS mopac-bz RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)
   endif()
 else()
   install(TARGETS mopac-core LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT main)
@@ -333,6 +333,5 @@ cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 
   "secondary license terms (GPL3)" "${CMAKE_SOURCE_DIR}/COPYING"
   SCRIPT "${CMAKE_SOURCE_DIR}/.github/qtifw_component.qs"
   USER_INTERFACES "${CMAKE_SOURCE_DIR}/.github/pathcheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/filecheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/iconcheckboxform.ui")
-cpack_ifw_configure_component(extra DISPLAY_NAME "extra utilities" SORTING_PRIORITY 1 DEFAULT FALSE)
 cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)
 cpack_ifw_configure_component(redist VIRTUAL FORCED_INSTALLATION)
