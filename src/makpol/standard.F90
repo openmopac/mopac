@@ -294,8 +294,8 @@ subroutine getdat
       write(*,"(a)")" "
       write(*,"(a)")" http://www.OpenMOPAC.net/Manual/makpol.html"
       write(*,"(a)")"  "
-     
-      call sleep (100)
+      write(0,'(10x,a)')" Press (return) to continue"
+      read(5,*, iostat=i)
       stop
     end if
     if (i > 1) then
