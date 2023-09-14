@@ -204,7 +204,7 @@ subroutine two_atoms(i, j)
 !
 use common_arrays_C, only : txtatm, coord, nbonds, ibonds
 use funcon_C, only : pi
-USE molkst_C, ONLY : line
+USE molkst_C, ONLY : line, numat
 implicit none
 integer, intent (in) :: i, j
 integer :: jj, k, l, m, n, ii, priority(4), order(3)
@@ -356,7 +356,12 @@ data nos / "1", "2", "3" /
 !
 ! Assumed convention: The first hydrogen on CA is HA2, the second is HA3
 !
-    if (txtatm(i + 1)(12:20) == txtatm(i)(12:20)) then
+!  Find the first HA atom in this GLY residue. 
+!
+    do l = j + 1,  numat
+      if (txtatm(l)(18:20) == "GLY" .and. txtatm(l)(14:15) == "HA") exit
+    end do    
+    if (l == i) then
       txtatm(i)(14:16) = "HA2"
     else
       txtatm(i)(14:16) = "HA3"

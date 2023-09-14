@@ -146,7 +146,11 @@
           call mopend("Parameters for some elements are missing")
           return
         end if
-        write (iw, '(/,a)') " General Reference for PM6-ORG will be added when available."
+        write (iw, '(/,a)') " General Reference for PM6-ORG:"
+        write (iw, '(1x,a)') &
+          &  """A semiempirical method optimized for modeling proteins""", &
+          & "J. J. P. Stewart and A. C. Stewart, J. Mol. Model. 29, 284 (2023) ", &
+          & "https://doi.org/10.1007/s00894-023-05695-1"
         return
       end if
       mixok = index(keywrd,'PARASOK') /= 0

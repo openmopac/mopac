@@ -31,7 +31,7 @@ jobs:
       - name: Check number of cores
         run: |
           lscpu
-          lscpu | grep "CPU(s):                  " | awk '{print $2}' > num_cores
+          lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v3
@@ -82,7 +82,7 @@ jobs:
       - name: Check number of cores
         run: |
           lscpu
-          lscpu | grep "CPU(s):                  " | awk '{print $2}' > num_cores
+          lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
       - uses: actions/checkout@v3
@@ -269,7 +269,7 @@ jobs:
         run: |
           cd build
           sudo make install
-          sudo cpack -G TGZ
+          sudo cpack -G ZIP
 
       - name: Save executable as an artifact
         uses: actions/upload-artifact@v2
@@ -330,7 +330,7 @@ jobs:
           echo %PATH%
           cmake -Bbuild ^
             -GNinja ^
-            -DBUILD_WINMOPAC=ON ^
+            -DBUILD_BZ=ON ^
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^

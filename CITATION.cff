@@ -2,40 +2,12 @@ cff-version: 1.2.0
 message: "If you use this software for a scientific publication, please cite it as below."
 title: MOPAC
 type: software
-version: 22.0.6
+version: 22.1.0
 doi: 10.5281/zenodo.6511958
-date-released: 2022-12-18
+date-released: 2023-09-30
 authors:
-  - family-names: Stewart
-    given-names: "James J. P."
-
-  - family-names: Klamt
-    given-names: Andreas
-
-  - family-names: Thiel
-    given-names: Walter
-
-  - family-names: Danovich
-    given-names: David
-
-  - family-names: Rocha
-    given-names: "Gerd B."
-
-  - family-names: Gieseking
-    given-names: "Rebecca L."
-
   - family-names: Moussa
     given-names: "Jonathan E."
 
-  - family-names: Kurtz
-    given-names: "Henry A."
-
-  - family-names: Korambath
-    given-names: Prakashan
-
-  - family-names: Merz
-    given-names: "Kenneth M."
-    name-suffix: Jr.
-
-  - family-names: Wang
-    given-names: Bingze
+  - family-names: Stewart
+    given-names: "James J. P."

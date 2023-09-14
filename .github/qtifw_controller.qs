@@ -16,5 +16,6 @@ on a core shared library, \"libmopac\", as well as Intel's OpenMP shared library
 both of which are contained in this installer package."); // set the welcome text
 
         installer.setDefaultPageVisible(QInstaller.StartMenuSelection, false);
+        installer.setDefaultPageVisible(QInstaller.ComponentSelection, false);
     }
 }
