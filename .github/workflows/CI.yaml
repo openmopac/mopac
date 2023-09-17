@@ -24,6 +24,47 @@ env:
   MKL_WINDOWS_VERSION: 2022.0.2
 
 jobs:
+  linux-static:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check number of cores
+        run: |
+          lscpu
+          lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
+          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies with PyPI
+        run: pip install numpy
+
+      - name: Configure MOPAC with CMake
+        run: |
+          cmake -B build \
+            -DTHREADS_KEYWORD=OFF \
+            -DSTATIC_BUILD=ON
+
+      - name: Build MOPAC with Make
+        run: |
+          cmake --build build -- -j$NUM_CORES
+
+      - name: Test MOPAC with CTest
+        run: |
+          cd build
+          ctest -V -j $NUM_CORES
+
+      - name: Save test results as an artifact (on failure)
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-test-output
+          path: build/tests
+
   code-coverage:
     runs-on: ubuntu-latest
 
