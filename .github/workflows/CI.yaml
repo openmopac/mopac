@@ -46,7 +46,6 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
-            -DTHREADS_KEYWORD=OFF \
             -DSTATIC_BUILD=ON
 
       - name: Build MOPAC with Make
