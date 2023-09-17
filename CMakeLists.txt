@@ -55,7 +55,8 @@ option(STATIC_BUILD "Build a static executable" OFF)
 if (STATIC_BUILD)
   message(STATUS "Static executables")
   message(WARNING "CMake cannot verify the ability to link static executables in the pre-build phase. "
-    "Please verify that you are able to link static executables with a \"-static\" linker flag.")
+    "Please verify that you are able to link static executables with a \"-static\" linker flag. "
+    "OpenMP does not support static builds by default, so try THREADS_KEYWORD=OFF if the static build fails to turn off OpenMP.")
 else()
   message(STATUS "Shared library and dynamic executables")
 endif()
