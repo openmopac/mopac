@@ -1,0 +1,6 @@
+*
+*  Optimize all parameters for one element, using the method PM6-ORG
+*  
+set="Cobalt list of files.txt" ref="Normal metal compounds";"Cobalt distance" PM6-org cycles=200   nolim   noscale 
+ (Co)(All)      
+end

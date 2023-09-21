@@ -1,0 +1,8 @@
+*
+*   482.890
+*
+ SCFCRT=1.D-3 CHARGE=2 PM7
+Calcium, dication
+ HWT=0.5 H=460.3 HR=WEPS1982
+ Ca     0.00000000 +0   0.00000000 +0   0.00000000 +0
+ 

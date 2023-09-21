@@ -1,0 +1,39 @@
+*
+* Set up a realistic environment for K(+)
+* and define the K - K separation as 3.6 Angstroms
+* and the K - O separation as 3.0 Angstroms
+*
+* To optimize the other variables, 
+* flag "C   MOH G   3" "X" as +1, and
+* flag "1H   MOH G   3" "X" as +1, and
+* flag "1H   MOH G   3" "Y" as +1
+*
+ symmetry html PM6-ORG charge=2
+ K - K interaction (good) 3.60
+ h=0 hr=ref
+ XX(HETATM    1  XX  HET A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0 
+  K(HETATM    2  K    K  A   1)   1.80000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  K(HETATM    3  K    K  B   2)   1.80000000 +0  180.0000000 +0    0.0000000 +0     1     2     0
+  O(HETATM    4  O   MOH C   3)   2.40000000 +0   90.0000000 +0    0.0000000 +0     1     2     3
+  O(HETATM    5  O   MOH D   4)   2.40000000 +0   90.0000000 +0   90.0000000 +0     1     2     3
+  O(HETATM    6  O   MOH E   5)   2.40000000 +0   90.0000000 +0  180.0000000 +0     1     2     3
+  O(HETATM    7  O   MOH F   6)   2.40000000 +0   90.0000000 +0  -90.0000000 +0     1     2     3
+  C(HETATM    8  C   MOH G   3)   1.21386595 +0  180.0000000 +0    0.0000000 +0     4     1     2
+  C(HETATM    9  C   MOH H   4)   1.21386595 +0  180.0000000 +0    0.0000000 +0     5     1     2
+  C(HETATM   10  C   MOH I   5)   1.21386595 +0  180.0000000 +0    0.0000000 +0     6     1     2
+  C(HETATM   11  C   MOH J   6)   1.21386595 +0  180.0000000 +0    0.0000000 +0     7     1     2
+  H(HETATM   12 1H   MOH G   3)   1.10262466 +0  120.5553751 +0   90.0000000 +0     8     4     1
+  H(HETATM   13 2H   MOH G   3)   1.10262466 +0  120.5553751 +0  -90.0000000 +0     8     4     1
+  H(HETATM   14 1H   MOH H   4)   1.10262466 +0  120.5553751 +0   90.0000000 +0     9     5     1
+  H(HETATM   15 2H   MOH H   4)   1.10262466 +0  120.5553751 +0  -90.0000000 +0     9     5     1
+  H(HETATM   16 1H   MOH I   5)   1.10262466 +0  120.5553751 +0   90.0000000 +0    10     6     1
+  H(HETATM   17 2H   MOH I   5)   1.10262466 +0  120.5553751 +0  -90.0000000 +0    10     6     1
+  H(HETATM   18 1H   MOH J   6)   1.10262466 +0  120.5553751 +0   90.0000000 +0    11     7     1
+  H(HETATM   19 2H   MOH J   6)   1.10262466 +0  120.5553751 +0  -90.0000000 +0    11     7     1
+ 
+   2  1    3
+   4  1    5    6    7
+   8  1    9   10   11
+  12  1   13   14   15   16   17   18   19
+  12  2   13   14   15   16   17   18   19
+ 

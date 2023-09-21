@@ -1,0 +1,95 @@
+  znet2r                                                                          
+  zn(ii)c4(2-) (ltmezn) r                                                         
+  c5h5znmer                                                                       
+  znpr2r                                                                          
+  zn(ii)n4(2+) (fuzcuy) r                                                         
+  zn(ii)(en)3r                                                                    
+  zn(ii)n6(2+) (cibkih) r                                                         
+  zn[(c6h9)(nh2)3]2(++)r                                                          
+  znn3o2r                                                                         
+  zn(ii)o5 (acaczm01) r                                                           
+  zn(ii)(h2o)4(oh)2r                                                              
+  zn(ii)(h2o)5.ohr                                                                
+  zn(ii)(h2o)6r                                                                   
+  zn(ii)o6(2+) (znaqbs) r                                                         
+  zn(ii)o6 (znaqac02) r                                                           
+  zinc (ii) edtar                                                                 
+  h3zn(ox)3r                                                                      
+  zn(ii)s2n2 (xustag) r                                                           
+  zn(ii)o3s2 (gayzip) r                                                           
+  [zn(ch3s)3](-)r                                                                 
+  zn(ii)s4o2 (tedvih) r                                                           
+  Zn(II)N2CCl (CLPDZN)r                                                           
+  zn(ii)o3ncl (ceamzn01) r                                                        
+  zncl2r                                                                          
+  zn(ii)n2cl2 (znacet) r                                                          
+  zn(ii)n2cl2 (cahgex) r                                                          
+  zn(ii)o2cl2 (ducneu) r                                                          
+  zn(ii)sncl2 (catszn) r                                                          
+  zn(ii)s2cl2 (clstuz) r                                                          
+  zn(ii)cl4(2-) (abdznc20) r                                                      
+  zn2[s2c-nme2]4r                                                                 
+  zn(ii)n4br(+) (daeazn) r                                                        
+  znbr2r                                                                          
+  zn(ii)n2br2 (cahgib) r                                                          
+  zn(ii)o2br2 (caryup) r                                                          
+  zn(ii)br4(2-) (beynuo) r                                                        
+  zn(ii)n4i(+) (znetam10) r                                                       
+  zni2r                                                                           
+  zn(ii)n2i2 (znpydi) r                                                           
+  zn(ii)o2i2 (acaqaw) r                                                           
+  zn(ii)i4(2-) (bzdazp) r                                                         
+  zinc, dication                                                                  
+  zinc, cation                                                                    
+  zinc, atom                                                                      
+  zinc hydride                                                                    
+  methyl zinc, cation                                                             
+  ethyl zinc                                                                      
+  dimethyl zinc                                                                   
+  diethyl zinc                                                                    
+  zn(ii)c4(2-) (ltmezn)                                                           
+  di-n-propyl zinc                                                                
+  di-n-butyl zinc                                                                 
+  di-t-butyl zinc                                                                 
+  zn(ii)n4(2+) (fuzcuy)                                                           
+  zn(ii)(en)3                                                                     
+  zn(ii)n6(2+) (cibkih)                                                           
+  zn[(c6h9)(nh2)3]2(++)                                                           
+  znn3o2                                                                          
+  zn(ii)o5 (acaczm01)                                                             
+  zn(ii)(h2o)4(oh)2                                                               
+  zn(ii)(h2o)5.oh                                                                 
+  zn(ii)(h2o)6                                                                    
+  zn(ii)o6(2+) (znaqbs)                                                           
+  zn(ii)o6 (znaqac02)                                                             
+  zinc (ii) edta                                                                  
+  h3zn(ox)3                                                                       
+  zn(ch2sime3)2                                                                   
+  zn[n(sime3)2]2                                                                  
+  zinc sulfide                                                                    
+  zn(ii)s2n2 (xustag)                                                             
+  zn(ii)o3s2 (gayzip)                                                             
+  [zn(ch3s)3](-)                                                                  
+  [zn(ch3s)4](=)                                                                  
+  zn(ii)s4o2 (tedvih)                                                             
+  zinc dichloride, cation                                                         
+  zinc dichloride                                                                 
+  zn(ii)n2cl2 (znacet)                                                            
+  zn(ii)n2cl2 (cahgex)                                                            
+  zn(ii)o2cl2 (ducneu)                                                            
+  zn(ii)sncl2 (catszn)                                                            
+  zn(ii)s2cl2 (clstuz)                                                            
+  zn(ii)cl4(2-) (abdznc20)                                                        
+  zn2[s2c-nme2]4                                                                  
+  zinc selenide                                                                   
+  zn(ii)n4br(+) (daeazn)                                                          
+  zinc dibromide                                                                  
+  zn(ii)n2br2 (cahgib)                                                            
+  zn(ii)o2br2 (caryup)                                                            
+  zn(ii)br4(2-) (beynuo)                                                          
+  zinc telluride                                                                  
+  zn(ii)n4i(+) (znetam10)                                                         
+  zinc diiodide                                                                   
+  zn(ii)n2i2 (znpydi)                                                             
+  zn(ii)o2i2 (acaqaw)                                                             
+  zn(ii)i4(2-) (bzdazp)   

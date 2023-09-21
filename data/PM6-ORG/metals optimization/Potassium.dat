@@ -1,0 +1,7 @@
+*
+*  Optimize all parameters for one element, using the method PM6-ORG
+*  
+set="Potassium list of files.txt" ref="Normal metal compounds";"Potassium distance" PM6-org cycles=200   nolim   noscale 
+HSP  k  0.2 0.5
+(K)(All)      
+end

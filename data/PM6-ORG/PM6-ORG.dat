@@ -1,0 +1,348 @@
+*
+*  Optimize all parameters for H, C, N, O, F, Cl, Br, and I, and all intermolecular interactions, using the method PM6-ORG
+*  
+*
+*     Keywords used
+*
+* SET:        Define the sets of files that contains lists of compounds to be used.
+* REF:        Define all the folders that contain reference data for systems defined by SET. 
+*
+set="Clashes.txt"; &
+    "Specific properties.txt"; &
+    "repulsive interactions.txt"; &
+    "All intermolecular interaction sets.txt"; &
+    "Core.txt" &
+ref= &
+  "Repulsive interactions"; &
+  "Clashes"; &
+  "Specific properties"; &
+  "Core"; &
+  "Intermolecular interactions" &
+*
+*  Use the current PM6-ORG method as the starting point
+*
+   PM6-ORG cycles=1000   nolim   noscale external=PM6-ORG.rp  parab=200000
+*
+* Parameter    Element     
+*
+     PAR16  
+     PAR17  
+     PAR18  
+     PAR19  
+     PAR11  
+     PAR12  
+     PAR13  
+     PAR14  
+     PAR15 
+     PAR38       
+     PAR39      
+     PAR40     
+     PAR35    
+     PAR36   
+     PAR37  
+     PAR3               
+     PAR4              
+     PAR5             
+     PAR20           
+     PAR21          
+     PAR22         
+     PAR26        
+     PAR27       
+     PAR28 
+     PAR32
+     PAR33
+     PAR34
+     PAR44
+     PAR45
+     PAR46     
+     PAR23     
+     PAR24    
+     PAR25
+     PAR41
+     PAR42
+     PAR43  
+     PAR7   
+     PAR8          
+     PAR9         
+     USS          H 
+     ZS           H 
+     BETAS        H 
+     GSS          H 
+     FN11         H 
+     FN21         H 
+     FN31         H 
+     ALPB_H       H 
+     XFAC_H       H 
+     ALPB_C       H 
+     XFAC_C       H 
+     ALPB_N       H 
+     XFAC_N       H 
+     ALPB_O       H 
+     XFAC_O       H 
+     ALPB_F       H 
+     XFAC_F       H 
+     ALPB_P       H 
+     XFAC_P       H 
+     ALPB_S       H 
+     XFAC_S       H 
+     ALPB_Cl      H 
+     XFAC_Cl      H 
+     ALPB_Fe      H 
+     XFAC_Fe      H 
+     ALPB_Br      H 
+     XFAC_Br      H 
+     ALPB_I       H 
+     XFAC_I       H 
+     USS          C 
+     UPP          C 
+     ZS           C 
+     ZP           C 
+     BETAS        C 
+     BETAP        C 
+     GSS          C 
+     GSP          C 
+     GPP          C 
+     GP2          C 
+     HSP          C 
+     FN11         C 
+     FN21         C 
+     FN31         C 
+     ALPB_C       C 
+     XFAC_C       C 
+     ALPB_N       C 
+     XFAC_N       C 
+     ALPB_O       C 
+     XFAC_O       C 
+     ALPB_F       C 
+     XFAC_F       C 
+     ALPB_P       C 
+     XFAC_P       C 
+     ALPB_S       C 
+     XFAC_S       C 
+     ALPB_Cl      C 
+     XFAC_Cl      C 
+     ALPB_Fe      C 
+     XFAC_Fe      C 
+     ALPB_Br      C 
+     XFAC_Br      C 
+     ALPB_I       C 
+     XFAC_I       C 
+     USS          N 
+     UPP          N 
+     ZS           N 
+     ZP           N 
+     BETAS        N 
+     BETAP        N 
+     GSS          N 
+     GSP          N 
+     GPP          N 
+     GP2          N 
+     HSP          N 
+     FN11         N 
+     FN21         N 
+     FN31         N 
+     ALPB_N       N 
+     XFAC_N       N 
+     ALPB_O       N 
+     XFAC_O       N 
+     ALPB_F       N 
+     XFAC_F       N 
+     ALPB_P       N 
+     XFAC_P       N 
+     ALPB_S       N 
+     XFAC_S       N 
+     ALPB_Cl      N 
+     XFAC_Cl      N 
+     ALPB_Fe      N 
+     XFAC_Fe      N 
+     ALPB_Br      N 
+     XFAC_Br      N 
+     ALPB_I       N 
+     XFAC_I       N 
+     USS          O 
+     UPP          O 
+     ZS           O 
+     ZP           O 
+     BETAS        O 
+     BETAP        O 
+     GSS          O 
+     GSP          O 
+     GPP          O 
+     GP2          O 
+     HSP          O 
+     FN11         O 
+     FN21         O 
+     FN31         O 
+     ALPB_O       O 
+     XFAC_O       O 
+     ALPB_F       O 
+     XFAC_F       O 
+     ALPB_P       O 
+     XFAC_P       O 
+     ALPB_S       O 
+     XFAC_S       O 
+     ALPB_Cl      O 
+     XFAC_Cl      O 
+     ALPB_Fe      O 
+     XFAC_Fe      O 
+     ALPB_Br      O 
+     XFAC_Br      O   
+     ALPB_I       O   
+     XFAC_I       O   
+     USS          F   
+     UPP          F   
+     ZS           F   
+     ZP           F   
+     BETAS        F   
+     BETAP        F   
+     GSS          F   
+     GSP          F   
+     GPP          F   
+     GP2          F   
+     HSP          F   
+     FN11         F   
+     FN21         F   
+     FN31         F   
+     ALPB_F       F   
+     XFAC_F       F   
+     ALPB_P       F   
+     XFAC_P       F   
+     ALPB_S       F   
+     XFAC_S       F   
+     ALPB_Cl      F   
+     XFAC_Cl      F   
+     ALPB_Br      F   
+     XFAC_Br      F   
+     ALPB_I       F   
+     XFAC_I       F   
+     USS         Cl   
+     UPP         Cl   
+     UDD         Cl   
+     ZSN         Cl   
+     ZPN         Cl   
+     ZDN         Cl   
+     ZS          Cl   
+     ZP          Cl   
+     ZD          Cl   
+     BETAS       Cl   
+     BETAP       Cl   
+     BETAD       Cl   
+     GSS         Cl   
+     GSP         Cl   
+     GPP         Cl   
+     GP2         Cl   
+     HSP         Cl   
+     FN11        Cl   
+     FN21        Cl   
+     FN31        Cl   
+     ALPB_P      Cl   
+     XFAC_P      Cl   
+     ALPB_S      Cl   
+     XFAC_S      Cl   
+     ALPB_Cl     Cl   
+     XFAC_Cl     Cl   
+     ALPB_Br     Cl   
+     XFAC_Br     Cl   
+     ALPB_I      Cl   
+     XFAC_I      Cl   
+     USS         Br   
+     UPP         Br   
+     UDD         Br   
+     ZSN         Br   
+     ZPN         Br   
+     ZDN         Br   
+     ZS          Br   
+     ZP          Br   
+     ZD          Br   
+     BETAS       Br   
+     BETAP       Br   
+     BETAD       Br   
+     GSS         Br   
+     GSP         Br   
+     GPP         Br   
+     GP2         Br   
+     HSP         Br   
+     FN11        Br   
+     FN21        Br   
+     FN31        Br   
+     ALPB_P      Br   
+     XFAC_P      Br   
+     ALPB_S      Br   
+     XFAC_S      Br   
+     ALPB_Br     Br   
+     XFAC_Br     Br   
+     USS          I   
+     UPP          I   
+     UDD          I   
+     ZSN          I   
+     ZPN          I   
+     ZDN          I   
+     ZS           I   
+     ZP           I   
+     ZD           I   
+     BETAS        I   
+     BETAP        I   
+     BETAD        I   
+     GSS          I   
+     GSP          I   
+     GPP          I   
+     GP2          I   
+     HSP          I   
+     FN11         I   
+     FN21         I   
+     FN31         I   
+     ALPB_P       I   
+     XFAC_P       I   
+     ALPB_S       I   
+     XFAC_S       I   
+     ALPB_Br      I   1.0 3
+     XFAC_Br      I   0.4 2
+     ALPB_I       I   
+     XFAC_I       I   
+     USS          S   
+     UPP          S   
+     UDD          S   
+     ZSN          S   
+     ZPN          S   
+     ZDN          S   
+     ZS           S   
+     ZP           S   
+     ZD           S   
+     BETAS        S   
+     BETAP        S   
+     BETAD        S   
+     GSS          S   
+     GSP          S   
+     GPP          S   
+     GP2          S   
+     HSP          S   
+     FN11         S   
+     FN21         S   
+     FN31         S   
+     ALPB_P       S   
+     XFAC_P       S   
+     ALPB_S       S   
+     XFAC_S       S   
+     USS          P   
+     UPP          P   
+     UDD          P   
+     ZSN          P   
+     ZPN          P   
+     ZDN          P   
+     ZS           P   
+     ZP           P   
+     ZD           P   
+     BETAS        P   
+     BETAP        P   
+     BETAD        P   
+     GSS          P   
+     GSP          P   
+     GPP          P   
+     GP2          P   
+     HSP          P   
+     FN11         P   
+     FN21         P   
+     FN31         P   
+     ALPB_P       P   
+     XFAC_P       P   
+end

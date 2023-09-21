@@ -1,0 +1,1962 @@
+  Core Line-1                                                                     
+  Core Line-2                                                                     
+  Core Line-3                                                                     
+  Core Line-4                                                                     
+  Core Line-5  
+  acetylacetone                                                                   
+  ch2sir                                                                          
+  ch2tr                                                                           
+  ch4r                                                                            
+  c2h2r                                                                           
+  c2h4r                                                                           
+  c2h6r                                                                           
+  allener                                                                         
+  cyc3h4r                                                                         
+  propyner                                                                        
+  cyc3h6r                                                                         
+  propener                                                                        
+  propaner                                                                        
+  c4h2r                                                                           
+  c4h4r                                                                           
+  vinylacetr                                                                      
+  bicycbutr                                                                       
+  but2yner                                                                        
+  transc4h6r                                                                      
+  but1ener                                                                        
+  cyc4h8r                                                                         
+  ibutener                                                                        
+  tbut2ener                                                                       
+  butaner                                                                         
+  ic4h10r                                                                         
+  cyc5h6r                                                                         
+  spiranr                                                                         
+  neoc5r                                                                          
+  benzener                                                                        
+  fulvener                                                                        
+  chexenr                                                                         
+  cyc6h12r                                                                        
+  c10h8r                                                                          
+  nh3r                                                                            
+  hcnr                                                                            
+  ch3nh2r                                                                         
+  ch3cnr                                                                          
+  ch3ncr                                                                          
+  c2h4nhr                                                                         
+  me2nhr                                                                          
+  chccnr                                                                          
+  ch2chcnr                                                                        
+  me3nr                                                                           
+  c4h4nhr                                                                         
+  c5h5nr                                                                          
+  n2r                                                                             
+  c2n2r                                                                           
+  mennmer                                                                         
+  n3r                                                                             
+  triaziner                                                                       
+  h2or                                                                            
+  cor                                                                             
+  ch2or                                                                           
+  ch3ohr                                                                          
+  ch2cor                                                                          
+  ch3chor                                                                         
+  ch3och3r                                                                        
+  ch2chchor                                                                       
+  acetoner                                                                        
+  furanr                                                                          
+  c5or                                                                            
+  nor                                                                             
+*  hconh2r                                                                         
+  n2or                                                                            
+  ceb r                                                                           
+  1d88_b3p r                                                                      
+  2me_b3p r                                                                       
+  h2o2r                                                                           
+  h(+)(h2o)2r                                                                     
+  co2r                                                                            
+  hcoohr                                                                          
+  chochor                                                                         
+  hcooch3r                                                                        
+  c3o2r                                                                           
+  pquinoner                                                                       
+  no2r                                                                            
+  hno2r                                                                           
+  hno2transr                                                                      
+  salr                                                                            
+  nh2no2r                                                                         
+*  o3r                                                                             
+  hno3r                                                                           
+  n2o3r                                                                           
+  aa_20_pro-pro r                                                                 
+  aa_03_val-val r                                                                 
+  aa_05_ile-ile r                                                                 
+  naphthoquinone_b3p r                                                            
+  n2o4r                                                                           
+  meno23r                                                                         
+  hfr                                                                             
+  cfr                                                                             
+  chfr                                                                            
+  ch3fr                                                                           
+  c2hfr                                                                           
+  c2h3fr                                                                          
+  cf2cch2r                                                                        
+  fcnr                                                                            
+  f2r                                                                             
+  h2f2r                                                                           
+  cf2r                                                                            
+  nf2-cnr                                                                         
+  f2or                                                                            
+  cof2r                                                                           
+  chf3r                                                                           
+  nf3r                                                                            
+  cf3cnr                                                                          
+  cf4r                                                                            
+  c2f4r                                                                           
+  c2f6r                                                                           
+  (cf3)2or                                                                        
+  c3f8r                                                                           
+  c3o2f8r                                                                         
+  c4f10r                                                                          
+  ph3r                                                                            
+  ch3ph2r                                                                         
+  me3pr                                                                           
+  c5h5pr                                                                          
+  por                                                                             
+  triphenyl phosphine oxide r                                                     
+  ethylene phosphate anion r                                                      
+  dimethyl phosphate anion r                                                      
+  me2hpo4r                                                                        
+  me3po4r                                                                         
+  po(ocn)3r                                                                       
+  ch2pfr                                                                          
+  pf3r                                                                            
+  pof3r                                                                           
+  pf5r                                                                            
+  pyrophosphoric acid r                                                           
+  p2f4r                                                                           
+  methyl triphosphate r                                                           
+  p4o6r                                                                           
+  p4o10r                                                                          
+  h2sr                                                                            
+  csr                                                                             
+  ch2sr                                                                           
+  ch3shr                                                                          
+  ch3chsr                                                                         
+  c2h6shr                                                                         
+  me2sr                                                                           
+  thiophener                                                                      
+  snr                                                                             
+*  ch3ncsr                                                                         
+  me2sor                                                                          
+  so2r                                                                            
+  me2so2r                                                                         
+  so3r                                                                            
+  me2so3r                                                                         
+  h2so4r                                                                          
+  me2so4r                                                                         
+  ch3so3fr                                                                        
+  sf2r                                                                            
+  f2csr                                                                           
+  osf2r                                                                           
+  so2f2r                                                                          
+  sf4r                                                                            
+  sof4r                                                                           
+  sf5ncor                                                                         
+  sf6r                                                                            
+  psf3r                                                                           
+  h2s2r                                                                           
+  cs2r                                                                            
+  ch3ssch3r                                                                       
+  me2s2r                                                                          
+  aa_16_cys-cys r                                                                 
+  aa_19_met-met r                                                                 
+  fssfr                                                                           
+  s2f2r                                                                           
+  s2f10r                                                                          
+  hclr                                                                            
+  chclr                                                                           
+  ch3clr                                                                          
+  c2hclr                                                                          
+  c2h5clr                                                                         
+  2-chloropropener                                                                
+  1-chloropropaner                                                                
+  2-chloropropaner                                                                
+  2-chloro-2-methylpropaner                                                       
+  chlorobenzener                                                                  
+  clcnr                                                                           
+  cyanogen chlorider                                                              
+  clor                                                                            
+  acetyl chlorider                                                                
+  noclr                                                                           
+  no2clr                                                                          
+  hclo4r                                                                          
+  clfr                                                                            
+  coclfr                                                                          
+  clo3fr                                                                          
+  chclf2r                                                                         
+  clf3r                                                                           
+  clf5r                                                                           
+  ch3sclr                                                                         
+  ch2cl2r                                                                         
+  cis-dichloroethylener                                                           
+  1,1-dichloroethaner                                                             
+  trans-1,2-dichloroethaner                                                       
+  cl2or                                                                           
+  cocl2r                                                                          
+  oxalyl chlorider                                                                
+  cf2cl2r                                                                         
+  oscl2r                                                                          
+  so2cl2r                                                                         
+  ch3opscl2r                                                                      
+  ch3spocl2r                                                                      
+  chcl3r                                                                          
+  ccl3fr                                                                          
+  pocl3r                                                                          
+  ccl4r                                                                           
+  c2cl4r                                                                          
+  2,3,5,6-tetrachloro-1,4-benzoquinoner                                           
+  c2cl6r                                                                          
+  c6cl6r                                                                          
+  hbrr                                                                            
+  ch3brr                                                                          
+  c2hbrr                                                                          
+  brcnr                                                                           
+  brhccor                                                                         
+  ch3cobrr                                                                        
+  brnor                                                                           
+  brfr                                                                            
+  brfo3r                                                                          
+  brf3r                                                                           
+  cbrf3r                                                                          
+  brf5r                                                                           
+  brsf5r                                                                          
+  brf2psr                                                                         
+  ch2clbrr                                                                        
+  ch2br2r                                                                         
+  cobr2r                                                                          
+  c4o2br2r                                                                        
+  sobr2r                                                                          
+  pobr3r                                                                          
+  cbr4r                                                                           
+  c2br4r                                                                          
+  hir                                                                             
+  ch3ir                                                                           
+  c6h5ir                                                                          
+  ifr                                                                             
+  cf3ir                                                                           
+  if5r                                                                            
+  c4h4clir                                                                        
+  c4h4brir                                                                        
+  ch2i2r                                                                          
+  e-c2h2i2r                                                                       
+  z-c2h2i2r                                                                       
+  1,2-diiodobenzener                                                              
+  chi3r                                                                           
+  ci4r                                                                            
+  hydrogen, 2s(g)  1s(1)                                                          
+  hydrogen, atom                                                                  
+  hydrogen                                                                        
+  carbon, atom                                                                    
+  methylidyne                                                                     
+  methylene, singlet                                                              
+  methyl, cation                                                                  
+  methane                                                                         
+  acetylene                                                                       
+  vinyl, cation                                                                   
+  vinyl                                                                           
+  c2h4                                                                            
+  ethylene                                                                        
+  methylmethylene                                                                 
+  ethyl, cation                                                                   
+  ethyl radical                                                                   
+  c2h6                                                                            
+  carbon, trimer                                                                  
+  cyclopropenyl, cation                                                           
+  propynyl, cation                                                                
+  allene                                                                          
+  cyclopropene                                                                    
+  propyne                                                                         
+  allyl, cation                                                                   
+  cyclopropane                                                                    
+  propene                                                                         
+  propane                                                                         
+  carbon, tetramer                                                                
+  diacetylene                                                                     
+  ch2=c=c=ch2                                                                     
+  vinylacetylene                                                                  
+  1,2-butadiene                                                                   
+  1,3-butadiene                                                                   
+  1-butyne                                                                        
+  2-butyne                                                                        
+  bicyclobutane                                                                   
+  cyclobutene                                                                     
+  methyl cyclopropene                                                             
+  methylenecyclopropane                                                           
+  2-butenyl, cation                                                               
+  cyclobutyl, cation                                                              
+  1-butene                                                                        
+  cis-2-butene                                                                    
+  cyclobutane                                                                     
+  isobutene                                                                       
+  trans-2-butene                                                                  
+  isobutyl, cation                                                                
+  isobutyl                                                                        
+  n-butane                                                                        
+  isobutane                                                                       
+  cyclopentadienyl, anion                                                         
+  cyclopentadiene                                                                 
+  1,2-dimethyl cyclopropene                                                       
+  1,4-pentadiene                                                                  
+  1,cis-3-pentadiene                                                              
+  1,trans-3-pentadiene                                                            
+  bicyclo(2.1.0)-pentane                                                          
+  cyclopentene                                                                    
+  isoprene                                                                        
+  methylene cyclobutane                                                           
+  spiropentane                                                                    
+  cyclopentyl, cation                                                             
+  2-methyl-2-butene                                                               
+  cis-2-pentene                                                                   
+  cis-dimethylcyclopropane                                                        
+  cyclopentane                                                                    
+  trans-2-pentene                                                                 
+  isopentane                                                                      
+  n-pentane                                                                       
+  neopentane                                                                      
+  benzene                                                                         
+  fulvene                                                                         
+  (e)-1,3,5-hexatriene                                                            
+  (z)-1,3,5-hexatriene                                                            
+  1,3-cyclohexadiene                                                              
+  1,4-cyclohexadiene                                                              
+  1,2-dimethylcyclobutene                                                         
+  1,5-hexadiene                                                                   
+  1-methyl cyclopentene                                                           
+  3-methyl cyclopentene                                                           
+  4-methyl cyclopentene                                                           
+  bicyclopropyl                                                                   
+  cyclohexene                                                                     
+  cyclohexyl, cation                                                              
+  1-hexene                                                                        
+  2,3-dimethyl-1-butene                                                           
+  2,3-dimethyl-2-butene                                                           
+  3-methyl-2-pentene                                                              
+  4-methyl-1-pentene                                                              
+  cyclohexane                                                                     
+  2,2-dimethyl butane                                                             
+  2,3-dimethyl butane                                                             
+  2-methyl pentane                                                                
+  3-methyl pentane                                                                
+  n-hexane                                                                        
+  benzyl, cation                                                                  
+  tropylium, cation                                                               
+  cycloheptatriene                                                                
+  norbornadiene                                                                   
+  toluene                                                                         
+  1,2-dimethyl cyclopentene                                                       
+  1-ethyl cyclopentene                                                            
+  1-methyl cyclohexene                                                            
+  norbornane                                                                      
+  1,1-dimethyl cyclopentane                                                       
+  1,2-cis-dimethyl cyclopentane                                                   
+  1,2-trans-dimethyl cyclopentane                                                 
+  1,3-cis-dimethyl cyclopentane                                                   
+  1-heptene                                                                       
+  ethyl cyclopentane                                                              
+  methyl-cyclohexane                                                              
+  2,2,3-trimethyl butane                                                          
+  2,2-dimethyl pentane                                                            
+  2,3-dimethyl pentane                                                            
+  2,4-dimethyl pentane                                                            
+  2-methyl hexane                                                                 
+  3,3-dimethyl pentane                                                            
+  3-ethyl pentane                                                                 
+  3-methyl hexane                                                                 
+  n-heptane                                                                       
+  cubane                                                                          
+  cyclooctatetraene                                                               
+  styrene                                                                         
+  ethylbenzene                                                                    
+  m-xylene                                                                        
+  o-xylene                                                                        
+  p-xylene                                                                        
+  1,5-cyclooctadiene                                                              
+  4-vinyl cyclohexene                                                             
+  1-octyne                                                                        
+  2,5-dimethyl 2,4-hexadiene                                                      
+  2-octyne                                                                        
+  3,4-dimethyl-(e,e)-2,4-hexadiene                                                
+  3,4-dimethyl-(e,z)-2,4-hexadiene                                                
+  3,4-dimethyl-(z,z)-2,4-hexadiene                                                
+  3-octyne                                                                        
+  4-octyne                                                                        
+  bicyclo(2.2.2)-octane                                                           
+  1-octene                                                                        
+  ethylcyclohexane                                                                
+  2,2,3,3-tetramethyl butane                                                      
+  2,2,3-trimethyl pentane                                                         
+  2,2,4-trimethyl pentane                                                         
+  2,2-dimethyl hexane                                                             
+  2,3,3-trimethyl pentane                                                         
+  2,3,4-trimethyl pentane                                                         
+  2,3-dimethyl hexane                                                             
+  2,4-dimethyl hexane                                                             
+  2,5-dimethyl hexane                                                             
+  2-methyl heptane                                                                
+  3,3-dimethyl hexane                                                             
+  3,4-dimethyl hexane                                                             
+  3-ethyl hexane                                                                  
+  3-ethyl-2-methyl pentane                                                        
+  3-ethyl-3-methyl pentane                                                        
+  3-methyl heptane                                                                
+  4-methyl heptane                                                                
+  n-octane                                                                        
+  alpha-methyl styrene                                                            
+  cyclopropyl benzene                                                             
+  1,3,5-trimethyl cyclohexane                                                     
+  cis-cis-trans-1,3,5-trimethyl cyclohexane                                       
+  3,3-diethylpentane                                                              
+  n-nonane                                                                        
+  azulene                                                                         
+  naphthalene                                                                     
+  1,4-dicyclopropylbuta-1,3-diyne                                                 
+  1-butynl benzene                                                                
+  2a,4a,6a,6b-tetrahydrocyclopentapentalene                                       
+  bulvalene                                                                       
+  diisopropenyldiacetylene                                                        
+  tricyclo[6.2.0.0]deca-1(8),2,6-triene                                           
+  1,2,6,7-cyclodecatetraene                                                       
+  dispiro[2.2.2.2]deca-4,9-diene                                                  
+  tetralin                                                                        
+  (1-methylpropyl) benzene                                                        
+  (2-methylpropyl) benzene                                                        
+  1,2,3,4-tetramethyl benzene                                                     
+  1,2,3,4-tetramethylfulvene                                                      
+  1,2,3,5-tetramethyl benzene                                                     
+  1,2,4,5-tetramethylbenzene                                                      
+  tert-butyl benzene                                                              
+  tetrahydrotriquinacene                                                          
+  1,2,3,4,5-pentamethyl-1,3-cyclopentadiene                                       
+  adamantane                                                                      
+  camphene                                                                        
+  perhydrotriquinacene                                                            
+  1-methyl-4-(1-methylethyl)-cyclohexene                                          
+  4-methyl-1-(1-methylethyl)-cyclohexene                                          
+  cis-decalin                                                                     
+  spiro(4-5)decane                                                                
+  trans-decalin                                                                   
+  (e)-2,2,5,5-tetramethyl-3-hexene                                                
+  (z)-2,2,5,5-tetramethyl-3-hexene                                                
+  1-decene                                                                        
+  butyl cyclohexane                                                               
+  pentyl cyclopentane                                                             
+  2,2,5,5-tetramethylhexane                                                       
+  3,3,4,4-tetramethylhexane                                                       
+  n-decane                                                                        
+  pentamethylbenzene                                                              
+  1,1,4-trimethylcycloheptane                                                     
+  hexyl cyclopentane                                                              
+  pentyl cyclohexane                                                              
+  undecane                                                                        
+  acenaphthylene                                                                  
+  biphenylene                                                                     
+  acenaphthene                                                                    
+  biphenyl                                                                        
+  hexamethylbenzene                                                               
+  hexylcyclohexane                                                                
+  n-duodecane                                                                     
+  fluorene                                                                        
+  tri-t-butylmethane                                                              
+  tridecane                                                                       
+  anthracene                                                                      
+  diphenylethyne                                                                  
+  phenanthrene                                                                    
+  9,10-dihydro-phenanthrene                                                       
+  9-methyl-9h-fluorene                                                            
+  stilbene                                                                        
+  1,2,3,4-tetrahydrophenanthrene                                                  
+  4,4'-dimethylbiphenyl                                                           
+  bibenzyl                                                                        
+  1,4,5,8-tetramethynaphthalene                                                   
+  1,2,3,4,5,6,7,8-octahydro-anthracene                                            
+  diadamantane                                                                    
+  1,3,5,7-tetramethyladamantane                                                   
+  (e)-3,4-di-tert-butyl-3-hexene                                                  
+  cyclotetradecane                                                                
+  n-nonylcyclopentane                                                             
+  octylcyclohexane                                                                
+  3,3,4,4-tetraethylhexane                                                        
+  octamethylhexane                                                                
+  tetradecane                                                                     
+  4-methylphenanthrene                                                            
+  1-methyldiadamantane                                                            
+  3-methyladamantane                                                              
+  4-methyldiadamantane                                                            
+  6-(1,1-dimethylethyl)-2,3-dihydro-1,1-dimethyl-1h-indene                        
+  n-nonylcyclohexane                                                              
+  pentadecane                                                                     
+  fluoranthene                                                                    
+  pyrene                                                                          
+  2,7-dimethylphenanthrene                                                        
+  4,5,9,10-tetrahydropyrene                                                       
+  9,10-dimethylphenanthrene                                                       
+  (2.2)metaparacyclophane                                                         
+  [2.2]metacyclophane                                                             
+  [2.2]paracyclophane                                                             
+  1,2,3,6,7,8-hexahydropyrene                                                     
+  tricyclo[8.2.2.2]-hexadecane                                                    
+  1-hexadecene                                                                    
+  decylcyclohexane                                                                
+  n-undecylcyclopentane                                                           
+  n-dodecylcyclopentane                                                           
+  undecylcyclohexane                                                              
+  heptadecane                                                                     
+  p-terphenyl                                                                     
+  2,5-diphenyl-1,5-hexadiene                                                      
+  3,4,5,6-tetramethylphenanthrene                                                 
+  [3.3]paracyclophane                                                             
+  1,1'-(1,1,2,2-tetramethyl-1,2-ethanediyl)bis-benzene                            
+  dodecylcyclohexane                                                              
+  n-tridecylcyclopentane                                                          
+  1,1,2,2-tetra-t-butylethane                                                     
+  octadecane                                                                      
+  2,6-diphenyl-1,6-heptadiene                                                     
+  n-tetradecylcyclopentane                                                        
+  n-tridecylcyclohexane                                                           
+  nonadecane                                                                      
+  9,10-dihydro-9,10[1',2']benzanthracene                                          
+  3,9-dimethylbenz[a]anthracene                                                   
+  5,6-dimethyl chrysene                                                           
+  9,10-dimethyl-1,2-benzanthracene                                                
+  1,3,5-tris(t-butyl) pentalene                                                   
+  hexacyclopropylethane                                                           
+  tetra-tert-butyltetrahedrane                                                    
+  meso-3,4-dicyclohexyl-2,5-dimethylhexane                                        
+  tetradecylcyclohexane                                                           
+  eicosane                                                                        
+  1,8-paracyclophane                                                              
+  hexadecylcyclopentane                                                           
+  pentadecylcyclohexane                                                           
+  1,1'-diphenyl-1,1'-bicyclopentyl                                                
+  dl-3,4-di-1-cyclohexen-1-yl-2,2,5,5-tetramethyl hexane                          
+  meso-3,4-di-1-cyclohexen-1-yl-2,2,5,5-tetramethyl hexane                        
+  n-hexadecylcyclohexane                                                          
+  p-quaterphenyl                                                                  
+  1,1'-diphenyl-1,1'-bicyclohexyl                                                 
+  6,6'-paracyclophane                                                             
+  tetraphenylmethane                                                              
+  9,9'-bi-9h-fluorene                                                             
+  1,1,1,2-tetraphenylethane                                                       
+  1,1,2,2-tetraphenylethane                                                       
+  pentacyclo hexacosa nonane                                                      
+  2,3-dimethyl-2,3-bis(4-t-butylphenyl)butane                                     
+  11-n-butyl docosane                                                             
+  5-n-butyl docosane                                                              
+  9,9'-dimethyl-9,9'-bifluorene                                                   
+  1,1-diphenyl-1,1-bicyclooctyl                                                   
+  11-decyl heneicosane                                                            
+  2,4,5,7-tetramethyl-4,5-bis(4-t-butylphenyl) octane                             
+  dotriacontane                                                                   
+  4,5-dipropyl-4,5-bis(4-t-butylphenyl) octane                                    
+  5,6-dibutyl-5,6-bis(4-tert-butylphenyl)decane                                   
+  nitrogen, atom                                                                  
+  amidogen                                                                        
+  ammonia                                                                         
+  ammonium, cation                                                                
+  cyanide                                                                         
+  hydrogen cyanide                                                                
+  ch2-nh2, cation                                                                 
+  ch3-nh.                                                                         
+  ch3nh, anion                                                                    
+  methylamine                                                                     
+  acetonitrile                                                                    
+  methyl isocyanide                                                               
+  ethyleneimine (azirane)                                                         
+  dimethyl nitrogen, anion                                                        
+  dimethylamine                                                                   
+  ethylamine                                                                      
+  ch.c.cn                                                                         
+  acrylonitrile                                                                   
+  ethyl cyanide                                                                   
+  cyclopropylamine                                                                
+  isopropylamine                                                                  
+  n-propylamine                                                                   
+  trimethylamine                                                                  
+  (e)-2-butenenitrile                                                             
+  (z)-2-butenenitrile                                                             
+  3-butenenitrile                                                                 
+  pyrrole                                                                         
+  butanenitrile                                                                   
+  isobutane nitrile                                                               
+  pyrrolidine                                                                     
+  2-butylamine                                                                    
+  2-methyl-1-propylamine                                                          
+  n-butylamine                                                                    
+  t-butylamine                                                                    
+  pyridine                                                                        
+  n-methyl pyrrole                                                                
+  1,2,3,6-tetrahydropyridine                                                      
+  2-cyanobutane                                                                   
+  butyl cyanide                                                                   
+  t-butylnitrile                                                                  
+  cyclopentylamine                                                                
+  piperidine                                                                      
+  n-methyl-n-butylamine                                                           
+  1-cyclopentenecarbonitrile                                                      
+  2-cyclopentenecarbonitrile                                                      
+  2-methyl pyridine                                                               
+  3-methyl pyridine                                                               
+  4-methyl pyridine                                                               
+  aniline                                                                         
+  2,5-dimethyl-1h-pyrrole                                                         
+  cyclopentanecarbonitrile                                                        
+  2-methylpiperidine                                                              
+  cyclohexamethylenimine                                                          
+  cyclohexanamine                                                                 
+  di-n-propylamine                                                                
+  diiospropylamine                                                                
+  triethylamine                                                                   
+  phenyl cyanide                                                                  
+  1-cyclohexenecarbonitrile                                                       
+  2,6-dimethylpyridine                                                            
+  2-cyclohexenecarbonitrile                                                       
+  benzylamine                                                                     
+  m-toluidine                                                                     
+  n-methylaniline                                                                 
+  o-toluidine                                                                     
+  p-toluidine                                                                     
+  cyclohexanecarbonitrile                                                         
+  hexahydro-1h-pyrrolizine                                                        
+  n-heptanenitrile                                                                
+  isopropylbutylamine                                                             
+  1-norbornylcyanide                                                              
+  1-norbornylisocyanide                                                           
+  5-ethyl-2-methyl-pyridine                                                       
+  n,n-dimethyl aniline                                                            
+  n-ethyl aniline                                                                 
+  3-azabicyclo[3.2.2]nonane                                                       
+  n-heptyl cyanide                                                                
+  n-(2-methylpropylidene)-butylamine                                              
+  2-methyl-n-(2-methylpropyl)-1-propanamine                                       
+  di-sec-butylamine                                                               
+  dibutylamine                                                                    
+  n-(2-methylpropyl)-1-butanamine                                                 
+  n-octylamine                                                                    
+  isoquinoline                                                                    
+  quinoline                                                                       
+  2,6-dimethylbenzonitrile                                                        
+  (1a,2a,4a)-bicyclo[2.2.2]oct-5-ene-2-carbonitrile                               
+  (1a,2b,4a)-bicyclo[2.2.2]oct-5-ene-2-carbonitrile                               
+  1,2,3,4-tetrahydroquinoline                                                     
+  5,6,7,8-tetrahydroquinoline                                                     
+  n,n-dimethyl m-toluidine                                                        
+  n,n-dimethyl p-toluidine                                                        
+  n-ethyl m-toluidine                                                             
+  cis-3,7a-h-cis-5,8-h-3,5-dimethylpyrrolizidine                                  
+  decahydro trans-quinoline                                                       
+  2,2,6,6-tetramethyl piperidine                                                  
+  2-methyl-quinoline                                                              
+  4-methyl-quinoline                                                              
+  6-methyl-quinoline                                                              
+  8-methyl-quinoline                                                              
+  2,4,6-trimethyl-benzonitrile                                                    
+  2,4,6-trimethylphenyl isocyanide                                                
+  n,n-diethyl aniline                                                             
+  n-nonyl cyanide                                                                 
+  2,6-dimethyl quinoline                                                          
+  2,7-dimethyl quinoline                                                          
+  1-adamantyl cyanide                                                             
+  1-adamantyl isocyanide                                                          
+  2-methyl-6-t-butylaniline                                                       
+  n-undecanenitrile                                                               
+  carbazole                                                                       
+  2-biphenylamine                                                                 
+  biphenylamine                                                                   
+  2-n-butyl-2-methylhexanenitrile                                                 
+  6,7-benzoquinoline                                                              
+  a-benzoquinoline                                                                
+  acridine                                                                        
+  benzo[f]quinoline                                                               
+  phenanthridine                                                                  
+  n-methylcarbazole                                                               
+  1,2,3,4-tetrahydro-n-methylcarbazole                                            
+  9-ethyl-9h-carbazole                                                            
+  tetradecanenitrile                                                              
+  dioctylamine                                                                    
+  triphenylamine                                                                  
+  trioctylamine                                                                   
+  nitrogen                                                                        
+  diazene                                                                         
+  hydrazine                                                                       
+  diazomethane                                                                    
+  n=n-ch2-                                                                        
+  methylhydrazine                                                                 
+  cyanogen                                                                        
+  1,1-dimethylhydrazine                                                           
+  1,2-dimethylhydrazine                                                           
+  ethylenediamine                                                                 
+  1h-pyrazole                                                                     
+  imidazole                                                                       
+  1,2-propanediamine                                                              
+  dicyanoacetylene                                                                
+  fumaronitrile                                                                   
+  1,3-diazine                                                                     
+  pyrazine                                                                        
+  pyridazine                                                                      
+  succinonitrile                                                                  
+  2-methyl-1h-imidazole                                                           
+  (dimethylamino) acetonitrile                                                    
+  1,4,5,6-tetrahydropyrimidine                                                    
+  piperazine                                                                      
+  2-aminopyridine                                                                 
+  3-aminopyridine                                                                 
+  4-aminopyridine                                                                 
+  dimethyl propanedinitrile                                                       
+  2-ethyl-1h-imidazole                                                            
+  diethylcyanamide                                                                
+  butylmethyldiazene                                                              
+  n,n-dimethyl-1,3-propanediamine                                                 
+  2-cyanopyridine                                                                 
+  3-cyanopyridine                                                                 
+  4-cyanopyridine                                                                 
+  2,3-dimethyl pyrazine                                                           
+  hexanedinitrile                                                                 
+  phenylhydrazine                                                                 
+  3(dimethylamino) propanenitrile                                                 
+  tetramethyldiazetine                                                            
+  triethylenediamine                                                              
+  1,2-diisopropyldiazene                                                          
+  dipropyldiazene                                                                 
+  1h-benzimidazole                                                                
+  1h-indazole                                                                     
+  1-methyl-1-phenylhydrazine                                                      
+  t-butylmalononitrile                                                            
+  trimethyl pyrazine                                                              
+  1-piperidineacetonitrile                                                        
+  3,3,5,5-tetramethyl-1-pyrazoline                                                
+  m-dicyanobenzene                                                                
+  o-dicyanobenzene                                                                
+  p-dicyanobenzene                                                                
+  phthalazine                                                                     
+  quinazoline                                                                     
+  quinoxaline                                                                     
+  n-pentylmalonodinitrile                                                         
+  tetramethylbutanedinitrile                                                      
+  tetramethylpyrazine                                                             
+  1,4-dimethyl-2,3-diaza-bicyclo[2.2.2]oct-2-ene                                  
+  3,4,5,6-tetrahydro-3,3,6,6-tetramethylpyridazine                                
+  di-n-butyldiazene                                                               
+  di-tert-butyldiazene                                                            
+  1,2-dibutylhydrazine                                                            
+  3-quinolinamine                                                                 
+  5-quinolinamine                                                                 
+  6-quinolinamine                                                                 
+  8-quinolinamine                                                                 
+  2-(diethylamino)-pentanenitrile                                                 
+  2,2-bipyridyl                                                                   
+  2,4-bipyridyl                                                                   
+  4,4'-bipyridine                                                                 
+  2,3-dimethyl quinoxaline                                                        
+  alpha n,n-dimethylamino phenylacetonitrile                                      
+  ethyl(1,1-dimethylpropyl)malonodinitrile                                        
+  meso-2,3-diethyl-2,3-dimethylsuccinodinitrile                                   
+  methyl(1,1,2-trimethylpropyl)malonodinitrile                                    
+  phenazine                                                                       
+  phenazone                                                                       
+  cis-azobenzene                                                                  
+  diphenyl diazene                                                                
+  4,4'-dimethyl-2,2'-bipyridine                                                   
+  1,(1-piperidinyl) cyclohexanecarbonitrile                                       
+  a-phenyl-1-piperidineacetonitrile                                               
+  2,2'-biquinoline                                                                
+  tetraisobutylsuccinonitrile                                                     
+  azide                                                                           
+  hydrazoic acid                                                                  
+  methyl azide                                                                    
+  1,3,5-triazine                                                                  
+  ethylenetricarbonitrile                                                         
+  1,1,1-ethanetricarbonitrile                                                     
+  1,3,5-tricyanobenzene                                                           
+  1,1,1-tricyano-2-phenyl ethane                                                  
+  2,2',6',2'-terpyridine                                                          
+  1-h tetrazole                                                                   
+  2-h-tetrazole                                                                   
+  tetracyanoethylene                                                              
+  1,3,5,7-tetraazaadamantane                                                      
+  melamine                                                                        
+  oxygen, atom                                                                    
+  hydroxyl radical                                                                
+  hydroxide, anion                                                                
+  water                                                                           
+  hydronium, cation                                                               
+  carbon monoxide                                                                 
+  hco, cation                                                                     
+  hco                                                                             
+  formaldehyde                                                                    
+  ch2oh, cation                                                                   
+  methoxy, radical                                                                
+  methoxy, anion                                                                  
+  methanol                                                                        
+  ketene                                                                          
+  acetaldehyde                                                                    
+  ethylene oxide                                                                  
+  ethoxy, anion                                                                   
+  dimethyl ether                                                                  
+  ethanol                                                                         
+  propynal                                                                        
+  acrolein                                                                        
+  acetone                                                                         
+  propanal                                                                        
+  trimethylene oxide                                                              
+  isopropanol                                                                     
+  methyl ethyl ether                                                              
+  propanol                                                                        
+  acetyl acetylene                                                                
+  furan                                                                           
+  2,3-dihydrofuran                                                                
+  crotonaldehyde                                                                  
+  divinyl ether                                                                   
+  butanal                                                                         
+  isobutanal                                                                      
+  methyl ethyl ketone                                                             
+  tetrahydrofuran                                                                 
+  diethyl ether                                                                   
+  t-butanol                                                                       
+  2,3-dihydro-5-methyl-furan                                                      
+  2-ethylacrolein                                                                 
+  3,4-dihydro-2h-pyran                                                            
+  3-penten-2-one                                                                  
+  cyclopentanone                                                                  
+  diethyl ketone                                                                  
+  tetrahydropyran                                                                 
+  t-butyl methyl ether                                                            
+  phenoxy, anion                                                                  
+  phenol                                                                          
+  4-methyl-3-penten-2-one                                                         
+  cyclohexanone                                                                   
+  methyl neopentyl ketone                                                         
+  di-isopropyl ether                                                              
+  benzaldehyde                                                                    
+  anisole                                                                         
+  m-cresol                                                                        
+  o-cresol                                                                        
+  p-cresol                                                                        
+  2-methyl-5-hexen-3-yn-2-ol                                                      
+  2-norbornanone                                                                  
+  cis-2,3-epoxybicyclo[2.2.1]heptane                                              
+  norbornan-7-one                                                                 
+  1-methoxy cyclohexene                                                           
+  bicyclo[2.2.1]heptan-7-ol                                                       
+  cis-1,2-epoxycycloheptane                                                       
+  cycloheptanone                                                                  
+  2,4-dimethyl 3-pentanone                                                        
+  2-methyl cis-cyclohexanol                                                       
+  3,3-dimethyl-2-pentanone                                                        
+  4-heptanone                                                                     
+  heptanal                                                                        
+  t-butyl ethyl ketone                                                            
+  n-heptanol                                                                      
+  t-butyl isopropyl ether                                                         
+  benzofuran                                                                      
+  1,3-dihydro isobenzofuran                                                       
+  1-phenylethenol                                                                 
+  2,3-dihydro-benzofuran                                                          
+  acetophenone                                                                    
+  2,3-dimethyl phenol                                                             
+  2,4-dimethyl phenol                                                             
+  2,5-dimethyl phenol                                                             
+  2,6-dimethyl phenol                                                             
+  2-ethyl phenol                                                                  
+  3,4-dimethyl phenol                                                             
+  3,5-dimethyl phenol                                                             
+  3-ethyl phenol                                                                  
+  4-ethyl phenol                                                                  
+  benzyl alcohol                                                                  
+  ethoxybenzene                                                                   
+  phenetole                                                                       
+  1-methylnorcamphor                                                              
+  bicyclo[2.2.2]octanone                                                          
+  bicyclo[3.2.1]octan-2-one                                                       
+  bicyclo[3.2.1]octan-3-one                                                       
+  bicyclo[3.2.1]octan-8-one                                                       
+  cis-bicyclo[3.3.0]-octan-2-one                                                  
+  trans-bicyclo[3.3.0]-octan-2-one                                                
+  3-oxabicyclo[3,2,2]nonane                                                       
+  6-methyl-5-hepten-2-one                                                         
+  bicyclo(2.2.2)octan-2-ol                                                        
+  cis-1,2-epoxycyclooctane                                                        
+  cyclooctanone                                                                   
+  2,2,4-trimethyl-3-pentanone                                                     
+  2-octanone                                                                      
+  3,3,4-trimethyl pentan-2-one                                                    
+  3-octanone                                                                      
+  4-octanone                                                                      
+  octanal                                                                         
+  1-octanol                                                                       
+  1-tert-butoxybutane                                                             
+  2-(1,1-dimethylethoxy)-butane                                                   
+  di-n-butyl ether                                                                
+  di-sec-butyl ether                                                              
+  sec-butyl-tert-butyl ether                                                      
+  tert-butyl ether                                                                
+  tert-butyl isobutyl ether                                                       
+  3,4-dihydro-1h-2-benzopyran                                                     
+  3,4-dihydro-2h-1-benzopyran                                                     
+  benzyl methyl ketone                                                            
+  2(-1-methylethyl)-phenol                                                        
+  2,4,6-trimethyl phenol                                                          
+  3(-1-methylethyl)-phenol                                                        
+  4-(1methylethyl)-phenol                                                         
+  2,6,6-trimethyl-2-cyclohexen-1-one                                              
+  bicycle[3.3.1]nonan-9-one -check -3-one                                         
+  cis octahydro-2h-inden-2-one                                                    
+  trans octahydro-2h-inden-2-one                                                  
+  cyclononanone                                                                   
+  2,6-dimethyl-4-heptanone                                                        
+  2-nonanone                                                                      
+  3,3,4,4-tetramethyl-2-pentanone                                                 
+  5-nonanone                                                                      
+  di-tert-butyl ketone                                                            
+  1-nonanol                                                                       
+  amyl-t-butyl ether                                                              
+  butyl 1,1-dimethylpropyl ether                                                  
+  4-phenyl-3-buten-2-one                                                          
+  2-adamantone                                                                    
+  2-isopropyl-4-methylphenol                                                      
+  2-isopropyl-5-methylphenol                                                      
+  2-isopropyl-6-methylphenol                                                      
+  2-methyl-5-isopropylphenol                                                      
+  3-isopropyl-2-methylphenol                                                      
+  3-methyl-2-isopropylphenol                                                      
+  3-methyl-5-isopropylphenol                                                      
+  4-isopropyl-2-methylphenol                                                      
+  4-isopropyl-3-methylphenol                                                      
+  4-methyl-3-isopropylphenol                                                      
+  m-tert-butylphenol                                                              
+  o-sec-butylphenol                                                               
+  o-tert-butylphenol                                                              
+  p-sec-butylphenol                                                               
+  p-tert-butyl phenol                                                             
+  1-adamantol                                                                     
+  2-adamantol                                                                     
+  camphor                                                                         
+  octahydro-3a-methyl-cis-2h-inden-2-one                                          
+  octahydro-3a-methyl-trans-2h-inden-2-one                                        
+  beta-caran-3-ol                                                                 
+  cyclodecanone                                                                   
+  2,2,5,5-tetramethyl-3-hexanone                                                  
+  decanol                                                                         
+  dipentyl ether                                                                  
+  2,4,5-trimethyl-acetophenone                                                    
+  2,4,6-trimethyl-acetophenone                                                    
+  2-tert-butyl-p-cresol                                                           
+  3-methyl-2-phenylbutane-2-ol                                                    
+  cycloundecanone                                                                 
+  2,2,6,6-tetramethyl-4-heptanone                                                 
+  dipentyl ketone                                                                 
+  decyl methyl ether                                                              
+  dibenzofuran                                                                    
+  m-hydroxybiphenyl                                                               
+  o-hydroxybiphenyl                                                               
+  p-hydroxybiphenyl                                                               
+  isobutyl phenyl ketone                                                          
+  2,6-diisopropylphenol                                                           
+  benzophenone                                                                    
+  anthone                                                                         
+  1,1'-diadamantylketone                                                          
+  nitric oxide, cation                                                            
+  nitric oxide                                                                    
+  nco                                                                             
+  hydrogen isocyanate                                                             
+  formamide                                                                       
+  acetaldoxime                                                                    
+  acetamide                                                                       
+  isoxazole                                                                       
+  oxalone                                                                         
+  acrylamine                                                                      
+  methoxyacetonitrile                                                             
+  dimethylformamide                                                               
+  n-methyl acetamide                                                              
+  propanamide                                                                     
+  dimethylaminomethanol                                                           
+  3-methyl isoxazole                                                              
+  5-methyl isoxazole                                                              
+  2-pyrrolidinone                                                                 
+  4,5-dihydro-2-methyl oxazole                                                    
+  methacrylamide                                                                  
+  2-methyl propanamide                                                            
+  butanamide                                                                      
+  isobutylamide                                                                   
+  n,n-diethyl-hydroxylamine                                                       
+  2-pyridinol                                                                     
+  3-pyridinol                                                                     
+  4-pyridinol                                                                     
+  pyridine 1 oxide                                                                
+  3,5-dimethyl isoxazole                                                          
+  1-methyl-2-pyrrolidinone                                                        
+  2-ethyl-4,5-dihydro-oxazole                                                     
+  n,n-dimethylamino-2-propen-3-al                                                 
+  1-(dimethylamino)-2-propanone                                                   
+  2,2-dimethyl-propanamide                                                        
+  n,n-dimethyl propanamide                                                        
+  2-hydroxy-6-methylpyridine                                                      
+  3-hydroxy-2-methylpyridine                                                      
+  3-hydroxy-6-methylpyridine                                                      
+  4-hydroxy-2-methylpyridine                                                      
+  6-methyl-2(1h)-pyridinone                                                       
+  m-amino phenol                                                                  
+  o-amino phenol                                                                  
+  p-amino phenol                                                                  
+  para-aminophenol                                                                
+  trimethyl isoxazole                                                             
+  caprolactam                                                                     
+  cyclohexanone oxime                                                             
+  n,n-diethyl acetamide                                                           
+  n,n-dimethylbutyramine                                                          
+  benzoxazole                                                                     
+  isocyanatobenzene                                                               
+  benzamide                                                                       
+  n,n-dimethylamino-2,4-pentadiene-5-al                                           
+  2-methoxy-3,3-dimethylbutanenitrile                                             
+  n,n-diethylaminoacetone                                                         
+  n,n-dimethyl-tert-butylcarboxamide                                              
+  alpha-oxo benzeneacetonitrile                                                   
+  1,3-dimethyl-2-nitroso-benzene                                                  
+  n-methyl-n-phenyl formamide                                                     
+  octanone-1-oxime                                                                
+  octanone-2-oxime                                                                
+  octanone-3-oxime                                                                
+  octanone-4-oxime                                                                
+  2(1h)-quinolinone                                                               
+  3-phenyl isoxazole                                                              
+  4-quinolinol                                                                    
+  5-phenyl isoxazole                                                              
+  8-quinolinol                                                                    
+  a-cyanoacetophenone                                                             
+  2,4,6-trimethylnitrosobenzene                                                   
+  n,n-dimethyl benzamide                                                          
+  n,n-dimethyamino-2,4,6-heptatriene-7-al                                         
+  2,2,6,6-tetramethyl-4-piperidinone                                              
+  2-methyl-4-hydroxyquinoline                                                     
+  2-methyl-8-quinolinol                                                           
+  3-methyl-5-phenyl isoxazole                                                     
+  4-methyl-2-hydroxyquinoline                                                     
+  5-methyl-3-phenyl isoxazole                                                     
+  beta-cyanopropiophenone                                                         
+  2,4,6-trimethylbenzonitrile, n-oxide                                            
+  2-(dimethylamino)-acetophenone                                                  
+  n,n,4-trimethyl benzamide                                                       
+  (e)-3-(methylamino)-1-phenyl-but-2-enone                                        
+  1-propanone, 2-(dimethylamino)-1-phenyl-                                        
+  2-propanamine, 2-methyl-n-(phenylmethylene)-, n-oxide                           
+  1-adamantanecarboxamide                                                         
+  n,n-dimethylnonamide                                                            
+  phenoxazine                                                                     
+  2-(diethylamino)-1-phenylethanone                                               
+  9,10-dihydro-9-oxoacridine                                                      
+  benzenamine, n-(phenylmethylene)-, n-oxide                                      
+  1-propanone, 2-(diethylamino)-1-phenyl-                                         
+  n,n-dimethyl-1-adamantylcarboxamide                                             
+  4-isopropylbenzylidene t-butylamine n-oxide                                     
+  nitrous oxide                                                                   
+  urea                                                                            
+  n-methyl urea                                                                   
+  dimethyl furazan                                                                
+  isopropylurea                                                                   
+  5-amino-3,4-dimethylisoxazole                                                   
+  (1-methylpropyl) urea                                                           
+  n,n-diethylurea                                                                 
+  tetramethylurea                                                                 
+  4-amino-2(1h)-pyrimidinone                                                      
+  oxygen (singlet)                                                                
+  h2o2                                                                            
+  h2o2cis                                                                         
+  h2o2trans                                                                       
+  hydrogen peroxide                                                               
+  h(+)(h2o)2                                                                      
+  carbon dioxide                                                                  
+  formate, anion                                                                  
+  formic acid                                                                     
+  trans glyoxal                                                                   
+  acetate, anion                                                                  
+  acetic acid                                                                     
+  methyl formate                                                                  
+  dimethyl peroxide                                                               
+  ethylene glycol                                                                 
+  carbon suboxide                                                                 
+  2-oxo-propanal                                                                  
+  2-propenoic acid                                                                
+  beta-propiolactone                                                              
+  1,3-dioxalane                                                                   
+  ethyl formate                                                                   
+  methyl acetate                                                                  
+  propionic acid                                                                  
+  1,3-propanediol                                                                 
+  2-methoxyethanol                                                                
+  dimethoxymethane                                                                
+  propylene glycol                                                                
+  2-butenoic acid                                                                 
+  2-methyl-2-propenic acid                                                        
+  diacetyl                                                                        
+  gamma butyrolactone                                                             
+  methyl 2-propenoate                                                             
+  1,1 dimethoxy ethene                                                            
+  1,3 dioxan                                                                      
+  1,4-dioxane                                                                     
+  ethyl acetate                                                                   
+  1,2-dimethoxyethane                                                             
+  1,4 butandiol                                                                   
+  diethyl peroxide                                                                
+  dimethyl acetal                                                                 
+  ethyl propionate                                                                
+  isopropyl acetate                                                               
+  1,5 pentandiol                                                                  
+  p-benzoquinone                                                                  
+  1,2-benzenediol                                                                 
+  hydroquinone                                                                    
+  resorcinol                                                                      
+  1,3-cyclohexanedione                                                            
+  1,4-cyclohexanedione                                                            
+  2,4-hexanedione                                                                 
+  2-oxepanone                                                                     
+  3-methyl-2,4-pentandione                                                        
+  ethyl-(e)-2-butenoate                                                           
+  1,1-dimethoxy-2-butene                                                          
+  4-hydroxy-4-methylpentan-2-one                                                  
+  5,5-dimethyl-1,3-dioxane                                                        
+  cis-2,4-dimethyl-1,3-dioxane                                                    
+  ethyl butanoate                                                                 
+  hexanoic acid                                                                   
+  methyl 2-methylbutanoate                                                        
+  methyl 2,2-dimethyl-propanoate                                                  
+  methyl 3-methylbutanoate                                                        
+  methyl pentanoate                                                               
+  t-butyl acetate                                                                 
+  trans 4,5-dimethyl-1,3-dioxane                                                  
+  1,1-diethoxy ethane                                                             
+  1,1-dimethoxy-butane                                                            
+  1,2-diethoxy ethane                                                             
+  1,6-hexanediol                                                                  
+  2,3-dimethyl-2,3-butanediol                                                     
+  3-(2-furanyl)-2-propenal                                                        
+  benzoic acid                                                                    
+  phenyl formate                                                                  
+  tropolone                                                                       
+  3-methyl-1,2-benzenediol                                                        
+  4-methyl 1,2-benzenediol                                                        
+  ethyl 2-methylene-3-butenoate                                                   
+  ethyl 2-pentynoate                                                              
+  ethyl 3-pentynoate                                                              
+  ethyl 4-pentynoate                                                              
+  3,5-heptanedione                                                                
+  3-ethyl-2,4-pentanedione                                                        
+  5-methyl-2,4-hexanedione                                                        
+  butyl 2-propenoate                                                              
+  ethyl (z)-2-pentenoate                                                          
+  ethyl (z)-3-pentenoate                                                          
+  ethyl 4-pentenoate                                                              
+  ethyl trans-2-pentenoate                                                        
+  heptanolactone                                                                  
+  isopropyl 2-butenoate                                                           
+  propyl (e)-2-butenoate                                                          
+  (2a,4a,6b)-2,4,6-trimethyl-1,3-dioxane                                          
+  1,1-dimethoxycyclopentane                                                       
+  1,1-dimethylpropyl acetate                                                      
+  ethyl 2-methylbutanoate                                                         
+  ethyl 3-methylbutanoate                                                         
+  ethyl pentanoate                                                                
+  methyl 3,3-dimethylbutanoate                                                    
+  methyl hexanoate                                                                
+  1,3-diethoxypropane                                                             
+  1,7-heptanediol                                                                 
+  m-methylbenzoic acid                                                            
+  methyl benzoate                                                                 
+  o-methylbenzoic acid                                                            
+  p-methylbenzoic acid                                                            
+  1,3-dioxolane-2-phenyl                                                          
+  2,3-dimethylbenzoic acid                                                        
+  2,4-dimethylbenzoic acid                                                        
+  2,5-dimethylbenzoic acid                                                        
+  2,6-dimethylbenzoic acid                                                        
+  2-ethylbenzoic acid                                                             
+  3,4-dimethylbenzoic acid                                                        
+  3,5-dimethylbenzoic acid                                                        
+  3-ethylbenzoic acid                                                             
+  4-ethylbenzoic acid                                                             
+  methyl 4-methylbenzoate                                                         
+  1,2-naphthalenediol                                                             
+  1,3-naphthalenediol                                                             
+  1,4-naphthalenediol                                                             
+  2,3-naphthalenediol                                                             
+  1-phenyl-1,3-butanedione                                                        
+  2,3,4-trimethylbenzoic acid                                                     
+  2,3,5-trimethylbenzoic acid                                                     
+  2,3,6-trimethylbenzoic acid                                                     
+  2,4,5-trimethylbenzoic acid                                                     
+  2,4,6-trimethylbenzoic acid                                                     
+  2-isopropyl benzoic acid                                                        
+  2-methyl-2-phenyl-1,3-dioxolane                                                 
+  3,4,5-trimethylbenzoic acid                                                     
+  3-isopropyl benzoic acid                                                        
+  4-isopropyl benzoic acid                                                        
+  2-isopropyl-6-methyl-pyrocatechol                                               
+  cyclohexyl butanoate                                                            
+  ethyl octanoate                                                                 
+  1,10-decanediol                                                                 
+  1-naphthoic acid                                                                
+  isonaphthoic acid                                                               
+  2,3,4,5-tetramethylbenzoic acid                                                 
+  2,3,4,6-tetramethylbenzoic acid                                                 
+  2,3,5,6-tetramethylbenzoic acid                                                 
+  p-tert-butyl benzoic acid                                                       
+  oxacyclododecan-2-one                                                           
+  ethyl nonanoate                                                                 
+  1,1-dibutoxypropane                                                             
+  5,5-dimethyl-2-phenyl-1,3-dioxane                                               
+  pentamethylbenzoic acid                                                         
+  2,2,6,6-tetramethyl-3,5-heptanedione                                            
+  ethyl decanoate                                                                 
+  xanthone                                                                        
+  phenyl benzoate                                                                 
+  9,10-anthroquinone                                                              
+  9,10-phenanthroquinone                                                          
+  nitrogen dioxide                                                                
+  nitrous acid, cis                                                               
+  nitrous acid, trans                                                             
+  methyl nitrite                                                                  
+  nitromethane                                                                    
+  ethyl nitrite                                                                   
+  glycine                                                                         
+  methyl carbamate                                                                
+  nitroethane                                                                     
+  alanine                                                                         
+  beta-alanine                                                                    
+  isopropylnitrite                                                                
+  n-methylglycine                                                                 
+  propyl nitrite                                                                  
+  urethane                                                                        
+  methyl cyanoacetate                                                             
+  succinimide                                                                     
+  2-nitrobutane                                                                   
+  2-nitroisobutane                                                                
+  4-aminobutanoic acid                                                            
+  isobutyl nitrite                                                                
+  n-butyl nitrite                                                                 
+  sec-butyl nitrite                                                               
+  t-butyl nitrite                                                                 
+  diethanolamine                                                                  
+  n-methylmaleimide                                                               
+  glutarimide                                                                     
+  n-methylsuccinimide                                                             
+  proline                                                                         
+  5-aminovaleric acid                                                             
+  n,n-dimethylglycine methyl ester                                                
+  tert-pentyl nitrite                                                             
+  valine                                                                          
+  1,1-dimethoxy-trimethylamine                                                    
+  niacin                                                                          
+  nitrobenzene                                                                    
+  ethyl 2-cyanopropionate                                                         
+  ethyl n,n-dimethylglycinate                                                     
+  hexanoic acid, 6-amino-                                                         
+  isoleucine                                                                      
+  leucine                                                                         
+  methyl n,n-dimethylalaninate                                                    
+  n,n-dimethylacetamide dimethyl acetal                                           
+  m-aminobenzoic acid                                                             
+  o-aminobenzoic acid                                                             
+  p-aminobenzoic acid                                                             
+  p-nitrotoluene                                                                  
+  phenylnitromethane                                                              
+  methyl n,n-,a,a-tetramethylglycinate                                            
+  2,6-dimethylnitrobenzene                                                        
+  2-amino-2-phenylacetic acid                                                     
+  2-nitro-m-xylene                                                                
+  n-phenylglycine                                                                 
+  8-aminocaprylic acid                                                            
+  2-methyl-1h-isoindole-1,3(2h)-dione                                             
+  nitromesitylene                                                                 
+  phenylalanine                                                                   
+  2,2,6,6-tetramethyl-4-oxo-1-piperidinyloxy                                      
+  1-hydroxy-2,2,6,6-tetramethyl-4-piperidinone                                    
+  4-hydroxy-2,2,6,6-tetramethyl-1-piperidinyloxy                                  
+  1-hydroxy-2,2,6,6-tetramethyl-4-piperidinol                                     
+  1-nitroso-2-naphthalenol                                                        
+  1-nitroso-4-naphthalenol                                                        
+  2-nitroso-1-naphthalenol                                                        
+  n,n-dimethyl 4-methoxybenzamide                                                 
+  1-nitroadamantane                                                               
+  2-nitroadamantane                                                               
+  phenol, 2-[(phenylimino)methyl]-, n-oxide                                       
+  benzenamine, n-[(4-methoxyphenyl)methylene]-, n-oxide                           
+  n-(3-phenoxy-2-hydroxypropyl)aniline                                            
+  oxalamide                                                                       
+  n-nitrodimethylamine                                                            
+  acetyl-urea                                                                     
+  propanediamide                                                                  
+  pyrazine-1,4-dioxide                                                            
+  uracil                                                                          
+  thymine                                                                         
+  m-nitroaniline                                                                  
+  p-nitroaniline                                                                  
+  lysine                                                                          
+  n,n-dimethyl-m-nitroaniline                                                     
+  n,n-dimethyl-p-nitroaniline                                                     
+  tryptophan                                                                      
+  imidodicarbonic diamide                                                         
+  histidine                                                                       
+  argenine                                                                        
+  ozone                                                                           
+  1,3,5-trioxane                                                                  
+  methyl hydroxyacetate                                                           
+  glycerol                                                                        
+  acetic anhydride                                                                
+  trimethoxymethane                                                               
+  2,5,8-trioxanonane                                                              
+  m-salicylic acid                                                                
+  o-salicylic acid                                                                
+  p-salicylic acid                                                                
+  2,3-butanediol, 2,3-dimethyl-, monoformate                                      
+  trimethoxymethyl benzene                                                        
+  1-tert-butoxy-3-propoxy-2-propanol                                              
+  1-butoxy-3-tert-butyl-2-propanol                                                
+  benzoic acid, anhydride                                                         
+  nitrate radical                                                                 
+  nitrate anion                                                                   
+  nitric acid                                                                     
+  methyl nitrate                                                                  
+  oxamic acid                                                                     
+  ethyl nitrate                                                                   
+  serine                                                                          
+  2-nitrofuran                                                                    
+  threonine                                                                       
+  m-nitrophenol                                                                   
+  o-nitrophenol                                                                   
+  p-nitrophenol                                                                   
+  tyrosine                                                                        
+  dinitrogen trioxide                                                             
+  barbituric acid                                                                 
+  asparagine                                                                      
+  glutamine                                                                       
+  8-hydroxy-5-nitroquinoline                                                      
+  1,3,5-triazine-2,4,6(1h,3h,5h)-trione                                           
+  1,3,5-trimethyl-s-triazine-2,4,6-trione                                         
+  2,4,6-trimethoxy-s-triazine                                                     
+  oxalic acid                                                                     
+  dioxybismethanol                                                                
+  1,4-dioxan-2,5-dione                                                            
+  dimethyl oxalate                                                                
+  1,3,5,7-tetroxane                                                               
+  dimethyl malonate                                                               
+  ethylmalonic acid                                                               
+  methylene diacetate                                                             
+  tetramethoxymethane                                                             
+  1,1-diacetoxyethane                                                             
+  dimethyl methylmalonate                                                         
+  2,2-diacetoxypropane                                                            
+  diethyl malonate                                                                
+  dimethyl dimethylmalonate                                                       
+  3,5,7,9-tetraoxyundecane                                                        
+  12-crown-4                                                                      
+  5,8-dihydroxy-1,4-naphthalenedione                                              
+  dimethyl isophthalate                                                           
+  dimethyl phthalate                                                              
+  1-(tert-butyldioxy)-3-propoxy-2-propanol                                        
+  benzal diacetate                                                                
+  1-butoxy-1-tert-butyldioxy-2-propanol                                           
+  1,1-ethanediol, 2-phenyl-, diacetate                                            
+  benzyl diacetate                                                                
+  1,4,9,10-anthracenetetrone                                                      
+  1,4-dihydroxy-9,10-anthracenedione                                              
+  diphenyl oxalate                                                                
+  dimethyl naphthalene-2,6-dicarboxylate                                          
+  p-diacetylbenzene diethyl ketal                                                 
+  aspartic acid                                                                   
+  glutamic acid                                                                   
+  4-nitrocatechol                                                                 
+  p-nitrobenzoic acid                                                             
+  dinitrogen tetroxide                                                            
+  dinitromethane                                                                  
+  m-dinitrobenzene                                                                
+  o-dinitrobenzene                                                                
+  p-dinitrobenzene                                                                
+  2,4-dinitrotoluene                                                              
+  dinitrophenylmethane                                                            
+  n,n'-bis(m-methoxyphenyl) terephthalamide                                       
+  n,n'-bis(o-methoxyphenyl) terephthalamide                                       
+  n,n'-bis(p-methoxyphenyl) terephthalamide                                       
+  methyldinitramine                                                               
+  tartronic acid                                                                  
+  1,3,5,7,9-pentaoxecane                                                          
+  3,5,7,9,11-pentaoxa-tridecane                                                   
+  15-crown-5                                                                      
+  dinitrogen pentoxide                                                            
+  trimethyl methanetricarboxylate                                                 
+  triethyl methanetricarboxylate                                                  
+  triethyl 1,1,1-ethanetricarboxylate                                             
+  trinitromethane                                                                 
+  1,1,1-trinitroethane                                                            
+  2,4,6-trinitrotoluene                                                           
+  2-(diacetoxymethyl)-5-nitrofuran                                                
+  2,4,6-trinitroanisole                                                           
+  2,4,6-trinitrophenetole                                                         
+  tetraethylpyromellitate                                                         
+  tetrapropyl 1,2,4,5-benzene tetracarboxylate                                    
+  tetranitromethane                                                               
+  glycerol trinitrate                                                             
+  pentaerythritol tetranitrate                                                    
+  hexanitroethane                                                                 
+  bis(2,2,2-trinitroethyl)-amine                                                  
+  fluorine, 2p(u) 2s(2)2p(5)                                                      
+  fluorine, 2s(g) 2s(1)2p(6)                                                      
+  fluorine, atom                                                                  
+  fluoride, anion                                                                 
+  hydrogen fluoride                                                               
+  fluoromethylidyne                                                               
+  fluoromethyl, cation                                                            
+  fluoromethane                                                                   
+  fluoroacetylene                                                                 
+  fluoroethylene                                                                  
+  ch3chf, cation                                                                  
+  fluoroethane                                                                    
+  2-fluoropropane                                                                 
+  fluorobenzene                                                                   
+  fluorocyclohexane                                                               
+  1-fluorononane                                                                  
+  cyanogen fluoride                                                               
+  fluorine oxide                                                                  
+  hypofluorous acid                                                               
+  hcof                                                                            
+  acetyl fluoride                                                                 
+  nitrosyl fluoride                                                               
+  fluorine dioxide                                                                
+  p-fluorobenzoic acid                                                            
+  fluorine nitrite                                                                
+  fluorine nitrate                                                                
+  fluorodinitromethane                                                            
+  fluorodinitrophenylmethane                                                      
+  fluorine                                                                        
+  difluoromethylene                                                               
+  difluoromethyl, cation                                                          
+  difluoromethane                                                                 
+  difluoroacetylene                                                               
+  gem-difluoroethylene                                                            
+  ch3cf2, cation                                                                  
+  1,1-difluoroethane                                                              
+  1,2-difluorobenzene                                                             
+  1,3-difluorobenzene                                                             
+  1,4-difluorobenzene                                                             
+  nf2.                                                                            
+  difluoro nitrogen, anion                                                        
+  t-butyldifluoroamine                                                            
+  n,n'-difluorobenzylamine                                                        
+  cis-difluorodiazene                                                             
+  trans-difluorodiazene                                                           
+  difluorine oxide                                                                
+  carbonyl fluoride                                                               
+  trifluoromethyl                                                                 
+  trifluoromethane, cation                                                        
+  trifluoromethane                                                                
+  trifluoroethylene                                                               
+  cf3ch2, cation                                                                  
+  ch2f.cf2, cation                                                                
+  cf3ch2.                                                                         
+  1,1,1-trifluoroethane                                                           
+  (trifluoromethyl)-benzene                                                       
+  trifluoromethylbenzene                                                          
+  nitrogen trifluoride                                                            
+  trifluoroacetonitrile                                                           
+  trifluoromethylisocyanide                                                       
+  f3no                                                                            
+  trifluoroacetic acid                                                            
+  carbon tetrafluoride                                                            
+  tetrafluoroethylene                                                             
+  1,2,4,5-tetrafluorobenzene                                                      
+  1-fluoro-3-(trifluoro-methyl)benzene                                            
+  tetrafluorohydrazine                                                            
+  n,n,n',n'-tetrafluoro-1,1-cyclohexanediamine                                    
+  n,n,n',n'-tetrafluoro-4-methyl-1,2-pentane                                      
+  1,1-bis(difluoroamine)heptane                                                   
+  perfluoromethanol                                                               
+  bis(fluoroxy)perfluoromethane                                                   
+  pentafluorobenzene                                                              
+  2,3,4,5,6-pentafluorotoluene                                                    
+  pentafluoromethylamine                                                          
+  pentafluoroguanidine                                                            
+  pentafluorophenol                                                               
+  hexafluoroethane                                                                
+  perfluorobutadiene                                                              
+  hexafluorobenzene                                                               
+  hexafluorodimethylamine                                                         
+  dimethyl perfluoroether                                                         
+  perfluoroacetone                                                                
+  hexafluoropentanedioic acid, dimethyl ester                                     
+  heptafluoromethane triamine                                                     
+  perfluoropropane                                                                
+  perfluorobut-2-ene                                                              
+  perfluorocyclobutane                                                            
+  octafluorotoluene                                                               
+  octafluoromethanetetramine                                                      
+  perfluorodimethoxymethane                                                       
+  n-perfluorobutane                                                               
+  decafluorocyclohexene                                                           
+  undecafluoropiperidine                                                          
+  tetrakis(difluoroamine)-n-1,1-trifluorodimethylamine                            
+  dodecafluorocyclohexane                                                         
+  bis-(n-perfluoropropyl ether)                                                   
+  perfluorotriethylamine                                                          
+  perfluoroheptane                                                                
+  cis-perfluorobicyclo[4,3,0]nonane                                               
+  trans-perfluorobicyclo[4,3,0]nonane                                             
+  perfluoro 3-ethyl 2,4 dimethyl pent-2-en                                        
+  perfluoro cis decalin                                                           
+  perfluoro-di(n-butyl) ether                                                     
+  perfluoro-2,7-dimethyloctane                                                    
+  perfluorotributylamine                                                          
+  phosphinidene                                                                   
+  phosphino                                                                       
+  phosphine cation                                                                
+  phosphine                                                                       
+  ph4(+)                                                                          
+  methinophosphide                                                                
+  methylphosphine                                                                 
+  phosphetethene                                                                  
+  dimethylphosphine                                                               
+  ethylphosphine                                                                  
+  trimethylphosphine                                                              
+  protonated trimethylphosphine                                                   
+  diethylphosphine                                                                
+  triphenylphosphine                                                              
+  phosphorus nitride                                                              
+  hpn                                                                             
+  pnh                                                                             
+  pnh2 (singlet)                                                                  
+  trans-hpnh                                                                      
+  (ch3)2p=net                                                                     
+  trimethylphosphine-n-ethylimine                                                 
+  hexamethylphosphorous triamide                                                  
+  tris(diethylamino)phosphine                                                     
+  phosphorus oxide                                                                
+  hpo                                                                             
+  trimethylphosphine oxide                                                        
+  triphenyl phosphine oxide                                                       
+  phosphorus dioxide                                                              
+  methylphosphonic acid                                                           
+  ethylphosphonic acid                                                            
+  trimethyl phosphite                                                             
+  triethyl phosphite                                                              
+  di-isopropyl ethylphosphonate                                                   
+  tri-isopropyl phosphite                                                         
+  methyl phosphate anion                                                          
+  methyl phosphate                                                                
+  ethylene phosphate anion                                                        
+  (c2h4)po4h                                                                      
+  ethylene phosphate                                                              
+  dimethyl phosphate anion                                                        
+  dimethyl hydrogen phosphate                                                     
+  methyl ethyl phosphate anion                                                    
+  trimethyl phosphate                                                             
+  triethyl phosphate                                                              
+  tri-n-butyl phosphate                                                           
+  triphenyl phosphate                                                             
+  po(ocn)3                                                                        
+  (c2h4)(po4h2)-oh                                                                
+  (c2h4)(po4h)-ome anion                                                          
+  phosphorus monofluoride (triplet)                                               
+  ch2=p-f                                                                         
+  fpo                                                                             
+  phosphorus difluoride                                                           
+  opf2                                                                            
+  methylphosphonodifluoride                                                       
+  phosphorus trifluoride                                                          
+  phosphorus oxyfluoride                                                          
+  phosphorus tetrafluoride                                                        
+  phosphorus tetrafluoride, anion                                                 
+  phosphorus pentafluoride                                                        
+  phosphorus hexafluoride, anion                                                  
+  p2h4                                                                            
+  pyrophosphoric acid                                                             
+  methyl triphosphate anion                                                       
+  methyl triphosphate                                                             
+  phosphorus trioxide                                                             
+  phosphorus pentoxide                                                            
+  hydrogen sulfide (hs)                                                           
+  hydrogen sulfide, anion                                                         
+  hydrogen sulfide (h2s)                                                          
+  carbon sulfide                                                                  
+  thioformaldehyde                                                                
+  methanethio radical                                                             
+  thiomethanol                                                                    
+  thioketene, h2ccs                                                               
+  c2h3s                                                                           
+  thiirane                                                                        
+  dimethyl thioether                                                              
+  thioethanol                                                                     
+  thietane                                                                        
+  1-propanthiol                                                                   
+  isopropanthiol                                                                  
+  methylethylthioether                                                            
+  thiophene                                                                       
+  2,3-dihydrothiophene                                                            
+  2,5-dihydrothiophene                                                            
+  cis dimethylthiirane                                                            
+  tetrahydrothiophene                                                             
+  trans dimethylthiirane                                                          
+  butanethiol                                                                     
+  diethyl thioether                                                               
+  methylpropylthioether                                                           
+  cyclopentanthiol                                                                
+  thiacyclohexane                                                                 
+  thiophenol                                                                      
+  cyclohexanethiol                                                                
+  2,3-dimethyl-2-butanethiol                                                      
+  2-methyl-2-pentanethiol                                                         
+  butyl ethyl sulfide                                                             
+  methyl pentyl sulfide                                                           
+  methyl phenyl sulfide                                                           
+  toluenethiol                                                                    
+  3(tert-butyl)-1-propene                                                         
+  1-heptanethiol                                                                  
+  benzyl methyl sulfide                                                           
+  ethyl phenyl sulfide                                                            
+  di-tert-butyl sulfide                                                           
+  diisobutyl sulfide                                                              
+  diphenyl sulfide                                                                
+  sulfur nitride                                                                  
+  hydrogen isothiocyanate                                                         
+  methyl isothiocyanate                                                           
+  methyl thiocyanate                                                              
+  ethanethioamide                                                                 
+  4-methylthiazole                                                                
+  benzothiazole                                                                   
+  benzenecarbothioamide                                                           
+  n,n-(dimethyl)thiobenzamide                                                     
+  phenothiazine                                                                   
+  thiourea                                                                        
+  tetramethylthiourea                                                             
+  4,6-bis(isopropylamino)-2-methylmercapto)-s-triazine                            
+  sulfur monoxide (triplet)                                                       
+  hos                                                                             
+  carbon oxysulfide                                                               
+  ethyne sulfenic acid                                                            
+  thiolacetic acid                                                                
+  dimethyl sulfoxide                                                              
+  s-ethylthioacetate                                                              
+  diethyl sulfoxide                                                               
+  benzenesulfenic acid                                                            
+  dipropyl sulfoxide                                                              
+  phenoxathiin                                                                    
+  diphenyl sulfoxide                                                              
+  thioxanthone                                                                    
+  bis-diethylamine sulfoxide                                                      
+  sulfur dioxide                                                                  
+  s(oh)2                                                                          
+  dimethyl sulfone                                                                
+  methylethyl sulfone                                                             
+  2,5-dihydrothiophene sulfone                                                    
+  divinyl sulfone                                                                 
+  diethyl sulfone                                                                 
+  methyl-i-propyl sulfone                                                         
+  methyl n-butyl sulfone                                                          
+  methyl-t-butyl sulfone                                                          
+  di-n-propyl sulfone                                                             
+  ethyl-t-butyl sulfone                                                           
+  diethoxy ethylthiomethane                                                       
+  benzyl methyl sulfone                                                           
+  p-tolyl methyl sulfone                                                          
+  di-i-butyl sulfone                                                              
+  di-n-butyl sulfone                                                              
+  di-tert-butyl sulfone                                                           
+  diisobutyl sulfone                                                              
+  (e)-1-methyl-4-(1-propenyl-sulfonyl)-benzene                                    
+  1-methyl-4-(1-methyl-ethenylsulfonyl) benzene                                   
+  2-butenyl p-tolyl sulfone                                                       
+  2-methyl-2-propenyl p-tolyl sulfone                                             
+  3-butenyl p-tolyl sulfone                                                       
+  diphenyl sulfone                                                                
+  cysteine                                                                        
+  methionine                                                                      
+  sulfur trioxide                                                                 
+  hoso2(-)                                                                        
+  h2so3                                                                           
+  dimethyl sulfite                                                                
+  (ch3o)(c2h5o)so                                                                 
+  diethyl sulfite                                                                 
+  dipropyl sulfite                                                                
+  di-n-butyl sulfite                                                              
+  sulfuric acid                                                                   
+  dimethyl sulfate                                                                
+  (ch3o)3so                                                                       
+  diethyl sulfate                                                                 
+  dipropyl sulfate                                                                
+  di-n-butyl sulfate                                                              
+  sulfur fluoride                                                                 
+  so2f                                                                            
+  fluorosulfonic acid (hoso2f)                                                    
+  sulfur difluoride                                                               
+  thiocarbonyl difluoride                                                         
+  thionyl fluoride                                                                
+  sulfuryl fluoride                                                               
+  sulfur trifluoride                                                              
+  s-ethyl trifluorothioacetic acid                                                
+  sulfur tetrafluoride                                                            
+  sof4                                                                            
+  sulfur pentafluoride                                                            
+  sulfur pentafluoride, anion                                                     
+  sf5oh                                                                           
+  sulfur hexafluoride                                                             
+  hs2                                                                             
+  hydrogen disulfide                                                              
+  carbon disulfide                                                                
+  ch3ssh                                                                          
+  (ch3)2s=s                                                                       
+  1,2-ethanedithiol                                                               
+  2,3-dithiabutane                                                                
+  ch3sch2sh                                                                       
+  ethanedithiol-1,2                                                               
+  propane-1,3-dithiol                                                             
+  (c2h5s)2                                                                        
+  1,4-butanedithiol                                                               
+  3,6-dithiaoctane                                                                
+  dipropyl disulfide                                                              
+  ethyl tert-butyl disulfide                                                      
+  isopropyl tert-butyl disulfide                                                  
+  di-tert-butyl disulfide                                                         
+  dibutyldisulfide                                                                
+  diphenyl disulfide                                                              
+  diisopropyldithiocarbamic acid                                                  
+  dipropyldithiocarbamic acid                                                     
+  s2(cn)2                                                                         
+  thiocyanogen                                                                    
+  bis-diethylamino disulfide                                                      
+  1,3-dithiolan-2-one                                                             
+  cys-cys                                                                         
+  diphenyl disulfone                                                              
+  fssf                                                                            
+  ssf2                                                                            
+  hs3                                                                             
+  hydrogen trisulfide                                                             
+  2,3,4-trithiapentane                                                            
+  1,3-dithiol-2-thione                                                            
+  1,3-dithiolan-2-thione                                                          
+  1,3-benzodithiole-2-thione                                                      
+  3h-1,2-benzodithiole-3-thione                                                   
+  4,5-tetramethylene-1,3-dithiol-2-thione                                         
+  hydrogen tetrasulfide                                                           
+  hydrogen pentasulfide                                                           
+  hydrogen chloride                                                               
+  chloromethylidyne                                                               
+  chloromethylene                                                                 
+  methyl chloride                                                                 
+  ch3clh(+)                                                                       
+  chloroacetylene                                                                 
+  chloroethylene                                                                  
+  chloroethane                                                                    
+  2-chloropropene                                                                 
+  1-chloropropane                                                                 
+  2-chloropropane                                                                 
+  1-chloro-2-methylpropane                                                        
+  2-chloro-2-methylpropane                                                        
+  1-chloropentane                                                                 
+  chlorobenzene                                                                   
+  benzyl chloride                                                                 
+  1-chloro-4-ethylbenzene                                                         
+  1-chloronaphthalene                                                             
+  2-chloronaphthalene                                                             
+  cyanogen chloride                                                               
+  3-chloro-4-methylaniline                                                        
+  chlorine oxide                                                                  
+  hypochlorous acid                                                               
+  carbonyl chloride (cocl)                                                        
+  acetyl chloride                                                                 
+  3-chlorophenol                                                                  
+  4-chlorophenol                                                                  
+  2-chlorobenzaldehyde                                                            
+  benzoyl chloride                                                                
+  nitrosyl chloride                                                               
+  chlorine dioxide                                                                
+  chloroacetic acid                                                               
+  2-chlorobenzoic acid                                                            
+  3-chlorobenzoic acid                                                            
+  4-chlorobenzoic acid                                                            
+  nitryl chloride                                                                 
+  o3cl                                                                            
+  o4cl(-)                                                                         
+  hoclo3                                                                          
+  chlorine fluoride                                                               
+  hydrogen chloride fluoride, anion                                               
+  fluorochloromethane                                                             
+  ofcl                                                                            
+  carbonyl fluoride chloride                                                      
+  fclo2(-)                                                                        
+  perchloryl fluoride                                                             
+  clf2                                                                            
+  difluorochloromethane                                                           
+  nclf2                                                                           
+  chlorine trifluoride                                                            
+  trifluorochloromethane                                                          
+  chlorotrifluoroethene                                                           
+  chlorine pentafluoride                                                          
+  chloropentafluoroethane                                                         
+  chloropentafluorobenzene                                                        
+  1,1,2-trifluoro-2-chloroethyl dodecafluoroheptylether                           
+  phosphorus monoxide monochloride                                                
+  ch3scl                                                                          
+  c6h5scl                                                                         
+  socl                                                                            
+  hoso2cl                                                                         
+  so2clf                                                                          
+  sf5cl                                                                           
+  hydrogen dichloride, anion                                                      
+  dichloromethylene                                                               
+  chcl2(+)                                                                        
+  dichloromethane                                                                 
+  dichloroacetylene                                                               
+  1,1-dichloroethylene                                                            
+  cis-dichloroethylene                                                            
+  trans-1,2-dichloroethylene                                                      
+  1,1-dichloroethane                                                              
+  trans-1,2-dichloroethane                                                        
+  1,2-dichloropropane                                                             
+  1,2-dichlorobenzene                                                             
+  1,3-dichlorobenzene                                                             
+  1,4-dichlorobenzene                                                             
+  chlorine monoxide                                                               
+  carbonyl chloride                                                               
+  cl2o2                                                                           
+  oxalyl chloride                                                                 
+  1,1-dichloro-1-nitro-propane                                                    
+  chlorine heptoxide                                                              
+  1,1',2,2'-tetranitro-1,2-dichloroethane                                         
+  1,3-dichloro-1,1,3,3-tetranitropropane                                          
+  fluorodichloromethane                                                           
+  difluorodichloromethane                                                         
+  1,2-dichloro 1,1,2,2-tetrafluoroethane                                          
+  pcl2(c2h5)                                                                      
+  opcl2                                                                           
+  methylphosphonodichloride                                                       
+  ethylphosphonic dichloride                                                      
+  thionyl chloride                                                                
+  sulfuryl chloride                                                               
+  trichloromethyl                                                                 
+  chloroform                                                                      
+  trichloroethylene                                                               
+  1,1,1-trichloroethane                                                           
+  1,2,2-trichloroethane                                                           
+  1,2,3-trichlorobenzene                                                          
+  1,2,4-trichlorobenzene                                                          
+  1,3,5-trichlorobenzene                                                          
+  trichloroacetaldehyde                                                           
+  fluorotrichloromethane                                                          
+  1,1',2-trichloro-1,2,2'-trifluoroethane                                         
+  phosphorus oxychloride                                                          
+  socl3                                                                           
+  carbon tetrachloride                                                            
+  tetrachloroethylene                                                             
+  1,1,2,2-tetrachloroethane                                                       
+  1,2,2,2-tetrachloroethane                                                       
+  1,2,3,4-tetrachlorobenzene                                                      
+  1,2,3,5-tetrachlorobenzene                                                      
+  1,2,4,5-tetrachlorobenzene                                                      
+  trichloroacetyl chloride                                                        
+  2,3,5,6-tetrachloro-1,4-benzoquinone                                            
+  socl4                                                                           
+  pentachloroethane                                                               
+  pentachlorobenzene                                                              
+  pentachlorophenol                                                               
+  hexachloroethane                                                                
+  hexachlorobenzene                                                               
+  gamma hexachlorocyclohexane                                                     
+  hexachloro-1,3,5,2,4,6-triazatriphosphorine                                     
+*  hydrogen bromide, cation                                                        
+  hydrogen bromide                                                                
+  bromomethane                                                                    
+  bromoacetylene                                                                  
+  bromoethylene                                                                   
+  bromoethane                                                                     
+  3-bromopropene                                                                  
+  1-bromopropane                                                                  
+  2-bromopropane                                                                  
+  bromobenzene                                                                    
+  1-bromonaphthalene                                                              
+  2-bromonaphthalene                                                              
+  1-bromo-dodecane                                                                
+  1-bromo-hexadecane                                                              
+  cyanogen bromide                                                                
+  3-bromo-3-methyldiazirine                                                       
+  bromine oxide                                                                   
+  hypobromous acid                                                                
+  acetyl bromide                                                                  
+  benzoyl bromide                                                                 
+  nitrosyl bromide                                                                
+  bromine fluoride                                                                
+  bromodifluoromethane                                                            
+  1-bromo-1,1-difluoroethane                                                      
+  bromine trifluoride                                                             
+  bromotrifluoromethane                                                           
+  1-bromo-2,2,2-trifluoroethane                                                   
+  bromine pentafluoride                                                           
+  bromopentafluorobenzene                                                         
+  bromochloromethane                                                              
+  1-bromo-1-chloroethane                                                          
+  5-chloro-8-bromo-8-hydroxyquinoline                                             
+  trichlorobromomethane                                                           
+  dibromomethane                                                                  
+  1,1-dibromoethane                                                               
+  1,4-dibromobutane                                                               
+  carbonyl bromide                                                                
+  difluorodibromomethane                                                          
+  1,2-dibromotetrafluoroethane                                                    
+  bromoform                                                                       
+  1,1,1-tribromoethane                                                            
+  2,4,6-tribromoaniline                                                           
+  phosphorus oxybromide                                                           
+  hexabromoethane                                                                 
+  hydrogen iodide                                                                 
+  methyl iodide                                                                   
+  iodoethane                                                                      
+  3-iodo-1-propene                                                                
+  e-1-iodo-1-propene                                                              
+  z-1-iodo-1-propene                                                              
+  1-iodopropane                                                                   
+  2-iodopropane                                                                   
+  1-butyl iodide                                                                  
+  iodobenzene                                                                     
+  iodocyclohexane                                                                 
+  benzyl iodide                                                                   
+  m-iodotoluene                                                                   
+  o-iodotoluene                                                                   
+  p-iodotoluene                                                                   
+  1-iodonaphthalene                                                               
+  2-iodonaphthalene                                                               
+  cyanogen iodide                                                                 
+  acetyl iodide                                                                   
+  iodomethyl methyl ether                                                         
+  1-iodo-2-propanone                                                              
+  3-iodo-2-butanone                                                               
+  benzoyl iodide                                                                  
+  nitrosyl iodide                                                                 
+  2-iodobenzoic acid                                                              
+  3-iodobenzoic acid                                                              
+  4-iodobenzoic acid                                                              
+  iodine fluoride                                                                 
+  trifluoroiodomethane                                                            
+  1,1,1-trifluoro-2-iodoethane                                                    
+  iodine pentafluoride                                                            
+  pentafluoroiodobenzene                                                          
+  iodomethyl methyl sulfide                                                       
+  1,2-chloroiodoethane                                                            
+  1-chloro-4-iodobutadiene                                                        
+  1-bromo-4-iodobutadiene                                                         
+  diiodomethane                                                                   
+  diiodoacetylene                                                                 
+  e-1,2-diiodoethene                                                              
+  z-1,2-diiodoethene                                                              
+  1,2-diiodoethane                                                                
+  1,2-diiodopropane                                                               
+  1,3-diiodopropane                                                               
+  1,2-diiodobutane                                                                
+  1,4-diiodobutane                                                                
+  1,2-diiodobenzene                                                               
+  5,7-diiodo-8-hydroxyquinoline                                                   
+  1,2 diiodotetrafluoroethane                                                     
+  iodoform                                                                        

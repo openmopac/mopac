@@ -1,0 +1,14 @@
+  PM6-ORG  external="Y:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ Water trimer 1 PM6-ORG
+ h=0+"Water"+"Water"+"Water"  hr=guess hwt=50
+  O(HETATM    7  O   HOH A 383)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  O(HETATM    4  O   HOH A 273)   3.07743746 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  O(HETATM    1  O   HOH A 254)   3.06251746 +0   59.2704298 +0    0.0000000 +0     2     1     0
+  H(HETATM    2  H1  HOH A 254)   0.95045398 +0   81.1494381 +0  -21.6602312 +0     3     2     1
+  H(HETATM    3  H2  HOH A 254)   0.94371693 +0  114.0425439 +0   87.1351521 +0     3     2     1
+  H(HETATM    5  H1  HOH A 273)   0.94880410 +0   82.1258972 +0   -4.2268601 +0     2     1     3
+  H(HETATM    6  H2  HOH A 273)   0.94040620 +0  163.2135200 +0 -154.4708845 +0     2     1     3
+  H(HETATM    8  H1  HOH A 383)   0.94949252 +0   27.3894125 +0 -129.2013680 +0     1     2     3
+  H(HETATM    9  H2  HOH A 383)   0.94273280 +0  106.2986290 +0  126.1202012 +0     1     2     3
+ 
+ 

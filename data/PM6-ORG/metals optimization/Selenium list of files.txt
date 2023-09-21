@@ -1,0 +1,68 @@
+Clash Se - C = 3.39 (good)
+Clash Se - C = 3.29 (bad)
+Clash Se - O = 3.35 (good)
+Clash Se - O = 3.25 (bad)
+MSO (Good)
+MSO (Bad)
+* SE7 (Good)
+* SE7 (Bad)
+h2ser
+secr
+ch3sehr
+seethr
+seme2r
+c4h4ser
+c4h8ser
+seh-nh2r
+secnhr
+seor
+ocsr
+seo2r
+seo3r
+se(oh)6r
+secf2r
+sef2or
+seo2f2r
+sef4r
+sef6r
+sef6(=)
+sec2f6r
+sepf2hr
+csser
+secl2r
+seocl2r
+secl6(=)r
+se2me2r
+Se2Cl2r
+p4se3r
+se4cl16r
+sebr6(=)r
+selenium, cation
+selenium, atom
+selenyl radical
+hydrogen selenide
+dimethylselenium
+selenophene
+tetrahydroselenophene
+diethylselenium
+seh-nh2
+selenium dioxide
+selenium fluoride
+Selenium tetrafluoride
+selenium hexafluoride
+thiocarbonyl selenide
+selenium dichloride
+carbon diselenide
+(c6h5)-se-se-(c6h5)
+c6h5-ch2-se-se-ch2-c6h5
+clsesecl
+selenium, trimer
+se4cl16
+et3sebr
+selenium dibromide
+sebr6(=)
+indium selenide
+tin selenide
+selenium telluride
+lead selenide
+bismuth selenide

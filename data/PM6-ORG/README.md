@@ -1,0 +1,3 @@
+This directory contains the training data and PARAM input files used to fit the PM6-ORG model. The main input file is
+PM6-ORG.dat, which was used to fit H, C, N, O, F, Cl, Br, I and all intermolecular interactions that were updated. The
+`metals optimization` directory contains input files for the optimization of specific metal elements: Zn, Fe, Co, Mg, Ca, Se, K, and Na. All optimizations were repeated until the process converged to a consistent set of model parameters.

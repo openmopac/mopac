@@ -1,0 +1,6 @@
+*
+*  Optimize all parameters for one element, using the method PM6-ORG
+*  
+set="Magnesium list of files.txt" ref="Normal metal compounds";"Magnesium distance" PM6-org cycles=50   nolim 
+(Mg)(All)      
+end

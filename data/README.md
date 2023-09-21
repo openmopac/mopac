@@ -9,3 +9,7 @@ Because most of the reference data is heats of formation and most geometries are
 the reference geometries are relaxed to the local minimum of the semiempirical model being trained. The initial values
 of the reference geometries serve to place the molecules in a particular basin of convergence in the potential energy
 surface.
+
+The PM6-ORG directory contains the specific training data used to fit the PM6-ORG model together with the PARAM input file
+for the final stage of the fitting process. Much of this training data is new, but some of it is copied from the existing
+reference data set.

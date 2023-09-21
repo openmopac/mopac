@@ -1,0 +1,6 @@
+*
+*  Optimize parameters using the method PM6-ORG  
+*  
+set="Iron list of files.txt" ref="Normal metal compounds";"Iron distance" PM6-org cycles=50  nolim  noscale 
+ (Fe)(All)      
+end
