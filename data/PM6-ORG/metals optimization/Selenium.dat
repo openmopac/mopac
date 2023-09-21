@@ -1,0 +1,6 @@
+*
+*  Optimize all parameters for one element, using the method PM6-ORG
+*  
+set="Selenium list of files.txt" ref="Normal metal compounds";"Selenium distance" PM6-ORG cycles=111   nolim  noscale 
+(Se)(All)      
+end

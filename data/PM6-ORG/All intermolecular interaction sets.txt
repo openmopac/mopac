@@ -1,0 +1,390 @@
+  Non-covalent Line-1                                                             
+  Non-covalent Line-2                                                             
+  Non-covalent Line-3                                                             
+  Non-covalent Line-4                                                             
+  Non-covalent Line-5 
+  C6H5Cl-C6H6 complex r                                                           
+  C6H5Br-C6H6 complex r                                                           
+  C6H5I-C6H6 complex r                                                            
+  C6H5Cl-C6H6 separated                                                           
+  C6H5Br-C6H6 separated                                                           
+  C6H5I-C6H6 separated                                                            
+  C6H5Cl-C6H6 complex                                                             
+  C6H5Br-C6H6 complex                                                             
+  C6H5I-C6H6 complex                                                              
+  a0_Guanine-cytosine_WC_well_separated                                           
+  a0_Guanine-cytosine_WC                                                          
+  a0_Guanine-cytosine_WC r                                                        
+  a1_Guanine-cytosine_stacked_well_separated                                      
+  a1_Guanine-cytosine_stacked                                                     
+  a1_Guanine-cytosine_stacked r                                                   
+  Adenine-4-thiouracil_separated                                                  
+  Adenine-4-thiouracil                                                            
+  Adenine-4-thiouracil_r                        
+  01_NH3_dimer separated                                                          
+  02_water_dimer separated                                                        
+  03_formic_acid_dimer separated                                                  
+  04_formamide_dimer separated                                                    
+  05_uracil_HB separated                                                          
+  06_pyridoxine_aminopyridine separated                                           
+  07_adenine_thymine_WC separated                                                 
+  08_CH4_dimer_well_separated                                                     
+  09_Ethylene_dimer_well_separated                                                
+  10_benzene_methane_well_separated                                               
+  11_benzene_dimer_stack_well_separated                                           
+  12_pyrazine_dimer_well_separated                                                
+  13_uracil_dimer_stack_well_separated                                            
+  14_indole_benzene_stack_well_separated                                          
+  15_adenine_thymine_stack separated                                              
+  16_Ethylene_acetylene_well_separated                                            
+  17_benzene_H2O_well_separated                                                   
+  18_benzene_NH3_well_separated                                                   
+  19_benzene_HCN_well_separated                                                   
+  20_benzene_dimer_T_well_separated                                               
+  21_indole_benzene_T_well_separated                                              
+  22_phenol_dimer separated                                                       
+  01_NH3_dimer                                                                    
+  02_water_dimer                                                                  
+  03_formic_acid_dimer                                                            
+  04_formamide_dimer                                                              
+  05_uracil_HB                                                                    
+  06_pyridoxine_aminopyridine                                                     
+  07_adenine_thymine_WC                                                           
+  08_CH4_dimer                                                                    
+  09_Ethylene_dimer                                                               
+  10_benzene_methane                                                              
+  11_benzene_dimer_stack                                                          
+  12_pyrazine_dimer                                                               
+  13_uracil_dimer_stack                                                           
+  14_indole_benzene_stack                                                         
+  15_adenine_thymine_stack                                                        
+  16_Ethylene_acetylene                                                           
+  17_benzene_H2O                                                                  
+  18_benzene_NH3                                                                  
+  19_benzene_HCN                                                                  
+  20_benzene_dimer_T                                                              
+  21_indole_benzene_T                                                             
+  22_phenol_dimer                                                                 
+  01_NH3_dimer r                                                                  
+  02_water_dimer r                                                                
+  03_formic_acid_dimer r                                                          
+  04_formamide_dimer r                                                            
+  05_uracil_HB r                                                                  
+  06_pyridoxine_aminopyridine r                                                   
+  07_adenine_thymine_WC r                                                         
+  08_CH4_dimer r                                                                  
+  09_Ethylene_dimer r                                                             
+  10_benzene_methane r                                                            
+  11_benzene_dimer_stack r                                                        
+  13_uracil_dimer_stack r                                                         
+  15_adenine_thymine_stack r                                                      
+  16_Ethylene_acetylene r                                                         
+  17_benzene_H2O r                                                                
+  18_benzene_NH3 r                                                                
+  20_benzene_dimer_T r                                                            
+  22_phenol_dimer r                                                               
+  23_Methanol_dimer r                                                             
+  24_Methanol_formaldehyde r                                                      
+  01 Water - Water (Separated)                                                    
+  01 Water - Water                                                                
+  02 Water - Methanol (Separated)                                                 
+  02 Water - Methanol                                                             
+  03 Water - MeNH2 (Separated)                                                    
+  03 Water - MeNH2                                                                
+  04 Water - Peptide (Separated)                                                  
+  04 Water - Peptide                                                              
+  05 MeOH - MeOH (Separated)                                                      
+  05 MeOH - MeOH                                                                  
+  06 MeOH - MeNH2 (Separated)                                                     
+  06 MeOH - MeNH2                                                                 
+  07 MeOH - Peptide (Separated)                                                   
+  07 MeOH - Peptide                                                               
+  08 MeOH - Water (Separated)                                                     
+  08 MeOH - Water                                                                 
+  09 MeNH2 - MeOH (Separated)                                                     
+  09 MeNH2 - MeOH                                                                 
+  10 MeNH2 - MeNH2 (Separated)                                                    
+  10 MeNH2 - MeNH2                                                                
+  11 MeNH2 - Peptide (Separated)                                                  
+  11 MeNH2 - Peptide                                                              
+  12 MeNH2 - Water (Separated)                                                    
+  12 MeNH2 - Water                                                                
+  13 Peptide - MeOH (Separated)                                                   
+  13 Peptide - MeOH                                                               
+  14 Peptide - MeNH2 (Separated)                                                  
+  14 Peptide - MeNH2                                                              
+  15 Peptide - Peptide (Separated)                                                
+  15 Peptide - Peptide                                                            
+  16 Peptide - Water (Separated)                                                  
+  16 Peptide - Water                                                              
+  17 Uracil - Uracil (BP) (Separated)                                             
+  17 Uracil - Uracil (BP)                                                         
+  18 Water - Pyridine (Separated)                                                 
+  18 Water - Pyridine                                                             
+  19 MeOH - Pyridine (Separated)                                                  
+  19 MeOH - Pyridine                                                              
+  20 AcOH - AcOH (Separated)                                                      
+  20 AcOH - AcOH                                                                  
+  21 AnNH2 - AcNH2 (Separated)                                                    
+  21 AnNH2 - AcNH2                                                                
+  22 AcOH - Uracil (Separated)                                                    
+  22 AcOH - Uracil                                                                
+  23 AcNH2 - Uracil (Separated)                                                   
+  23 AcNH2 - Uracil                                                               
+  24 Benzene - Benzene (pi - pi) (Separated)                                      
+  24 Benzene - Benzene (pi - pi)                                                  
+  25 Pyridine - Pyridine (pi - pi) (Separated)                                    
+  25 Pyridine - Pyridine (pi - pi)                                                
+  26 Uracil - Uracil (pi - pi) (Separated)                                        
+  26 Uracil - Uracil (pi - pi)                                                    
+  27 Benzene - Pyridine (pi - pi) (Separated)                                     
+  27 Benzene - Pyridine (pi - pi)                                                 
+  28 Benzene - Uracil (pi - pi) (Separated)                                       
+  28 Benzene - Uracil (pi - pi)                                                   
+  29 Pyridine - uracil (pi - pi) (Separated)                                      
+  29 Pyridine - uracil (pi - pi)                                                  
+  30 Benzene - Ethylene (Separated)                                               
+  30 Benzene - Ethylene                                                           
+  31 Uracil - Ethylene (Separated)                                                
+  31 Uracil - Ethylene                                                            
+  32 Uracil - Ethyne (Separated)                                                  
+  32 Uracil - Ethyne                                                              
+  33 Pyridine - Ethylene (Separated)                                              
+  33 Pyridine - Ethylene                                                          
+  34 Pentane - Pentane (Separated)                                                
+  34 Pentane - Pentane                                                            
+  35 Neopentane - Pentane (Separated)                                             
+  35 Neopentane - Pentane                                                         
+  36 Neopentane - Neopentane (Separated)                                          
+  36 Neopentane - Neopentane                                                      
+  37 Cyclopentane - Neopentane (Separated)                                        
+  37 Cyclopentane - Neopentane                                                    
+  38 Cyclopentane - Cyclopentane (Separated)                                      
+  38 Cyclopentane - Cyclopentane                                                  
+  39 Benzene - Cyclopentane (Separated)                                           
+  39 Benzene - Cyclopentane                                                       
+  40 Benzene - Neopentane (Separated)                                             
+  40 Benzene - Neopentane                                                         
+  41 Uracil - Pentane (Separated)                                                 
+  41 Uracil - Pentane                                                             
+  42 Uracil - Cyclopentane (Separated)                                            
+  42 Uracil - Cyclopentane                                                        
+  43 Uracil - Neopentane (Separated)                                              
+  43 Uracil - Neopentane                                                          
+  44 Ethylene - Pentane (Separated)                                               
+  44 Ethylene - Pentane                                                           
+  45 Ethyne - Pentane (Separated)                                                 
+  45 Ethyne - Pentane                                                             
+  46 Peptide - Pentane (Separated)                                                
+  46 Peptide - Pentane                                                            
+  47 Benzene - Benzene (TS) (Separated)                                           
+  47 Benzene - Benzene (TS)                                                       
+  48 Pyridine - Pyridine (TS) (Separated)                                         
+  48 Pyridine - Pyridine (TS)                                                     
+  49 Benzene - Pyridine (TS) (Separated)                                          
+  49 Benzene - Pyridine (TS)                                                      
+  50 Benzene - Ethyne (CH - pi) (Separated)                                       
+  50 Benzene - Ethyne (CH - pi)                                                   
+  51 Ethyne - Ethyne (TS) (Separated)                                             
+  51 Ethyne - Ethyne (TS)                                                         
+  52 Benzene - AcOH (OH - pi) (Separated)                                         
+  52 Benzene - AcOH (OH - pi)                                                     
+  53 Benzene - AcNH2 (NH - pi) (Separated)                                        
+  53 Benzene - AcNH2 (NH - pi)                                                    
+  54 Benzene - Water (OH - pi) (Separated)                                        
+  54 Benzene - Water (OH - pi)                                                    
+  55 Benzene - MeOH (OH - pi) (Separated)                                         
+  55 Benzene - MeOH (OH - pi)                                                     
+  56 Benzene - MeNH2 (NH - pi) (Separated)                                        
+  56 Benzene - MeNH2 (NH - pi)                                                    
+  57 Benzene - Peptide (NH - pi) (Separated)                                      
+  57 Benzene - Peptide (NH - pi)                                                  
+  58 Pyridine - Pyridine (CH - N) (Separated)                                     
+  58 Pyridine - Pyridine (CH - N)                                                 
+  59 Ethyne - Water (Separated)                                                   
+  59 Ethyne - Water                                                               
+  60 Ethyne - AcOH (OH-pi) (Separated)                                            
+  60 Ethyne - AcOH (OH-pi)                                                        
+  61 Pentane - AcOH (Separated)                                                   
+  61 Pentane - AcOH                                                               
+  62 Pentane - AcNH2 (Separated)                                                  
+  62 Pentane - AcNH2                                                              
+  63 Benzene - AcOH (Separated)                                                   
+  63 Benzene - AcOH                                                               
+  64 Peptide - Ethylene (Separated)                                               
+  64 Peptide - Ethylene                                                           
+  65 Pyridine - Ethyne (Separated)                                                
+  65 Pyridine - Ethyne                                                            
+  66 MeNH2 - Pyridine (Separated)                                                 
+  66 MeNH2 - Pyridine                                                             
+  01 methane - f2 separated                                                       
+  01 Methane - F2                                                                 
+  02 methane - cl2 separated                                                      
+  02 Methane - Cl2                                                                
+  03 methane - br2 separated                                                      
+  03 Methane - Br2                                                                
+  04 methane - i2 separated                                                       
+  04 Methane - I2                                                                 
+  05 fluoromethane - methane separated                                            
+  05 Fluoromethane - methane                                                      
+  06 chloromethane - methane separated                                            
+  06 Chloromethane - methane                                                      
+  07 trifluoromethane - methane separated                                         
+  07 Trifluoromethane - methane                                                   
+  08 trichloromethane - methane separated                                         
+  08 Trichloromethane - methane                                                   
+  09 fluoromethane dimer separated                                                
+  09 Fluoromethane dimer                                                          
+  10 chloromethane dimer separated                                                
+  10 Chloromethane dimer                                                          
+  11 trifluorobenzene - benzene separated                                         
+  11 Trifluorobenzene - benzene                                                   
+  12 hexafluorobenzene - benzene separated                                        
+  12 Hexafluorobenzene - benzene                                                  
+  13 chloromethane - formaldehyde separated                                       
+  13 Chloromethane - formaldehyde                                                 
+  14 bromomethane - formaldehyde separated                                        
+  14 Bromomethane - formaldehyde                                                  
+  15 iodomethane - formaldehyde separated                                         
+  15 Iodomethane - formaldehyde                                                   
+  16 trifluorochloromethane - formaldehyde separated                              
+  16 Trifluorochloromethane - formaldehyde                                        
+  17 trifluorobromomethane - formaldehyde separated                               
+  17 Trifluorobromomethane - formaldehyde                                         
+  18 trifluoroiodomethane - formaldehyde separated                                
+  18 Trifluoroiodomethane - formaldehyde                                          
+  19 chlorobenzenezene - acetone separated                                        
+  19 Chlorobenzenezene - acetone                                                  
+  20 bromobenzenezene - acetone separated                                         
+  20 Bromobenzenezene - acetone                                                   
+  21 iodobenzenezene - acetone separated                                          
+  21 Iodobenzenezene - acetone                                                    
+  22 chlorobenzenezene - trimethylamine separated                                 
+  22 Chlorobenzenezene - trimethylamine                                           
+  23 bromobenzenezene - trimethylamine separated                                  
+  23 Bromobenzenezene - trimethylamine                                            
+  24 iodobenzenezene - trimethylamine separated                                   
+  24 Iodobenzenezene - trimethylamine                                             
+  25 bromobenzenezene - methanethiol separated                                    
+  25 Bromobenzenezene - methanethiol                                              
+  26 iodobenzenezene - methanethiol separated                                     
+  26 Iodobenzenezene - methanethiol                                               
+  27 bromomethane - benzene separated                                             
+  27 Bromomethane - benzene                                                       
+  28 iodomethane - benzene separated                                              
+  28 Iodomethane - benzene                                                        
+  29 trifluorobromomethane - benzene separated                                    
+  29 Trifluorobromomethane - benzene                                              
+  30 trifluoroiodomethane - benzene separated                                     
+  30 Trifluoroiodomethane - benzene                                               
+  31 trifluoromethanol - water separated                                          
+  31 Trifluoromethanol - water                                                    
+  32 trichloromethanol - water separated                                          
+  32 Trichloromethanol - water                                                    
+  33 hf - methanol separated                                                      
+  33 HF - methanol                                                                
+  34 hcl - methanol separated                                                     
+  34 HCl - methanol                                                               
+  35 hbr - methanol separated                                                     
+  35 HBr - methanol                                                               
+  36 hi - methanol separated                                                      
+  36 HI - methanol                                                                
+  37 hf - methylamine separated                                                   
+  37 HF - methylamine                                                             
+  38 hcl - methylamine separated                                                  
+  38 HCl - methylamine                                                            
+  39 methanol - fluoromethane separated                                           
+  39 methanol - fluoromethane                                                     
+  40 methanol - chloromethane separated                                           
+  40 methanol - chloromethane                                                     
+  1 Circumcoronene adenine separated                                              
+  2 Circumcoronene GC base pair separated                                         
+  3 Coronene dimer separated                                                      
+  4 GCGC base pair stack separated                                                
+  5 Guanine trimer separated                                                      
+  6 Octadecane dimer separated                                                    
+  7 Phenylalanine residues trimer separated                                       
+  1 Circumcoronene adenine                                                        
+  2 Circumcoronene GC base pair                                                   
+  3 Coronene dimer                                                                
+  4 GCGC base pair stack                                                          
+  5 Guanine trimer                                                                
+  6 Octadecane dimer                                                              
+  7 Phenylalanine residues trimer                                                 
+  2a tcna tweezer separated                                                       
+  2a TCNA tweezer                                                                 
+  2b dcb tweezer separated                                                        
+  2b DCB tweezer                                                                  
+  3a tnf pincer separated                                                         
+  3a TNF pincer                                                                   
+  3b ndb pincer separated                                                         
+  3b NDB pincer                                                                   
+  4a c60 catcher separated                                                        
+  4a C60 catcher                                                                  
+  4b c70 catcher separated                                                        
+  4b C70 catcher                                                                  
+  5a glh mcyle separated                                                          
+  5a GLH mcyle                                                                    
+  5b bq mcyle separated                                                           
+  5b BQ mcyle                                                                     
+  6a bunh4 cb6 separated a
+  6a bunh4 cb6 separated b
+  6a bunh4 cb6                                                                  
+  6b prnh4 cb6 separated                                                          
+  6b PrNH4 CB6                                                                    
+  7a FECP CB7 separated                                                           
+  7a FECP CB7                                                                     
+  7b adoh cb7 separated                                                           
+  7b ADOH CB7                                                                     
+  water_ref                                                                       
+  water dimer structure 1 (non-planar open Cs)                                    
+  water dimer structure 2 (open ci)                                               
+  water dimer structure 3 (planar open Cs)                                        
+  water dimer structure 4 (cyclic ci)                                             
+  water dimer structure 5 (cyclic c2)                                             
+  water dimer structure 6 (cyclic c2h)                                            
+  water dimer structure 7 (triply hydrogen bonded Cs)                             
+  water dimer structure 8 (non-planar bifurcated C2v)                             
+  water dimer structure 9 (non-planar bifurcated C2v)                             
+  water dimer structure 10 (planar bifurcated C2v)                                
+  water dimer structure 1 (non-planar open cs)r                                   
+  water dimer structure 1' (non-planar open cs)r                                  
+  water dimer structure 10 (planar bifurcated c2v)r                               
+  water dimer structure 2 (open ci)r                                              
+  water dimer structure 3 (planar open cs)r                                       
+  water dimer structure 4 (cyclic ci)r                                            
+  water dimer structure 5 (cyclic c2)r                                            
+  water dimer structure 6 (cyclic c2h)r                                           
+  water dimer structure 7 (triply hydrogen bonded cs)r                            
+  water dimer structure 8 (non-planar bifurcated c2v)r                            
+  water dimer structure 9 (non-planar bifurcated c2v)r                            
+  methylammonium ... methylamine separated                                        
+  imidazolium ... methylamine separated                                           
+  guanidinium ... methylamine separated                                           
+  methylammonium ... water separated                                              
+  methylammonium ... formaldehyde separated                                       
+  methylammonium ... methanol separated                                           
+  imidazolium ... water separated                                                 
+  imidazolium ... formaldehyde separated                                          
+  imidazolium ... methanol separated                                              
+  guanidinium ... water separated                                                 
+  guanidinium ... formaldehyde separated                                          
+  guanidinium ... methanol separated                                              
+  acetate ... methylamine separated                                               
+  acetate ... water separated                                                     
+  acetate ... methanol separated                                                  
+  acetate ... methylamine                                                         
+  acetate ... water                                                               
+  acetate ... methanol                                                            
+  methylammonium ... methylamine                                                  
+  methylammonium ... water                                                        
+  methylammonium ... formaldehyde                                                 
+  methylammonium ... methanol                                                     
+  imidazolium ... methylamine                                                     
+  imidazolium ... water                                                           
+  imidazolium ... formaldehyde                                                    
+  imidazolium ... methanol                                                        
+  guanidinium ... methylamine                                                     
+  guanidinium ... water                                                           
+  guanidinium ... formaldehyde                                                    
+  guanidinium ... methanol    

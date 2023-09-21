@@ -1,0 +1,8 @@
+5-18-2022
+Distance Fe - S (Bad) 2.5 Change weight from 5 to 1
+Distance Fe - O (bad) 2.0 Change H from 0 to 2; change HWT fron 4 to 5
+
+5-19-2022
+Distance Fe - S (Bad) 1.8 Change H from 5 to 7 
+Investigate charge on GOL: Confirmed - Glycerol is neutral
+Fe - S: 2.067 (2.279) A, Fe - O: 2.307 (2.407)

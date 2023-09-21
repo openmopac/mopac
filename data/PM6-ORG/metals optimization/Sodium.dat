@@ -1,0 +1,8 @@
+*
+*  Optimize all parameters for one element, using the method PM6-ORG
+*  
+set="Sodium.txt" ref="Normal metal compounds";"Sodium distance" PM6-org cycles=100   nolim 
+HSP NA 0.5 5
+FN11 Na -2 1
+(Na)(All)      
+end

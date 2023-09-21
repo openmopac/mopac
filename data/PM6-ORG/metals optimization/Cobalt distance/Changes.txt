@@ -1,0 +1,20 @@
+5-19-2022
+Co-N: 1.67 (2.100) A, Co-C: 1.747 (1.892)
+Distance "Co - N (Bad) 1.7" Change H from 7 to 10, HWT from 7 to 10 
+Distance "Co - C (bad) 1.7" Change H from 4 to 6, hwt from 7 to 10
+
+Co-N: 1.68 (2.100) A, Co-C: 1.762 (1.892)
+Distance "Co - N (Bad) 1.7" Change H from 10 to 15
+Distance "Co - C (bad) 1.7" Change H from 6 to 10
+
+Co-N: 1.70 (2.100) A, Co-C: 1.785 (1.892)
+Distance "Co - N (Bad) 1.7" Change H from 15 to 30
+Distance "Co - C (bad) 1.7" Change H from 10 to 15
+
+Co-N: 1.73 (2.100) A, Co-C: 1.807 (1.892)
+Distance "Co - N (Bad) 1.7" Change H from 30 to 40
+Distance "Co - C (bad) 1.7" Change H from 15 to 22
+
+Co-N: 1.75 (2.100) A, Co-C: 1.839 (1.892)
+Distance "Co - N (Bad) 1.7" Change H from 40 to 60
+Distance "Co - C (bad) 1.7" Change H from 22 to 35

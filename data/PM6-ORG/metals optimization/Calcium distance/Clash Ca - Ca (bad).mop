@@ -1,0 +1,9 @@
+ HTML  pm6-org  king 
+ Ca - Ca (Bad)        Ca - Ca  = 4.50
+ h=10+"Clash Ca - Ca (Good)" hr=guess hwt=50
+ Ca(HETATM    1 CA    CA A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+ Ca(HETATM    2 CA    CA B   2)   4.50000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  O(HETATM    3  O   HOH C   3)   1.60845850 +0  180.0000000 +0    0.0000000 +0     2     1     0
+  O(HETATM    4  O   HOH C   4)   1.60652934 +0  180.0000000 +0    0.0000000 +0     1     2     3
+ 
+

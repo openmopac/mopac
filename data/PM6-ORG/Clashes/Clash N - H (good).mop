@@ -1,0 +1,14 @@
+*
+*   (Glu-23 HG2 - Arg-17 NE) Crambin
+*
+ PM6-ORG precise html(nores) external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+      H3N - H-OH (good)     N - H  = 2.93
+ H=0 hr=ref
+  N(HETATM    1  N   HET A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  H(HETATM    2  H   FMT B   2)   2.93000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  O(HETATM    3  O   FMT B   2)   1.17161073 +0  168.4832452 +0    0.0000000 +0     2     1     0
+  H(HETATM    4  H2  FMT B   2)   0.91470851 +0  100.1903490 +0   -0.0000002 +0     3     2     1
+  H(HETATM    5 1H   HET A   1)   0.96706786 +0  114.8447489 +0    0.0000002 +0     1     2     3
+  H(HETATM    6 2H   HET A   1)   0.96767083 +0  107.3540660 +0  121.4482192 +0     1     2     3
+  H(HETATM    6 2H   HET A   1)   0.96767083 +0  107.3540660 +0 -121.4482189 +0     1     2     3
+ 

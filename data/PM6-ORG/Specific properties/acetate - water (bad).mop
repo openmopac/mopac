@@ -1,0 +1,18 @@
+*
+*  35 - too small
+*  50 - too large
+*  49.39 - too small
+ HTML charge=-1 PM6-ORG precise gnorm=0.1 external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ Acetate - water (unsymmetric) (bad)
+h=2.5+"acetate - water (good)" hr=guess hwt=55
+  C(HETATM    1  C1  ACY A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  C(HETATM    2  C2  ACY A   1)   1.55712106 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  H(HETATM    3 1H2  ACY A   1)   1.09555290 +0  108.5338282 +0    0.0000000 +0     2     1     0
+  H(HETATM    4 2H2  ACY A   1)   1.09556966 +0  108.4887993 +0  118.7055149 +0     2     1     3
+  H(HETATM    5 3H2  ACY A   1)   1.09501552 +0  110.1127403 +0 -120.6745567 +0     2     1     3
+  O(HETATM    6  O2  ACY A   1)   1.24152836 +0  117.2141430 +0  121.2201058 +0     1     2     3
+  O(HETATM    7  O1  ACY A   1)   1.25824604 +0  114.6297564 +0  -58.7960967 +0     1     2     3
+  H(HETATM    8 1H   HOH B   2)   1.63087299 +0  113.2363331 +0 -179.9802865 +0     7     1     2
+  O(HETATM    9  O   HOH B   2)   1.01220528 +0  155.0260235 +0    0.0009582 +0     8     7     1
+  H(HETATM   10 2H   HOH B   2)   0.94224224 +0   99.9201774 +0   -0.0021501 +0     9     8     7
+ 

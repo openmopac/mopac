@@ -1,0 +1,63 @@
+*
+*  Add clashes in atomic number order
+*
+*
+* Clashes specific to Proteins
+*
+Clashes line-1 Protein-2
+Clashes line-2 Protein-2
+Clashes line-3 Protein-2
+Clashes line-4 Protein-2
+Clashes line-5 Protein-2
+*                          (Arg-458 HA - Ser-470 HA)  Zinc Finger
+Clash H - H (good)                                                     
+Clash H - H (Bad)  
+*                          (Phe-441 CD2 - Leu-447 HA)  Zinc Finger
+Clash H - H (good) a                                                     
+Clash H - H (Bad) a  
+*                          (THR-2 HG22 - PHE-13 CZ)               Crambin
+Clash C - H (Good)
+Clash C - H (bad)
+*                          (Set-470 CA - Arg-458 HA)  Zinc Finger
+Clash C - C (good)
+Clash C - C (bad)
+*                          (Glu-23 HG2 - Arg-17 NE)               Crambin
+Clash N - H (good)
+Clash N - H (bad)
+*                          (Arg-471 CZ - His-474 NE2) Zinc Finger
+Clash N - C (Good)
+Clash N - C (bad)
+*                          (Pro-429 O - His-424 HA)   Zinc Finger              
+Clash O - H (good)
+Clash O - H (bad)
+*                          (Trp-434 O - Asp-435 C)    Zinc Finger
+Clash O - C (good)
+Clash O - C (bad)
+*                          (Cys-3 HB3 - Tyr-44 O)                 Crambin
+Clash O - C (good) a
+Clash O - C (bad) a
+*                          (CYS-4 N   - TYR-44 O)                 Crambin
+Clash O - N (good)
+Clash O - N (bad)
+*                          (GLU-23 O  - ALA-24 O)                 Crambin
+Clash O - O (good)
+Clash O - O (bad)
+*                          (Thr-21 HB - Cys-26 SG)                Crambin
+Clash S - H (good)
+Clash S - H (bad)
+*                          (Thr-21 HB - Cys-26 SG)                Crambin
+Clash S - C (good)
+Clash S - C (bad)
+*                          (CYS-4 SG  - ARG-10 CZ)                Crambin
+Clash S - N (good)
+Clash S - N (bad)
+*                          Thr-30 OG1 - Cys-32 SG)                Crambin
+Clash S - O (Good)
+Clash S - O (bad)
+*                          (Cys-3 SG - Tyr-44 O)                  Crambin
+Clash S - O (Good) a
+Clash S - O (bad) a
+*                          (Arg-356 HG3 - Cl-1417 (-))            Cobalamin
+Clash Cl - H (Good)
+Clash Cl - H (bad)
+

@@ -1,0 +1,11 @@
+ html  pm6-org   external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp" geo-ok 
+ H2C=O - O=CH2 (good)  O - O  = 3.47
+      H=0 hr=ref
+  O(HETATM    1  O   MOH A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  O(HETATM    2  O   MOH A   2)   3.47000000  0    0.0000000 +0    0.0000000 +0     1     0     0
+  C(HETATM    3  C   MOH A   1)   1.20395713 +0  180.0000000 +0    0.0000000 +0     1     2     0
+  C(HETATM    4  C   MOH A   2)   1.20432232 +0  179.9951713 +0    0.0000000 +0     2     1     3
+  H(HETATM    5 1H   MOH A   1)   1.09251981 +0  121.3743489 +0   90.0000000 +0     3     1     2
+  H(HETATM    6 2H   MOH A   1)   1.09208345 +0  121.6575290 +0  -90.0000000 +0     3     1     2
+  H(HETATM    7 1H   MOH A   2)   1.09257053 +0  121.3757206 +0    0.0000000 +0     4     2     1
+  H(HETATM    8 2H   MOH A   2)   1.09213411 +0  121.6588289 +0  180.0000000 +0     4     2     1

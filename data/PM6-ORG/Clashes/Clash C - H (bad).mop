@@ -1,0 +1,18 @@
+*
+* (Set-470 CA - Arg-458 HA) Zinc
+*
+ html symmetry pm6-org external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ HNC - H-CH3 for       C - H  = 2.64
+ H=0.5+"Clash C - H (Good)"  hr=guess hwt=106
+  C(HETATM    1  C   CYN A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  H(HETATM    2 1H   HET A   2)   2.64        0    0.0000000 +0    0.0000000 +0     1     0     0
+  C(HETATM    3  C   HET A   2)   1.09809052 +0  180.0000000 +0    0.0000000 +0     2     1     0
+  N(HETATM    4  N   CYN A   1)   1.16873322 +0  180.0000000 +0    0.0000000 +0     1     2     3
+  H(HETATM    5  H   CYN A   1)   0.89854568 +0  180.0000000 +0    0.0000000 +0     4     1     2
+  H(HETATM    6 2H   HET A   2)   1.09551994 +0  109.3854969 +0    0.0000000 +0     3     2     1
+  H(HETATM    7 3H   HET A   2)   1.09551994 +0  109.3854969 +0  120.0000000 +0     3     2     6
+  H(HETATM    8 4H   HET A   2)   1.09551994 +0  109.3854969 +0 -120.0000000 +0     3     2     6
+ 
+   6  1    7    8
+   6  2    7    8
+ 

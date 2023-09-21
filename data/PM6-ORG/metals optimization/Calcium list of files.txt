@@ -1,0 +1,88 @@
+Clash Ca - O (Good)
+Clash Ca - O (bad)
+Clash Ca - Ca (Good)
+Clash Ca - Ca (bad)
+  cahr                                                                            
+  canh2r                                                                          
+  ca(ii)n6(2+) (qakgal) r                                                         
+  ca(ii)(en)3r                                                                    
+  caor                                                                            
+  caohr                                                                           
+  cao2h2r                                                                         
+  ca(ii)(cp)2o2 (teyyif) r                                                        
+  ca(ii)(cp)2o2 (sehpea) r                                                        
+  ca(ii)o2 (tasfoi) r                                                             
+  ca(++)(h2o)4.(oh)2r                                                             
+  ca(++)(h2o)5.ohr                                                                
+  ca(ii)(h2o)6(2+) (bihniq) r                                                     
+  ca(ii)o6 (boltif) r                                                             
+  ca(ii)o7n2(2+) (cacrpb) r                                                       
+  calcium(ii) edta r                                                              
+*  ca(ii)o6n2 (linyai) r                                                           
+  ca(ii)o8 (gebpae) r                                                             
+  calcium hydrogen trisoxalate r                                                  
+  Nonactin-calcium (CAXHEO) r                                                     
+  ca(ii)o10 (dujjoh) r                                                            
+  ca(ii)o8 (caarab) r                                                             
+  cafr                                                                            
+  ca(++)(h2o)5.fr                                                                 
+  caf2r                                                                           
+  casr                                                                            
+  caso4.2h2or                                                                     
+  ca(++).2(h2s)r                                                                  
+  ca(ii)n6o (bukzuc) r                                                            
+  caclr                                                                           
+  ca(++)(h2o)5.clr                                                                
+  cacl2r                                                                          
+  ca(ii)cl4o2(2-) (dilxol) r                                                      
+  ca(ii)2o12cl2(2+) (nadqep) r                                                    
+  cabrr                                                                           
+  ca(++)(h2o)5.brr                                                                
+  cabr2r                                                                          
+  ca(ii)n2o2br2 (tapkea) r                                                        
+  cair                                                                            
+  ca(++)(h2o)5.ir                                                                 
+  cai2r                                                                           
+*  ca(ii)n4i2 (taqqeh) r                                                           
+*  ca(ii)n5i2 (tanqoo) r                                                           
+  calcium, dication                                                               
+  calcium, cation                                                                 
+  calcium, atom                                                                   
+  calcium hydride                                                                 
+  ca(ii)(en)3                                                                     
+  calcium oxide                                                                   
+  calcium monohydroxide                                                           
+  calcium hydroxide                                                               
+  ca(ii)(cp)2o2 (teyyif)                                                          
+  ca(ii)(cp)2o2 (sehpea)                                                          
+  ca(ii)o2 (tasfoi)                                                               
+  ca(++)(h2o)4.(oh)2                                                              
+  ca(++)(h2o)5.oh                                                                 
+  ca(ii)(h2o)6(2+) (bihniq)                                                       
+  ca(ii)o6 (boltif)                                                               
+  calcium(ii) edta                                                                
+*  ca(ii)o6n2 (linyai)                                                             
+  ca(ii)o8 (gebpae)                                                               
+  calcium hydrogen trisoxalate                                                    
+  ca(ii)o10 (dujjoh)                                                              
+  calcium monofluoride                                                            
+  ca(++)(h2o)5.f                                                                  
+  calcium difluoride                                                              
+  calcium sulfide                                                                 
+  ca(++).2(h2s)                                                                   
+  ca(ii)n6o (bukzuc)                                                              
+  calcium monochloride                                                            
+  calcium hydroxide fluoride                                                      
+  ca(++)(h2o)5.cl                                                                 
+  calcium dichloride                                                              
+  ca(ii)cl4o2(2-) (dilxol)                                                        
+  ca(ii)2o12cl2(2+) (nadqep)                                                      
+  calcium monobromide                                                             
+  calcium hydroxide bromide                                                       
+  ca(++)(h2o)5.br                                                                 
+  calcium dibromide                                                               
+  ca(ii)n2o2br2 (tapkea)                                                          
+  calcium monoiodide                                                              
+  ca(++)(h2o)5.i                                                                  
+  calcium diiodide                                                                
+*  ca(ii)n4i2 (taqqeh)   

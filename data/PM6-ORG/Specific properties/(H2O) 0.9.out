@@ -1,0 +1,170 @@
+ *******************************************************************************
+ **                                                                           **
+ **                              MOPAC vunknown                               **
+ **                                                                           **
+ *******************************************************************************
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
+ *******************************************************************************
+
+                              PM6-ORG CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Sat Apr 22 14:28:16 2023  *
+ *  PM6-ORG    - The PM6-ORG Hamiltonian to be used (IN DEVELOPMENT)
+ *  RESIDUES   - DETERMINE THE SEQUENCE OF RESIDUES
+ *  NOOPT      - DO NOT OPTIMIZE ANY COORDINATES
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  HTML       - WRITE HTML SCRIPT TO READ PDB FILE USING JSMOL
+ *******************************************************************************
+ PM6-ORG html noopt
+ Water Dimer (Hobza) 0.9
+ h=0.32+"(H2O) 1.0" hwt=98.821 hr=S66x8
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       O         -0.70219605     -0.05606026      0.00994226   
+     2       H         -1.02219322      0.84677578     -0.01148871   
+     3       H          0.25752106      0.04212150      0.00521900   
+     4       O          2.06777225      0.02791803      0.00097906   
+     5       H          2.44439386     -0.41046204      0.76710344   
+     6       H          2.44003657     -0.44829495     -0.74442344   
+ 
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         O         -0.7022     -0.0561      0.0099
+     2         H         -1.0222      0.8468     -0.0115
+     3         H          0.2575      0.0421      0.0052
+     4         O          2.0678      0.0279      0.0010
+     5         H          2.4444     -0.4105      0.7671
+     6         H          2.4400     -0.4483     -0.7444
+
+ General Reference for PM6-ORG will be added when available.
+
+           Empirical Formula: H4 O2  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Cs  
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 8
+
+
+ -------------------------------------------------------------------------------
+ PM6-ORG html noopt
+ Water Dimer (Hobza) 0.9
+ h=0.32+"(H2O) 1.0" hwt=98.821 hr=S66x8
+
+
+     NO PARAMETERS MARKED FOR OPTIMIZATION, SO 1SCF WAS USED  
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM6-ORG CALCULATION
+                                                       MOPAC vunknown unknown
+                                                       Sat Apr 22 14:28:16 2023
+
+
+
+
+          FINAL HEAT OF FORMATION =       -115.54964 KCAL/MOL =    -483.45969 KJ/MOL
+
+
+          COSMO AREA              =         73.44 SQUARE ANGSTROMS
+          COSMO VOLUME            =         49.64 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         11.787332 EV
+          HOMO LUMO ENERGIES (EV) =        -11.787  3.273
+          NO. OF FILLED LEVELS    =          8
+          MOLECULAR WEIGHT        =         36.0304         POINT GROUP:  Cs  
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     5    H     2     3.76883
+            H     6    O     1     1.54497
+            H     6    H     2     0.70638
+
+
+          SCF CALCULATIONS        =          1
+ 
+          WALL-CLOCK TIME         =      0.199 SECONDS
+          COMPUTATION TIME        =      0.078 SECONDS
+
+
+
+
+   ATOM                 CHEMICAL                   X               Y               Z
+  NUMBER                 SYMBOL               (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+ 
+     1       O(HETATM    1  O   HOH A   1)   -0.70219605     -0.05606026      0.00994226   
+     2       H(HETATM    2 1H   HOH A   1)   -1.02219322      0.84677578     -0.01148871   
+     3       H(HETATM    3 2H   HOH A   1)    0.25752106      0.04212150      0.00521900   
+     4       O(HETATM    4  O   HOH A   2)    2.06777225      0.02791803      0.00097906   
+     5       H(HETATM    5 1H   HOH A   2)    2.44439386     -0.41046204      0.76710344   
+     6       H(HETATM    6 2H   HOH A   2)    2.44003657     -0.44829495     -0.74442344   
+
+                             CARTESIAN COORDINATES
+
+   1    O       -0.702196054    -0.056060256     0.009942262
+   2    H       -1.022193224     0.846775782    -0.011488714
+   3    H        0.257521062     0.042121496     0.005218999
+   4    O        2.067772248     0.027918025     0.000979062
+   5    H        2.444393863    -0.410462041     0.767103444
+   6    H        2.440036565    -0.448294950    -0.744423440
+
+
+           Empirical Formula: H4 O2  =     6 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   Cs  
+
+
+                  EIGENVALUES  
+ -40.46480 -38.78269 -18.83111 -17.44006 -15.20028 -13.82693 -12.97998 -11.78733
+   3.27333   5.09153   5.78294   7.37482
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.                 TYPE                        CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          O(HETATM    1  O   HOH A   1)          -0.788418        6.7884     1.87588     4.91253
+    2          H(HETATM    2 1H   HOH A   1)           0.371549        0.6285     0.62845
+    3          H(HETATM    3 2H   HOH A   1)           0.403997        0.5960     0.59600
+    4          O(HETATM    4  O   HOH A   2)          -0.767781        6.7678     1.87067     4.89711
+    5          H(HETATM    5 1H   HOH A   2)           0.390326        0.6097     0.60967
+    6          H(HETATM    6 2H   HOH A   2)           0.390326        0.6097     0.60967
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.     2.867     0.092    -0.009     2.868
+ HYBRID         0.395     0.025    -0.002     0.396
+ SUM            3.261     0.117    -0.011     3.263
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+                   Atom                  s        px        py        pz   
+   O(HETATM    1  O   HOH A   1)   1.87588   1.44532   1.46753   1.99968
+   H(HETATM    2 1H   HOH A   1)   0.62845
+   H(HETATM    3 2H   HOH A   1)   0.59600
+   O(HETATM    4  O   HOH A   2)   1.87067   1.80128   1.71638   1.37945
+   H(HETATM    5 1H   HOH A   2)   0.60967
+   H(HETATM    6 2H   HOH A   2)   0.60967
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.91 SECONDS
+
+ == MOPAC DONE ==
