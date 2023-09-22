@@ -435,6 +435,8 @@
       if (Abs(press(1)) > 1.d-20) then
         write(hook,"(a,i1,a)")" RESTRAINING_PRESSURE:GIGAPASCALS[3]="
         write(hook,"(3f"//fmt13p5//")")(press(i),i=1,3)
+        write(hook,"(a,i1,a)")" VOIGT_STRESS_TENSOR:GIGAPASCALS[6]="
+        write(hook,"(6f"//fmt13p5//")")(press(i),i=1,6)
       end if
     end if
 #ifdef MOPAC_F2003

@@ -232,7 +232,7 @@ module molkst_C
   &  stress,       & !  Term        Energy due to distortion from reference geometry, used with GEO-REF=
                      !  Units       Kcal/mol
                      !
-  &  press(3),     & ! Type         Pressure on crystal faces
+  &  press(6),     & ! Type         Pressure on crystal faces in Voigt order (xx, yy, zz, yz, xz, xy)
                      ! Definition   Pressure required to stop crystal expanding
                      ! Units        Gigapascals
   &  E_disp,       & ! Dispersion term
