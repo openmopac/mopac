@@ -219,7 +219,7 @@ module molkst_C
   &  cupper,       & !  Upper bound for transition to point charges in solid-state
                      !  Default     cutofp
                      !
-  &  pressure,     & !  Term        Pressure or stress for solid-state and polymer work
+  &  pressure,     & !  Term        Pressure or stress for solid-state and polymer work (sign flipped)
                      !  Definition  Applied isotropic pressure (for solids) or pull (for polymers)
                      !  Units       Pascals (Newtons per square meter) (solids) or Newtons per Mole (polymers)
                      !  Default     0.0
@@ -232,8 +232,11 @@ module molkst_C
   &  stress,       & !  Term        Energy due to distortion from reference geometry, used with GEO-REF=
                      !  Units       Kcal/mol
                      !
-  &  press(6),     & ! Type         Pressure on crystal faces in Voigt order (xx, yy, zz, yz, xz, xy)
+  &  press(3),     & ! Type         Pressure on crystal faces
                      ! Definition   Pressure required to stop crystal expanding
+                     ! Units        Gigapascals
+  &  voigt(6),     & ! Type         Stress tensor in Voigt notation (xx, yy, zz, yz, xz, xy)
+                     ! Definition   Stress tensor is a symmetric 3-by-3 matrix represented by 6 distinct values
                      ! Units        Gigapascals
   &  E_disp,       & ! Dispersion term
   &  E_hb,         & ! Hydrogen-bond term

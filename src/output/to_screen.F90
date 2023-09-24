@@ -61,7 +61,7 @@
 !
   use molkst_C, only : numat, norbs, escf, nelecs, nclose, nopen, verson, &
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
-  method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, &
+  method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, voigt, &
   uhf, nalpha, nbeta,  gnorm, mozyme, mol_weight, ilim, &
   line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no, fract
 !
@@ -436,7 +436,7 @@
         write(hook,"(a,i1,a)")" RESTRAINING_PRESSURE:GIGAPASCALS[3]="
         write(hook,"(3f"//fmt13p5//")")(press(i),i=1,3)
         write(hook,"(a,i1,a)")" VOIGT_STRESS_TENSOR:GIGAPASCALS[6]="
-        write(hook,"(6f"//fmt13p5//")")(press(i),i=1,6)
+        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
       end if
     end if
 #ifdef MOPAC_F2003
