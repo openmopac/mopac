@@ -370,6 +370,19 @@
         write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
         if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
       end if
+      if (nvar > 0) then
+        sum = 0.d0
+        do i = 1, nvar
+          if (abs(grad(i)) > sum) sum = abs(grad(i))
+        end do
+        if (sum > 1.d-4) then
+          write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
+          read(fmt9p4,'(3x,i2)')i
+          j = max(int(log10(sum)),1)
+          write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+          write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
+        end if
+      end if
     end if
     if (opt_hook == 0) call flush (0)
     return
@@ -404,6 +417,24 @@
     end if
     write(opt_hook,"(a,i"//paras//",a)")" ATOM_X_UPDATED:ANGSTROMS[",3*numat, "]="
     write(opt_hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
+    if (id > 0) then
+      write(opt_hook,"(a,i1,a)")" TRANS_VECTS_UPDATED:ANGSTROMS[",id*3,"]="
+      write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
+      if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
+    end if
+    if (nvar > 0) then
+      sum = 0.d0
+      do i = 1, nvar
+        if (abs(grad(i)) > sum) sum = abs(grad(i))
+      end do
+      if (sum > 1.d-4) then
+        write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
+        read(fmt9p4,'(3x,i2)')i
+        j = max(int(log10(sum)),1)
+        write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+        write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
+      end if
+    end if
     if (L_MO_s) &
     call print_conventional_M_O_s(opt_hook, compressed, moa_lower, moa_upper, mob_lower, mob_upper, fmt9p4, orbs2)
     if (L_MO_s) &
@@ -435,9 +466,11 @@
       if (Abs(press(1)) > 1.d-20) then
         write(hook,"(a,i1,a)")" RESTRAINING_PRESSURE:GIGAPASCALS[3]="
         write(hook,"(3f"//fmt13p5//")")(press(i),i=1,3)
-        write(hook,"(a,i1,a)")" VOIGT_STRESS_TENSOR:GIGAPASCALS[6]="
-        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
       end if
+    end if
+    if (id == 3 .and. nvar == 3*natoms) then
+      write(hook,"(a,i1,a)")" VOIGT_STRESS_TENSOR:GIGAPASCALS[6]="
+      write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
     end if
 #ifdef MOPAC_F2003
     if (.not. ieee_is_nan(dip(4,3))) then
@@ -1122,6 +1155,24 @@
     write(hook,"(a,sp, d"//fmt13p6//",a)")" HEAT_OF_FORMATION:KCAL/MOL=",escf
     write(hook,"(a,i"//paras//",a)")" ATOM_X_OPT:ANGSTROMS[",3*numat, "]="
     write(hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
+    if (id > 0) then
+      write(opt_hook,"(a,i1,a)")" TRANS_VECTS_UPDATED:ANGSTROMS[",id*3,"]="
+      write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
+      if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
+    end if
+    if (nvar > 0) then
+      sum = 0.d0
+      do i = 1, nvar
+        if (abs(grad(i)) > sum) sum = abs(grad(i))
+      end do
+      if (sum > 1.d-4) then
+        write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
+        read(fmt9p4,'(3x,i2)')i
+        j = max(int(log10(sum)),1)
+        write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+        write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
+      end if
+    end if
     if (index(keywrd, " BOND") /= 0)  &
       call write_screen_bonds(compressed, orbs2, hook, fmt9p4)
   else if (mullik) then
