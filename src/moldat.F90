@@ -1308,9 +1308,9 @@ subroutine calculate_voigt
       voigt(6) = voigt(6) + 0.5*(dsum(2)*dsum1(1) + dsum(1)*dsum1(2))
     end if
   end do
-!  Convert from enthalpy to internal energy (sign is flipped on pressure)
+!  Convert from enthalpy to internal energy
   do i = 1, 3
-    voigt(i) = voigt(i) + pressure*volume (tvec, 3)
+    voigt(i) = voigt(i) - pressure*volume (tvec, 3)
   end do
 !  Convert units of stress tensor to GPa
   xi = 1.d-9*(4184.d0*10.d0**30)/(fpc_10*volume (tvec, 3))
@@ -1379,7 +1379,7 @@ subroutine write_pressure(iprt)
             end if
             i2 = 1
           end if
-          xi = (xi - pressure * (4184.d0*10.d0**30)/ fpc_10)*1.d-9
+          xi = (xi + pressure * (4184.d0*10.d0**30)/ fpc_10)*1.d-9
           ndim = ndim + 1
           press(ndim) = xi
           write(line,'(10x,a,i4,a,f7.2,a)')"Tv(", k,")  Pressure:",xi," GPa"

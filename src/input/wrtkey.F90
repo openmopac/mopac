@@ -1251,7 +1251,7 @@ subroutine wrtcon (allkey)
       pressure = reada (keywrd, Index (keywrd, " P="))
       if (id == 1) then
         write (iw, '(" *  P=         - TENSION IN POLYMER=", g13.6, " NEWTONS PER MOLE")') pressure
-        pressure = -pressure * 10.d0 ** (-13) / 4.184d0
+        pressure = pressure * 10.d0 ** (-13) / 4.184d0
       else if (id == 2) then
       else if (id == 3) then
         i = Index (keywrd, " P=")
@@ -1270,7 +1270,7 @@ subroutine wrtcon (allkey)
 !  Divide by 4184 to convert from J/M**3/mol to Kcal/M**3/mol
 !  Divide by 10**30 to convert from Kcal/M**3/mol to Kcal/Angstrom**3/mol
 !
-        pressure = -(fpcref(1,10)*pressure) / (4184.d0*10.d0**30)
+        pressure = (fpcref(1,10)*pressure) / (4184.d0*10.d0**30)
       else
         write (iw, *) " Keyword 'P=n.nn' is not allowed here"
         call mopend("Keyword 'P=n.nn' is not allowed here")

@@ -254,8 +254,8 @@
         !  1N = J/M = 10**(-3)/4.184 kcal/M = 4.184*10**(-3)*10**(-10) kcal/Angstrom
           press = pressure / Sqrt (dot(tvec(1, 1), tvec(1, 1), 3))
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) + tvec(j, 1) * press
-            dxyz(j + i + 3) = dxyz(j + i + 3) - tvec(j, 1) * press
+            dxyz(j + i) = dxyz(j + i) - tvec(j, 1) * press
+            dxyz(j + i + 3) = dxyz(j + i + 3) + tvec(j, 1) * press
           end do
         else if (id == 3) then
   ! Transition vector derivatives of pressure times volume
@@ -288,30 +288,30 @@
   !
           i = 3*(l1u * (2*l2u+1) * (2*l3u+1) + l2u * (2*l3u+1) + l3u - 1)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) + tderiv(j, 1)
-            dxyz(j + i) = dxyz(j + i) + tderiv(j, 2)
-            dxyz(j + i) = dxyz(j + i) + tderiv(j, 3)
+            dxyz(j + i) = dxyz(j + i) - tderiv(j, 1)
+            dxyz(j + i) = dxyz(j + i) - tderiv(j, 2)
+            dxyz(j + i) = dxyz(j + i) - tderiv(j, 3)
           end do
   !
   !  Cell in 0,0,1 position
   !
           i = 3*(l1u * (2*l2u+1) * (2*l3u+1) + l2u * (2*l3u+1) + l3u)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) - tderiv(j, 3)
+            dxyz(j + i) = dxyz(j + i) + tderiv(j, 3)
           end do
   !
   !  Cell in 0,1,0 position
   !
           i = 3*(l1u * (2*l2u+1) * (2*l3u+1) + (l2u+1) * (2*l3u+1) + l3u - 1)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) - tderiv(j, 2)
+            dxyz(j + i) = dxyz(j + i) + tderiv(j, 2)
           end do
   !
   !  Cell in 1,0,0 position
   !
           i = 3*((l1u+1) * (2*l2u+1) * (2*l3u+1) + l2u * (2*l3u+1) + l3u - 1)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) - tderiv(j, 1)
+            dxyz(j + i) = dxyz(j + i) + tderiv(j, 1)
           end do
         end if
       end if
