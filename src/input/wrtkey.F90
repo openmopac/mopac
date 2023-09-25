@@ -1168,6 +1168,17 @@ subroutine wrtcon (allkey)
     end do
   end if
   line = trim(allkey)
+  i = 0
+  if (myword(line, " OPT-")) i = i + 1
+  if (myword(line, " OPT ")) i = i + 1
+  if (myword(line, " OPT(")) i = i + 1
+  if (myword(line, " OPT=")) i = i + 1
+  if (i > 1) then
+    call mopend("MORE THAN ONE TYPE OF ""OPT"" REQUESTED. THIS IS NOT ALLOWED")
+    write(iw,'(/10x,a,//,a,/)')"KEYWORDS SUPPLIED:", trim(keywrd)
+    return
+  end if
+  line = trim(allkey)
   if (myword(allkey, " OPT-") .or. myword(allkey, " OPT ") .or. myword(allkey, " OPT(") &
     .or. myword(allkey, " OPT="))   then
     i = index(line, " OPT=")
