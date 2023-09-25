@@ -48,8 +48,8 @@
       double precision :: coord(3*natoms), gold(3*natoms), xparam(3*natoms)
 
 
-      double precision :: grlim, sum, gnorm, step, press, summ, press1, &
-      press2, press3
+      double precision :: grlim, sum, gnorm, step, press
+      double precision, dimension(3,3) :: tderiv
       double precision, external :: dot, volume
       logical :: scf1, halfe, slow, aifrst, debug, precis, intn, geochk, ci, &
         aic, noanci, field, saddle, DH_correction, l_redo_bonds
@@ -258,10 +258,20 @@
             dxyz(j + i + 3) = dxyz(j + i + 3) - tvec(j, 1) * press
           end do
         else if (id == 3) then
-          summ = volume (tvec, 3)
-          press1 = summ / dot (tvec(1, 1), tvec(1, 1), 3) * pressure
-          press2 = summ / dot (tvec(1, 2), tvec(1, 2), 3) * pressure
-          press3 = summ / dot (tvec(1, 3), tvec(1, 3), 3) * pressure
+  ! Transition vector derivatives of pressure times volume
+          press = ((tvec(2, 1)*tvec(3, 2)-tvec(3, 1)*tvec(2, 2))*tvec(1, 3) + &
+                  (tvec(3, 1)*tvec(1, 2)-tvec(1, 1)*tvec(3, 2))*tvec(2, 3) + &
+                  (tvec(1, 1)*tvec(2, 2)-tvec(2, 1)*tvec(1, 2))*tvec(3, 3))
+          tderiv(1, 1) = tvec(2, 2)*tvec(3, 3) - tvec(3, 2)*tvec(2, 3)
+          tderiv(2, 1) = tvec(3, 2)*tvec(1, 3) - tvec(1, 2)*tvec(3, 3)
+          tderiv(3, 1) = tvec(1, 2)*tvec(2, 3) - tvec(2, 2)*tvec(1, 3)
+          tderiv(1, 2) = tvec(3, 1)*tvec(2, 3) - tvec(2, 1)*tvec(3, 3)
+          tderiv(2, 2) = tvec(1, 1)*tvec(3, 3) - tvec(3, 1)*tvec(1, 3)
+          tderiv(3, 2) = tvec(2, 1)*tvec(1, 3) - tvec(1, 1)*tvec(2, 3)
+          tderiv(1, 3) = tvec(2, 1)*tvec(3, 2) - tvec(3, 1)*tvec(2, 2)
+          tderiv(2, 3) = tvec(3, 1)*tvec(1, 2) - tvec(1, 1)*tvec(3, 2)
+          tderiv(3, 3) = tvec(1, 1)*tvec(2, 2) - tvec(2, 1)*tvec(1, 2)
+          tderiv = tderiv*pressure*sign(1.d0, press)
   !
   ! Add in gradient pressure term
   !
@@ -269,30 +279,30 @@
   !
           i = 3*(l1u * (2*l2u+1) * (2*l3u+1) + l2u * (2*l3u+1) + l3u - 1)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) + tvec(j, 1) * press1
-            dxyz(j + i) = dxyz(j + i) + tvec(j, 2) * press2
-            dxyz(j + i) = dxyz(j + i) + tvec(j, 3) * press3
+            dxyz(j + i) = dxyz(j + i) + tderiv(j, 1)
+            dxyz(j + i) = dxyz(j + i) + tderiv(j, 2)
+            dxyz(j + i) = dxyz(j + i) + tderiv(j, 3)
           end do
   !
   !  Cell in 0,0,1 position
   !
           i = 3*(l1u * (2*l2u+1) * (2*l3u+1) + l2u * (2*l3u+1) + l3u)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) - tvec(j, 3) * press3
+            dxyz(j + i) = dxyz(j + i) - tderiv(j, 3)
           end do
   !
   !  Cell in 0,1,0 position
   !
           i = 3*(l1u * (2*l2u+1) * (2*l3u+1) + (l2u+1) * (2*l3u+1) + l3u - 1)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) - tvec(j, 2) * press2
+            dxyz(j + i) = dxyz(j + i) - tderiv(j, 2)
           end do
   !
   !  Cell in 1,0,0 position
   !
           i = 3*((l1u+1) * (2*l2u+1) * (2*l3u+1) + l2u * (2*l3u+1) + l3u - 1)
           do j = 1, 3
-            dxyz(j + i) = dxyz(j + i) - tvec(j, 1) * press1
+            dxyz(j + i) = dxyz(j + i) - tderiv(j, 1)
           end do
         end if
       end if
