@@ -259,6 +259,15 @@
           end do
         else if (id == 3) then
   ! Transition vector derivatives of pressure times volume
+  !
+  ! Derivatives are calculated in a redundant coordinate system where the
+  ! atomic coordinates in the central cell plus translation vectors are
+  ! replaced by atomic coordinates in the central cell plus atomic coordinates
+  ! in all coupled non-central cells. The formula for volume that is being
+  ! differentiated uses the coordinate difference between a central atom and
+  ! its neighbors as proxies for the translation vectors in the volume formula.
+  ! The choice of atom in this formula and the resulting derivatives are completely
+  ! arbitrary and do not change the derivatives in the original coordinate system.
           press = ((tvec(2, 1)*tvec(3, 2)-tvec(3, 1)*tvec(2, 2))*tvec(1, 3) + &
                   (tvec(3, 1)*tvec(1, 2)-tvec(1, 1)*tvec(3, 2))*tvec(2, 3) + &
                   (tvec(1, 1)*tvec(2, 2)-tvec(2, 1)*tvec(1, 2))*tvec(3, 3))
