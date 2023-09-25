@@ -27,7 +27,7 @@
       USE molkst_C, only : gnorm, natoms, numat, nvar, numcal, job_no, nscf, id, &
         escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
         time0, atheat, errtxt, isok, mpack, line, na1, refkey, keywrd_txt, &
-        press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
+        press, voigt, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
@@ -182,6 +182,7 @@
       ediel  = 0.d0
       gnorm  = 0.D0
       press  = 0.d0
+      voigt  = 0.d0
       E_disp = 0.d0
       E_hb   = 0.d0
       E_hh   = 0.d0
