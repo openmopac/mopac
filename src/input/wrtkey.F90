@@ -1168,6 +1168,17 @@ subroutine wrtcon (allkey)
     end do
   end if
   line = trim(allkey)
+  i = 0
+  if (myword(line, " OPT-")) i = i + 1
+  if (myword(line, " OPT ")) i = i + 1
+  if (myword(line, " OPT(")) i = i + 1
+  if (myword(line, " OPT=")) i = i + 1
+  if (i > 1) then
+    call mopend("MORE THAN ONE TYPE OF ""OPT"" REQUESTED. THIS IS NOT ALLOWED")
+    write(iw,'(/10x,a,//,a,/)')"KEYWORDS SUPPLIED:", trim(keywrd)
+    return
+  end if
+  line = trim(allkey)
   if (myword(allkey, " OPT-") .or. myword(allkey, " OPT ") .or. myword(allkey, " OPT(") &
     .or. myword(allkey, " OPT="))   then
     i = index(line, " OPT=")
@@ -1240,7 +1251,7 @@ subroutine wrtcon (allkey)
       pressure = reada (keywrd, Index (keywrd, " P="))
       if (id == 1) then
         write (iw, '(" *  P=         - TENSION IN POLYMER=", g13.6, " NEWTONS PER MOLE")') pressure
-        pressure = -pressure * 10.d0 ** (-13) / 4.184d0
+        pressure = pressure * 10.d0 ** (-13) / 4.184d0
       else if (id == 2) then
       else if (id == 3) then
         i = Index (keywrd, " P=")
@@ -1259,7 +1270,7 @@ subroutine wrtcon (allkey)
 !  Divide by 4184 to convert from J/M**3/mol to Kcal/M**3/mol
 !  Divide by 10**30 to convert from Kcal/M**3/mol to Kcal/Angstrom**3/mol
 !
-        pressure = -(fpcref(1,10)*pressure) / (4184.d0*10.d0**30)
+        pressure = (fpcref(1,10)*pressure) / (4184.d0*10.d0**30)
       else
         write (iw, *) " Keyword 'P=n.nn' is not allowed here"
         call mopend("Keyword 'P=n.nn' is not allowed here")

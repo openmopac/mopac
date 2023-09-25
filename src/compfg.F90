@@ -359,9 +359,9 @@
         hpress = 0.d0
         if (Abs (pressure) > 1.d-4) then
           if (id == 1) then
-            hpress = -pressure * Sqrt (dot(tvec(1, 1), tvec(1, 1), 3))
+            hpress = pressure * Sqrt (dot(tvec(1, 1), tvec(1, 1), 3))
           else if (id == 3) then
-            hpress = -pressure * volume (tvec, 3)
+            hpress = pressure * volume (tvec, 3)
           end if
           atheat = atheat + hpress
         end if

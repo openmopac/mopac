@@ -162,9 +162,9 @@
       ! Remove energy term arising from the external pressure,
       !
         if( id == 1) then
-          escf = escf + pressure * dsqrt(dot(tvec(1,1), tvec(1,1),3))
+          escf = escf - pressure * dsqrt(dot(tvec(1,1), tvec(1,1),3))
         else if (id == 3) then
-          escf = escf + pressure * volume(tvec,3)
+          escf = escf - pressure * volume(tvec,3)
         end if
       end if
       if (use_ref_geo) then
@@ -281,13 +281,13 @@
       hpress = 0.d0
       if (Abs (pressure) > 1.d-4) then
         if (id == 1) then
-          hpress = -pressure * dsqrt (dot(tvec(1, 1), tvec(1, 1), 3))
+          hpress = pressure * dsqrt (dot(tvec(1, 1), tvec(1, 1), 3))
         else if (id == 3) then
           sum =  volume (tvec, 3)
-          hpress = -pressure * sum
+          hpress = pressure * sum
           write (iw, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress
-          sum = -(4184.d0*10.d0**30)*pressure/fpc_10
+          sum = (4184.d0*10.d0**30)*pressure/fpc_10
           if (abs(sum) > 1.d9) then
             write (iw, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
           else
@@ -1081,7 +1081,7 @@
           sum =  volume (tvec, 3)
           write (iwrite, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress
-          sum = -(4184.d0*10.d0**30)*pressure/fpc_10
+          sum = (4184.d0*10.d0**30)*pressure/fpc_10
           if (abs(sum) > 1.d9) then
             write (iwrite, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
           else

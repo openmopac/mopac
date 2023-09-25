@@ -219,7 +219,7 @@ module molkst_C
   &  cupper,       & !  Upper bound for transition to point charges in solid-state
                      !  Default     cutofp
                      !
-  &  pressure,     & !  Term        Pressure or stress for solid-state and polymer work (sign flipped)
+  &  pressure,     & !  Term        Pressure or stress for solid-state and polymer work
                      !  Definition  Applied isotropic pressure (for solids) or pull (for polymers)
                      !  Units       Pascals (Newtons per square meter) (solids) or Newtons per Mole (polymers)
                      !  Default     0.0
