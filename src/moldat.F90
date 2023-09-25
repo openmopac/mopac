@@ -1275,82 +1275,134 @@ subroutine write_unit_cell_HOF(iprt)
          write(iprt,"(a)")line(:len_trim(line))
        end if
        return
-      end subroutine write_unit_cell_HOF
-      subroutine write_pressure(iprt)
-      use common_arrays_C, only: loc, tvec, na
-      use molkst_C, only: nvar, pressure, line, press
-      use funcon_C, only: fpc_10
-      use common_arrays_C, only : grad, xparam, labels
-      implicit none
-      integer, intent(in) :: iprt
-      integer :: m, i1,i2, k, l, i, ndim
-      double precision :: xi
-      double precision, dimension (nvar) :: dsum, dsum1
-      double precision, external :: ddot, volume
-      if (iprt < 0) return
-        m = 0
-        i1 = 0
-        i2 = 0
-        ndim = 0
-        do i = 1, nvar
-          k = loc(1, i)
-          l = labels(k)
-          xi = xparam(i)
-          if (l == 107 .and. (m == 0 .or. k == i1)) then
+end subroutine write_unit_cell_HOF
+subroutine write_pressure(iprt)
+  use common_arrays_C, only: loc, tvec, na
+  use molkst_C, only: natoms, nvar, pressure, line, press, voigt
+  use funcon_C, only: fpc_10
+  use common_arrays_C, only : grad, xparam, labels
+  implicit none
+  integer, intent(in) :: iprt
+  integer :: m, i1,i2, k, l, i, ndim
+  double precision :: xi
+  double precision, dimension (nvar) :: dsum, dsum1
+  double precision, external :: ddot, volume
+  if (iprt < 0) return
+    voigt = 0.d0
+    m = 0
+    i1 = 0
+    i2 = 0
+    ndim = 0
+    do i = 1, nvar
+      k = loc(1, i)
+      l = labels(k)
+      xi = xparam(i)
+      if (l == 107 .and. (m == 0 .or. k == i1)) then
 !
 !  Atom is a Tv
 !
-            i1 = k
-            m = m + 1
-            dsum(m) = grad(i)
-            dsum1(m) = xparam(i)
-            if (m == 3) then
-              if (na(k) /= 0) then
-                if (iprt == 0) then
-                  call to_screen("The pressure required to constrain translation vectors")
-                  call to_screen("can only be calculated if Cartesian coordinates are used.")
-                else
-                  if (Abs(pressure) > 0.01d0) then
-                    write(iprt,'(/10x,a)')"The pressure required to constrain translation vectors"
-                    write(iprt,'(10x,a)')"can only be calculated if Cartesian coordinates are used."
-                  end if
-                end if
-                return
+        i1 = k
+        m = m + 1
+        dsum(m) = grad(i)
+        dsum1(m) = xparam(i)
+        if (m == 3) then
+          if (na(k) /= 0) then
+            if (iprt == 0) then
+              call to_screen("The pressure required to constrain translation vectors")
+              call to_screen("can only be calculated if Cartesian coordinates are used.")
+            else
+              if (Abs(pressure) > 0.01d0) then
+                write(iprt,'(/10x,a)')"The pressure required to constrain translation vectors"
+                write(iprt,'(10x,a)')"can only be calculated if Cartesian coordinates are used."
               end if
+            end if
+            return
+          end if
 !
 !  Determine the scalar of the component of the gradient vector in the
 !  direction of the translation vector
 !
-              xi = ddot(3,dsum, 1,dsum1,1)
+          xi = ddot(3,dsum, 1,dsum1,1)
 !
 !  Convert this into a pressure = force per unit area
 !
-              xi = -(4184.d0*10.d0**30)/fpc_10 * xi/volume (tvec, 3)
-              if (Abs(xi) < 1.d-20) cycle ! suppress printing if gradients are zero
-              if (i2 == 0) then
-                write(line,'(a)') "          Pressure required to constrain translation vectors"
-                if (iprt == 0) then
-                  call to_screen(trim(line))
-                else
-                  write(iprt,*)trim(line)
-                end if
-                i2 = 1
-              end if
-              xi = (xi - pressure * (4184.d0*10.d0**30)/ fpc_10)*1.d-9
-              ndim = ndim + 1
-              press(ndim) = xi
-              write(line,'(10x,a,i4,a,f7.2,a)')"Tv(", k,")  Pressure:",xi," GPa"
-               if (iprt == 0) then
-                  call to_screen(trim(line))
-                else
-                  write(iprt,*)trim(line)
-                end if
-              m = 0
+          xi = -(4184.d0*10.d0**30)/fpc_10 * xi/volume (tvec, 3)
+          if (Abs(xi) < 1.d-20) cycle ! suppress printing if gradients are zero
+          if (i2 == 0) then
+            write(line,'(a)') "          Pressure required to constrain translation vectors"
+            if (iprt == 0) then
+              call to_screen(trim(line))
+            else
+              write(iprt,*)trim(line)
             end if
+            i2 = 1
           end if
-        end do
-  end subroutine write_pressure
-  subroutine setup_nhco(ii)
+          xi = (xi - pressure * (4184.d0*10.d0**30)/ fpc_10)*1.d-9
+          ndim = ndim + 1
+          press(ndim) = xi
+          write(line,'(10x,a,i4,a,f7.2,a)')"Tv(", k,")  Pressure:",xi," GPa"
+           if (iprt == 0) then
+              call to_screen(trim(line))
+            else
+              write(iprt,*)trim(line)
+            end if
+          m = 0
+        end if
+      end if
+    end do
+!  Accumulate stress tensor
+    if (nvar == 3*natoms) then
+      i1 = 0
+      do i = 1, nvar
+        k = loc(1, i)
+        l = labels(k)
+        xi = xparam(i)
+        if(k /= i1) m = 0
+        i1 = k
+        m = m + 1
+        dsum(m) = grad(i)
+        dsum1(m) = xparam(i)
+        ! complete 3-component derivative of an atom or translation vector
+        if (m == 3) then
+          voigt(1) = voigt(1) + dsum(1)*dsum1(1)
+          voigt(2) = voigt(2) + dsum(2)*dsum1(2)
+          voigt(3) = voigt(3) + dsum(3)*dsum1(3)
+          voigt(4) = voigt(4) + 0.5*(dsum(2)*dsum1(3) + dsum(3)*dsum1(2))
+          voigt(5) = voigt(5) + 0.5*(dsum(1)*dsum1(3) + dsum(3)*dsum1(1))
+          voigt(6) = voigt(6) + 0.5*(dsum(2)*dsum1(1) + dsum(1)*dsum1(2))
+        end if
+      end do
+  !  Convert from enthalpy to internal energy (sign is flipped on pressure)
+      do i = 1, 3
+        voigt(i) = voigt(i) + pressure*volume (tvec, 3)
+      end do
+  !  Convert units of stress tensor to GPa
+      xi = 1.d-9*(4184.d0*10.d0**30)/(fpc_10*volume (tvec, 3))
+      do i = 1, 6
+        voigt(i) = voigt(i) * xi
+      end do
+  !  Print stress tensor
+      write(line,'(a)') ""
+      if (iprt == 0) then
+        call to_screen(trim(line))
+      else
+        write(iprt,*)trim(line)
+      end if
+      write(line,'(a)') "          Stress tensor in GPa using Voigt notation (xx, yy, zz, yz, xz, xy):"
+      if (iprt == 0) then
+        call to_screen(trim(line))
+      else
+        write(iprt,*)trim(line)
+      end if
+      write(line,'(10x,6f10.3)') (voigt(i),i=1,6)
+      if (iprt == 0) then
+        call to_screen(trim(line))
+      else
+        write(iprt,*)trim(line)
+      end if
+    end if
+end subroutine write_pressure
+subroutine setup_nhco(ii)
   USE molmec_C, only : nnhco, nhco, htype
   USE molkst_C, only : numat,  method_am1, method_pm3, method_mndo, method_pm6, method_PM7, method_rm1, &
    keywrd
@@ -1423,4 +1475,4 @@ subroutine write_unit_cell_HOF(iprt)
         end do
       end do
   end do l230
-    end subroutine setup_nhco
+end subroutine setup_nhco
