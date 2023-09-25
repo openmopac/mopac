@@ -457,6 +457,7 @@
         if (moperr) return
         if (times) call timer ('AFTER  DERIV')
         e_disp = store_e_disp
+        if (id == 3 .and. nvar == 3*natoms) call calculate_voigt()
       end if
       if (aider) then
 !

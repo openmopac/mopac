@@ -361,7 +361,7 @@
 !
     if (abs(escf) > 1.d-30) then
       write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" HEAT_OF_FORM_UPDATED:KCAL/MOL=",escf
-      write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" GRADIENT_UPDATED:KCAL/MOL/ANG=",gnorm
+      write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" GRADIENT_NORM_UPDATED:KCAL/MOL/ANG=",gnorm
 
       write(opt_hook,"(a,i"//paras//",a)")" ATOM_X_UPDATED:ANGSTROMS[",3*numat, "]="
       write(opt_hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
@@ -369,6 +369,16 @@
         write(opt_hook,"(a,i1,a)")" TRANS_VECTS_UPDATED:ANGSTROMS[",id*3,"]="
         write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
         if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
+      end if
+      if (id == 3 .and. nvar == 3*natoms) then
+        sum = 0.d0
+        do i = 1, 6
+          if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+        end do
+        if (sum /= 0.d0) then
+          write(hook,"(a,i1,a)")" VOIGT_STRESS_UPDATED:GIGAPASCALS[6]="
+          write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+        end if
       end if
       if (nvar > 0) then
         sum = 0.d0
@@ -422,6 +432,16 @@
       write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
       if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
     end if
+    if (id == 3 .and. nvar == 3*natoms) then
+      sum = 0.d0
+      do i = 1, 6
+        if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+      end do
+      if (sum /= 0.d0) then
+        write(hook,"(a,i1,a)")" VOIGT_STRESS_UPDATED:GIGAPASCALS[6]="
+        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+      end if
+    end if
     if (nvar > 0) then
       sum = 0.d0
       do i = 1, nvar
@@ -469,8 +489,14 @@
       end if
     end if
     if (id == 3 .and. nvar == 3*natoms) then
-      write(hook,"(a,i1,a)")" VOIGT_STRESS_TENSOR:GIGAPASCALS[6]="
-      write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+      sum = 0.d0
+      do i = 1, 6
+        if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+      end do
+      if (sum /= 0.d0) then
+        write(hook,"(a,i1,a)")" VOIGT_STRESS:GIGAPASCALS[6]="
+        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+      end if
     end if
 #ifdef MOPAC_F2003
     if (.not. ieee_is_nan(dip(4,3))) then
@@ -1159,6 +1185,16 @@
       write(opt_hook,"(a,i1,a)")" TRANS_VECTS_UPDATED:ANGSTROMS[",id*3,"]="
       write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
       if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
+    end if
+    if (id == 3 .and. nvar == 3*natoms) then
+      sum = 0.d0
+      do i = 1, 6
+        if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+      end do
+      if (sum /= 0.d0) then
+        write(hook,"(a,i1,a)")" VOIGT_STRESS_UPDATED:GIGAPASCALS[6]="
+        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+      end if
     end if
     if (nvar > 0) then
       sum = 0.d0

@@ -1276,6 +1276,48 @@ subroutine write_unit_cell_HOF(iprt)
        end if
        return
 end subroutine write_unit_cell_HOF
+subroutine calculate_voigt
+  use common_arrays_C, only: loc, tvec, na
+  use molkst_C, only: natoms, nvar, pressure, voigt
+  use funcon_C, only: fpc_10
+  use common_arrays_C, only : grad, xparam, labels
+  implicit none
+  integer :: m, i1, k, l, i
+  double precision :: xi
+  double precision, dimension (3) :: dsum, dsum1
+  double precision, external :: volume
+!  Accumulate stress tensor from gradients with x, y, & z components
+  m = 0
+  i1 = 0
+  do i = 1, nvar
+    k = loc(1, i)
+    l = labels(k)
+    xi = xparam(i)
+    if(k /= i1) m = 0
+    i1 = k
+    m = m + 1
+    dsum(m) = grad(i)
+    dsum1(m) = xparam(i)
+    ! complete 3-component derivative of an atom or translation vector
+    if (m == 3) then
+      voigt(1) = voigt(1) + dsum(1)*dsum1(1)
+      voigt(2) = voigt(2) + dsum(2)*dsum1(2)
+      voigt(3) = voigt(3) + dsum(3)*dsum1(3)
+      voigt(4) = voigt(4) + 0.5*(dsum(2)*dsum1(3) + dsum(3)*dsum1(2))
+      voigt(5) = voigt(5) + 0.5*(dsum(1)*dsum1(3) + dsum(3)*dsum1(1))
+      voigt(6) = voigt(6) + 0.5*(dsum(2)*dsum1(1) + dsum(1)*dsum1(2))
+    end if
+  end do
+!  Convert from enthalpy to internal energy (sign is flipped on pressure)
+  do i = 1, 3
+    voigt(i) = voigt(i) + pressure*volume (tvec, 3)
+  end do
+!  Convert units of stress tensor to GPa
+  xi = 1.d-9*(4184.d0*10.d0**30)/(fpc_10*volume (tvec, 3))
+  do i = 1, 6
+    voigt(i) = voigt(i) * xi
+  end do
+end subroutine calculate_voigt
 subroutine write_pressure(iprt)
   use common_arrays_C, only: loc, tvec, na
   use molkst_C, only: natoms, nvar, pressure, line, press, voigt
@@ -1352,35 +1394,7 @@ subroutine write_pressure(iprt)
     end do
 !  Accumulate stress tensor
     if (nvar == 3*natoms) then
-      i1 = 0
-      do i = 1, nvar
-        k = loc(1, i)
-        l = labels(k)
-        xi = xparam(i)
-        if(k /= i1) m = 0
-        i1 = k
-        m = m + 1
-        dsum(m) = grad(i)
-        dsum1(m) = xparam(i)
-        ! complete 3-component derivative of an atom or translation vector
-        if (m == 3) then
-          voigt(1) = voigt(1) + dsum(1)*dsum1(1)
-          voigt(2) = voigt(2) + dsum(2)*dsum1(2)
-          voigt(3) = voigt(3) + dsum(3)*dsum1(3)
-          voigt(4) = voigt(4) + 0.5*(dsum(2)*dsum1(3) + dsum(3)*dsum1(2))
-          voigt(5) = voigt(5) + 0.5*(dsum(1)*dsum1(3) + dsum(3)*dsum1(1))
-          voigt(6) = voigt(6) + 0.5*(dsum(2)*dsum1(1) + dsum(1)*dsum1(2))
-        end if
-      end do
-  !  Convert from enthalpy to internal energy (sign is flipped on pressure)
-      do i = 1, 3
-        voigt(i) = voigt(i) + pressure*volume (tvec, 3)
-      end do
-  !  Convert units of stress tensor to GPa
-      xi = 1.d-9*(4184.d0*10.d0**30)/(fpc_10*volume (tvec, 3))
-      do i = 1, 6
-        voigt(i) = voigt(i) * xi
-      end do
+      call calculate_voigt()
   !  Print stress tensor
       write(line,'(a)') ""
       if (iprt == 0) then
