@@ -171,7 +171,9 @@ endif()
 
 # Pass version & commit information to MOPAC's Fortran source
 target_compile_definitions(mopac-core PRIVATE MOPAC_VERSION_FULL="${PROJECT_VERSION}")
-execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_HASH)
+if(NOT GIT_HASH)
+  execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_HASH)
+endif()
 if(GIT_HASH)
   string(STRIP ${GIT_HASH} GIT_HASH)
   target_compile_definitions(mopac-core PRIVATE MOPAC_GIT_HASH="${GIT_HASH}")
