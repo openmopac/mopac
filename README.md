@@ -10,6 +10,10 @@ This is the official repository of the modern open-source version of MOPAC, whic
 This is a direct continuation of the commercial development and distribution of MOPAC, which ended at MOPAC 2016.
 Commercial versions of MOPAC are no longer supported, and all MOPAC users are encouraged to switch to the most recent open-source version.
 
+[![mopac_at_molssi](.github/mopac_at_molssi.png)](https://molssi.org)
+
+MOPAC is actively maintained and curated by the [Molecular Sciences Software Institute (MolSSI)](https://molssi.org).
+
 ## Installation
 
 Open-source MOPAC is available through multiple distributon channels, and it can also be compiled from source using CMake.
