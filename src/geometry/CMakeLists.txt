@@ -17,7 +17,7 @@
 #===============================================
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list 
-    gmetry xyzint bangle symtry axis dang dihed volume
+    gmetry xyzint bangle symtry axis dang dihed volume cross
    )
 #-----------------------------------------------
 # Add a list of source files to the target

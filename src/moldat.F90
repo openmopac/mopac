@@ -950,14 +950,15 @@ subroutine setcup
    !
    !***********************************************************************
     use molkst_C, only: cutofp, id, keywrd, l1u, l2u, l3u, l123, l11, l21, l31, line, &
-      clower
-    use common_arrays_C, only : tvec
+      clower, numat
+    use common_arrays_C, only : tvec, coord
     use chanel_C, only: iw
     implicit none
-    integer :: i
+    integer :: i, j
     double precision :: area12, area13, area23, r1, r12, r13, r2, &
-         & r23, r3, tv1, tv2, tv3, vol, sum
-    double precision, external :: reada, volume
+         & r23, r3, tv1, tv2, tv3, vol, sum, lcoord, lcoord_min(3), lcoord_max(3)
+    double precision, dimension (3, 3) :: lvec, rvec
+    double precision, external :: reada, volume, dot
     cutofp = 1.d10
     l1u = 0
     l2u = 0
@@ -1087,10 +1088,68 @@ subroutine setcup
       l2u = Int ((cutofp*4.d0/3.d0)/tv2) + 1
       l3u = Int ((cutofp*4.d0/3.d0)/tv3) + 1
     end if
+!
+! the previous block of setcup is preserved for its error checking,
+! but it does not produce reliable translation vector bounds, which are recomputed below
+!
+! Construct artificial orthogonal lattice vectors for lower-dimensional crystals
+    lvec(:,1) = tvec(:,1)
+    if(id > 1) then
+      lvec(:,2) = tvec(:,2)
+    else ! first orthogonal lattice vector in Cartesian plane of largest overlap
+      if(abs(lvec(1,1)) < abs(lvec(2,1)) .and. abs(lvec(1,1)) < abs(lvec(3,1))) then
+        lvec(1,2) = 0.d0
+        lvec(2,2) = tvec(3,1)
+        lvec(3,2) = -tvec(2,1)
+      else if(abs(lvec(2,1)) < abs(lvec(1,1)) .and. abs(lvec(2,1)) < abs(lvec(3,1))) then
+        lvec(1,2) = tvec(3,1)
+        lvec(2,2) = 0.d0
+        lvec(3,2) = -tvec(1,1)
+      else
+        lvec(1,2) = tvec(2,1)
+        lvec(2,2) = -tvec(1,1)
+        lvec(3,2) = 0.d0
+      end if
+    end if
+    if(id == 3) then
+      lvec(:,3) = tvec(:,3)
+    else ! second orthogonal lattice vector from cross product
+      call cross(lvec(:,1), lvec(:,2), lvec(:,3))
+    end if
+! Construct reciprocal lattice vectors (normalized to 1 instead of 2*pi against lattice vectors)
+    call cross(lvec(:,2), lvec(:,3), rvec(:,1))
+    call cross(lvec(:,3), lvec(:,1), rvec(:,2))
+    call cross(lvec(:,1), lvec(:,2), rvec(:,3))
+    vol = dot(rvec(:,1), lvec(:,1), 3)
+    rvec = rvec/vol
+! Evaluate minimum and maximum atomic positions in lattice coordinates
+    do i=1, 3
+      lcoord_min(i) = dot(rvec(:,i), coord(:,1), 3)
+    end do
+    lcoord_max = lcoord_min
+    do i=2, numat
+      do j=1, 3
+        lcoord = dot(rvec(:,j), coord(:,i), 3)
+        if(lcoord < lcoord_min(j)) lcoord_min(j) = lcoord
+        if(lcoord > lcoord_max(j)) lcoord_max(j) = lcoord
+      end do
+    end do
+! Evaluate maximum lattice summation values that connect the central cell to all atoms
+! within a radius of cutofp
+    l1u = ceiling(sqrt(dot(rvec(:,1), rvec(:,1), 3))*cutofp + lcoord_max(1) - lcoord_min(1))
+    l2u = ceiling(sqrt(dot(rvec(:,2), rvec(:,2), 3))*cutofp + lcoord_max(2) - lcoord_min(2))
+    l3u = ceiling(sqrt(dot(rvec(:,3), rvec(:,3), 3))*cutofp + lcoord_max(3) - lcoord_min(3))
     l123 = (2*l1u + 1)*(2*l2u + 1)*(2*l3u + 1)
     l11 = min(l1u,1)
     l21 = min(l2u,1)
     l31 = min(l3u,1)
+! Print an error if the number of unit cells in the sum is very large
+    if (l123 > 1331 .and. Index (keywrd, " GEO-OK") == 0) then
+      call mopend("Excessive size of lattice vector summation")
+      write(iw,'(10x,a)')"To avoid this problem, pack atoms more tightly in the central unit cell (try MAKPOL)"
+      write(iw,'(10x,a)')"To over-ride this safety check, add keyword 'GEO-OK'"
+      return
+    end if
 end subroutine setcup
 subroutine write_cell(iprt)
   use molkst_C, only: mol_weight, escf, numat, keywrd, gnorm, &
