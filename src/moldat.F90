@@ -1137,8 +1137,16 @@ subroutine setcup
 ! Evaluate maximum lattice summation values that connect the central cell to all atoms
 ! within a radius of cutofp
     l1u = ceiling(sqrt(dot(rvec(:,1), rvec(:,1), 3))*cutofp + lcoord_max(1) - lcoord_min(1))
-    l2u = ceiling(sqrt(dot(rvec(:,2), rvec(:,2), 3))*cutofp + lcoord_max(2) - lcoord_min(2))
-    l3u = ceiling(sqrt(dot(rvec(:,3), rvec(:,3), 3))*cutofp + lcoord_max(3) - lcoord_min(3))
+    if(id > 1) then
+      l2u = ceiling(sqrt(dot(rvec(:,2), rvec(:,2), 3))*cutofp + lcoord_max(2) - lcoord_min(2))
+    else
+      l2u = 0
+    end if
+    if(id == 3) then
+      l3u = ceiling(sqrt(dot(rvec(:,3), rvec(:,3), 3))*cutofp + lcoord_max(3) - lcoord_min(3))
+    else
+      l3u = 0
+    end if
     l123 = (2*l1u + 1)*(2*l2u + 1)*(2*l3u + 1)
     l11 = min(l1u,1)
     l21 = min(l2u,1)
