@@ -235,7 +235,7 @@ subroutine symtrz (sec_det, nvecs, coord)
         sym_op2: do jj = 1, numat
           do kk = 1, 3
             sum = new_coord(kk, ii) - nijk_CUC(kk,ii) - coord(kk, jj) + nijk_CUC(kk,jj)
-            if (Abs (sum) > 0.2d0) cycle sym_op2
+            if (Abs (sum) > 1d-4) cycle sym_op2
           end do
 !
 !  Atom II has been moved to become atom new(ii) in unit cell incell(1-3,ii)
