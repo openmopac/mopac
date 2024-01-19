@@ -14,14 +14,14 @@ on:
 # https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html
 # (while MKL is available through several package managers, the compiler is not and we are grouping these dependencies for simplicity)
 env:
-  IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18481/l_fortran-compiler_p_2022.0.2.83_offline.sh
-  MKL_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18483/l_onemkl_p_2022.0.2.136_offline.sh
-  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18357/m_fortran-compiler-classic_p_2022.0.0.63_offline.dmg
-  MKL_MAC_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18346/m_onemkl_p_2022.0.0.105_offline.dmg
-  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18412/w_fortran-compiler_p_2022.0.0.77_offline.exe
-  MKL_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/irc_nas/18495/w_onemkl_p_2022.0.2.130_offline.exe
-  IFORT_WINDOWS_VERSION: 2022.0.0
-  MKL_WINDOWS_VERSION: 2022.0.2
+  IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/0d65c8d4-f245-4756-80c4-6712b43cf835/l_fortran-compiler_p_2023.2.1.8_offline.sh
+  MKL_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/adb8a02c-4ee7-4882-97d6-a524150da358/l_onemkl_p_2023.2.0.49497_offline.sh
+  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/2fbce033-15f4-4e13-8d14-f5a2016541ce/m_fortran-compiler-classic_p_2023.2.0.49001_offline.dmg
+  MKL_MAC_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/9399bece-76fb-4b1c-b15c-8ac295448513/m_onemkl_p_2023.2.0.49501_offline.dmg
+  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/1720594b-b12c-4aca-b7fb-a7d317bac5cb/w_fortran-compiler_p_2023.2.1.7_offline.exe
+  MKL_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/2b9cdf66-5291-418e-a7e8-f90515cc9098/w_onemkl_p_2023.2.0.49500_offline.exe
+  IFORT_WINDOWS_VERSION: 2023.2.1
+  MKL_WINDOWS_VERSION: 2023.2.0
 
 jobs:
   linux-static:
