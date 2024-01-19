@@ -174,7 +174,7 @@ subroutine symtrz (sec_det, nvecs, coord)
       end if
       sym_op1: do j = 1, numat
         do k = 1, 3
-          if (Abs (new_coord(k, i)  - nijk_CUC(k,i) - coord(k, j) + nijk_CUC(k,j)) > 0.2d0) cycle sym_op1
+          if (Abs (new_coord(k, i)  - nijk_CUC(k,i) - coord(k, j) + nijk_CUC(k,j)) > 1d-4) cycle sym_op1
         end do
         new_coord(:, i) = new_coord(:, i) + nijk_CUC(:,j) - nijk_CUC(:,i)
         itrans(:, i) = itrans(:, i) - nijk_CUC(:,j) + nijk_CUC(:,i)
