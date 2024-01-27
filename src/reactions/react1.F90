@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
       subroutine react1
-      USE molkst_C, only : keywrd, natoms, moperr, numat, nvar, keywrd_txt, &
+      USE molkst_C, only : keywrd, natoms, moperr, numat, nvar, keywrd_quoted, &
       tleft,  gnorm, escf, cosine, mpack, step, time0, iflepo, line, density
       use chanel_C, only : iw, ir
       use elemts_C, only : elemnt
@@ -63,7 +63,7 @@
       if (i /= 0) stepmx = reada(keywrd,i)
       maxstp = 10000
       allocate(pastor(mpack), pbstor(mpack))
-      if (index(keywrd_txt, "GEO_REF") == 0) then
+      if (index(keywrd_quoted, "GEO_REF") == 0) then
 !
 !    READ IN THE SECOND GEOMETRY.
 !
