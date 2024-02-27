@@ -26,6 +26,7 @@ env:
 jobs:
   linux-static:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Check number of cores
@@ -67,6 +68,7 @@ jobs:
 
   code-coverage:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Check number of cores
@@ -118,6 +120,7 @@ jobs:
   linux-build:
     # Ubuntu 22+ switched to newer glibc (2.34) that breaks the compatibility library right now
     runs-on: ubuntu-20.04
+    timeout-minutes: 30
 
     steps:
       - name: Check number of cores
@@ -135,7 +138,7 @@ jobs:
       # Set up the QT installer framework
       - uses: jmarrec/setup-qtifw@v1
         with:
-          qtifw-version: '4.x'
+          qtifw-version: '4.6.x'
 
       - name: Cache Intel dependencies
         id: cache-intel
@@ -212,6 +215,7 @@ jobs:
 
   mac-build:
     runs-on: macos-latest
+    timeout-minutes: 30
 
     steps:
       - name: Check number of cores
@@ -229,7 +233,7 @@ jobs:
       # Set up the QT installer framework
       - uses: jmarrec/setup-qtifw@v1
         with:
-          qtifw-version: '4.x'
+          qtifw-version: '4.6.x'
 
       - name: Fix permissions for cache restore
         run: |
@@ -321,6 +325,7 @@ jobs:
   windows-build:
     # NOTE: windows-latest has been switched to Visual Studio 2022, which is not yet supported by Intel development tools
     runs-on: windows-2019
+    timeout-minutes: 30
 
     steps:
       - name: Check number of cores
@@ -339,7 +344,7 @@ jobs:
       # Set up the QT installer framework
       - uses: jmarrec/setup-qtifw@v1
         with:
-          qtifw-version: '4.x'
+          qtifw-version: '4.6.x'
 
       - name: Cache Intel Fortran compiler
         id: cache-intel
