@@ -22,21 +22,21 @@
 !
       use common_arrays_C, only : nfirst, nlast, nat, xparam, grad, nw, &
       p, pa, pb, labels, loc, time_start, l_atom, coord, txtatm, coorda, &
-      txtatm1, cell_ijk, eigs, c
+      txtatm1, cell_ijk, eigs, c, breaks
 !
       USE molkst_C, only : gnorm, natoms, numat, nvar, numcal, job_no, nscf, id, &
         escf, iflepo, iscf, keywrd, last, moperr, maxatoms, ncomments, &
         time0, atheat, errtxt, isok, mpack, line, na1, refkey, keywrd_txt, &
-        press, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
+        press, voigt, mozyme, step_num, jobnam, nelecs, stress, E_disp, E_hb, E_hh, no_pKa, &
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
-        sparkle, itemp_1, maxtxt, koment, sz, ss2, &
+        sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
 !
-      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi
+      use cosmo_C, only : iseps, useps, lpka, solv_energy, area, fepsi, ediel
 !
       USE funcon_C, only : fpc_9
 !
@@ -67,6 +67,10 @@
       logical :: exists, opend, sparkles_available, l_OLDDEN
       double precision, external :: C_triple_bond_C, reada, seconds
       character :: nokey(20)*10
+#ifdef _OPENMP
+      integer :: num_threads, default_num_threads
+      integer, external :: omp_get_max_threads
+#endif
 #ifdef MKL
       integer :: num_threads
       integer, external :: mkl_get_max_threads
@@ -94,8 +98,13 @@
       git_hash = MOPAC_GIT_HASH
 #endif
 ! parse command-line flags
+#ifdef MOPAC_F2003
+      do i = 1, command_argument_count()
+        call get_command_argument (i, jobnam)
+#else
       do i = 1, iargc()
         call getarg (i, jobnam)
+#endif
         if (jobnam == '-V' .OR. jobnam == '--version') then
           write(*,"(a)") "MOPAC version "//trim(verson)//" commit "//trim(git_hash)
           stop
@@ -107,6 +116,7 @@
       call fordd                          ! More constants, for use by MNDO-d
       trunc_1 = 7.0d0    ! Beyond 7.0 Angstroms, use exact point-charge
       trunc_2 = 0.22d0   ! Multiplier in Gaussian: exp(-trunc_2*(trunc_1 - Rab)^2)
+      fepsi = 0.d0       ! for correct initialization of store_fepsi
 !
 ! Read in all data; put it into a scratch file, "ir"
 !
@@ -169,8 +179,10 @@
       moperr = .FALSE.
       name = " "
       escf   = 0.d0
+      ediel  = 0.d0
       gnorm  = 0.D0
       press  = 0.d0
+      voigt  = 0.d0
       E_disp = 0.d0
       E_hb   = 0.d0
       E_hh   = 0.d0
@@ -198,12 +210,13 @@
       iflepo = 0
       time0 = seconds(1)
       MM_corrections = .false.
+      nelecs = 0
       pdb_label = .false.
       l_normal_html = .true.
       state_Irred_Rep = " "
       if (job_no > 1) then
         i = index(keywrd, " BIGCYCL")
-        if (i /= 0) then
+        if (i /= 0 .and. index(keywrd,' DRC') == 0) then
           i = nint(reada(keywrd, i)) + 1
           if (job_no < i) then
             fepsi = store_fepsi
@@ -211,7 +224,6 @@
           end if
         end if
       end if
-      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
       if (numcal > 1 .and. numcal < 4 .and. index(keywrd_txt," GEO_DAT") /= 0) then
 !
 !  Quickly jump over first three lines
@@ -222,6 +234,7 @@
         natoms = i
         call gettxt
       end if
+      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
 !
 !    Read in all the data for the current job
 !
@@ -240,6 +253,17 @@
 90      if (moperr .and. numcal == 1 .and. natoms > 1) goto 101
       if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
+! Adjust maximum number of threads using the OpenMP API
+#ifdef _OPENMP
+      if (numcal == 1) default_num_threads = omp_get_max_threads()
+      i = index(keywrd, " THREADS")
+      if (i > 0) then
+        num_threads = nint(reada(keywrd, i))
+      else
+        num_threads = default_num_threads
+      end if
+      call omp_set_num_threads(num_threads)
+#endif
       if (numcal == 1) then
 #ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
@@ -361,7 +385,7 @@
 !
       call switch
     !  if (method_PM8) method_PM7 = .true.
-      if (index(keywrd,' EXTERNAL') /= 0) call datin (iw)
+      if (index(keywrd_quoted,' EXTERNAL=') + index(keywrd,' EXTERNAL') /= 0) call datin (ir, iw)
       if (moperr) go to 100
       sparkle = (index(keywrd, " SPARKL") /= 0)
 !
@@ -498,7 +522,9 @@
         end if
       end if
       if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) nelecs = 0
-      if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") + index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
+      if (index(keywrd, " ADD-H") /= 0 ) call l_control("NEWPDB", len_trim("NEWPDB"), 1)
+      if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") + index(keywrd, " NEWPDB") + &
+        index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
         if (index(keywrd, " DISP") /= 0) then
           call l_control("0SCF", len_trim("0SCF"), 1)
           call l_control("PRT", len_trim("PRT"), 1)
@@ -512,7 +538,7 @@
           line = ' GEOMETRY OF SYSTEM SUPPLIED'
         end if
         if (prt_coords) write (iw, '(A)') trim(line)
-        xparam(1) = -1.D0
+!        xparam(1) = -1.D0
         if (index(keywrd," OLDEN") /= 0 .and. index(keywrd, " 0SCF") == 0) then
 !
 ! read in density so that charges can be calculated
@@ -538,13 +564,27 @@
           call wrttxt (iarc)
           call geoutg (iarc)
         else if (mozyme .or. index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0  .or. &
-          (index(keywrd," PDBOUT") + index(keywrd," RESEQ") + index(keywrd," RESID") /= 0)) then
+          (index(keywrd," PDBOUT") + index(keywrd," RESEQ") + index(keywrd," NEWPDB") + &
+          index(keywrd," RESID") /= 0)) then
           i = size(coorda)
           j = size(coord)
           if (i /= j) then
             deallocate (coorda)
             allocate(coorda(3,natoms))
             coorda = coord
+          end if
+!
+!  Check the format of hydrogen atoms if SITE is used.  If it is the new formatmake sure that NEWPDB is present
+!
+          if (index(keywrd, " SITE=") /= 0 .and. index(keywrd," NEWPDB") == 0) then
+            j = 0
+            k = 0
+            do i = 1, min(numat,100)
+              if (index(txtatm(i), " 1H") /= 0) j = j + 1
+              if (index(txtatm(i), " HG13") /= 0) k = k + 1
+              line=txtatm(i)(12:15)
+            end do
+            if (k > 0 .and. j == 0) call l_control("NEWPDB", len("NEWPDB"), 1)
           end if
           if (index(keywrd, " ADD-H") + index(keywrd, " SITE=") == 0) call geochk()
           if (index(keywrd, " ADD-H") == 0 .and. index(keywrd, " SITE=") == 0 .and. index(keywrd," RESEQ") /= 0) then
@@ -557,6 +597,11 @@
             if (index(keywrd, " ADD-H") /= 0) then
               call store_and_restore_Tv("STORE")
               call add_hydrogen_atoms()
+              if (moperr) then
+                inquire(unit=iarc, opened=opend) 
+                if (opend) close (iarc, status="DELETE") 
+                go to 101
+              end if
               call move_hydrogen_atoms
               call store_and_restore_Tv("RESTORE")
               call lewis(.false.)
@@ -573,6 +618,10 @@
               moperr = .false.
             end if
             call l_control("0SCF", len("0SCF"), 1)
+!
+! Force the TER's to be re-calculated
+!
+            breaks(1) = -300
             call geochk()
             if (moperr) goto 101
             if (size(coorda) >= size(coord)) then
@@ -582,9 +631,11 @@
             moperr = .false.
             i = index(refkey(1), "ADD-H")
             if (i /= 0) refkey(1) = refkey(1)(:i - 1)//refkey(1)(i + 5:)
+          else
+            if (index(keywrd, " NEWPDB") /= 0) call update_txtatm(.true., .false.)
           end if
           if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") /= 0 .and. &
-            index(keywrd," RESEQ") + index(keywrd," RESID") /= 0) &
+            index(keywrd," RESEQ") + index(keywrd," RESID") + index(keywrd, " NEWPDB") /= 0) &
             call update_txtatm(.true., .false.)         !  Now that geometry checks are done, switch to input labels
           if (index(keywrd, " NEWPDB") /= 0) call PDB3()
           call write_sequence
@@ -646,7 +697,10 @@
           end if
           call geout (iarc)
         end if
-        go to 100
+        if (index(keywrd, " SITE=") + index(keywrd, " ADD-H") + index(keywrd, " 0SCF") + &
+          index(keywrd," RESEQ") + index(keywrd," RESID") /= 0) go to 100
+        if (nelecs == 0 .or. index(keywrd, " NEWPDB") == 0) goto 100
+        close (iarc)
       end if
       if (pdb_label) call compare_txtatm(moperr, moperr)
       if (moperr) then
@@ -808,6 +862,7 @@
         call to_screen(" Force constant calculation")
         last = 1
         call force ()
+        keywrd = " "
         iflepo = -1
       else if (index(keywrd,' DRC') + index(keywrd,' IRC') /= 0) then
         call to_screen(" Reaction coordinate calculation")
@@ -884,7 +939,6 @@
           end do
         end do
         call rci()
-        go to 100
       end if
 !
 !  Calculation done, now print results
@@ -981,7 +1035,7 @@
       write (iw, '(3/,'' TOTAL JOB TIME: '',F16.2,'' SECONDS'')') tim
       write (iw, '(/,'' == MOPAC DONE =='')')
       call fdate (line)
-      write(0,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
+      write(*,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
       line(5:10)//", "//trim(line(21:))//", at"//line(11:16)//"."
 !
 !  Delete files that are definitely not wanted

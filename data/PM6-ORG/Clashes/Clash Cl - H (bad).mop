@@ -1,0 +1,10 @@
+ HTML  pm6-org  charge=-1 external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ Cl - H-CH3 (bad)     Cl - H  = 2.78
+ h=0.5+"Clash Cl - H (Good)" hr=guess hwt=30
+ Cl(HETATM    1 CL    CL A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  H(HETATM    2 1H   HET B   2)   2.78000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  C(HETATM    3  C   HET B   2)   1.11176311 +0  180.0000000 +0    0.0000000 +0     2     1     0
+  H(HETATM    4 2H   HET B   2)   1.09717278 +0  108.9336993 +0    0.0000000 +0     3     2     1
+  H(HETATM    5 3H   HET B   2)   1.09718138 +0  108.9352817 +0  120.0000000 +0     3     2     1
+  H(HETATM    6 4H   HET B   2)   1.09720490 +0  108.9396071 +0 -120.0000000 +0     3     2     1
+ 

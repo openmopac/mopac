@@ -1,0 +1,6 @@
+*
+*  Optimize all parameters for Zn, using the method PM6-ORG
+*  
+set="Zinc list of files.txt" ref="Normal metal compounds" PM6-org cycles=400   nolim
+(Zn)(All)      
+end

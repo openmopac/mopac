@@ -641,32 +641,15 @@ subroutine coscl1 (a, id, n)
     integer, intent (in) :: n
     double precision, dimension (*), intent (inout) :: a
     integer, dimension (n), intent (inout) :: id
-    integer :: i, indi, indk, j, k, kk
-    double precision :: summe
+    integer :: i, indi, info
     indi = 0
     do i = 1, n
       id(i) = indi
       indi = indi + i
     end do
-    do k = 1, n
-      indk = id(k)
-      kk = k + indk
-      do i = k, n
-        indi = id(i)
-        summe = 0.d0
-        do j = 1, k - 1
-          summe = summe + a(j + indi) * a(j + indk)
-        end do
-        summe = a(k + indi) - summe
-        if (i == k) then
-          if (summe < 0.0d0) then
-            summe = a(kk)
-          end if
-          a(kk) = 1.d0 / Sqrt (summe)
-        else
-          a(k + indi) = summe * a(kk)
-        end if
-      end do
+    call dpptrf('U', n, a, info)
+    do i = 1, n
+      a(i+id(i)) = 1.0d0/a(i+id(i))
     end do
 end subroutine coscl1
 subroutine coscl2 (a, id, x, y, n)
@@ -1331,6 +1314,7 @@ subroutine surclo (coord, nipa, lipa, din, dim_din, rsc, isort, ipsrs, nipsrs, n
     tarset = 0.d0
     nipc = 0
     nrs = 0
+    iset = 0
    ! GENERATION OF SEGMENTS ALONG THE INTERSECTION RINGS
     ilipa = 0
     do i = 1, numat
@@ -1850,7 +1834,14 @@ subroutine cosini(l_print)
       return
     end if
     if (.not. mozyme) then
-      if (lenabc > 22000) then
+      allocate(abcmat(lenabc), xsp(3, lenabc), nset(nppa*numat), bh(lenabc), stat = j)
+      allocate(bmat(lm61, lenabc), stat = i)
+      j = j + i
+      allocate(amat((lenabc*(lenabc + 1))/2), stat = i)
+      j = j + i
+      allocate(cmat((lm61*(lm61 + 1))/2), stat = i)
+      j = j + i
+      if (j /= 0) then
         if (l_print) then
           write(line, '(a, i5, a)')"Data set '"//trim(jobnam)//"' exists, "
           write(0, '(//10x, a)')trim(line)
@@ -1862,17 +1853,6 @@ subroutine cosini(l_print)
           write(0, '(/10x, a, //)')trim(line)
           write(iw, '(/10x, a, //)')trim(line)
         end if
-        moperr = .true.
-        return
-      end if
-      allocate(abcmat(lenabc), xsp(3, lenabc), nset(nppa*numat), bh(lenabc), stat = j)
-      allocate(bmat(lm61, lenabc), stat = i)
-      j = j + i
-      allocate(amat((lenabc*(lenabc + 1))/2), stat = i)
-      j = j + i
-      allocate(cmat((lm61*(lm61 + 1))/2), stat = i)
-      j = j + i
-      if (j /= 0) then
         call memory_error("COSINI (2) in Cosmo")
         return
       end if

@@ -1,0 +1,107 @@
+*  Distance Fe - S (good) 2.279
+*  Distance Fe - S (Bad) 2.5
+*  Distance Fe - S (Bad) 1.8
+  Distance Fe - H (good) 3.0
+  Distance Fe - H (Bad) 2.9
+  Distance Fe - N (good) 2.04
+  Distance Fe - N (Bad) 1.94
+  Distance Fe - O (good) 2.19
+  Distance Fe - O (Bad) 2.29
+  fe(acac)3 anion                                                                 
+  iron(iii) edta                                                                  
+  Fe(III)(Ox)3                                                                    
+  H3Fe(III)(Ox)3                                                                  
+  fe(co)4(pet3)                                                                   
+  FeS4C2 (CIBGAV10)                                                               
+  iron(i) chloride                                                                
+  Fe(II)(H2O)5.Cl                                                                 
+  Fe(III)Cl3N2 (FINJIV)                                                           
+  Fe(II)Cl4(2-)                                                                   
+  Fe(III)Cl6 d5                                                                   
+  fe2(co)9                                                                        
+  iron dichloride, dimer                                                          
+  iron trichloride, dimer                                                         
+  Fe(II)(H2O)5.Br                                                                 
+  Fe(II)Br2.4(H2O)                                                                
+  Fe(III)Br4(-)                                                                   
+  fe(co)3(c3h6)i                                                                  
+  FeC6I (ALCOFE10)                                                                
+*  fe(co)4i2                                                                       
+  Fe(III)Cp2(+) (FERRIC) r                                                        
+  fe(c5h5)2r                                                                      
+*  fe_tol_bipyr                                                                    
+  fe(ii)(nh3)6r                                                                   
+  Fe(III)(CN)6(3-) (JIHPAR) r                                                                                  
+  FeC9 (1,3-C4H6)  (BUDFEC01) r                                                   
+  FeCO(1,3-C4H6)2r                                                                
+  methyl iron(iii) dihydroxider                                                   
+  cyclobutadiene iron tricarbonyl r                                               
+*  Fe(CO)4(2-) (FUZHUD) r                                                          
+  fe(co)4h2r                                                                      
+  fe(co)4(c2h4)r                                                                  
+  fe(co)2(no)2r                                                                   
+  bis(Pyridine)-tetra-aqua-iron(ii)_(NEJBOT01) r                                  
+  FeN3O2r                                                                         
+*  Fe(CO)5 (FOJBOV) r                                                              
+*  FeCp(CO)2(NO3) (CNOFEA) r                                                       
+  Fe(II)(H2O)4(OH)2r                                                              
+  Fe(II)(H2O)5.OHr                                                                
+  Fe(III)(H2O)6r                                                                  
+  fe(ii)(h2o)6_r                                                                  
+*  Fe(CO)3C2 (FCPENO) r                                                            
+  fe_2acacr                                                                       
+  Diaqua-bis(a-pyridinecarboxylato)-iron(ii)_(TUBWES) r                           
+  fe_2h2o_py_car                                                                  
+  iron(iii) edta r                                                                
+*  Fe(III)(Ox)3r                                                                   
+  H3Fe(III)(Ox)3r                                                                 
+  Fe(II)(H2O)5.Fr                                                                 
+*  FeCpS(CO)2 (CEYTFE) r                                                           
+  fe_dic_thior                                                                    
+  bis(beta-dimethylcysteinyl)-iron_(LERJIB) r                                     
+*  FeP4S2 (JIYFAY) r                                                               
+  tris(N-Methylformothiohydroxamato)-iron(iii) (TFORHI10) r                       
+  fe_dim_car                                                                      
+  tris(2-Mercaptopyridine N-oxide)-iron(iii) (PEDKEO) r                           
+*  FeS4C2 (CIBGAV10) r                                                             
+*  fe_2isothior                                                                    
+  Fe(II)(H2O)5.Clr                                                                
+  Aqua-chloro-bis(a-picolinato-N,O)-iron(iii)_(ACPICF) r                          
+  Dichloro-(N-(2-salicylidene-ethyl)ethanolaminato)-iron(iii)_(WIQMOY) r          
+  Fe(III)O2N2Cl2_(WIQMOY) r                                                       
+  Fe(III)Cl3N2 (FINJIV) r                                                         
+  Trichloro-bis(trimethylamine)-iron r                                            
+  Trichloro-(N,N',N''-trimethyl-triazacyclohexane-N,N',N'')-iron(iii) r           
+  Aqua-(1,10-phenanthroline-N,N')-trichloro-iron(iii)                             
+  Trichloro-(1,4,7-trithiacyclononane)-iron(iii) r                                
+  Fe(III)Cl4(-) r                                                                 
+  Fe(II)Cl4(2-) (GOXLUA) r                                                        
+  Fe(III)Cl6 (DALLIL) r                                                           
+  fe2(co)9r                                                                       
+*  FeC6Br (ALCFEA) r                                                               
+  Fe(II)(H2O)5.Brr                                                                
+  fe_2h2o_br_oxyr                                                                 
+  Fe(II)Br2.4(H2O) r                                                              
+  Fe(III)Br4(-) (EPYMBF) r                                                        
+  FeC6I (ALCOFE10) r                                                              
+*  Fe(III)I4(-) r                                                                  
+  fe(iii)i6 d5_r                                                                  
+  iron, atom                                                                      
+  Fe(III)Cp2(+)                                                                   
+  fe(c5h5)2 d5d                                                                   
+  fe(ii)(nh3)6                                                                    
+  Fe(III)(CN)6(3-)                                                                
+  ferrous tris(ortho phenantholine)                                               
+*  FeC9 (1,3-C4H6) (BUDFEC01)                                                      
+  FeCO(1,3-C4H6)2                                                                 
+*  FeCp(CO)2(CN) (ACODUR)                                                          
+*  FeCp(CO)2(MECN)(+) (CPACFE)                                                     
+  fe(co)3(c4h6)                                                                   
+  Fe(CO)4(2-)                                                                     
+  fe(co)4h2                                                                       
+*  fe(co)4(c2h4)                                                                   
+  fe(co)4(acetonitrile)                                                           
+  fe(co)2(no)2                                                                    
+  FeN3O2                                                                          
+  Fe(CO)5 (FOJBOV)                                                                
+*  FeCp(CO)2(NO3) (CNOFEA)   

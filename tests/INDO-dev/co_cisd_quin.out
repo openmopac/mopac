@@ -1,0 +1,41 @@
+ *******************************************************************************
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
+ *******************************************************************************
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
+ *******************************************************************************
+
+                              INDO CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Mon May 15 10:16:29 2023  *
+ *  INDO       - The INDO Hamiltonian to be used
+ *  CISD       - C.I. USES 1 AND 2 ELECTRON EXCITATIONS
+ *  QUINTET    - SPIN STATE DEFINED AS A QUINTET
+ * C.I.D.=(N,M)- 1 DOUBLY FILLED LEVELS USED IN A CI DOUBLES INVOLVING 3 M.O.'S
+ *  C.I.=(N,M) - 3 DOUBLY FILLED LEVELS USED IN A C.I. INVOLVING 6 M.O.'S
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+
+          Spin is incompatible with INDO
+ *
+ *  Errors detected in keywords.  Job stopped here to avoid wasting time.
+ *
+ *******************************************************************************
+
+ ******************************************************************************
+ *                                                                            *
+ *     Error and normal termination messages reported in this calculation     *
+ *                                                                            *
+ * Spin is incompatible with INDO                                             *
+ * JOB ENDED NORMALLY                                                         *
+ *                                                                            *
+ ******************************************************************************
+
+
+
+ TOTAL JOB TIME:             0.00 SECONDS
+
+ == MOPAC DONE ==

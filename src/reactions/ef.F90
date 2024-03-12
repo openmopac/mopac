@@ -1124,7 +1124,7 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
     double precision, save :: eone, eigit
     double precision, parameter :: tmtwo = 1.0d-2
     double precision :: bl, bu, d2max, fl, fm, fu, ssmax, ssmin, &
-         & sstoll, temp, xlamda, lamda, lamda0, sstep, store_ddx
+         & sstoll, temp, xlambda, lambda, lambda0, sstep, store_ddx
     double precision, parameter :: eps = 1.0d-12, four = 4.0d+00, &
          & one = 1.0d+0, sfix = 1.0d+01, step_loc = 5.0d-02, ten = 1.0d+1, &
          & tmsix = 1.0d-06, toll = 1.0d-8, zero = 0.0d0
@@ -1204,15 +1204,15 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
     ssmax = ssmax * big
     sstoll = toll
     d2max = dmax * dmax
-   !  SOLVE ITERATIVELY FOR LAMDA
-   !  INITIAL GUESS FOR LAMDA IS ZERO EXCEPT NOTE THAT
-   !  LAMDA SHOULD BE LESS THAN EIGVAL(1)
+   !  SOLVE ITERATIVELY FOR LAMBDA
+   !  INITIAL GUESS FOR LAMBDA IS ZERO EXCEPT NOTE THAT
+   !  LAMBDA SHOULD BE LESS THAN EIGVAL(1)
    !  START BY BRACKETING ROOT, THEN HUNT IT DOWN WITH BRUTE FORCE BISECT.
    !
     frodo1 = .false.
     frodo2 = .false.
-    lamda = zero
-    lamda0 = zero
+    lambda = zero
+    lambda0 = zero
     if (ts) then
       if (eigit < zero .and. eone >= zero .and. donr) then
         if (iprnt >= 1) then
@@ -1231,23 +1231,23 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
    !     .. Head of OUTER_LOOP ..
 1000 continue
     if (ts) then
-      lamda0 = eigval(it) + Sqrt (eigval(it)**2+four*fx(it)**2)
-      lamda0 = lamda0 * half
+      lambda0 = eigval(it) + Sqrt (eigval(it)**2+four*fx(it)**2)
+      lambda0 = lambda0 * half
       if (iprnt >= 1) then
          !
-10030   format (1 x, "LAMDA THAT MAXIMIZES ALONG TS MODES =   ", f15.5)
-        write (iw, 10030) lamda0
+10030   format (1 x, "LAMBDA THAT MAXIMIZES ALONG TS MODES =   ", f15.5)
+        write (iw, 10030) lambda0
       end if
     end if
     sstep = step_loc
     if (eone <= zero) then
-      lamda = eone - sstep
+      lambda = eone - sstep
     end if
     if (eone > zero) then
       sstep = eone
     end if
-    bl = lamda - sstep
-    bu = lamda + sstep * half
+    bl = lambda - sstep
+    bu = lambda + sstep * half
     ncnt = 0
     do
       fl = zero
@@ -1280,57 +1280,57 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
       endfile (iw)
       backspace (iw)
       if (frodo1 .and. frodo2) then
-        write (iw,*) "NUMERICAL PROBLEMS IN BRACKETING LAMDA", eone, bl, &
+        write (iw,*) "NUMERICAL PROBLEMS IN BRACKETING LAMBDA", eone, bl, &
              & bu, fl, fu
         write (iw,*) " GOING FOR FIXED STEP SIZE...."
         go to 1020
       end if
       ncnt = ncnt + 1
       if (ncnt > 1000) then
-        write (iw,*) "TOO MANY ITERATIONS IN LAMDA BISECT", bl, bu, &
+        write (iw,*) "TOO MANY ITERATIONS IN LAMBDA BISECT", bl, bu, &
              & fl, fu
-        call mopend ("TOO MANY ITERATIONS IN LAMDA BISECT IN EF")
+        call mopend ("TOO MANY ITERATIONS IN LAMBDA BISECT IN EF")
         return
       end if
     end do
     ncnt = 0
-    xlamda = zero
+    xlambda = zero
     do
       fl = zero
       fu = zero
       fm = zero
-      lamda = half * (bl+bu)
+      lambda = half * (bl+bu)
       do i = 1, nvar
         if (i /= it) then
           if ((bl-eigval(i) == zero) .or. &
             & (bu-eigval(i) == zero) .or. &
-            & (lamda-eigval(i) == zero)) then
+            & (lambda-eigval(i) == zero)) then
             write (iw, "(' CALCULATION IS TERMINATED TO AVOID ZERO DIVIDE')")
             call mopend ("in FORMD")
             return
           end if
           fl = fl + (fx(i)*fx(i)) / (bl-eigval(i))
           fu = fu + (fx(i)*fx(i)) / (bu-eigval(i))
-          fm = fm + (fx(i)*fx(i)) / (lamda-eigval(i))
+          fm = fm + (fx(i)*fx(i)) / (lambda-eigval(i))
         end if
       end do
       fl = fl - bl
       fu = fu - bu
-      fm = fm - lamda
-      if (Abs (xlamda-lamda) < sstoll) exit
+      fm = fm - lambda
+      if (Abs (xlambda-lambda) < sstoll) exit
       ncnt = ncnt + 1
       if (ncnt > 1000) then
-        write (iw,*) "TOO MANY ITERATIONS IN LAMDA BISECT", bl, bu, &
-             & lamda, fl, fu
-        call mopend ("TOO MANY ITERATIONS IN LAMDA BISECT IN EF")
+        write (iw,*) "TOO MANY ITERATIONS IN LAMBDA BISECT", bl, bu, &
+             & lambda, fl, fu
+        call mopend ("TOO MANY ITERATIONS IN LAMBDA BISECT IN EF")
         return
       else
-        xlamda = lamda
+        xlambda = lambda
         if (fm*fu < zero) then
-          bl = lamda
+          bl = lambda
         end if
         if (fm*fl < zero) then
-          bu = lamda
+          bu = lambda
         end if
       end if
     end do
@@ -1338,8 +1338,8 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
 1010 continue
    !
     if (iprnt >= 1) then
-10040 format (1 x, "LAMDA THAT MINIMIZES ALONG ALL MODES =  ", f17.9)
-      write (iw, 10040) lamda
+10040 format (1 x, "LAMBDA THAT MINIMIZES ALONG ALL MODES =  ", f17.9)
+      write (iw, 10040) lambda
     end if
    !
    !  CALCULATE THE STEP
@@ -1348,20 +1348,20 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
       d(i) = zero
     end do
     do i = 1, nvar
-      if (lamda == zero .and. Abs (eigval(i)) < tmtwo) then
+      if (lambda == zero .and. Abs (eigval(i)) < tmtwo) then
         temp = zero
       else
-        temp = fx(i) / (lamda-eigval(i))
+        temp = fx(i) / (lambda-eigval(i))
       end if
       if (i == it) then
-        if (Abs (lamda0-eigval(it)) < 1.d-9) then
+        if (Abs (lambda0-eigval(it)) < 1.d-9) then
           write (iw,*) " TS FAILED TO LOCATE TRANSITION STATE"
           write (iw, "(/10X,'CURRENT VALUE OF GEOMETRY',/)")
           call geout (iw)
           call mopend ("TS FAILED TO LOCATE TRANSITION STATE")
           return
         else
-          temp = fx(it) / (lamda0-eigval(it))
+          temp = fx(it) / (lambda0-eigval(it))
         end if
       end if
       if (iprnt >= 5) then
@@ -1372,48 +1372,48 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
       end do
     end do
     ddx = dSqrt (ddot(nvar, d, 1, d, 1))
-    if ( ((lamda /= zero .and. abs(lamda0 + lamda) <= 1.d-20)) .or. &
-        & (lamda /= zero .and. abs(lamda0 + lamda) > 1.d-20) .and. store_ddx > 1.d-9) then
+    if ( ((lambda /= zero .and. abs(lambda0 + lambda) <= 1.d-20)) .or. &
+        & (lambda /= zero .and. abs(lambda0 + lambda) > 1.d-20) .and. store_ddx > 1.d-9) then
       if (ddx > 2*store_ddx) then
         d = d*store_ddx/ddx
         ddx = 2*store_ddx
       end if
     end if
-    if (lamda == zero .and. lamda0 == zero .and. iprnt >= 1) then
+    if (lambda == zero .and. lambda0 == zero .and. iprnt >= 1) then
 10050 format (1 x, "PURE NR-STEP HAS LENGTH", f10.5)
       write (iw, 10050) ddx
     end if
-    if (lamda /= zero .and. abs(lamda0 + lamda) > 1.d-20 .and. iprnt >= 1) then
+    if (lambda /= zero .and. abs(lambda0 + lambda) > 1.d-20 .and. iprnt >= 1) then
 10060 format (1 x, "P-RFO-STEP   HAS LENGTH", f10.5)
       write (iw, 10060) ddx
     end if
-    if (lamda /= zero .and. abs(lamda0 + lamda) <= 1.d-20 .and. iprnt >= 1) then
+    if (lambda /= zero .and. abs(lambda0 + lambda) <= 1.d-20 .and. iprnt >= 1) then
 10070 format (1 x, "QA/TRIM-STEP HAS LENGTH", f10.5)
       write (iw, 10070) ddx
     end if
     store_ddx = ddx
     if (ddx < (dmax+tmsix)) then
-      xlamd = lamda
-      xlamd0 = lamda0
+      xlamd = lambda
+      xlamd0 = lambda0
       return
     end if
-    if (lamda == zero .and. lamda0 == zero) go to 1000
+    if (lambda == zero .and. lambda0 == zero) go to 1000
     if (rscal) go to 1040
-1020 lamda = zero
+1020 lambda = zero
     frodo1 = .false.
     frodo2 = .false.
     sstep = step_loc
     if (eone <= zero) then
-      lamda = eone - sstep
+      lambda = eone - sstep
     end if
     if (ts .and.-eigit < eone) then
-      lamda = -eigit - sstep
+      lambda = -eigit - sstep
     end if
     if (eone > zero) then
       sstep = eone
     end if
-    bl = lamda - sstep
-    bu = lamda + sstep * half
+    bl = lambda - sstep
+    bu = lambda + sstep * half
     do
       fl = zero
       fu = zero
@@ -1454,71 +1454,71 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
       end if
       if (frodo1 .and. frodo2) exit
     end do
-    write (iw,*) "NUMERICAL PROBLEMS IN BRACKETING LAMDA", eone, bl, bu, &
+    write (iw,*) "NUMERICAL PROBLEMS IN BRACKETING LAMBDA", eone, bl, bu, &
          & fl, fu
     write (iw,*) " GOING FOR FIXED LEVEL SHIFTED NR STEP..."
-   !           BOTH LAMDA SEARCHES FAILED, GO FOR FIXED LEVEL SHIFTED NR
+   !           BOTH LAMBDA SEARCHES FAILED, GO FOR FIXED LEVEL SHIFTED NR
    !           THIS IS UNLIKELY TO PRODUCE ANYTHING USEFUL, BUT MAYBE WE'RE
-    lamda = eone - sfix
-    lamda0 = eigit + sfix
+    lambda = eone - sfix
+    lambda0 = eigit + sfix
     rscal = .true.
     go to 1010
 1030 continue
     ncnt = 0
-    xlamda = zero
+    xlambda = zero
     do
       fl = zero
       fu = zero
       fm = zero
-      lamda = half * (bl+bu)
+      lambda = half * (bl+bu)
       do i = 1, nvar
         if (i /= it) then
           if ((bl-eigval(i) == zero) .or. &
             & (bu-eigval(i) == zero) .or. &
-            & (lamda-eigval(i) == zero)) then
+            & (lambda-eigval(i) == zero)) then
             write (iw, "(' CALCULATION IS TERMINATED TO AVOID ZERO DIVIDE')")
             call mopend ("in FORMD")
             return
           end if
           fl = fl + (fx(i)/(bl-eigval(i))) ** 2
           fu = fu + (fx(i)/(bu-eigval(i))) ** 2
-          fm = fm + (fx(i)/(lamda-eigval(i))) ** 2
+          fm = fm + (fx(i)/(lambda-eigval(i))) ** 2
         end if
       end do
       if (ts) then
         if ((bl+eigval(it) == zero) .or. &
           & (bu+eigval(it) == zero) .or. &
-          & (lamda+eigval(it) == zero)) then
+          & (lambda+eigval(it) == zero)) then
           write (iw, "(' CALCULATION IS TERMINATED TO AVOID ZERO DIVIDE')")
           call mopend ("in FORMD")
           return
         end if
         fl = fl + (fx(it)/(bl+eigval(it))) ** 2
         fu = fu + (fx(it)/(bu+eigval(it))) ** 2
-        fm = fm + (fx(it)/(lamda+eigval(it))) ** 2
+        fm = fm + (fx(it)/(lambda+eigval(it))) ** 2
       end if
       fl = fl - d2max
       fu = fu - d2max
       fm = fm - d2max
-      if (Abs (xlamda-lamda) < sstoll) exit
+      if (Abs (xlambda-lambda) < sstoll) exit
       ncnt = ncnt + 1
       if (ncnt > 1000) then
-        write (iw,*) "TOO MANY ITERATIONS IN LAMDA BISECT", bl, bu, lamda, &
+        write (iw,*) "TOO MANY ITERATIONS IN LAMBDA BISECT", bl, bu, lambda, &
              & fl, fu
-        call mopend ("TOO MANY ITERATIONS IN LAMDA BISECT IN EF")
+        call mopend ("TOO MANY ITERATIONS IN LAMBDA BISECT IN EF")
         return
       else
-        xlamda = lamda
+        xlambda = lambda
         if (fm*fu < zero) then
-          bl = lamda
+          bl = lambda
         end if
         if (fm*fl < zero) then
-          bu = lamda
+          bu = lambda
         end if
       end if
     end do
    !
-    lamda0 = -lamda
+    lambda0 = -lambda
     rscal = .true.
    !     .. End of LOOP ..
     go to 1010
@@ -1536,8 +1536,8 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
 10080 format (5 x, "CALCULATED STEP SIZE TOO LARGE, SCALED WITH", f9.5)
       write (iw, 10080) skal
     end if
-    xlamd = lamda
-    xlamd0 = lamda0
+    xlamd = lambda
+    xlamd0 = lambda0
 end subroutine formd
 subroutine gethes (xparam, igthes, iloop, hess, pmat, bmat, grad, geo, loc, &
      & oldf, d, vmode, funct0)

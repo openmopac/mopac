@@ -16,7 +16,7 @@
 
   subroutine to_screen(text0)
   use chanel_C, only : iw0
-  use molkst_C, only : keywrd
+  use molkst_C, only : keywrd, keywrd_txt
   implicit none
   character (len=*) :: text0
   character (len=200) :: text
@@ -38,7 +38,7 @@
       call flush (iw0)
     end if
   else
-    if (index(keywrd, " AUX") == 0) return
+    if (index(keywrd, " AUX") == 0 .and. index(keywrd_txt, " AUX") == 0) return
     call current_version(text)
   end if
   end subroutine to_screen
@@ -61,13 +61,13 @@
 !
   use molkst_C, only : numat, norbs, escf, nelecs, nclose, nopen, verson, &
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
-  method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, &
+  method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, voigt, &
   uhf, nalpha, nbeta,  gnorm, mozyme, mol_weight, ilim, &
   line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no, fract
 !
   use MOZYME_C, only : ncf, ncocc, noccupied, icocc_dim, cocc_dim, nvirtual, icvir_dim, &
   nncf, iorbs, cocc, icocc, ncvir, nnce, nce, icvir, cvir, tyres, size_mres, &
-  cvir_dim
+  cvir_dim, idiag
 !
   use elemts_C, only : elemnt
 !
@@ -83,6 +83,10 @@
   use maps_C, only : rxn_coord, rc_escf, ekin, lparam, latom
 !
   use drc_C, only: time
+!
+#if MOPAC_F2003
+  USE, INTRINSIC :: IEEE_ARITHMETIC
+#endif
 !
   implicit none
   character (len=*) :: text
@@ -357,7 +361,7 @@
 !
     if (abs(escf) > 1.d-30) then
       write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" HEAT_OF_FORM_UPDATED:KCAL/MOL=",escf
-      write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" GRADIENT_UPDATED:KCAL/MOL/ANG=",gnorm
+      write(opt_hook,"(a,sp, d"//fmt13p6//",a)")" GRADIENT_NORM_UPDATED:KCAL/MOL/ANG=",gnorm
 
       write(opt_hook,"(a,i"//paras//",a)")" ATOM_X_UPDATED:ANGSTROMS[",3*numat, "]="
       write(opt_hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
@@ -365,6 +369,29 @@
         write(opt_hook,"(a,i1,a)")" TRANS_VECTS_UPDATED:ANGSTROMS[",id*3,"]="
         write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
         if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
+      end if
+      if (id == 3 .and. nvar == 3*natoms) then
+        sum = 0.d0
+        do i = 1, 6
+          if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+        end do
+        if (sum /= 0.d0) then
+          write(hook,"(a,i1,a)")" VOIGT_STRESS_UPDATED:GIGAPASCALS[6]="
+          write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+        end if
+      end if
+      if (nvar > 0) then
+        sum = 0.d0
+        do i = 1, nvar
+          if (abs(grad(i)) > sum) sum = abs(grad(i))
+        end do
+        if (sum > 1.d-4) then
+          write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
+          read(fmt9p4,'(3x,i2)')i
+          j = max(int(log10(sum)),1)
+          write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+          write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
+        end if
       end if
     end if
     if (opt_hook == 0) call flush (0)
@@ -400,6 +427,34 @@
     end if
     write(opt_hook,"(a,i"//paras//",a)")" ATOM_X_UPDATED:ANGSTROMS[",3*numat, "]="
     write(opt_hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
+    if (id > 0) then
+      write(opt_hook,"(a,i1,a)")" TRANS_VECTS_UPDATED:ANGSTROMS[",id*3,"]="
+      write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
+      if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
+    end if
+    if (id == 3 .and. nvar == 3*natoms) then
+      sum = 0.d0
+      do i = 1, 6
+        if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+      end do
+      if (sum /= 0.d0) then
+        write(hook,"(a,i1,a)")" VOIGT_STRESS_UPDATED:GIGAPASCALS[6]="
+        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+      end if
+    end if
+    if (nvar > 0) then
+      sum = 0.d0
+      do i = 1, nvar
+        if (abs(grad(i)) > sum) sum = abs(grad(i))
+      end do
+      if (sum > 1.d-4) then
+        write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
+        read(fmt9p4,'(3x,i2)')i
+        j = max(int(log10(sum)),1)
+        write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+        write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
+      end if
+    end if
     if (L_MO_s) &
     call print_conventional_M_O_s(opt_hook, compressed, moa_lower, moa_upper, mob_lower, mob_upper, fmt9p4, orbs2)
     if (L_MO_s) &
@@ -433,7 +488,21 @@
         write(hook,"(3f"//fmt13p5//")")(press(i),i=1,3)
       end if
     end if
+    if (id == 3 .and. nvar == 3*natoms) then
+      sum = 0.d0
+      do i = 1, 6
+        if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+      end do
+      if (sum /= 0.d0) then
+        write(hook,"(a,i1,a)")" VOIGT_STRESS:GIGAPASCALS[6]="
+        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+      end if
+    end if
+#ifdef MOPAC_F2003
+    if (.not. ieee_is_nan(dip(4,3))) then
+#else
     if (.not. isnan(dip(4,3))) then
+#endif
       if (Abs(dip(4,3)) > 1.d-20) then
         write(hook,"(a,sp, d"//fmt13p6//", a)")" DIPOLE:DEBYE=",dip(4,3)
         write(hook,"(a,sp, 3d"//fmt13p5//", a)")" DIP_VEC:DEBYE[3]=",(dip(i,3), i = 1, 3)
@@ -487,10 +556,14 @@
     write(hook,"(a,i"//atoms//",a)")" ATOM_CHARGES[",numat,"]="
     write(hook,"(sp,10f"//fmt9p5//")") (q(i), i=1,numat)
     write(hook,"(a,i"//orbs//",a)")" AO_CHARGES[",norbs,"]="
-    write(hook,"(10f"//fmt9p5//")") (p((i*(i+1))/2), i=1,norbs)
-    if (uhf) then
-      write(hook,"(a,i"//orbs//",a)")" AO_SPINS[",norbs,"]="
-      write(hook,"(10f"//fmt9p5//")") (pa((i*(i+1))/2)-pb((i*(i+1))/2), i=1,norbs)
+    if (mozyme) then
+      write(hook,"(10f"//fmt9p5//")") (p(idiag(i)), i=1,norbs)
+    else
+      write(hook,"(10f"//fmt9p5//")") (p((i*(i+1))/2), i=1,norbs)
+      if (uhf) then
+        write(hook,"(a,i"//orbs//",a)")" AO_SPINS[",norbs,"]="
+        write(hook,"(sp,10f"//fmt9p5//")") (pa((i*(i+1))/2)-pb((i*(i+1))/2), i=1,norbs)
+      end if
     end if
     if (nvar > 0) then
       sum = 0.d0
@@ -904,7 +977,8 @@
       end if
       write(hook,"(10f"//fmt9p3//")") (eigs(eigs_map(i)), i=moa_lower, moa_upper)
       if (compressed) then
-        deallocate (icomp, comp)
+        if (allocated(icomp)) deallocate (icomp)
+        if (allocated(comp)) deallocate (comp)
       else
         if (allocated(overlap2)) deallocate (overlap2)
       end if
@@ -1107,13 +1181,41 @@
     write(hook,"(a,sp, d"//fmt13p6//",a)")" HEAT_OF_FORMATION:KCAL/MOL=",escf
     write(hook,"(a,i"//paras//",a)")" ATOM_X_OPT:ANGSTROMS[",3*numat, "]="
     write(hook,"(3f"//fmt10p4//")") ((coord(j,i),j=1,3), i=1,numat)
+    if (id > 0) then
+      write(opt_hook,"(a,i1,a)")" TRANS_VECTS_UPDATED:ANGSTROMS[",id*3,"]="
+      write(opt_hook,"(3f"//fmt9p4//")")((tvec(j,i),j=1,3),i=1,id)
+      if (density > 1.d-1) write(opt_hook,"(a,d"//fmt13p6//",a)")" DENSITY:G/CM^3=",density
+    end if
+    if (id == 3 .and. nvar == 3*natoms) then
+      sum = 0.d0
+      do i = 1, 6
+        if (abs(voigt(i)) > sum) sum = abs(voigt(i))
+      end do
+      if (sum /= 0.d0) then
+        write(hook,"(a,i1,a)")" VOIGT_STRESS_UPDATED:GIGAPASCALS[6]="
+        write(hook,"(6f"//fmt13p5//")")(voigt(i),i=1,6)
+      end if
+    end if
+    if (nvar > 0) then
+      sum = 0.d0
+      do i = 1, nvar
+        if (abs(grad(i)) > sum) sum = abs(grad(i))
+      end do
+      if (sum > 1.d-4) then
+        write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
+        read(fmt9p4,'(3x,i2)')i
+        j = max(int(log10(sum)),1)
+        write(fmtnnp4,"(i2.2,'.',i2.2)")4 + j + i, i
+        write(hook,"(10f"//fmtnnp4//")") (grad(i), i=1,nvar)
+      end if
+    end if
     if (index(keywrd, " BOND") /= 0)  &
       call write_screen_bonds(compressed, orbs2, hook, fmt9p4)
   else if (mullik) then
     write(hook,"(a,i"//atoms//",a)")" MULLIKEN_ATOM_CHARGES[",numat,"]="
     write(hook,"(sp,10f9.5)") (chrg(i), i=1,numat)
   else if (esp) then
-    write(hook,"(a,i"//atoms//",a)")" ELECTOSTATIC_POTENTIAL_CHARGES[",numat,"]="
+    write(hook,"(a,i"//atoms//",a)")" ELECTROSTATIC_POTENTIAL_CHARGES[",numat,"]="
     write(hook,"(sp,10f9.5)") (q(i), i=1,numat)
   else if (loc_mos) then
     if (uhf) then
@@ -1252,6 +1354,7 @@
         end do
       end do
       bk = seconds(2) - bk
+      if(natoms == 0) write(hook,"(a,f12.2)") " DUMMY[1]=",bi ! dummy code to force bi evaluation
       write(hook,"(a,f12.2)")" CPU_TIME:ARBITRARY_UNITS[1]=",time0/bk
     end if
     write(hook,"(a)")" END OF MOPAC FILE"

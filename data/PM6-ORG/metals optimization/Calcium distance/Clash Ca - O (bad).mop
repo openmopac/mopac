@@ -1,0 +1,9 @@
+ HTML  pm6-org  charge=2 external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ Ca - O=CH2 (Bad)     Ca - O   = 2.20
+ h=-5+"Clash Ca - O (Good)" hr=guess hwt=50
+ Ca(HETATM    1 Ca    Ca A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  O(HETATM    2  O   HET B   2)   2.20000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  C(HETATM    3  C   HET B   2)   1.21629879 +0  180.0000000 +0    0.0000000 +0     2     1     0
+  H(HETATM    4 2H   HET B   2)   1.10553325 +0  118.8451063 +0    0.0000000 +0     3     2     1
+  H(HETATM    5 3H   HET B   2)   1.10555012 +0  118.8508126 +0 -179.8766040 +0     3     2     1
+ 

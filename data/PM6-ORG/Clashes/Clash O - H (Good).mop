@@ -1,0 +1,11 @@
+HTML  pm6-org  external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ CO2 - H-CH3 (Good)    O - H  = 2.21
+h=0 hr=ref
+  H(HETATM    1 1H   HET A   2)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  O(HETATM    2  O   FMT A   1)   2.21000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  C(HETATM    3  C   HET A   2)   1.10788595 +0  180.1267459 +0    0.0000000 +0     1     2     0
+  C(HETATM    4  C   FMT A   1)   1.16946532 +0  179.9998985 +0   -0.0000000 +0     2     1     3
+  O(HETATM    5  O   FMT A   1)   1.16928454 +0  179.9999187 +0    0.0000000 +0     4     2     1
+  H(HETATM    6 2H   HET A   2)   1.10492513 +0  109.3224144 +0    0.1330420 +0     3     1     2
+  H(HETATM    7 3H   HET A   2)   1.10490768 +0  109.3468143 +0  120.1360556 +0     3     1     2
+  H(HETATM    8 4H   HET A   2)   1.10491965 +0  109.3293053 +0 -119.8549426 +0     3     1     2

@@ -27,13 +27,14 @@ subroutine pdbout (mode1)
 !
     character :: ele_pdb*2, idate*24, num*1, x*1
     integer :: i, i1, i2, iprt, k, nline
-    logical :: ter, html, ter_ok, l_irc_drc
+    logical :: ter, html, ter_ok, l_irc_drc, charge
     double precision :: sum
     intrinsic Abs, Char, Ichar
     double precision, allocatable :: q2(:), coord(:,:)
 !
     html = (index(keywrd, " HTML") /= 0)
     ter_ok = (index(keywrd, " NOTER") == 0)
+    charge = (index(keywrd, " PRTCHAR") /= 0)
     l_irc_drc = (index(keywrd, " IRC") + index(keywrd, " DRC") /= 0)
     ter = .false.
     allocate (q2(numat), coord(3, natoms))
@@ -156,8 +157,8 @@ subroutine pdbout (mode1)
       nline = nline + 1
       if (ter_ok) ter = (i == breaks(nbreaks))
       if (ter) nbreaks = nbreaks + 1
-      if (i1 == 0) cycle
-      if ( .not. l_atom(i1)) cycle
+      if (i1 == 0 .and. i /= 1) cycle
+      if ( .not. l_atom(max(1,i1))) cycle
       if (elemnt(labels(i)) (1:1) == " " .or. labels(i) == 99) then
         ele_pdb(1:1) = " "
         ele_pdb(2:2) = elemnt(labels(i)) (2:2)
@@ -175,8 +176,13 @@ subroutine pdbout (mode1)
       x = txtatm(i)(13:13)
       if (x == "X") txtatm(i)(13:13) = " "
       if (txtatm(i)(14:14) /= "X") then
-      write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f7.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
-        & (coord(k, i), k=1, 3), "  1.0",q2(i1)*10.d0,"      PROT", ele_pdb, " "
+        if (charge) then
+          write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f7.2,f10.3, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
+          & (coord(k, i), k=1, 3), "  1.0", 0.d0, q2(i1), ele_pdb, " "
+        else
+          write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f7.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
+          & (coord(k, i), k=1, 3), "  1.0",q2(i1)*10.d0,"      PROT", ele_pdb, " "
+        end if
       else
         write (iprt, "(a,i5,a,f1"//num//".3,f8.3,f8.3,a,f7.2,a, a2,a)") txtatm(i)(1:6),i2,txtatm(i)(12:maxtxt), &
         & (coord(k, i), k=1, 3), "  1.0 ",0.d0,"      PROT", ele_pdb, " "
@@ -205,7 +211,7 @@ subroutine pdbout (mode1)
     integer :: nres, i, j, k, nprt, ncol, biggest_res, iprt, icalcn = -1, it
     character :: res_txt(4000)*10, l_res*14, n_res*14, wrt_res*14, num*1, line_1*400
     integer, parameter :: limres = 260
-    logical :: exists, l_prt_res, l_geo_ref, l_compare
+    logical :: exists, l_prt_res, l_geo_ref, l_compare, l_het_only
     double precision, external :: reada
     save :: icalcn
     it = 0
@@ -222,8 +228,12 @@ subroutine pdbout (mode1)
 !   Identify all residues
 !
 
+      l_het_only = .true.
       do i = 1, natoms - id
+        if (txtatm(i)(1:4) == "ATOM") l_het_only = .false.
         if (txtatm(i)(18:20) == "HOH") cycle
+        if (txtatm(i)(18:20) == "WAT") cycle
+        if (txtatm(i)(18:20) == "DOD") cycle
         if (txtatm(i)(18:20) == "SO4") cycle
         j = nint(reada(txtatm(i), 23))
         if (j < 0) then
@@ -262,6 +272,20 @@ subroutine pdbout (mode1)
           end do
         end if
       end do
+!
+! Remove redundancies
+!
+      j = 0
+      do i = 1, nres
+        do k = 1, j
+          if (res_txt(k) == res_txt(i)) exit
+        end do
+        if (k > j) then
+          j = j + 1
+          res_txt(j) = res_txt(i)
+        end if
+      end do
+      nres = j
     end if
 !
 !  Heading
@@ -580,7 +604,11 @@ subroutine pdbout (mode1)
         if (j > 0) l_res(j:j) = "_"
         if (n_res(2:4) == "UNK") then
           if (res_txt(i)(1:3) == "UNK") then
-            n_res = "[UNK]"//res_txt(i)(4:7)
+            if (l_het_only) then
+              n_res = res_txt(i)(4:7)
+            else
+              n_res = "[UNK]"//res_txt(i)(4:7)
+            end if
           else
             n_res = res_txt(i)(4:7)
           end if
@@ -615,9 +643,7 @@ subroutine pdbout (mode1)
 !
 !   Element(1,1) and (2,1)
 !
-   !   write(iprt,"(a)") "<TD colspan=""2"">"
       call write_data_to_html(iprt)
-   !   write(iprt,"(a)") "</TD></TR><TR>"
     end if
     write(iprt,"(a)") "<span id=mydiv></span><a href=""javascript:Jmol.script(jmolApplet0)""></a></TD></TABLE>"
     write(iprt,"(a)") "</BODY>"
@@ -626,7 +652,7 @@ subroutine pdbout (mode1)
 !  Write out a simple script file
 !
     close (iprt)
-    line = line(:len_trim(line) - 3)
+    line = input_fn(:len_trim(input_fn) - 4)
     call add_path(line)
     inquire (file=trim(line)//"txt", exist = exists)
     if (.not. exists) then
@@ -641,7 +667,7 @@ subroutine pdbout (mode1)
     close (iprt)
   end subroutine write_html
   subroutine write_data_to_html(iprt)
-    use molkst_C, only : numat, formula, escf, nelecs, keywrd, arc_hof_1, arc_hof_2, keywrd_txt, &
+    use molkst_C, only : numat, formula, escf, nelecs, keywrd, arc_hof_1, arc_hof_2, &
       density, id, mol_weight, stress
     USE parameters_C, only : tore
     use common_arrays_C, only: nat, tvec
@@ -653,6 +679,7 @@ subroutine pdbout (mode1)
     character :: idate*24, line*120
     logical :: store_log
     double precision :: sum
+    integer, external :: quoted
     double precision, external :: volume
 !
 !  Print out information on the system: formula, number of atoms, heat of formation, date, etc.
@@ -683,7 +710,7 @@ subroutine pdbout (mode1)
       end if
     end do
     write(iprt,"(a)")  "<TR><TD> Formula:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>"//trim(line)//"</TD></TR>"
-    if (index(keywrd, " 0SCF") == 0 .or. index(keywrd_txt, " GEO_REF") == 0) then
+    if (index(keywrd, " 0SCF") == 0 .or. quoted('GEO_REF="') == 0) then
        if (id == 3) then
         sum = volume(tvec,3)
         density = mol_weight*1.D24/fpc_10/sum
@@ -692,7 +719,7 @@ subroutine pdbout (mode1)
       end if
     else
       if (abs(arc_hof_1) > 1.d-4) then
-        if (index(keywrd_txt, " GEO_DAT") /= 0) then
+        if ( quoted('GEO_DAT="') /= 0) then
           write(iprt,"(a,f12.3,a)")  "<TR><TD> GEO_DAT:</TD><TD> &nbsp;&nbsp; &nbsp;</TD><TD>", &
           arc_hof_1," kcal/mol</TD></TR>"
         else

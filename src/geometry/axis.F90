@@ -31,7 +31,6 @@
       double precision, dimension(3) ::  eig
       double precision :: const1, const2, sumwx, sumwy, sumwz, sum
       logical :: first
-      double precision, external :: ddot
       save t, eig, first, icalcn
 !***********************************************************************
 !

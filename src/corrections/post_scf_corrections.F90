@@ -22,7 +22,7 @@ subroutine post_scf_corrections(correction, l_grad)
 !
   use molkst_C, only : keywrd, E_disp, E_hb, E_hh, method_pm7, P_Hbonds, &
     method_pm6_dh_plus, method_pm6_dh2, method_pm6_d3h4, method_pm6_dh2x, method_pm6_d3h4x, &
-    method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, method_pm7_minus, method_PM8
+    method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, method_pm7_minus, method_pm6_org, method_PM8
   use common_arrays_C, only: dxyz
   implicit none
   double precision, intent(out) ::  correction
@@ -110,11 +110,14 @@ subroutine post_scf_corrections(correction, l_grad)
     correction = correction + Hydrogen_bond_corrections(l_grad, prt)
   else if (method_pm7_minus) then
     return
+  else if (method_pm6_org) then
+    correction = correction + dftd3(l_grad, dxyz)
+    correction = correction + Hydrogen_bond_corrections(l_grad, prt)
+    correction = correction + energy_corr_hh_rep(l_grad, dxyz)
   else if (method_pm8) then
     correction = correction + dftd3(l_grad, dxyz)
     correction = correction + Hydrogen_bond_corrections(l_grad, prt)
     correction = correction + energy_corr_hh_rep(l_grad, dxyz)
- !   correction = correction + disp_DnX(l_grad)
   else if (method_pm7) then
     correction = correction + PM6_DH_Dispersion(l_grad)
     correction = correction + Hydrogen_bond_corrections(l_grad, prt)

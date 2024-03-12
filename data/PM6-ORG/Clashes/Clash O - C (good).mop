@@ -1,0 +1,12 @@
+*
+*  (Trp-434 O - Asp-435 C)
+*
+ html  pm6-org   external="N:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ C=O - C=N-H (good)    O - C  = 2.78
+ h=0 hr=ref
+  C(HETATM    1 1C   HET C   2)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  O(HETATM    2  O   MOH B   1)   2.78000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  N(HETATM    3  N   HET C   2)   1.17254639 +0  180.0000000 +0    0.0000000 +0     1     2     0
+  H(HETATM    4  H   HET C   2)   0.95485768 +0  180.0000000 +0    0.0000000 +0     3     1     2
+  C(HETATM    7  C   MOH D   1)   1.13548740 +0  180.0000000 +0    0.0000000 +0     2     1     3
+ 

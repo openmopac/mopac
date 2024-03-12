@@ -13,10 +13,10 @@
 !
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+ 
 subroutine rapid1 (loop, xparam, numvar_loc, funct1)
 !
-!
+!   
     use param_global_C, only : ifiles_8, parab, contrl, nfns, error, &
     factor, maxpms
     integer, intent (inout) :: numvar_loc
@@ -286,8 +286,8 @@ subroutine rapid1 (loop, xparam, numvar_loc, funct1)
              first_print = .false.
           end if
           write(ifiles_8,'(i7,f16.2, f14.2)')iloop,funct1,gnorm_loc
-          endfile (ifiles_8)
-          backspace (ifiles_8)
+     !     endfile (ifiles_8) 
+     !     backspace (ifiles_8) 
         end if
         if (jnrst /= 0 .and. gnorm_loc < 0.01d0*startg .or. iloop > 2000) then
           i = 0
@@ -361,10 +361,10 @@ subroutine rapid1 (loop, xparam, numvar_loc, funct1)
       factor(1:nfns) = error(1:nfns)
    !   gnorm_loc = Sqrt(dot(grad,grad,numvar_loc))
       if(.not. fix_parab) then
-      if (cosine_loc > 0.6d0) then
-        parab = Max (parab/1.3d0, -10.d0)
+      if (cosine_loc > 0.5d0) then
+        parab = Max (parab/1.3d0, 250.d0)
       else
-        parab = Min (Max(10.d0,parab*1.3d0), 5000000.d0)
+        parab = Min (Max(250.d0,parab*1.3d0), 100000.d0)
       end if
       end if
       write (ifiles_8, "(i4,A,F12.5,A,F17.5,a,i4)") loop, " COSINE ", cosine_loc, " PARAB", &
@@ -378,6 +378,9 @@ subroutine rapid1 (loop, xparam, numvar_loc, funct1)
       if (startf-funct >=1.d-1) return
     else
     write(ifiles_8,*) "Optimization Successful"
+    write(ifiles_8,'(a,i6)') " NUMVAR_LOC:", numvar_loc
+    write(ifiles_8,'(a,i6)') " GRAD"
+    write(ifiles_8,'(10F12.4)') grad(:numvar_loc)
     call finish
     end if
 end subroutine rapid1

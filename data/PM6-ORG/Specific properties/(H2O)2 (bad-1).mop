@@ -1,0 +1,10 @@
+ html  pm6-org   external="Y:\Parameter Optimization\Parameter Optimization\PM6-ORG\PM6-ORG.rp"
+ (H2O)2 (Bad-1) O - H = 1.85
+ h=1.0+"(H2O)2 (good)" hr=guess hwt=70
+  H(HETATM    1 1H   HOH A   2)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  O(HETATM    2  O   HOH A   1)   1.85000000 +0    0.0000000 +0    0.0000000 +0     1     0     0
+  O(HETATM    3  O   HOH A   2)   0.95916753 +0  173.0766882 +0    0.0000000 +0     1     2     0
+  H(HETATM    4 2H   HOH A   2)   0.95496653 +0  106.6150355 +0 -179.9690043 +0     3     1     2
+  H(HETATM    5 1H   HOH A   1)   0.95838975 +0  101.1722849 +0   54.6184103 +0     2     1     3
+  H(HETATM    6 2H   HOH A   1)   0.95836727 +0  101.0832603 +0  -55.2257527 +0     2     1     3
+ 

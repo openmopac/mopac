@@ -1,0 +1,65 @@
+Distance Co - N (good) 1.900
+Distance Co - N (Bad) 1.7
+Distance Co - C (good) 1.892
+Distance Co - C (Bad) 1.7
+  Co(II)Cp2 (DCYPCO) r                                                            
+  co(v)(cn)4r                                                                     
+  Co(III)N6(3+) (COTENC01) r                                                      
+  Co(II)N6(2+) (QICSOK) r                                                         
+  Co(III)C3N3 (FEFRUD) r                                                          
+  Co(III)N6(2+) (FAMYEX) r                                                        
+  Co(CO)4(-) (FUBYOQ) r                                                           
+  co(co)3nor                                                                      
+  Co(III)O2N4(+) (OXENCO) r                                                       
+  Co(III)N4O2(+) (AETXCO) r                                                       
+  Co(III)N6(+) (NIXGEG) r                                                         
+  co(co)5 cation_r                                                                
+  Co(III)N4CO (AMGXCO01) r                                                        
+  Co(II)(H2O)6(2+) (NAZVOZ) r                                                     
+  co(ii)(h2o)6r                                                                   
+  Co(II)(Acac)3(-) (IKEYAY) r                                                     
+  Co(III)N4O2(+) (NITNCO) r                                                       
+  co(iii)(ox)3r                                                                   
+  Co(II)S4 (TACACO10) r                                                           
+  Co(III)S6 (MEDTCO10) r                                                          
+  Co(III)S6 (TDTCCO) r                                                            
+  Co(III)N5Cl(2+) (ADETCO) r                                                      
+  co(iii)(nh3)2(h2o)2clfr                                                         
+  Co(I)P3Cl (BUTDEZ) r                                                            
+  Co(II)S2N2 (COTUCL11) r                                                         
+  Co(III)N3Cl3 (AMPRCO) r                                                         
+  Co(III)SN2Cl3 (CATBAA) r                                                        
+  Co(II)Cl4(2-) (DMDPCO) r                                                        
+  Co(III)N4BrO (BUKPIG) r                                                         
+*  Co(II)Br4(2-) (BPYRBC10) r                                                      
+  co(ii)br4r                                                                      
+  Co(III)IS2Cp (GECVEP) r                                                         
+  Co(III)N4I2(-) (FIRCOY01) r                                                     
+  bicyclopentadienyl cobalt                                                       
+  Co(II)Cp2 (DCYPCO)                                                              
+  Co(III)N6(3+) (COTENC01)                                                        
+  Co(II)N6(2+) (QICSOK)                                                           
+  Co(III)C3N3 (FEFRUD)                                                            
+  Co(III)N6(2+) (FAMYEX)                                                          
+  Co(III)N4O2(+) (AETXCO)                                                         
+  Co(III)O2N4(+) (OXENCO)                                                         
+  Co(III)N6(+) (NIXGEG)                                                           
+  Co(III)N4CO (AMGXCO01)                                                          
+  co(ii)(h2o)6                                                                    
+  Co(III)N4O2(+) (NITNCO)                                                         
+  co(iii)(ox)3                                                                    
+  cobalt(iii) oxide fluoride                                                      
+  Co(II)S4 (TACACO10)                                                             
+  Co(III)S6 (MEDTCO10)                                                            
+  Co(III)S6 (TDTCCO)                                                              
+  cobalt(i) chloride                                                              
+  Co(III)N5Cl(2+) (ADETCO)                                                        
+  cobalt(iii) oxide chloride                                                      
+  co(iii)(nh3)2(h2o)2clf                                                          
+  Co(II)S2N2 (COTUCL11)                                                           
+  Co(III)N3Cl3 (AMPRCO)                                                           
+  Co(III)SN2Cl3 (CATBAA)                                                          
+  Co(III)N4BrO (BUKPIG)                                                           
+  Co(III)IS2Cp (GECVEP)   
+  Co(III)N4I2(-) (FIRCOY01)                                                          
+  

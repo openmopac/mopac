@@ -14,20 +14,20 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-      subroutine datin(iw)
+      subroutine datin(ir, iw)
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
       USE parameters_C, only : partyp, n_partyp, n_partyp_alpb, v_par, t_par
       use Common_arrays_C, only : ijpars, parsij
-      use molkst_C, only : keywrd, lpars, line, backslash
+      use molkst_C, only : keywrd, keywrd_quoted, lpars, line, backslash
       use chanel_C, only : iext
 !***********************************************************************
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
       implicit none
-      integer, intent(in) :: iw
+      integer, intent(in) :: iw, ir
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -42,7 +42,11 @@
       character, dimension(107) :: elemnt*2
       character, external :: get_a_name*300
       integer, external :: end_of_keyword
+      integer, external :: quoted
       double precision, external :: reada
+
+      character :: infile * 100
+      logical :: first = .true., found = .false.
 
       save elemnt
 !-----------------------------------------------
@@ -56,29 +60,67 @@
         , 'PT', 'AU', 'HG', 'TL', 'PB', 'BI', 'PO', 'AT', 'RN', 'FR', 'RA', &
         'AC', 'TH', 'PA', 'U ', 'NP', 'PU', 'AM', 'CM', 'BK', 'MI', 'XX', 'FM'&
         , 'MD', 'CB', '++', '+', '--', '-', 'TV'/
+    t_par      = "Add a description of this parameter near line 50 in datin.F90  "
+    t_par(1)   = "Used in ccrep C-C triple bonds."
+    t_par(2)   = "Used in ccrep for exponent correction of C-C triple bonds."
+    t_par(3)   = "O-H scalar                 correction."
+    t_par(4)   = "O-H       exponent         correction."
+    t_par(5)   = "O-H               offset   correction."
+    t_par(7)   = "Used in dftd3 to set ""s6""  in D3H4"
+    t_par(8)   = "Used in dftd3 to set ""alp"" in D3H4"
+    t_par(9)   = "Used in dftd3 to set ""rs6"" in D3H4"
+    t_par(10)  = "Used in dftd3 to set ""s18"" in D3H4."
+    t_par(11)  = "C-H       exponent         correction."
+    t_par(12)  = "C-H               offset   correction."
+    t_par(13)  = "C-C scalar                 correction."
+    t_par(14)  = "C-C       exponent         correction."
+    t_par(15)  = "C-C               offset   correction."
+    t_par(16)  = "H-H scalar                 correction."
+    t_par(17)  = "H-H       exponent         correction."
+    t_par(18)  = "H-H               offset   correction."
+    t_par(19)  = "C-H scalar                 correction."
+    t_par(20)  = "O-C scalar                 correction."
+    t_par(21)  = "O-C       exponent         correction."
+    t_par(22)  = "O-C               offset   correction."
+    t_par(23)  = "S-O scalar                 correction."
+    t_par(24)  = "S-O       exponent         correction."
+    t_par(25)  = "S-O               offset   correction."
+    t_par(26)  = "O-N scalar                 correction."
+    t_par(27)  = "O-N       exponent         correction."
+    t_par(28)  = "O-N               offset   correction."
+    t_par(29)  = "F-H scalar                 correction."
+    t_par(30)  = "F-H       exponent         correction."
+    t_par(31)  = "F-H               offset   correction."
+    t_par(32)  = "O-O scalar                 correction."
+    t_par(33)  = "O-O       exponent         correction."
+    t_par(34)  = "O-O               offset   correction."
+    t_par(35)  = "N-C scalar                 correction."
+    t_par(36)  = "N-C       exponent         correction."
+    t_par(37)  = "N-C               offset   correction."
+    t_par(38)  = "N-H scalar                 correction."
+    t_par(39)  = "N-H       exponent         correction."
+    t_par(40)  = "N-H               offset   correction."
+    t_par(41)  = "S-N scalar                 correction."
+    t_par(42)  = "S-N       exponent         correction."
+    t_par(43)  = "S-N               offset   correction."
+    t_par(44)  = "S-H scalar                 correction."
+    t_par(45)  = "S-H       exponent         correction."
+    t_par(46)  = "S-H               offset   correction."
     if (.not. allocated(ijpars))  allocate(ijpars(5,5000), parsij(5000))
-    i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
-    t_par     = "Add a description of this parameter near line 50 in datin.F90  "
-    t_par(1)  = "Used in ccrep for scalar correction of C-C triple bonds."
-    t_par(2)  = "Used in ccrep for exponent correction of C-C triple bonds."
-    t_par(3)  = "Used in ccrep for scalar correction of O-H term."
-    t_par(4)  = "Used in ccrep for exponent correction of C-C triple bonds."
-    t_par(7)  = "Used in dftd3 to set ""s6""  in D3H4"
-    t_par(8)  = "Used in dftd3 to set ""alp"" in D3H4"
-    t_par(9)  = "Used in dftd3 to set ""rs6"" in D3H4"
+    i = Index(keywrd_quoted, "EXTERNAL=")
     nref = 0
-    k = Index (keywrd(i:), "=") + i
-    j = end_of_keyword(keywrd, len_trim(keywrd), k)
+    k = Index (keywrd_quoted(i:), "=") + i
+    j = end_of_keyword(keywrd_quoted, len_trim(keywrd_quoted), k)
 !
 ! k = start of reference data directory list
 ! j = end of list.
 ! in between are the names of the reference directories, separated by ";"
 !
     do l = 1, 20
-      i = Index(keywrd(k:j),";")
+      i = Index(keywrd_quoted(k:j),";")
       if (i /= 0) then
         nref = nref + 1
-        file(nref) = trim(get_a_name(keywrd(k:j), len_trim(keywrd(k:j))))
+        file(nref) = trim(get_a_name(keywrd_quoted(k:j), len_trim(keywrd_quoted(k:j))))
         k = k + i
       end if
       if (i == 0) then
@@ -86,7 +128,7 @@
 !  Last entry
 !
         nref = nref + 1
-        file(nref) = keywrd(k:j)
+        file(nref) = keywrd_quoted(k:j)
         exit
       end if
     end do
@@ -104,46 +146,56 @@
       call add_path(file(loop))
       inquire (file=trim(file(loop)), exist = exists)
       if (.not. exists) then
-        if (index(keywrd,' 0SCF') == 0) call mopend("EXTERNAL file: '"//trim(file(loop))//"' does not exist!")
-        line = trim(file(loop))
-        do i = len_trim(line), 1, -1
-          if (line(i:i) == backslash .or. line(i:i) == "/") then
-!  using inquire to check for the existence of a directory is a non-standard Intel extension to Fortran 90
-!  there is no standard, system-independent way to do this as directories do not exist in Fortran language specifications
-!  I'm just commenting this out for now, since it is just some extra error messages [JEM 2019.05.24]
-!            inquire (directory = line(:i), exist = exists)
-!            if (exists) then
-!              write(iw,"(10x,a)")"  (but folder: '"//line(:i)//"' does exist.)"
-!            else
-!              if (verson(7:7) == "W") write(iw,"(5x,a)")" (Note: the folder: '"//line(:i)//"'  also does not exist.)"
-!            end if
-            exit
+        ! first look for BEGIN EXTERNAL block farther down in the file
+        rewind(ir)
+        do 2
+          read(ir, '(A)', end=3) infile
+          if (first) then
+            first = .false.
+            goto 2
           end if
-        end do
-        return
+          call upcase(infile, 80)
+          i = Index(infile, "BEGIN EXTERNAL")
+          if (i /= 0) then
+            ! found the parameters, move on
+            found = .true.
+            goto 3
+          end if
+2       continue
+3       continue
+        if (.not. found) then
+          if (index(keywrd,' 0SCF') == 0) call mopend("EXTERNAL file: '"//trim(file(loop))//"' does not exist!")
+          exit
+        end if
       end if
-      open (unit=iext, form="FORMATTED", status="OLD", file=trim(file(loop)), action="READ", iostat = i)
-      if (i /= 0) then
-        if (lpars > 0) exit
-        if (loop == 1) then
-          write(line,'(a)')" EXTERNAL file """//trim(file(loop))//""" could not be opened"
-          write(iw,'(/,a)')trim(line)
-          if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
-            call mopend(trim(line))
-            inquire (file=trim(file(loop)), exist = exists)
-            if (exists) then
-              write(line,'(a)')" (The EXTERNAL file exists, but could not be read)"
-              write(iw,'(a)')trim(line)
+! Read from beginning of external block in input file
+      if (found) then
+        iext = ir
+! Read from external file
+      else
+        open (unit=iext, form="FORMATTED", status="OLD", file=trim(file(loop)), action="READ", iostat = i)
+        if (i /= 0) then
+          if (lpars > 0) exit
+          if (loop == 1) then
+            write(line,'(a)')" EXTERNAL file """//trim(file(loop))//""" could not be opened"
+            write(iw,'(/,a)')trim(line)
+            if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
               call mopend(trim(line))
-            else
-              write(line,'(a)')" (The EXTERNAL file does not exist)"
-              write(iw,'(a)')trim(line)
-              call mopend(trim(line))
+              inquire (file=trim(file(loop)), exist = exists)
+              if (exists) then
+                write(line,'(a)')" (The EXTERNAL file exists, but could not be read)"
+                write(iw,'(a)')trim(line)
+                call mopend(trim(line))
+              else
+                write(line,'(a)')" (The EXTERNAL file does not exist)"
+                write(iw,'(a)')trim(line)
+                call mopend(trim(line))
+              end if
             end if
           end if
         end if
+        rewind (iext,err = 10)
       end if
-      rewind (iext,err = 10)
       do
         read (iext, "(A60)", err=11, end=11) text
         call upcase (text, 80)
@@ -224,7 +276,7 @@
           if (Index(" "//text, " "//partyp(j)) /= 0) go to 1000
         end do
         write(iw,"(3a)")" EXTERNAL parameter type: '",trim(text),"' unrecognized"
-        close(iext)
+        if (.not. found) close(iext)
         goto 99
 1000    iparam = j
         jelmnt=0
@@ -251,7 +303,7 @@
           if (Index (text, " "//elemnt(j)) /= 0) go to 1100
         end do
         write(iw,"(3a)")" EXTERNAL element type: '",trim(text),"' unrecognized"
-        close(iext)
+        if (.not. found) close(iext)
         goto 99
 1100    param = reada (text, Index (text, " "//elemnt(j)))
         if (j > jelmnt) then
@@ -273,19 +325,19 @@
       end do
 11  continue
     if(mpar == 1) then
-      write(iw,'(/,3a)')" Parameters read in from file: """, file(loop)(:len_trim(file(loop))),""""
+      if(.not. found) write(iw,'(/,3a)')" Parameters read in from file: """, file(loop)(:len_trim(file(loop))),""""
     else
       if (index(keywrd,' 0SCF') + index(keywrd, " RESEQ") == 0 ) then
         call mopend("No parameters read in from '"//file(loop)(:len_trim(file(loop)))//"'")
       end if
     end if
 10  continue
-    close (iext, status="KEEP")
+    if (.not. found) close (iext, status="KEEP")
     call write_params(iw, lv_par)
     do i = 1, lpars
       call update(ijpars(2, i), ijpars(1, i), parsij(i), 0.d0)
     end do
-    close(iext)
+    if (.not. found) close(iext)
  99   return
     end subroutine datin
 !
@@ -305,7 +357,7 @@
       integer :: i, j, k, l, il, iu, ii, jj, iparam, ielmnt, jelmnt
       character :: elemnt(107)*2, elemnt2*2
       save elemnt, lold
-!-----------------------------------------------
+!----------------------------------------------- 
       data (elemnt(i),i=1,107)/ 'H ', 'HE', 'LI', 'BE', 'B ', 'C ', 'N ', 'O '&
         , 'F ', 'NE', 'NA', 'MG', 'AL', 'SI', 'P ', 'S ', 'CL', 'AR', 'K ', &
         'CA', 'SC', 'TI', 'V ', 'CR', 'MN', 'FE', 'CO', 'NI', 'CU', 'ZN', 'GA'&
@@ -315,7 +367,7 @@
         'DY', 'HO', 'ER', 'TM', 'YB', 'LU', 'HF', 'TA', 'W ', 'RE', 'OS', 'IR'&
         , 'PT', 'AU', 'HG', 'TL', 'PB', 'BI', 'PO', 'AT', 'RN', 'FR', 'RA', &
         'AC', 'TH', 'PA', 'U ', 'NP', 'PU', 'AM', 'CM', 'BK', 'MI', 'XX', 'FM'&
-        , 'MD', 'CB', '++', '+', '--', '-', 'TV'/
+        , 'MD', 'CB', '++', '+', '--', '-', 'TV'/  
       do j = 1, 107
         do k = 1, n_partyp
           if (k == n_partyp_alpb + 1) cycle
@@ -338,7 +390,7 @@
                     write (iw, "(//,8X,A)") " Parameters read in"
                     write (iw, "(/5X, ' Parameter Type  Element    Parameter')")
                     lold = .false.
-                  end if
+                  end if              
                   if(l /= 0) then
                     elemnt2 = elemnt(l)
                     if(elemnt2(2:2) == " ")elemnt2 = elemnt2(1:1)
@@ -386,7 +438,7 @@
       k = k + 1
     end do
     j = k - 1
-    do
+    do 
       j = j + 1
       if (j > len) exit
       if (input(j:j) == ' ') exit
@@ -405,7 +457,7 @@
   end function end_of_keyword
   character(LEN=300) function get_a_name(input, len)
 !
-! Given a string of the type "aaa;bbb;ccc" separate
+! Given a string of the type "aaa;bbb;ccc" separate 
 ! off the first string, here "aaa"
 !
 ! Note: In input, the first character MUST be the first character of the name or
@@ -419,6 +471,10 @@
   integer :: istart, istop
   logical :: quotation_marks
   istart = 1
+  do 
+    if (input(istart:istart) /= " ") exit
+    istart = istart + 1
+  end do
   quotation_marks = (input(istart:istart) == '"')
   if (quotation_marks) then
 !
@@ -435,3 +491,5 @@
   get_a_name = input(istart:istop)
   return
   end function get_a_name
+
+ 

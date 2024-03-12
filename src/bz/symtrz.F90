@@ -174,7 +174,7 @@ subroutine symtrz (sec_det, nvecs, coord)
       end if
       sym_op1: do j = 1, numat
         do k = 1, 3
-          if (Abs (new_coord(k, i)  - nijk_CUC(k,i) - coord(k, j) + nijk_CUC(k,j)) > 0.2d0) cycle sym_op1
+          if (Abs (new_coord(k, i)  - nijk_CUC(k,i) - coord(k, j) + nijk_CUC(k,j)) > 1d-4) cycle sym_op1
         end do
         new_coord(:, i) = new_coord(:, i) + nijk_CUC(:,j) - nijk_CUC(:,i)
         itrans(:, i) = itrans(:, i) - nijk_CUC(:,j) + nijk_CUC(:,i)
@@ -235,7 +235,7 @@ subroutine symtrz (sec_det, nvecs, coord)
         sym_op2: do jj = 1, numat
           do kk = 1, 3
             sum = new_coord(kk, ii) - nijk_CUC(kk,ii) - coord(kk, jj) + nijk_CUC(kk,jj)
-            if (Abs (sum) > 0.2d0) cycle sym_op2
+            if (Abs (sum) > 1d-4) cycle sym_op2
           end do
 !
 !  Atom II has been moved to become atom new(ii) in unit cell incell(1-3,ii)

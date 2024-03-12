@@ -61,7 +61,7 @@ subroutine geochk ()
     l_names(max_sites), first, first_prt, header, l_rama, l_salt
     logical, dimension (:), allocatable :: ioptl
     integer :: i, ibad, ichrge, irefq, ires, ii, jj, m, nfrag, io, kk, kkk, near_ions_store(2), &
-   & j, jbad, k, l, large, n1, new, alloc_stat, mres, near_ions(2, 100), atomic_charges(8), &
+   & j, jbad, k, l, large, n1, new, alloc_stat, mres, near_ions(2, 100), atomic_charges(8), n_neutral, &
      maxtxt_store, nn1, n_new, new_res(max_sites), j2, mbreaks, icalcn = -10, nnumat, delta_res, max_frag
     integer, dimension(:), allocatable ::  mb
     integer, save :: numbon(3), num_ions(-6:6)
@@ -201,6 +201,7 @@ subroutine geochk ()
 !
 !   Add or remove hydrogen atoms, as necessary.
 !
+    if (index(keywrd," SITE=") /= 0) call l_control("NEWPDB", len_trim("NEWPDB"), 1)
     i =  index(keywrd," SITE=(IONIZE)")
     if (i > 0) then
       line = "SITE=(COO,NH3,ARG(+),SO4,PO4)"
@@ -223,8 +224,10 @@ subroutine geochk ()
 !   8:   -His-
 !   9:    SO4(=)
 !  10:    PO4(=)
+!  11:   -Lys(+)-
+!  12:   -Lys-
 !
-
+    n_neutral = 12
     i = index(keywrd," SITE=(")
     if (i /= 0 .and. index (keywrd, " ADD-H") == 0) then
 !
@@ -299,11 +302,16 @@ subroutine geochk ()
             if (index(keywrd(i:j),"PO4") /= 0) then
                neutral(10) = .true.
             end if
+            if (index(keywrd(i:j),"LYS(+)") /= 0) then
+              neutral(11) = .true.
+            else if (index(keywrd(i:j),"LYS") /= 0) then
+              neutral(12) = .true.
+            end if
           end if
-          do k = 1, 10
+          do k = 1, n_neutral
             if (neutral(k)) exit
           end do
-          if (k > 10) then
+          if (k > n_neutral) then
             if (index(keywrd(i:j), "SALT") /= 0) then
               call find_salt_bridges(numbon, numbon, 0, 0)
               if (moperr) return
@@ -430,7 +438,9 @@ subroutine geochk ()
 !
 !    ASSIGN LOGICALS USING KEYWRD
 !
-    lres = (Index (keywrd, " RESI") + Index (keywrd, " RESEQ") /= 0)
+!  Force the TER's to be re-calculated
+!
+    lres = (Index (keywrd, " RESI") + Index (keywrd, " RESEQ") + index(keywrd, " NOSITE") /= 0)
     if (.not. lres) lres = (Index (keywrd, " PDBOUT") /= 0 .and. maxtxt /= txtmax)
     if (.not. lres) lres = (Index (keywrd, " ADD-H") /= 0 .and. Index (keywrd, " NORESEQ") == 0)
     lreseq = (Index (keywrd, " NORESEQ") == 0 .and. Index (keywrd, " RESEQ") /= 0)
@@ -611,7 +621,7 @@ subroutine geochk ()
     end if
     noccupied = 0
     if (Index (keywrd, " RESEQ") + Index (keywrd, " SITE=") + index(keywrd, " ADD-H") &
-      + index(keywrd, " 0SCF") == 0) then
+      + index(keywrd, " 0SCF") == 0 .and. nelecs /= 0) then
 !
 !  EXAMINE THE GEOMETRY - IDENTIFY THE LEWIS ELEMENTS (SIGMA BONDS,
 !  LONE PAIRS, CATIONS, PI BONDS, ANIONS, OTHER CHARGES)
@@ -1027,7 +1037,7 @@ subroutine geochk ()
     natoms = max(natoms, numat)
     if (index(keywrd, " ADD-H") /= 0) return
     if (index(keywrd, "CHARGES") == 0 .and. index(keywrd, "CONTROL_no_MOZYME") /= 0 .or. index(keywrd, " RESEQ") /= 0) then
-      if ( index(keywrd," PDBOUT") /= 0) then
+      if ( index(keywrd," PDBOUT") /= 0 .and. index(keywrd, " RESEQ") /= 0) then
         line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
         i = iarc
         inquire(unit=i, opened=opend)
@@ -1271,7 +1281,7 @@ subroutine geochk ()
       i = i + num_ions(j) + num_ions(-j)
     end do
     if (i == 0) then
-      write(iw,'(/10x, a)')"NO CHARGES FOUND."
+      if (nelecs /= 0) write(iw,'(/10x, a)')"NO CHARGES FOUND."
     else
       if (index(keywrd," LEWIS") > 0) then
         write (iw,*)
@@ -1576,7 +1586,8 @@ subroutine geochk ()
       rewind iarc
       if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
       call geout (iarc)
-      if (index(keywrd, " PDBOUT") /= 0 .and. index(keywrd, " RESEQ") == 0) then
+      if (index(keywrd, " PDBOUT") + index(keywrd, " HTML") /= 0 .and. &
+        index(keywrd, " RESEQ") == 0) then
         line = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
         i = iarc
         inquire(unit=i, opened=opend)

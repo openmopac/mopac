@@ -343,7 +343,7 @@
      &                spintr, nspn, ci, ndump)
       use reimers_C, only : n, nb2, matind, nconf, multci, ncore, nol, nvl, &
            nvh, nov, fastci, edef, eec, ee2, iwk, wk0, nex, cc0, mspn
-      use cosmo_C, only : ffact, diagsl
+      use cosmo_C, only : iseps, diagsl
 
       implicit none
       double precision ::  e(nconf), beta(nb2), ci(nconf*(nconf + 1)/2), &
@@ -439,7 +439,7 @@
       end if
 
 ! RMG - add COSMO correction to CI diagonal matrix elements
-      if (ffact > 0.d0) then
+      if (iseps) then
         do i = 1, n
           do j = 1, n
             cc0(i, j) = c(i, j)
@@ -712,7 +712,7 @@
 
       subroutine cidiag (ciin, ci, aii, aocc, bocc)
       use reimers_C, only : matind, nconf, nci, nr, nov, nex, mspn
-      use cosmo_C, only : ffact, diagsl
+      use cosmo_C, only : iseps, diagsl
 
       implicit none
       double precision ::  ciin(nconf*(nconf + 1)/2), ci(nconf, nconf), &
@@ -747,7 +747,7 @@
       end do
 
 ! RMG - correct eigenvalues if using solvent
-      if (ffact > 0.d0) then
+      if (iseps) then
         call corrci(ciin, ci, aocc, bocc, diagsl, aii)
       end if
 

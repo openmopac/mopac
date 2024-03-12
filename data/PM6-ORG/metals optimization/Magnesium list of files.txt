@@ -1,0 +1,96 @@
+  Mg - O good
+  Mg - O bad
+Distance Mg - N (good) 2.05
+Distance Mg - N (bad) 1.95
+  mgme2r                                                                          
+  mg(ii)c2 (gimniz) r                                                             
+  c10h10mgr                                                                       
+  mghcnr                                                                          
+  mgn2h4r                                                                         
+  mgc2n2r                                                                         
+  mg(ii)c2n2 (meenmg) r                                                           
+  mg(ii)n4c(+) (fizrem) r                                                         
+  mg(ii)n6(2+) (dotziv) r                                                         
+  mgo2h2r                                                                         
+  mg(ii)c2o2 (dobxib) r                                                           
+  mg(ii)(cp)co2 (huxsau) r                                                        
+  mghno2r                                                                         
+  mghonor                                                                         
+  mg(ii)o4(2+) (insmgc) r                                                         
+  mg(acac)2r                                                                      
+  mgn3o2r                                                                         
+  mg(ii)(h2o)4(oh)2r                                                              
+  mg(ii)(h2o)5.ohr                                                                
+  mg(ii)(h2o)6r                                                                   
+  mg(ii)o6 (dacamg) r                                                             
+  mg(ii)o6 (felguy) r                                                             
+  mg(edta)r                                                                       
+  mg(ii)o6(-) (gapsev) r                                                          
+  mg(ii)o6 (davgai) r                                                             
+  mg(ii)o6 (besxon) r                                                             
+  mg(ii)o6(2-) (fapsiy) r                                                         
+  mg(++)(h2o)4(h2s)2r                                                             
+  mg(ii)s2o4 (kiwseo) r                                                           
+  mg(ii)s2n2o2 (ehufui) r                                                         
+  mgclfr                                                                          
+  mgcl2r                                                                          
+  mg(ii)o4cl2 (cexwux10) r                                                        
+  mg(ii)2(cp)2cl4o2 (lakleo) r                                                    
+  mg(ii)cl4(2-) (dupcog) r                                                        
+  mg(ii)o2br(+) (basliq) r                                                        
+  mg(ii)cbro2 (emgbre10) r                                                        
+  mgetbro2et4r                                                                    
+  mgbr2r                                                                          
+  mg(ii)o5br2 (gupjac) r                                                                                                                    
+  methyl magnesium hydride                                                        
+  mgh(cch)                                                                        
+  mgh(ch=ch2)                                                                     
+  dimethylmagnesium                                                               
+  mg(ii)c2 (gimniz)                                                               
+  bicyclopentadienyl magnesium                                                    
+  amino magnesium hydride                                                         
+  magnesium hydride cyanide                                                       
+  diamino magnesium                                                               
+  magnesium cyanide                                                               
+  mg(ii)c2n2 (meenmg)                                                             
+  mg(ii)n4c(+) (fizrem)                                                           
+  mg(ii)n6(2+) (dotziv)                                                           
+  magnesium oxide                                                                                                                            
+  magnesium hydride hydroxide                                                     
+  magnesium cyanide hydroxide                                                     
+  magnesium di-hydroxide                                                          
+  mg(ii)c2o2 (dobxib)                                                             
+  mg(ii)(cp)co2 (huxsau)                                                          
+  mg(ii)o4(2+) (insmgc)                                                           
+  magnesium di-acetylacetonate                                                                                                               
+  mg(ii)(h2o)4(oh)2                                                               
+  mg(ii)(h2o)5.oh                                                                 
+  mg(ii)(h2o)6                                                                    
+  mg(ii)o6 (dacamg)                                                               
+  mg(ii)o6 (felguy)                                                               
+  mg(ii)(edta)(=)                                                                 
+  mg(ii)o6(-) (gapsev)                                                            
+  mg(ii)o6 (davgai)                                                               
+  mg(ii)o6 (besxon)                                                               
+  magnesium fluoride                                                              
+  magnesium difluoride                                                            
+  magnesium hydride fluoride                                                      
+  methyl magnesium fluoride                                                       
+  magnesium sulfide                                                               
+  magnesium hydride hydrosulfide                                                  
+  magnesium hydrosulfide hydroxide                                                
+  magnesium di-hydrosulfide                                                       
+  mg(++)(h2o)4(h2s)2                                                              
+  mg(ii)s2o4 (kiwseo)                                                             
+  mg(ii)s2n2o2 (ehufui)                                                           
+  magnesium hydride chloride                                                      
+  magnesium chloride fluoride                                                     
+  magnesium dichloride                                                            
+  mg(ii)o4cl2 (cexwux10)                                                          
+  mg(ii)2(cp)2cl4o2 (lakleo)                                                      
+  mg(ii)cl4(2-) (dupcog)                                                          
+  magnesium dichloride, dimer                                                     
+  mg(ii)cbro2 (emgbre10)                                                          
+  magnesium dibromide                                                             
+  mg(ii)o5br2 (gupjac)    
+  magnesium dibromide, dimer                                                                                                                

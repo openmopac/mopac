@@ -22,7 +22,7 @@
 !
     use molkst_C, only : tdump, maxatoms, is_PARAM, numat, jobnam, &
      moperr, &
-     norbs, mpack, nvar, n2elec, keywrd, uhf, l123, run, method_pm6_d3, &
+     norbs, mpack, nvar, n2elec, keywrd, keywrd_quoted, uhf, l123, run, method_pm6_d3, &
      method_pm6, lm61, tleft, &
      method_pm6_dh_plus, method_pm6_dh2, method_pm7, trunc_1, method_pm8, &
      trunc_2, method_pm6_d3h4, method_pm6_d3_not_h4, n_methods, methods, &
@@ -70,8 +70,13 @@
     git_hash = MOPAC_GIT_HASH
 #endif
   ! parse command-line flags
+#ifdef MOPAC_F2003
+    do i = 1, command_argument_count()
+      call get_command_argument (i, jobnam)
+#else
     do i = 1, iargc()
       call getarg (i, jobnam)
+#endif
       if (jobnam == '-V' .OR. jobnam == '--version') then
         write(*,"(a)") "PARAM version "//trim(verson)//" commit "//trim(git_hash)
         stop
@@ -377,7 +382,7 @@
 !
     j = iw
     iw = ifiles_8
-    if (index(keywrd, " PARAMS=") + index(keywrd, " EXTERNAL=") /= 0) call datin(ifiles_8)
+    if (index(keywrd, " PARAMS=") + index(keywrd, " EXTERNAL") + index(keywrd_quoted, " EXTERNAL=") /= 0) call datin(ir, ifiles_8)
     iw = j
     if (moperr) stop
     call getpar

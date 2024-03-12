@@ -24,7 +24,7 @@ set(src_list
    )
 #-----------------------------------------------
 # Add a list of source files to the target
-if(BUILD_WINMOPAC)
+if(BUILD_BZ)
   foreach(idx IN LISTS src_list)
           target_sources(mopac-bz PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
   endforeach()

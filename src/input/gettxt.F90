@@ -16,20 +16,23 @@
 
       subroutine gettxt
       use chanel_C, only: ir, iw, isetup, input_fn
-      use molkst_C, only: keywrd, koment, title, refkey, numcal, line, &
-        moperr, allkey, backslash, gui
+      use molkst_C, only: keywrd, keywrd_quoted, koment, title, refkey, gui, numcal, line, &
+        moperr, allkey, backslash
       implicit none
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, j, k, l, m, n, ipath
+      integer :: i, j, k, l, m, ipath
       character :: filen*300, oldkey*3000, line1*3000, path*240, ch*1
-      logical :: aux, exists, setup_present, zero_scf, l_quote
+      logical :: aux, exists, setup_present, zero_scf
       character (len = 300), external :: get_text
+      integer, external :: quoted
 !-----------------------------------------------
       koment = " "
       title = " "
       refkey = '    NULL  '
+      keywrd_quoted = " "
+      oldkey = " "
       aux = (index(keywrd, "AUX") /= 0)
       read (ir, '(A2000)', end=100, err=100) refkey(1)
       keywrd = refkey(1)
@@ -124,6 +127,8 @@
           do
             read (isetup, '(A)', end=61, err=50) line1
 61          if (line1(1:1) == "*") cycle
+            j = len_trim(line1)
+            if (j == 3000) line1 = " "
             if (i == -1) then
               refkey(2) = trim(refkey(2))//trim(line1)
             else
@@ -157,7 +162,12 @@
 !
 !  Check for " -" signs in setup file
 !
-          if (refkey(2)(1:1) /= " ") refkey(2) = " "//refkey(2)(:len_trim(refkey(2)))
+          i = ichar(refkey(2)(1:1))
+          if (i == 0) then
+            refkey(2) = " "
+          else if (refkey(2)(1:1) /= " ") then
+            refkey(2) = " "//refkey(2)(:len_trim(refkey(2)))
+          end if
           do
             i = index(refkey(2), " -")
             if (i == 0) exit
@@ -189,6 +199,9 @@
 !   Check for keywords in SETUP that are present in the keyword line, and delete them
 !   ( Keywords on keyword line take precedence.)
 !
+!  First, move keywords that contain quoted text into keywrd_quoted so that they
+!  will not affect keyword analyses
+!
           i = 1
           do
             i = i + 1
@@ -219,11 +232,10 @@
 !
 !  Check for " -" signs in keywrd line
 !
+          m = 0
           do
-            i = index(keywrd, " -")
-            if (i == 0) exit
-            i = index(keywrd, " -")
-            if (i == 0) exit
+            i = index(keywrd(m + 1:), " -") + m
+            if (i == m) exit
 !
 ! Is the minus sign inside a quoted text
 !
@@ -235,7 +247,8 @@
 !
 !  Yes, it's inside a quoted string, so protect it and carry on
 !
-              refkey(2)(i:i) = "*"
+              keywrd(i:i) = char(0)
+              m = i
               cycle
             end if
             j = index(keywrd(i + 2:), " ") + i + 1
@@ -248,9 +261,15 @@
             i = index(keywrd, " -")
             j = index(keywrd(i + 2:), " ") + i + 1
             keywrd(i:) = keywrd(j:)
+            m = i
+          end do
+          do
+            i = index(keywrd, char(0))
+            if (i == 0) exit
+            keywrd(i:i) = " "
           end do
           i = len_trim(keywrd)
-          keywrd(i + 1:) = " "//refkey(2)(:3000 - 1 - i)
+          keywrd(i + 1:) = refkey(2)(:3000 - 1 - i)
           refkey(1) = trim(keywrd)
           refkey(2) = refkey(3)
 !
@@ -312,7 +331,7 @@
 !
           read (ir, '(A)', end=100, err=100) refkey(3)
           allkey = refkey(3)
-          i = index(allkey, " + ")
+          i = index(allkey, " +")
           if (i /= 0) then
             write(iw,"(a)")" A maximum of three lines of keywords are allowed."
             write(iw,"(a)")" On the third line of keywords is a '+' sign, implying more lines of keywords."
@@ -322,11 +341,12 @@
             return
           end if
           i = index(keywrd(1:len_trim(keywrd)),' +')
-          keywrd(i:i + 1) = " "
+          keywrd(i:i + 1) = "  "
           i = len_trim(keywrd)
           keywrd(i + 2:) = refkey(3)(:1001 - i)
           i = len_trim(oldkey)
-          oldkey(i:) = trim(refkey(3))
+          oldkey(i+1:i+1) = " "
+          oldkey(i+2:) = trim(refkey(3))
           call upcase (keywrd, len_trim(keywrd))
         end if
 !
@@ -336,10 +356,11 @@
       else if (index(keywrd,'&') /= 0) then
         i = index(keywrd,'&')
         keywrd(i:i) = ' '
+        oldkey(i:i) = ' '
         i = len_trim(keywrd)
         read (ir, '(A)', end=100, err=100) refkey(2)
         keywrd(i + 1:) = " "//refkey(2)(:1001 - i)
-        oldkey(len_trim(oldkey) + 2:) = trim(keywrd)
+        oldkey(len_trim(oldkey) + 2:) = refkey(2)(:1001 - i)
         call upcase (keywrd, len_trim(keywrd))
         i = len_trim(keywrd)
         if (index(keywrd,'SETUP') /= 0) then
@@ -365,8 +386,10 @@
         else if (index(keywrd(i:),'&') /= 0) then
           j = index(keywrd,'&')
           keywrd(j:j) = ' '
+          oldkey(j:j) = ' '
           read (ir, '(A)', end=100, err=100) refkey(3)
           read(refkey(3), '(a)') keywrd(i + 1:)
+          read(refkey(3), '(a)') oldkey(i + 1:)
           call upcase (keywrd, len_trim(keywrd))
         else
           read (ir, '(A)', end=100, err=100) title
@@ -374,6 +397,7 @@
       else
         read (ir, '(A)', end=100, err=100) koment, title
       end if
+      call split_keywords(oldkey)
       go to 60
 50    continue
       if (zero_scf) go to 60
@@ -382,119 +406,22 @@
       write(iw,'(a)') " (Setup file name: '"//trim(filen)//"')"
       return
 60    continue
-      i = len_trim(keywrd)
-      call upcase (keywrd, len_trim(keywrd))
-      i = index(keywrd, "GEO-DAT")
-      if (i /= 0) then
-        keywrd(i:i+6) = "GEO_DAT"
-        refkey(1)(i:i+6) = "GEO_DAT"
-      end if
-      i = index(keywrd, "GEO-REF")
-      if (i /= 0) then
-        keywrd(i:i+6) = "GEO_REF"
-        refkey(1)(i:i+6) = "GEO_REF"
-      end if
-!
-!  The following code is specific to very case-sensitive operating systems
-!  such as Red Hat Enterprise Linux.
-!
-!  Preserve case of files that start and end with a quotation mark
-!  The original case is in oldkey.  Allow for keywrd and oldkey to have other differences.
-!
-      line = trim(oldkey)
-      k = 1
-      n = 1
-      do
-        i = index(keywrd(k:), '"')
-        if (i /= 0) then
-!
-! Find closing quotation mark
-!
-          i = i + k - 1
-          j = index(keywrd(i + 1:), '"') + i
-          if (j == i) then
-            call mopend("NUMBER OF QUOTATION MARKS, '""', IN KEYWORDS IS ODD. THIS NUMBER MUST BE EVEN.")
-            return
-          end if
-          l = index(oldkey(n:), '"') + n - 1
-          m = index(oldkey(l + 1:), '"') + l
-          keywrd(i:j) = oldkey(l:m)
-          k = j + 1
-          n = m + 1
-        else
-          exit
-        end if
-      end do
-!
-! End of UNIX-specific code
-!
-      do
-        i = index(refkey(1), "*-")
-        if (i == 0) exit
-        refkey(1)(i:i) = " "
-      end do
-      if (len_trim(keywrd) == len_trim(oldkey)) then
-        l_quote = .false.
-        do i = 1, len_trim(oldkey)
-          if (l_quote) keywrd(i:i) = oldkey(i:i)
-          if(keywrd(i:i) == '"') l_quote = .not. l_quote
-        end do
-      end if
-      if (gui) then
-        i = index(keywrd,"PM3")  ! Convert PM3 to PM6 for CAChe only
-        if (i /= 0) then
-          keywrd(i:i+2) = "PM6"
-           write (iw, '(A)') ' Keyword PM3 was supplied. PM3 is not supported, so keyword converted to PM6'
-        end if
-        i = index(keywrd,"PM5")  ! Convert PM5 to PM7 for CAChe only
-        if (i /= 0) then
-          keywrd(i:i+2) = "PM7"
-           write (iw, '(A)') ' Keyword PM5 was supplied. PM5 is not supported, so keyword converted to PM7'
-        end if
-      end if
       line = " "
       goto 99
-  100 continue
+100   continue
+      call split_keywords(oldkey)
+      
       if (numcal > 1) then
-        if (index(keywrd,"OLDGEO") /= 0) then ! User forgot to add extra lines for title and comment
-          return
-        end if
+        if (index(keywrd,"OLDGEO") /= 0) return ! User forgot to add extra lines for title and comment
         if (aux) keywrd = " AUX"
         line = "JOB ENDED NORMALLY"
-      else
-        i = index(keywrd, "GEO-DAT")
-        if (i /= 0) then
-          keywrd(i:i+6) = "GEO_DAT"
-          do j = 1, 6
-            line = trim(refkey(j))
-            call upcase(line, len_trim(line))
-            i = index(line, "GEO-DAT")
-            if (i /= 0) then
-              refkey(j)(i + 3:i + 3) = "_"
-              exit
-            end if
-          end do
-        end if
-        i = index(keywrd, "GEO-REF")
-        if (i /= 0) then
-          keywrd(i:i+6) = "GEO_REF"
-          do j = 1, 6
-            line = trim(refkey(j))
-            call upcase(line, len_trim(line))
-            i = index(line, "GEO-REF")
-            if (i /= 0) then
-              refkey(j)(i + 3:i + 3) = "_"
-              exit
-            end if
-          end do
-        end if
-        if (index(keywrd, "GEO_DAT") == 0) then
-          line = ' ERROR IN READ OF FIRST THREE LINES'
+        if (quoted('GEO_DAT"') == 0) then
+          line = ' ERROR IN READ OF FIRST THREE LINES' 
         else
           line = " "
         end if
       end if
-99    if (line /= " ") call mopend (trim(line))
+99    continue
 !
 !  Look for non-standard characters.  If Apple's "text editor" is used,
 !  convert the fancy '"' (four characters) into a normal '"'.
@@ -594,3 +521,135 @@
     if (zero == 0) line(i_start:i + 1) = " "
     return
   end function get_text
+!
+!
+!
+  subroutine split_keywords(oldkey)
+  use molkst_C, only: keywrd, keywrd_quoted, line
+  implicit none
+  character, intent (in) :: oldkey*3000
+  integer :: i, j, k, loop
+  integer, parameter :: n_quoted = 4
+  character :: quoted_keywords(n_quoted)*20, old*3000, quotation*1
+  logical :: first
+!
+!  Split the keyword string "keywrd" into two strings: "keywrd" and "keywrd_quoted".
+!  On exit:
+!  First string:  keywrd        - holds all the keywords that must not contain quotation marks.
+!  Second string: keywrd_quoted - holds all the keywords that can contain quotation marks.
+!
+!  If a keyword that can contain quotation marks does not have quotation marks, 
+!  then quotation marks will be added.
+!
+!  If a keyword occurs more than once, only the first occurance will be kept in "keywrd_quoted", 
+!  all others will be deleted.
+!
+  quoted_keywords(1) = ' GEO_DAT='
+  quoted_keywords(2) = ' GEO_REF='
+  quoted_keywords(3) = ' EXTERNAL='
+  quoted_keywords(4) = ' SETUP='
+  old = trim(oldkey)
+  keywrd_quoted = " "
+  do
+    i = index(old, " + ")
+    if (i /= 0) then
+      line = trim(old)
+      old = line(:i)//trim(line(i + 3:))
+    else
+      exit
+    end if
+  end do
+  keywrd = trim(old)
+  call upcase (keywrd, len_trim(keywrd))
+  if (keywrd(1:1) /= " ") then
+    line = trim(keywrd)
+    keywrd = " "//trim(line)
+    line = trim(old)
+    old = " "//trim(line)
+  end if
+  do loop = 1, n_quoted
+    first = .true.
+    do
+      i = index(keywrd, trim(quoted_keywords(loop)))
+      if (i /= 0) then
+!
+! Found a keyword that should be quoted.  Make sure that it has a quotation mark
+!
+        k = len_trim(quoted_keywords(loop))
+        j = i + k
+        if (keywrd(j:j) /= '"') then
+          quotation = '"'
+          j = index(keywrd(j:), ' ') + j - 1
+        else
+          quotation = ' '
+          j = index(keywrd(j + 1:), '"') + j + 1
+          j = index(keywrd(j:), ' ') + j - 1
+        end if
+!
+! Copy the keyword that contains quotation marks to keywrd_quoted
+!    
+        if (first) then
+          line = trim(keywrd_quoted)
+          keywrd_quoted = trim(line)//keywrd(i:i + k -1)//trim(quotation)//old(i + k:j - 1)//trim(quotation)  
+          first = .false.
+        end if
+!
+! Delete the keyword from keywrd that contains the quotation marks
+!  
+        line = trim(keywrd)
+        keywrd = line(1:i - 1)//trim(line(j:))
+        line = trim(old)
+        old = line(1:i - 1)//trim(line(j:))
+      else
+        exit
+      end if
+    end do
+  end do
+  do
+    i = index(keywrd_quoted, "\")
+    if (i == 0) exit
+    keywrd_quoted(i:i) = "/"
+  end do
+  return
+  end subroutine split_keywords
+  
+  
+  integer function quoted(key)
+!
+! If the test keyword "key" is present in "keywrd_quoted", then the function is set to
+! the location in the string, and the string variable "line" is set to the text.
+! If the test keyword is not present, the function is set to zero and "line" is empty.  
+!
+  use molkst_C, only: keywrd_quoted, line
+  implicit none
+  character, intent (in) :: key*(*)
+  integer :: i, j, k
+  integer, external :: end_of_keyword
+!
+! Search for a keyword that contains a string that contains text that could be mistaken
+! for keywords.
+!
+    line = " "
+    i = index(keywrd_quoted, trim(key))
+    if (i /= 0) then
+!
+! Keyword contains quotation marks, so:
+!
+      k = Index (keywrd_quoted(i:), "=") + i
+      j = end_of_keyword(keywrd_quoted, len_trim(keywrd_quoted), k) - 2
+      i = i + 1 + len_trim(key) 
+      if (trim(key) == "GEO_REF=") then
+        if (index(keywrd_quoted(i:j), '"') /= 0) then
+!
+! Special treatment for "GEO_REF="
+!
+          do j = j, 1, -1
+            if (keywrd_quoted(j:j) == '"') exit
+          end do
+        end if
+      end if
+      line = keywrd_quoted(i:j)
+      end if
+    quoted = i
+    return
+  end function quoted

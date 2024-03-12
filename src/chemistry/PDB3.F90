@@ -121,7 +121,28 @@ do i = 1, numat
     do j = 1, 20
       if (txtatm(i)(18:20) == tyres(j)) exit
     end do
-    if (j == 21) cycle
+    if (j == 21) then
+!
+! Not one of the 20 amino-acids, so treat it as a generic atom.
+! If a number is present at the start of the atom symbol, move the number to the end of the atom symbol.
+!
+      do j = 13, 15
+        if (txtatm(i)(j:j) /= " ") exit
+      end do
+      if (txtatm(i)(j:j) > "0" .and. txtatm(i)(j:j) < "9") then
+        line = txtatm(i)(j:16)
+        if (len_trim(line) == 4) then
+          txtatm(i)(j:16) = trim(line(2:))
+          j = j + 3
+          txtatm(i)(j:j) = line(1:1)
+        else
+          txtatm(i)(j:15) = " "//trim(line(2:))
+          j = j + len_trim(line) 
+          txtatm(i)(j:j) = line(1:1)
+        end if
+      end if
+      cycle
+    end if
 !
 ! Identify the atom that the hydrogen atom is attached to
 !
@@ -183,7 +204,7 @@ subroutine two_atoms(i, j)
 !
 use common_arrays_C, only : txtatm, coord, nbonds, ibonds
 use funcon_C, only : pi
-USE molkst_C, ONLY : line
+USE molkst_C, ONLY : line, numat
 implicit none
 integer, intent (in) :: i, j
 integer :: jj, k, l, m, n, ii, priority(4), order(3)
@@ -200,6 +221,24 @@ data nos / "1", "2", "3" /
 !
 ! Two hydrogen atoms attached to atom "j"
   if (txtatm(j)(18:20) == "ARG" .and. txtatm(j)(14:15) == "NH") then
+    do jj = 1, nbonds(j)
+      k = ibonds(jj,j)
+!
+! If a hydrogen atom on atom j, i.e., NH, has already been defined, then
+! automatically assign the current hydrogen atom, atom i.
+!
+      if (txtatm(k)(13:14) == "HH") then
+        if (k < i) then
+          line = txtatm(i)(14:16)
+          if (txtatm(k)(16:16) == "1") then
+            txtatm(i)(13:16) = line(1:3)//"2"
+          else
+            txtatm(i)(13:16) = line(1:3)//"1"
+          end if
+          return
+        end if
+      end if
+    end do
     do jj = 1, nbonds(j)
       k = ibonds(jj,j)
       if (txtatm(k)(14:15) == "CZ") then
@@ -228,6 +267,24 @@ data nos / "1", "2", "3" /
   if (txtatm(j)(18:20) == "ASN" .and. txtatm(j)(14:15) == "ND") then
     do jj = 1, nbonds(j)
       k = ibonds(jj,j)
+!
+! If a hydrogen atom on atom j, i.e., ND, has already been defined, then
+! automatically assign the current hydrogen atom, atom i.
+!
+      if (txtatm(k)(13:14) == "HD") then
+        if (k < i) then
+          line = txtatm(i)(14:16)
+          if (txtatm(k)(16:16) == "1") then
+            txtatm(i)(13:16) = line(1:3)//"2"
+          else
+            txtatm(i)(13:16) = line(1:3)//"1"
+          end if
+          return
+        end if
+      end if
+    end do
+    do jj = 1, nbonds(j)
+      k = ibonds(jj,j)
       if (txtatm(k)(14:15) == "CG") then
         do l = 1, nbonds(k)
           m = ibonds(l,k)
@@ -252,6 +309,24 @@ data nos / "1", "2", "3" /
   end if
   !
   if (txtatm(j)(18:20) == "GLN" .and. txtatm(j)(14:15) == "NE") then
+    do jj = 1, nbonds(j)
+      k = ibonds(jj,j)
+!
+! If a hydrogen atom on atom j, i.e., NE, has already been defined, then
+! automatically assign the current hydrogen atom, atom i.
+!
+      if (txtatm(k)(13:14) == "HE") then
+        if (k < i) then
+          line = txtatm(i)(14:16)
+          if (txtatm(k)(16:16) == "1") then
+            txtatm(i)(13:16) = line(1:3)//"2"
+          else
+            txtatm(i)(13:16) = line(1:3)//"1"
+          end if
+          return
+        end if
+      end if
+    end do
     do jj = 1, nbonds(j)
       k = ibonds(jj,j)
       if (txtatm(k)(14:15) == "CD") then
@@ -281,7 +356,12 @@ data nos / "1", "2", "3" /
 !
 ! Assumed convention: The first hydrogen on CA is HA2, the second is HA3
 !
-    if (txtatm(i + 1)(12:20) == txtatm(i)(12:20)) then
+!  Find the first HA atom in this GLY residue. 
+!
+    do l = j + 1,  numat
+      if (txtatm(l)(18:20) == "GLY" .and. txtatm(l)(14:15) == "HA") exit
+    end do    
+    if (l == i) then
       txtatm(i)(14:16) = "HA2"
     else
       txtatm(i)(14:16) = "HA3"
@@ -341,4 +421,5 @@ data nos / "1", "2", "3" /
   else
     txtatm(i)(k:k) = nos(nbonds(j) - 1)
   end if
+  return
 end subroutine two_atoms

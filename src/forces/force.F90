@@ -140,13 +140,6 @@
         labels(numat + 1:numat + id) = 107
       end if
       na = 0
-      if (nvar > 9000) then
-        call mopend("Insufficient memory to run FORCE")
-        if ((index(keywrd, " FORCE ") /= 0 .or. index(keywrd, " IRC=") /= 0 .or. index(keywrd, " RESTART") /= 0) .and. &
-          nvar == numat*3 .and. index(keywrd, " FORCETS") == 0) &
-          write(iw,'(10x,a)')"If only the atoms that are flagged for optimization are to be used, add keyword ""FORCETS"""
-        return
-      end if
       if (ts) then
         i = nvar
       else
@@ -511,6 +504,7 @@
         store_coord = coord
         geo(:,:numat) = store_coord(:,:numat)
         na = 0
+        jloop = 0
         this_point = 0
         if (ts) then
           allocate(velocity(3*numat))
@@ -557,7 +551,7 @@
             call reverse_aux
             call l_control("REVERSE", len("REVERSE"), 1)
             last = 1
-            geo(:,:numat) = store_coord
+            geo(:,:numat) = store_coord(:,:numat)
             na = 0
             jloop = 0
             numcal = numcal + 1

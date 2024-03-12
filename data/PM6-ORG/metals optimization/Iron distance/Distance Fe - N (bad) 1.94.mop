@@ -1,0 +1,8 @@
+ PM6-ORG HTML   external="M:\PARAM\Parameter Optimization\iron.rp"
+ Distance Fe - N (Bad)  1.94
+ H=-3+"Distance Fe - N (good) 2.04" hr=guess hwt=80
+  N(HETATM    1  N1  HET A   1)   0.00000000 +0    0.0000000 +0    0.0000000 +0
+  N(HETATM    2  N2  HET A   1)   1.12406289 +0    0.0000000 +0    0.0000000 +0
+ Fe(HETATM    3 FE   HET A   1)   1.94000000 +0  180.0000000 +0    0.0000000 +0     2     1     0
+  O(HETATM    4  O   HET A   1)   1.61163509 +0  180.0000000 +0    0.0000000 +0     3     2     1
+ 

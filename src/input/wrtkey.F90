@@ -17,11 +17,12 @@
 subroutine wrtkey
   use molkst_C, only : moperr, allkey, keywrd
   implicit none
-  integer :: i, j, k, l
+  integer :: i, j, k, l, m
   integer, parameter :: n_protected_keywords = 14
   character :: protected_keywords(n_protected_keywords)*10
-  data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", &
-    "EXTERNAL=", "C.A.S.=", "C.I.D.=", "C.I.="/
+  data protected_keywords /"SITE=", "C.I.=", "I.D.=", "METAL=", "POLAR=", &
+       "POLAR(", "PDB(", "OPEN(", "OPT(", "LARGE=", "EXTERNAL=", &
+       "C.A.S.=", "C.I.D.=", "C.I.="/
 !**********************************************************************
 !
 !  WRTKEY CHECKS ALL KEY-WORDS AND PRINTS THOSE IT RECOGNIZES.  IF IT
@@ -34,7 +35,7 @@ subroutine wrtkey
 !
 !  Do not tidy up allkey earlier in the job, instead fill allkey here from keywrd,
 !  and do all the tidying up at this one point.  The old style of tidying up allkey
-!  as the job progressed was very error-prone and hadr to debug.
+!  as the job progressed was very error-prone and hard to debug.
 !
   allkey = trim(keywrd)
   j = 1
@@ -58,6 +59,9 @@ subroutine wrtkey
       do
         i = index(allkey, "(")
         if (i == 0) exit
+        if (i > 6) then
+          if (allkey(i-6:i) == "OUTPUT(") exit
+        end if
         j = index(allkey(i + 1:), ')') + i
         allkey(i:j) = " "
       end do
@@ -84,14 +88,30 @@ subroutine wrtkey
     do
       i = index(keywrd(j:), " "//trim(protected_keywords(k))) + j
       if (i == j) exit
-      j = index(keywrd(i:), ") ")
-      l = index(keywrd(i:), '" ')
+      m = i + len_trim(protected_keywords(k)) 
+      if (keywrd(m:m) == "(" .or. keywrd(m - 1:m - 1) == "(") then
+!
+! Keyword starts with "(" so search for closing ")"
+!
+        j = 1
+        do
+          m = m + 1
+          if (keywrd(m:m) == "(") j = j + 1
+          if (keywrd(m:m) == ")") j = j - 1
+          if (j == 0) exit
+        end do
+        j = m   
+        l = 1000
+      else
+        l = index(keywrd(i:), ' ') 
+        l = index(keywrd(i:l), '" ')    
+        if (l == 0) exit
+      endif
       if (j > 0 .and. l > 0) then
         j = min(j,l)
       else if (l > 0) then
         j = l
       end if
-      j = j + i
       allkey(i - 1:j) = keywrd(i - 1:j)
     end do
   end do
@@ -119,7 +139,7 @@ end subroutine wrtkey
 subroutine wrtchk (allkey)
   use molkst_C, only: keywrd, is_PARAM, uhf, method_mndo, method_am1, &
   method_pm3, method_mndod, method_pm6, method_rm1, rhf, mozyme, line, &
-  method_pm7, method_pm8, method_indo, koment, title, refkey
+  method_pm7, method_pm6_org, method_pm8, method_indo, koment, title, refkey
   use chanel_C, only: iw, input_fn
   implicit none
   logical :: birad, exci, ci, trip
@@ -257,7 +277,8 @@ subroutine wrtchk (allkey)
     if (method_am1)     i = i + 1
     if (method_pm3)     i = i + 1
     if (method_pm6)     i = i + 1
-    if (method_pm7 .or. method_PM8)     i = i + 1
+    if (method_pm7)     i = i + 1
+    if (method_PM8)     i = i + 1
     if (method_mndo)    i = i + 1
     if (method_mndod)   i = i + 1
     if (method_rm1)     i = i + 1
@@ -744,13 +765,13 @@ subroutine wrtchk (allkey)
        !
        !    DUMMY IF STATEMENT TO REMOVE AMPERSAND, PLUS SIGNS AND OBSOLETE KEYWORDS, IF PRESENT
        !
-      if (myword(allkey, " SETUP"))       i = 1
-      if (myword(allkey, "&"))            i = 2
-      if (myword(allkey, " +"))           i = 3
-      if (myword(allkey, " CONTROL"))     i = 3
-      if (myword(allkey, " DIIS"))    write (iw,'(" *  DIIS       - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
-      if (myword(allkey, " NODIIS"))  write (iw,'(" *  NODIIS     - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
-      if (myword(allkey, " ROT"))     write (iw,'(" *  ROT        - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
+      if (myword(allkey, " SETUP")    ) i = 1
+      if (myword(allkey, " &")        ) write (iw,'(" *  &          - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
+      if (myword(allkey, " +")        ) write (iw,'(" *  +          - THIS IS A DEPRECATED KEYWORD, USE "" ++ "" INSTEAD")')
+      if (myword(allkey, " CONTROL")  ) i = 2
+      if (myword(allkey, " DIIS")     ) write (iw,'(" *  DIIS       - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
+      if (myword(allkey, " NODIIS")   ) write (iw,'(" *  NODIIS     - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
+      if (myword(allkey, " ROT")      ) write (iw,'(" *  ROT        - THIS IS AN OBSOLETE KEYWORD, IT WILL BE IGNORED")')
       if (myword(allkey, " HEADER") .or. myword(allkey, " USER"))  then
         write (iw,'(" *  HEADER     - DATA SET IS IN PROTEIN DATA BANK FORMAT")')
         i = index(keywrd, " HEADER")
@@ -792,7 +813,7 @@ end subroutine wrtchk
 
 
 subroutine wrtcon (allkey)
-  use molkst_C, only: keywrd, numat, pressure, id, mozyme, mers, natoms, maxtxt, txtmax, &
+  use molkst_C, only: keywrd, keywrd_quoted, numat, pressure, id, mozyme, mers, natoms, maxtxt, txtmax, &
     line, old_chrge
   use cosmo_C, only : fepsi, nspa
   use chanel_C, only: iw, job_fn
@@ -805,8 +826,8 @@ subroutine wrtcon (allkey)
   integer :: i, ielec, ilevel, j, k, l
   logical :: l_add_H = .false., l_temp
   character :: num*1, num1*1
-  character, external :: get_a_name*300, get_text*300
-  integer, external :: end_of_keyword
+  character(len=300), external :: get_a_name
+  integer, external :: quoted
   logical, external :: myword
   double precision, external :: reada
   save :: l_add_H
@@ -852,7 +873,8 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " PM6 "))   write (iw, '(" *  PM6        - The PM6 Hamiltonian to be used")')
   if (myword(allkey, " PM7-TS")) write (iw, '(" *  PM7-TS     - Calculate barrier height using PM7-TS")')
   if (myword(allkey, " PM7"))    write (iw, '(" *  PM7        - The PM7 Hamiltonian to be used")')
-  if (myword(allkey, " PM8"))    write (iw, '(" *  PM8        - The PM8 Hamiltonian to be used")')
+  if (myword(allkey, " PM6-ORG"))write (iw, '(" *  PM6-ORG    - The PM6-ORG Hamiltonian to be used")')
+  if (myword(allkey, " PM8"))    write (iw, '(" *  PM8        - The PM8 Hamiltonian to be used (IN DEVELOPMENT)")')
   if (myword(allkey, " SPARKL")) write (iw, '(" *  SPARKLE    - Use SPARKLES when they exist.")')
   if (myword(allkey, " RM1 "))   write (iw, '(" *  RM1        - The RM1 Hamiltonian to be used")')
   if (myword(allkey, " PM5 "))   write (iw, '(" *  PM5        - METHOD NOT SUPPORTED. DEFAULT METHOD USED INSTEAD (See above)")')
@@ -871,7 +893,7 @@ subroutine wrtcon (allkey)
 !
   if (myword(allkey, "QMMM "))   write (iw, '(" *  QMMM       - Generate energies and gradients for use in MM codes")')
   if (myword(allkey, " COMPAR")) write (iw, '(" *  COMPARE    - Compare two geometries")')
-  if (myword(allkey, " BRZ"))    write (iw, '(" *  BRZ         - Write file <name>.brz for use by program BZ")')
+  if (myword(allkey, " BZ"))     write (iw, '(" *  BZ         - Write file <name>.brz for use by program BZ")')
   if (myword(allkey, " BIRAD"))  write (iw, '(" *  BIRADICAL  - SYSTEM HAS TWO UNPAIRED ELECTRONS")')
   if (myword(allkey, " EXCI"))   write (iw, '(" *  EXCITED    - FIRST EXCITED STATE IS TO BE OPTIMIZED")')
   if (myword(allkey, " VELO"))   write (iw, '(" *  VELOCITY   - INPUT STARTING VELOCITIES FOR DRC")')
@@ -965,47 +987,45 @@ subroutine wrtcon (allkey)
       return
     end if
   end if
-  if (myword(allkey, " GEO_DAT")) then
-    i = index(keywrd," GEO_DAT")
-    j = index(keywrd(i + 10:),'"') + i + 9
-    write (iw, '(" *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE """,a,"""")')keywrd(i + 10:j   - 1)
-    if (index(keywrd(i + 10:j   - 1), " ADD-H") /= 0) then
-!
-! Force the "DD" to be "dd"
-!
-      k = index(keywrd(i + 10:j   - 1), " ADD-H") + i + 10
-      do k = k, j - 1
-        if (keywrd(k:k) == "D") keywrd(k:k) = "d"
-      end do
-    end if
-    allkey(i:j) = " "
+
+  if (quoted('GEO_DAT=')  > 0) then
+    i = index(keywrd_quoted," GEO_DAT")
+    j = index(keywrd_quoted(i + 10:),'"') + i + 9 
+    write (iw, '(" *  GEO_DAT    - DATA SET GEOMETRY IS IN FILE """,a,"""")') &
+      keywrd_quoted(i + 10:j - 1)
   end if
-  if (myword(allkey, " GEO_REF")) then
-    i = index(keywrd," GEO_REF")
-    j = index(keywrd(i + 10:),'"') + i + 9
-    k = index(keywrd(i:j), "SELF")
-    if (index(keywrd(i:j), "SELF") /= 0) then
-      line = " *  GEO_REF=""SELF""    - USE MOPAC DATA SET """//keywrd(i + 10:j - 5) &
+  if (quoted('GEO_REF=')  > 0) then
+    i = index(keywrd_quoted," GEO_REF")
+    j = index(keywrd_quoted(i + 10:),'"') + i + 9 
+    k = index(keywrd_quoted(i:j), "SELF")
+    if (index(keywrd_quoted(i:j), "SELF") /= 0) then
+      line = " *  GEO_REF=""SELF""    - USE MOPAC DATA SET """//keywrd_quoted(i + 10:j - 5) &
         //trim(job_fn)//""" AS REFERENCE GEOMETRY"
        write (iw, '(a)')trim(line)
     else
-      write (iw, '(" *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE """,a,"""")')keywrd(i + 10:j - 1)
+      write (iw, '(" *  GEO_REF    - REFERENCE GEOMETRY IS IN FILE """,a,"""")')keywrd_quoted(i + 10:j - 1)
     end if
-    if (keywrd(j + 1:j + 1) == " ") then
+    if (keywrd_quoted(j + 1:j + 1) == " ") then
       write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
     else
-      sum = reada(keywrd(j:), 1)
-      if (sum < 0.1d0) then
+      sum = reada(keywrd_quoted(j:), 1)
+      if (sum < 1.d-15) then
         write(iw,'(a)') " *               (NO BIAS TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
       else
-        num = char(ichar("4") + int(log10(sum)))
-        write(iw,'(a, f'//num//'.1, a)') " *               (A BIAS OF",sum, &
-        " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
-        do
-          j = j + 1
-          if (allkey(j:j) == " ") exit
-          allkey(j:j) = " "
-        end do
+        i = nint(log10(sum))
+        if (abs(i) > 5) then
+          write(iw,'(a, g11.4, a)') " *               (A BIAS OF",sum, &
+          " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
+        else         
+          num = char(ichar("4") + abs(i))
+          if (i < 0) then
+            num1 = char(ichar("1") - i)
+          else
+            num1 = "1"
+          end if 
+          write(iw,'(a, f'//num//'.'//num1//', a)') " *               (A BIAS OF",sum, &
+          " KCAL/MOL/ANGSTROM^2 TOWARDS THE REFERENCE GEOMETRY WILL BE APPLIED)"
+        end if
       end if
     end if
   end if
@@ -1022,10 +1042,7 @@ subroutine wrtcon (allkey)
                                  write (iw, '(" *  CHAINS     - PDB CHAIN LETTERS EXPLICITLY DEFINED")')
                                  write (iw, '(" *  Keyword:     ",a)')keywrd(i:j)
   end if
-  if (myword(allkey, " NEWPDB")) then
-    write (iw, '(" *  NEWPDB     - CONVERT PDB ATOM FORMAT INTO THE MODERN PDB VERSION, VERSION-3")')
-    if (index(keywrd, " SITE") == 0) call l_control("SITE=()", len("SITE=()"), 1)
-  end if
+  if (myword(allkey, " NEWPDB")) write (iw, '(" *  NEWPDB     - CONVERT PDB ATOM FORMAT INTO THE MODERN PDB VERSION, VERSION-3")')
   if (myword(allkey, " GEOCHK")) write (iw, '(" *  GEOCHK     - PRINT WORKING IN SUBROUTINE GEOCHK")')
   if (myword(allkey, " LEWIS"))  write (iw, '(" *  LEWIS      - PRINT OUT LEWIS STRUCTURE, THEN STOP")')
   if (myword(allkey, " SETPI"))  write (iw, '(" *  SETPI      - SOME OR ALL PI BONDS EXPLICITLY SET BY USER")')
@@ -1046,10 +1063,12 @@ subroutine wrtcon (allkey)
   if (myword(allkey, " UHF"))    write (iw, '(" *  UHF        - UNRESTRICTED HARTREE-FOCK CALCULATION")')
   if (myword(allkey, " RHF"))    write (iw, '(" *  RHF        - RESTRICTED HARTREE-FOCK CALCULATION")')
   if (myword(allkey, " STATIC")) write (iw, '(" *  STATIC     - CALCULATE STATIC FIELD POLARIZABILITIES")')
-  i = index(allkey," SETUP=")
+  i = quoted(' SETUP=')
   if (i /= 0) then
-    line = trim(get_text(allkey, i + 7, 0))  ! delete file name plus delimiter, if any.
-    allkey(i:i + 7) = " "
+    if (len_trim(line) == 0) then
+      allkey(i:i + 7) = " " 
+      line = "SETUP or SETUP.TXT"
+    end if
     i = len_trim(line)
     if (i < 26) then
       write (iw, '(" *  SETUP      - EXTRA KEYWORDS TO BE READ FROM FILE """, a, """")') trim(line)
@@ -1149,13 +1168,24 @@ subroutine wrtcon (allkey)
     end do
   end if
   line = trim(allkey)
+  i = 0
+  if (myword(line, " OPT-")) i = i + 1
+  if (myword(line, " OPT ")) i = i + 1
+  if (myword(line, " OPT(")) i = i + 1
+  if (myword(line, " OPT=")) i = i + 1
+  if (i > 1) then
+    call mopend("MORE THAN ONE TYPE OF ""OPT"" REQUESTED. THIS IS NOT ALLOWED")
+    write(iw,'(/10x,a,//,a,/)')"KEYWORDS SUPPLIED:", trim(keywrd)
+    return
+  end if
+  line = trim(allkey)
   if (myword(allkey, " OPT-") .or. myword(allkey, " OPT ") .or. myword(allkey, " OPT(") &
     .or. myword(allkey, " OPT="))   then
     i = index(line, " OPT=")
     if (i /= 0) line(i + 4:) = line(i + 5:)
     l = 0
     do
-      i = index(line, " OPT")
+      i = index(line, " OPT-") + index(line, " OPT ") + index(line, " OPT(") + index(line, " OPT=(")
       if (i == 0) exit
       j = index(line(i + 4:)," ") + i + 2
       if (index(line, " OPT-") /= 0) then
@@ -1221,7 +1251,7 @@ subroutine wrtcon (allkey)
       pressure = reada (keywrd, Index (keywrd, " P="))
       if (id == 1) then
         write (iw, '(" *  P=         - TENSION IN POLYMER=", g13.6, " NEWTONS PER MOLE")') pressure
-        pressure = -pressure * 10.d0 ** (-13) / 4.184d0
+        pressure = pressure * 10.d0 ** (-13) / 4.184d0
       else if (id == 2) then
       else if (id == 3) then
         i = Index (keywrd, " P=")
@@ -1240,7 +1270,7 @@ subroutine wrtcon (allkey)
 !  Divide by 4184 to convert from J/M**3/mol to Kcal/M**3/mol
 !  Divide by 10**30 to convert from Kcal/M**3/mol to Kcal/Angstrom**3/mol
 !
-        pressure = -(fpcref(1,10)*pressure) / (4184.d0*10.d0**30)
+        pressure = (fpcref(1,10)*pressure) / (4184.d0*10.d0**30)
       else
         write (iw, *) " Keyword 'P=n.nn' is not allowed here"
         call mopend("Keyword 'P=n.nn' is not allowed here")
@@ -1456,8 +1486,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP1      - FIRST STEP-SIZE IN GRID =", f7.2)') &
    reada (keywrd, Index (keywrd, "STEP1")+6)
    if (index(keywrd, " POINT1") == 0) then
-     write (iw,'("*",/," *             - **** KEYWORD POINT1 MISSING ****",/,"*")')
-     call mopend("KEYWORD POINT1 MISSING")
+    call l_control("POINT1=11", len_trim("POINT1=11"), 1)
    end if
    i = 2
  end if
@@ -1465,8 +1494,7 @@ subroutine wrtcon (allkey)
    write (iw,'(" *  STEP2      - SECOND STEP-SIZE IN GRID =", f7.2)') &
    reada (keywrd, Index (keywrd, "STEP2")+6)
    if (index(keywrd, " POINT2") == 0) then
-     write (iw,'("*",/," *             - **** KEYWORD POINT2 MISSING ****",/,"*")')
-     call mopend("KEYWORD POINT2 MISSING")
+    call l_control("POINT2=11", len_trim("POINT2=11"), 1)
    end if
  end if
  if (myword(allkey, " STEP="))  then
@@ -1562,29 +1590,28 @@ subroutine wrtcon (allkey)
 !
 !                       External parameters read from file
 !
-  if ( .not. myword(allkey, " EXTERNAL")) return
-  i = Index(keywrd, "EXTERNAL=") + Index(keywrd, "PARAMS=")
-    if (i /= 0) then
-      i = index(keywrd(i:), "=") + i
-      k = end_of_keyword(keywrd, len_trim(keywrd), i)
-      line = get_a_name(keywrd(i:k), len_trim(keywrd(i:k)))
-      write (iw, '(" *",/," *  EXTERNAL=n  -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
-      do
-        j = index(keywrd(i:k), ";")
-        if (j /= 0) then
-          i = i + j
-          line = get_a_name(keywrd(i:), len_trim(keywrd(i:)))
-          write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
-        else
-          exit
-        end if
-      end do
-    end if
+  if (myword(allkey, " EXTERNAL")) write (iw, '(" *  EXTERNAL   - DEFAULT PARAMETERS RESET USING DATA IN INPUT FILE")')
+  if (quoted('EXTERNAL=')  > 0) then
+    i = index(keywrd_quoted," EXTERNAL=")
+    i = i + 10
+    line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+    write (iw, '(" *",/," *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: ",/," *",17x, a)') '"'//trim(line)//'"'
+    do
+      j = index(keywrd_quoted(i:), ";")
+      if (j /= 0) then
+        i = i + j
+        line = get_a_name(keywrd_quoted(i:), len_trim(keywrd_quoted(i:)))
+        write (iw, '(" *", 10x, a)')'   and "'//trim(line)//'"'
+      else
+        exit
+      end if
+    end do
+  end if
   return
 end subroutine wrtcon
 subroutine wrtout (allkey)
   use molkst_C, only : keywrd, mozyme, maxtxt, line, prt_coords, prt_gradients, prt_cart, prt_charges, prt_pops, &
-    prt_topo, prt_force, prt_normal_coords, prt_orientation, prt_velocity, backslash
+    prt_topo, prt_force, prt_normal_coords, prt_orientation, prt_velocity, backslash, is_PARAM
   use chanel_C, only: iw0, iw, log, input_fn
   implicit none
   character (len=1000), intent (inout) :: allkey
@@ -1593,7 +1620,7 @@ subroutine wrtout (allkey)
   double precision, external :: reada
   intrinsic Index, Nint
   if (myword(allkey, " PRTINT"))  write (iw,'(" *  PRTINT     - INTERATOMIC DISTANCES TO BE PRINTED")')
-  if (myword(allkey, " PRTCHAR")) write (iw,'(" *  PRTCHARGE  - PRINT CHARGES IN ARC FILE")')
+  if (myword(allkey, " PRTCHAR")) write (iw,'(" *  PRTCHARGE  - PRINT CHARGES IN ARC FILE AND PDB OUTPUT")')
   if (index(allkey, " AUX") > 0) then
     i = index(allkey, " AUX(") + 1
     if (i > 1) then
@@ -1754,18 +1781,20 @@ subroutine wrtout (allkey)
         end if
       end if
     end if
+    if ( .not. is_PARAM) then
 !
 !  Check that file-name is okay
 !
-    do j = len_trim(input_fn) - 5, 2, -1
-      if (input_fn(j:j) == "/" .or. input_fn(j:j) == backslash) exit
-    end do
-    do i = j, len_trim(input_fn) - 5
-      if (input_fn(i:i) == "'") exit
-    end do
-    if (i < len_trim(input_fn) - 6) then
-       call mopend("When HTML is present, the file-name must not contain an apostrophe.")
-       write(iw,'(/10x,a)')"(File name = """//input_fn(:len_trim(input_fn) - 5)//""")"
+      do j = len_trim(input_fn) - 5, 2, -1
+        if (input_fn(j:j) == "/" .or. input_fn(j:j) == backslash) exit
+      end do
+      do i = j, len_trim(input_fn) - 5
+        if (input_fn(i:i) == "'") exit
+      end do
+      if (i < len_trim(input_fn) - 6) then
+         call mopend("When HTML is present, the file-name must not contain an apostrophe.")
+         write(iw,'(/10x,a)')"(File name = """//input_fn(:len_trim(input_fn) - 5)//""")"
+      end if
     end if
   end if
   if (myword(allkey, " NORJSMOL")) write (iw,'(" *  HTML(NORES)- SUPPRESS LIST OF RESIDUES IN HTML FILE")')
@@ -1871,6 +1900,7 @@ subroutine wrtwor (allkey)
     i = Index (keywrd, " THREADS")
     i = nint(reada(keywrd, i))
     i = max(i,1)
+#ifdef _OPENMP
     if (i == 1) then
       write (iw,'(" *  THREADS=1  - MULTI-THREADING NOT USED")')
     else if (i < 10) then
@@ -1878,6 +1908,9 @@ subroutine wrtwor (allkey)
     else
       write (iw,'(" *  THREADS    - USE A MAXIMUM OF", i3, " THREADS")') i
     end if
+#else
+    write (iw,'(" *  THREADS    - INACTIVE (THREAD CONTROLS DISABLED)")')
+#endif
   end if
   !                   Times
   chrono = "SECONDS"

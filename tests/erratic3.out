@@ -1,0 +1,158 @@
+ *******************************************************************************
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
+ *******************************************************************************
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
+ *******************************************************************************
+
+                              MNDO CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Thu Apr 13 11:25:54 2023  *
+ *  MNDO       - The MNDO Hamiltonian to be used
+ *  OPEN(M,N)  - THERE ARE 1 ELECTRONS IN 2 LEVELS
+ *  PRECISE    - TIGHTER CRITERIA TO BE USED
+ *  1SCF       - DO 1 SCF AND THEN STOP 
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *  GRADIENTS  - ALL GRADIENTS TO BE PRINTED
+ *******************************************************************************
+open(1,2) 1SCF   MNDO     GRADIENTS  PRECISE
+             SIH  HEAT OF FORMATION (MNDO)= 90.215
+
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1      Si          0.00000000       0.0000000       0.0000000        0     0     0
+     2       H          1.37437054  *    0.0000000       0.0000000        1     0     0
+
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1        Si          0.0000      0.0000      0.0000
+     2         H          1.3744      0.0000      0.0000
+
+  H: (MNDO): M.J.S. DEWAR, W. THIEL, J. AM. CHEM. SOC., 99, 4899, (1977)
+ Si: (MNDO): M.J.S.DEWAR, ET. AL. ORGANOMETALLICS  5, 375 (1986)
+
+           Empirical Formula: H Si  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+      THERE ARE    2 DOUBLY FILLED LEVELS
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 2
+
+
+                       NO. OF LEVELS WITH OCCUPANCY 0.500  =  2
+
+ -------------------------------------------------------------------------------
+ open(1,2) 1SCF   MNDO     GRADIENTS  PRECISE
+             SIH  HEAT OF FORMATION (MNDO)= 90.215
+
+
+
+     1SCF WAS SPECIFIED, SO BFGS WAS NOT USED                 
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              MNDO CALCULATION
+                                                       MOPAC v22.0.6 MacOS
+                                                       Thu Apr 13 11:25:54 2023
+
+
+
+
+          FINAL HEAT OF FORMATION =         90.21521 KCAL/MOL =     377.46045 KJ/MOL
+
+
+          COSMO AREA              =         77.32 SQUARE ANGSTROMS
+          COSMO VOLUME            =         63.39 CUBIC ANGSTROMS
+
+          GRADIENT NORM           =          0.00072          =       0.00051 PER ATOM
+          NO. OF FILLED LEVELS    =          2
+          AND NO. OF OPEN LEVELS  =          2
+          MOLECULAR WEIGHT        =         29.0934         POINT GROUP:  C*v 
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     2   Si     1     1.37437
+            H     2   Si     1     0.00000
+           Si     1    H     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+
+          WALL-CLOCK TIME         =      0.012 SECONDS
+          COMPUTATION TIME        =      0.039 SECONDS
+
+
+
+       FINAL  POINT  AND  DERIVATIVES
+
+   PARAMETER     ATOM    TYPE            VALUE        GRADIENT
+      1          2  H    BOND            1.374371     -0.000717  KCAL/ANGSTROM
+
+
+
+
+  ATOM    CHEMICAL      BOND LENGTH      BOND ANGLE     TWIST ANGLE 
+ NUMBER    SYMBOL       (ANGSTROMS)      (DEGREES)       (DEGREES) 
+   (I)                     NA:I           NB:NA:I       NC:NB:NA:I       NA    NB    NC 
+     1      Si          0.00000000       0.0000000       0.0000000        0     0     0
+     2       H          1.37437054  *    0.0000000       0.0000000        1     0     0
+
+                             CARTESIAN COORDINATES
+
+   1   Si        0.000000000     0.000000000     0.000000000
+   2    H        1.374370540     0.000000000     0.000000000
+
+
+           Empirical Formula: H Si  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+                  EIGENVALUES  
+ -15.87388  -8.20273  -0.96708  -0.96708   3.30250
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1         Si           0.416850        3.5832     1.81127     1.77188
+    2          H          -0.416850        1.4168     1.41685
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -2.752     0.000     0.000     2.752
+ HYBRID         3.079    -0.000    -0.000     3.079
+ SUM            0.327    -0.000    -0.000     0.327
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1 Si   1.81127   0.77188   0.50000   0.50000
+    2  H   1.41685
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.03 SECONDS
+
+ == MOPAC DONE ==

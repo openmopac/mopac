@@ -1200,7 +1200,7 @@ subroutine update_txtatm(output, sort)
 !
   if (index(keywrd," ADD-H") + index(keywrd," SITE=") + index(keywrd," RESEQ") /= 0) &
     call set_up_dentate()
-  if (index(keywrd, "0SCF") == 0 .or. index(keywrd, "SITE") /= 0) call check_cvs(.true.)
+  if (index(keywrd, "0SCF") == 0 .and. index(keywrd, "SITE") == 0) call check_cvs(.true.)
   call check_H(i)
   update_chain = (index(keywrd, " CHAINS=(") == 0)
   do i = 1, numat
@@ -1239,6 +1239,7 @@ subroutine update_txtatm(output, sort)
 !  Number hydrogen atoms, if more than one on a heavy atom
 !
   allocate(n_H(numat), nn_H(numat))
+  n_H = 0
   nn_H = 0
   do i = 1, numat
     if (nat(i) > H_Z) then
@@ -1320,6 +1321,5 @@ subroutine update_txtatm(output, sort)
     txtatm(i) = trim(line)
     if (PDB .and. i == breaks(j)) j = j + 1
   end do
-  if (index(keywrd, " NEWPDB") /= 0) call PDB3()
   return
   end subroutine update_txtatm

@@ -118,9 +118,8 @@ subroutine Locate_TS
       stresses(5) = 30.d0
       nloop = 5
     end if
-    if (index(keywrd, " LOCATE-TS ") /= 0) then
-      k = 1
-    else
+    k = 0
+    if (index(keywrd, " LOCATE-TS ") == 0) then
       i = index(keywrd,  " LOCATE-TS") + 11
       do j = i + 1, len_trim(keywrd)
         if (keywrd(j:j) == " ") exit
@@ -180,6 +179,7 @@ subroutine Locate_TS
       end do
     else
       shell = 0
+      big_xparam = 0.d0
     end if
 !
 ! Delete GEO_REF and LOCATE-TS from the new .mop, .arc, and other files
@@ -870,7 +870,7 @@ subroutine Locate_TS
     end do
     store = " "
     if (mode == 1) then
-      i = index(keywrd, store(:mt + 2))
+      i = index(keywrd, store(:mt + 50))
       keywrd = keywrd(:i)//line(:mt)//trim(keywrd(i + mt + 1:))
     end if
     if (local_txt == " ") exit
@@ -1209,7 +1209,7 @@ subroutine Locate_TS
     do i = 1, nsite
       k = max(k,nbonds_b(active_site(i)))
     end do
-    write(ch,'(i2)')k*6 - 6
+    write(ch,'(i2)')max(1, k*6 - 6)
 
     if (pdb_label) then
       write(iw,'(/,a,'//ch//'x,a,/16x,a)') &

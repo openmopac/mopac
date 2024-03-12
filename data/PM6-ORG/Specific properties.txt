@@ -1,0 +1,21 @@
+Specific line-1
+Specific line-2
+Specific line-3
+Specific line-4
+Specific line-5 
+(H2O) 1.0
+(H2O) 0.9 
+(H2O) 1.1
+(H2O)5 (good)
+(H2O)5 (bad)
+ Cys-4 (good)
+ Cys-4 (bad)
+acetate - water (good)
+acetate - water (bad)
+NH3 (good)
+NH3 (bad)
+Covalent peptide bond C - N (good)
+Covalent peptide bond C - N (bad)                                             
+H2O (Good)                                                                
+H2O (bad)  
+ 

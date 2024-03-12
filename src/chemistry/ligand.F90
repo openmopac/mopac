@@ -840,11 +840,12 @@ subroutine ligand (ires, start_res, nfrag)
                 write(line,'(a,i4)') "*REMARK   3 "//het//" = "//trim(het_group)//"   res: ", ires
               end if
               j = len_trim(line)
+              ! hard-coded to allow for only 1 line wrap
               if (j > 80) then
                 j = index(line, "XENO")
-                write(all_comments(ncomments),'(a)') line(1:j +7)
+                write(all_comments(ncomments),'(a)') line(1:76)//">>>"
                 ncomments = ncomments + 1
-                write(all_comments(ncomments),'(a)') "*REMARK   3"//trim(line(j + 7:))
+                write(all_comments(ncomments),'(a)') "*REMARK   3 >>>"//trim(line(77:))
               else
                 write(all_comments(ncomments),'(a)') trim(line)
               end if

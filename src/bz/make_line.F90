@@ -35,7 +35,7 @@ subroutine make_line (nvecs, fcells)
   double precision :: eigs(2*nvecs), xyzk(3,2)
   integer, parameter :: npoints = 4
   character :: num*1, char_points(3)*3, symbols*100, line_1*100, &
-    points(npoints)*5 =  (/"GAMMA", "DELTA", "LAMDA", "SIGMA" /), &
+    points(npoints)*6 =  (/"GAMMA", "DELTA", "LAMBDA", "SIGMA" /), &
     pts(npoints)*3 = (/"G G", "D G", "L G", "S G"/)
   logical :: opend
   save

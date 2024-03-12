@@ -49,6 +49,10 @@
       use funcon_C, only : fpc_10, fpc_9
 !
       use chanel_C, only : iw0, iw, iarc, ibrz, brillouin_fn, archive_fn, log
+!
+#if MOPAC_F2003
+      USE, INTRINSIC :: IEEE_ARITHMETIC
+#endif
 !-----------------------------------------------
       implicit none
 !-----------------------------------------------
@@ -158,9 +162,9 @@
       ! Remove energy term arising from the external pressure,
       !
         if( id == 1) then
-          escf = escf + pressure * dsqrt(dot(tvec(1,1), tvec(1,1),3))
+          escf = escf - pressure * dsqrt(dot(tvec(1,1), tvec(1,1),3))
         else if (id == 3) then
-          escf = escf + pressure * volume(tvec,3)
+          escf = escf - pressure * volume(tvec,3)
         end if
       end if
       if (use_ref_geo) then
@@ -196,20 +200,22 @@
           return
         end if
         stress = -1.1d-6
-        write (iw, &
-      '(4/10X,''FINAL HEAT OF FORMATION ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
+        if(.not. method_indo) then
+          write (iw, &
+          '(4/10X,''FINAL HEAT OF FORMATION ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
+        endif
       end if
+      elect = elect + solv_energy
+      solv_energy = 0.d0
       if (index(keywrd," DISP") /= 0) then
-        write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-        (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION "
-        write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         if (index(keywrd,' EPS') /= 0) then
-          if (abs(solv_energy) > 1.d-1) then
-            write (iw, '(    10X,''SOLVATION ENERGY        ='',F17.5,'' KCAL/MOL''   )') solv_energy*fpc_9
-          else if (.not. mozyme) then
-            write (iw, '(/10X,"SOLVATION ENERGY CAN ONLY BE PRINTED WHEN MOZYME IS USED",/)')
-          end if
+          write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION + SOLVATION ENERGY"
+        else
+          write(iw,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION"
         end if
+        write(iw,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         write(iw,'(10x,"                    SUM =",f17.5,a)') &
         (elect + enuclr)*fpc_9 + atheat + solv_energy*fpc_9, " KCAL/MOL"
         if (abs(hpress) > 1.d-5)      write(iw,'(10x,"ENERGY DUE TO PRESSURE  =",f17.5,a)') hpress, " KCAL/MOL"
@@ -275,13 +281,13 @@
       hpress = 0.d0
       if (Abs (pressure) > 1.d-4) then
         if (id == 1) then
-          hpress = -pressure * dsqrt (dot(tvec(1, 1), tvec(1, 1), 3))
+          hpress = pressure * dsqrt (dot(tvec(1, 1), tvec(1, 1), 3))
         else if (id == 3) then
           sum =  volume (tvec, 3)
-          hpress = -pressure * sum
+          hpress = pressure * sum
           write (iw, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress
-          sum = -(4184.d0*10.d0**30)*pressure/fpc_10
+          sum = (4184.d0*10.d0**30)*pressure/fpc_10
           if (abs(sum) > 1.d9) then
             write (iw, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
           else
@@ -346,7 +352,7 @@
         end if
       end if
       if (latom == 0) write (iw, '(1X)')
-      if (lprtgra .or. gnorm > 1.D-15 ) &
+      if (lprtgra .or. gnorm /= 0.D0) &
         write (iw, '(10X,"GRADIENT NORM           =",F17.5, 10x, "=", 7x, f'//num//'.5, '' PER ATOM'')') &
         gnorm, gnorm/sqrt(1.0*numat)
       if (gnorm > 2.D0 .and. fract > 0.05D0 .and. fract < 1.95D0 .and. &
@@ -356,7 +362,11 @@
       still = .TRUE.
       if (latom == 0) then
         if (index(keywrd,' AIDER') == 0 .and. nvar > 0) then
+#ifdef MOPAC_F2003
+          if (.not. ieee_is_nan(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then
+#else
           if (.not. isnan(dxyz(1)) .and. (index(keywrd,' 1SCF') == 0 .or. index(keywrd,' GRAD') /= 0)) then
+#endif
 !
 !   CHECK THAT THE CARTESIAN COORDINATE GRADIENT IS ALSO SMALL
 !
@@ -722,7 +732,7 @@
           write (iw, '('' FOCK MATRIX '')')
           call vecprt (f, norbs)
         end if
-        if (mers(1) /= 0 .and. .not. mozyme .and. index(keywrd, " BRZ") /= 0) then
+        if (mers(1) /= 0 .and. .not. mozyme .and. index(keywrd, " BZ") /= 0) then
           bcc = index(keywrd,' BCC') /= 0
           open(unit=ibrz, file=brillouin_fn, status='UNKNOWN')
           write (ibrz,*) norbs, (max(mers(i),1), i = 1,3), bcc
@@ -1016,8 +1026,13 @@
       '(/10X,''HEAT OF FORMATION       ='',F17.5,'' KCAL/MOL''  ,'' ='',F14.5,'' KJ/MOL'')') escf, escf*4.184D0
       end if
       if (index(keywrd," DISP") /= 0) then
-        write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
-          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION "
+        if (index(keywrd,' EPS') /= 0) then
+          write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION + SOLVATION ENERGY"
+        else
+          write(iwrite,'(/10x,"TOTAL ENERGY            =",f17.5,a)') &
+          (elect + enuclr)*fpc_9, " KCAL/MOL = ELECTRONIC ENERGY + CORE-CORE REPULSION"
+        end if
         write(iwrite,'(10x,"ENERGY OF ATOMS         =",f17.5,a)') atheat, " KCAL/MOL"
         if (index(keywrd,' EPS') /= 0) then
           if (abs(solv_energy) > 1.d-1) then
@@ -1057,9 +1072,8 @@
         if (abs(solv_energy) > 1.d-1) &
           write (iwrite, '(    10X,''SOLVATION ENERGY        ='',F17.5,'' EV''   )') solv_energy
       end if
-      if (iseps) then
+      if (abs(ediel) > 1.d-5) then
         write (iwrite, '(    10X,''DIELECTRIC ENERGY       ='',F17.5,'' EV''   )') ediel
-      !  if (Index (keywrd, "COSWRT") /= 0) call coswrt()
       end if
       if (Abs (pressure) > 1.d-4) then
         if (id == 1) then
@@ -1067,7 +1081,7 @@
           sum =  volume (tvec, 3)
           write (iwrite, '(    10X,''ENERGY DUE TO PRESSURE  ='',F17.5,'' KCAL/MOL''    )') &
           hpress
-          sum = -(4184.d0*10.d0**30)*pressure/fpc_10
+          sum = (4184.d0*10.d0**30)*pressure/fpc_10
           if (abs(sum) > 1.d9) then
             write (iwrite, '(10X,''PRESSURE                ='',F17.5,'' Gp''    )') sum*1.d-9
           else
@@ -1085,7 +1099,7 @@
           vol,  vol*fpc_10*1.d-24
         write(iwrite,*)
       end if
-      if (lprtgra .or. gnorm > 1.D-15 ) write (iwrite, &
+      if (lprtgra .or. gnorm /= 0.D0) write (iwrite, &
         '(  10X, "GRADIENT NORM           =",F17.5, 10x, "=", 7x, f'//num//'.5, " PER ATOM")') gnorm, gnorm/sqrt(1.0*numat)
       if (latom == 0) then
         if (.not.still) then
@@ -1131,7 +1145,7 @@
       if (ci .or. nopen /= nclose .and. Abs(fract - 2.d0) > 1.d-20 .and. fract > 1.d-20) &
          write (iwrite, '(  10X,''CONFIGURATION INTERACTION WAS USED'')')
       if (kchrge /= 0) write (iwrite, &
-        '(  10X,''CHARGE ON SYSTEM        =  '',I9)') kchrge
+        '(  SP, 10X,''CHARGE ON SYSTEM        =  '',I9)') kchrge
       if ( .not. mozyme ) then
         if (state_Irred_Rep /= " ") then
           write(line, '(11x, "STATE:  ",i2,1x,3A)') state_QN, state_spin, state_Irred_Rep

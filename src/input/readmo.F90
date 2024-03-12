@@ -30,11 +30,11 @@
       use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
       & verson, is_PARAM, line, nl_atoms, l_feather, backslash, &
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
-      isok, method_pm6_dh2, caltyp, &
+      isok, method_pm6_dh2, caltyp, keywrd_quoted, &
       method_pm7, jobnam, method_PM7_ts, arc_hof_1, keywrd_txt, txtmax, refkey_ref, &
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &
-      method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, &
+      method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, method_pm6_org, &
       method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label, gui
 !
       use meci_C, only : maxci
@@ -64,6 +64,7 @@
       integer , dimension(19,2) :: idepco
       integer :: naigin, i, j, k, iflag, nreact, ij, iend, l, ii, jj, &
         i4, j4, ir_temp, l_iw, from_data_set = 14, i_loop, setpi_limit = 50
+      integer, external :: quoted
       double precision, dimension(40) :: value
       double precision, dimension(400) :: xyzt
       double precision :: degree, convrt, dum1, dum2, sum, Rab
@@ -155,7 +156,7 @@
       refkey_ref(2) = title
       call gettxt
       if (moperr) return
-      if (index(keywrd, "GEO_DAT")  > 0) then
+      if (quoted('GEO_DAT=')  > 0) then
         if (moperr) then
           title = " "
           koment = " "
@@ -164,41 +165,7 @@
 !
 !     Use geometry in file defined by GEO_DAT
 !
-        j = index(keywrd,"GEO_DAT")
-        i = index(keywrd(j:j + 10), '"') + j
-        if (i == j) then
-          write(line,'(a)')" File name after GEO_DAT must be in quotation marks."
-          call mopend(trim(line))
-          return
-        end if
-        j = index(keywrd(i + 2:),'" ') + i
-        if (j == i) then
-          write(line,'(a)')" File name after GEO_DAT must end with a quotation mark."
-          call mopend(trim(line))
-          return
-        end if
-        line = keywrd(i:j)
-        call upcase(line, len_trim(line))
-        k = index(line, "SELF")
-        if (k /= 0) then
-          ii = len_trim(job_fn)
-          if (index(job_fn, "/") /= 0) then
-            do l = ii, 2, -1
-              if (job_fn(l:l) == "/") exit
-            end do
-            line_1 = line(:k - 2)//job_fn(l:ii - 4)//trim(line(k + 4:))
-            if (line_1(1:1) == "/") then
-              line = trim(line_1(2:))
-              line_1 = trim(line)
-            end if
-          else
-            line_1 = line(:k - 2)//"/"//job_fn(1:ii - 4)//trim(line(k + 4:))
-          end if
-          line = trim(line_1)
-          call add_path(line)
-        else
-          line = keywrd(i:j)
-        end if
+        line_2 = trim(line)
         line_1 = trim(line)
         call upcase(line_1, len_trim(line_1))
         line_2 = job_fn
@@ -422,7 +389,7 @@
         call gettxt
         if (moperr) return
       end if
-      if (keywrd(1:6) == "HEADER") keywrd(7:) = " "
+      if (keywrd(1:7) == " HEADER") keywrd(8:) = " "
       if (keywrd(1:1) /= space) keywrd = " "//trim(keywrd)
       if (koment(1:1) /= space) koment = " "//trim(koment)
       if (title(1:1) /= space)  title  = " "//trim(title)
@@ -487,6 +454,7 @@
             call getpdb(geo)
             coorda(:,:numat) = geo(:,:numat)
             numat_old = numat
+            intern = .false.
           else
             call getgeo (ir, labels, geo, coord, lopt, na, nb, nc, intern)
             if (numcal == 1 .and. natoms == 0) then
@@ -543,7 +511,7 @@
 !  Convert any "SELF" into file-names
 !
       do
-        line = trim(keywrd)
+        line = trim(keywrd_quoted)
         call upcase(line, len_trim(line))
         i = index(line, "SELF")
         if (i == 0) exit
@@ -551,20 +519,20 @@
 ! Isolate the path
 !
         do l = i, 1, -1
-          if (keywrd(l:l) == '"') exit
+          if (keywrd_quoted(l:l) == '"') exit
         end do
         if (l == 0) then
           call mopend(" KEYWORD OPTION ""SELF"" FOUND, BUT IT WAS NOT IN DOUBLE QUOTATION MARKS")
           return
         end if
-        line_2 = keywrd(l + 1:i - 1)
+        line_2 = keywrd_quoted(l + 1:i - 1)
 !
 ! If "SELF" without a suffix, use the name of the job.
 !
         do k = len_trim(job_fn), 1, -1
             if (job_fn(k:k) == "/" .or. job_fn(k:k) == "\") exit
         end do
-        if (keywrd(i + 4:i + 4) == '"') then
+        if (keywrd_quoted(i + 4:i + 4) == '"') then
 !
 !  "SELF" without a suffix, so use the name of the job.
 !
@@ -577,15 +545,15 @@
           do j = len_trim(job_fn), k + 1, -1
             if (job_fn(j:j) == ".") exit
           end do
-          line_1 = keywrd(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd(i + 4:i + 7)
-          i = i + index(keywrd(i:), '"') - 1
+          line_1 = keywrd_quoted(l + 1:i - 1)//job_fn(k + 1: j - 1)//keywrd_quoted(i + 4:i + 7)
+          i = i + index(keywrd_quoted(i:), '"') - 1
         end if
         call add_path(line_1)
 !
 ! Replace "SELF"
 !
-        line = keywrd(1:l)//trim(line_1)//trim(keywrd(i:))
-        keywrd = trim(line)
+        line = keywrd_quoted(1:l)//trim(line_1)//trim(keywrd_quoted(i:))
+        keywrd_quoted = trim(line)
       end do
           if (index(keywrd, " HTML") + index(keywrd, " PDBOUT") /= 0 .and. maxtxt == 0) then
             if (index(keywrd," ADD-H") + index(keywrd," SITE=") /= 0) then
@@ -717,7 +685,7 @@
           if (numcal == 1 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
         end if
       end if
-      maxci = 16000
+      maxci = 10000
       write (iw, '(1X,a)')"**                                                                           **"
       write (iw,"(1x,a)") "**                              MOPAC v"//verson//"                  **"
       write (iw, '(1X,a)')"**                                                                           **"
@@ -740,9 +708,9 @@
           l = l + 20
           k = min(l,i)
           if (k < l - 19) exit
-          write(iw,'(a,i3,30i4)')"Position:", (j, j = l - 19, k)
-          write(iw,'(a,i3,30i4)')"   ASCII:", (ichar(keywrd(j:j)), j = l - 19, k)
-          write(iw,'(a,a3,29a4)')"    Char:", (keywrd(j:j), j = l - 19, k)
+          write(iw,'(a,i4,30i4)')"Position: ", (j, j = l - 19, k)
+          write(iw,'(a,i4,30i4)')"   ASCII: ", (ichar(keywrd(j:j)), j = l - 19, k)
+          write(iw,'(a,a4,29a4)')"    Char: ", (keywrd(j:j), j = l - 19, k)
           write(iw,*)
           if (k == i) exit
         end do
@@ -794,8 +762,6 @@
         method_pm7 = (method_PM7 .or. method_PM7_ts .or. method_pm7_hh .or. method_pm7_minus)
         method_pm6 = (method_PM6 .or. method_pm6_dh2 .or. method_pm6_d3h4 .or. method_pm6_dh_plus .or. &
        & method_pm6_dh2x .or. method_pm6_d3h4x .or. method_pm6_d3 .or. method_pm6_d3_not_h4)
-        l_feather = (method_PM7 .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
-        l_feather_1 = (index(keywrd, " MACRO") /= 0)
         dh = " "
         i = index(keywrd, " PM6-D")
         if (i /= 0) then
@@ -806,6 +772,8 @@
         end if
         keywrd = trim(keywrd_txt)
       end if
+      l_feather = (method_PM7 .or. method_pm6_org .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
+      l_feather_1 = (index(keywrd, " MACRO") /= 0)
       write (iw, &
       '(/24X,A,'' CALCULATION RESULTS'',2/1X,15(''*****''),''****'' )') "     "//trim(caltyp)
       write (iw,'(" *  CALCULATION DONE: ",31x,2a)') idate,"  *"
@@ -1469,7 +1437,7 @@
           end if
           iend = ireact + 1
           react(iend) = -1.D12
-          if (na(latom) > 0 .and. labels(1) < 99 .and. labels(latom) < 99 ) then
+          if (na(latom) > 0 .and. lparam == 1 .and. labels(1) < 99 .and. labels(latom) < 99 ) then
             do i = 1, ireact
               if (abs(react(i)) < 1.d-3) exit
             end do
@@ -1583,7 +1551,7 @@
       end if
       if (moperr) return
       pdb_label = (maxtxt > 25)
-      use_ref_geo = (index(keywrd_txt," GEO_REF") /= 0)
+      use_ref_geo = (quoted('GEO_REF="')  > 0)
       if (use_ref_geo) then
 !
 !  "GEO-OK+" is used only by COMPARE.  It can be read as "If one or more hydrogen atoms in the two systems have different labels,
@@ -1936,7 +1904,7 @@
       dum1 = sqrt(dum1)
       move(i) = dum1
       sum = sum + dum1
-      if (txtmax == 26) then
+      if (txtmax >= 26) then
         j = max(-100, nint(reada(txtatm(i), 24)))
         ires_l = min(j, ires_l)
         ires_u = max(j, ires_u)

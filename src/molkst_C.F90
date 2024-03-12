@@ -235,6 +235,9 @@ module molkst_C
   &  press(3),     & ! Type         Pressure on crystal faces
                      ! Definition   Pressure required to stop crystal expanding
                      ! Units        Gigapascals
+  &  voigt(6),     & ! Type         Stress tensor in Voigt notation (xx, yy, zz, yz, xz, xy)
+                     ! Definition   Stress tensor is a symmetric 3-by-3 matrix represented by 6 distinct values
+                     ! Units        Gigapascals
   &  E_disp,       & ! Dispersion term
   &  E_hb,         & ! Hydrogen-bond term
   &  E_hh,         & ! Hydrogen-hydrogen repulsion term (to correct for short H - H interactions)
@@ -256,7 +259,7 @@ module molkst_C
                      !  Units         Text
   & git_hash*40 = 'unknown', & !  Git commit hash string
   & os*12 = 'unknown', &       !  Operating system name
-  & verson*20 = 'unknown'      !  Version number for this copy of MOPAC
+  & verson*20 = '22.*.*'       !  Version number for this copy of MOPAC
                      !  Pattern      "xx.yy.zz(-pre)"
                      !  Description  major version, minor version, patch version, & pre-release tag
   character ::     &
@@ -264,7 +267,7 @@ module molkst_C
   & line*3000         !
   character :: backslash = achar(92) ! portable way of representing the backslash character
   character :: keywrd*3000, koment*200, title*200, refkey(6)*3000, geo_ref_name*241, geo_dat_name*241, &
-    allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000
+    allkey*3000, keywrd_txt*3000, refkey_ref(6)*3000, keywrd_quoted*3000
   character :: errtxt*200, dh*20
 !
   logical ::            &
@@ -312,7 +315,7 @@ module molkst_C
 !
 !  Define names for all methods.  Adjust n_methods here and in the equivalence statement lower down.
 !
-  integer, parameter :: n_methods = 19
+  integer, parameter :: n_methods = 20
   logical ::      &
        & methods(n_methods),   &
        & method_MNDO,          &   !  1
@@ -332,6 +335,7 @@ module molkst_C
        & method_pm7_ts,        &   ! 15
        & method_PM7_HH,        &
        & method_PM7_minus,     &
+       & method_pm6_org,       &
        & method_PM8,           &
        & method_indo,          &
        & method_x,             &  ! 20 To be used some day
@@ -341,12 +345,12 @@ module molkst_C
   character :: methods_keys(n_methods)*11
   data methods_keys/ " MNDO ", " AM1 ", " PM3 ", " RM1 ", " MNDOD ", " PM6 ", " PM6-DH+ ", &
     & " PM6-DH2 ", " PM6-D3H4 ", " PM6-DH2X ", " PM6-D3H4X ", " PM6-D3 ", " PM6-D3(H4)",  &
-    & " PM7 ", " PM7-TS ", " PM7-HH ", " PM7- ", " PM8", " INDO"/
+    & " PM7 ", " PM7-TS ", " PM7-HH ", " PM7- ", " PM6-ORG ", " PM8", " INDO"/
   equivalence (methods(1),  method_MNDO), (methods(2),  method_AM1), (methods(3),  method_PM3), &
     & (methods(4),  method_RM1), (methods(5),  method_MNDOD), (methods(6),  method_PM6), &
     & (methods(7),  method_PM6_DH_plus), (methods(8),  method_PM6_DH2), (methods(9),  method_PM6_D3H4), &
     & (methods(10),  method_PM6_DH2X), (methods(11),  method_PM6_D3H4X), (methods(12),method_PM6_D3), &
     & (methods(13),  method_PM6_D3_not_H4), (methods(14), method_PM7), (methods(15),  method_pm7_ts), &
-    & (methods(16),  method_PM7_HH), (methods(17),  method_PM7_minus), (methods(18),  method_PM8), &
-    & (methods(19), method_indo)
+    & (methods(16),  method_PM7_HH), (methods(17),  method_PM7_minus), (methods(18),  method_pm6_org), &
+    & (methods(19),  method_PM8), (methods(20), method_indo)
 end module molkst_C

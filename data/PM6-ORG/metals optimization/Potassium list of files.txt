@@ -1,0 +1,59 @@
+  Clash K - K (good) 3.60
+  Clash K - K (bad) 3.50
+  K(Cp)r                                                                          
+  kohr                                                                            
+  koh.h2or                                                                        
+  koh.h2orr                                                                       
+  k(+)(h2o)2                                                                      
+  k(+)(h2o)3r                                                                     
+  k(+)(h2o)4r                                                                     
+  k(+)(h2o)5r                                                                     
+  khco3.2h2or                                                                     
+  kno3.2h2or                                                                      
+  k(+)(h2o)6r                                                                     
+  k(+)-18-crown-6_(kegxid)r                                                       
+  k(i)o6(+) (aqepiv) r                                                            
+  k(i)o6n (yakwox) r                                                              
+  k(i)o6n2(+) (gazgix) r                                                          
+  k(i)o7 (legxok) r                                                               
+*  k(i)o5n3 (poztck) r                                                             
+  k(i)o6s (ruxvah) r                                                              
+  kclr                                                                            
+  k(+)(h2o)5.cl r                                                                 
+  k(+)(h2o)5.br r                                                                 
+  k2br2r                                                                          
+  kir                                                                             
+  k(+)(h2o)5.i r                                                                  
+  k(i)o5ni (dughoc) r                                                             
+  k2i2r                                                                           
+  potassium cyanide                                                               
+  potassium hydroxide                                                             
+  koh.h2o                                                                         
+  k(+)(h2o)3                                                                      
+  k(+)(h2o)4                                                                      
+  k(+)(h2o)5                                                                      
+  khco3.2h2o                                                                      
+  kno3.2h2o                                                                       
+  k(+)(h2o)6                                                                      
+  k(i)(h2o)6(+) (gugnur)                                                          
+  k(i)o6(+) (aqepiv)                                                              
+  k(i)o6n (yakwox)                                                                
+  k(i)o6n2(+) (gazgix)                                                            
+  k(i)o7 (legxok)                                                                 
+  potassium fluoride                                                              
+  k(+)(h2o)5.f                                                                    
+  khso4                                                                           
+*  k(i)o5n3 (poztck)                                                               
+*  k(i)o6s (ruxvah)                                                                
+  potassium chloride                                                              
+  k(+)(h2o)5.cl                                                                   
+  potassium sulfate                                                               
+  potassium chloride, dimer                                                       
+  (khco3)4                                                                        
+  potassium bromide                                                               
+  k(+)(h2o)5.br                                                                   
+  potassium bromide, dimer                                                        
+  potassium iodide                                                                
+  k(+)(h2o)5.i                                                                    
+  k(i)o5ni (dughoc)                                                               
+  potassium iodide, dimer                                                         

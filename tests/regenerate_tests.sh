@@ -12,14 +12,16 @@ rm port.res
 rm port.txt
 rm port.ump
 rm port.xyz
-rm parameters_for_PM8_C.F90
+rm parameters_for_PM6_ORG_C.F90
 
 mopac Crambin_1SCF.mop
 rm Crambin_1SCF.arc
 rm Crambin_1SCF.log
 rm Crambin_1SCF.pdb
+rm Crambin_1SCF.den
 
 mopac test_Lewis_for_Proteins.mop
+rm test_Lewis_for_Proteins.arc
 rm test_Lewis_for_Proteins.html
 rm test_Lewis_for_Proteins.pdb
 rm test_Lewis_for_Proteins.txt
@@ -53,19 +55,17 @@ rm Check_that_TERs_are_preserved.html
 rm Check_that_TERs_are_preserved.pdb
 rm Check_that_TERs_are_preserved.txt
 
+# other tests depend on outputs
+mopac ADD-H_Bacteriorhodopsin_1AP9.mop
+mopac ADD-H_Bacteriorhodopsin_1AT9.mop
+mopac PDB1CBN.ent
+mopac PDB1EJG.ent
+
 mopac Compare_two_protein_structures.mop
 rm Compare_two_protein_structures.html
 rm Compare_two_protein_structures.txt
 rm Compare_two_protein_structures_Structure-1.pdb
 rm Compare_two_protein_structures_Structure-2.pdb
-
-mopac PDB1CBN.ent
-rm PDB1CBN.log
-rm PDB1CBN.pdb
-
-mopac PDB1EJG.ent
-rm PDB1EJG.log
-rm PDB1EJG.pdb
 
 mopac Compare_PDB_1EJG_and_1CBN.mop
 rm Compare_PDB_1EJG_and_1CBN.html
@@ -103,15 +103,6 @@ rm Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9.txt
 rm Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9_ADD-H_Bacteriorhodopsin_1AP9.pdb
 rm Compare_PDB_Bacteriorhodopsin_1AP9_and_1AT9_ADD-H_Bacteriorhodopsin_1AT9.pdb
 
-mopac ADD-H_Bacteriorhodopsin_1AP9.mop
-rm ADD-H_Bacteriorhodopsin_1AP9.html
-rm ADD-H_Bacteriorhodopsin_1AP9.log
-rm ADD-H_Bacteriorhodopsin_1AP9.pdb
-rm ADD-H_Bacteriorhodopsin_1AP9.txt
-
-mopac ADD-H_Bacteriorhodopsin_1AT9.mop
-rm ADD-H_Bacteriorhodopsin_1AT9.log
-
 mopac Au_Add-H.mop
 rm Au_Add-H.arc
 rm Au_Add-H.log
@@ -122,31 +113,44 @@ rm Compare_ADD-H_1EJG_and_1CBN.txt
 rm Compare_ADD-H_1EJG_and_1CBN_PDB1CBN.pdb
 rm Compare_ADD-H_1EJG_and_1CBN_PDB1EJG.pdb
 
+# remove intermediate files later
+rm ADD-H_Bacteriorhodopsin_1AP9.html
+rm ADD-H_Bacteriorhodopsin_1AP9.log
+rm ADD-H_Bacteriorhodopsin_1AP9.arc
+rm ADD-H_Bacteriorhodopsin_1AP9.pdb
+rm ADD-H_Bacteriorhodopsin_1AP9.txt
+rm ADD-H_Bacteriorhodopsin_1AT9.log
+rm ADD-H_Bacteriorhodopsin_1AT9.arc
+rm PDB1CBN.log
+rm PDB1CBN.pdb
+rm PDB1CBN.arc
+rm PDB1EJG.log
+rm PDB1EJG.pdb
+rm PDB1EJG.arc
+
 mopac Locate_TS.mop
 rm Locate_TS.html
 rm Locate_TS.log
 rm Locate_TS.pdb
 rm Locate_TS.arc
 rm Locate_TS.txt
-rm "Locate_TS 30p0 first.mop"
-rm "Locate_TS 60p0 first.mop"
-rm "Locate_TS 120p0 first.mop"
-rm "Locate_TS 30p0 second.mop"
-rm "Locate_TS 60p0 second.mop"
-rm "Locate_TS 120p0 second.mop"
-rm "Locate_TS 30p0 average.mop"
-rm "Locate_TS 60p0 average.mop"
-rm "Locate_TS 120p0 average.mop"
+rm "Locate_TS bias=120.0 average.mop"
+rm "Locate_TS bias=120.0 first.mop"
+rm "Locate_TS bias=120.0 second.mop"
+rm "Locate_TS bias=30.0 average.mop"
+rm "Locate_TS bias=30.0 first.mop"
+rm "Locate_TS bias=30.0 second.mop"
+rm "Locate_TS bias=60.0 average.mop"
+rm "Locate_TS bias=60.0 first.mop"
+rm "Locate_TS bias=60.0 second.mop"
 rm "Locate_TS Loop1.mop"
 rm "Locate_TS Loop2.mop"
 rm "Locate_TS Loop3.mop"
 rm "Locate_TS Loop4.mop"
 rm "Locate_TS Loop5.mop"
 
+#delay removal of intermediate files
 mopac IONIZE.mop
-rm IONIZE.html
-rm IONIZE.pdb
-rm IONIZE.txt
 
 mopac SALT.mop
 rm SALT.arc
@@ -157,57 +161,18 @@ rm SALT_2.arc
 mopac SITE_Individual_residues.mop
 rm SITE_Individual_residues.arc
 
-mopac ag20.mop
-rm ag20.arc
+#delayed removal
+rm IONIZE.arc
+rm IONIZE.html
+rm IONIZE.pdb
+rm IONIZE.txt
 
-mopac ag20_cis_active.mop
+mopac erratic1.mop
+rm erratic1.arc
 
-mopac benzene.mop
+mopac erratic2.mop
+rm erratic2.arc
 
-mopac co_cas.mop
+mopac erratic3.mop
+rm erratic3.arc
 
-mopac co_cis.mop
-
-mopac co_cis_2.mop
-
-mopac co_cis_PM7.mop
-rm co_cis_PM7.arc
-
-mopac co_cis_active.mop
-
-mopac co_cis_solv.mop
-
-mopac co_cis_tdip.mop
-rm co_cis_tdip.tdip
-
-mopac co_cis_trip.mop
-
-mopac co_extern.mop
-
-mopac co_fail.mop
-
-mopac co_field.mop
-
-mopac co_mrci.mop
-
-mopac co_mrci_maxci.mop
-
-mopac co_mrci_solv.mop
-
-mopac co_pm7.mop
-rm co_pm7.arc
-
-mopac co_pm7_solv.mop
-rm co_pm7_solv.arc
-
-mopac co_print.mop
-
-mopac no_cis_quar.mop
-
-mopac no_mrci.mop
-
-mopac noparam.mop
-
-mopac poly_c8.mop
-
-mopac poly_c8_mr.mop

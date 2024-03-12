@@ -32,8 +32,8 @@
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
       integer, parameter :: from_data_set = 7
-      integer :: i, j, io_stat, l, nlines, iargc
-      logical :: exists, arc_file, comments = .true.
+      integer :: i, j, io_stat, l, nlines
+      logical :: exists, arc_file, comments = .true., double_plus
       character :: line1*3000, num1*1, num2*1
       character, allocatable :: tmp_comments(:)*120
       double precision, external :: reada
@@ -53,9 +53,17 @@
         natoms = 1
       else
         if (run /= 2 .or.jobnam ==" ") then
+#ifdef MOPAC_F2003
+          i = command_argument_count()
+#else
           i = iargc()
+#endif
           if (i >= run) then
+#ifdef MOPAC_F2003
+            call get_command_argument (run, jobnam)
+#else
             call getarg (run, jobnam)
+#endif
             natoms = 1
             do i = len_trim(jobnam), 1, -1   !  Remove any unprintable characters from the end of the file-name
               if (ichar(jobnam(i:i)) > 39 .and. ichar(jobnam(i:i)) < 126 .or. jobnam(i:i) =="'") exit
@@ -220,22 +228,29 @@
           if (j > 0) exit
         end if
         if (line(1:1) /= '*') then
-            line1 = trim(line)
-            i = 0
-            do j = 1, len_trim(line1)
-              if (ichar(line1(j:j)) == 9) then
-      !
-      ! convert tab to space(s).  Align with 8 character boundary
-      !
-                i = i + 1
-                l = mod(i,8)
-                line(i:) = " "
-                if (l /= 0) i = i + 8 - l
-              else
-                i = i + 1
-                line(i:i) = line1(j:j)
-              end if
-            end do
+           line1 = trim(line)    
+          i = 0
+          do j = 1, len_trim(line1)
+            if (ichar(line1(j:j)) == 9) then
+    !
+    ! convert tab to space(s).  Align with 8 character boundary
+    !
+              i = i + 1
+              l = mod(i,8)
+              line(i:) = " "
+              if (l /= 0) i = i + 8 - l                    
+            else
+              i = i + 1
+              line(i:i) = line1(j:j)
+            end if
+          end do
+!
+! Replace ASCII 194 and 160 with spaces
+!
+          i = len_trim(line)
+          do j = 1, i
+            if (ichar(line(j:j)) == 194 .or. ichar(line(j:j)) == 160) line(j:j) = " "
+          end do
           write (input, '(A)', iostat=io_stat) trim(line)
           if (io_stat /= 0) then
             write (line, '(a)') ' The run-time temporary file "'//trim(jobnam)//'.temp" cannot be written to.'
@@ -280,6 +295,7 @@
       if (i /= 0) keywrd(i:i+6) = "GEO_DAT"
       i = index(keywrd, "GEO-REF")
       if (i /= 0) keywrd(i:i+6) = "GEO_REF"
+      double_plus = (index(keywrd, " ++ ") /= 0)
       if (index(keywrd, " GEO_DAT") + index(keywrd, " SETUP")/= 0) then
         nlines = nlines + 3
       else if (.not. is_PARAM .and. nlines < 4) then
@@ -287,8 +303,8 @@
         if (.not. exists) open(unit=iw, file=trim(jobnam)//'.out')
         if (keywrd /= " ") then
           if (index(keywrd, "++") == 0) &
-          write(iw,'(3/10x,a,/)')" Data set does not contain "//&
-            "any atoms and neither GEO_DAT or SETUP is  present on the keyword line"
+          write(iw,'(3/10x,a,/)') &
+            " Data set does not contain any atoms and neither GEO_DAT or SETUP is present on the keyword line"
         end if
       end if
       keywrd = "  "
@@ -367,10 +383,14 @@
       line = ' '
       write (input, '(A241)') line
       rewind input
-1000  if (nlines < 3 .and. .not. is_PARAM) then
+1000  if (nlines < 3 .and. .not. is_PARAM .and. line1 == " " .and. .not. double_plus) then
         inquire(unit=output, opened=exists)
         if (.not. exists) open(unit=output, file=trim(jobnam)//'.out')
+#ifdef MOPAC_F2003
+        call get_command_argument (run, jobnam)
+#else
         call getarg (run, jobnam)
+#endif
         write (0, '(A)') ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY'
         call mopend ( ' INPUT FILE "'//trim(jobnam)//'" MISSING OR EMPTY')
         return

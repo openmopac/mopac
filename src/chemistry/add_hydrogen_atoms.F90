@@ -245,6 +245,8 @@
           j = 21
         end if
       end if
+      if (j == 11 .and. txtatm(icc)(14:15) == "ND") j = 21 ! force planarity of primary amide in Asn
+      if (j == 15 .and. txtatm(icc)(14:15) == "NE") j = 21 ! force planarity of primary amide in Gln
       if (j == 17 .and. (txtatm(icc)(14:15) == "ND" .or. txtatm(icc)(14:15) == "NE")) j = 21  ! His' imidazole N are too hard - solve directly
       if (nat(icc) == 8 .and. nbonds(icc) == 1) then    ! Carboxylic acid
     cooh: do i = 1, nbonds(icc)
@@ -381,6 +383,7 @@
             call add_a_sp3_hydrogen_atom(icc, nb_icc, nc_icc, nd_icc, bond_length, metals, nmetals)
           else
             call add_a_generic_hydrogen_atom(icc, nb_icc, nc_icc, bond_length, angle, dihedral, metals, nmetals)
+            if (moperr) return
 !
 !  Check to see if the system is water
 !
@@ -440,7 +443,6 @@
 ! At this point it's necessary to re-calculate nbonds and ibonds
 !
     call set_up_dentate()
-    call geochk()
     if (index(keywrd, "SITE") /= 0) call geochk()
     call l_control("NOSITE", len("NOSITE"), 1)
     call reset_breaks()
@@ -1390,6 +1392,22 @@
                 hybrid(icc) = 1
                 return
               end if
+              ! primary amide group, -C(=O)-NH2
+              if (nbonds(ii) == 3) then
+                l_tmp = .false.
+                do i = 1,3
+                  if (nat(ibonds(i,ii)) == 8 .and. nbonds(ibonds(i,ii)) == 1) then
+                    l_tmp = .true.
+                    nc_icc = ibonds(i,ii)
+                  end if
+                end do
+                if (l_tmp) then
+                  angle = 120.d0
+                  internal_dihedral = 180.d0
+                  dihedral = 180.d0
+                  return
+                end if
+              end if
 !
 !  For Arg, make one -N -NH2, then decide on the other later on.
 !
@@ -2060,8 +2078,9 @@
 !  Add a single hydrogen atom to a heavy atom.
 !  (This subroutine is generic, and is derived from subroutine geout)
 !
-    use common_arrays_C, only : coord, nbonds, ibonds, nat
-    use molkst_C, only : numat, id, temp_1, temp_2, temp_3
+    use common_arrays_C, only : coord, nbonds, ibonds, nat, txtatm
+    use molkst_C, only : numat, id, temp_1, temp_2, temp_3, line
+    use chanel_C, only: iw
     implicit none
     double precision, intent (in) :: bond_length, angle, dihedral
     integer, intent (in) :: na, nb, nc, nmetals, metals(nmetals)
@@ -2084,6 +2103,16 @@
         zb = coord(3,nb) - coord(3,na)
       end if
       rbc = xb*xb + yb*yb + zb*zb
+      if (rbc < 1.d-4) then
+        write(line,'(a, i6, a, i6, a)')"Atoms",na, " and", nb, " have the same coordinates."
+        call mopend(trim(line))
+        write(iw,'(/10x, a, i6, a, a, 3f10.3)') &
+          "Atom No.:", na, "  Label: """//trim(txtatm(na))//"""", " Coordinates:", coord(:,na)
+        write(iw,'(10x, a, i6, a, a, 3f10.3)') &
+          "Atom No.:", nb, "  Label: """//trim(txtatm(nb))//"""", " Coordinates:", coord(:,nb)
+        write(iw,'(/10x,a)')"Correct error before continuing."
+        return
+      end if
       rbc = 1.0D00/sqrt(rbc)
       if (nc /= 0) then
         if (id > 0) then

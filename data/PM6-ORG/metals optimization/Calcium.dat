@@ -1,0 +1,6 @@
+*
+*  Optimize all parameters for one element, using the method PM6-ORG 
+*  
+set="Calcium list of files.txt" ref="Normal metal compounds";"Calcium distance" PM6-org cycles=100   nolim  noscale 
+ (Ca)(All)      
+end

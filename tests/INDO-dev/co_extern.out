@@ -1,0 +1,347 @@
+ *******************************************************************************
+ **                                                                           **
+ **                              MOPAC v22.0.6                                **
+ **                                                                           **
+ *******************************************************************************
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
+ *******************************************************************************
+
+                              INDO CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE:                                Wed Jul 12 16:25:34 2023  *
+ *  INDO       - The INDO Hamiltonian to be used
+ *  CIS        - C.I. USES 1 ELECTRON EXCITATIONS ONLY
+ *
+ *  EXTERNAL=n -  DEFAULT PARAMETERS RESET USING DATA IN FILES: 
+ *                 "param.txt"
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+INDO CIS EXTERNAL=param.txt
+ Carbon Monoxide
+ INDO
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+
+     1       C          0.00000000      0.00000000      0.00000000   
+     2       O          1.17300000      0.00000000      0.00000000   
+
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         C          0.0000      0.0000      0.0000
+     2         O          1.1730      0.0000      0.0000
+
+ Parameters read in from file: "param.txt"
+
+
+         Parameters read in
+
+      Parameter Type  Element    Parameter
+            FG1           C     -18.42000000
+            FG3           C      -9.70000000
+            FG1           O     -31.49000000
+            FG3           O     -14.88000000
+
+           Empirical Formula: C O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 5
+
+ WARNING: INDO only performs single-point calculations
+
+ Summary of symmetry occupancy in each shell:
+
+ SHELL     
+    1    5
+    v    3
+ TOTAL   8
+
+
+                     MOLECULAR ORBITALS 
+
+
+
+
+
+
+    ROOT NO.    1           2           3           4           5           6
+
+           -42.05652   -18.27644   -13.77940   -13.77940   -13.49534     1.09603
+  
+  
+  S  C   1   0.44267    -0.58677    -0.00000     0.00000    -0.60295    -0.00000
+ PX  C   1   0.36283     0.01825     0.00000    -0.00000     0.61061     0.00000
+ PY  C   1   0.00000    -0.00000     0.48812    -0.00001    -0.00000     0.87278
+ PZ  C   1   0.00000    -0.00000     0.00001     0.48812    -0.00000     0.00000
+  
+  S  O   2   0.77781     0.52976    -0.00000     0.00000    -0.10914     0.00000
+ PX  O   2  -0.25962     0.61215    -0.00000     0.00000    -0.50170     0.00000
+ PY  O   2  -0.00000    -0.00000     0.87278    -0.00002    -0.00000    -0.48812
+ PZ  O   2   0.00000     0.00000     0.00002     0.87278     0.00000    -0.00000
+
+
+
+
+    ROOT NO.    7           8
+
+             1.09603    11.49950
+  
+  
+  S  C   1  -0.00000     0.31016
+ PX  C   1   0.00000     0.70369
+ PY  C   1  -0.00000    -0.00000
+ PZ  C   1   0.87278     0.00000
+  
+  S  O   2  -0.00000    -0.32009
+ PX  O   2  -0.00000     0.55333
+ PY  O   2  -0.00000     0.00000
+ PZ  O   2  -0.48812    -0.00000
+
+
+ Reference determinate nber   1 is ALPHA 1 -   5
+ SINGLE excitations FROM orbs   1 to   5 INTO orbs   6 to   8
+
+
+ CI excitations=   16:        = 16
+ The lowest   16 spin-adapted configurations of multiplicity=  1
+     sym   eV   cm**-1 -dets- dipole oscilator X FRAG ....Excitations named from first reference determinate
+                       tot  #  Debye  strength
+
+   1      0.000      0.  1  1  0.4656 0.000000 0  0 (    )->(       )
+   2      6.887  55544.  1  1  1.8085 0.063447 1  1 (   5)->(   6   )
+   3      6.887  55544.  1  1  1.8085 0.063447 1  1 (   5)->(   7   )
+   4      6.939  55969.  1  1  2.4836 0.000000 1  1 (   4)->(   6   )
+   5      6.939  55969.  1  1  2.4836 0.000000 1  1 (   3)->(   7   )
+   6     10.546  85063.  1  1  2.4836 0.460837 1  1 (   4)->(   7   )
+   7     10.546  85063.  1  1  2.4836 0.460837 1  1 (   3)->(   6   )
+   8     12.502 100837.  1  1  2.8818 0.234675 1  1 (   2)->(   6   )
+   9     12.502 100837.  1  1  2.8818 0.234675 1  1 (   2)->(   7   )
+  10     17.441 140669.  1  1  1.1095 0.001563 1  1 (   4)->(   8   )
+  11     17.441 140669.  1  1  1.1095 0.001563 1  1 (   3)->(   8   )
+  12     18.449 148799.  1  1  3.1826 0.421664 1  1 (   5)->(   8   )
+  13     23.038 185817.  1  1  1.5078 0.006331 1  1 (   2)->(   8   )
+  14     36.386 293476.  1  1  2.0541 0.018656 1  1 (   1)->(   6   )
+  15     36.386 293476.  1  1  2.0541 0.018656 1  1 (   1)->(   7   )
+  16     49.741 401190.  1  1  0.6801 0.068688 1  1 (   1)->(   8   )
+
+ Depression of ground-state after CI=          0. cm**-1 Energy=  -611.4637871 eV
+ Dipole moment= -0.465634 -0.000000 -0.000000 tot=  0.465634 Debyes
+
+
+  CI trans.  energy frequency wavelength oscillator--------- polarization---------  dipole  ------ components-----
+ st.  symm.    eV      cm - 1       nm      strength       x          y         z       moment     x       y       z 
+
+   2      6.6907017    53964.    185.31  0.000000                                   2.483568   2.484   0.000  -0.000
+   3      6.8545370    55286.    180.88  0.053244   0.000000   1.000000   0.000012  1.449165  -1.449  -0.000   0.000
+   4      6.8545370    55286.    180.88  0.053244  -0.000000  -0.000012   1.000000  1.449165  -1.449  -0.000   0.000
+   5      7.1878187    57974.    172.49  0.000000                                   2.483568   2.484  -0.000  -0.000
+   6      7.1878187    57974.    172.49  0.000000                                   2.483568   2.484   0.000  -0.000
+   7     12.0854283    97476.    102.59  0.519006  -1.000000  -0.000000  -0.000000  1.950371   1.950  -0.000  -0.000
+   8     12.5148416   100939.     99.07  0.252756   0.000000  -1.000000   0.000012  2.479747   2.480  -0.000   0.000
+   9     12.5148416   100939.     99.07  0.252756  -0.000000   0.000012   1.000000  2.479747   2.480  -0.000  -0.000
+  10     17.4176900   140484.     71.18  0.001569   0.000000   0.000002  -1.000000  1.111018   1.111  -0.000   0.000
+  11     17.4176900   140484.     71.18  0.001569   0.000000  -1.000000  -0.000002  1.111018   1.111  -0.000   0.000
+  12     19.1682495   154603.     64.68  0.970008  -1.000000   0.000000  -0.000000  3.945025  -3.945   0.000   0.000
+  13     23.5093054   189616.     52.74  0.276836  -1.000000   0.000000  -0.000000  2.953464   2.953  -0.000  -0.000
+  14     36.4286557   293818.     34.03  0.019374  -0.000000  -1.000000   0.000158  2.095345   2.095   0.000   0.000
+  15     36.4286557   293818.     34.03  0.019374   0.000000  -0.000158  -1.000000  2.095345   2.095  -0.000   0.000
+  16     50.3701936   406264.     24.61  0.331342  -1.000000   0.000000   0.000000  0.530011   0.530  -0.000  -0.000
+
+ Polarizability (au  ) xx=   15.16 xy=    0.00 yy=    6.15 xz=   -0.00 yz=   -0.00 zz=    6.15
+ Polarizability (A**3) xx=    2.25 xy=    0.00 yy=    0.91 xz=   -0.00 yz=   -0.00 zz=    0.91
+
+
+ Major CI contributions to CI states
+
+State    1  0.0000     CI coeff  CI percent
+    Config       1   1.00000000  1.00000000
+ Total coeff printed             1.00000000
+  
+State    2  6.6907     CI coeff  CI percent
+    Config       4  -0.70710678  0.50000000
+    Config       5   0.70710678  0.50000000
+ Total coeff printed             1.00000000
+  
+State    3  6.8545     CI coeff  CI percent
+    Config       2  -0.99833746  0.99667769
+    Config       8   0.05236036  0.00274161
+ Total coeff printed             0.99941930
+  
+State    4  6.8545     CI coeff  CI percent
+    Config       3  -0.99833746  0.99667769
+    Config       9   0.05236036  0.00274161
+ Total coeff printed             0.99941930
+  
+State    5  7.1878     CI coeff  CI percent
+    Config       4   0.38433435  0.14771290
+    Config       5   0.38433435  0.14771290
+    Config       6  -0.59353779  0.35228710
+    Config       7   0.59353779  0.35228710
+ Total coeff printed             1.00000000
+  
+State    6  7.1878     CI coeff  CI percent
+    Config       4   0.59353779  0.35228710
+    Config       5   0.59353779  0.35228710
+    Config       6   0.38433435  0.14771290
+    Config       7  -0.38433435  0.14771290
+ Total coeff printed             1.00000000
+  
+State    7 12.0854     CI coeff  CI percent
+    Config       6   0.64495792  0.41597071
+    Config       7   0.64495792  0.41597071
+    Config      12  -0.37910537  0.14372088
+    Config      13   0.13603045  0.01850428
+    Config      16  -0.07637672  0.00583340
+ Total coeff printed             1.00000000
+  
+State    8 12.5148     CI coeff  CI percent
+    Config       2   0.05259517  0.00276625
+    Config       8   0.99856095  0.99712397
+ Total coeff printed             0.99989022
+  
+State    9 12.5148     CI coeff  CI percent
+    Config       3  -0.05259517  0.00276625
+    Config       9  -0.99856095  0.99712397
+ Total coeff printed             0.99989022
+  
+State   10 17.4177     CI coeff  CI percent
+    Config      10   0.99938077  0.99876192
+ Total coeff printed             0.99876192
+  
+State   11 17.4177     CI coeff  CI percent
+    Config      11   0.99938077  0.99876192
+ Total coeff printed             0.99876192
+  
+State   12 19.1682     CI coeff  CI percent
+    Config       6   0.23057132  0.05316313
+    Config       7   0.23057132  0.05316313
+    Config      12   0.90009797  0.81017635
+    Config      13   0.27816724  0.07737702
+    Config      16  -0.07823276  0.00612036
+ Total coeff printed             1.00000000
+  
+State   13 23.5093     CI coeff  CI percent
+    Config       6   0.15536901  0.02413953
+    Config       7   0.15536901  0.02413953
+    Config      12   0.20601748  0.04244320
+    Config      13  -0.94935708  0.90127887
+    Config      16  -0.08943640  0.00799887
+ Total coeff printed             1.00000000
+  
+State   14 36.4287     CI coeff  CI percent
+    Config      14  -0.99905694  0.99811477
+ Total coeff printed             0.99811477
+  
+State   15 36.4287     CI coeff  CI percent
+    Config      15  -0.99905694  0.99811477
+ Total coeff printed             0.99811477
+  
+State   16 50.3702     CI coeff  CI percent
+    Config       6   0.08201599  0.00672662
+    Config       7   0.08201599  0.00672662
+    Config      12   0.06049434  0.00365956
+    Config      13  -0.05329005  0.00283983
+    Config      16   0.98997341  0.98004736
+ Total coeff printed             1.00000000
+  
+
+ -------------------------------------------------------------------------------
+ INDO CIS EXTERNAL=param.txt
+ Carbon Monoxide
+ INDO
+
+
+     NO PARAMETERS MARKED FOR OPTIMIZATION, SO 1SCF WAS USED  
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              INDO CALCULATION
+                                                       MOPAC v22.0.6 MacOS
+                                                       Wed Jul 12 16:25:34 2023
+
+
+          COSMO AREA              =         57.92 SQUARE ANGSTROMS
+          COSMO VOLUME            =         40.40 CUBIC ANGSTROMS
+
+          IONIZATION POTENTIAL    =         13.495342 EV
+          HOMO LUMO ENERGIES (EV) =        -13.495  1.096
+          NO. OF FILLED LEVELS    =          5
+          MOLECULAR WEIGHT        =         28.0104         POINT GROUP:  C*v 
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            O     2    C     1     1.17300
+            O     2    C     1     0.00000
+            C     1    O     2     0.00000
+
+
+          SCF CALCULATIONS        =          1
+
+          WALL-CLOCK TIME         =      0.047 SECONDS
+          COMPUTATION TIME        =      0.042 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+
+     1       C          0.00000000      0.00000000      0.00000000   
+     2       O          1.17300000      0.00000000      0.00000000   
+
+                             CARTESIAN COORDINATES
+
+   1    C        0.000000000     0.000000000     0.000000000
+   2    O        1.173000000     0.000000000     0.000000000
+
+
+           Empirical Formula: C O  =     2 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C*v 
+
+
+                  EIGENVALUES  
+ -42.05652 -18.27644 -13.77940 -13.77940 -13.49534   1.09603   1.09603  11.49950
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          C           0.228558        3.7714     1.80762     1.96383
+    2          O          -0.228558        6.2286     1.79506     4.43350
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -1.288     0.000     0.000     1.288
+ HYBRID         0.828    -0.000     0.000     0.828
+ SUM           -0.460    -0.000     0.000     0.460
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  C   1.80762   1.00993   0.47695   0.47695
+    2  O   1.79506   1.38739   1.52305   1.52305
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.08 SECONDS
+
+ == MOPAC DONE ==
