@@ -55,6 +55,8 @@
 !
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
+!
+      use mdi_implementation, only: mdi_listen
 #ifdef GPU
       Use iso_c_binding
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
@@ -430,7 +432,7 @@
 !
 ! Try listening from MDI
 !
-      call mdi_listen()
+      call mdi_listen(i)
 !
 !  If no SCF calculations are needed, output geometry and quit
 !
