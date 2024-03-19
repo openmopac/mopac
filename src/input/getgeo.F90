@@ -793,6 +793,7 @@
             k = k + lopt(j,i)
           end do
         end do
+        j = na(2)
 !
 !  Get rid of dummy atoms
 !
@@ -811,7 +812,7 @@
 !   If everything is marked for optimization then unconditionally mark the first
 !   three atoms for optimization
 !
-        if (k >= 3*numat - 6) lopt(:,:min(3, numat)) = 1
+        if (k >= 3*numat - 6 .and. j /= 0) lopt(:,:min(3, numat)) = 1
         natoms = numat
         if (saddle .or. (index(keywrd, " LOCATE-TS") /= 0)) then
           if (index(keywrd, " LOCATE-TS") == 0) lopt(:,:numat) = 1  ! In a saddle calculation, all parameters must be optimizable.
