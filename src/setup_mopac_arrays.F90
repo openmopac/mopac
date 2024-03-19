@@ -28,7 +28,7 @@
      & h, w, p, pa, pb, f, c, eigs, dxyz, grad, eigb, txtatm, fb, cb, &
      & wk, errfn, aicorr, nbonds, ibonds, na_store, q, nw, lopt, &
      & hesinv, gnext1, gmin1, ifact, i1fact, ptot2, geoa, l_atom, coorda, &
-       txtatm1, workmat1, workmat2, workmat3
+       txtatm1
 !
   USE maps_C, only : react
 !
@@ -143,16 +143,11 @@
           if (allocated(eigs))     deallocate(eigs)
           if (allocated(q))        deallocate(q)
           if (allocated(eigb))     deallocate(eigb)
-          if (allocated(workmat1)) deallocate(workmat1)
-          if (allocated(workmat2)) deallocate(workmat2)
-          if (allocated(workmat3)) deallocate(workmat3)
           allocate(h(mpack), p(mpack), pa(mpack), pb(mpack), stat=i)
           j = j + i
           allocate(pold(npulay*mpack),  pold2(npulay*mpack), f(mpack), stat=i)
           j = j + i
           allocate(c(norbs, norbs), eigs(norbs + 1), q(numat), stat=i)
-          j = j + i
-          allocate(workmat1(norbs, norbs), workmat2(norbs, norbs), workmat3(norbs, norbs), stat=i)
           j = j + i
           allocate(eigb(norbs + 1), pold3(max(mpack, 400)), stat=i)
           j = j + i
@@ -468,9 +463,6 @@
     if (allocated(cc0))        deallocate(cc0, stat = i)
     if (allocated(wk0))        deallocate(wk0, stat = i)
     if (allocated(q0))         deallocate(q0, stat = i)
-    if (allocated(workmat1))   deallocate(workmat1, stat = i)
-    if (allocated(workmat2))   deallocate(workmat2, stat = i)
-    if (allocated(workmat3))   deallocate(workmat3, stat = i)
     end if
   end subroutine setup_mopac_arrays
   subroutine memory_error(txt)
