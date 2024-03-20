@@ -344,7 +344,7 @@
               k = k + lopt(j,i)
             end do
           end do
-          j = na(2)
+          j = na(3)
           numat = 0
           do i = 1, natoms
             if (labels(i) /= 99) then

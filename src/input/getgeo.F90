@@ -793,7 +793,7 @@
             k = k + lopt(j,i)
           end do
         end do
-        j = na(2)
+        j = na(3)
 !
 !  Get rid of dummy atoms
 !
