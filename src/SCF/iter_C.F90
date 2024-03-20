@@ -22,6 +22,6 @@
 !
       double precision, dimension(:), allocatable :: h_ai, vecl_ai, h_bi, vecl_bi
       double precision, dimension(:,:), allocatable :: vec_ai, fock_ai, &
-       & p_ai, vec_bi, fock_bi, p_bi
+       & p_ai, vec_bi, fock_bi, p_bi, pulay_work1, pulay_work2, pulay_work3
 
       end module iter_C

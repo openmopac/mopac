@@ -338,6 +338,13 @@
           lopt(3,3) = 0
         end if
         if (index(keywrd, " XYZ") /= 0) then
+          k = 0
+          do i = 1, natoms
+            do j = 1, 3
+              k = k + lopt(j,i)
+            end do
+          end do
+          j = na(3)
           numat = 0
           do i = 1, natoms
             if (labels(i) /= 99) then
@@ -353,7 +360,7 @@
 !   If everything is marked for optimization then unconditionally mark the first
 !   three atoms for optimization
 !
-          if (k >= 3*numat - 6) lopt(:,:min(3, numat)) = 1
+          if (k >= 3*numat - 6 .and. j /= 0) lopt(:,:min(3, numat)) = 1
           natoms = numat
         end if
 

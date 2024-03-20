@@ -17,7 +17,7 @@
       subroutine pulay(f, p, n, fppf, fock, emat, lfock, nfock, msize, start, pl)
       use chanel_C, only : iw
       use molkst_C, only : numcal, keywrd, mpack, npulay
-      use Common_arrays_C, only : workmat1, workmat2, workmat3
+      use iter_C, only : pulay_work1, pulay_work2, pulay_work3
       implicit none
       integer  :: n
       integer , intent(inout) :: lfock
@@ -95,10 +95,10 @@
 !
 !      call mamult (p, f, fppf(lbase+1), n, 0.D0)
 !      call mamult (f, p, fppf(lbase+1), n, -1.D0)
-      call unpack_matrix(p, workmat1, n)
-      call unpack_matrix(f, workmat2, n)
-      call sym_commute(workmat1, workmat2, workmat3, n)
-      call pack_matrix(workmat3, fppf(lbase+1), n)
+      call unpack_matrix(p, pulay_work1, n)
+      call unpack_matrix(f, pulay_work2, n)
+      call sym_commute(pulay_work1, pulay_work2, pulay_work3, n)
+      call pack_matrix(pulay_work3, fppf(lbase+1), n)
 !
 !   FPPF NOW CONTAINS THE RESULT OF FP - PF.
 !

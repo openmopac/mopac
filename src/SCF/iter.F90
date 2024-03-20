@@ -19,7 +19,7 @@
        &  c, nat, nfirst, nlast, eigb, pdiag, f, w, wk, fb
       use iter_C, only : pold, pold2, pbold, pbold2, &
       & pold3, pbold3, vec_ai, vec_bi, fock_ai, fock_bi, p_ai, &
-      p_bi, h_ai, h_bi, vecl_ai, vecl_bi
+      p_bi, h_ai, h_bi, vecl_ai, vecl_bi, pulay_work1, pulay_work2, pulay_work3
       USE parameters_C, only :
       USE funcon_C, only : fpc_9
       USE maps_C, ONLY: latom
@@ -812,6 +812,14 @@
 !                                                                      *
 !***********************************************************************
            if (okpuly .and. makea .and. iredy>1) then
+            if (.not. Allocated (pulay_work1)) then
+              allocate (pulay_work1(norbs, norbs), pulay_work2(norbs, norbs), &
+              & pulay_work3(norbs, norbs), stat=i)
+              if (i /= 0) then
+                call memory_error("Pulay converger in Iter")
+                return
+              end if
+            end if
 #ifdef GPU
               if (lgpu) then
                  call pulay_for_gpu (f, pa, norbs, pold, pold2, pold3, &
@@ -925,6 +933,14 @@
 !                                                                      *
 !***********************************************************************
             if (okpuly .and. makeb .and. iredy>1) then
+              if (.not. Allocated (pulay_work1)) then
+                allocate (pulay_work1(norbs, norbs), pulay_work2(norbs, norbs), &
+                & pulay_work3(norbs, norbs), stat=i)
+                if (i /= 0) then
+                  call memory_error("Pulay converger in Iter")
+                  return
+                end if
+              end if
 #ifdef GPU
               if (lgpu) then
                  call pulay_for_gpu (fb, pb, norbs, pbold, pbold2, pbold3, &
@@ -1095,7 +1111,7 @@
 !  become corrupt if INTERP is called.
 !
       use iter_C, only : vec_ai, vec_bi, fock_ai, fock_bi, p_ai, &
-      p_bi, h_ai, h_bi, vecl_ai, vecl_bi
+      p_bi, h_ai, h_bi, vecl_ai, vecl_bi, pulay_work1, pulay_work2, pulay_work3
       implicit none
         if (allocated(vec_ai)) deallocate(vec_ai)
         if (allocated(vec_bi)) deallocate(vec_bi)
@@ -1107,6 +1123,9 @@
         if (allocated(h_bi)) deallocate(h_bi)
         if (allocated(vecl_ai)) deallocate(vecl_ai)
         if (allocated(vecl_bi)) deallocate(vecl_bi)
+        if (allocated(pulay_work1)) deallocate(pulay_work1)
+        if (allocated(pulay_work2)) deallocate(pulay_work2)
+        if (allocated(pulay_work3)) deallocate(pulay_work3)
       end subroutine delete_iter_arrays
 
 
