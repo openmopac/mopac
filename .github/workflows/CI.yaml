@@ -35,7 +35,7 @@ jobs:
           lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v4
         with:
