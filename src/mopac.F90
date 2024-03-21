@@ -15,7 +15,8 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 program mopac
+  use molkst_C, only : gui
   implicit none
-  call mopac_gui_deactivate
+  gui = .false.
   call run_mopac
 end program mopac
