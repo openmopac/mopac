@@ -112,10 +112,11 @@ jobs:
           path: build/tests
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v4
         with:
           directory: build
           files: coverage.info
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   linux-build:
     # Ubuntu 22+ switched to newer glibc (2.34) that breaks the compatibility library right now
