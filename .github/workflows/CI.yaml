@@ -37,7 +37,7 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -61,7 +61,7 @@ jobs:
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-test-output
           path: build/tests
@@ -77,9 +77,9 @@ jobs:
           lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -106,7 +106,7 @@ jobs:
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-test-output
           path: build/tests
@@ -129,9 +129,9 @@ jobs:
           lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -142,7 +142,7 @@ jobs:
 
       - name: Cache Intel dependencies
         id: cache-intel
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /opt/intel
           key: cache-${{ env.IFORT_LINUX_URL }}-${{ env.MKL_LINUX_URL }}
@@ -156,7 +156,7 @@ jobs:
           sudo sh mkl_download.sh -a --silent --eula accept
 
       - name: Clone glibc compatibility library
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: wheybags/glibc_version_header
           path: glibc
@@ -189,7 +189,7 @@ jobs:
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: linux-test-output
           path: build/tests
@@ -208,7 +208,7 @@ jobs:
           sudo cpack -G TGZ
 
       - name: Save executable as an artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: linux-dist
           path: build/mopac-*-linux.*
@@ -224,9 +224,9 @@ jobs:
           system_profiler SPHardwareDataType | grep "Total Number of Cores" | awk '{print $5}' > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -242,7 +242,7 @@ jobs:
 
       - name: Cache Intel Fortran compiler
         id: cache-intel
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /opt/intel
           key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}
@@ -293,7 +293,7 @@ jobs:
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: mac-test-output
           path: build/tests
@@ -317,7 +317,7 @@ jobs:
           sudo cpack -G ZIP
 
       - name: Save executable as an artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: mac-dist
           path: build/mopac-*-mac.*
@@ -335,9 +335,9 @@ jobs:
           WMIC CPU Get NumberOfLogicalProcessors | head -2 | tail -1 > num_cores
           echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
@@ -348,7 +348,7 @@ jobs:
 
       - name: Cache Intel Fortran compiler
         id: cache-intel
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: C:\Program Files (x86)\Intel
           key: cache-${{ env.IFORT_WINDOWS_URL }}-${{ env.MKL_WINDOWS_URL }}
@@ -399,7 +399,7 @@ jobs:
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: windows-test-output
           path: build/tests
@@ -429,7 +429,7 @@ jobs:
           cpack -G ZIP
 
       - name: Save executable as an artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: windows-dist
           path: build/mopac-*-win.*
