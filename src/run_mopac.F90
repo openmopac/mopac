@@ -64,7 +64,7 @@
       implicit none
       integer ::  i, j, k, l
       double precision :: eat,  tim, store_fepsi
-      logical :: exists, opend, sparkles_available, l_OLDDEN
+      logical :: exists, opend, l_OLDDEN
       double precision, external :: C_triple_bond_C, reada, seconds
       character :: nokey(20)*10
 #ifdef _OPENMP
@@ -387,34 +387,12 @@
     !  if (method_PM8) method_PM7 = .true.
       if (index(keywrd_quoted,' EXTERNAL=') + index(keywrd,' EXTERNAL') /= 0) call datin (ir, iw)
       if (moperr) go to 100
-      sparkle = (index(keywrd, " SPARKL") /= 0)
 !
-!  Check to see if SPARKLES are needed and, if need, can they be used.
+!  Check to see if SPARKLES are used
 !
-      sparkles_available = .true.
-!
-! Are SPARKLES needed?
-!
-      do i = 1, natoms
-        if (labels(i) > 83) cycle
-        if  (zs(labels(i)) < 0.1d0) then
-!
-! Can SPARKLES be used?
-!
-          sparkles_available = (sparkles_available .and. (gss(labels(i)) > 0.1d0))
-          if (.not. sparkle) then
-            line = " "
-            do j = 1, 10
-              if (atom_names(labels(i))(j:j) /= " ") exit
-            end do
-            write (line, '(A,a)') ' Data are not available for ', atom_names(labels(i))(j:)//"."
-            if (index(keywrd, " 0SCF") == 0) then
-              if (sparkles_available) write(iw,*)" (Parameters are available if SPARKLE is used)"
-              call mopend(trim(line))
-              goto 100
-            end if
-          end if
-        end if
+      sparkle = .false.
+      do i = 1, numat
+        if  (nat(i) > 56 .and. nat(i) < 72 .and. zs(nat(i)) < 0.1d0) sparkle = .true.
       end do
       do i = 57,71
         if (zs(i) < 0.1d0) tore(i) = 3.d0

@@ -287,7 +287,7 @@ module molkst_C
      lxfac,             & !  TRUE if a diatomic is being used to define the values of XFAC and ALPB
      units,             & !  TRUE if units for input geometry are defined (Angstroms or A0), FALSE otherwise
      Angstroms,         & !  TRUE if units for input geometry must be in Angstroms, if FALSE then A0, see also units
-     Sparkle,           & !  TRUE if basis set is missing and sparkles are present (any of elements 58:70)
+     sparkle,           & !  TRUE if basis set is missing and sparkles are present (any of elements 58:70)
      keep_res,          & !  TRUE if the original residue names are to be used
      use_ref_geo,       & !  TRUE if keyword GEO_REF is used
      pdb_label,         & !  TRUE if label text is in PDB format
