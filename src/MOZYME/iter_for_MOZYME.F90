@@ -16,7 +16,7 @@
 
 subroutine iter_for_MOZYME (ee)
     use molkst_C, only: norbs, step_num, numcal, nscf, escf, &
-       & numat,  enuclr, atheat, emin, keywrd, moperr, line
+       & numat,  enuclr, atheat, emin, keywrd, moperr, line, mem_oldens
 !
     use chanel_C, only: iw, iend, end_fn
 !
@@ -135,7 +135,7 @@ subroutine iter_for_MOZYME (ee)
         return
       end if
       if (Index (keywrd, " OLDEN") /= 0) then
-          call pinout(0, (index(keywrd, "SILENT") == 0))
+          if (.not. mem_oldens) call pinout(0, (index(keywrd, "SILENT") == 0))
           if (add_niter /= 0)  call l_control("OLDEN", len_trim("OLDEN"), -1)
           if (add_niter /= 0)  call l_control("SILENT", len_trim("SILENT"), -1)
           if (moperr) return

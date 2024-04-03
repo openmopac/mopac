@@ -31,7 +31,8 @@
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
-        density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson
+        density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson, &
+        mem_oldens
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
@@ -213,6 +214,7 @@
       nelecs = 0
       pdb_label = .false.
       l_normal_html = .true.
+      mem_oldens = .false.
       state_Irred_Rep = " "
       if (job_no > 1) then
         i = index(keywrd, " BIGCYCL")

@@ -306,7 +306,8 @@ module molkst_C
      prt_velocity,      & ! TRUE if velocity vector in IRC/DRC to be printed
      dummy_present,     & !
      l_normal_html,     & ! TRUE if a normal HTML file is to be generated. After it's generated, set FALSE
-     is_PARAM=.false.     !  This will be set "TRUE" in a PARAM run
+     is_PARAM=.false.,  & !  This will be set "TRUE" in a PARAM run
+     mem_oldens=.false.   ! TRUE if old density matrix has been loaded from memory rather than disk
   equivalence  &
     (MM_corrections(1), N_3_present),    & ! TRUE if the system contains at least one N bonded to three ligands
                                            ! and at least two are not hydrogen atoms

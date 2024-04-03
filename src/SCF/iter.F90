@@ -28,7 +28,7 @@
     &    nclose, nopen, fract, numcal, mpack, iflepo, iscf, &
     &    enuclr, keywrd, gnorm, moperr, last, nscf, emin, &
          limscf, atheat, is_PARAM, id, line, lxfac, nalpha_open, &
-         nbeta_open, npulay, method_indo
+         nbeta_open, npulay, method_indo, mem_oldens
       USE reimers_C, only: dd, ff, tot, cc0, aa, dtmp, nb2
       use cosmo_C, only : useps
 #ifdef GPU
@@ -150,7 +150,7 @@
         iscf = 1
         trans = 0.200D0
         if (index(keywrd,' OLDENS') /= 0) then
-           call den_in_out(0)
+           if (.not. mem_oldens) call den_in_out(0)
            if (moperr) return
            if (uhf) then
             pold(1:mpack) = pa(1:mpack)
