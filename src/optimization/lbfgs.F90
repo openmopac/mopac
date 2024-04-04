@@ -411,7 +411,7 @@
     end subroutine lbfgs
     subroutine lbfsav (tt0, mode, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
    & dsave, nstep, escf)
-      use molkst_C, only: nscf, numat, norbs, nvar
+      use molkst_C, only: nscf, numat, norbs, nvar, use_disk
       use chanel_C, only: ires, iw, restart_fn
       use common_arrays_C, only: xparam, grad
       implicit none
@@ -426,6 +426,7 @@
       double precision, dimension (nwa), intent (inout) :: wa
       logical :: opend
       integer :: old_numat, old_norbs, i, j
+      if (.not. use_disk) return
       inquire (unit=ires, opened=opend)
       if (opend) then
         close (unit=ires, status="KEEP")
