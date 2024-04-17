@@ -33,13 +33,13 @@ module mopac_api
     integer :: nlattice = 0
     ! net charge
     integer :: charge = 0
-    ! excess spin, floor[(number of alpha electrons)/2 - (number of beta electrons)/2]
+    ! number of spin excitations, floor[(number of alpha electrons)/2 - (number of beta electrons)/2]
     integer :: spin = 0
     ! COSMO dielectric constant, must be 1.d0 (no dielectric medium) for nlattice > 0
     double precision :: epsilon = 1.d0
     ! external hydrostatic pressure (Gigapascals)
     double precision :: pressure = 0.d0
-    ! semiempirical model: PM7 = 0, PM6-D3H4 = 1, PM6-ORG = 2, PM6 = 3, AM1 = 4
+    ! semiempirical model: PM7 = 0, PM6-D3H4 = 1, PM6-ORG = 2, PM6 = 3, AM1 = 4, RM1 = 5
     integer :: model = 0
     ! atomic number of each atom [natom]
     integer, dimension (:), allocatable :: atom
@@ -58,12 +58,14 @@ module mopac_api
     ! heat of formation (kcal/mol)
     double precision :: heat
     ! atomic gradients of heat (kcal/mol/Angstrom) [3*natom]
-    double precision, dimension (:), allocatable :: grad
+    double precision, dimension (:), allocatable :: coord_deriv
+    ! lattice gradients of heat (kcal/mol/Angstrom) [3*nlattice]
+    double precision, dimension (:), allocatable :: lattice_deriv
     ! atomic partial charges [natom]
-    double precision, dimension (:), allocatable :: atom_charge
+    double precision, dimension (:), allocatable :: charge
     ! dipole moment vector (Debye)
     double precision, dimension (3) :: dipole
-    ! Voigt stress tensor (Gigapascals), only for nlattice = 3
+    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy) for nlattice == 3
     double precision, dimension (6) :: stress
     ! bond-order matrix in compressed sparse column (CSC) matrix format
     ! with insignificant bond orders (<0.001) truncated
@@ -131,8 +133,9 @@ module mopac_api
   end type
 
   interface
+
     ! MOPAC electronic ground state calculation
-    subroutine mopac_scf(system, state, properties)
+    module subroutine mopac_scf(system, state, properties)
     !dec$ attributes dllexport :: mopac_scf
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
@@ -140,7 +143,7 @@ module mopac_api
     end subroutine mopac_scf
   
     ! MOPAC geometry relaxation
-    subroutine mopac_relax(system, state, properties, relax_coord, relax_lattice)
+    module subroutine mopac_relax(system, state, properties, relax_coord, relax_lattice)
     !dec$ attributes dllexport :: mopac_relax
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
@@ -150,7 +153,7 @@ module mopac_api
     end subroutine mopac_relax
   
     ! MOPAC vibrational calculation
-    subroutine mopac_vibe(system, state, properties, frequency, displacement)
+    module subroutine mopac_vibe(system, state, properties, frequency, displacement)
     !dec$ attributes dllexport :: mopac_vibe
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
@@ -160,7 +163,7 @@ module mopac_api
     end subroutine mopac_vibe
   
     ! MOZYME electronic ground state calculation
-    subroutine mozyme_scf(system, state, properties)
+    module subroutine mozyme_scf(system, state, properties)
     !dec$ attributes dllexport :: mozyme_scf
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
@@ -168,7 +171,7 @@ module mopac_api
     end subroutine mozyme_scf
   
     ! MOZYME geometry relaxation
-    subroutine mozyme_relax(system, state, properties, relax_coord, relax_lattice)
+    module subroutine mozyme_relax(system, state, properties, relax_coord, relax_lattice)
     !dec$ attributes dllexport :: mozyme_relax
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
@@ -176,6 +179,7 @@ module mopac_api
       double precision, dimension(:), intent(out) :: relax_coord
       double precision, optional, dimension(:), intent(out) :: relax_lattice
     end subroutine mozyme_relax
+
   end interface
 
 end module mopac_api
