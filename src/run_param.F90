@@ -96,7 +96,6 @@
     tore = ios + iop + iod
     is_PARAM = .true.
     run = 1
-    call mopac_version(verson)
 #ifdef MOPAC_OS
     os = MOPAC_OS
 #endif

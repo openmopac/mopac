@@ -43,7 +43,7 @@ subroutine geochk ()
 !
     use molkst_C, only: natoms, numat, nelecs, keywrd, moperr, maxtxt, mozyme, &
       maxatoms, line, nalpha, nbeta, uhf, nclose, nopen, norbs, numcal, id, &
-      ncomments, numat_old, nvar, prt_coords, prt_topo, allkey, txtmax, pdb_label
+      ncomments, numat_old, nvar, prt_coords, prt_topo, allkey, txtmax, pdb_label, use_disk
     use chanel_C, only: iw, iarc, archive_fn, log, ilog
     use atomradii_C, only: atom_radius_covalent
     use parameters_C, only : ams, natorb, tore, main_group

@@ -25,7 +25,7 @@
       ams, npq, natorb
 !
 !
-      USE molkst_C, only : keywrd, keywrd_quoted, method_mndo, method_pm3, method_indo, &
+      USE molkst_C, only : keywrd, keywrd_quoted, method_mndo, method_am1, method_pm3, method_indo, &
       method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm6_org, method_pm8
 !
 !
@@ -123,7 +123,7 @@
         if (index(keywrd, " SPARK") /= 0 .or. method_pm3 .or. method_am1) then
           sparkle_min = 57
           sparkle_max = 71
-        else if (method_rm1)
+        else if (method_rm1) then
           sparkle_min = 0
           sparkle_max = 0
         else
