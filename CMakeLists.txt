@@ -30,6 +30,25 @@ endif()
 file(READ "CITATION.cff" CITATION)
 string(REGEX MATCH "[^-]version: ([0-9\.]*)" _ ${CITATION})
 
+# Code coverage option
+option(ENABLE_COVERAGE "Code coverage flag" OFF)
+
+# Set a safe default build type if there is no user input
+if(NOT CMAKE_BUILD_TYPE)
+  if (ENABLE_COVERAGE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
+  else()
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  endif()
+else()
+# otherwise, check conflict with ENABLE_COVERAGE
+  if(ENABLE_COVERAGE AND NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    message(FATAL_ERROR "Option ENABLE_COVERAGE requires CMAKE_BUILD_TYPE=Debug")
+  endif()
+endif()
+
+message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
+
 # Specify project name & programming languages
 project(openmopac VERSION ${CMAKE_MATCH_1} LANGUAGES Fortran)
 
@@ -60,25 +79,6 @@ if (STATIC_BUILD)
 else()
   message(STATUS "Shared library and dynamic executables")
 endif()
-
-# Code coverage option
-option(ENABLE_COVERAGE "Code coverage flag" OFF)
-
-# Set a safe default build type if there is no user input
-if(NOT CMAKE_BUILD_TYPE)
-  if (ENABLE_COVERAGE)
-    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
-  else()
-    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-  endif()
-else()
-# otherwise, check conflict with ENABLE_COVERAGE
-  if(ENABLE_COVERAGE AND NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-    message(FATAL_ERROR "Option ENABLE_COVERAGE requires CMAKE_BUILD_TYPE=Debug")
-  endif()
-endif()
-
-message(STATUS "Build type is ${CMAKE_BUILD_TYPE}")
 
 # location for CMake modules
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
