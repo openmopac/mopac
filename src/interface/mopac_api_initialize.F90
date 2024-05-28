@@ -23,7 +23,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     labels, & ! atomic numbers of real atoms, labels for dummy atoms (Tv = 107)
     atmass, & ! atomic masses of atoms
     xparam, & ! values of coordinates undergoing optimization
-    coord, & ! Cartesian coordinates of atoms
+    geo, & ! raw coordinates of atoms
     lopt, & ! optimization flags for Cartesian coordinates of atoms
     na, nb, nc, & ! internal coordinate connectivity information
     breaks, chains, cell_ijk, nw, nfirst, nlast
@@ -91,7 +91,7 @@ contains
     ! initialize CODATA fundamental constants
     fpc(:) = fpcref(1,:)
     ! assemble virtual keyword line
-    keywrd = trim(keywrd) // " LET ALLBOND"
+    keywrd = trim(keywrd) // " LET NOSYM"
     write(num2str,'(i6)') system%charge
     keywrd = trim(keywrd) // " CHARGE=" // adjustl(num2str)
     if (system%pressure /= 0.d0) then
@@ -160,11 +160,11 @@ contains
     labels(:system%natom) = system%atom(:)
     atmass(:natoms) = ams(labels(:))
     xparam(:3*system%natom) = system%coord(:)
-    coord(:,:system%natom) = reshape(system%coord,[3, system%natom])
+    geo(:,:system%natom) = reshape(system%coord,[3, system%natom])
     if (id > 0) then
       labels(system%natom+1:system%natom+id) = 107
       xparam(3*system%natom+1:3*system%natom+3*id) = system%lattice(:)
-      coord(:,system%natom+1:system%natom+id) = reshape(system%coord,[3, id])
+      geo(:,system%natom+1:system%natom+id) = reshape(system%coord,[3, id])
     end if
     ! update MOPAC state variables that do not reset
     numcal = numcal + 1
@@ -270,6 +270,8 @@ contains
     atheat = atheat + C_triple_bond_C()
     ! setup MOZYME calculations
     if (mozyme) call set_up_MOZYME_arrays()
+    ! successful setup
+    status = 0
   end subroutine mopac_initialize
 
 end submodule mopac_api_initialize
