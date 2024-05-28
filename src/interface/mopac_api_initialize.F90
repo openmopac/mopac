@@ -41,6 +41,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     numat, & ! number of real atoms
     mozyme, & ! logical flag for MOZYME calculations
     methods, methods_keys, & ! logical flags and names of semiempirical models
+    l_feather, & ! smooth transition from NDDO to point-charge
     method_am1, method_pm3, method_rm1, & ! logical flag aliases for specific models
     id, & ! number of translation/lattice vectors
     nvar, & ! number of coordinates to be optimized
@@ -145,6 +146,8 @@ contains
     end select
     methods(i) = .true.
     keywrd = trim(keywrd) // methods_keys(i)
+    ! l_feather logic
+    l_feather = (methods(14) .or. methods(18) .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
     ! check for use of COSMO model
     if (system%epsilon /= 1.d0) then
       iseps = .true.
