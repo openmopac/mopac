@@ -48,6 +48,7 @@ contains
     type(mopac_state), intent(in) :: state
     integer, intent(out) :: status
 
+    status = 0
     if(state%save_state) then
       ! TO DO: compatibility tests
       keywrd = trim(keywrd) // " OLDENS"
@@ -121,6 +122,7 @@ contains
     type(mozyme_state), intent(in) :: state
     integer, intent(out) :: status
 
+    status = 0
     if(state%save_state) then
       ! TO DO: compatibility tests
       keywrd = trim(keywrd) // " OLDENS"

@@ -16,7 +16,7 @@
 
 submodule (mopac_api) mopac_api_operations
   use Common_arrays_C, only: xparam, grad, lopt
-  use molkst_C, only: keywrd, escf, nvar
+  use molkst_C, only: keywrd, escf, nvar, moperr
   use to_screen_C, only : freq, cnorml
   implicit none
 
@@ -69,7 +69,7 @@ contains
       type(mopac_properties), intent(out) :: properties
       integer :: status
 
-      keywrd = " 1SCF PULAY"
+      keywrd = " 1SCF PULAY BONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
@@ -101,7 +101,7 @@ contains
       double precision, optional, dimension(:), intent(out) :: relax_lattice
       integer :: status
 
-      keywrd = " LBFGS PULAY"
+      keywrd = " LBFGS PULAY BONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
@@ -149,7 +149,7 @@ contains
       double precision, optional, dimension(:,:), intent(out) :: displacement
       integer :: status
 
-      keywrd = " FORCE NOREOR PULAY"
+      keywrd = " FORCE NOREOR PULAY BONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
@@ -185,7 +185,7 @@ contains
       type(mopac_properties), intent(out) :: properties
       integer :: status
 
-      keywrd = " MOZYME 1SCF"
+      keywrd = " MOZYME 1SCF ALLBONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
@@ -217,7 +217,7 @@ contains
       double precision, optional, dimension(:), intent(out) :: relax_lattice
       integer :: status
 
-      keywrd = " MOZYME LBFGS"
+      keywrd = " MOZYME LBFGS ALLBONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
