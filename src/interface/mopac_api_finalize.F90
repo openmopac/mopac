@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api:mopac_api_operations) mopac_api_finalize
+  use chanel_C, only : iw ! file handle for main output file
   use Common_arrays_C, only : grad, & ! gradients of heat
     p, & ! total density matrix
     q, & ! partial charges
@@ -41,6 +42,8 @@ contains
     integer :: i, j, k, kk, kl, ku, io, jo
     double precision :: valenc, sum
 
+    ! close dummy output file to free up /dev/null
+    close(iw)
     ! deallocate any prior arrays
     if (allocated(properties%coord_deriv)) deallocate(properties%coord_deriv)
     if (allocated(properties%lattice_deriv)) deallocate(properties%lattice_deriv)

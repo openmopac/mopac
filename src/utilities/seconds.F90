@@ -125,6 +125,7 @@
       seconds = dble(wall_clock_1 - wall_clock_0) + shut
 
       if (is_PARAM) return
+      if (.not. use_disk) return
  11   endfile (iw, iostat = i99)
       l = 0
       if (i99 /= 0) then
