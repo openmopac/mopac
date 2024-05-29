@@ -16,7 +16,6 @@
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
 module mopac_api
-!dec$ attributes dllexport :: mopac_system, mopac_properties, mopac_state, mozyme_state
   implicit none
 
   private
