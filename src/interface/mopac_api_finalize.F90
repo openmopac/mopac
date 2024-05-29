@@ -69,7 +69,7 @@ contains
     allocate(properties%bond_index(numat+1))
     if (mozyme) then
       ! 1st pass to populate bond_index
-      properties%bond_index(i) = 1
+      properties%bond_index(1) = 1
       do i = 1, numat
         io = iorbs(i)
         properties%bond_index(i+1) = properties%bond_index(i)
@@ -151,7 +151,7 @@ contains
     else
       call bonds()
       ! 1st pass to populate bond_index
-      properties%bond_index(i) = 1
+      properties%bond_index(1) = 1
       do i = 1, numat
         properties%bond_index(i+1) = properties%bond_index(i)
         ku = i*(i-1)/2 + 1
