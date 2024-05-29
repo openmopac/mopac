@@ -146,7 +146,7 @@ contains
     end select
     methods(i) = .true.
     keywrd = trim(keywrd) // methods_keys(i)
-    ! l_feather logic
+    ! feathered interactions for PM6-ORG and PM7, or for MOZYME calculations of PM6-based models
     l_feather = (methods(14) .or. methods(18) .or. index(keywrd, " MOZ") /= 0 .and. (index(keywrd, " PM6") /= 0))
     ! check for use of COSMO model
     if (system%epsilon /= 1.d0) then
