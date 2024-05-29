@@ -24,6 +24,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     atmass, & ! atomic masses of atoms
     xparam, & ! values of coordinates undergoing optimization
     geo, & ! raw coordinates of atoms
+    loc, & ! indices of atoms and coordinates marked for optimization
     lopt, & ! optimization flags for Cartesian coordinates of atoms
     na, nb, nc, & ! internal coordinate connectivity information
     breaks, chains, cell_ijk, nw, nfirst, nlast
@@ -164,6 +165,10 @@ contains
     atmass(:natoms) = ams(labels(:))
     xparam(:3*system%natom) = system%coord(:)
     geo(:,:system%natom) = reshape(system%coord,[3, system%natom])
+    do i=1, nvar
+      loc(1,i) = 1 + (i-1)/3
+      loc(2,i) = 1 + mod(i-1,3)
+    end do
     if (id > 0) then
       labels(system%natom+1:system%natom+id) = 107
       xparam(3*system%natom+1:3*system%natom+3*id) = system%lattice(:)
