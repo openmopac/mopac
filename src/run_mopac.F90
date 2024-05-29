@@ -394,8 +394,10 @@
 !
       sparkle = .false.
       do i = 1, numat
-        if  (nat(i) > 56 .and. nat(i) < 72 .and. zs(nat(i)) < 0.1d0) sparkle = .true.
+write(*,*) "sp", i, labels(i), zs(labels(i))
+        if  (labels(i) > 56 .and. labels(i) < 72 .and. zs(labels(i)) < 0.1d0) sparkle = .true.
       end do
+write(*,*) "sparkle", sparkle
       do i = 57,71
         if (zs(i) < 0.1d0) tore(i) = 3.d0
       end do

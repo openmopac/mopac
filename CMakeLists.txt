@@ -106,11 +106,14 @@ set_target_properties(mopac-core PROPERTIES OUTPUT_NAME "mopac")
 add_executable(mopac)
 add_executable(mopac-param)
 add_executable(mopac-makpol)
+add_executable(mopac-test)
 target_link_libraries(mopac mopac-core)
 target_link_libraries(mopac-param mopac-core)
+target_link_libraries(mopac-test mopac-core)
 if (STATIC_BUILD)
   target_link_options(mopac PUBLIC "-static")
   target_link_options(mopac-param PUBLIC "-static")
+  target_link_options(mopac-test PUBLIC "-static")
   target_link_options(mopac-makpol PUBLIC "-static")
 endif()
 
@@ -135,7 +138,7 @@ if(BUILD_BZ)
 endif()
 
 # MOPAC shared library ABI compatibility version
-set_target_properties(mopac-core PROPERTIES SOVERSION 1)
+set_target_properties(mopac-core PROPERTIES SOVERSION 2)
 
 # Adjust legacy PGI compiler behavior: disable C-style backslash characters & warn about CRLF handling
 if(CMAKE_Fortran_COMPILER_ID MATCHES "PGI|Flang")
