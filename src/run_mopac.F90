@@ -394,10 +394,8 @@
 !
       sparkle = .false.
       do i = 1, numat
-write(*,*) "sp", i, labels(i), zs(labels(i))
         if  (labels(i) > 56 .and. labels(i) < 72 .and. zs(labels(i)) < 0.1d0) sparkle = .true.
       end do
-write(*,*) "sparkle", sparkle
       do i = 57,71
         if (zs(i) < 0.1d0) tore(i) = 3.d0
       end do
