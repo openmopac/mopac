@@ -68,6 +68,7 @@ module mopac_api
     double precision, dimension (6) :: stress
     ! bond-order matrix in compressed sparse column (CSC) matrix format
     ! with insignificant bond orders (<0.001) truncated
+    ! diagonal matrix entries are atomic valencies
     ! > first index of each atom in CSC bond-order matrix [natom+1]
     integer, dimension (:), allocatable :: bond_index
     ! > list of atoms bonded to each atom in CSC format [bond_index(natom+1)-1]
