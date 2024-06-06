@@ -16,7 +16,7 @@
 
       subroutine powsq()
       use molkst_C, only : tleft, time0, numcal, keywrd, last, &
-      &  nscf, tdump, nvar, iflepo, escf, line
+      &  nscf, tdump, nvar, iflepo, escf, line, use_disk
       use funcon_C, only : a0
       use common_arrays_C, only : loc, grad, xparam, gnext1, gmin1
       use chanel_C, only : iw0, iw, ilog, log
@@ -386,8 +386,10 @@
   380   format(' CYCLE:',i6,' TIME:',f8.3,' TIME LEFT:',f6.2,a1,'  GRAD.:',f10.3,' HEAT:',g14.7)
       end if
       call to_screen(line)
-      endfile (iw)
-      backspace (iw)
+      if (use_disk) then
+        endfile (iw)
+        backspace (iw)
+      end if
       if (log) then
         endfile (ilog)
         backspace (ilog)

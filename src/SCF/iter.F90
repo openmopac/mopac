@@ -767,8 +767,10 @@
             niter, pl, plb, escf, diff
           write(iw,'(a)')trim(line)
           call to_screen(line)
-          endfile (iw)
-          backspace (iw)
+          if (use_disk) then
+            endfile (iw)
+            backspace (iw)
+          end if
         end if
       end if
       if (incitr) eold = escf

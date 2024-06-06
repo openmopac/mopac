@@ -315,7 +315,7 @@ subroutine Locate_TS
 !    Mathematical Programming B, 45, 3, pp. 503-528.
 !
   use molkst_C, only: tleft, time0, iflepo, tdump, gnorm, keywrd, density, &
-  moperr, nvar, id, line, numat, refkey, title
+  moperr, nvar, id, line, numat, refkey, title, use_disk
 !
   use chanel_C, only: iw0, iw, log, ilog, input_fn, iarc
 !
@@ -530,8 +530,10 @@ subroutine Locate_TS
       jcyc, Min (tstep, 9999.99d0), tprt, txt, &
       & Min (gnorm, 999999.999d0), escf_tot
     write(iw,"(a)")trim(line)
-    endfile (iw)
-    backspace (iw)
+    if (use_disk) then
+      endfile (iw)
+      backspace (iw)
+    end if
     if (log) write (ilog, "(a)")trim(line)
     call to_screen(line)
     if (mod(jcyc,30) == 0) then
@@ -541,7 +543,7 @@ subroutine Locate_TS
       call to_screen(line(:i))
     end if
     if (nflush /= 0) then
-      if (Mod(jcyc, nflush) == 0) then
+      if (Mod(jcyc, nflush) == 0 .and. use_disk) then
         endfile (iw)
         backspace (iw)
         if (log) then
@@ -556,8 +558,10 @@ subroutine Locate_TS
 !  with the old gradient.  Ideally, this should be small.
 !
       call dcopy (big_nvar, big_grad, 1, gold, 1)
-      endfile (iw)
-      backspace (iw)
+      if (use_disk) then
+        endfile (iw)
+        backspace (iw)
+      end if
 !
 !  EXIT CRITERIA.  (The criteria in SETULB are ignored.)
 !

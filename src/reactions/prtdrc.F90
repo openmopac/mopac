@@ -19,7 +19,7 @@
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-      USE molkst_C, only : numat, keywrd, numcal, nvar, jloop => itemp_1, line
+      USE molkst_C, only : numat, keywrd, numcal, nvar, jloop => itemp_1, line, use_disk
       use common_arrays_C, only : nat, na, nb, nc, p, na_store, geoa, loc
       USE parameters_C, only : tore
       use chanel_C, only : iw, ires
@@ -594,8 +594,10 @@
       told2 = told1
       told1 = deltat
       iloop = iloop + 1
-      endfile (iw)
-      backspace (iw)
+      if (use_disk) then
+        endfile (iw)
+        backspace (iw)
+      end if
       na = 0
       return
       end subroutine prtdrc

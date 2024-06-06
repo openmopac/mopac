@@ -460,8 +460,10 @@ subroutine iter_for_MOZYME (ee)
                 escf = escf + solv_energy * fpc_9
           end if
           if (prtpls)  write (iw, "(/,A,F16.6,A,/)") " PLS ESCF USING THE OLD LMOs:", escf, " KCAL/MOL"
-          endfile (iw)
-          backspace (iw)
+          if (use_disk) then
+            endfile (iw)
+            backspace (iw)
+          end if
         end if
         if (imol == numcal .and. numat > numred+1) call buildf (partf, f, -1)
         icalcn = step_num
@@ -474,11 +476,11 @@ subroutine iter_for_MOZYME (ee)
       if (moperr) return
       call check (nvir1, nnce, nce, icvir, icvir_dim, iorbs, ncvir, cvir, cvir_dim)
       if (moperr) return
-      if (Mod(niter+1, idnout) == 0) then
+      if (Mod(niter+1, idnout) == 0 .and. use_disk) then
         write (iw, "(A)") " .den FILE TO BE WRITTEN OUT"
         endfile (iw)
         backspace (iw)
-        if (use_disk) call pinout (1, .true.)
+        call pinout (1, .true.)
         write (iw, "(A)") " .den FILE WRITTEN OUT"
         endfile (iw)
         backspace (iw)
@@ -574,8 +576,10 @@ subroutine iter_for_MOZYME (ee)
         niter + add_niter, ovmax,   escf, energy_diff
         write(iw,"(a)")trim(line)
         call to_screen(line)
-        endfile (iw)
-        backspace (iw)
+        if (use_disk) then
+          endfile (iw)
+          backspace (iw)
+        end if
         if (debug) then
           write (iw, "(A,F9.6,A,F7.1,A,F9.6,A,F8.2,A,F11.3,A,I7)") "TINY:", &
                & tiny, " SUMT:", sumt, " OVMAX:", ovmax, " SUMB:", sumb, &
@@ -593,8 +597,10 @@ subroutine iter_for_MOZYME (ee)
         write (iw, "(10F8.4)") (ws(i), i=1, numat)
         write (iw, "(A,F12.6)") " Variance:", sum
       end if
-      endfile (iw)
-      backspace (iw)
+      if (use_disk) then
+        endfile (iw)
+        backspace (iw)
+      end if
       call isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
       if ( .not. bigscf .and. numcal == 1) then
         exit
