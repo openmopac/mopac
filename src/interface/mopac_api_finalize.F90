@@ -16,7 +16,8 @@
 
 submodule (mopac_api:mopac_api_operations) mopac_api_finalize
   use chanel_C, only : iw ! file handle for main output file
-  use Common_arrays_C, only : grad, & ! gradients of heat
+  use Common_arrays_C, only : xparam, & ! values of coordinates undergoing optimization
+    grad, & ! gradients of heat
     p, & ! total density matrix
     q, & ! partial charges
     nat, & ! atomic number of each atom
@@ -39,8 +40,9 @@ contains
   module subroutine mopac_finalize(properties)
     type(mopac_properties), intent(out) :: properties
     integer, external :: ijbo
+    double precision, external :: dipole, dipole_for_MOZYME
     integer :: i, j, k, kk, kl, ku, io, jo
-    double precision :: valenc, sum
+    double precision :: valenc, sum, dumy(3)
 
     ! close dummy output file to free up /dev/null
     close(iw)
@@ -51,6 +53,14 @@ contains
     if (allocated(properties%bond_index)) deallocate(properties%bond_index)
     if (allocated(properties%bond_atom)) deallocate(properties%bond_atom)
     if (allocated(properties%bond_order)) deallocate(properties%bond_order)
+    ! trigger charge & dipole calculation
+    call chrge (p, q)
+    q(:numat) = tore(nat(:numat)) - q(:numat)
+    if (mozyme) then
+      sum = dipole_for_MOZYME(dumy, 1)
+    else
+      sum = dipole(p, xparam, dumy, 1)
+    end if
     ! save properties
     properties%heat = escf
     allocate(properties%coord_deriv(3*numat))
@@ -59,8 +69,6 @@ contains
       allocate(properties%lattice_deriv(3*id))
       properties%lattice_deriv = grad(3*numat+1:3*(numat+id))
     end if
-    call chrge (p, q)
-    q(:numat) = tore(nat(:numat)) - q(:numat)
     allocate(properties%charge(numat))
     properties%charge = q(:numat)
     properties%dipole = dip(:3,3)

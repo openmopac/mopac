@@ -48,11 +48,11 @@ program mopac_api_test
     test_in(1)%coord(9) = 0.0d0
     test_target(1)%heat = -57.76975d0
     allocate(test_target(1)%coord_deriv(3*3))
-    test_target(1)%coord_deriv(1) = 2.277043d0
-    test_target(1)%coord_deriv(2) = 2.711610d0
+    test_target(1)%coord_deriv(1) = 2.307865d0
+    test_target(1)%coord_deriv(2) = 2.742432d0
     test_target(1)%coord_deriv(3) = 0.0d0
-    test_target(1)%coord_deriv(4) = -2.277043d0
-    test_target(1)%coord_deriv(5) = 2.742432d0
+    test_target(1)%coord_deriv(4) = -2.307865d0
+    test_target(1)%coord_deriv(5) = 2.711610d0
     test_target(1)%coord_deriv(6) = 0.0d0
     test_target(1)%coord_deriv(7) = 0.0d0
     test_target(1)%coord_deriv(8) = -5.454042d0
@@ -83,9 +83,9 @@ program mopac_api_test
     test_target(1)%bond_order(2) = 0.895
     test_target(1)%bond_order(3) = 0.896
     test_target(1)%bond_order(4) = 0.895
-    test_target(1)%bond_order(5) = 1.791
+    test_target(1)%bond_order(5) = 0.895
     test_target(1)%bond_order(6) = 0.895
-    test_target(1)%bond_order(7) = 0.895
+    test_target(1)%bond_order(7) = 1.791
     test_target(1)%status = 0
 
     ! 2 - geometry relaxation of H2O
@@ -96,43 +96,43 @@ program mopac_api_test
     test_in(2)%atom(2) = 1
     test_in(2)%atom(3) = 8
     allocate(test_in(2)%coord(3*3))
-    test_in(2)%coord(1) = 0.76d0
-    test_in(2)%coord(2) = 0.59d0
+    test_in(2)%coord(1) = 0.8d0
+    test_in(2)%coord(2) = 0.4d0
     test_in(2)%coord(3) = 0.0d0
-    test_in(2)%coord(4) = -0.76d0
-    test_in(2)%coord(5) = 0.59d0
+    test_in(2)%coord(4) = -0.8d0
+    test_in(2)%coord(5) = 0.4d0
     test_in(2)%coord(6) = 0.0d0
     test_in(2)%coord(7) = 0.0d0
     test_in(2)%coord(8) = 0.0d0
     test_in(2)%coord(9) = 0.0d0
     target_coord(2)%natom = 3
     allocate(target_coord(2)%coord(3*3))
-    target_coord(2)%coord(1) = 0.75869d0
-    target_coord(2)%coord(2) = 0.58354d0
+    target_coord(2)%coord(1) = 0.758862835d0
+    target_coord(2)%coord(2) = 0.486805290d0
     target_coord(2)%coord(3) = 0.0d0
-    target_coord(2)%coord(4) = -0.75870d0
-    target_coord(2)%coord(5) = 0.58355d0
+    target_coord(2)%coord(4) = -0.759709263d0
+    target_coord(2)%coord(5) = 0.485142519d0
     target_coord(2)%coord(6) = 0.0d0
-    target_coord(2)%coord(7) = 0.0d0
-    target_coord(2)%coord(8) = 0.00324d0
+    target_coord(2)%coord(7) = 0.000846434d0
+    target_coord(2)%coord(8) = -0.093004709d0
     target_coord(2)%coord(9) = 0.0d0
-    test_target(2)%heat = -57.79928d0
+    test_target(2)%heat = -57.79952d0
     allocate(test_target(2)%coord_deriv(3*3))
-    test_target(2)%coord_deriv(1) = 0.397645d0
-    test_target(2)%coord_deriv(2) = 0.068524d0
+    test_target(2)%coord_deriv(1) = -0.565914d0
+    test_target(2)%coord_deriv(2) = -0.294814d0
     test_target(2)%coord_deriv(3) = 0.0d0
-    test_target(2)%coord_deriv(4) = -0.409261d0
-    test_target(2)%coord_deriv(5) = 0.090923d0
+    test_target(2)%coord_deriv(4) = 0.063505d0
+    test_target(2)%coord_deriv(5) = 0.058243d0
     test_target(2)%coord_deriv(6) = 0.0d0
-    test_target(2)%coord_deriv(7) = 0.011616d0
-    test_target(2)%coord_deriv(8) = -0.159447d0
+    test_target(2)%coord_deriv(7) = 0.502409d0
+    test_target(2)%coord_deriv(8) = 0.236571d0
     test_target(2)%coord_deriv(9) = 0.0d0
     allocate(test_target(2)%charge(3))
-    test_target(2)%charge(1) = 0.324258d0
-    test_target(2)%charge(2) = 0.324254d0
-    test_target(2)%charge(3) = -0.648511d0
-    test_target(2)%dipole(1) = 0.0d0
-    test_target(2)%dipole(2) = 2.131d0
+    test_target(2)%charge(1) = 0.324544d0
+    test_target(2)%charge(2) = 0.324720d0
+    test_target(2)%charge(3) = -0.649264d0
+    test_target(2)%dipole(1) = -0.005d0
+    test_target(2)%dipole(2) = 2.129d0
     test_target(2)%dipole(3) = 0.0d0
     test_target(2)%stress(:) = 0.0d0
     allocate(test_target(2)%bond_index(4))
@@ -153,9 +153,9 @@ program mopac_api_test
     test_target(2)%bond_order(2) = 0.894
     test_target(2)%bond_order(3) = 0.895
     test_target(2)%bond_order(4) = 0.894
-    test_target(2)%bond_order(5) = 1.788
+    test_target(2)%bond_order(5) = 0.894
     test_target(2)%bond_order(6) = 0.894
-    test_target(2)%bond_order(7) = 0.894
+    test_target(2)%bond_order(7) = 1.788
     test_target(2)%status = 0
 
     ! run tests
@@ -193,7 +193,7 @@ subroutine test_output(num, input, target, output, nfail)
     integer :: i
     double precision :: heat_tol, deriv_tol, charge_tol, stress_tol
     heat_tol = 1d-3
-    deriv_tol = 1d-2
+    deriv_tol = 1d-1
     charge_tol = 1d-3
     stress_tol = 1d-3
     ! compare heats

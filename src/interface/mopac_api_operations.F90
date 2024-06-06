@@ -119,6 +119,7 @@ contains
       end if
       ! call computational routine for LBFGS geometry optimization
       call lbfgs (xparam, escf)
+write(*,*) "moperr", moperr
       ! TO DO: lbfgs error handling
       ! save relaxed geometry
       if(size(relax_coord) < 3*system%natom) then

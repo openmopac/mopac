@@ -38,6 +38,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     trunc_1, & ! cutoff radius for switch to point-charge electrostatics
     trunc_2, & ! exponent in smooth cutoff for point-charge electrostatics
     time0, & ! starting time of the MOPAC calculation
+    tleft, & ! amount of time left for the calculation to finish
     natoms, maxatoms, & ! number of atoms
     numat, & ! number of real atoms
     mozyme, & ! logical flag for MOZYME calculations
@@ -118,6 +119,7 @@ contains
     ! initialize job timers
     time0 = seconds(1)
     call date_and_time(VALUES=time_start)
+    tleft = system%max_time
     ! set number of atoms
     natoms = system%natom + system%nlattice
     maxatoms = natoms
