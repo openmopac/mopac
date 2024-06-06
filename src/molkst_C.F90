@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 module molkst_C
+!dec$ attributes dllexport :: gui
 !
 !  This module contains all the scalars relating to the system being calculated.
 !  Every entry is unique, and has the same meaning in every subroutine.
@@ -287,7 +288,7 @@ module molkst_C
      lxfac,             & !  TRUE if a diatomic is being used to define the values of XFAC and ALPB
      units,             & !  TRUE if units for input geometry are defined (Angstroms or A0), FALSE otherwise
      Angstroms,         & !  TRUE if units for input geometry must be in Angstroms, if FALSE then A0, see also units
-     Sparkle,           & !  TRUE if basis set is missing and sparkles are present (any of elements 58:70)
+     sparkle,           & !  TRUE if basis set is missing and sparkles are present (any of elements 58:70)
      keep_res,          & !  TRUE if the original residue names are to be used
      use_ref_geo,       & !  TRUE if keyword GEO_REF is used
      pdb_label,         & !  TRUE if label text is in PDB format
@@ -306,7 +307,8 @@ module molkst_C
      prt_velocity,      & ! TRUE if velocity vector in IRC/DRC to be printed
      dummy_present,     & !
      l_normal_html,     & ! TRUE if a normal HTML file is to be generated. After it's generated, set FALSE
-     is_PARAM=.false.     !  This will be set "TRUE" in a PARAM run
+     is_PARAM=.false.,  & !  This will be set "TRUE" in a PARAM run
+     use_disk=.true.      ! TRUE if disk access is allowed for functionality supported by MOPAC API
   equivalence  &
     (MM_corrections(1), N_3_present),    & ! TRUE if the system contains at least one N bonded to three ligands
                                            ! and at least two are not hydrogen atoms

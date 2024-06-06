@@ -63,7 +63,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-test-output
+          name: static-test-output
           path: build/tests
 
   code-coverage:

@@ -17,7 +17,7 @@
 subroutine ef (xparam, funct)
     use Common_arrays_C, only: geo, loc, hesinv, grad, atmass, nc
     use molkst_C, only: nvar, numcal, last, gnorm, iflepo, line, &
-       & tleft, numat, ndep, time0, tdump, natoms, id, keywrd, moperr
+       & tleft, numat, ndep, time0, tdump, natoms, id, keywrd, moperr, use_disk
     use chanel_C, only: iw0, iw, ilog, log, input_fn
     use ef_C, only: nstep, negreq, iprnt, ef_mode, ddx, xlamd, &
        & xlamd0, skal, rmin, rmax
@@ -307,13 +307,15 @@ subroutine ef (xparam, funct)
             i = len_trim(line) - 5
           call to_screen(line(:i))
         end if
-          endfile (iw)
-          backspace (iw)
+          if (use_disk) then
+            endfile (iw)
+            backspace (iw)
+          end if
           if (log) write (ilog, "(a)")line(:len_trim(line))
           call to_screen(line)
         end if
         if (nflush /= 0) then
-          if (Mod(nstep+1, nflush) == 0) then
+          if (Mod(nstep+1, nflush) == 0 .and. use_disk) then
               endfile (iw)
               backspace (iw)
             if (log) then
@@ -332,15 +334,17 @@ subroutine ef (xparam, funct)
         tprt, txt, Min (gnorm, 999999.999d0), funct
         write(iw,"(a)")line(:len_trim(line))
         call to_screen(line)
-        endfile (iw)
-        backspace (iw)
+        if (use_disk) then
+          endfile (iw)
+          backspace (iw)
+        end if
         if (log) then
           write (ilog, '(" RESTART FILE WRITTEN,      TIME LEFT:", f6.2, &
         & a1, "  GRAD.:", f10.3, " HEAT:", g14.7)', err=1000) &
         tprt, txt, Min (gnorm,999999.999d0), funct
         end if
         if (nflush /= 0) then
-          if (Mod(nstep+1, nflush) == 0) then
+          if (Mod(nstep+1, nflush) == 0 .and. use_disk) then
               endfile (iw)
               backspace (iw)
             if (log) then
@@ -1108,7 +1112,7 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
    !     DMAX
     use chanel_C, only: iw
     use ef_C, only: skal, ef_mode, iprnt, ddx, xlamd, xlamd0
-    use molkst_C, only: numcal, numat
+    use molkst_C, only: numcal, numat, use_disk
     implicit none
     logical, intent (in) :: donr, rrscal, ts
     logical, intent (inout) :: lorjk
@@ -1277,8 +1281,10 @@ subroutine formd (eigval, fx, nvar, dmax, ddmin, ts, lorjk, rrscal, &
         bu = eone - ssmin
         frodo2 = .true.
       end if
-      endfile (iw)
-      backspace (iw)
+      if (use_disk) then
+        endfile (iw)
+        backspace (iw)
+      end if
       if (frodo1 .and. frodo2) then
         write (iw,*) "NUMERICAL PROBLEMS IN BRACKETING LAMBDA", eone, bl, &
              & bu, fl, fu

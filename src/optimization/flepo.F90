@@ -16,7 +16,7 @@
 
       subroutine flepo(xparam, nvar, funct1)
       use molkst_C, only : numcal, gnorm, iflepo, keywrd, emin, tleft, &
-      & time0, moperr, nscf, limscf, tdump, last, cosine, line
+      & time0, moperr, nscf, limscf, tdump, last, cosine, line, use_disk
       use common_arrays_C, only : hesinv, grad
       USE chanel_C, only : iw, ilog, log, input_fn
       implicit none
@@ -803,8 +803,10 @@
            tprt, txt, Min (gnorm, 999999.999d0), funct1
         write(iw,"(a)")trim(line)
         call to_screen(trim(line))
-        endfile (iw)
-        backspace (iw)
+        if (use_disk) then
+          endfile (iw)
+          backspace (iw)
+        end if
         if (log) then
           write (ilog, "(a)")trim(line)
           endfile (ilog)
@@ -816,7 +818,7 @@
           & f6.2, a1, "  GRAD.:", f10.3, " HEAT:", g14.7)') &
           jcyc, Min (tcycle, 9999.99d0), tprt, txt, &
           & Min (gnorm, 999999.999d0), funct1
-          if (minprt) then
+          if (minprt .and. use_disk) then
             write(iw,"(a)")trim(line)
             endfile (iw)
             backspace (iw)

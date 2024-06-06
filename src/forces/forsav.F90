@@ -20,7 +20,7 @@
 !   M o d u l e s
 !-----------------------------------------------
       USE chanel_C, only : iw, ires, restart_fn
-      use molkst_C, only : numat, norbs
+      use molkst_C, only : numat, norbs, use_disk
 !-----------------------------------------------
 !   I n t e r f a c e   B l o c k s
 !-----------------------------------------------
@@ -53,6 +53,7 @@
 !               = 0 IF IN READ MODE.
 !        FMATRX = FORCE MATRIX
 !***********************************************************************
+      if (.not. use_disk) return
       i99 = 0
    10 continue
       j = i99

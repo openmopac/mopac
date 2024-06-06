@@ -24,7 +24,7 @@
 !    Mathematical Programming B, 45, 3, pp. 503-528.
 !
       use molkst_C, only: tleft, time0, iflepo, tdump, gnorm, natoms, keywrd, stress, &
-      moperr, nvar, id, line, last, mozyme, numat, prt_gradients, keywrd_txt,  prt_coords
+      moperr, nvar, id, line, last, mozyme, numat, prt_gradients, keywrd_txt,  prt_coords, use_disk
 !
       use chanel_C, only: iw0, iw, log, ilog, input_fn
 !
@@ -299,8 +299,10 @@
              tprt, txt, Min (gnorm, 999999.999d0), escf, trim(line1)
             write(iw,"(a)")trim(line)
             call to_screen(trim(line))
-            endfile (iw)
-            backspace (iw)
+            if (use_disk) then
+              endfile (iw)
+              backspace (iw)
+            end if
             if (log) write (ilog, '(a)', err = 1000)trim(line)
             resfil = .false.
           else
@@ -309,8 +311,10 @@
                    nstep, Min (tstep, 9999.99d0), tprt, txt, &
                    & Min (gnorm, 999999.999d0), escf, trim(line1)
             write(iw,"(a)")trim(line)
-            endfile (iw)
-            backspace (iw)
+            if (use_disk) then
+              endfile (iw)
+              backspace (iw)
+            end if
             if (log) write (ilog, "(a)")trim(line)
             call to_screen(trim(line))
           end if
@@ -321,7 +325,7 @@
             call to_screen(line(:i))
           end if
           if (nflush /= 0) then
-            if (Mod(nstep, nflush) == 0) then
+            if (Mod(nstep, nflush) == 0 .and. use_disk) then
               endfile (iw)
               backspace (iw)
               if (log) then
@@ -336,8 +340,10 @@
           !  with the old gradient.  Ideally, this should be small.
           !
   1000    call dcopy (nvar, grad, 1, gold, 1)
-          endfile (iw)
-          backspace (iw)
+          if (use_disk) then
+            endfile (iw)
+            backspace (iw)
+          end if
           !
           !  EXIT CRITERIA.  (The criteria in SETULB are ignored.)
           if (gnorm < tolerg) then
@@ -411,7 +417,7 @@
     end subroutine lbfgs
     subroutine lbfsav (tt0, mode, wa, nwa, iwa, niwa, task, csave, lsave, isave, &
    & dsave, nstep, escf)
-      use molkst_C, only: nscf, numat, norbs, nvar
+      use molkst_C, only: nscf, numat, norbs, nvar, use_disk
       use chanel_C, only: ires, iw, restart_fn
       use common_arrays_C, only: xparam, grad
       implicit none
@@ -426,6 +432,7 @@
       double precision, dimension (nwa), intent (inout) :: wa
       logical :: opend
       integer :: old_numat, old_norbs, i, j
+      if (.not. use_disk) return
       inquire (unit=ires, opened=opend)
       if (opend) then
         close (unit=ires, status="KEEP")

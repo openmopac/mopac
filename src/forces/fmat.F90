@@ -20,7 +20,7 @@
 !-----------------------------------------------
       use common_arrays_C, only : coord, na, labels, atmass, p, q, xparam
       use molkst_C, only : numat, nvar, keywrd, tleft, moperr, natoms, tdump, &
-      emin, mozyme
+      emin, mozyme, use_disk
       use parameters_C, only : tore
       use funcon_C, only : fpc_10
       use chanel_C, only : iw, ilog, log
@@ -150,8 +150,10 @@
           write (line, '(" STEP:",I4,23X,"INTEGRAL =",F10.2," TIME LEFT:",F10.2)') i, totime, tleft
           write(iw,"(a)")line(:len_trim(line))
           call to_screen(line)
-          endfile (iw)
-          backspace (iw)
+          if (use_disk) then
+            endfile (iw)
+            backspace (iw)
+          end if
           iskip = iskip - 1
           lu = lu + i
           cycle
@@ -324,8 +326,10 @@
       '('' STEP:'',I4,'' RESTART FILE WRITTEN, INTEGRAL ='',F10.2,'' TIME LEFT:'',F10.2)') &
       i, min(totime,9999999.9D0), tleft
           write(iw,'(a)')trim(line)
-          endfile (iw)
-          backspace (iw)
+          if (use_disk) then
+            endfile (iw)
+            backspace (iw)
+          end if
           if (log) write (ilog, '(a)')trim(line)
           resfil = .FALSE.
         else
@@ -333,8 +337,10 @@
       '('' STEP:'',I4,'' TIME ='',F9.2,'' SECS, INTEGRAL ='',F10.2,'' TIME LEFT:'',F10.2)') &
       i, tstep, totime, tleft
           write(iw,'(a)')trim(line)
-          endfile (iw)
-          backspace (iw)
+          if (use_disk) then
+            endfile (iw)
+            backspace (iw)
+          end if
           if (log) write (ilog, '(a)')trim(line)
         end if
         call to_screen(line)

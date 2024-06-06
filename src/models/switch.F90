@@ -25,8 +25,8 @@
       ams, npq, natorb
 !
 !
-      USE molkst_C, only : keywrd, keywrd_quoted, method_mndo, method_pm3, method_indo, &
-      & method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm6_org, method_pm8
+      USE molkst_C, only : keywrd, keywrd_quoted, method_mndo, method_am1, method_pm3, method_indo, &
+      method_mndod, method_pm6, method_rm1, method_pm7, method_PM7_ts, method_pm6_org, method_pm8
 !
 !
       USE parameters_for_INDO_C, only: isoki, nbfai, zetai, zetadi, &
@@ -117,7 +117,20 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, j
+      integer :: i, j, sparkle_min, sparkle_max
+
+        ! adjust range of sparkles for each model
+        if (index(keywrd, " SPARK") /= 0 .or. method_pm3 .or. method_am1) then
+          sparkle_min = 57
+          sparkle_max = 71
+        else if (method_rm1) then
+          sparkle_min = 0
+          sparkle_max = 0
+        else
+          sparkle_min = 58
+          sparkle_max = 70
+        end if
+
         pocord = 0.d0
         if (method_mndo) then
 !
@@ -193,46 +206,42 @@
           gp2 = gp2pm3
           hsp = hsppm3
           call alpb_and_xfac_pm3
-          if (index(keywrd, " SPARK") /= 0) then
-            do i = 1, 102
-              if (alpPM3sp(i) > 0.1d0) then
-                zd(i) = 0.d0
-                zp(i) = 0.d0
-                zs(i) = 0.d0
-                zsn(i) = 0.d0
-                zpn(i) = 0.d0
-                zdn(i) = 0.d0
-                uss(i) = 0.d0
-                upp(i) = 0.d0
-                udd(i) = 0.d0
-                betas(i) = 0.d0
-                betap(i) = 0.d0
-                betad(i) = 0.d0
-                alp(i) = alpPM3sp(i)
-                gss(i) = gssPM3sp(i)
-                gpp(i) = 0.d0
-                gp2(i) = 0.d0
-                hsp(i) = 0.d0
-                gsp(i) = 0.d0
-                f0sd(i) = 0.d0
-                g2sd(i) = 0.d0
-                pocord(i) = 0.d0
-                guess1(i,1) = guesPM3sp1(i,1)
-                guess2(i,1) = guesPM3sp2(i,1)
-                guess3(i,1) = guesPM3sp3(i,1)
-                guess1(i,2) = guesPM3sp1(i,2)
-                guess2(i,2) = guesPM3sp2(i,2)
-                guess3(i,2) = guesPM3sp3(i,2)
-                guess1(i,3:4) = 0.d0
-                guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0
-              end if
-            end do
-            alpb(:100,57:71) = 0.d0
-            alpb(57:71,:100) = 0.d0
-            xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0
-          end if
+          do i = sparkle_min, sparkle_max
+            zd(i) = 0.d0
+            zp(i) = 0.d0
+            zs(i) = 0.d0
+            zsn(i) = 0.d0
+            zpn(i) = 0.d0
+            zdn(i) = 0.d0
+            uss(i) = 0.d0
+            upp(i) = 0.d0
+            udd(i) = 0.d0
+            betas(i) = 0.d0
+            betap(i) = 0.d0
+            betad(i) = 0.d0
+            alp(i) = alpPM3sp(i)
+            gss(i) = gssPM3sp(i)
+            gpp(i) = 0.d0
+            gp2(i) = 0.d0
+            hsp(i) = 0.d0
+            gsp(i) = 0.d0
+            f0sd(i) = 0.d0
+            g2sd(i) = 0.d0
+            pocord(i) = 0.d0
+            guess1(i,1) = guesPM3sp1(i,1)
+            guess2(i,1) = guesPM3sp2(i,1)
+            guess3(i,1) = guesPM3sp3(i,1)
+            guess1(i,2) = guesPM3sp1(i,2)
+            guess2(i,2) = guesPM3sp2(i,2)
+            guess3(i,2) = guesPM3sp3(i,2)
+            guess1(i,3:4) = 0.d0
+            guess2(i,3:4) = 0.d0
+            guess3(i,3:4) = 0.d0
+          end do
+          alpb(:100,sparkle_min:sparkle_max) = 0.d0
+          alpb(sparkle_min:sparkle_max,:100) = 0.d0
+          xfac(:100,sparkle_min:sparkle_max) = 0.d0
+          xfac(sparkle_min:sparkle_max,:100) = 0.d0
         else if (method_pm6_org) then
 !
 !    SWITCH IN PM6-ORG PARAMETERS
@@ -331,46 +340,42 @@
           CPE_Xhi  = CPE_Xhi6
           v_par = v_par6
           call alpb_and_xfac_pm6
-          if (index(keywrd, " SPARK") /= 0) then
-            do i = 1, 107
-              if (alp6sp(i) > 0.1d0) then
-                zd(i) = 0.d0
-                zp(i) = 0.d0
-                zs(i) = 0.d0
-                zsn(i) = 0.d0
-                zpn(i) = 0.d0
-                zdn(i) = 0.d0
-                uss(i) = 0.d0
-                upp(i) = 0.d0
-                udd(i) = 0.d0
-                betas(i) = 0.d0
-                betap(i) = 0.d0
-                betad(i) = 0.d0
-                alp(i) = alp6sp(i)
-                gss(i) = gss6sp(i)
-                gpp(i) = 0.d0
-                gp2(i) = 0.d0
-                hsp(i) = 0.d0
-                gsp(i) = 0.d0
-                f0sd(i) = 0.d0
-                g2sd(i) = 0.d0
-                pocord(i) = 0.d0
-                guess1(i,1) = gues6sp1(i,1)
-                guess2(i,1) = gues6sp2(i,1)
-                guess3(i,1) = gues6sp3(i,1)
-                guess1(i,2) = gues6sp1(i,2)
-                guess2(i,2) = gues6sp2(i,2)
-                guess3(i,2) = gues6sp3(i,2)
-                guess1(i,3:4) = 0.d0
-                guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0
-              end if
-            end do
-            alpb(:100,57:71) = 0.d0
-            alpb(57:71,:100) = 0.d0
-            xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0
-          end if
+          do i = sparkle_min, sparkle_max
+            zd(i) = 0.d0
+            zp(i) = 0.d0
+            zs(i) = 0.d0
+            zsn(i) = 0.d0
+            zpn(i) = 0.d0
+            zdn(i) = 0.d0
+            uss(i) = 0.d0
+            upp(i) = 0.d0
+            udd(i) = 0.d0
+            betas(i) = 0.d0
+            betap(i) = 0.d0
+            betad(i) = 0.d0
+            alp(i) = alp6sp(i)
+            gss(i) = gss6sp(i)
+            gpp(i) = 0.d0
+            gp2(i) = 0.d0
+            hsp(i) = 0.d0
+            gsp(i) = 0.d0
+            f0sd(i) = 0.d0
+            g2sd(i) = 0.d0
+            pocord(i) = 0.d0
+            guess1(i,1) = gues6sp1(i,1)
+            guess2(i,1) = gues6sp2(i,1)
+            guess3(i,1) = gues6sp3(i,1)
+            guess1(i,2) = gues6sp1(i,2)
+            guess2(i,2) = gues6sp2(i,2)
+            guess3(i,2) = gues6sp3(i,2)
+            guess1(i,3:4) = 0.d0
+            guess2(i,3:4) = 0.d0
+            guess3(i,3:4) = 0.d0
+          end do
+          alpb(:100,sparkle_min:sparkle_max) = 0.d0
+          alpb(sparkle_min:sparkle_max,:100) = 0.d0
+          xfac(:100,sparkle_min:sparkle_max) = 0.d0
+          xfac(sparkle_min:sparkle_max,:100) = 0.d0
         else if (method_pm7_ts) then
 !
 !    SWITCH IN PM7_TS PARAMETERS
@@ -433,46 +438,42 @@
           polvol = polvo7
           v_par = v_par7
           call alpb_and_xfac_pm7
-          if (index(keywrd, " SPARK") /= 0) then
-            do i = 1, 102
-              if (alp7sp(i) > 0.1d0) then
-                zd(i) = 0.d0
-                zp(i) = 0.d0
-                zs(i) = 0.d0
-                zsn(i) = 0.d0
-                zpn(i) = 0.d0
-                zdn(i) = 0.d0
-                uss(i) = 0.d0
-                upp(i) = 0.d0
-                udd(i) = 0.d0
-                betas(i) = 0.d0
-                betap(i) = 0.d0
-                betad(i) = 0.d0
-                alp(i) = alp7sp(i)
-                gss(i) = gss7sp(i)
-                gpp(i) = 0.d0
-                gp2(i) = 0.d0
-                hsp(i) = 0.d0
-                gsp(i) = 0.d0
-                f0sd(i) = 0.d0
-                g2sd(i) = 0.d0
-                pocord(i) = 0.d0
-                guess1(i,1) = gues7sp1(i,1)
-                guess2(i,1) = gues7sp2(i,1)
-                guess3(i,1) = gues7sp3(i,1)
-                guess1(i,2) = gues7sp1(i,2)
-                guess2(i,2) = gues7sp2(i,2)
-                guess3(i,2) = gues7sp3(i,2)
-                guess1(i,3:4) = 0.d0
-                guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0
-              end if
-            end do
-            alpb(:100,57:71) = 0.d0
-            alpb(57:71,:100) = 0.d0
-            xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0
-          end if
+          do i = sparkle_min, sparkle_max
+            zd(i) = 0.d0
+            zp(i) = 0.d0
+            zs(i) = 0.d0
+            zsn(i) = 0.d0
+            zpn(i) = 0.d0
+            zdn(i) = 0.d0
+            uss(i) = 0.d0
+            upp(i) = 0.d0
+            udd(i) = 0.d0
+            betas(i) = 0.d0
+            betap(i) = 0.d0
+            betad(i) = 0.d0
+            alp(i) = alp7sp(i)
+            gss(i) = gss7sp(i)
+            gpp(i) = 0.d0
+            gp2(i) = 0.d0
+            hsp(i) = 0.d0
+            gsp(i) = 0.d0
+            f0sd(i) = 0.d0
+            g2sd(i) = 0.d0
+            pocord(i) = 0.d0
+            guess1(i,1) = gues7sp1(i,1)
+            guess2(i,1) = gues7sp2(i,1)
+            guess3(i,1) = gues7sp3(i,1)
+            guess1(i,2) = gues7sp1(i,2)
+            guess2(i,2) = gues7sp2(i,2)
+            guess3(i,2) = gues7sp3(i,2)
+            guess1(i,3:4) = 0.d0
+            guess2(i,3:4) = 0.d0
+            guess3(i,3:4) = 0.d0
+          end do
+          alpb(:100,sparkle_min:sparkle_max) = 0.d0
+          alpb(sparkle_min:sparkle_max,:100) = 0.d0
+          xfac(:100,sparkle_min:sparkle_max) = 0.d0
+          xfac(sparkle_min:sparkle_max,:100) = 0.d0
         else if (method_mndod) then
 !
 !    SWITCH IN MNDOD PARAMETERS
@@ -531,40 +532,39 @@
           g2sd = g2sdRM1
           alp = alpRM1
           pocord = poc_RM1
-          if (index(keywrd, " SPARK") /= 0) then
-            do i = 1, 102
-              if (alp7sp(i) > 0.1d0) then
-                zd(i) = 0.d0
-                zp(i) = 0.d0
-                zs(i) = 0.d0
-                zsn(i) = 0.d0
-                zpn(i) = 0.d0
-                zdn(i) = 0.d0
-                uss(i) = 0.d0
-                upp(i) = 0.d0
-                udd(i) = 0.d0
-                betas(i) = 0.d0
-                betap(i) = 0.d0
-                betad(i) = 0.d0
-                alp(i) = alprm1sp(i)
-                gss(i) = gssrm1sp(i)
-                gpp(i) = 0.d0
-                gp2(i) = 0.d0
-                hsp(i) = 0.d0
-                gsp(i) = 0.d0
-                f0sd(i) = 0.d0
-                g2sd(i) = 0.d0
-                pocord(i) = 0.d0
-                guess1(i,1) = guesrm1sp1(i,1)
-                guess2(i,1) = guesrm1sp2(i,1)
-                guess3(i,1) = guesrm1sp3(i,1)
-                guess1(i,2) = guesrm1sp1(i,2)
-                guess2(i,2) = guesrm1sp2(i,2)
-                guess3(i,2) = guesrm1sp3(i,2)
-                guess1(i,3:4) = 0.d0
-                guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0
-              end if
+          ! RM1 has atoms available for all Lanthanides if sparkles are off
+          if (sparkle_max > 0) then
+            do i = sparkle_min, sparkle_max
+              zd(i) = 0.d0
+              zp(i) = 0.d0
+              zs(i) = 0.d0
+              zsn(i) = 0.d0
+              zpn(i) = 0.d0
+              zdn(i) = 0.d0
+              uss(i) = 0.d0
+              upp(i) = 0.d0
+              udd(i) = 0.d0
+              betas(i) = 0.d0
+              betap(i) = 0.d0
+              betad(i) = 0.d0
+              alp(i) = alprm1sp(i)
+              gss(i) = gssrm1sp(i)
+              gpp(i) = 0.d0
+              gp2(i) = 0.d0
+              hsp(i) = 0.d0
+              gsp(i) = 0.d0
+              f0sd(i) = 0.d0
+              g2sd(i) = 0.d0
+              pocord(i) = 0.d0
+              guess1(i,1) = guesrm1sp1(i,1)
+              guess2(i,1) = guesrm1sp2(i,1)
+              guess3(i,1) = guesrm1sp3(i,1)
+              guess1(i,2) = guesrm1sp1(i,2)
+              guess2(i,2) = guesrm1sp2(i,2)
+              guess3(i,2) = guesrm1sp3(i,2)
+              guess1(i,3:4) = 0.d0
+              guess2(i,3:4) = 0.d0
+              guess3(i,3:4) = 0.d0
             end do
           end if
         else
@@ -600,46 +600,44 @@
 !   Unique parameter for Voityuk's Molybdenum
 !
           pocord(42) = 1.334d0
-          if (index(keywrd, " SPARK") /= 0) then
-            do i = 1, 102
-              if (alpam1sp(i) > 0.1d0) then
-                zd(i) = 0.d0
-                zp(i) = 0.d0
-                zs(i) = 0.d0
-                zsn(i) = 0.d0
-                zpn(i) = 0.d0
-                zdn(i) = 0.d0
-                uss(i) = 0.d0
-                upp(i) = 0.d0
-                udd(i) = 0.d0
-                betas(i) = 0.d0
-                betap(i) = 0.d0
-                betad(i) = 0.d0
-                alp(i) = alpam1sp(i)
-                gss(i) = gssam1sp(i)
-                gpp(i) = 0.d0
-                gp2(i) = 0.d0
-                hsp(i) = 0.d0
-                gsp(i) = 0.d0
-                f0sd(i) = 0.d0
-                g2sd(i) = 0.d0
-                pocord(i) = 0.d0
-                guess1(i,1) = guesam1sp1(i,1)
-                guess2(i,1) = guesam1sp2(i,1)
-                guess3(i,1) = guesam1sp3(i,1)
-                guess1(i,2) = guesam1sp1(i,2)
-                guess2(i,2) = guesam1sp2(i,2)
-                guess3(i,2) = guesam1sp3(i,2)
-                guess1(i,3:4) = 0.d0
-                guess2(i,3:4) = 0.d0
-                guess3(i,3:4) = 0.d0
-              end if
-            end do
-            alpb(:100,57:71) = 0.d0
-            alpb(57:71,:100) = 0.d0
-            xfac(:100,57:71) = 0.d0
-            xfac(57:71,:100) = 0.d0
-          end if
+          do i = sparkle_min, sparkle_max
+            if (alpam1sp(i) > 0.1d0) then
+              zd(i) = 0.d0
+              zp(i) = 0.d0
+              zs(i) = 0.d0
+              zsn(i) = 0.d0
+              zpn(i) = 0.d0
+              zdn(i) = 0.d0
+              uss(i) = 0.d0
+              upp(i) = 0.d0
+              udd(i) = 0.d0
+              betas(i) = 0.d0
+              betap(i) = 0.d0
+              betad(i) = 0.d0
+              alp(i) = alpam1sp(i)
+              gss(i) = gssam1sp(i)
+              gpp(i) = 0.d0
+              gp2(i) = 0.d0
+              hsp(i) = 0.d0
+              gsp(i) = 0.d0
+              f0sd(i) = 0.d0
+              g2sd(i) = 0.d0
+              pocord(i) = 0.d0
+              guess1(i,1) = guesam1sp1(i,1)
+              guess2(i,1) = guesam1sp2(i,1)
+              guess3(i,1) = guesam1sp3(i,1)
+              guess1(i,2) = guesam1sp1(i,2)
+              guess2(i,2) = guesam1sp2(i,2)
+              guess3(i,2) = guesam1sp3(i,2)
+              guess1(i,3:4) = 0.d0
+              guess2(i,3:4) = 0.d0
+              guess3(i,3:4) = 0.d0
+            end if
+          end do
+          alpb(:100,sparkle_min:sparkle_max) = 0.d0
+          alpb(sparkle_min:sparkle_max,:100) = 0.d0
+          xfac(:100,sparkle_min:sparkle_max) = 0.d0
+          xfac(sparkle_min:sparkle_max,:100) = 0.d0
         end if
 !
 !

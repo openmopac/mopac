@@ -21,7 +21,7 @@
 !                 if <file>.end exists, and contains anything, increase time by 10^8 seconds.
 !
       USE chanel_C, only : iw, iend, end_fn, output_fn
-      use molkst_C, only : is_PARAM, wall_clock_0, wall_clock_1, CPU_1, CPU_0, prt_coords
+      use molkst_C, only : is_PARAM, wall_clock_0, wall_clock_1, CPU_1, CPU_0, prt_coords, use_disk
       implicit none
       integer , intent(in) :: mode
       double precision :: shut
@@ -48,21 +48,23 @@
 !
 !   CHECK TO SEE IF AN OLD '.end' FILE EXISTS.  IF IT DOES, DELETE IT.
 !
-        rewind iend
-        open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat = i99)
-        if (i99 /= 0) then
-          write(iw,"(a)")" File '"//trim(end_fn)//"' is unavailable for use"
-          write(iw,"(a)")" Correct the error and re-submit"
-          call to_screen(" File '"//trim(end_fn)//"' is unavailable for use")
-          call to_screen(" Correct the error and re-submit")
-          call mopend("File '"//trim(end_fn)//"' is unavailable for use")
-          return
-        end if
-        read (iend, '(A)', end=20, err=20, iostat = i99) x
+        if (use_disk) then
+          rewind iend
+          open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat = i99)
+          if (i99 /= 0) then
+            write(iw,"(a)")" File '"//trim(end_fn)//"' is unavailable for use"
+            write(iw,"(a)")" Correct the error and re-submit"
+            call to_screen(" File '"//trim(end_fn)//"' is unavailable for use")
+            call to_screen(" Correct the error and re-submit")
+            call mopend("File '"//trim(end_fn)//"' is unavailable for use")
+            return
+          end if
+          read (iend, '(A)', end=20, err=20, iostat = i99) x
 !
 !   FILE EXISTS.  DELETE IT.
 !
-        if (ichar(x) /= (-1)) close(iend, status='DELETE')
+          if (ichar(x) /= (-1)) close(iend, status='DELETE')
+        end if
 !
 !  Set the zero of time
 !
@@ -81,7 +83,7 @@
 !   THEN INCREMENT CPU TIME BY 10,000,000 SECONDS.
 !
 !***********************************************************************
-      if (mode == 2) then
+      if (mode == 2 .and. use_disk) then
         shut = 0.D0
         inquire (file=end_fn, exist = exists)
         if (exists) then
@@ -123,6 +125,7 @@
       seconds = dble(wall_clock_1 - wall_clock_0) + shut
 
       if (is_PARAM) return
+      if (.not. use_disk) return
  11   endfile (iw, iostat = i99)
       l = 0
       if (i99 /= 0) then

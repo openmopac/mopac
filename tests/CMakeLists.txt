@@ -31,6 +31,18 @@ macro(add_mopac_test _name _files)
            ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} ${HOF_ERROR} ${_files})
 endmacro()
 
+#===============================================
+# Create a list of source files (src_list) with the .F90 extension
+set(src_list
+    mopac_api_test
+   )
+#-----------------------------------------------
+# Add a list of source files to the target
+foreach(idx IN LISTS src_list)
+        target_sources(mopac-api-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
+endforeach()
+#===============================================
+
 add_subdirectory(INDO-dev)
 add_subdirectory(keywords)
 
@@ -69,3 +81,5 @@ set(HOF_ERROR 1.0) # Raise threshold, these tests are only looking for crashes
 add_mopac_test(erratic-1 "erratic1.mop")
 add_mopac_test(erratic-2 "erratic2.mop")
 add_mopac_test(erratic-3 "erratic3.mop")
+
+add_test(NAME "mopac-api-test" COMMAND ${CMAKE_BINARY_DIR}/mopac-api-test${CMAKE_EXECUTABLE_SUFFIX})

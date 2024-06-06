@@ -21,7 +21,7 @@ set(src_list
     eimp vecprt_for_MOZYME outer2 compct cnvgz diagg
     kab_for_MOZYME bonds_for_MOZYME prtlmo density_for_MOZYME
     addhb dipole_for_MOZYME local_for_MOZYME fock2z local2
-    helecz scfcri MOZYME_C epseta iter_for_MOZYME
+    helecz scfcri MOZYME_C epseta iter_for_MOZYME pinout
     denrot_for_MOZYME fock1_for_MOZYME jab_for_MOZYME hybrid
     hcore_for_MOZYME tidy makvec selmos diagg2 mlmo
     convert_storage outer1 diagg1 adjvec MOZYME_eigs

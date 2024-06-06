@@ -14,8 +14,9 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
- program param
-    implicit none
-    call mopac_gui_deactivate
-    call run_param
- end program param
+program param
+  use molkst_C, only : gui
+  implicit none
+  gui = .false.
+  call run_param
+end program param

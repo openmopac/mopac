@@ -16,7 +16,7 @@
 
 subroutine tidy (nmos_loc, nc, ic, n01, c, n02, nnc_loc, ncmo, ln, mn, mode)
     use MOZYME_C, only: iorbs, jopt, thresh, numred
-    use molkst_C, only: numat, step_num, norbs, moperr, keywrd, numcal
+    use molkst_C, only: numat, step_num, norbs, moperr, keywrd, numcal, use_disk
     use chanel_C, only: iw
     implicit none
     integer, intent (in) :: mode,  n02, nmos_loc
@@ -152,7 +152,7 @@ subroutine tidy (nmos_loc, nc, ic, n01, c, n02, nnc_loc, ncmo, ln, mn, mode)
    !
     i = n01 / nmos_loc
     if (i + ispace < numat .and. ispace < Max (i/5, 20)) then
-      call pinout (1, .false.)
+      if (use_disk) call pinout (1, .false.)
   !    write (iw, "(/,A,/,A,I8)") &
   !   & " There is not enough unused space left to ensure ", &
   !   & " that the next iteration can be done.  New memory being allocated:", &
