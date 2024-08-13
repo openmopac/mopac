@@ -385,7 +385,7 @@
         do i = 1, nvar
           if (abs(grad(i)) > sum) sum = abs(grad(i))
         end do
-        if (sum > 1.d-4) then
+        if (sum /= 0.d0) then
           write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
           read(fmt9p4,'(3x,i2)')i
           j = max(int(log10(sum)),1)
@@ -447,7 +447,7 @@
       do i = 1, nvar
         if (abs(grad(i)) > sum) sum = abs(grad(i))
       end do
-      if (sum > 1.d-4) then
+      if (sum /= 0.d0) then
         write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
         read(fmt9p4,'(3x,i2)')i
         j = max(int(log10(sum)),1)
@@ -570,7 +570,7 @@
       do i = 1, nvar
         if (abs(grad(i)) > sum) sum = abs(grad(i))
       end do
-      if (sum > 1.d-4) then
+      if (sum /= 0.d0) then
         write(hook,"(a,i"//paras//",a)")" GRADIENTS:KCAL/MOL/ANGSTROM[",nvar, "]="
         read(fmt9p4,'(3x,i2)')i
         j = max(int(log10(sum)),1)
@@ -1201,7 +1201,7 @@
       do i = 1, nvar
         if (abs(grad(i)) > sum) sum = abs(grad(i))
       end do
-      if (sum > 1.d-4) then
+      if (sum /= 0.d0) then
         write(hook,"(a,i"//paras//",a)")" GRADIENTS_UPDATED:KCAL/MOL/ANGSTROM[",nvar, "]="
         read(fmt9p4,'(3x,i2)')i
         j = max(int(log10(sum)),1)
