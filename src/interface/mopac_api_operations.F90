@@ -15,14 +15,13 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api) mopac_api_operations
-  use Common_arrays_C, only: xparam, grad, lopt
-  use molkst_C, only: keywrd, escf, nvar, moperr
-  use to_screen_C, only : freq, cnorml
+  use Common_arrays_C, only: xparam, grad
+  use molkst_C, only: keywrd, escf, moperr
   implicit none
 
   interface
 
-    ! initial MOPAC modules before calculations
+    ! initialize MOPAC modules before calculations
     module subroutine mopac_initialize(system, status)
       type(mopac_system), intent(in) :: system
       integer, intent(out) :: status
@@ -92,13 +91,11 @@ contains
     end subroutine mopac_scf
   
     ! MOPAC geometry relaxation
-    module subroutine mopac_relax(system, state, properties, relax_coord, relax_lattice)
+    module subroutine mopac_relax(system, state, properties)
     !dec$ attributes dllexport :: mopac_relax
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
-      double precision, dimension(:), intent(out) :: relax_coord
-      double precision, optional, dimension(:), intent(out) :: relax_lattice
       integer :: status
 
       keywrd = " LBFGS PULAY BONDS"
@@ -112,25 +109,9 @@ contains
         properties%status = status
         return
       end if
-      ! turn off lattice relaxation as needed
-      if (system%nlattice > 0 .and. .not. present(relax_lattice)) then
-        lopt(:,system%natom+1:system%natom+system%nlattice) = 0
-        nvar = 3*system%natom
-      end if
       ! call computational routine for LBFGS geometry optimization
       call lbfgs (xparam, escf)
       ! TO DO: lbfgs error handling
-      ! save relaxed geometry
-      if(size(relax_coord) < 3*system%natom) then
-        ! TO DO: error handling
-      end if
-      relax_coord = xparam(:3*system%natom)
-      if(system%nlattice > 0 .and. present(relax_lattice)) then
-        if(size(relax_lattice) < 3*system%nlattice) then
-          ! TO DO: error handling
-        end if
-        relax_lattice = xparam(3*system%natom+1:3*system%natom+3*system%nlattice)
-      end if
       call mopac_save(state, status)
       if (status /= 0) then
         properties%status = status
@@ -140,13 +121,11 @@ contains
     end subroutine mopac_relax
   
     ! MOPAC vibrational calculation
-    module subroutine mopac_vibe(system, state, properties, frequency, displacement)
+    module subroutine mopac_vibe(system, state, properties)
     !dec$ attributes dllexport :: mopac_vibe
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
-      double precision, dimension(:), intent(out) :: frequency
-      double precision, optional, dimension(:,:), intent(out) :: displacement
       integer :: status
 
       keywrd = " FORCE NOREOR PULAY BONDS"
@@ -160,15 +139,10 @@ contains
         properties%status = status
         return
       end if
-      ! turn off lattice relaxation
-!      lopt(:,system%natom+1:system%natom+system%nlattice) = 0
-!      nvar = 3*system%natom
       ! call computational routine to evaluate vibrational matrix
       call force ()
       ! TO DO: force error handling
-      ! save frequencies and displacement vectors
-      frequency = freq
-      displacement = reshape(cnorml,[nvar, nvar])
+write(*,*) "done"
       call mopac_save(state, status)
       if (status /= 0) then
         properties%status = status
@@ -208,13 +182,11 @@ contains
     end subroutine mozyme_scf
   
     ! MOZYME geometry relaxation
-    module subroutine mozyme_relax(system, state, properties, relax_coord, relax_lattice)
+    module subroutine mozyme_relax(system, state, properties)
     !dec$ attributes dllexport :: mozyme_relax
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
-      double precision, dimension(:), intent(out) :: relax_coord
-      double precision, optional, dimension(:), intent(out) :: relax_lattice
       integer :: status
 
       keywrd = " MOZYME LBFGS ALLBONDS"
@@ -228,25 +200,9 @@ contains
         properties%status = status
         return
       end if
-      ! turn off lattice relaxation as needed
-      if (system%nlattice > 0 .and. .not. present(relax_lattice)) then
-        lopt(:,system%natom+1:system%natom+system%nlattice) = 0
-        nvar = 3*system%natom
-      end if
       ! call computational routine for LBFGS geometry optimization
       call lbfgs (xparam, escf)
       ! TO DO: lbfgs error handling
-      ! save relaxed geometry
-      if(size(relax_coord) < 3*system%natom) then
-        ! TO DO: error handling
-      end if
-      relax_coord = xparam(:3*system%natom)
-      if(system%nlattice > 0 .and. present(relax_lattice)) then
-        if(size(relax_lattice) < 3*system%nlattice) then
-          ! TO DO: error handling
-        end if
-        relax_lattice = xparam(3*system%natom+1:3*system%natom+3*system%nlattice)
-      end if
       call mozyme_save(state, status)
       if (status /= 0) then
         properties%status = status
@@ -254,5 +210,35 @@ contains
       end if
       call mopac_finalize(properties)
     end subroutine mozyme_relax
+
+    ! MOPAC vibrational calculation
+    module subroutine mozyme_vibe(system, state, properties)
+      !dec$ attributes dllexport :: mopac_vibe
+        type(mopac_system), intent(in) :: system
+        type(mozyme_state), intent(inout) :: state
+        type(mopac_properties), intent(out) :: properties
+        integer :: status
+  
+        keywrd = " FORCE NOREOR PULAY BONDS"
+        call mopac_initialize(system, status)
+        if (status /= 0) then
+          properties%status = status
+          return
+        end if
+        call mozyme_load(state, status)
+        if (status /= 0) then
+          properties%status = status
+          return
+        end if
+        ! call computational routine to evaluate vibrational matrix
+        call force ()
+        ! TO DO: force error handling
+        call mozyme_save(state, status)
+        if (status /= 0) then
+          properties%status = status
+          return
+        end if
+        call mopac_finalize(properties)
+      end subroutine mozyme_vibe
 
 end submodule mopac_api_operations

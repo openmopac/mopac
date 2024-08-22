@@ -77,7 +77,7 @@ contains
     integer, intent(out) :: status
     double precision, external :: seconds, C_triple_bond_C
     character(100) :: num2str
-    integer :: i, l, nelectron
+    integer :: i, j, k, nelectron
     double precision :: eat
 
     use_disk = .false.
@@ -161,21 +161,54 @@ contains
     end if
     ! insert geometry information into MOPAC data structures
     id = system%nlattice
-    nvar = natoms*3
     nat(:system%natom) = system%atom(:)
     labels(:system%natom) = system%atom(:)
     atmass(:natoms) = ams(labels(:))
-    xparam(:3*system%natom) = system%coord(:)
     geo(:,:system%natom) = reshape(system%coord,[3, system%natom])
-    do i=1, nvar
-      loc(1,i) = 1 + (i-1)/3
-      loc(2,i) = 1 + mod(i-1,3)
-    end do
     if (id > 0) then
+      nat(system%natom+1:system%natom+id) = 107
       labels(system%natom+1:system%natom+id) = 107
-      xparam(3*system%natom+1:3*system%natom+3*id) = system%lattice(:)
-      geo(:,system%natom+1:system%natom+id) = reshape(system%coord,[3, id])
+      geo(:,system%natom+1:system%natom+id) = reshape(system%lattice,[3, id])
     end if
+    ! set optimization flags & xparam
+    nvar = 0
+    do i=1, numat
+      if (system%move_atom(i)) then
+        lopt(:,i) = 1
+        nvar = nvar + 3
+      else
+        lopt(:,i) = 0
+      end if
+    end do
+    do i=1, id
+      if (system%move_lattice(i)) then
+        lopt(:,numat+i) = 1
+        nvar = nvar + 3
+      else
+        lopt(:,numat+i) = 0
+      end if
+    end do
+    k = 0
+    do i=1, numat
+      if (system%move_atom(i)) then
+        do j=1, 3
+          loc(1,k+j) = i
+          loc(2,k+j) = j
+          xparam(k+j) = system%coord(3*(i-1)+j)
+        end do
+        k = k + 3
+      end if
+    end do
+    do i=1, id
+      if (system%move_lattice(i)) then
+        do j=1, 3
+          loc(1,k+j) = numat+i
+          loc(2,k+j) = j
+          xparam(k+j) = system%lattice(3*(i-1)+j)
+        end do
+        k = k + 3
+      end if
+    end do
     ! update MOPAC state variables that do not reset
     numcal = numcal + 1
     job_no = job_no + 1
@@ -207,7 +240,6 @@ contains
     stress = 0.d0
     voigt = 0.d0
     ! initialize variables that need default values (Common_arrays_C)
-    lopt = 1
     na = 0
     nb = 0
     nc = 0
@@ -261,10 +293,10 @@ contains
     call setup_mopac_arrays(1,2)
     if (allocated(nw)) deallocate(nw)
     allocate(nw(numat))
-    l = 1
+    j = 1
     do i = 1, numat
-      nw(i) = l
-      l = l + ((nlast(i)-nfirst(i)+1)*(nlast(i)-nfirst(i)+2))/2
+      nw(i) = j
+      j = j + ((nlast(i)-nfirst(i)+1)*(nlast(i)-nfirst(i)+2))/2
     end do
     ! calculate the atomic energy, including sparkles for Ce-Yb
     atheat = 0.d0

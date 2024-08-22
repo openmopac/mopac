@@ -22,30 +22,34 @@ module mopac_api
   ! public derived types of the MOPAC API
   public :: mopac_system, mopac_properties, mopac_state, mozyme_state
   ! public subroutines of the MOPAC API
-  public :: mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax
+  public :: mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax, mozyme_vibe
 
   ! data that defines the atomistic system and MOPAC job options
   type :: mopac_system
     ! number of atoms
     integer :: natom = 0
-    ! number of lattice vectors / translation vectors / periodic dimensions
-    integer :: nlattice = 0
     ! net charge
     integer :: charge = 0
     ! number of spin excitations, floor[(number of alpha electrons)/2 - (number of beta electrons)/2]
     integer :: spin = 0
-    ! COSMO dielectric constant, must be 1.d0 (no dielectric medium) for nlattice > 0
+    ! dielectric constant for COSMO implicit solvent, must be 1 (no solvent) for nlattice > 0
     double precision :: epsilon = 1.d0
-    ! external hydrostatic pressure (Gigapascals)
-    double precision :: pressure = 0.d0
     ! semiempirical model: PM7 = 0, PM6-D3H4 = 1, PM6-ORG = 2, PM6 = 3, AM1 = 4, RM1 = 5
     integer :: model = 0
     ! atomic number of each atom [natom]
     integer, dimension (:), allocatable :: atom
-    ! (x,y,z) Cartesian coordinates of each atom (Angstroms) [3*natom]
+    ! (x,y,z) coordinates of each atom (Angstroms) [3*natom]
     double precision, dimension (:), allocatable :: coord
-    ! lattice/translation vectors (Angstroms) [3*nlattice]
+    ! flag to determine if each atom is allowed to move [natom]
+    logical, dimension (:), allocatable :: move_atom
+    ! number of lattice vectors / translation vectors / periodic dimensions
+    integer :: nlattice = 0
+    ! external hydrostatic pressure (Gigapascals)
+    double precision :: pressure = 0.d0
+    ! (x,y,z) coordinates of each lattice vectors (Angstroms) [3*nlattice]
     double precision, dimension (:), allocatable :: lattice
+    ! flag to determine if each lattice vector is allowed to move [nlattice]
+    logical, dimension (:), allocatable :: move_lattice
     ! numerical tolerances (relative to their default values)
     double precision :: tolerance = 1.d0
     ! time limit for a MOPAC calculation (seconds)
@@ -56,16 +60,24 @@ module mopac_api
   type :: mopac_properties
     ! heat of formation (kcal/mol)
     double precision :: heat
-    ! atomic gradients of heat (kcal/mol/Angstrom) [3*natom]
-    double precision, dimension (:), allocatable :: coord_deriv
-    ! lattice gradients of heat (kcal/mol/Angstrom) [3*nlattice]
-    double precision, dimension (:), allocatable :: lattice_deriv
-    ! atomic partial charges [natom]
-    double precision, dimension (:), allocatable :: charge
     ! dipole moment vector (Debye)
     double precision, dimension (3) :: dipole
-    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy) for nlattice == 3
-    double precision, dimension (6) :: stress
+    ! atomic partial charges [natom]
+    double precision, dimension (:), allocatable :: charge
+    ! number of moveable atoms
+    integer :: natom_move
+    ! index of each moveable atom [natom_move]
+    integer, dimension (:), allocatable :: atom_move
+    ! (x,y,z) coordinates of each moveable atom (Angstroms) [3*natom_move]
+    double precision, dimension (:), allocatable :: coord_update
+    ! (x,y,z) heat gradients for each moveable atom (kcal/mol/Angstrom) [3*natom_move]
+    double precision, dimension (:), allocatable :: coord_deriv
+    ! availability of vibrational properties
+    logical :: calc_vibe
+    ! vibrational frequencies of normal modes (1/cm) [3*natom_move]
+    double precision, dimension (:), allocatable :: freq
+    ! displacement vectors of normal modes [3*natom_move,3*natom_move]
+    double precision, dimension (:,:), allocatable :: disp
     ! bond-order matrix in compressed sparse column (CSC) matrix format
     ! with insignificant bond orders (<0.001) truncated
     ! diagonal matrix entries are atomic valencies
@@ -75,6 +87,16 @@ module mopac_api
     integer, dimension (:), allocatable :: bond_atom
     ! > bond order of atoms bonded to each atom in CSC format [bond_index(natom+1)-1]
     double precision, dimension (:), allocatable :: bond_order
+    ! number of moveable lattice vectors
+    integer :: nlattice_move
+    ! index of each moveable lattice vector [nlattice_move]
+    integer, dimension (:), allocatable :: lattice_move
+    ! (x,y,z) coordinates of each moveable lattice vectors (Angstroms) [3*nlattice_move]
+    double precision, dimension (:), allocatable :: lattice_update
+    ! (x,y,z) heat gradients for each moveable lattice vector (kcal/mol/Angstrom) [3*nlattice_move]
+    double precision, dimension (:), allocatable :: lattice_deriv
+    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy) for nlattice_move == 3
+    double precision, dimension (6) :: stress
     ! status of MOPAC job
     integer :: status
     ! TO DO: compile list of status values & their meaning
@@ -86,7 +108,7 @@ module mopac_api
     logical :: save_state = .false.
     ! MOPAC data format is copied from molkst_C and Common_arrays_C modules
     ! > number of matrix elements in packed lower triangle matrix format
-    integer mpack
+    integer :: mpack
     ! > alpha density matrix [mpack]
     double precision, dimension (:), allocatable :: pa
     ! > beta density matrix [mpack]
@@ -141,27 +163,23 @@ module mopac_api
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
     end subroutine mopac_scf
-  
+
     ! MOPAC geometry relaxation
-    module subroutine mopac_relax(system, state, properties, relax_coord, relax_lattice)
+    module subroutine mopac_relax(system, state, properties)
     !dec$ attributes dllexport :: mopac_relax
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
-      double precision, dimension(:), intent(out) :: relax_coord
-      double precision, optional, dimension(:), intent(out) :: relax_lattice
     end subroutine mopac_relax
-  
+
     ! MOPAC vibrational calculation
-    module subroutine mopac_vibe(system, state, properties, frequency, displacement)
+    module subroutine mopac_vibe(system, state, properties)
     !dec$ attributes dllexport :: mopac_vibe
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
-      double precision, dimension(:), intent(out) :: frequency
-      double precision, optional, dimension(:,:), intent(out) :: displacement
     end subroutine mopac_vibe
-  
+
     ! MOZYME electronic ground state calculation
     module subroutine mozyme_scf(system, state, properties)
     !dec$ attributes dllexport :: mozyme_scf
@@ -169,17 +187,22 @@ module mopac_api
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
     end subroutine mozyme_scf
-  
+
     ! MOZYME geometry relaxation
-    module subroutine mozyme_relax(system, state, properties, relax_coord, relax_lattice)
+    module subroutine mozyme_relax(system, state, properties)
     !dec$ attributes dllexport :: mozyme_relax
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
-      double precision, dimension(:), intent(out) :: relax_coord
-      double precision, optional, dimension(:), intent(out) :: relax_lattice
     end subroutine mozyme_relax
 
+    ! MOZYME vibrational calculation
+    module subroutine mozyme_vibe(system, state, properties)
+      !dec$ attributes dllexport :: mopac_vibe
+        type(mopac_system), intent(in) :: system
+        type(mozyme_state), intent(inout) :: state
+        type(mopac_properties), intent(out) :: properties
+      end subroutine mozyme_vibe
   end interface
 
 end module mopac_api
