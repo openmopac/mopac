@@ -23,6 +23,9 @@ program mopac_api_test
     call test_mopac_scf1(nfail)
     call test_mopac_relax1(nfail)
 !    call test_mopac_vibe1(nfail)
+    call test_mozyme_scf1(nfail)
+    call test_mozyme_relax1(nfail)
+!    call test_mozyme_vibe1(nfail)
     call exit(nfail)
 end program mopac_api_test
 
@@ -308,6 +311,184 @@ subroutine test_mopac_vibe1(nfail)
     call mopac_vibe(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mopac_vibe1
+
+subroutine test_mozyme_scf1(nfail)
+    use mopac_api
+    implicit none
+    integer, intent(inout) :: nfail
+    type(mopac_system) :: test_in
+    type(mozyme_state) :: test_restore
+    type(mopac_properties) :: test_target
+    type(mopac_properties) :: test_out
+    character(20) :: test_name
+    integer :: i
+    test_name = 'H2O SCF'
+
+    ! SCF calculation of H2O
+    test_in%natom = 3
+    allocate(test_in%atom(3))
+    test_in%atom(1) = 1
+    test_in%atom(2) = 1
+    test_in%atom(3) = 8
+    allocate(test_in%coord(3*3))
+    test_in%coord(1) = 0.76d0
+    test_in%coord(2) = 0.59d0
+    test_in%coord(3) = 0.0d0
+    test_in%coord(4) = -0.76d0
+    test_in%coord(5) = 0.59d0
+    test_in%coord(6) = 0.0d0
+    test_in%coord(7) = 0.0d0
+    test_in%coord(8) = 0.0d0
+    test_in%coord(9) = 0.0d0
+    allocate(test_in%move_atom(3))
+    test_in%move_atom = .true.
+    test_target%heat = -57.76975d0
+    test_target%natom_move = 3
+    allocate(test_target%atom_move(3))
+    do i=1, 3
+      test_target%atom_move(i) = i
+    end do
+    allocate(test_target%coord_update(3*3))
+    test_target%coord_update = test_in%coord
+    allocate(test_target%coord_deriv(3*3))
+    test_target%coord_deriv(1) = 2.307865d0
+    test_target%coord_deriv(2) = 2.742432d0
+    test_target%coord_deriv(3) = 0.0d0
+    test_target%coord_deriv(4) = -2.307865d0
+    test_target%coord_deriv(5) = 2.711610d0
+    test_target%coord_deriv(6) = 0.0d0
+    test_target%coord_deriv(7) = 0.0d0
+    test_target%coord_deriv(8) = -5.454042d0
+    test_target%coord_deriv(9) = 0.0d0
+    allocate(test_target%charge(3))
+    test_target%charge(1) = 0.322260d0
+    test_target%charge(2) = 0.322260d0
+    test_target%charge(3) = -0.644520d0
+    test_target%dipole(1) = 0.0d0
+    test_target%dipole(2) = 2.147d0
+    test_target%dipole(3) = 0.0d0
+    test_target%stress(:) = 0.0d0
+    allocate(test_target%bond_index(4))
+    test_target%bond_index(1) = 1
+    test_target%bond_index(2) = 3
+    test_target%bond_index(3) = 5
+    test_target%bond_index(4) = 8
+    allocate(test_target%bond_atom(7))
+    test_target%bond_atom(1) = 1
+    test_target%bond_atom(2) = 3
+    test_target%bond_atom(3) = 2
+    test_target%bond_atom(4) = 3
+    test_target%bond_atom(5) = 1
+    test_target%bond_atom(6) = 2
+    test_target%bond_atom(7) = 3
+    allocate(test_target%bond_order(7))
+    test_target%bond_order(1) = 0.896d0
+    test_target%bond_order(2) = 0.895d0
+    test_target%bond_order(3) = 0.896d0
+    test_target%bond_order(4) = 0.895d0
+    test_target%bond_order(5) = 0.895d0
+    test_target%bond_order(6) = 0.895d0
+    test_target%bond_order(7) = 1.791d0
+    test_target%calc_vibe = .false.
+    test_target%nlattice_move = 0
+    test_target%status = 0
+
+    call mozyme_scf(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target, test_out, nfail)
+end subroutine test_mozyme_scf1
+
+subroutine test_mozyme_relax1(nfail)
+    use mopac_api
+    implicit none
+    integer, intent(inout) :: nfail
+    type(mopac_system) :: test_in
+    type(mozyme_state) :: test_restore
+    type(mopac_properties) :: test_target
+    type(mopac_properties) :: test_out
+    character(20) :: test_name
+    integer :: i
+    test_name = 'H2O relax'
+
+    ! 1 - geometry relaxation of H2O
+    test_in%natom = 3
+    allocate(test_in%atom(3))
+    test_in%atom(1) = 1
+    test_in%atom(2) = 1
+    test_in%atom(3) = 8
+    allocate(test_in%coord(3*3))
+    test_in%coord(1) = 0.8d0
+    test_in%coord(2) = 0.4d0
+    test_in%coord(3) = 0.0d0
+    test_in%coord(4) = -0.8d0
+    test_in%coord(5) = 0.4d0
+    test_in%coord(6) = 0.0d0
+    test_in%coord(7) = 0.0d0
+    test_in%coord(8) = 0.0d0
+    test_in%coord(9) = 0.0d0
+    allocate(test_in%move_atom(3))
+    test_in%move_atom = .true.
+    test_target%heat = -57.79952d0
+    test_target%natom_move = 3
+    allocate(test_target%atom_move(3))
+    do i=1, 3
+      test_target%atom_move(i) = i
+    end do
+    allocate(test_target%coord_update(3*3))
+    test_target%coord_update(1) = 0.758862835d0
+    test_target%coord_update(2) = 0.486805290d0
+    test_target%coord_update(3) = 0.0d0
+    test_target%coord_update(4) = -0.759709263d0
+    test_target%coord_update(5) = 0.485142519d0
+    test_target%coord_update(6) = 0.0d0
+    test_target%coord_update(7) = 0.000846434d0
+    test_target%coord_update(8) = -0.093004709d0
+    test_target%coord_update(9) = 0.0d0
+    allocate(test_target%coord_deriv(3*3))
+    test_target%coord_deriv(1) = -0.565914d0
+    test_target%coord_deriv(2) = -0.294814d0
+    test_target%coord_deriv(3) = 0.0d0
+    test_target%coord_deriv(4) = 0.063505d0
+    test_target%coord_deriv(5) = 0.058243d0
+    test_target%coord_deriv(6) = 0.0d0
+    test_target%coord_deriv(7) = 0.502409d0
+    test_target%coord_deriv(8) = 0.236571d0
+    test_target%coord_deriv(9) = 0.0d0
+    allocate(test_target%charge(3))
+    test_target%charge(1) = 0.324544d0
+    test_target%charge(2) = 0.324720d0
+    test_target%charge(3) = -0.649264d0
+    test_target%dipole(1) = -0.005d0
+    test_target%dipole(2) = 2.129d0
+    test_target%dipole(3) = 0.0d0
+    test_target%stress(:) = 0.0d0
+    allocate(test_target%bond_index(4))
+    test_target%bond_index(1) = 1
+    test_target%bond_index(2) = 3
+    test_target%bond_index(3) = 5
+    test_target%bond_index(4) = 8
+    allocate(test_target%bond_atom(7))
+    test_target%bond_atom(1) = 1
+    test_target%bond_atom(2) = 3
+    test_target%bond_atom(3) = 2
+    test_target%bond_atom(4) = 3
+    test_target%bond_atom(5) = 1
+    test_target%bond_atom(6) = 2
+    test_target%bond_atom(7) = 3
+    allocate(test_target%bond_order(7))
+    test_target%bond_order(1) = 0.895d0
+    test_target%bond_order(2) = 0.894d0
+    test_target%bond_order(3) = 0.895d0
+    test_target%bond_order(4) = 0.894d0
+    test_target%bond_order(5) = 0.894d0
+    test_target%bond_order(6) = 0.894d0
+    test_target%bond_order(7) = 1.788d0
+    test_target%calc_vibe = .false.
+    test_target%nlattice_move = 0
+    test_target%status = 0
+
+    call mozyme_relax(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target, test_out, nfail)
+end subroutine test_mozyme_relax1
 
 subroutine test_output(name, input, target, output, nfail)
     use mopac_api
