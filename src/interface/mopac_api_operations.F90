@@ -159,7 +159,7 @@ write(*,*) "done"
       type(mopac_properties), intent(out) :: properties
       integer :: status
 
-      keywrd = " MOZYME 1SCF ALLBONDS"
+      keywrd = " MOZYME 1SCF GRADIENTS ALLBONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
