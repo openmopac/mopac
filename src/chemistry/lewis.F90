@@ -258,8 +258,10 @@ subroutine remove_bond(i)
     prt = (icalcn /= numcal)
     if (prt) icalcn = numcal
     allocate (im(natoms))
-    inquire(unit=ilog, opened=opend)
-    if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis')
+    if (log) then
+      inquire(unit=ilog, opened=opend)
+      if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis')
+    end if
     j = 0
     k = 0
     do i = 1, natoms
@@ -305,7 +307,6 @@ subroutine remove_bond(i)
               elemnt (nat(k))(j:2), im(k),")"
             call mopend(trim(line))
             write(iw,"(10x,a,i"//num1//",a,/)")"(Label for atom ", i, ": """//trim(txtatm(i))//""")"
-            inquire(unit=ilog, opened=opend)
             if (log) write (ilog, "(a)")trim(line)
             ibad = ibad + 1
           end if
