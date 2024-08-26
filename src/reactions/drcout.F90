@@ -98,7 +98,7 @@
           last_rxn_coord = rxn_coord
         end if
       end if
-      if (jloop==0 .or. mod(jloop,iprint)==1) then
+      if (jloop==0 .or. mod(jloop-1,iprint)==0) then
         if (drc) then
           write (line, '('' FEMTOSECONDS  POINT  POTENTIAL + KINETIC  =   TOTAL     ERROR    REF%   MOVEMENT'')')
         else
