@@ -192,11 +192,11 @@ module mopac_api
 
     ! MOZYME vibrational calculation
     module subroutine mozyme_vibe(system, state, properties)
-      !dec$ attributes dllexport :: mopac_vibe
-        type(mopac_system), intent(in) :: system
-        type(mozyme_state), intent(inout) :: state
-        type(mopac_properties), intent(out) :: properties
-      end subroutine mozyme_vibe
+    !dec$ attributes dllexport :: mozyme_vibe
+      type(mopac_system), intent(in) :: system
+      type(mozyme_state), intent(inout) :: state
+      type(mopac_properties), intent(out) :: properties
+    end subroutine mozyme_vibe
   end interface
 
 end module mopac_api
