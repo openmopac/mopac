@@ -110,7 +110,7 @@ double precision function dipole_for_MOZYME (dipvec, mode)
       dip(j, 3) = dip(j, 2) + dip(j, 1)
     end do
     dip(4, :) = Sqrt (dip(1, :)**2+dip(2, :)**2+dip(3, :)**2)
-    if (force) then
+    if (force .or. mode == 2) then
       dipvec(1) = dip(1,3)
       dipvec(2) = dip(2,3)
       dipvec(3) = dip(3,3)

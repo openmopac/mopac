@@ -15,8 +15,8 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api) mopac_api_operations
-  use Common_arrays_C, only: xparam, grad
-  use molkst_C, only: keywrd, escf, moperr
+  use Common_arrays_C, only: xparam, grad, lopt
+  use molkst_C, only: keywrd, escf, moperr, nvar
   implicit none
 
   interface
@@ -68,7 +68,7 @@ contains
       type(mopac_properties), intent(out) :: properties
       integer :: status
 
-      keywrd = " 1SCF PULAY BONDS"
+      keywrd = " 1SCF PULAY GRADIENTS BONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
@@ -126,9 +126,9 @@ contains
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
-      integer :: status
+      integer :: status, i
 
-      keywrd = " FORCE NOREOR PULAY BONDS"
+      keywrd = " FORCETS PULAY BONDS"
       call mopac_initialize(system, status)
       if (status /= 0) then
         properties%status = status
@@ -142,7 +142,14 @@ contains
       ! call computational routine to evaluate vibrational matrix
       call force ()
       ! TO DO: force error handling
-write(*,*) "done"
+      ! recompute nvar because it is zero'd after vibrational calculations
+      nvar = 0
+      do i=1, system%natom+system%nlattice
+        if (lopt(1,i) == 1) nvar = nvar + 3
+      end do
+      ! call computational routine for standard properties calculations
+      call compfg (xparam, .true., escf, .true., grad, .true.)
+      ! TO DO: compfg error handling
       call mopac_save(state, status)
       if (status /= 0) then
         properties%status = status
@@ -217,9 +224,9 @@ write(*,*) "done"
         type(mopac_system), intent(in) :: system
         type(mozyme_state), intent(inout) :: state
         type(mopac_properties), intent(out) :: properties
-        integer :: status
+        integer :: status, i
   
-        keywrd = " FORCE NOREOR PULAY BONDS"
+        keywrd = " MOZYME FORCETS PULAY BONDS"
         call mopac_initialize(system, status)
         if (status /= 0) then
           properties%status = status
@@ -233,6 +240,13 @@ write(*,*) "done"
         ! call computational routine to evaluate vibrational matrix
         call force ()
         ! TO DO: force error handling
+        ! recompute nvar because it is zero'd after vibrational calculations
+        nvar = 0
+        do i=1, system%natom+system%nlattice
+          if (lopt(1,i) == 1) nvar = nvar + 3
+        end do
+        ! call computational routine for standard properties calculations
+        call compfg (xparam, .true., escf, .true., grad, .true.)
         call mozyme_save(state, status)
         if (status /= 0) then
           properties%status = status

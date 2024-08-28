@@ -28,6 +28,8 @@ module mopac_api
   type :: mopac_system
     ! number of atoms
     integer :: natom = 0
+    ! number of atoms that are allowed to move (first natom_move atoms in array)
+    integer :: natom_move = 0
     ! net charge
     integer :: charge = 0
     ! number of spin excitations, floor[(number of alpha electrons)/2 - (number of beta electrons)/2]
@@ -44,13 +46,13 @@ module mopac_api
     logical, dimension (:), allocatable :: move_atom
     ! number of lattice vectors / translation vectors / periodic dimensions
     integer :: nlattice = 0
+    ! number of lattice vectors that are allowed to move (first nlattice_move vectors in array)
+    integer :: nlattice_move = 0
     ! external hydrostatic pressure (Gigapascals)
     double precision :: pressure = 0.d0
     ! (x,y,z) coordinates of each lattice vectors (Angstroms) [3*nlattice]
     double precision, dimension (:), allocatable :: lattice
-    ! flag to determine if each lattice vector is allowed to move [nlattice]
-    logical, dimension (:), allocatable :: move_lattice
-    ! numerical tolerances (relative to their default values)
+    ! relative numerical tolerances (equivalent to GNORM and RELSCF keyword values)
     double precision :: tolerance = 1.d0
     ! time limit for a MOPAC calculation (seconds)
     integer :: max_time = 3600
@@ -64,10 +66,6 @@ module mopac_api
     double precision, dimension (3) :: dipole
     ! atomic partial charges [natom]
     double precision, dimension (:), allocatable :: charge
-    ! number of moveable atoms
-    integer :: natom_move
-    ! index of each moveable atom [natom_move]
-    integer, dimension (:), allocatable :: atom_move
     ! (x,y,z) coordinates of each moveable atom (Angstroms) [3*natom_move]
     double precision, dimension (:), allocatable :: coord_update
     ! (x,y,z) heat gradients for each moveable atom (kcal/mol/Angstrom) [3*natom_move]
@@ -76,7 +74,7 @@ module mopac_api
     logical :: calc_vibe
     ! vibrational frequencies of normal modes (1/cm) [3*natom_move]
     double precision, dimension (:), allocatable :: freq
-    ! displacement vectors of normal modes [3*natom_move,3*natom_move]
+    ! (x,y,z) displacement vectors of normal modes [3*natom_move,3*natom_move]
     double precision, dimension (:,:), allocatable :: disp
     ! bond-order matrix in compressed sparse column (CSC) matrix format
     ! with insignificant bond orders (<0.001) truncated
@@ -87,15 +85,11 @@ module mopac_api
     integer, dimension (:), allocatable :: bond_atom
     ! > bond order of atoms bonded to each atom in CSC format [bond_index(natom+1)-1]
     double precision, dimension (:), allocatable :: bond_order
-    ! number of moveable lattice vectors
-    integer :: nlattice_move
-    ! index of each moveable lattice vector [nlattice_move]
-    integer, dimension (:), allocatable :: lattice_move
     ! (x,y,z) coordinates of each moveable lattice vectors (Angstroms) [3*nlattice_move]
     double precision, dimension (:), allocatable :: lattice_update
     ! (x,y,z) heat gradients for each moveable lattice vector (kcal/mol/Angstrom) [3*nlattice_move]
     double precision, dimension (:), allocatable :: lattice_deriv
-    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy) for nlattice_move == 3
+    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy), if nlattice_move == 3
     double precision, dimension (6) :: stress
     ! status of MOPAC job
     integer :: status

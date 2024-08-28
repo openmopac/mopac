@@ -77,7 +77,7 @@ contains
     integer, intent(out) :: status
     double precision, external :: seconds, C_triple_bond_C
     character(100) :: num2str
-    integer :: i, j, k, nelectron
+    integer :: i, j, nelectron
     double precision :: eat
 
     use_disk = .false.
@@ -171,44 +171,26 @@ contains
       geo(:,system%natom+1:system%natom+id) = reshape(system%lattice,[3, id])
     end if
     ! set optimization flags & xparam
-    nvar = 0
-    do i=1, numat
-      if (system%move_atom(i)) then
-        lopt(:,i) = 1
-        nvar = nvar + 3
-      else
-        lopt(:,i) = 0
-      end if
+    nvar = 3*system%natom_move + 3*system%nlattice_move
+    lopt(:,:system%natom_move) = 1
+    lopt(:,system%natom_move+1:) = 0
+    xparam(:3*system%natom_move) = system%coord(:3*system%natom_move)
+    do i=1, system%natom_move
+      do j=1, 3
+        loc(1,3*(i-1)+j) = i
+        loc(2,3*(i-1)+j) = j
+      end do
     end do
-    do i=1, id
-      if (system%move_lattice(i)) then
-        lopt(:,numat+i) = 1
-        nvar = nvar + 3
-      else
-        lopt(:,numat+i) = 0
-      end if
-    end do
-    k = 0
-    do i=1, numat
-      if (system%move_atom(i)) then
+    if (system%nlattice_move > 0) then
+      lopt(:,numat+1:numat+system%nlattice_move) = 1
+      xparam(3*system%natom_move+1:) = system%lattice(:3*system%nlattice_move)
+      do i=1, system%nlattice_move
         do j=1, 3
-          loc(1,k+j) = i
-          loc(2,k+j) = j
-          xparam(k+j) = system%coord(3*(i-1)+j)
+          loc(1,3*system%natom_move+3*(i-1)+j) = numat+i
+          loc(2,3*system%natom_move+3*(i-1)+j) = j
         end do
-        k = k + 3
-      end if
-    end do
-    do i=1, id
-      if (system%move_lattice(i)) then
-        do j=1, 3
-          loc(1,k+j) = numat+i
-          loc(2,k+j) = j
-          xparam(k+j) = system%lattice(3*(i-1)+j)
-        end do
-        k = k + 3
-      end if
-    end do
+      end do  
+    end if
     ! update MOPAC state variables that do not reset
     numcal = numcal + 1
     job_no = job_no + 1

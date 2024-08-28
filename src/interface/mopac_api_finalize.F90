@@ -26,8 +26,8 @@ submodule (mopac_api:mopac_api_operations) mopac_api_finalize
     bondab ! bond order matrix in packed triangular format
   use molkst_C, only : escf, & ! heat of formation
     numat, & ! number of real atoms
-    id, & ! number of lattice vectors
     nvar, & ! number of coordinates to be optimized
+    id, & ! number of lattice vectors
     keywrd, & ! keyword string to adjust MOPAC behavior
     voigt, & ! Voigt stress tensor
     mozyme, & ! logical flag for MOZYME calculations
@@ -46,13 +46,12 @@ contains
     type(mopac_properties), intent(out) :: properties
     integer, external :: ijbo
     double precision, external :: dipole, dipole_for_MOZYME
-    integer :: i, j, k, kk, kl, ku, io, jo
+    integer :: i, j, k, kk, kl, ku, io, jo, natom_move, nlattice_move
     double precision :: valenc, sum, dumy(3)
 
     ! close dummy output file to free up /dev/null
     close(iw)
     ! deallocate any prior arrays
-    if (allocated(properties%atom_move)) deallocate(properties%atom_move)
     if (allocated(properties%coord_update)) deallocate(properties%coord_update)
     if (allocated(properties%coord_deriv)) deallocate(properties%coord_deriv)
     if (allocated(properties%freq)) deallocate(properties%freq)
@@ -61,56 +60,41 @@ contains
     if (allocated(properties%bond_index)) deallocate(properties%bond_index)
     if (allocated(properties%bond_atom)) deallocate(properties%bond_atom)
     if (allocated(properties%bond_order)) deallocate(properties%bond_order)
-    if (allocated(properties%lattice_move)) deallocate(properties%lattice_move)
     if (allocated(properties%lattice_update)) deallocate(properties%lattice_update)
     if (allocated(properties%lattice_deriv)) deallocate(properties%lattice_deriv)
     ! trigger charge & dipole calculation
     call chrge (p, q)
     q(:numat) = tore(nat(:numat)) - q(:numat)
     if (mozyme) then
-      sum = dipole_for_MOZYME(dumy, 1)
+      sum = dipole_for_MOZYME(dumy, 2)
+      properties%dipole = dumy
     else
       sum = dipole(p, xparam, dumy, 1)
+      properties%dipole = dip(:3,3)
     end if
     ! save basic properties
     properties%heat = escf
-    properties%dipole = dip(:3,3)
     allocate(properties%charge(numat))
     properties%charge = q(:numat)
     properties%stress = voigt
-    ! create index map for moveable coordinates
-    properties%natom_move = 0
-    properties%nlattice_move = 0
-    do i = 1, nvar/3
+    natom_move = nvar/3
+    nlattice_move = 0
+    do i=nvar/3-id, nvar/3
       if (nat(loc(1,3*i)) == 107) then
-        properties%nlattice_move = properties%nlattice_move + 1
-      else
-        properties%natom_move = properties%natom_move + 1
-      end if
-    end do
-    allocate(properties%atom_move(properties%natom_move))
-    allocate(properties%lattice_move(properties%nlattice_move))
-    j = 0
-    k = 0
-    do i = 1, nvar/3
-      if (nat(loc(1,3*i)) == 107) then
-        j = j + 1
-        properties%lattice_move(j) = loc(1,3*i) - numat
-      else
-        k = k + 1
-        properties%atom_move(k) = loc(1,3*i)
+        natom_move = natom_move - 1
+        nlattice_move = nlattice_move + 1
       end if
     end do
     ! save properties of moveable coordinates
-    allocate(properties%coord_update(3*properties%natom_move))
-    properties%coord_update = xparam(:3*properties%natom_move)
-    allocate(properties%coord_deriv(3*properties%natom_move))
-    properties%coord_deriv = grad(:3*properties%natom_move)
-    if (properties%nlattice_move > 0) then
-      allocate(properties%lattice_update(3*properties%nlattice_move))
-      properties%lattice_update = xparam(3*properties%natom_move+1:)
-      allocate(properties%lattice_deriv(3*properties%nlattice_move))
-      properties%lattice_deriv = grad(3*properties%natom_move+1:)
+    allocate(properties%coord_update(3*natom_move))
+    properties%coord_update = xparam(:3*natom_move)
+    allocate(properties%coord_deriv(3*natom_move))
+    properties%coord_deriv = grad(:3*natom_move)
+    if (nlattice_move > 0) then
+      allocate(properties%lattice_update(3*nlattice_move))
+      properties%lattice_update = xparam(3*natom_move+1:)
+      allocate(properties%lattice_deriv(3*nlattice_move))
+      properties%lattice_deriv = grad(3*natom_move+1:)
     end if
     ! save vibrational properties if available
     if (index(keywrd, " FORCE") /= 0) then
