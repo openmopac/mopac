@@ -19,8 +19,7 @@
 set(src_list 
     superd matout eigen pdbout modchg to_screen
     prtpka timout matou1 geout enpart modgra
-    denrot geoutg to_screen_C pinout xxx writmo
-    output_rama
+    denrot geoutg to_screen_C xxx writmo output_rama
    )
 #-----------------------------------------------
 # Add a list of source files to the target

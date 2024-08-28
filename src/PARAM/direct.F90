@@ -23,7 +23,7 @@ subroutine direct(cycle_no)
     heats, refhof
 !
     use molkst_C, only : koment, title,   tleft, gnorm, last, nvar,  &
-    moperr,  atheat, norbs, is_PARAM, id, rjkab1, keywrd, line, time0
+    moperr,  atheat, norbs, is_PARAM, id, rjkab1, keywrd, line, time0, use_disk
     use cosmo_C, only : iseps, useps
 !
     use chanel_C, only : iw, ir
@@ -113,7 +113,7 @@ subroutine direct(cycle_no)
       call calpar
       call getmol (loop)
       write(iw,*)trim(koment)
-      if (large) then
+      if (large .and. use_disk) then
         endfile (iw) 
         backspace (iw) 
       end if
@@ -467,7 +467,7 @@ subroutine direct(cycle_no)
       end if
       itime = i
       write(iw,*)trim(koment)//" end"
-      if (large) then
+      if (large .and. use_disk) then
         endfile (iw) 
         backspace (iw) 
       end if

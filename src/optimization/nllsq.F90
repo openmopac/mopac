@@ -20,7 +20,7 @@
 !-----------------------------------------------
       use chanel_C, only : iw, ilog, igpt, log
       use molkst_C, only : iflepo, keywrd, last, moperr, escf, nvar, &
-      & tleft, nscf, tdump, time0, line
+      & tleft, nscf, tdump, time0, line, use_disk
       use common_arrays_C, only : xparam, grad
       implicit none
       double precision, dimension (:,:), allocatable  :: q, r
@@ -464,19 +464,25 @@
                  icyc, min(tcycle,9999.99D0), tprt, txt, &
                  & min(sqrt(ssq),999999.999D0), escf
         write(iw,"(a)")line(:len_trim(line))
-        endfile (iw)
-        backspace (iw)
+        if (use_disk) then
+          endfile (iw)
+          backspace (iw)
+        end if
         if (log) write (ilog, "(a)")line(:len_trim(line))
         call to_screen(line)
-        endfile (iw)
-        backspace (iw)
+        if (use_disk) then
+          endfile (iw)
+          backspace (iw)
+        end if
         if (log) then
           endfile (ilog)
           backspace (ilog)
         end if
       end if
-      endfile (iw)
-      backspace (iw)
+      if (use_disk) then
+        endfile (iw)
+        backspace (iw)
+      end if
       if (log) then
         endfile (ilog)
         backspace (ilog)

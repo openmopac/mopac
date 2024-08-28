@@ -643,7 +643,6 @@
 
   99  if (allocated(dipt))    deallocate (dipt)
       if (allocated(travel))  deallocate (travel)
-      if (allocated(freq))    deallocate (freq)
       if (allocated(redmas))  deallocate (redmas)
       if (store_natoms /= natoms + id) then
         natoms = -30; numat = -30
