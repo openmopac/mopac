@@ -136,7 +136,7 @@
       end if
       if (id > 0) then
         natoms = numat + id
-        nvar = nvar - 3*id ! No need to check for TS - solids can't have transition states.
+        if(.not. ts) nvar = nvar - 3*id
         labels(numat + 1:numat + id) = 107
       end if
       na = 0
