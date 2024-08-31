@@ -125,6 +125,7 @@
       if (numat == 0) go to 50
       if (nlast(numat) /= nr) go to 50
       do i = 1, numat
+        if (iflag == 5 .and. 3*i > nr) exit
         jlo = nfirst(i)
         jhi = nlast(i)
         l = nat(i)
