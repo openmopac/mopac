@@ -251,7 +251,7 @@
       nlower = (norbs*(norbs + 1))/2
       call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 3)
 !
-      pb = pb*store
+      pb(:ifact(norbs+1)) = pb(:ifact(norbs+1))*store(:ifact(norbs+1))
       summ = 0.D0
       do i = 1, norbs
         sum = 0

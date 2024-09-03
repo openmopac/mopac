@@ -136,7 +136,7 @@
       end if
       if (id > 0) then
         natoms = numat + id
-        nvar = nvar - 3*id ! No need to check for TS - solids can't have transition states.
+        if(.not. ts) nvar = nvar - 3*id
         labels(numat + 1:numat + id) = 107
       end if
       na = 0
@@ -329,7 +329,7 @@
       end do
       if (debug) then
         write (iw, '(2/10X,'' FULL FORCE MATRIX, INVOKED BY "DFORCE"'')')
-        if (index(keywrd, " NOREOR") == 0) then
+        if (index(keywrd, " NOREOR") == 0 .and. .not. ts) then
           write(iw,'(/10x,a)')" Caution: NOREOR is NOT present, therefore system will be oriented"
           write(iw,'(10x,a)')" so that the moments of inertia are along the Cartesian axes."
         end if

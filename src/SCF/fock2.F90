@@ -30,8 +30,8 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer  :: numat, mode
-      integer  :: nfirst(numat_ref)
-      integer  :: nlast(numat_ref)
+      integer  :: nfirst(abs(numat))
+      integer  :: nlast(abs(numat))
       double precision  :: f(mpack)
       double precision , intent(in) :: ptot(mpack)
       double precision  :: p(mpack)
@@ -87,6 +87,8 @@
 !
 !   SET UP ARRAY OF LOWER HALF TRIANGLE INDICES (PASCAL'S TRIANGLE)
 !
+        ifact = 0  ! the bookkeeping used in dhc can read past ifact(norbs), which
+        i1fact = 0 ! explains the extended size of these arrays and their need for zero-padding
         do i = 1, norbs
           ifact(i) = (i*(i - 1))/2
           i1fact(i) = ifact(i) + i
