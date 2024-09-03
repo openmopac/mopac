@@ -94,7 +94,7 @@ contains
     ! initialize CODATA fundamental constants
     fpc(:) = fpcref(1,:)
     ! assemble virtual keyword line
-    keywrd = trim(keywrd) // " LET NOSYM"
+    keywrd = trim(keywrd) // " LET NOSYM GEO-OK"
     write(num2str,'(i6)') system%charge
     keywrd = trim(keywrd) // " CHARGE=" // adjustl(num2str)
     if (system%pressure /= 0.d0) then
