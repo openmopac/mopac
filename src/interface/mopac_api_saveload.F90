@@ -24,52 +24,63 @@ submodule (mopac_api:mopac_api_operations) mopac_api_saveload
 contains
 
   ! save MOPAC density matrices
-  module subroutine mopac_save(state, status)
+  module subroutine mopac_save(state)
     type(mopac_state), intent(out) :: state
-    integer, intent(out) :: status
+    integer :: status
 
     state%save_state = .true.
     state%mpack = mpack
 
     if (allocated(state%pa)) deallocate(state%pa)
     allocate(state%pa(mpack), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOPAC_SAVE")
+      return
+    end if
     state%pa = pa
     if (uhf) then
       if (allocated(state%pb)) deallocate(state%pb)
       allocate(state%pb(mpack), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_SAVE")
+        return
+      end if
       state%pb = pb
     end if
   end subroutine mopac_save
 
   ! load MOPAC density matrices, or construct initial guesses
-  module subroutine mopac_load(state, status)
+  module subroutine mopac_load(state)
     type(mopac_state), intent(in) :: state
-    integer, intent(out) :: status
+    integer :: status
 
-    status = 0
     if(state%save_state) then
       ! TO DO: compatibility tests
       keywrd = trim(keywrd) // " OLDENS"
       mpack = state%mpack
       if (allocated(pa)) deallocate(pa)
       allocate(pa(mpack), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_LOAD")
+        return
+      end if  
       pa = state%pa
       if(uhf) then
         if (allocated(pb)) deallocate(pb)
         allocate(pb(mpack), stat=status)
-        if (status /= 0) return
+        if (status /= 0) then
+          call mopend("Failed to allocate memory in MOPAC_LOAD")
+          return
+        end if
         pb = state%pb
       end if
     end if
   end subroutine mopac_load
 
   ! save MOZYME density matrix
-  module subroutine mozyme_save(state, status)
+  module subroutine mozyme_save(state)
     type(mozyme_state), intent(out) :: state
-    integer, intent(out) :: status
+    integer :: status
 
     state%save_state = .true.
     state%numat = numat
@@ -89,23 +100,50 @@ contains
     if (allocated(state%cocc)) deallocate(state%cocc)
     if (allocated(state%cvir)) deallocate(state%cvir)
     allocate(state%nbonds(numat), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%ibonds(9,numat), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%iorbs(numat), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%ncf(noccupied), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%nce(nvirtual), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%icocc(icocc_dim), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%icvir(icvir_dim), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%cocc(cocc_dim), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     allocate(state%cvir(cvir_dim), stat=status)
-    if (status /= 0) return
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOZYME_SAVE")
+      return
+    end if
     state%nbonds = nbonds
     state%ibonds = ibonds
     state%iorbs = iorbs
@@ -118,11 +156,10 @@ contains
   end subroutine mozyme_save
 
   ! load MOZYME density matrix, or construct initial guess
-  module subroutine mozyme_load(state, status)
+  module subroutine mozyme_load(state)
     type(mozyme_state), intent(in) :: state
-    integer, intent(out) :: status
+    integer :: status
 
-    status = 0
     if(state%save_state) then
       ! TO DO: compatibility tests
       keywrd = trim(keywrd) // " OLDENS"
@@ -143,23 +180,50 @@ contains
       if (allocated(cocc)) deallocate(cocc)
       if (allocated(cvir)) deallocate(cvir)
       allocate(nbonds(numat), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(ibonds(9,numat), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(iorbs(numat), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(ncf(noccupied), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(nce(nvirtual), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(icocc(icocc_dim), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(icvir(icvir_dim), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(cocc(cocc_dim), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       allocate(cvir(cvir_dim), stat=status)
-      if (status /= 0) return
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       nbonds = state%nbonds
       ibonds = state%ibonds
       iorbs = state%iorbs

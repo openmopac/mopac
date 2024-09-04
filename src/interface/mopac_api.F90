@@ -91,9 +91,10 @@ module mopac_api
     double precision, dimension (:), allocatable :: lattice_deriv
     ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy), if nlattice_move == 3
     double precision, dimension (6) :: stress
-    ! status of MOPAC job
-    integer :: status
-    ! TO DO: compile list of status values & their meaning
+    ! number of MOPAC error messages (negative value indicates that allocation of error_msg failed)
+    integer :: nerror
+    ! text of MOPAC error messages [nerror,120]
+    character, dimension(:,:), allocatable :: error_msg
   end type
 
   ! data that describes the electronic state using standard molecular orbitals

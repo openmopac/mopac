@@ -42,7 +42,7 @@
 !
 !
         use chanel_C, only : iw, ir
-        use molkst_C, only : line, job_no, natoms
+        use molkst_C, only : line, job_no, natoms, dummy, errtxt
         implicit none
         integer, intent (in) :: ntxt
         character, intent (in) :: txt*(*)
@@ -54,6 +54,23 @@
         integer :: nmessages = 0, i, j, max_txt
         logical :: first = .true., opend
         save
+! vvv MOPAC API hijacking of the error handler vvv
+        ! report number of errors in dummy
+        if (ntxt == 0) then
+          dummy = nmessages
+          return
+        ! record error message in errtxt
+        else if (ntxt < 0) then
+          ! reset error handler
+          if (ntxt < -nmessages) then
+            first = .true.
+            nmessages = 0
+            return
+          end if
+          errtxt = messages(-ntxt)
+          return
+        end if
+! ^^^ MOPAC API hijacking of the error handler ^^^
         if (first) then
            messages(1)(:18) = "JOB ENDED NORMALLY"
            first = .false.

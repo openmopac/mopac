@@ -72,12 +72,11 @@ contains
   ! investment of development time. Similarly, the keyword line is set to represent
   ! the calculation that the API is trying to perform, but some of the keyword-dependent
   ! logic has been stripped out of this restricted initialization.
-  module subroutine mopac_initialize(system, status)
+  module subroutine mopac_initialize(system)
     type(mopac_system), intent(in) :: system
-    integer, intent(out) :: status
     double precision, external :: seconds, C_triple_bond_C
     character(100) :: num2str
-    integer :: i, j, nelectron
+    integer :: i, j, nelectron, status
     double precision :: eat
 
     use_disk = .false.
@@ -112,9 +111,10 @@ contains
     if (MOPAC_OS == "Windows") output_fn = 'NUL'
 #endif
     close(iw)
-    open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat = i)
-    if (i /= 0) then
-        ! TO DO: error handling ???
+    open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat=status)
+    if (status /= 0) then
+      call mopend("Failed to open NULL file in MOPAC_INITIALIZE")
+      return
     end if
     ! initialize job timers
     time0 = seconds(1)
@@ -128,7 +128,13 @@ contains
     mozyme = (index(keywrd," MOZ") /= 0)
     ! initialize common workspaces (Common_arrays_C)
     call setup_mopac_arrays(natoms, 1)
-    if (.not. allocated(lopt)) allocate(lopt(3,maxatoms))
+    if (.not. allocated(lopt)) then
+      allocate(lopt(3,maxatoms), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_INITIALIZE")
+        return
+      end if
+    end if
     ! set semiempirical model
     methods = .false.
     select case (system%model)
@@ -274,7 +280,11 @@ contains
     ! initialize system-specific MOPAC workspaces (Common_arrays_C)
     call setup_mopac_arrays(1,2)
     if (allocated(nw)) deallocate(nw)
-    allocate(nw(numat))
+    allocate(nw(numat), stat=status)
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOPAC_INITIALIZE")
+      return
+    end if
     j = 1
     do i = 1, numat
       nw(i) = j
@@ -294,8 +304,6 @@ contains
     atheat = atheat + C_triple_bond_C()
     ! setup MOZYME calculations
     if (mozyme) call set_up_MOZYME_arrays()
-    ! successful setup
-    status = 0
   end subroutine mopac_initialize
 
 end submodule mopac_api_initialize

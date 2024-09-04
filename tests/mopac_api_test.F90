@@ -101,7 +101,7 @@ subroutine test_mopac_scf1(nfail)
     test_target%bond_order(6) = 0.895d0
     test_target%bond_order(7) = 1.791d0
     test_target%calc_vibe = .false.
-    test_target%status = 0
+    test_target%nerror = 0
 
     call mopac_scf(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
@@ -187,7 +187,7 @@ subroutine test_mopac_relax1(nfail)
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
     test_target%calc_vibe = .false.
-    test_target%status = 0
+    test_target%nerror = 0
 
     call mopac_relax(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
@@ -264,7 +264,7 @@ subroutine test_mopac_vibe1(nfail)
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
     test_target%calc_vibe = .true.
-    test_target%status = 0
+    test_target%nerror = 0
     allocate(test_target%freq(9))
     test_target%freq(1) = -18.0d0
     test_target%freq(2) = -14.6d0
@@ -434,7 +434,7 @@ subroutine test_mozyme_scf1(nfail)
     test_target%bond_order(6) = 0.896d0
     test_target%bond_order(7) = 1.793d0
     test_target%calc_vibe = .false.
-    test_target%status = 0
+    test_target%nerror = 0
 
     call mozyme_scf(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
@@ -520,7 +520,7 @@ subroutine test_mozyme_relax1(nfail)
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
     test_target%calc_vibe = .false.
-    test_target%status = 0
+    test_target%nerror = 0
 
     call mozyme_relax(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
@@ -599,7 +599,7 @@ subroutine test_mozyme_vibe1(nfail)
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
     test_target%calc_vibe = .true.
-    test_target%status = 0
+    test_target%nerror = 0
     allocate(test_target%freq(9))
     test_target%freq(1) = -18.0d0
     test_target%freq(2) = -14.6d0
@@ -826,9 +826,9 @@ subroutine test_output(name, input, target, output, nfail)
             "vs", output%stress(i)
         end if
     end do
-    ! compare status
-    if(target%status /= output%status) then
+    ! compare error status
+    if(target%nerror /= output%nerror) then
         nfail = nfail + 1
-        write(*,*) "status mismatch in test '", name, "':", target%status, "vs", output%status
+        write(*,*) "nerror mismatch in test '", name, "':", target%nerror, "vs", output%nerror
     end if
 end subroutine test_output
