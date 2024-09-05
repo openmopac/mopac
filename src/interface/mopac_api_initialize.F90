@@ -79,6 +79,22 @@ contains
     integer :: i, j, nelectron, status
     double precision :: eat
 
+    ! validity checks of data in system
+    if (system%natom <= 0) call mopend("Invalid number of atoms")
+    if (system%natom_move < 0 .or. system%natom_move > system%natom) &
+      call mopend("Invalid number of moveable atoms")
+    if (system%epsilon /= 1.d0 .and. system%nlattice > 0) &
+      call mopend("COSMO solvent not available for periodic systems")
+    if (size(system%atom) < system%natom) call mopend("List of atomic numbers is too small")
+    if (size(system%coord) < 3*system%natom) call mopend("List of atomic coordinates is too small")
+    if (system%nlattice < 0 .or. system%nlattice > 3) call mopend("Invalid number of lattice vectors")
+    if (system%nlattice_move < 0 .or. system%nlattice_move > system%nlattice) &
+      call mopend("Invalid number of moveable lattice vectors")
+    if (size(system%lattice) < 3*system%nlattice) call mopend("List of lattice vectors is too small")
+    if (system%tolerance <= 0.d0) call mopend("Relative numerical tolerance must be a positive number")
+    if (system%max_time <= 0) call mopend("Time limit must be a positive number")
+    if (moperr) return
+
     use_disk = .false.
     ! load ios, iop, and iod data into tore
     tore = ios + iop + iod
@@ -151,7 +167,7 @@ contains
       case (5) ! RM1
         i = 4
       case default
-! TO DO: handle error
+        call mopend("Unknown semiempirical model requested")
     end select
     methods(i) = .true.
     keywrd = trim(keywrd) // methods_keys(i)

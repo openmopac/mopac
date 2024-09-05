@@ -42,8 +42,6 @@ module mopac_api
     integer, dimension (:), allocatable :: atom
     ! (x,y,z) coordinates of each atom (Angstroms) [3*natom]
     double precision, dimension (:), allocatable :: coord
-    ! flag to determine if each atom is allowed to move [natom]
-    logical, dimension (:), allocatable :: move_atom
     ! number of lattice vectors / translation vectors / periodic dimensions
     integer :: nlattice = 0
     ! number of lattice vectors that are allowed to move (first nlattice_move vectors in array)
@@ -89,7 +87,7 @@ module mopac_api
     double precision, dimension (:), allocatable :: lattice_update
     ! (x,y,z) heat gradients for each moveable lattice vector (kcal/mol/Angstrom) [3*nlattice_move]
     double precision, dimension (:), allocatable :: lattice_deriv
-    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy), if nlattice_move == 3
+    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy), if available
     double precision, dimension (6) :: stress
     ! number of MOPAC error messages (negative value indicates that allocation of error_msg failed)
     integer :: nerror
