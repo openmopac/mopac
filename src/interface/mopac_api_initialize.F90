@@ -93,6 +93,8 @@ contains
     if (size(system%lattice) < 3*system%nlattice) call mopend("List of lattice vectors is too small")
     if (system%tolerance <= 0.d0) call mopend("Relative numerical tolerance must be a positive number")
     if (system%max_time <= 0) call mopend("Time limit must be a positive number")
+    if (system%nlattice_move > 0 .and. index(keywrd," FORCETS") /= 0) &
+      call mopend("Lattice vectors cannot move during vibrational calculations")
     if (moperr) return
 
     use_disk = .false.
