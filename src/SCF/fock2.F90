@@ -82,14 +82,12 @@
         if (allocated(ptot2))  deallocate(ptot2)
         if (allocated(ifact))  deallocate(ifact)
         if (allocated(i1fact)) deallocate(i1fact)
-        allocate(ptot2(numat,81), ifact(3 + norbs), i1fact(3 + norbs))
+        allocate(ptot2(max(2,numat),81), ifact(max(18,norbs)), i1fact(max(18,norbs)))
         icalcn = numcal
 !
 !   SET UP ARRAY OF LOWER HALF TRIANGLE INDICES (PASCAL'S TRIANGLE)
 !
-        ifact = 0  ! the bookkeeping used in dhc can read past ifact(norbs), which
-        i1fact = 0 ! explains the extended size of these arrays and their need for zero-padding
-        do i = 1, norbs
+        do i = 1, max(18,norbs)
           ifact(i) = (i*(i - 1))/2
           i1fact(i) = ifact(i) + i
         end do
