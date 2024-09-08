@@ -90,7 +90,9 @@ contains
     if (system%nlattice < 0 .or. system%nlattice > 3) call mopend("Invalid number of lattice vectors")
     if (system%nlattice_move < 0 .or. system%nlattice_move > system%nlattice) &
       call mopend("Invalid number of moveable lattice vectors")
-    if (size(system%lattice) < 3*system%nlattice) call mopend("List of lattice vectors is too small")
+    if (system%nlattice > 0) then
+      if(size(system%lattice) < 3*system%nlattice) call mopend("List of lattice vectors is too small")
+    end if
     if (system%tolerance <= 0.d0) call mopend("Relative numerical tolerance must be a positive number")
     if (system%max_time <= 0) call mopend("Time limit must be a positive number")
     if (system%nlattice_move > 0 .and. index(keywrd," FORCETS") /= 0) &

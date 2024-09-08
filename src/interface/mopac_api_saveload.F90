@@ -18,7 +18,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_saveload
   use Common_arrays_C, only: pa, pb, nbonds, ibonds
   use molkst_C, only: keywrd, uhf, mpack, numat
   use MOZYME_C, only: iorbs, noccupied, ncf, nvirtual, nce, icocc_dim, &
-    icocc, icvir_dim, icvir, cocc_dim, cocc, cvir_dim, cvir
+    icocc, icvir_dim, icvir, cocc_dim, cocc, cvir_dim, cvir, nnce, nncf, ncocc, ncvir
   implicit none
 
 contains
@@ -158,7 +158,7 @@ contains
   ! load MOZYME density matrix, or construct initial guess
   module subroutine mozyme_load(state)
     type(mozyme_state), intent(in) :: state
-    integer :: status
+    integer :: status, i, j, k, l
 
     if(state%save_state) then
       ! TO DO: compatibility tests
@@ -179,6 +179,10 @@ contains
       if (allocated(icvir)) deallocate(icvir)
       if (allocated(cocc)) deallocate(cocc)
       if (allocated(cvir)) deallocate(cvir)
+      if (allocated(nncf)) deallocate(nncf)
+      if (allocated(nnce)) deallocate(nnce)
+      if (allocated(ncocc)) deallocate(ncocc)
+      if (allocated(ncvir)) deallocate(ncvir)
       allocate(nbonds(numat), stat=status)
       if (status /= 0) then
         call mopend("Failed to allocate memory in MOZYME_LOAD")
@@ -224,6 +228,26 @@ contains
         call mopend("Failed to allocate memory in MOZYME_LOAD")
         return
       end if
+      allocate(nncf(noccupied), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
+      allocate(nnce(nvirtual), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
+      allocate(ncocc(noccupied), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
+      allocate(ncvir(nvirtual), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOZYME_LOAD")
+        return
+      end if
       nbonds = state%nbonds
       ibonds = state%ibonds
       iorbs = state%iorbs
@@ -233,6 +257,35 @@ contains
       icvir = state%icvir
       cocc = state%cocc
       cvir = state%cvir
+      ! reconstruct nncf, nnce, ncocc, & ncvir
+      j = 0
+      do i = 1, noccupied
+        nncf(i) = j
+        j = j + ncf(i)
+      end do
+      j = 0
+      do i = 1, nvirtual
+        nnce(i) = j
+        j = j + nce(i)
+      end do
+      k = 0
+      do i = 1, noccupied
+        ncocc(i) = k
+        l = 0
+        do j = nncf(i) + 1, nncf(i) + ncf(i)
+          l = l + iorbs(icocc(j))
+        end do
+        k = k + l
+      end do
+      k = 0
+      do i = 1, nvirtual
+        ncvir(i) = k
+        l = 0
+        do j = nnce(i) + 1, nnce(i) + nce(i)
+          l = l + iorbs(icvir(j))
+        end do
+        k = k + l
+      end do
     else
       call geochk()
     end if

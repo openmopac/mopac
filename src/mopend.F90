@@ -67,7 +67,7 @@
             nmessages = 0
             return
           end if
-          errtxt = messages(-ntxt)
+          errtxt = trim(messages(-ntxt))
           return
         end if
 ! ^^^ MOPAC API hijacking of the error handler ^^^

@@ -71,13 +71,13 @@ contains
     if (moperr) then
       call summary("",0)
       properties%nerror = dummy
-      allocate(properties%error_msg(properties%nerror,120), stat=status)
+      allocate(properties%error_msg(properties%nerror), stat=status)
       if (status /= 0) then
         properties%nerror = -properties%nerror
       else
         do i=1, properties%nerror
           call summary("",-i)
-          properties%error_msg(i,:) = errtxt
+          properties%error_msg(i) = trim(errtxt)
         end do
       end if
       call summary("",-abs(properties%nerror)-1)

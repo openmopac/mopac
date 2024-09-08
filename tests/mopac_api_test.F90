@@ -26,6 +26,8 @@ program mopac_api_test
     call test_mozyme_scf1(nfail)
     call test_mozyme_relax1(nfail)
     call test_mozyme_vibe1(nfail)
+    call test_mopac_restart1(nfail)
+    call test_mozyme_restart1(nfail)
     call exit(nfail)
 end program mopac_api_test
 
@@ -37,7 +39,7 @@ subroutine test_mopac_scf1(nfail)
     type(mopac_state) :: test_restore
     type(mopac_properties) :: test_target
     type(mopac_properties) :: test_out
-    character(20) :: test_name
+    character(50) :: test_name
     integer :: i
     test_name = 'H2O SCF'
 
@@ -115,7 +117,7 @@ subroutine test_mopac_relax1(nfail)
     type(mopac_state) :: test_restore
     type(mopac_properties) :: test_target
     type(mopac_properties) :: test_out
-    character(20) :: test_name
+    character(50) :: test_name
     integer :: i
     test_name = 'H2O relax'
 
@@ -201,7 +203,7 @@ subroutine test_mopac_vibe1(nfail)
     type(mopac_state) :: test_restore
     type(mopac_properties) :: test_target
     type(mopac_properties) :: test_out
-    character(20) :: test_name
+    character(50) :: test_name
     test_name = 'H2O vibe'
 
     ! 1 - geometry relaxation of H2O
@@ -370,7 +372,7 @@ subroutine test_mozyme_scf1(nfail)
     type(mozyme_state) :: test_restore
     type(mopac_properties) :: test_target
     type(mopac_properties) :: test_out
-    character(20) :: test_name
+    character(50) :: test_name
     integer :: i
     test_name = 'H2O SCF MOZYME'
 
@@ -448,7 +450,7 @@ subroutine test_mozyme_relax1(nfail)
     type(mozyme_state) :: test_restore
     type(mopac_properties) :: test_target
     type(mopac_properties) :: test_out
-    character(20) :: test_name
+    character(50) :: test_name
     integer :: i
     test_name = 'H2O relax MOZYME'
 
@@ -535,7 +537,7 @@ subroutine test_mozyme_vibe1(nfail)
     type(mozyme_state) :: test_restore
     type(mopac_properties) :: test_target
     type(mopac_properties) :: test_out
-    character(20) :: test_name
+    character(50) :: test_name
     test_name = 'H2O vibe MOZYME'
 
     ! 1 - geometry relaxation of H2O
@@ -697,10 +699,168 @@ subroutine test_mozyme_vibe1(nfail)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mozyme_vibe1
 
+subroutine test_mopac_restart1(nfail)
+    use mopac_api
+    implicit none
+    integer, intent(inout) :: nfail
+    type(mopac_system) :: test_in
+    type(mopac_state) :: test_restore
+    type(mopac_properties) :: test_target
+    type(mopac_properties) :: test_out
+    character(50) :: test_name
+    integer :: i
+    test_name = 'H2O SCF restart'
+
+    ! SCF calculation of H2O
+    test_in%natom = 3
+    test_in%natom_move = 3
+    allocate(test_in%atom(3))
+    test_in%atom(1) = 1
+    test_in%atom(2) = 1
+    test_in%atom(3) = 8
+    allocate(test_in%coord(3*3))
+    test_in%coord(1) = 0.76d0
+    test_in%coord(2) = 0.59d0
+    test_in%coord(3) = 0.0d0
+    test_in%coord(4) = -0.76d0
+    test_in%coord(5) = 0.59d0
+    test_in%coord(6) = 0.0d0
+    test_in%coord(7) = 0.0d0
+    test_in%coord(8) = 0.0d0
+    test_in%coord(9) = 0.0d0
+    test_target%heat = -57.76975d0
+    allocate(test_target%coord_update(3*3))
+    test_target%coord_update = test_in%coord
+    allocate(test_target%coord_deriv(3*3))
+    test_target%coord_deriv(1) = 2.307865d0
+    test_target%coord_deriv(2) = 2.742432d0
+    test_target%coord_deriv(3) = 0.0d0
+    test_target%coord_deriv(4) = -2.307865d0
+    test_target%coord_deriv(5) = 2.711610d0
+    test_target%coord_deriv(6) = 0.0d0
+    test_target%coord_deriv(7) = 0.0d0
+    test_target%coord_deriv(8) = -5.454042d0
+    test_target%coord_deriv(9) = 0.0d0
+    allocate(test_target%charge(3))
+    test_target%charge(1) = 0.322260d0
+    test_target%charge(2) = 0.322260d0
+    test_target%charge(3) = -0.644520d0
+    test_target%dipole(1) = 0.0d0
+    test_target%dipole(2) = 2.147d0
+    test_target%dipole(3) = 0.0d0
+    test_target%stress(:) = 0.0d0
+    allocate(test_target%bond_index(4))
+    test_target%bond_index(1) = 1
+    test_target%bond_index(2) = 3
+    test_target%bond_index(3) = 5
+    test_target%bond_index(4) = 8
+    allocate(test_target%bond_atom(7))
+    test_target%bond_atom(1) = 1
+    test_target%bond_atom(2) = 3
+    test_target%bond_atom(3) = 2
+    test_target%bond_atom(4) = 3
+    test_target%bond_atom(5) = 1
+    test_target%bond_atom(6) = 2
+    test_target%bond_atom(7) = 3
+    allocate(test_target%bond_order(7))
+    test_target%bond_order(1) = 0.896d0
+    test_target%bond_order(2) = 0.895d0
+    test_target%bond_order(3) = 0.896d0
+    test_target%bond_order(4) = 0.895d0
+    test_target%bond_order(5) = 0.895d0
+    test_target%bond_order(6) = 0.895d0
+    test_target%bond_order(7) = 1.791d0
+    test_target%calc_vibe = .false.
+    test_target%nerror = 0
+
+    call mopac_scf(test_in, test_restore, test_out)
+    call mopac_scf(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target, test_out, nfail)
+end subroutine test_mopac_restart1
+
+subroutine test_mozyme_restart1(nfail)
+    use mopac_api
+    implicit none
+    integer, intent(inout) :: nfail
+    type(mopac_system) :: test_in
+    type(mozyme_state) :: test_restore
+    type(mopac_properties) :: test_target
+    type(mopac_properties) :: test_out
+    character(50) :: test_name
+    integer :: i
+    test_name = 'H2O SCF MOZYME restart'
+
+    ! SCF calculation of H2O
+    test_in%natom = 3
+    test_in%natom_move = 3
+    allocate(test_in%atom(3))
+    test_in%atom(1) = 1
+    test_in%atom(2) = 1
+    test_in%atom(3) = 8
+    allocate(test_in%coord(3*3))
+    test_in%coord(1) = 0.76d0
+    test_in%coord(2) = 0.59d0
+    test_in%coord(3) = 0.0d0
+    test_in%coord(4) = -0.76d0
+    test_in%coord(5) = 0.59d0
+    test_in%coord(6) = 0.0d0
+    test_in%coord(7) = 0.0d0
+    test_in%coord(8) = 0.0d0
+    test_in%coord(9) = 0.0d0
+    test_target%heat = -57.76970d0
+    allocate(test_target%coord_update(3*3))
+    test_target%coord_update = test_in%coord
+    allocate(test_target%coord_deriv(3*3))
+    test_target%coord_deriv(1) = 2.296d0
+    test_target%coord_deriv(2) = 2.662d0
+    test_target%coord_deriv(3) = 0.001d0
+    test_target%coord_deriv(4) = -2.295d0
+    test_target%coord_deriv(5) = 2.631d0
+    test_target%coord_deriv(6) = 0.001d0
+    test_target%coord_deriv(7) = -0.001d0
+    test_target%coord_deriv(8) = -5.293d0
+    test_target%coord_deriv(9) = -0.001d0
+    allocate(test_target%charge(3))
+    test_target%charge(1) = 0.321963d0
+    test_target%charge(2) = 0.321963d0
+    test_target%charge(3) = -0.643926d0
+    test_target%dipole(1) = 0.0d0
+    test_target%dipole(2) = 2.146d0
+    test_target%dipole(3) = 0.0d0
+    test_target%stress(:) = 0.0d0
+    allocate(test_target%bond_index(4))
+    test_target%bond_index(1) = 1
+    test_target%bond_index(2) = 3
+    test_target%bond_index(3) = 5
+    test_target%bond_index(4) = 8
+    allocate(test_target%bond_atom(7))
+    test_target%bond_atom(1) = 1
+    test_target%bond_atom(2) = 3
+    test_target%bond_atom(3) = 2
+    test_target%bond_atom(4) = 3
+    test_target%bond_atom(5) = 1
+    test_target%bond_atom(6) = 2
+    test_target%bond_atom(7) = 3
+    allocate(test_target%bond_order(7))
+    test_target%bond_order(1) = 0.896d0
+    test_target%bond_order(2) = 0.895d0
+    test_target%bond_order(3) = 0.896d0
+    test_target%bond_order(4) = 0.895d0
+    test_target%bond_order(5) = 0.895d0
+    test_target%bond_order(6) = 0.895d0
+    test_target%bond_order(7) = 1.791d0
+    test_target%calc_vibe = .false.
+    test_target%nerror = 0
+
+    call mozyme_scf(test_in, test_restore, test_out)
+    call mozyme_scf(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target, test_out, nfail)
+end subroutine test_mozyme_restart1
+
 subroutine test_output(name, input, target, output, nfail)
     use mopac_api
     implicit none
-    character(20), intent(in) :: name
+    character(50), intent(in) :: name
     type(mopac_system), intent(in) :: input
     type(mopac_properties), intent(in) :: target, output
     integer, intent(inout) :: nfail
@@ -716,13 +876,13 @@ subroutine test_output(name, input, target, output, nfail)
     ! compare heat
     if(abs(target%heat - output%heat) > heat_tol) then
         nfail = nfail + 1
-        write(*,*) "heat mismatch in test '", name, "':", target%heat, "vs", output%heat
+        write(*,*) "heat mismatch in test '", trim(name), "':", target%heat, "vs", output%heat
     end if
     ! compare dipole
     do i = 1, 3
         if(abs(target%dipole(i) - output%dipole(i)) > charge_tol) then
             nfail = nfail + 1
-            write(*,*) "dipole(", i, ") mismatch in test '", name, "':", target%dipole(i), &
+            write(*,*) "dipole(", i, ") mismatch in test '", trim(name), "':", target%dipole(i), &
             "vs", output%dipole(i)
         end if
     end do
@@ -730,7 +890,7 @@ subroutine test_output(name, input, target, output, nfail)
     do i = 1, input%natom
         if(abs(target%charge(i) - output%charge(i)) > charge_tol) then
             nfail = nfail + 1
-            write(*,*) "charge(", i, ") mismatch in test '", name, "':", target%charge(i), &
+            write(*,*) "charge(", i, ") mismatch in test '", trim(name), "':", target%charge(i), &
             "vs", output%charge(i)
         end if
     end do
@@ -738,7 +898,7 @@ subroutine test_output(name, input, target, output, nfail)
     do i = 1, 3*input%natom_move
         if(abs(target%coord_update(i) - output%coord_update(i)) > coord_tol) then
             nfail = nfail + 1
-            write(*,*) "coord_update(", i, ") mismatch in test '", name, "':", &
+            write(*,*) "coord_update(", i, ") mismatch in test '", trim(name), "':", &
             target%coord_update(i), "vs", output%coord_update(i)
         end if
     end do
@@ -746,20 +906,20 @@ subroutine test_output(name, input, target, output, nfail)
     do i = 1, 3*input%natom_move
         if(abs(target%coord_deriv(i) - output%coord_deriv(i)) > deriv_tol) then
             nfail = nfail + 1
-            write(*,*) "coord_deriv(", i, ") mismatch in test '", name, "':", &
+            write(*,*) "coord_deriv(", i, ") mismatch in test '", trim(name), "':", &
             target%coord_deriv(i), "vs", output%coord_deriv(i)
         end if
     end do
     ! compare vibrational properties
     if(target%calc_vibe .neqv. output%calc_vibe) then
         nfail = nfail + 1
-        write(*,*) "calc_vibe mistmatch in test '", name, "':", target%calc_vibe, &
+        write(*,*) "calc_vibe mistmatch in test '", trim(name), "':", target%calc_vibe, &
         "vs", output%calc_vibe
     else if(target%calc_vibe .eqv. .true.) then
         do i = 1, 3*input%natom_move
             if(abs(target%freq(i) - output%freq(i)) > freq_tol) then
                 nfail = nfail + 1
-                write(*,*) "freq(", i, ") mismatch in test '", name, "':", target%freq(i), &
+                write(*,*) "freq(", i, ") mismatch in test '", trim(name), "':", target%freq(i), &
                 "vs", output%freq(i)
             end if
         end do
@@ -778,7 +938,7 @@ subroutine test_output(name, input, target, output, nfail)
             do j=1, 3*input%natom_move
                 if(abs(fmat1(i,j) - fmat2(i,j)) > freq_tol*freq_tol) then
                     nfail = nfail + 1
-                    write(*,*) "fmat(", i, ",", j, ") mismatch in test '", name, "':", fmat1(i,j), &
+                    write(*,*) "fmat(", i, ",", j, ") mismatch in test '", trim(name), "':", fmat1(i,j), &
                     "vs", fmat2(i,j)
                 end if
             end do
@@ -789,24 +949,24 @@ subroutine test_output(name, input, target, output, nfail)
     do i = 1, input%natom+1
         if(target%bond_index(i) /= output%bond_index(i)) then
             nfail = nfail + 1
-            write(*,*) "bond_index(", i, ") mismatch in test '", name, "':", target%bond_index(i), "vs", output%bond_index(i)
+            write(*,*) "bond_index(", i, ") mismatch in test '", trim(name), "':", target%bond_index(i), "vs", output%bond_index(i)
         end if
     end do
     do i = 1, target%bond_index(input%natom+1)-1
         if(target%bond_atom(i) /= output%bond_atom(i)) then
             nfail = nfail + 1
-            write(*,*) "bond_atom(", i, ") mismatch in test '", name, "':", target%bond_atom(i), "vs", output%bond_atom(i)
+            write(*,*) "bond_atom(", i, ") mismatch in test '", trim(name), "':", target%bond_atom(i), "vs", output%bond_atom(i)
         end if
         if(abs(target%bond_order(i) - output%bond_order(i)) > charge_tol) then
             nfail = nfail + 1
-            write(*,*) "bond_order(", i, ") mismatch in test '", name, "':", target%bond_order(i), "vs", output%bond_order(i)
+            write(*,*) "bond_order(", i, ") mismatch in test '", trim(name), "':", target%bond_order(i), "vs", output%bond_order(i)
         end if
     end do
     ! compare updated coordinates
     do i = 1, 3*input%nlattice_move
         if(abs(target%lattice_update(i) - output%lattice_update(i)) > coord_tol) then
             nfail = nfail + 1
-            write(*,*) "lattice_update(", i, ") mismatch in test '", name, "':", &
+            write(*,*) "lattice_update(", i, ") mismatch in test '", trim(name), "':", &
             target%lattice_update(i), "vs", output%lattice_update(i)
         end if
     end do
@@ -814,7 +974,7 @@ subroutine test_output(name, input, target, output, nfail)
     do i = 1, 3*input%nlattice_move
         if(abs(target%lattice_deriv(i) - output%lattice_deriv(i)) > deriv_tol) then
             nfail = nfail + 1
-            write(*,*) "lattice_deriv(", i, ") mismatch in test '", name, "':", &
+            write(*,*) "lattice_deriv(", i, ") mismatch in test '", trim(name), "':", &
             target%lattice_deriv(i), "vs", output%lattice_deriv(i)
         end if
     end do
@@ -822,13 +982,13 @@ subroutine test_output(name, input, target, output, nfail)
     do i = 1, 6
         if(abs(target%stress(i) - output%stress(i)) > stress_tol) then
             nfail = nfail + 1
-            write(*,*) "stress(", i, ") mismatch in test '", name, "':", target%stress(i), &
+            write(*,*) "stress(", i, ") mismatch in test '", trim(name), "':", target%stress(i), &
             "vs", output%stress(i)
         end if
     end do
     ! compare error status
     if(target%nerror /= output%nerror) then
         nfail = nfail + 1
-        write(*,*) "nerror mismatch in test '", name, "':", target%nerror, "vs", output%nerror
+        write(*,*) "nerror mismatch in test '", trim(name), "':", target%nerror, "vs", output%nerror
     end if
 end subroutine test_output

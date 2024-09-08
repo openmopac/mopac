@@ -92,7 +92,7 @@ module mopac_api
     ! number of MOPAC error messages (negative value indicates that allocation of error_msg failed)
     integer :: nerror
     ! text of MOPAC error messages [nerror,120]
-    character, dimension(:,:), allocatable :: error_msg
+    character*120, dimension(:), allocatable :: error_msg
   end type
 
   ! data that describes the electronic state using standard molecular orbitals
@@ -140,11 +140,11 @@ module mopac_api
     ! > size of array cocc
     integer :: cocc_dim
     ! > atomic orbital coefficients of the occupied LMOs [cocc_dim]
-    integer, dimension (:), allocatable :: cocc
+    double precision, dimension (:), allocatable :: cocc
     ! > size of array cvir
     integer :: cvir_dim
     ! > atomic orbital coefficients of the virtual LMOs [cvir_dim]
-    integer, dimension (:), allocatable :: cvir
+    double precision, dimension (:), allocatable :: cvir
   end type
 
   interface
