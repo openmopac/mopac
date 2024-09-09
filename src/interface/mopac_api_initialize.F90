@@ -29,7 +29,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     na, nb, nc, & ! internal coordinate connectivity information
     breaks, chains, cell_ijk, nw, nfirst, nlast
   use cosmo_C, only : iseps, & ! flag for use of COSMO model
-    useps, lpka, solv_energy, area, fepsi, ediel
+    noeps, useps, lpka, solv_energy, area, fepsi, ediel, nspa
   use funcon_C, only : fpc, fpc_9 ! fundamental constants used in the MOPAC calculation
   use maps_C, only : latom, lparam, lpara1, latom1, lpara2, latom2, rxn_coord
   use meci_C, only : nmos, lab
@@ -180,10 +180,16 @@ contains
     ! check for use of COSMO model
     if (system%epsilon /= 1.d0) then
       iseps = .true.
+      useps = .true.
+      noeps = .false.
       write(num2str,'(f6.2)') system%epsilon
       keywrd = trim(keywrd) // " EPS=" // adjustl(num2str)
+      fepsi = (system%epsilon-1.d0) / (system%epsilon+0.5d0)
     else
       iseps = .false.
+      useps = .false.
+      noeps = .true.
+      fepsi = 0.d0
     end if
     ! insert geometry information into MOPAC data structures
     id = system%nlattice
@@ -255,12 +261,11 @@ contains
     chains = " "
     breaks(1) = -300
     ! initialize variables that need default values (cosmo_C)
-    useps = .false.
     lpka = .false.
     solv_energy = 0.d0
     area = 0.d0
-    fepsi = 0.d0
     ediel = 0.d0
+    nspa = 42
     ! initialize variables that need default values (maps_C)
     latom = 0
     lparam = 0
