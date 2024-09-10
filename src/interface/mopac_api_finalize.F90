@@ -102,12 +102,16 @@ contains
     ! trigger charge & dipole calculation
     call chrge (p, q)
     q(:numat) = tore(nat(:numat)) - q(:numat)
-    if (mozyme) then
-      sum = dipole_for_MOZYME(dumy, 2)
-      properties%dipole = dumy
+    if (id == 0) then
+      if (mozyme) then
+        sum = dipole_for_MOZYME(dumy, 2)
+        properties%dipole = dumy
+      else
+        sum = dipole(p, xparam, dumy, 1)
+        properties%dipole = dip(:3,3)
+      end if
     else
-      sum = dipole(p, xparam, dumy, 1)
-      properties%dipole = dip(:3,3)
+      properties%dipole = 0.d0
     end if
     ! save basic properties
     properties%heat = escf
@@ -198,7 +202,7 @@ contains
             valenc = valenc + 2.d0 * p(kk)
           end do
         end if
-        if (valenc > 0.001d0) then
+        if (valenc > 0.01d0) then
           properties%bond_index(i+1) = properties%bond_index(i+1) + 1
         end if
         do j = 1, numat
@@ -210,7 +214,7 @@ contains
             do k = kl, ku
               sum = sum + p(k) ** 2
             end do
-            if (sum > 0.001d0) then
+            if (sum > 0.01d0) then
               properties%bond_index(i+1) = properties%bond_index(i+1) + 1
             end if
           end if
@@ -254,12 +258,12 @@ contains
             do k = kl, ku
               sum = sum + p(k) ** 2
             end do
-            if (sum > 0.001d0) then
+            if (sum > 0.01d0) then
               properties%bond_atom(kk) = j
               properties%bond_order(kk) = sum
               kk = kk + 1
             end if
-          else if (valenc > 0.001d0) then
+          else if (valenc > 0.01d0) then
             properties%bond_atom(kk) = j
             properties%bond_order(kk) = valenc
             kk = kk + 1
@@ -275,13 +279,13 @@ contains
         ku = i*(i-1)/2 + 1
         kl = (i+1)*(i+2)/2 - 1
         do j = 1, i
-          if (bondab(ku) > 0.001d0) then
+          if (bondab(ku) > 0.01d0) then
             properties%bond_index(i+1) = properties%bond_index(i+1) + 1
           end if
           ku = ku + 1
         end do
         do j = i+1, numat
-          if (bondab(kl) > 0.001d0) then
+          if (bondab(kl) > 0.01d0) then
             properties%bond_index(i+1) = properties%bond_index(i+1) + 1
           end if
           kl = kl + j
@@ -303,7 +307,7 @@ contains
         kl = (i+1)*(i+2)/2 - 1
         kk = properties%bond_index(i)
         do j = 1, i
-          if (bondab(ku) > 0.001d0) then
+          if (bondab(ku) > 0.01d0) then
             properties%bond_atom(kk) = j
             properties%bond_order(kk) = bondab(ku)
             kk = kk + 1
@@ -311,7 +315,7 @@ contains
           ku = ku + 1
         end do
         do j = i+1, numat
-          if (bondab(kl) > 0.001d0) then
+          if (bondab(kl) > 0.01d0) then
             properties%bond_atom(kk) = j
             properties%bond_order(kk) = bondab(kl)
             kk = kk + 1

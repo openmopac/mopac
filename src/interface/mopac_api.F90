@@ -75,7 +75,7 @@ module mopac_api
     ! (x,y,z) displacement vectors of normal modes [3*natom_move,3*natom_move]
     double precision, dimension (:,:), allocatable :: disp
     ! bond-order matrix in compressed sparse column (CSC) matrix format
-    ! with insignificant bond orders (<0.001) truncated
+    ! with insignificant bond orders (<0.01) truncated
     ! diagonal matrix entries are atomic valencies
     ! > first index of each atom in CSC bond-order matrix [natom+1]
     integer, dimension (:), allocatable :: bond_index

@@ -195,13 +195,13 @@ contains
     id = system%nlattice
     nat(:system%natom) = system%atom(:)
     labels(:system%natom) = system%atom(:)
-    atmass(:natoms) = ams(labels(:))
     geo(:,:system%natom) = reshape(system%coord,[3, system%natom])
     if (id > 0) then
       nat(system%natom+1:system%natom+id) = 107
       labels(system%natom+1:system%natom+id) = 107
       geo(:,system%natom+1:system%natom+id) = reshape(system%lattice,[3, id])
     end if
+    atmass(:natoms) = ams(labels(:))
     ! set optimization flags & xparam
     nvar = 3*system%natom_move + 3*system%nlattice_move
     lopt(:,:system%natom_move) = 1
