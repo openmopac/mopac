@@ -92,7 +92,7 @@ contains
     use_disk = .true.
   end subroutine mopac_finalize
 
-  module subroutine mopac_record(properties)
+  subroutine mopac_record(properties)
     type(mopac_properties), intent(out) :: properties
     integer, external :: ijbo
     double precision, external :: dipole, dipole_for_MOZYME
