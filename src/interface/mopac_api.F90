@@ -42,8 +42,6 @@ module mopac_api
     integer, dimension (:), allocatable :: atom
     ! (x,y,z) coordinates of each atom (Angstroms) [3*natom]
     double precision, dimension (:), allocatable :: coord
-    ! flag to determine if each atom is allowed to move [natom]
-    logical, dimension (:), allocatable :: move_atom
     ! number of lattice vectors / translation vectors / periodic dimensions
     integer :: nlattice = 0
     ! number of lattice vectors that are allowed to move (first nlattice_move vectors in array)
@@ -77,7 +75,7 @@ module mopac_api
     ! (x,y,z) displacement vectors of normal modes [3*natom_move,3*natom_move]
     double precision, dimension (:,:), allocatable :: disp
     ! bond-order matrix in compressed sparse column (CSC) matrix format
-    ! with insignificant bond orders (<0.001) truncated
+    ! with insignificant bond orders (<0.01) truncated
     ! diagonal matrix entries are atomic valencies
     ! > first index of each atom in CSC bond-order matrix [natom+1]
     integer, dimension (:), allocatable :: bond_index
@@ -89,11 +87,12 @@ module mopac_api
     double precision, dimension (:), allocatable :: lattice_update
     ! (x,y,z) heat gradients for each moveable lattice vector (kcal/mol/Angstrom) [3*nlattice_move]
     double precision, dimension (:), allocatable :: lattice_deriv
-    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy), if nlattice_move == 3
+    ! stress tensor (Gigapascals) in Voigt form (xx, yy, zz, yz, xz, xy), if available
     double precision, dimension (6) :: stress
-    ! status of MOPAC job
-    integer :: status
-    ! TO DO: compile list of status values & their meaning
+    ! number of MOPAC error messages (negative value indicates that allocation of error_msg failed)
+    integer :: nerror
+    ! text of MOPAC error messages [nerror,120]
+    character*120, dimension(:), allocatable :: error_msg
   end type
 
   ! data that describes the electronic state using standard molecular orbitals
@@ -141,11 +140,11 @@ module mopac_api
     ! > size of array cocc
     integer :: cocc_dim
     ! > atomic orbital coefficients of the occupied LMOs [cocc_dim]
-    integer, dimension (:), allocatable :: cocc
+    double precision, dimension (:), allocatable :: cocc
     ! > size of array cvir
     integer :: cvir_dim
     ! > atomic orbital coefficients of the virtual LMOs [cvir_dim]
-    integer, dimension (:), allocatable :: cvir
+    double precision, dimension (:), allocatable :: cvir
   end type
 
   interface

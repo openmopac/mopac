@@ -29,7 +29,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     na, nb, nc, & ! internal coordinate connectivity information
     breaks, chains, cell_ijk, nw, nfirst, nlast
   use cosmo_C, only : iseps, & ! flag for use of COSMO model
-    useps, lpka, solv_energy, area, fepsi, ediel
+    noeps, useps, lpka, solv_energy, area, fepsi, ediel, nspa
   use funcon_C, only : fpc, fpc_9 ! fundamental constants used in the MOPAC calculation
   use maps_C, only : latom, lparam, lpara1, latom1, lpara2, latom2, rxn_coord
   use meci_C, only : nmos, lab
@@ -72,13 +72,32 @@ contains
   ! investment of development time. Similarly, the keyword line is set to represent
   ! the calculation that the API is trying to perform, but some of the keyword-dependent
   ! logic has been stripped out of this restricted initialization.
-  module subroutine mopac_initialize(system, status)
+  module subroutine mopac_initialize(system)
     type(mopac_system), intent(in) :: system
-    integer, intent(out) :: status
     double precision, external :: seconds, C_triple_bond_C
     character(100) :: num2str
-    integer :: i, j, nelectron
+    integer :: i, j, nelectron, status
     double precision :: eat
+
+    ! validity checks of data in system
+    if (system%natom <= 0) call mopend("Invalid number of atoms")
+    if (system%natom_move < 0 .or. system%natom_move > system%natom) &
+      call mopend("Invalid number of moveable atoms")
+    if (system%epsilon /= 1.d0 .and. system%nlattice > 0) &
+      call mopend("COSMO solvent not available for periodic systems")
+    if (size(system%atom) < system%natom) call mopend("List of atomic numbers is too small")
+    if (size(system%coord) < 3*system%natom) call mopend("List of atomic coordinates is too small")
+    if (system%nlattice < 0 .or. system%nlattice > 3) call mopend("Invalid number of lattice vectors")
+    if (system%nlattice_move < 0 .or. system%nlattice_move > system%nlattice) &
+      call mopend("Invalid number of moveable lattice vectors")
+    if (system%nlattice > 0) then
+      if(size(system%lattice) < 3*system%nlattice) call mopend("List of lattice vectors is too small")
+    end if
+    if (system%tolerance <= 0.d0) call mopend("Relative numerical tolerance must be a positive number")
+    if (system%max_time <= 0) call mopend("Time limit must be a positive number")
+    if (system%nlattice_move > 0 .and. index(keywrd," FORCETS") /= 0) &
+      call mopend("Lattice vectors cannot move during vibrational calculations")
+    if (moperr) return
 
     use_disk = .false.
     ! load ios, iop, and iod data into tore
@@ -94,7 +113,7 @@ contains
     ! initialize CODATA fundamental constants
     fpc(:) = fpcref(1,:)
     ! assemble virtual keyword line
-    keywrd = trim(keywrd) // " LET NOSYM"
+    keywrd = trim(keywrd) // " LET NOSYM GEO-OK"
     write(num2str,'(i6)') system%charge
     keywrd = trim(keywrd) // " CHARGE=" // adjustl(num2str)
     if (system%pressure /= 0.d0) then
@@ -112,9 +131,10 @@ contains
     if (MOPAC_OS == "Windows") output_fn = 'NUL'
 #endif
     close(iw)
-    open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat = i)
-    if (i /= 0) then
-        ! TO DO: error handling ???
+    open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat=status)
+    if (status /= 0) then
+      call mopend("Failed to open NULL file in MOPAC_INITIALIZE")
+      return
     end if
     ! initialize job timers
     time0 = seconds(1)
@@ -128,7 +148,13 @@ contains
     mozyme = (index(keywrd," MOZ") /= 0)
     ! initialize common workspaces (Common_arrays_C)
     call setup_mopac_arrays(natoms, 1)
-    if (.not. allocated(lopt)) allocate(lopt(3,maxatoms))
+    if (.not. allocated(lopt)) then
+      allocate(lopt(3,maxatoms), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_INITIALIZE")
+        return
+      end if
+    end if
     ! set semiempirical model
     methods = .false.
     select case (system%model)
@@ -145,7 +171,7 @@ contains
       case (5) ! RM1
         i = 4
       case default
-! TO DO: handle error
+        call mopend("Unknown semiempirical model requested")
     end select
     methods(i) = .true.
     keywrd = trim(keywrd) // methods_keys(i)
@@ -154,22 +180,28 @@ contains
     ! check for use of COSMO model
     if (system%epsilon /= 1.d0) then
       iseps = .true.
+      useps = .true.
+      noeps = .false.
       write(num2str,'(f6.2)') system%epsilon
       keywrd = trim(keywrd) // " EPS=" // adjustl(num2str)
+      fepsi = (system%epsilon-1.d0) / (system%epsilon+0.5d0)
     else
       iseps = .false.
+      useps = .false.
+      noeps = .true.
+      fepsi = 0.d0
     end if
     ! insert geometry information into MOPAC data structures
     id = system%nlattice
     nat(:system%natom) = system%atom(:)
     labels(:system%natom) = system%atom(:)
-    atmass(:natoms) = ams(labels(:))
     geo(:,:system%natom) = reshape(system%coord,[3, system%natom])
     if (id > 0) then
       nat(system%natom+1:system%natom+id) = 107
       labels(system%natom+1:system%natom+id) = 107
       geo(:,system%natom+1:system%natom+id) = reshape(system%lattice,[3, id])
     end if
+    atmass(:natoms) = ams(labels(:))
     ! set optimization flags & xparam
     nvar = 3*system%natom_move + 3*system%nlattice_move
     lopt(:,:system%natom_move) = 1
@@ -229,12 +261,11 @@ contains
     chains = " "
     breaks(1) = -300
     ! initialize variables that need default values (cosmo_C)
-    useps = .false.
     lpka = .false.
     solv_energy = 0.d0
     area = 0.d0
-    fepsi = 0.d0
     ediel = 0.d0
+    nspa = 42
     ! initialize variables that need default values (maps_C)
     latom = 0
     lparam = 0
@@ -274,7 +305,11 @@ contains
     ! initialize system-specific MOPAC workspaces (Common_arrays_C)
     call setup_mopac_arrays(1,2)
     if (allocated(nw)) deallocate(nw)
-    allocate(nw(numat))
+    allocate(nw(numat), stat=status)
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOPAC_INITIALIZE")
+      return
+    end if
     j = 1
     do i = 1, numat
       nw(i) = j
@@ -294,8 +329,6 @@ contains
     atheat = atheat + C_triple_bond_C()
     ! setup MOZYME calculations
     if (mozyme) call set_up_MOZYME_arrays()
-    ! successful setup
-    status = 0
   end subroutine mopac_initialize
 
 end submodule mopac_api_initialize

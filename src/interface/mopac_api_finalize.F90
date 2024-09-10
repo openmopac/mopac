@@ -25,12 +25,15 @@ submodule (mopac_api:mopac_api_operations) mopac_api_finalize
     loc, & ! indices of atoms and coordinates marked for optimization
     bondab ! bond order matrix in packed triangular format
   use molkst_C, only : escf, & ! heat of formation
+    moperr, & ! error status
     numat, & ! number of real atoms
     nvar, & ! number of coordinates to be optimized
     id, & ! number of lattice vectors
     keywrd, & ! keyword string to adjust MOPAC behavior
     voigt, & ! Voigt stress tensor
     mozyme, & ! logical flag for MOZYME calculations
+    dummy, & ! dummy integer
+    errtxt, & ! most recent error message
     use_disk ! logical flag to enable disk access
   use MOZYME_C, only : iorbs ! number of atomic orbitals for each atom
   use parameters_C, only : tore ! number of valence electrons per element
@@ -44,13 +47,11 @@ contains
   ! save properties and clean up after a MOPAC/MOZYME calculation
   module subroutine mopac_finalize(properties)
     type(mopac_properties), intent(out) :: properties
-    integer, external :: ijbo
-    double precision, external :: dipole, dipole_for_MOZYME
-    integer :: i, j, k, kk, kl, ku, io, jo, natom_move, nlattice_move
-    double precision :: valenc, sum, dumy(3)
+    integer :: status, i
 
     ! close dummy output file to free up /dev/null
     close(iw)
+
     ! deallocate any prior arrays
     if (allocated(properties%coord_update)) deallocate(properties%coord_update)
     if (allocated(properties%coord_deriv)) deallocate(properties%coord_deriv)
@@ -62,19 +63,63 @@ contains
     if (allocated(properties%bond_order)) deallocate(properties%bond_order)
     if (allocated(properties%lattice_update)) deallocate(properties%lattice_update)
     if (allocated(properties%lattice_deriv)) deallocate(properties%lattice_deriv)
+
+    ! record properties
+    if (.not. moperr) call mopac_record(properties)
+
+    ! collect error messages
+    if (moperr) then
+      call summary("",0)
+      properties%nerror = dummy
+      allocate(properties%error_msg(properties%nerror), stat=status)
+      if (status /= 0) then
+        properties%nerror = -properties%nerror
+      else
+        do i=1, properties%nerror
+          call summary("",-i)
+          properties%error_msg(i) = trim(errtxt)
+        end do
+      end if
+      call summary("",-abs(properties%nerror)-1)
+    else
+      properties%nerror = 0
+    end if
+
+    ! deallocate memory
+    call setup_mopac_arrays(0,0)
+    if (mozyme) call delete_MOZYME_arrays()
+    ! turn use_disk back on
+    use_disk = .true.
+  end subroutine mopac_finalize
+
+  subroutine mopac_record(properties)
+    type(mopac_properties), intent(out) :: properties
+    integer, external :: ijbo
+    double precision, external :: dipole, dipole_for_MOZYME
+    integer :: status, i, j, k, kk, kl, ku, io, jo, natom_move, nlattice_move
+    double precision :: valenc, sum, dumy(3)
+
     ! trigger charge & dipole calculation
     call chrge (p, q)
     q(:numat) = tore(nat(:numat)) - q(:numat)
-    if (mozyme) then
-      sum = dipole_for_MOZYME(dumy, 2)
-      properties%dipole = dumy
+    if (id == 0) then
+      if (mozyme) then
+        sum = dipole_for_MOZYME(dumy, 2)
+        properties%dipole = dumy
+      else
+        sum = dipole(p, xparam, dumy, 1)
+        properties%dipole = dip(:3,3)
+      end if
     else
-      sum = dipole(p, xparam, dumy, 1)
-      properties%dipole = dip(:3,3)
+      properties%dipole = 0.d0
     end if
     ! save basic properties
     properties%heat = escf
-    allocate(properties%charge(numat))
+    allocate(properties%charge(numat), stat=status)
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+      return
+    end if
     properties%charge = q(:numat)
     properties%stress = voigt
     natom_move = nvar/3
@@ -86,28 +131,56 @@ contains
       end if
     end do
     ! save properties of moveable coordinates
-    allocate(properties%coord_update(3*natom_move))
+    allocate(properties%coord_update(3*natom_move), stat=status)
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+      return
+    end if
     properties%coord_update = xparam(:3*natom_move)
-    allocate(properties%coord_deriv(3*natom_move))
+    allocate(properties%coord_deriv(3*natom_move), stat=status)
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+      return
+    end if
     properties%coord_deriv = grad(:3*natom_move)
     if (nlattice_move > 0) then
-      allocate(properties%lattice_update(3*nlattice_move))
+      allocate(properties%lattice_update(3*nlattice_move), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
       properties%lattice_update = xparam(3*natom_move+1:)
-      allocate(properties%lattice_deriv(3*nlattice_move))
+      allocate(properties%lattice_deriv(3*nlattice_move), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
       properties%lattice_deriv = grad(3*natom_move+1:)
     end if
     ! save vibrational properties if available
-    if (index(keywrd, " FORCE") /= 0) then
+    if (index(keywrd, " FORCETS") /= 0) then
       properties%calc_vibe = .true.
-      allocate(properties%freq(nvar))
-      allocate(properties%disp(nvar,nvar))
+      allocate(properties%freq(nvar), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
+      allocate(properties%disp(nvar,nvar), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
       properties%freq = freq
       properties%disp = reshape(cnorml,[nvar, nvar])
     else
       properties%calc_vibe = .false.
     end if
     ! prune bond order matrix
-    allocate(properties%bond_index(numat+1))
+    allocate(properties%bond_index(numat+1), stat=status)
+    if (status /= 0) then
+      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+      return
+    end if
     if (mozyme) then
       ! 1st pass to populate bond_index
       properties%bond_index(1) = 1
@@ -129,7 +202,7 @@ contains
             valenc = valenc + 2.d0 * p(kk)
           end do
         end if
-        if (valenc > 0.001d0) then
+        if (valenc > 0.01d0) then
           properties%bond_index(i+1) = properties%bond_index(i+1) + 1
         end if
         do j = 1, numat
@@ -141,15 +214,23 @@ contains
             do k = kl, ku
               sum = sum + p(k) ** 2
             end do
-            if (sum > 0.001d0) then
+            if (sum > 0.01d0) then
               properties%bond_index(i+1) = properties%bond_index(i+1) + 1
             end if
           end if
         end do
       end do
       ! 2nd pass to populate bond_atom and bond_order
-      allocate(properties%bond_atom(properties%bond_index(numat+1)))
-      allocate(properties%bond_order(properties%bond_index(numat+1)))
+      allocate(properties%bond_atom(properties%bond_index(numat+1)), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
+      allocate(properties%bond_order(properties%bond_index(numat+1)), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
       do i = 1, numat
         io = iorbs(i)
         valenc = 0.d0
@@ -177,12 +258,12 @@ contains
             do k = kl, ku
               sum = sum + p(k) ** 2
             end do
-            if (sum > 0.001d0) then
+            if (sum > 0.01d0) then
               properties%bond_atom(kk) = j
               properties%bond_order(kk) = sum
               kk = kk + 1
             end if
-          else if (valenc > 0.001d0) then
+          else if (valenc > 0.01d0) then
             properties%bond_atom(kk) = j
             properties%bond_order(kk) = valenc
             kk = kk + 1
@@ -198,27 +279,35 @@ contains
         ku = i*(i-1)/2 + 1
         kl = (i+1)*(i+2)/2 - 1
         do j = 1, i
-          if (bondab(ku) > 0.001d0) then
+          if (bondab(ku) > 0.01d0) then
             properties%bond_index(i+1) = properties%bond_index(i+1) + 1
           end if
           ku = ku + 1
         end do
         do j = i+1, numat
-          if (bondab(kl) > 0.001d0) then
+          if (bondab(kl) > 0.01d0) then
             properties%bond_index(i+1) = properties%bond_index(i+1) + 1
           end if
           kl = kl + j
         end do
       end do
       ! 2nd pass to populate bond_atom and bond_order
-      allocate(properties%bond_atom(properties%bond_index(numat+1)))
-      allocate(properties%bond_order(properties%bond_index(numat+1)))
+      allocate(properties%bond_atom(properties%bond_index(numat+1)), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
+      allocate(properties%bond_order(properties%bond_index(numat+1)), stat=status)
+      if (status /= 0) then
+        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
+        return
+      end if
       do i = 1, numat
         ku = i*(i-1)/2 + 1
         kl = (i+1)*(i+2)/2 - 1
         kk = properties%bond_index(i)
         do j = 1, i
-          if (bondab(ku) > 0.001d0) then
+          if (bondab(ku) > 0.01d0) then
             properties%bond_atom(kk) = j
             properties%bond_order(kk) = bondab(ku)
             kk = kk + 1
@@ -226,7 +315,7 @@ contains
           ku = ku + 1
         end do
         do j = i+1, numat
-          if (bondab(kl) > 0.001d0) then
+          if (bondab(kl) > 0.01d0) then
             properties%bond_atom(kk) = j
             properties%bond_order(kk) = bondab(kl)
             kk = kk + 1
@@ -235,13 +324,6 @@ contains
         end do
       end do
     end if
-    ! deallocate memory
-    call setup_mopac_arrays(0,0)
-    if (mozyme) call delete_MOZYME_arrays()
-    ! turn use_disk back on
-    use_disk = .true.
-    ! mark the job as successful
-    properties%status = 0
-  end subroutine mopac_finalize
+  end subroutine mopac_record
 
 end submodule mopac_api_finalize
