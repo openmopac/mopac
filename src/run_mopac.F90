@@ -430,10 +430,6 @@
       if (moperr) goto 100
       call to_screen("To_file: Data read in")
 !
-! Try listening from MDI
-!
-      call mdi_listen(i)
-!
 !  If no SCF calculations are needed, output geometry and quit
 !
       if (.false.) then
@@ -831,6 +827,11 @@
         if (moperr) goto 101
         if (index(keywrd, " RAPID") /= 0) call set_up_rapid("ON")
       end if
+!
+! Try listening from MDI
+!
+      call mdi_listen(i)
+!
       if (index(keywrd,' 1SCF') /= 0 .or. method_indo) then
         if (method_indo .and. index(keywrd,' 1SCF') == 0) then
           write (iw,*) "WARNING: INDO only performs single-point calculations"
