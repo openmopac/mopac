@@ -38,5 +38,5 @@ set_target_properties(mdi-lib PROPERTIES
 link_directories(${MDI_BINARY_DIR})
 include_directories(${MDI_BINARY_DIR})
 
-target_link_libraries(mopac mdi-lib dl)
-target_link_libraries(mopac-param mdi-lib dl)
+add_dependencies(mopac-core mdi_build)
+target_link_libraries(mopac-core PUBLIC mdi-lib)
