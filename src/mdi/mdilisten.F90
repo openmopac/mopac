@@ -17,11 +17,39 @@
 MODULE MDI_IMPLEMENTATION
 
   use MDI, only : MDI_Init, MDI_Accept_communicator, MDI_Send, &
-    MDI_Recv_command, MDI_Recv, MDI_COMMAND_LENGTH, MDI_DOUBLE, &
-    MDI_CHAR, MDI_INT, MDI_Register_command, MDI_Register_node
+    MDI_Recv_command, MDI_Recv, MDI_COMMAND_LENGTH, MDI_LABEL_LENGTH, &
+    MDI_DOUBLE, MDI_CHAR, MDI_INT, MDI_Register_command, MDI_Register_node, &
+    MDI_Conversion_factor
 
-  ! Flag to terminate MDI response function
-  LOGICAL :: terminate_flag = .false.
+  ! MOPAC data exposed to the MDI interface:
+  USE chanel_C, only : iw
+
+  use molkst_C, only : numat, & ! number of real atoms
+    id, & ! number of translation/lattice vectors
+    nvar, & ! number of coordinates to be optimized
+    msdel, & ! magnetic component of spin
+    escf, & ! heat of formation
+    nelecs, & ! number of electrons
+    voigt ! Voigt stress tensor (xx, yy, zz, yz, xz, xy)
+
+  use Common_arrays_C, only : geo, & ! raw coordinates of atoms (highest priority for unrelaxed coordinates)
+    xparam, & ! values of coordinates undergoing optimization (highest priority for relaxed coordinates)
+    loc, & ! indices of atoms and coordinates marked for optimization
+    p, & ! total density matrix
+    q, & ! partial charges
+    nat, & ! atomic numbers of real atoms
+    atmass, & ! atomic masses
+    grad, & ! gradients of heat
+    txtatm1 ! original atom discriptor
+
+  use parameters_C, only : tore ! number of valence electrons per element
+
+  implicit none
+
+  ! Status flags for MDI
+  LOGICAL :: use_mdi
+  LOGICAL :: terminate_flag
+  LOGICAL :: recompute_flag
 
 CONTAINS
 
@@ -32,10 +60,14 @@ CONTAINS
       INTEGER, INTENT(IN)           :: comm
       INTEGER, INTENT(OUT)          :: ierr
 
+      INTEGER                       :: i, j
       INTEGER                       :: icoord
       INTEGER                       :: natoms
-      !DOUBLE PRECISION, ALLOCATABLE :: coords(:), forces(:)
-      DOUBLE PRECISION, ALLOCATABLE :: cell_displacement(:)
+      DOUBLE PRECISION              :: conv
+      DOUBLE PRECISION              :: charge
+      CHARACTER(len=:), ALLOCATABLE :: char_array
+      INTEGER, ALLOCATABLE :: int_array(:)
+      DOUBLE PRECISION, ALLOCATABLE :: real_array(:)
 
       ierr = 0
 
@@ -50,14 +82,16 @@ CONTAINS
          ! Send the name of the current node
          ! For MOPAC, this is always "@DEFAULT"
          CALL MDI_Send("@DEFAULT", MDI_COMMAND_LENGTH, MDI_CHAR, comm, ierr)
+         CALL handle_errors(ierr)
 
       CASE( "<CELL_DISPL" )
           ! Send the current displacement of the cell origin
           ! This is always zero for MOPAC
-          ALLOCATE( cell_displacement(3) )
-          cell_displacement = 0.0
-          CALL MDI_Send(cell_displacement, 3, MDI_DOUBLE, comm, ierr)
-          DEALLOCATE( cell_displacement )
+          ALLOCATE( real_array(3) )
+          real_array = 0.0d0
+          CALL MDI_Send(real_array, 3, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+          DEALLOCATE( real_array )
 
       ! Additional commands that should be supported
       ! Note: in general, when supporting a command that receives data from the
@@ -67,125 +101,202 @@ CONTAINS
       !    simply store the received value and otherwise leave MOPAC's internal
       !    system unchanged until the driver has sent other important information,
       !    such as >ELEMENTS and >COORDS.
-      !CASE( "<CELL" )
+      CASE( "<CELL" )
           ! Send the cell dimensions
           ! This should be in the form of three vectors
-          !CALL MDI_Send(cell, 9, MDI_DOUBLE, comm, ierr)
+          CALL MDI_Conversion_factor("angstrom", "atomic_unit_of_length", conv, ierr)
+          CALL handle_errors(ierr)
+          ALLOCATE( real_array(9) )
+          real_array = 0.0d0
+          do i=1, id
+            do j=1, 3
+              real_array(3*(i-1)+j) = geo(j,numat+i) * conv
+            end do
+          end do
+          CALL MDI_Send(real_array, 9, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+          DEALLOCATE( real_array )
 
-      !CASE( "<CHARGES" )
-          ! Optional: Send the Mulliken charges (or something similar) of each atom
-          !CALL MDI_Send(charges, natoms, MDI_DOUBLE, comm, ierr)
+      CASE( ">CELL" )
+          ! Receive new cell dimensions
+          ! NOTE: This is not reliable if the cell changes are too large,
+          !   in which case the summation bounds over unit cells need to be recomputed
+          CALL MDI_Conversion_factor("atomic_unit_of_length", "angstrom", conv, ierr)
+          CALL handle_errors(ierr)
+          ALLOCATE( real_array(9) )
+          CALL MDI_Recv(real_array, 9, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+          do i=1, id
+            do j=1, 3
+              geo(j, numat+i) = real_array(3*(i-1)+j) * conv
+            end do
+          end do
+          DEALLOCATE( real_array )
+          ! make sure that optimized coordinates in xparam are synchronized with geo
+          do i=MAX(nvar-3*id+1,1), nvar
+            if (loc(1,i) > numat) then
+              xparam(i) = geo(loc(2,i), loc(1,i))
+            end if
+          end do
+          recompute_flag = .true.
 
-      !CASE( "<COORDS" )
+      CASE( "<CHARGES" )
+          ! Send the partial charges of each atom
+          CALL recompute_as_needed()
+          ! extra code for partial charge post-processing
+          call chrge (p, q)
+          q(:numat) = tore(nat(:numat)) - q(:numat)
+          CALL MDI_Send(q, numat, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+
+      CASE( "<COORDS" )
           ! Send the current nuclear coordinates
-          !CALL MDI_Send(coords, 3 * natoms, MDI_DOUBLE, comm, ierr)
+          CALL MDI_Conversion_factor("angstrom", "atomic_unit_of_length", conv, ierr)
+          CALL handle_errors(ierr)
+          ALLOCATE( real_array(3*numat) )  
+          do i=1, numat
+            do j=1, 3
+              real_array(3*(i-1)+j) = geo(j,i) * conv
+            end do
+          end do
+          CALL MDI_Send(real_array, 3 * numat, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+          DEALLOCATE( real_array )
 
-      !CASE( ">COORDS" )
+      CASE( ">COORDS" )
           ! Receive a new set of nuclear coordinates
-          !CALL MDI_Recv(coords, 3 * natoms, MDI_DOUBLE, comm, ierr)
+          CALL MDI_Conversion_factor("atomic_unit_of_length", "angstrom", conv, ierr)
+          CALL handle_errors(ierr)
+          ALLOCATE( real_array(3*numat) )
+          CALL MDI_Recv(real_array, 3 * numat, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+          do i=1, numat
+            do j=1, 3
+              geo(j, i) = real_array(3*(i-1)+j) * conv
+            end do
+          end do
+          DEALLOCATE( real_array )
+          ! make sure that optimized coordinates in xparam are synchronized with geo
+          do i=1, nvar
+            if (loc(1,i) <= numat) then
+              xparam(i) = geo(loc(2,i), loc(1,i))
+            end if
+          end do
+          recompute_flag = .true.
 
-      !CASE( "<ELEC_MULT" )
+      CASE( "<DIMENSIONS" )
+          ! Send the status of translation vectors
+          ALLOCATE( int_array(3) )
+          int_array = 1
+          if (id > 0) int_array(1:id) = 2
+          CALL MDI_Send(int_array, 3, MDI_INT, comm, ierr)
+          CALL handle_errors(ierr)
+          DEALLOCATE( int_array )
+
+      CASE( "<ELEC_MULT" )
           ! Send the current electronic multiplicity
-          !CALL MDI_Send(mult, 1, MDI_INT, comm, ierr)
+          CALL MDI_Send(msdel+1, 1, MDI_INT, comm, ierr)
+          CALL handle_errors(ierr)
 
-      !CASE( ">ELEC_MULT" )
-          ! Receive a new electronic multiplicity
-          !CALL MDI_Recv(mult, 1, MDI_INT, comm, ierr)
-
-      !CASE( "<ELEMENTS" )
+      CASE( "<ELEMENTS" )
           ! Send the element of each atom
-          !CALL MDI_Send(elements, natoms, MDI_INT, comm, ierr)
+          CALL MDI_Send(nat, numat, MDI_INT, comm, ierr)
+          CALL handle_errors(ierr)
 
-      !CASE( ">ELEMENTS" )
-          ! Optional: Receive a new set of elements for each atom
-          !CALL MDI_Recv(elements, natoms, MDI_INT, comm, ierr)
-
-      !CASE( "<ENERGY" )
+      CASE( "<ENERGY" )
           ! Calculate and send the energy
-          !CALL MDI_Send(energy, 1, MDI_DOUBLE, comm, ierr)
+          CALL recompute_as_needed()
+          CALL MDI_Conversion_factor("kilocalorie_per_mol", "atomic_unit_of_energy", conv, ierr)
+          CALL handle_errors(ierr)
+          CALL MDI_Send(escf*conv, 1, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
 
-      !CASE( "<FORCES" )
+      CASE( "<FORCES" )
           ! Calculate and send the nuclear forces
-          !CALL MDI_Send(forces, 3 * natoms, MDI_DOUBLE, comm, ierr)
+          CALL recompute_as_needed()
+          ALLOCATE( real_array(3*numat) )
+          real_array = 0.0d0
+          do i=1, nvar
+            if (loc(1,i) <= numat) then
+              real_array(3*(loc(1,i)-1)+loc(2,i)) = grad(i)
+            end if
+          end do
+          CALL MDI_Conversion_factor("kilocalorie_per_mol", "atomic_unit_of_energy", conv, ierr)
+          CALL handle_errors(ierr)
+          real_array = real_array * conv
+          CALL MDI_Conversion_factor("angstrom", "atomic_unit_of_length", conv, ierr)
+          CALL handle_errors(ierr)
+          real_array = real_array / conv
+          CALL MDI_Send(real_array, 3 * numat, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+          DEALLOCATE( real_array )
 
-      !CASE( "<KE" )
-          ! Calculate and send the total kinetic energy
-          !CALL MDI_Send(ke, 1, MDI_DOUBLE, comm, ierr)
+      CASE( "<LABELS" )
+          ! Send the atom labels
+          ALLOCATE( CHARACTER(len=(MDI_LABEL_LENGTH * natoms)) :: char_array )
+          char_array = ""
+          do i=1, numat
+            char_array(1+(i-1)*MDI_LABEL_LENGTH:i*MDI_LABEL_LENGTH) = trim(txtatm1(i))
+          end do
+          CALL MDI_Send(char_array, MDI_LABEL_LENGTH * natoms, MDI_CHAR, comm, ierr)
+          CALL handle_errors(ierr)
+          DEALLOCATE( char_array )
 
-      !CASE( "<KE_ELEC" )
-          ! Calculate and send the total kinetic energy of the electrons
-          !CALL MDI_Send(ke_elec, 1, MDI_DOUBLE, comm, ierr)
+      CASE( "<MASSES" )
+          ! Send the atomic masses
+          CALL MDI_Send(atmass, numat, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
 
-      !CASE( "<KE_NUC" )
-          ! Calculate and send the total kinetic energy of the nuclei
-          ! This is probably just 0.0
-          !CALL MDI_Send(ke_nuc, 1, MDI_DOUBLE, comm, ierr)
-
-      !CASE( "<NATOMS" )
+      CASE( "<NATOMS" )
           ! Send the current number of atoms in the system
-          !CALL MDI_Send(natoms, 1, MDI_INT, comm, ierr)
+          CALL MDI_Send(numat, 1, MDI_INT, comm, ierr)
+          CALL handle_errors(ierr)
 
-      !CASE( "<PE" )
-          ! Calculate and send the total potential energy
-          !CALL MDI_Send(pe, 1, MDI_DOUBLE, comm, ierr)
+      CASE( "<STRESS" )
+          ! Calculate and send the virial stress tensor
+          CALL recompute_as_needed()
+          ALLOCATE( real_array(9) )
+          ! (xx, yy, zz, yz, xz, xy) -> (xx, xy, xz, yx, yy, yz, zx, zy, zz)
+          real_array(1) = voigt(1)
+          real_array(2) = voigt(6)
+          real_array(3) = voigt(5)
+          real_array(4) = voigt(6)
+          real_array(5) = voigt(2)
+          real_array(6) = voigt(4)
+          real_array(7) = voigt(5)
+          real_array(8) = voigt(4)
+          real_array(9) = voigt(3)
+          CALL MDI_Conversion_factor("newton", "atomic_unit_of_force", conv, ierr)
+          CALL handle_errors(ierr)
+          real_array = real_array * conv * 1e-9
+          CALL MDI_Conversion_factor("meter", "atomic_unit_of_length", conv, ierr)
+          CALL handle_errors(ierr)
+          real_array = real_array / (conv*conv)
+          CALL MDI_Send(real_array, 9, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
+          DEALLOCATE( real_array )
 
-      !CASE( "<PE_ELEC" )
-          ! Calculate and send the total potential energy of the electrons
-          ! See the MDI Standard definition for what this means.
-          !CALL MDI_Send(pe_elec, 1, MDI_DOUBLE, comm, ierr)
-
-      !CASE( "<PE_NUC" )
-          ! Calculate and send the total potential energy of the nuclei
-          ! See the MDI Standard definition for what this means.
-          !CALL MDI_Send(pe_nuc, 1, MDI_DOUBLE, comm, ierr)
-
-      !CASE( "<FORCES" )
-          ! Optional: Calculate and send the virial stress tensor
-          !CALL MDI_Send(stress, 9, MDI_DOUBLE, comm, ierr)
-
-      !CASE( "<TOTCHARGE" )
+      CASE( "<TOTCHARGE" )
           ! Send the total charge of the system
-          !CALL MDI_Send(totcharge, 1, MDI_DOUBLE, comm, ierr)
-
-      !CASE( ">TOTCHARGE" )
-          ! Optional: Receive a new total charge for the system
-          ! Note the the value is a double, but some rounding is permitted.
-          !CALL MDI_Recv(totcharge, 1, MDI_DOUBLE, comm, ierr)
-
-      ! Optional commands associated with supported a lattice of point charges
-      ! This is largely relevant for QM/MM with electrostatic embedding
-      !CASE( ">NLATTICE" )
-          ! Receive the number of lattice charges that will be used
-          !CALL MDI_Recv(nlattice, 1, MDI_INT, comm, ierr)
-      !CASE( ">CLATTICE" )
-          ! Receive the xyz-coordinates of the lattice charges
-          !CALL MDI_Recv(lattice_coords, 3 * nlattice, MDI_DOUBLE, comm, ierr)
-      !CASE( ">LATTICE" )
-          ! Receive the charges of the lattice charges
-          !CALL MDI_Recv(lattice_charges, nlattice, MDI_DOUBLE, comm, ierr)
-      !CASE( "<LATTICE_FORCES" )
-          ! Calculate and send the forces on the lattice points
-          !CALL MDI_Send(lattice_forces, 3 * nlattice, MDI_DOUBLE, comm, ierr)
-
+          charge = -nelecs
+          do i=1, numat
+            charge = charge + tore(nat(i))
+          end do
+          CALL MDI_Send(charge, 1, MDI_DOUBLE, comm, ierr)
+          CALL handle_errors(ierr)
 
       CASE DEFAULT
-         WRITE(6,*)'Error: command not recognized'
-         ierr = 1
+         write(iw,*) "Unknown command ", trim(command)," received through MDI"
+         CALL handle_errors(1)
       END SELECT
-
-      !DEALLOCATE( coords, forces )
 
       END SUBROUTINE execute_command
 
 
-
-
       subroutine mdi_listen(ierr)
-      USE chanel_C, only : iw
 
       character(len=1024) :: mdi_options
       integer :: i, ierr
-      logical :: use_mdi
 
       ! MDI Communicator to the driver
       INTEGER :: comm
@@ -211,14 +322,32 @@ CONTAINS
         endif
       end do
 
-
       if (use_mdi) then
+        recompute_flag = .true.
+        terminate_flag = .false.
+
         ! Register supported MDI commands
         CALL MDI_Register_node("@DEFAULT", ierr)
         CALL MDI_Register_command("@DEFAULT", "EXIT", ierr)
-        ! ... add more calls to MDI_Register_command here
+        CALL MDI_Register_command("@DEFAULT", "<@", ierr)
+        CALL MDI_Register_command("@DEFAULT", ">CELL", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<CELL", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<CELL_DISPL", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<CHARGES", ierr)
+        CALL MDI_Register_command("@DEFAULT", ">COORDS", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<COORDS", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<DIMENSIONS", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<ELEC_MULT", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<ELEMENTS", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<ENERGY", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<FORCES", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<LABELS", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<MASSES", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<NATOMS", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<STRESS", ierr)
+        CALL MDI_Register_command("@DEFAULT", "<TOTCHARGE", ierr)
 
-        ! Connct to the driver
+        ! Connect to the driver
         call MDI_Accept_communicator(comm, ierr)
         write(iw,*) " MDI communicator: ",comm
 
@@ -241,5 +370,19 @@ CONTAINS
 
       return
       end subroutine mdi_listen
+
+      subroutine recompute_as_needed()
+      if ( recompute_flag ) then
+        call compfg (xparam, .true., escf, .true., grad, .true.)
+        recompute_flag = .false.
+      end if
+      end subroutine recompute_as_needed
+
+      subroutine handle_errors(ierr)
+      integer :: ierr
+      if (ierr /= 0) then
+        stop 1
+      end if
+      end subroutine handle_errors
 
 END MODULE MDI_IMPLEMENTATION
