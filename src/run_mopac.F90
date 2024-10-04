@@ -56,7 +56,7 @@
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
 !
-      use mdi_implementation, only: mdi_listen
+      use mdi_implementation, only: mdi_listen, use_mdi
 #ifdef GPU
       Use iso_c_binding
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
@@ -831,6 +831,7 @@
 ! Try listening from MDI
 !
       call mdi_listen(i)
+      if (use_mdi) goto 100
 !
       if (index(keywrd,' 1SCF') /= 0 .or. method_indo) then
         if (method_indo .and. index(keywrd,' 1SCF') == 0) then
