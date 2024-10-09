@@ -30,7 +30,9 @@ MODULE MDI_IMPLEMENTATION
     msdel, & ! magnetic component of spin
     escf, & ! heat of formation
     nelecs, & ! number of electrons
-    voigt ! Voigt stress tensor (xx, yy, zz, yz, xz, xy)
+    voigt, & ! Voigt stress tensor (xx, yy, zz, yz, xz, xy)
+    jobnam, & ! path to input file
+    gui ! output information for a Graphical User Interface
 
   use Common_arrays_C, only : geo, & ! raw coordinates of atoms (highest priority for unrelaxed coordinates)
     xparam, & ! values of coordinates undergoing optimization (highest priority for relaxed coordinates)
@@ -47,13 +49,14 @@ MODULE MDI_IMPLEMENTATION
   implicit none
 
   ! Status flags for MDI
-  LOGICAL :: use_mdi
+  LOGICAL :: use_mdi = .false.
   LOGICAL :: terminate_flag
   LOGICAL :: recompute_flag
 
 CONTAINS
 
       SUBROUTINE execute_command(command, comm, ierr)
+      !dec$ attributes dllexport :: execute_command
       IMPLICIT NONE
 
       CHARACTER(LEN=*), INTENT(IN)  :: command
@@ -70,9 +73,6 @@ CONTAINS
       DOUBLE PRECISION, ALLOCATABLE :: real_array(:)
 
       ierr = 0
-
-      !ALLOCATE( coords( 3 * natoms ) )
-      !ALLOCATE( forces( 3 * natoms ) )
  
       SELECT CASE( TRIM(command) )
       CASE( "EXIT" )
@@ -306,7 +306,6 @@ CONTAINS
 !
 !  Check for a -mdi command-line option
 !
-      use_mdi = .false.
       do i = 1, iargc()
         call getarg (i, mdi_options)
         if (mdi_options == '-mdi' .OR. mdi_options == '--mdi') then
@@ -384,5 +383,22 @@ CONTAINS
         stop 1
       end if
       end subroutine handle_errors
+
+      subroutine MDI_Plugin_open_mopac(input_file)
+      !dec$ attributes dllexport :: MDI_Plugin_open_mopac
+      character(len=240) :: input_file
+      use_mdi = .true.
+      jobnam = trim(input_file)
+      gui = .false.
+      call run_mopac
+      gui = .true.
+      jobnam = ' '
+      use_mdi = .false.
+      end subroutine MDI_Plugin_open_mopac
+
+      ! MOPAC should close properly after the MDI EXIT command without additional action
+      subroutine MDI_Plugin_close_mopac()
+      !dec$ attributes dllexport :: MDI_Plugin_close_mopac
+      end subroutine MDI_Plugin_close_mopac
 
 END MODULE MDI_IMPLEMENTATION

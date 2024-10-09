@@ -14,6 +14,18 @@
 ! You should have received a copy of the GNU Lesser General Public License
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+  subroutine run_mopac_from_input(input_file)
+  !dec$ attributes dllexport :: run_mopac_from_input
+  USE molkst_C, only : gui, jobnam
+  implicit none
+  character(len=240) :: input_file
+  jobnam = trim(input_file)
+  gui = .false.
+  call run_mopac
+  gui = .true.
+  jobnam = ' '
+  end subroutine run_mopac_from_input
+
   subroutine run_mopac
   !dec$ attributes dllexport :: run_mopac
 !-----------------------------------------------
