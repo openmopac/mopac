@@ -241,6 +241,7 @@ endif()
 # MDI functionality (in development)
 option(MDI "MDI build flag" OFF)
 if(MDI)
+  add_definitions(-DBUILD_MDI)
   include(MDI)
 endif()
 
