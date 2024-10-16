@@ -5,7 +5,7 @@ include(ExternalProject)
 ExternalProject_Add(mdi_build
   URL     "https://github.com/MolSSI-MDI/MDI_Library/archive/v1.4.26.tar.gz"
   URL_MD5 "3124bb85259471e2a53a891f04bf697a"
-  CMAKE_ARGS ${CMAKE_REQUEST_PIC}
+  CMAKE_ARGS
   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
   -DCMAKE_Fortran_COMPILER=${CMAKE_Fortran_COMPILER}
@@ -13,12 +13,12 @@ ExternalProject_Add(mdi_build
   -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
   -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
   -Dlanguage=Fortran
-  -Dlibtype=STATIC
+  -Dlibtype=SHARED
   -Dmpi=OFF
   -Dpython_plugins=OFF
   UPDATE_COMMAND ""
   INSTALL_COMMAND ""
-  BUILD_BYPRODUCTS "<BINARY_DIR>/MDI_Library/libmdi.a"
+  BUILD_BYPRODUCTS "<BINARY_DIR>/MDI_Library/libmdi${CMAKE_SHARED_LIBRARY_SUFFIX}"
   )
 
 # where is the compiled library?
@@ -31,7 +31,7 @@ file(MAKE_DIRECTORY ${MDI_BINARY_DIR})
 add_library(mdi-lib UNKNOWN IMPORTED)
 add_dependencies(mdi-lib mdi_build)
 set_target_properties(mdi-lib PROPERTIES
-  IMPORTED_LOCATION "${MDI_BINARY_DIR}/libmdi.a"
+  IMPORTED_LOCATION "${MDI_BINARY_DIR}/libmdi${CMAKE_SHARED_LIBRARY_SUFFIX}"
   INTERFACE_INCLUDE_DIRECTORIES ${MDI_BINARY_DIR}
   )
 
