@@ -1354,6 +1354,7 @@ subroutine calculate_voigt
   double precision, dimension (3) :: dsum, dsum1
   double precision, external :: volume
 !  Accumulate stress tensor from gradients with x, y, & z components
+  voigt = 0.d0
   m = 0
   i1 = 0
   do i = 1, nvar
@@ -1462,24 +1463,32 @@ subroutine write_pressure(iprt)
 !  Accumulate stress tensor
     if (nvar == 3*natoms) then
       call calculate_voigt()
-  !  Print stress tensor
-      write(line,'(a)') ""
-      if (iprt == 0) then
-        call to_screen(trim(line))
-      else
-        write(iprt,*)trim(line)
-      end if
-      write(line,'(a)') "          Stress tensor in GPa using Voigt notation (xx, yy, zz, yz, xz, xy):"
-      if (iprt == 0) then
-        call to_screen(trim(line))
-      else
-        write(iprt,*)trim(line)
-      end if
-      write(line,'(10x,6f10.3)') (voigt(i),i=1,6)
-      if (iprt == 0) then
-        call to_screen(trim(line))
-      else
-        write(iprt,*)trim(line)
+      xi = 0.d0
+      do i = 1, 6
+        xi = xi + Abs(voigt(i))
+      end do
+      ! nvar doesn't guarantee gradients are calculated,
+      ! suppress exactly zero stress, assuming that gradients were not evaluated in that case
+      if (xi /= 0.d0) then
+    !  Print stress tensor
+        write(line,'(a)') ""
+        if (iprt == 0) then
+          call to_screen(trim(line))
+        else
+          write(iprt,*)trim(line)
+        end if
+        write(line,'(a)') "          Stress tensor in GPa using Voigt notation (xx, yy, zz, yz, xz, xy):"
+        if (iprt == 0) then
+          call to_screen(trim(line))
+        else
+          write(iprt,*)trim(line)
+        end if
+        write(line,'(10x,6f10.3)') (voigt(i),i=1,6)
+        if (iprt == 0) then
+          call to_screen(trim(line))
+        else
+          write(iprt,*)trim(line)
+        end if
       end if
     end if
 end subroutine write_pressure
