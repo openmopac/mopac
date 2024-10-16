@@ -205,6 +205,7 @@ CONTAINS
       write(iw,*) " Received MDI command: ",TRIM(command)
 
       ierr = execute_command(command, comm, class_obj)
+      IF ( ierr /= 0 ) STOP 1
 
       IF ( terminate_flag ) EXIT
 
