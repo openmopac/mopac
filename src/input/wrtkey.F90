@@ -1854,6 +1854,10 @@ subroutine wrtwor (allkey)
   double precision :: time, sum_1, sum_2
   logical, external :: myword
   double precision, external :: reada
+#ifdef _OPENMP
+  integer :: max_threads
+  integer, external :: omp_get_num_procs
+#endif
   intrinsic Index, Min, Nint, Max
   if (myword(allkey, " EIGINV"))     write (iw,'(" *  EIGINV     - USE HESSIAN EIGENVALUE REVERSION IN EF")')
   if (myword(allkey, " NONR"))       write (iw,'(" *  NONR       - DO NOT USE NEWTON-RAPHSON STEP IN EF")')
@@ -1901,12 +1905,11 @@ subroutine wrtwor (allkey)
     i = nint(reada(keywrd, i))
     i = max(i,1)
 #ifdef _OPENMP
+    max_threads = omp_get_num_procs()
     if (i == 1) then
       write (iw,'(" *  THREADS=1  - MULTI-THREADING NOT USED")')
-    else if (i < 10) then
-      write (iw,'(" *  THREADS    - USE A MAXIMUM OF", i2, " THREADS")') i
     else
-      write (iw,'(" *  THREADS    - USE A MAXIMUM OF", i3, " THREADS")') i
+      write (iw,'(" *  THREADS    - USE UP TO ", i0, " THREADS OUT OF ", i0)') i, max_threads
     end if
 #else
     write (iw,'(" *  THREADS    - INACTIVE (THREAD CONTROLS DISABLED)")')
