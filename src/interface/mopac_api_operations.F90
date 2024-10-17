@@ -171,4 +171,17 @@ contains
     call mopac_finalize(properties)
   end subroutine mozyme_vibe
 
+  ! Run MOPAC conventionally from an input file
+  subroutine run_mopac_from_input(path_to_file)
+    !dec$ attributes dllexport :: run_mopac_from_input
+    USE molkst_C, only : gui, jobnam
+    implicit none
+    character(len=240), intent(in) :: path_to_file
+    jobnam = trim(path_to_file)
+    gui = .false.
+    call run_mopac
+    gui = .true.
+    jobnam = ' '
+  end subroutine run_mopac_from_input
+  
 end submodule mopac_api_operations
