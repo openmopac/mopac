@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
+! NOTE: include this file or compile it to generate a .mod file to use the API
 module mopac_api
   implicit none
 
