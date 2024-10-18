@@ -32,11 +32,6 @@ macro(add_mopac_test _name _files)
 endmacro()
 
 #===============================================
-add_executable(mopac-api-test)
-target_link_libraries(mopac-api-test mopac-core)
-if (STATIC_BUILD)
-  target_link_options(mopac-api-test PUBLIC "-static")
-endif()
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list
     mopac_api_test
