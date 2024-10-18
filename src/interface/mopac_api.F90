@@ -201,7 +201,7 @@ module mopac_api
     end subroutine mozyme_vibe
 
     ! Run MOPAC conventionally from an input file
-    subroutine run_mopac_from_input(path_to_file)
+    module subroutine run_mopac_from_input(path_to_file)
       !dec$ attributes dllexport :: run_mopac_from_input
       character(len=240), intent(in) :: path_to_file
     end subroutine run_mopac_from_input
