@@ -41,8 +41,6 @@ set(src_list
 foreach(idx IN LISTS src_list)
         target_sources(mopac-api-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
 endforeach()
-# Extra file to build module interface
-target_sources(mopac-api-test PRIVATE ${CMAKE_SOURCE_DIR}/src/interface/mopac_api.F90)
 #===============================================
 
 add_subdirectory(INDO-dev)
