@@ -215,8 +215,8 @@ jobs:
           path: build/mopac-*-linux.*
 
   mac-build:
-    # macos-latest is now ARM-based, MOPAC is being distributed for Intel-based Macs right now, so using Intel-based standard runner from before the recent runner updates
-    runs-on: macos-12
+    # macos-latest is now ARM-based, MOPAC is being distributed for Intel-based Macs right now, so using latest free Intel-based standard runner
+    runs-on: macos-13
     timeout-minutes: 30
 
     steps:
@@ -247,7 +247,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /opt/intel
-          key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}
+          key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}-macos-13
 
       - name: Download & install Intel Fortran compiler
         if: steps.cache-intel.outputs.cache-hit != 'true'
@@ -272,6 +272,8 @@ jobs:
             -DCMAKE_Fortran_FLAGS="-static-intel" \
             -DCMAKE_C_COMPILER=gcc \
             -DAUTO_BLAS=OFF \
+            -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-ld_classic" \
+            -DCMAKE_EXE_LINKER_FLAGS="-Wl,-ld_classic" \
             -DMOPAC_LINK="${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_intel_thread.a ${MKLROOT}/lib/libmkl_core.a -liomp5 -lpthread -lm -ldl"
 
       # an Intel-suggested hack is temporarily circumventing excessively slow calls to xcodebuild hidden in ifort, taken from:
