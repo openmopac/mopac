@@ -15,6 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
+! NOTE: include this file or compile it to generate a .mod file to use the API
 module mopac_api
   implicit none
 
@@ -23,6 +24,8 @@ module mopac_api
   public :: mopac_system, mopac_properties, mopac_state, mozyme_state
   ! public subroutines of the MOPAC API
   public :: mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax, mozyme_vibe
+  ! public subroutine of the simple, disk-based MOPAC API
+  public :: run_mopac_from_input
 
   ! data that defines the atomistic system and MOPAC job options
   type :: mopac_system
@@ -92,7 +95,7 @@ module mopac_api
     ! number of MOPAC error messages (negative value indicates that allocation of error_msg failed)
     integer :: nerror
     ! text of MOPAC error messages [nerror,120]
-    character*120, dimension(:), allocatable :: error_msg
+    character*120, dimension (:), allocatable :: error_msg
   end type
 
   ! data that describes the electronic state using standard molecular orbitals
@@ -151,7 +154,7 @@ module mopac_api
 
     ! MOPAC electronic ground state calculation
     module subroutine mopac_scf(system, state, properties)
-    !dec$ attributes dllexport :: mopac_scf
+      !dec$ attributes dllexport :: mopac_scf
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -159,7 +162,7 @@ module mopac_api
 
     ! MOPAC geometry relaxation
     module subroutine mopac_relax(system, state, properties)
-    !dec$ attributes dllexport :: mopac_relax
+      !dec$ attributes dllexport :: mopac_relax
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -167,7 +170,7 @@ module mopac_api
 
     ! MOPAC vibrational calculation
     module subroutine mopac_vibe(system, state, properties)
-    !dec$ attributes dllexport :: mopac_vibe
+      !dec$ attributes dllexport :: mopac_vibe
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -175,7 +178,7 @@ module mopac_api
 
     ! MOZYME electronic ground state calculation
     module subroutine mozyme_scf(system, state, properties)
-    !dec$ attributes dllexport :: mozyme_scf
+      !dec$ attributes dllexport :: mozyme_scf
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -183,7 +186,7 @@ module mopac_api
 
     ! MOZYME geometry relaxation
     module subroutine mozyme_relax(system, state, properties)
-    !dec$ attributes dllexport :: mozyme_relax
+      !dec$ attributes dllexport :: mozyme_relax
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -191,11 +194,18 @@ module mopac_api
 
     ! MOZYME vibrational calculation
     module subroutine mozyme_vibe(system, state, properties)
-    !dec$ attributes dllexport :: mozyme_vibe
+      !dec$ attributes dllexport :: mozyme_vibe
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
     end subroutine mozyme_vibe
+
+    ! Run MOPAC conventionally from an input file
+    module subroutine run_mopac_from_input(path_to_file)
+      !dec$ attributes dllexport :: run_mopac_from_input
+      character(len=240), intent(in) :: path_to_file
+    end subroutine run_mopac_from_input
+    
   end interface
 
 end module mopac_api

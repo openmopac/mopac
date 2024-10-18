@@ -16,7 +16,7 @@
 
 submodule (mopac_api) mopac_api_operations
   use Common_arrays_C, only: xparam, grad, lopt
-  use molkst_C, only: keywrd, escf, moperr, nvar
+  use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam
   implicit none
 
   interface
@@ -171,4 +171,15 @@ contains
     call mopac_finalize(properties)
   end subroutine mozyme_vibe
 
+  ! Run MOPAC conventionally from an input file
+  module subroutine run_mopac_from_input(path_to_file)
+    !dec$ attributes dllexport :: run_mopac_from_input
+    character(len=240), intent(in) :: path_to_file
+    jobnam = trim(path_to_file)
+    gui = .false.
+    call run_mopac
+    gui = .true.
+    jobnam = ' '
+  end subroutine run_mopac_from_input
+  
 end submodule mopac_api_operations

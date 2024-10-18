@@ -82,4 +82,5 @@ add_mopac_test(erratic-1 "erratic1.mop")
 add_mopac_test(erratic-2 "erratic2.mop")
 add_mopac_test(erratic-3 "erratic3.mop")
 
-add_test(NAME "mopac-api-test" COMMAND ${CMAKE_BINARY_DIR}/mopac-api-test${CMAKE_EXECUTABLE_SUFFIX})
+add_test(NAME "mopac-api-test" COMMAND mopac-api-test)
+
