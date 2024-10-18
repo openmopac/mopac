@@ -215,8 +215,8 @@ jobs:
           path: build/mopac-*-linux.*
 
   mac-build:
-    # macos-latest is now ARM-based, MOPAC is being distributed for Intel-based Macs right now, so using latest Intel-based standard runner
-    runs-on: macos-14-large
+    # macos-latest is now ARM-based, MOPAC is being distributed for Intel-based Macs right now, so using latest free Intel-based standard runner
+    runs-on: macos-13
     timeout-minutes: 30
 
     steps:
@@ -247,7 +247,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /opt/intel
-          key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}-macos-14-large
+          key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}-macos-13
 
       - name: Download & install Intel Fortran compiler
         if: steps.cache-intel.outputs.cache-hit != 'true'
