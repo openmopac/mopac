@@ -76,8 +76,8 @@ CONTAINS
     generic_command => execute_command
     CALL MDI_Set_execute_command_func(c_funloc(generic_command), class_obj, ierr)
     CALL MDI_Plugin_get_argc(argc, ierr)
-    IF (argc > 1) THEN
-      CALL MDI_Plugin_get_arg(1, input_file, ierr)
+    IF (argc > 0) THEN
+      CALL MDI_Plugin_get_arg(0, input_file, ierr)
     ELSE
       MDI_Plugin_open_mopac = 1
       WRITE(*,*) "MDI ERROR: No input file provided for MOPAC engine"
@@ -114,8 +114,8 @@ CONTAINS
     generic_command => execute_command
     CALL MDI_Set_execute_command_func(c_funloc(generic_command), class_obj, ierr)
     CALL MDI_Plugin_get_argc(argc, ierr)
-    IF (argc > 1) THEN
-      CALL MDI_Plugin_get_arg(1, input_file, ierr)
+    IF (argc > 0) THEN
+      CALL MDI_Plugin_get_arg(0, input_file, ierr)
     ELSE
       MDI_Plugin_launch_mopac = 1
       WRITE(*,*) "MDI ERROR: No input file provided for MOPAC engine"
