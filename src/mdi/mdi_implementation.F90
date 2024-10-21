@@ -80,7 +80,7 @@ CONTAINS
       CALL MDI_Plugin_get_arg(1, input_file, ierr)
     ELSE
       MDI_Plugin_open_mopac = 1
-      WRITE(iw,*) "MDI ERROR: No input file provided for MOPAC engine"
+      WRITE(*,*) "MDI ERROR: No input file provided for MOPAC engine"
       RETURN
     END IF
     gui = .false.
@@ -118,7 +118,7 @@ CONTAINS
       CALL MDI_Plugin_get_arg(1, input_file, ierr)
     ELSE
       MDI_Plugin_launch_mopac = 1
-      WRITE(iw,*) "MDI ERROR: No input file provided for MOPAC engine"
+      WRITE(*,*) "MDI ERROR: No input file provided for MOPAC engine"
       RETURN
     END IF
     gui = .false.
