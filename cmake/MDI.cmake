@@ -15,7 +15,6 @@ ExternalProject_Add(mdi_build
   -Dlanguage=Fortran
   -Dlibtype=SHARED
   -Dmpi=OFF
-  -Dpython_plugins=OFF
   UPDATE_COMMAND ""
   INSTALL_COMMAND ""
   BUILD_BYPRODUCTS "<BINARY_DIR>/MDI_Library/libmdi${CMAKE_SHARED_LIBRARY_SUFFIX}"
