@@ -56,6 +56,10 @@
 !
       USE reimers_C, only: noh, nvl, cc0, nel, norb, norbl, norbh,&
           nshell, filenm, lenf, evalmo, nbt, multci, occfr, vca, vcb
+!
+#ifdef BUILD_MDI
+      use mdi_implementation, only: use_mdi, open_mdi, close_mdi, initialize_mdi, respond_to_commands
+#endif
 #ifdef GPU
       Use iso_c_binding
       Use mod_vars_cuda, only: lgpu, ngpus, gpu_id
@@ -87,6 +91,9 @@
       logical            :: gpu_ok(6)
       character*3        :: on_off(6)
       integer(c_int), dimension(6)	 :: clockRate, major, minor, name_size
+#endif
+#ifdef BUILD_MDI
+      if (close_mdi) goto 100
 #endif
 ! set versioning information
 #ifdef MOPAC_VERSION_FULL
@@ -805,6 +812,18 @@
         if (moperr) goto 101
         if (index(keywrd, " RAPID") /= 0) call set_up_rapid("ON")
       end if
+!
+! Initialize & run MDI, if activated
+!
+#ifdef BUILD_MDI
+      call initialize_mdi
+      if (open_mdi) return
+      if (use_mdi) then
+        call respond_to_commands
+        goto 100
+      end if
+#endif
+!
       if (index(keywrd,' 1SCF') /= 0 .or. method_indo) then
         if (method_indo .and. index(keywrd,' 1SCF') == 0) then
           write (iw,*) "WARNING: INDO only performs single-point calculations"

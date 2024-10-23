@@ -215,6 +215,13 @@ separate_arguments(MOPAC_LINK_PATH)
 target_link_libraries(mopac-core PUBLIC ${MOPAC_LINK})
 target_link_directories(mopac-core PUBLIC ${MOPAC_LINK_PATH})
 
+# MDI functionality (in development)
+option(MDI "MDI build flag" OFF)
+if(MDI)
+  add_definitions(-DBUILD_MDI)
+  include(MDI)
+endif()
+
 # Add list of source files from src directory
 add_subdirectory(src)
 
@@ -236,12 +243,6 @@ if(ENABLE_COVERAGE)
     message(FATAL_ERROR "${LCOV_PROGRAM_NAME} not found! Aborting...")
   endif()
   configure_file("cmake/CTestCustom.cmake" "${CMAKE_BINARY_DIR}/CTestCustom.cmake")
-endif()
-
-# MDI functionality (in development)
-option(MDI "MDI build flag" OFF)
-if(MDI)
-  include(MDI)
 endif()
 
 # GPU functionality (not functional at the moment)

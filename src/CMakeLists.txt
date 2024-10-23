@@ -43,4 +43,7 @@ set(dir_list
 foreach(idx IN LISTS dir_list)
 	add_subdirectory(${idx})
 endforeach()
+if(MDI)
+  add_subdirectory(mdi)
+endif()
 #===============================================
