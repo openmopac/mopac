@@ -15,8 +15,9 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api) mopac_api_operations
+  use iso_c_binding
   use Common_arrays_C, only: xparam, grad, lopt
-  use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam
+  use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam, run
   implicit none
 
   interface
@@ -57,7 +58,6 @@ contains
 
   ! MOPAC electronic ground state calculation
   module subroutine mopac_scf(system, state, properties)
-  !dec$ attributes dllexport :: mopac_scf
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -73,7 +73,6 @@ contains
 
   ! MOPAC geometry relaxation
   module subroutine mopac_relax(system, state, properties)
-  !dec$ attributes dllexport :: mopac_relax
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -89,7 +88,6 @@ contains
 
   ! MOPAC vibrational calculation
   module subroutine mopac_vibe(system, state, properties)
-  !dec$ attributes dllexport :: mopac_vibe
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -115,7 +113,6 @@ contains
 
   ! MOZYME electronic ground state calculation
   module subroutine mozyme_scf(system, state, properties)
-  !dec$ attributes dllexport :: mozyme_scf
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -131,7 +128,6 @@ contains
 
   ! MOZYME geometry relaxation
   module subroutine mozyme_relax(system, state, properties)
-  !dec$ attributes dllexport :: mozyme_relax
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -147,7 +143,6 @@ contains
 
   ! MOZYME vibrational calculation
   module subroutine mozyme_vibe(system, state, properties)
-  !dec$ attributes dllexport :: mozyme_vibe
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -173,11 +168,18 @@ contains
 
   ! Run MOPAC conventionally from an input file
   module subroutine run_mopac_from_input(path_to_file)
-    !dec$ attributes dllexport :: run_mopac_from_input
-    character(len=240), intent(in) :: path_to_file
-    jobnam = trim(path_to_file)
+    character(kind=c_char,len=*), intent(in) :: path_to_file
+    integer :: i
+    i = 1
+    do
+      if(path_to_file(i) == ' ' .or. path_to_file(i) == c_null_char) exit
+      jobnam(i) = path_to_file(i)
+      i = i + 1
+    end do
     gui = .false.
+    run = 2
     call run_mopac
+    run = 1
     gui = .true.
     jobnam = ' '
   end subroutine run_mopac_from_input
