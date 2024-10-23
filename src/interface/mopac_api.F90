@@ -22,9 +22,10 @@ module mopac_api
   private
   ! public derived types of the MOPAC API
   public :: mopac_system, mopac_properties, mopac_state, mozyme_state
-  ! public subroutines to create or destroy derived types
-  public :: create_mopac_system, destroy_mopac_system, destroy_mopac_properties, &
-            destroy_mopac_state, destroy_mozyme_state
+  ! public subroutines to create or destroy a MOPAC system
+  public :: create_mopac_system, destroy_mopac_system
+  ! public subroutines to destroy the other derived types of the API
+  public :: destroy_mopac_properties, destroy_mopac_state, destroy_mozyme_state
   ! public subroutines of the MOPAC API
   public :: mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax, mozyme_vibe
   ! public subroutine of the simple, disk-based MOPAC API
