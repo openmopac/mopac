@@ -16,7 +16,7 @@
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
 module mopac_api
-  use iso_c_binding
+  use iso_c_binding, only: c_int, c_double, c_char, c_ptr
   implicit none
 
   private

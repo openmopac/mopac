@@ -18,7 +18,7 @@
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list 
         mopac_api mopac_api_initialize mopac_api_finalize
-        mopac_api_saveload mopac_api_operations
+        mopac_api_saveload mopac_api_createdestroy mopac_api_operations
    )
 #-----------------------------------------------
 # Add a list of source files to the target
