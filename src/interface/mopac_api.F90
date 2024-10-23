@@ -40,10 +40,10 @@ module mopac_api
     integer(c_int) :: charge
     ! number of spin excitations, floor[(number of alpha electrons)/2 - (number of beta electrons)/2]
     integer(c_int) :: spin
-    ! dielectric constant for COSMO implicit solvent, must be 1 (no solvent) for nlattice > 0
-    real(c_double) :: epsilon
     ! semiempirical model: PM7 = 0, PM6-D3H4 = 1, PM6-ORG = 2, PM6 = 3, AM1 = 4, RM1 = 5
     integer(c_int) :: model
+    ! dielectric constant for COSMO implicit solvent, must be 1 (no solvent) for nlattice > 0
+    real(c_double) :: epsilon
     ! atomic number of each atom
     type(c_ptr) :: atom ! integer(c_int)[natom]
     ! (x,y,z) coordinates of each atom (Angstroms)
@@ -119,7 +119,7 @@ module mopac_api
     type(c_ptr) :: nbonds ! integer(c_int)[numat]
     ! > list of Lewis-bonded real atoms for each real atom
     type(c_ptr) :: ibonds ! integer(c_int)[9,numat]
-    ! > number of orbitals per real atom [numat]
+    ! > number of orbitals per real atom
     type(c_ptr) :: iorbs ! integer(c_int)[numat]
     ! > number of occupied molecular orbitals
     integer(c_int) :: noccupied
@@ -150,15 +150,16 @@ module mopac_api
   interface
 
     ! allocate memory & initialize mopac_system
-    module subroutine create_mopac_system(natom, natom_move, charge, spin, epsilon, model, &
-      atom, coord, nlattice, nlattice_move, pressure, lattice, tolerance, max_time, &
-      system) bind(c)
+    module subroutine create_mopac_system(natom, natom_move, charge, spin, model, & 
+                                          epsilon, atom, coord, nlattice, nlattice_move, &
+                                          pressure, lattice, tolerance, max_time, &
+                                          system) bind(c)
       integer(c_int), intent(in) :: natom
       integer(c_int), intent(in) :: natom_move
       integer(c_int), intent(in) :: charge
       integer(c_int), intent(in) :: spin
-      real(c_double), intent(in) :: epsilon
       integer(c_int), intent(in) :: model
+      real(c_double), intent(in) :: epsilon
       integer(c_int), dimension(natom), intent(in) :: atom
       real(c_double), dimension(3*natom), intent(in) :: coord
       integer(c_int), intent(in) :: nlattice
@@ -232,7 +233,7 @@ module mopac_api
       type(mopac_properties), intent(out) :: properties
     end subroutine mozyme_vibe
 
-    ! Run MOPAC conventionally from an input file
+    ! run MOPAC conventionally from an input file
     module subroutine run_mopac_from_input(path_to_file) bind(c)
       character(kind=c_char,len=*), intent(in) :: path_to_file
     end subroutine run_mopac_from_input
