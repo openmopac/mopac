@@ -36,6 +36,7 @@ MODULE MDI_IMPLEMENTATION
     nelecs, & ! number of electrons
     voigt, & ! Voigt stress tensor (xx, yy, zz, yz, xz, xy)
     jobnam, & ! path to input file
+    run, & ! run mode
     gui ! output information for a Graphical User Interface
 
   use Common_arrays_C, only : geo, & ! raw coordinates of atoms (highest priority for unrelaxed coordinates)
@@ -65,7 +66,7 @@ MODULE MDI_IMPLEMENTATION
 CONTAINS
 
   FUNCTION MDI_Plugin_open_mopac(plugin_state) bind ( C, name="MDI_Plugin_open_mopac" )
-    TYPE(C_PTR) :: plugin_state
+    TYPE(C_PTR), VALUE :: plugin_state
     INTEGER :: MDI_Plugin_open_mopac
     INTEGER :: ierr, argc
     CHARACTER(len=240) :: input_file
@@ -84,6 +85,7 @@ CONTAINS
       RETURN
     END IF
     gui = .false.
+    run = 2
     jobnam = trim(input_file)
     use_mdi = .true.
     open_mdi = .true.
@@ -99,11 +101,12 @@ CONTAINS
     close_mdi = .false.
     use_mdi = .false.
     jobnam = ' '
+    run = 1
     gui = .true.
   END FUNCTION MDI_Plugin_close_mopac
 
   FUNCTION MDI_Plugin_launch_mopac(plugin_state) bind ( C, name="MDI_Plugin_launch_mopac" )
-    TYPE(C_PTR) :: plugin_state
+    TYPE(C_PTR), VALUE :: plugin_state
     INTEGER :: MDI_Plugin_launch_mopac
     INTEGER :: ierr, argc
     CHARACTER(len=240) :: input_file
@@ -122,11 +125,13 @@ CONTAINS
       RETURN
     END IF
     gui = .false.
+    run = 2
     jobnam = trim(input_file)
     use_mdi = .true. 
     CALL run_mopac
     use_mdi = .false.
     jobnam = ' '
+    run = 1
     gui = .true.
   END FUNCTION MDI_Plugin_launch_mopac
 
