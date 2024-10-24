@@ -67,15 +67,15 @@ struct mopac_properties {
   double *freq; /* [3*natom_move], NULL if unavailable */
   /* (x,y,z) displacement vectors of normal modes */
   double *disp; /* [3*natom_move,3*natom_move], NULL if unavailable */
-  /* bond-order matrix in compressed sparse column (CSC) matrix format
+  /* bond-order matrix in compressed sparse column (CSC) matrix format (0-based indexing)
    * with insignificant bond orders (<0.01) truncated
    * diagonal matrix entries are atomic valencies */
   /* > first index of each atom in CSC bond-order matrix */
   int *bond_index; /* [natom+1] */
   /* > list of atoms bonded to each atom in CSC format */
-  int *bond_atom; /* [bond_index[natom]-1] */
+  int *bond_atom; /* [bond_index[natom]] */
   /* > bond order of atoms bonded to each atom in CSC format */
-  double *bond_order; /* [bond_index[natom]-1] */
+  double *bond_order; /* [bond_index[natom]] */
   /* (x,y,z) coordinates of each moveable lattice vectors (Angstroms) */
   double *lattice_update; /* [3*nlattice_move] */
   /* (x,y,z) heat gradients for each moveable lattice vector (kcal/mol/Angstrom) */
@@ -145,8 +145,9 @@ void create_mopac_system(int *natom, int *natom_move, int *charge, int *spin, in
 /* deallocate memory in mopac_system */
 void destroy_mopac_system(struct mopac_system *system);
 
-/* deallocate memory in mopac_properties */
-void destroy_mopac_properties(struct mopac_properties *properties);
+/* deallocate memory in mopac_properties (associated system is needed for size info) */
+void destroy_mopac_properties(struct mopac_system *system,
+                              struct mopac_properties *properties);
 
 /* deallocate memory in mopac_state */
 void destroy_mopac_state(struct mopac_state *state);
