@@ -177,8 +177,9 @@ module mopac_api
       type(mopac_system), intent(in) :: system
     end subroutine destroy_mopac_system
 
-    ! deallocate memory in mopac_properties
-    module subroutine destroy_mopac_properties(properties) bind(c)
+    ! deallocate memory in mopac_properties (associated system is needed for size info)
+    module subroutine destroy_mopac_properties(system, properties) bind(c)
+      type(mopac_system), intent(in) :: system
       type(mopac_properties), intent(in) :: properties
     end subroutine destroy_mopac_properties
 
