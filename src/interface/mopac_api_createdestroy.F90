@@ -16,7 +16,7 @@
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
 submodule (mopac_api) mopac_api_createdestroy
-  use iso_c_binding, only: c_int, c_double, c_char, c_ptr, c_loc, c_f_pointer, c_associated
+  use iso_c_binding, only: c_int, c_double, c_char, c_ptr, c_loc, c_f_pointer, c_null_char, c_associated
   implicit none
 
 contains
@@ -41,6 +41,7 @@ contains
     real(c_double), intent(in) :: tolerance
     integer(c_int), intent(in) :: max_time
     type(mopac_system), intent(out) :: system
+    integer :: status
     integer(c_int), pointer :: iptr(:)
     real(c_double), pointer :: rptr(:)
     system%natom = natom
@@ -50,10 +51,18 @@ contains
     system%model = model
     system%epsilon = epsilon
     if (natom > 0) then
-      allocate(iptr(natom))
+      allocate(iptr(natom), stat=status)
+      if (status /= 0) then
+        write(*,*) "ERROR: Failed to allocate memory in CREATE_MOPAC_SYSTEM"
+        stop 1
+      end if  
       iptr(1:natom) = atom(1:natom)
       system%atom = call c_loc(iptr)
-      allocate(rptr(3*natom))
+      allocate(rptr(3*natom), stat=status)
+      if (status /= 0) then
+        write(*,*) "ERROR: Failed to allocate memory in CREATE_MOPAC_SYSTEM"
+        stop 1
+      end if  
       rptr(1:3*natom) = coord(1:3*natom)
       system%coord = call c_loc(rptr)
     end if
@@ -61,7 +70,11 @@ contains
     system%nlattice_move = nlattice_move
     system%pressure = pressure
     if (nlattice > 0) then
-      allocate(rptr(3*nlattice))
+      allocate(rptr(3*nlattice), stat=status)
+      if (status /= 0) then
+        write(*,*) "ERROR: Failed to allocate memory in CREATE_MOPAC_SYSTEM"
+        stop 1
+      end if  
       rptr(1:3*nlattice) = lattice(1:3*nlattice)
       system%lattice = call c_loc(rptr)
     end if
@@ -75,69 +88,65 @@ contains
     integer(c_int), pointer :: iptr(:)
     real(c_double), pointer :: rptr(:)
     if (system%natom > 0) then
-      call c_f_pointer(system%atom, iptr)
+      call c_f_pointer(system%atom, iptr, [system%natom])
       deallocate(iptr)
-      call c_f_pointer(system%coord, rptr)
+      call c_f_pointer(system%coord, rptr, [3*system%natom])
       deallocate(rptr)
     end if
     if (system%nlattice > 0) then
-      call c_f_pointer(system%lattice, rptr)
+      call c_f_pointer(system%lattice, rptr, [3*system%nlattice])
       deallocate(rptr)
     end if
   end subroutine destroy_mopac_system
 
   ! deallocate memory in mopac_properties
-  module subroutine destroy_mopac_properties(properties) bind(c)
+  module subroutine destroy_mopac_properties(system, properties) bind(c)
+    type(mopac_system), intent(in) :: system
     type(mopac_properties), intent(in) :: properties
-    integer :: i
+    integer :: i, j
     integer(c_int), pointer :: iptr(:)
     real(c_double), pointer :: rptr(:)
     character(kind=c_char), pointer :: cptr(:)
     type(c_ptr), pointer :: pptr(:)
-    if (.not. c_associated(properties%charge)) then
-      call c_f_pointer(properties%charge, rptr)
+    if (system%natom > 0) then
+      call c_f_pointer(properties%charge, rptr, [system%natom])
       deallocate(rptr)
-    end if
-    if (.not. c_associated(properties%coord_update)) then
-      call c_f_pointer(properties%coord_update, rptr)
-      deallocate(rptr)
-    end if
-    if (.not. c_associated(properties%coord_deriv)) then
-      call c_f_pointer(properties%coord_deriv, rptr)
-      deallocate(rptr)
-    end if
-    if (.not. c_associated(properties%freq)) then
-      call c_f_pointer(properties%freq, rptr)
-      deallocate(rptr)
-    end if
-    if (.not. c_associated(properties%disp)) then
-      call c_f_pointer(properties%disp, rptr)
-      deallocate(rptr)
-    end if
-    if (.not. c_associated(properties%bond_index)) then
-      call c_f_pointer(properties%bond_index, iptr)
+      call c_f_pointer(properties%bond_index, iptr, [system%natom+1])
+      i = iptr(system%natom+1)
       deallocate(iptr)
-    end if
-    if (.not. c_associated(properties%bond_atom)) then
-      call c_f_pointer(properties%bond_atom, iptr)
+      call c_f_pointer(properties%bond_atom, iptr, [i])
       deallocate(iptr)
-    end if
-    if (.not. c_associated(properties%bond_order)) then
-      call c_f_pointer(properties%bond_order, rptr)
+      call c_f_pointer(properties%bond_order, rptr, [i])
       deallocate(rptr)
     end if
-    if (.not. c_associated(properties%lattice_update)) then
-      call c_f_pointer(properties%lattice_update, rptr)
+    if (system%natom_move > 0) then
+      call c_f_pointer(properties%coord_update, rptr, [3*system%natom_move])
+      deallocate(rptr)
+      call c_f_pointer(properties%coord_deriv, rptr, [3*system%natom_move])
       deallocate(rptr)
     end if
-    if (.not. c_associated(properties%lattice_deriv)) then
-      call c_f_pointer(properties%lattice_deriv, rptr)
+    if (c_associated(properties%freq)) then
+      call c_f_pointer(properties%freq, rptr, [3*system%natom_move])
+      deallocate(rptr)
+    end if
+    if (c_associated(properties%disp)) then
+      call c_f_pointer(properties%disp, rptr, [3*system%natom_move,3*system%natom_move])
+      deallocate(rptr)
+    end if
+    if (system%nlattice_move > 0) then
+      call c_f_pointer(properties%lattice_update, rptr, [3*system%nlattice_move])
+      deallocate(rptr)
+      call c_f_pointer(properties%lattice_deriv, rptr, [3*system%nlattice_move])
       deallocate(rptr)
     end if
     if (properties%nerror > 0) then
-      call c_f_pointer(properties%error_msg, pptr)
+      call c_f_pointer(properties%error_msg, pptr, [properties%nerror])
       do i=1, properties%nerror
         call c_f_pointer(pptr(i), cptr)
+        do j=1, 120 ! using the hard-coded max size of MOPAC's error messages
+          if (cptr(j) == c_null_char) exit
+        end do
+        call c_f_pointer(pptr(i), cptr, [j])
         deallocate(cptr)
       end do
       deallocate(pptr)
@@ -149,9 +158,9 @@ contains
     type(mopac_state), intent(in) :: state
     real(c_double), pointer :: rptr(:)
     if (state%mpack /= 0) then
-      call c_f_pointer(state%pa, rptr)
+      call c_f_pointer(state%pa, rptr, [state%mpack])
       deallocate(rptr)
-      call c_f_pointer(state%pb, rptr)
+      call c_f_pointer(state%pb, rptr, [state%mpack])
       deallocate(rptr)
     end if
   end subroutine destroy_mopac_state
@@ -162,23 +171,23 @@ contains
     integer(c_int), pointer :: iptr(:)
     real(c_double), pointer :: rptr(:)
     if (state%numat /= 0) then
-      call c_f_pointer(state%nbonds, iptr)
+      call c_f_pointer(state%nbonds, iptr, [state%numat])
       deallocate(iptr)
-      call c_f_pointer(state%ibonds, iptr)
+      call c_f_pointer(state%ibonds, iptr, [9,state%numat])
       deallocate(iptr)
-      call c_f_pointer(state%iorbs, iptr)
+      call c_f_pointer(state%iorbs, iptr, [state%numat])
       deallocate(iptr)
-      call c_f_pointer(state%ncf, iptr)
+      call c_f_pointer(state%ncf, iptr, [state%noccupied])
       deallocate(iptr)
-      call c_f_pointer(state%nce, iptr)
+      call c_f_pointer(state%nce, iptr, [state%nvirtual])
       deallocate(iptr)
-      call c_f_pointer(state%icocc, iptr)
+      call c_f_pointer(state%icocc, iptr, [state%icocc_dim])
       deallocate(iptr)
-      call c_f_pointer(state%icvir, iptr)
+      call c_f_pointer(state%icvir, iptr, [state%icvir_dim])
       deallocate(iptr)
-      call c_f_pointer(state%cocc, rptr)
+      call c_f_pointer(state%cocc, rptr, [state%cocc_dim])
       deallocate(rptr)
-      call c_f_pointer(state%cvir, rptr)
+      call c_f_pointer(state%cvir, rptr, [state%cvir_dim])
       deallocate(rptr)
     end if
   end subroutine destroy_mozyme_state
