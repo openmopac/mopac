@@ -16,7 +16,6 @@
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
 submodule (mopac_api) mopac_api_createdestroy
-  use iso_c_binding, only: c_int, c_double, c_char, c_ptr, c_loc, c_f_pointer, c_null_char, c_associated
   implicit none
 
 contains
@@ -57,14 +56,14 @@ contains
         stop 1
       end if  
       iptr(1:natom) = atom(1:natom)
-      system%atom = call c_loc(iptr)
+      system%atom = c_loc(iptr)
       allocate(rptr(3*natom), stat=status)
       if (status /= 0) then
         write(*,*) "ERROR: Failed to allocate memory in CREATE_MOPAC_SYSTEM"
         stop 1
       end if  
       rptr(1:3*natom) = coord(1:3*natom)
-      system%coord = call c_loc(rptr)
+      system%coord = c_loc(rptr)
     end if
     system%nlattice = nlattice
     system%nlattice_move = nlattice_move
@@ -76,7 +75,7 @@ contains
         stop 1
       end if  
       rptr(1:3*nlattice) = lattice(1:3*nlattice)
-      system%lattice = call c_loc(rptr)
+      system%lattice = c_loc(rptr)
     end if
     system%tolerance = tolerance
     system%max_time = max_time
@@ -130,7 +129,7 @@ contains
       deallocate(rptr)
     end if
     if (c_associated(properties%disp)) then
-      call c_f_pointer(properties%disp, rptr, [3*system%natom_move,3*system%natom_move])
+      call c_f_pointer(properties%disp, rptr, [3*system%natom_move*3*system%natom_move])
       deallocate(rptr)
     end if
     if (system%nlattice_move > 0) then
@@ -142,7 +141,7 @@ contains
     if (properties%nerror > 0) then
       call c_f_pointer(properties%error_msg, pptr, [properties%nerror])
       do i=1, properties%nerror
-        call c_f_pointer(pptr(i), cptr)
+        call c_f_pointer(pptr(i), cptr, [120])
         do j=1, 120 ! using the hard-coded max size of MOPAC's error messages
           if (cptr(j) == c_null_char) exit
         end do
@@ -173,7 +172,7 @@ contains
     if (state%numat /= 0) then
       call c_f_pointer(state%nbonds, iptr, [state%numat])
       deallocate(iptr)
-      call c_f_pointer(state%ibonds, iptr, [9,state%numat])
+      call c_f_pointer(state%ibonds, iptr, [9*state%numat])
       deallocate(iptr)
       call c_f_pointer(state%iorbs, iptr, [state%numat])
       deallocate(iptr)

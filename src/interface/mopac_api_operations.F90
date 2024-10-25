@@ -15,7 +15,6 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api) mopac_api_operations
-  use iso_c_binding
   use Common_arrays_C, only: xparam, grad, lopt
   use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam, run
   implicit none
@@ -168,12 +167,12 @@ contains
 
   ! Run MOPAC conventionally from an input file
   module subroutine run_mopac_from_input(path_to_file)
-    character(kind=c_char,len=*), intent(in) :: path_to_file
+    character(kind=c_char), dimension(*), intent(in) :: path_to_file
     integer :: i
     i = 1
     do
       if(path_to_file(i) == ' ' .or. path_to_file(i) == c_null_char) exit
-      jobnam(i) = path_to_file(i)
+      jobnam(i:i) = path_to_file(i)
       i = i + 1
     end do
     gui = .false.

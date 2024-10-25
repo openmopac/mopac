@@ -15,8 +15,6 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api:mopac_api_operations) mopac_api_initialize
-  use iso_c_binding, only: c_int, c_double, c_f_pointer, c_associated
-
   use chanel_C, only : output_fn, & ! name of output file
     iw ! file handle for main output file
   use conref_C, only : fpcref ! values of fundamental constants (data)
@@ -106,9 +104,9 @@ contains
     if (moperr) return
 
     ! convert C pointers
-    call c_f_pointer(system%atom, atom)
-    call c_f_pointer(system%coord, coord)
-    call c_f_pointer(system%lattice, lattice)
+    call c_f_pointer(system%atom, atom, [system%natom])
+    call c_f_pointer(system%coord, coord, [3*system%natom])
+    if (system%nlattice > 0) call c_f_pointer(system%lattice, lattice, [3*system%nlattice])
 
     use_disk = .false.
     ! load ios, iop, and iod data into tore

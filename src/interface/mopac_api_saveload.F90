@@ -15,8 +15,6 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api:mopac_api_operations) mopac_api_saveload
-  use iso_c_binding, only: c_int, c_double, c_loc, c_f_pointer
-
   use Common_arrays_C, only: pa, pb, nbonds, ibonds
   use molkst_C, only: keywrd, uhf, mpack, numat
   use MOZYME_C, only: iorbs, noccupied, ncf, nvirtual, nce, icocc_dim, &
@@ -97,14 +95,14 @@ contains
   module subroutine mozyme_save(state)
     type(mozyme_state), intent(out) :: state
     integer :: status
-    integer(c_int), pointer :: iptr(:)
+    integer(c_int), pointer :: iptr(:), iptr2(:,:)
     real(c_double), pointer :: rptr(:)
 
     if (state%numat > 0) then
       call c_f_pointer(state%nbonds, iptr, [state%numat])
       deallocate(iptr)
-      call c_f_pointer(state%ibonds, iptr, [9,state%numat])
-      deallocate(iptr)
+      call c_f_pointer(state%ibonds, iptr2, [9,state%numat])
+      deallocate(iptr2)
       call c_f_pointer(state%iorbs, iptr, [state%numat])
       deallocate(iptr)
       call c_f_pointer(state%ncf, iptr, [state%noccupied])
@@ -137,13 +135,13 @@ contains
     iptr = nbonds
     state%nbonds = c_loc(iptr)
     
-    allocate(iptr(9,numat), stat=status)
+    allocate(iptr2(9,numat), stat=status)
     if (status /= 0) then
       call mopend("Failed to allocate memory in MOZYME_SAVE")
       return
     end if
-    iptr = ibonds
-    state%ibonds = c_loc(iptr)
+    iptr2 = ibonds
+    state%ibonds = c_loc(iptr2)
 
     allocate(iptr(numat), stat=status)
     if (status /= 0) then
@@ -206,7 +204,7 @@ contains
   module subroutine mozyme_load(state)
     type(mozyme_state), intent(in) :: state
     integer :: status, i, j, k, l
-    integer(c_int), pointer :: iptr(:)
+    integer(c_int), pointer :: iptr(:), iptr2(:,:)
     real(c_double), pointer :: rptr(:)
 
     if(state%numat > 0) then
@@ -302,8 +300,8 @@ contains
       end if
       call c_f_pointer(state%nbonds, iptr, [numat])
       nbonds = iptr
-      call c_f_pointer(state%ibonds, iptr, [9,numat])
-      ibonds = iptr
+      call c_f_pointer(state%ibonds, iptr2, [9,numat])
+      ibonds = iptr2
       call c_f_pointer(state%iorbs, iptr, [numat])
       iorbs = iptr
       call c_f_pointer(state%ncf, iptr, [noccupied])

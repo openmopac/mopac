@@ -15,8 +15,6 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api:mopac_api_operations) mopac_api_finalize
-  use iso_c_binding, only: c_int, c_double, c_char, c_ptr, c_loc, c_null_char, c_null_ptr
-
   use chanel_C, only : iw ! file handle for main output file
   use Common_arrays_C, only : xparam, & ! values of coordinates undergoing optimization
     geo, & ! raw coordinates of atoms
@@ -79,7 +77,7 @@ contains
             return    
           end if
           do j=1, size
-            cptr(j) = errtxt(j)
+            cptr(j) = errtxt(j:j)
           end do
           cptr(size+1) = c_null_char
         end do
@@ -197,7 +195,7 @@ contains
     end if
     if (mozyme) then
       ! 1st pass to populate bond_index
-      bond_index(1) = 1
+      bond_index(1) = 0
       do i = 1, numat
         io = iorbs(i)
         bond_index(i+1) = bond_index(i)
@@ -235,13 +233,13 @@ contains
         end do
       end do
       ! 2nd pass to populate bond_atom and bond_order
-      allocate(properties%bond_atom(properties%bond_index(numat+1)), stat=status)
+      allocate(bond_atom(bond_index(numat+1)), stat=status)
       if (status /= 0) then
         call mopend("Failed to allocate memory in MOPAC_FINALIZE")
         return
       end if
       properties%bond_atom = c_loc(bond_atom)
-      allocate(properties%bond_order(properties%bond_index(numat+1)), stat=status)
+      allocate(bond_order(bond_index(numat+1)), stat=status)
       if (status /= 0) then
         call mopend("Failed to allocate memory in MOPAC_FINALIZE")
         return
@@ -264,7 +262,7 @@ contains
             valenc = valenc + 2.d0 * p(kk)
           end do
         end if
-        kk = bond_index(i)
+        kk = bond_index(i) + 1
         do j = 1, numat
           jo = iorbs(j)
           if (i /= j .and. ijbo (i, j) >= 0) then
@@ -289,7 +287,7 @@ contains
     else
       call bonds()
       ! 1st pass to populate bond_index
-      bond_index(1) = 1
+      bond_index(1) = 0
       do i = 1, numat
         bond_index(i+1) = bond_index(i)
         ku = i*(i-1)/2 + 1
@@ -308,13 +306,13 @@ contains
         end do
       end do
       ! 2nd pass to populate bond_atom and bond_order
-      allocate(bond_atom(properties%bond_index(numat+1)), stat=status)
+      allocate(bond_atom(bond_index(numat+1)), stat=status)
       if (status /= 0) then
         call mopend("Failed to allocate memory in MOPAC_FINALIZE")
         return
       end if
       properties%bond_atom = c_loc(bond_atom)
-      allocate(bond_order(properties%bond_index(numat+1)), stat=status)
+      allocate(bond_order(bond_index(numat+1)), stat=status)
       if (status /= 0) then
         call mopend("Failed to allocate memory in MOPAC_FINALIZE")
         return
@@ -323,7 +321,7 @@ contains
       do i = 1, numat
         ku = i*(i-1)/2 + 1
         kl = (i+1)*(i+2)/2 - 1
-        kk = bond_index(i)
+        kk = bond_index(i) + 1
         do j = 1, i
           if (bondab(ku) > 0.01d0) then
             bond_atom(kk) = j

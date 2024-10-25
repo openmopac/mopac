@@ -319,7 +319,7 @@ install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" DESTINATION "." COMPONENT 
 install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff"
               "${CMAKE_SOURCE_DIR}/COPYING"
               "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION "." COMPONENT redist EXCLUDE_FROM_ALL)
-install(PUBLIC_HEADER "${CMAKE_SOURCE_DIR}/include/mopac_api.h" COMPONENT redist EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_api.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
 
 # Install the executables and library
 install(TARGETS mopac RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)

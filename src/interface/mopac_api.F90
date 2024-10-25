@@ -16,7 +16,7 @@
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
 module mopac_api
-  use iso_c_binding, only: c_int, c_double, c_char, c_ptr
+  use, intrinsic :: iso_c_binding
   implicit none
 
   private
@@ -79,15 +79,15 @@ module mopac_api
     type(c_ptr) :: freq ! real(c_double)[3*natom_move], NULL if unavailable
     ! (x,y,z) displacement vectors of normal modes
     type(c_ptr) :: disp ! real(c_double)[3*natom_move,3*natom_move], NULL if unavailable
-    ! bond-order matrix in compressed sparse column (CSC) matrix format
+    ! bond-order matrix in compressed sparse column (CSC) matrix format (0-based indexing)
     ! with insignificant bond orders (<0.01) truncated
     ! diagonal matrix entries are atomic valencies
     ! > first index of each atom in CSC bond-order matrix
     type(c_ptr) :: bond_index ! integer(c_int)[natom+1]
     ! > list of atoms bonded to each atom in CSC format
-    type(c_ptr) :: bond_atom ! integer(c_int)[bond_index(natom+1)-1]
+    type(c_ptr) :: bond_atom ! integer(c_int)[bond_index(natom+1)]
     ! > bond order of atoms bonded to each atom in CSC format
-    type(c_ptr) :: bond_order ! real(c_double)[bond_index(natom+1)-1]
+    type(c_ptr) :: bond_order ! real(c_double)[bond_index(natom+1)]
     ! (x,y,z) coordinates of each moveable lattice vectors (Angstroms)
     type(c_ptr) :: lattice_update ! real(c_double)[3*nlattice_move]
     ! (x,y,z) heat gradients for each moveable lattice vector (kcal/mol/Angstrom)
@@ -237,7 +237,7 @@ module mopac_api
 
     ! run MOPAC conventionally from an input file
     module subroutine run_mopac_from_input(path_to_file) bind(c)
-      character(kind=c_char,len=*), intent(in) :: path_to_file
+      character(kind=c_char), dimension(*), intent(in) :: path_to_file
     end subroutine run_mopac_from_input
     
   end interface
