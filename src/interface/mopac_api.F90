@@ -22,12 +22,12 @@ module mopac_api
   private
   ! public derived types of the MOPAC API
   public :: mopac_system, mopac_properties, mopac_state, mozyme_state
-  ! public subroutines to create or destroy a MOPAC system
-  public :: create_mopac_system, destroy_mopac_system
-  ! public subroutines to destroy the other derived types of the API
-  public :: destroy_mopac_properties, destroy_mopac_state, destroy_mozyme_state
   ! public subroutines of the MOPAC API
   public :: mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax, mozyme_vibe
+  ! public subroutines to create derived types of the API that it can destroy
+  public :: create_mopac_state, create_mozyme_state
+  ! public subroutines to destroy derived types created by the API
+  public :: destroy_mopac_properties, destroy_mopac_state, destroy_mozyme_state
   ! public subroutine of the simple, disk-based MOPAC API
   public :: run_mopac_from_input
 
@@ -105,10 +105,12 @@ module mopac_api
     ! MOPAC data format is adapted from molkst_C and Common_arrays_C modules
     ! > number of matrix elements in packed lower triangle matrix format
     integer(c_int) :: mpack ! 0 if state is unavailable
+    ! > flag for unrestricted Hartree-Fock ground state (0 == restricted, 1 == unrestricted)
+    integer(c_int) :: uhf
     ! > alpha density matrix
     type(c_ptr) :: pa ! real(c_double)[mpack]
     ! > beta density matrix
-    type(c_ptr) :: pb ! real(c_double)[mpack]
+    type(c_ptr) :: pb ! real(c_double)[mpack], NULL if uhf == 0
   end type
 
   ! data that describes the electronic state using localized molecular orbitals
@@ -149,49 +151,6 @@ module mopac_api
   end type
 
   interface
-
-    ! allocate memory & initialize mopac_system
-    module subroutine create_mopac_system(natom, natom_move, charge, spin, model, & 
-                                          epsilon, atom, coord, nlattice, nlattice_move, &
-                                          pressure, lattice, tolerance, max_time, &
-                                          system) bind(c)
-      integer(c_int), intent(in) :: natom
-      integer(c_int), intent(in) :: natom_move
-      integer(c_int), intent(in) :: charge
-      integer(c_int), intent(in) :: spin
-      integer(c_int), intent(in) :: model
-      real(c_double), intent(in) :: epsilon
-      integer(c_int), dimension(natom), intent(in) :: atom
-      real(c_double), dimension(3*natom), intent(in) :: coord
-      integer(c_int), intent(in) :: nlattice
-      integer(c_int), intent(in) :: nlattice_move
-      real(c_double), intent(in) :: pressure
-      real(c_double), dimension(3*nlattice), intent(in) :: lattice
-      real(c_double), intent(in) :: tolerance
-      integer(c_int), intent(in) :: max_time
-      type(mopac_system), intent(out) :: system
-    end subroutine create_mopac_system
-
-    ! deallocate memory in mopac_system
-    module subroutine destroy_mopac_system(system) bind(c)
-      type(mopac_system), intent(in) :: system
-    end subroutine destroy_mopac_system
-
-    ! deallocate memory in mopac_properties (associated system is needed for size info)
-    module subroutine destroy_mopac_properties(system, properties) bind(c)
-      type(mopac_system), intent(in) :: system
-      type(mopac_properties), intent(in) :: properties
-    end subroutine destroy_mopac_properties
-
-    ! deallocate memory in mopac_state
-    module subroutine destroy_mopac_state(state) bind(c)
-      type(mopac_state), intent(in) :: state
-    end subroutine destroy_mopac_state
-
-    ! deallocate memory in mozyme_state
-    module subroutine destroy_mozyme_state(state) bind(c)
-      type(mozyme_state), intent(in) :: state
-    end subroutine destroy_mozyme_state
 
     ! MOPAC electronic ground state calculation
     module subroutine mopac_scf(system, state, properties) bind(c)
@@ -235,11 +194,98 @@ module mopac_api
       type(mopac_properties), intent(out) :: properties
     end subroutine mozyme_vibe
 
+    ! allocate memory for mopac_state
+    module subroutine create_mopac_state(state) bind(c)
+      type(mopac_state), intent(inout) :: state
+    end subroutine create_mopac_state
+
+    ! allocate memory for mozyme_state
+    module subroutine create_mozyme_state(state) bind(c)
+      type(mozyme_state), intent(inout) :: state
+    end subroutine create_mozyme_state
+  
+    ! deallocate memory in mopac_properties
+    module subroutine destroy_mopac_properties(properties) bind(c)
+      type(mopac_properties), intent(in) :: properties
+    end subroutine destroy_mopac_properties
+
+    ! deallocate memory in mopac_state
+    module subroutine destroy_mopac_state(state) bind(c)
+      type(mopac_state), intent(in) :: state
+    end subroutine destroy_mopac_state
+
+    ! deallocate memory in mozyme_state
+    module subroutine destroy_mozyme_state(state) bind(c)
+      type(mozyme_state), intent(in) :: state
+    end subroutine destroy_mozyme_state
+
     ! run MOPAC conventionally from an input file
     module subroutine run_mopac_from_input(path_to_file) bind(c)
       character(kind=c_char), dimension(*), intent(in) :: path_to_file
     end subroutine run_mopac_from_input
-    
+
+  end interface
+
+  ! allocate memory (C or Fortran memory manager, depending on compiler)
+  interface
+    module function create_int(size)
+      type(c_ptr) :: create_int
+      integer, intent(in) :: size
+    end function create_int
+    module function create_int2(size, size2)
+      type(c_ptr) :: create_int2
+      integer, intent(in) :: size
+      integer, intent(in) :: size2
+    end function create_int2
+    module function create_real(size)
+      type(c_ptr) :: create_real
+      integer, intent(in) :: size
+    end function create_real
+  end interface
+
+  ! allocate memory & copy data (C or Fortran memory manager, depending on compiler)
+  interface create_copy
+    module function create_copy_int(array, size)
+      type(c_ptr) :: create_copy_int
+      integer, intent(in) :: array(:)
+      integer, intent(in) :: size(1)
+    end function create_copy_int
+    module function create_copy_int2(array, size)
+      type(c_ptr) :: create_copy_int2
+      integer, intent(in) :: array(:,:)
+      integer, intent(in) :: size(2)
+    end function create_copy_int2
+    module function create_copy_real(array, size)
+      type(c_ptr) :: create_copy_real
+      double precision, intent(in) :: array(:)
+      integer, intent(in) :: size(1)
+    end function create_copy_real
+    module function create_copy_char(array, size)
+      type(c_ptr) :: create_copy_char
+      character(len=*), intent(in) :: array
+      integer, intent(in) :: size(1)
+    end function create_copy_char
+    module function create_copy_ptr(array, size)
+      type(c_ptr) :: create_copy_ptr
+      type(c_ptr), intent(in) :: array(:)
+      integer, intent(in) :: size(1)
+    end function create_copy_ptr
+  end interface
+
+  ! deallocate memory (C or Fortran memory manager, depending on compiler)
+  interface
+    module subroutine destroy_int(copy)
+      type(c_ptr), intent(in) :: copy
+    end subroutine destroy_int
+    module subroutine destroy_real(copy)
+      type(c_ptr), intent(in) :: copy
+    end subroutine destroy_real
+    module subroutine destroy_char(copy)
+      type(c_ptr), intent(in) :: copy
+    end subroutine destroy_char
+    module subroutine destroy_ptr(copy)
+      type(c_ptr), intent(in) :: copy
+    end subroutine destroy_ptr
   end interface
 
 end module mopac_api
