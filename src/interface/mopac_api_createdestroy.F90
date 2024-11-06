@@ -105,8 +105,8 @@ contains
   module function create_int(size)
     integer, intent(in) :: size
     type(c_ptr) :: create_int
-    integer(c_int), pointer :: ptr(:)
 #ifndef MOPAC_API_MALLOC
+    integer(c_int), pointer :: ptr(:)
     integer :: status
     allocate(ptr(size), stat=status)
     if (status /= 0) then
@@ -115,16 +115,18 @@ contains
     end if
     create_int = c_loc(ptr)
 #else
-    create_int = malloc(c_sizeof(ptr))
-    call c_f_pointer(create_int, ptr, [size])
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_int = transfer(dummy, create_int)
 #endif
   end function create_int
   module function create_int2(size, size2)
     integer, intent(in) :: size
     integer, intent(in) :: size2
     type(c_ptr) :: create_int2
-    integer(c_int), pointer :: ptr(:,:)
 #ifndef MOPAC_API_MALLOC
+    integer(c_int), pointer :: ptr(:,:)
     integer :: status
     allocate(ptr(size,size2), stat=status)
     if (status /= 0) then
@@ -133,15 +135,17 @@ contains
     end if
     create_int2 = c_loc(ptr)
 #else
-    create_int2 = malloc(c_sizeof(ptr))
-    call c_f_pointer(create_int2, ptr, [size,size2])
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1)*size(2))
+    create_int2 = transfer(dummy, create_int2)
 #endif
   end function create_int2
   module function create_real(size)
     integer, intent(in) :: size
     type(c_ptr) :: create_real
-    real(c_double), pointer :: ptr(:)
 #ifndef MOPAC_API_MALLOC
+    real(c_double), pointer :: ptr(:)
     integer :: status
     allocate(ptr(size), stat=status)
     if (status /= 0) then
@@ -150,8 +154,10 @@ contains
     end if
     create_real = c_loc(ptr)
 #else
-    create_real = malloc(c_sizeof(ptr))
-    call c_f_pointer(create_real, ptr, [size])
+    integer(c_intptr_t) :: dummy
+    real(c_double) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_real = transfer(dummy, create_real)
 #endif
   end function create_real
 
@@ -170,7 +176,10 @@ contains
     end if
     create_copy_int = c_loc(ptr)
 #else
-    create_copy_int = malloc(c_sizeof(ptr))
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_int = transfer(dummy, create_copy_int)
     call c_f_pointer(create_copy_int, ptr, size)
 #endif
     ptr = array
@@ -189,7 +198,10 @@ contains
     end if
     create_copy_int2 = c_loc(ptr)
 #else
-    create_copy_int2 = malloc(c_sizeof(ptr))
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1)*size(2))
+    create_copy_int2 = transfer(dummy, create_copy_int2)
     call c_f_pointer(create_copy_int2, ptr, size)
 #endif
     ptr = array
@@ -208,7 +220,10 @@ contains
     end if
     create_copy_real = c_loc(ptr)
 #else
-    create_copy_real = malloc(c_sizeof(ptr))
+    integer(c_intptr_t) :: dummy
+    real(c_double) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_real = transfer(dummy, create_copy_real)
     call c_f_pointer(create_copy_real, ptr, size)
 #endif
     ptr = array
@@ -228,7 +243,10 @@ contains
     end if
     create_copy_char = c_loc(ptr)
 #else
-    create_copy_char = malloc(c_sizeof(ptr))
+    integer(c_intptr_t) :: dummy
+    character(kind=c_char) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_char = transfer(dummy, create_copy_char)
     call c_f_pointer(create_copy_char, ptr, size)
 #endif
     do i=1, size(1)-1
@@ -250,7 +268,10 @@ contains
     end if
     create_copy_ptr = c_loc(ptr)
 #else
-    create_copy_ptr = malloc(c_sizeof(ptr))
+    integer(c_intptr_t) :: dummy
+    type(c_ptr) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_ptr = transfer(dummy, create_copy_ptr)
     call c_f_pointer(create_copy_ptr, ptr, size)
 #endif
     ptr = array
@@ -271,7 +292,9 @@ contains
       end if
     end if
 #else
-    call free(copy)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
 #endif
   end subroutine destroy_int
   module subroutine destroy_real(copy)
@@ -288,7 +311,9 @@ contains
       end if
     end if
 #else
-    call free(copy)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
 #endif
   end subroutine destroy_real
   module subroutine destroy_char(copy)
@@ -305,7 +330,9 @@ contains
       end if
     end if
 #else
-    call free(copy)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
 #endif
   end subroutine destroy_char
   module subroutine destroy_ptr(copy)
@@ -322,7 +349,9 @@ contains
       end if
     end if
 #else
-    call free(copy)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
 #endif
   end subroutine destroy_ptr
 
