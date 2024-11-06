@@ -56,7 +56,7 @@ submodule (mopac_api) mopac_api_operations
 contains
 
   ! MOPAC electronic ground state calculation
-  module subroutine mopac_scf(system, state, properties)
+  module subroutine mopac_scf(system, state, properties) bind(c)
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -71,7 +71,7 @@ contains
   end subroutine mopac_scf
 
   ! MOPAC geometry relaxation
-  module subroutine mopac_relax(system, state, properties)
+  module subroutine mopac_relax(system, state, properties) bind(c)
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -86,7 +86,7 @@ contains
   end subroutine mopac_relax
 
   ! MOPAC vibrational calculation
-  module subroutine mopac_vibe(system, state, properties)
+  module subroutine mopac_vibe(system, state, properties) bind(c)
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -111,7 +111,7 @@ contains
   end subroutine mopac_vibe
 
   ! MOZYME electronic ground state calculation
-  module subroutine mozyme_scf(system, state, properties)
+  module subroutine mozyme_scf(system, state, properties) bind(c)
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -126,7 +126,7 @@ contains
   end subroutine mozyme_scf
 
   ! MOZYME geometry relaxation
-  module subroutine mozyme_relax(system, state, properties)
+  module subroutine mozyme_relax(system, state, properties) bind(c)
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -141,7 +141,7 @@ contains
   end subroutine mozyme_relax
 
   ! MOZYME vibrational calculation
-  module subroutine mozyme_vibe(system, state, properties)
+  module subroutine mozyme_vibe(system, state, properties) bind(c)
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -166,7 +166,7 @@ contains
   end subroutine mozyme_vibe
 
   ! Run MOPAC conventionally from an input file
-  module subroutine run_mopac_from_input(path_to_file)
+  module subroutine run_mopac_from_input(path_to_file) bind(c)
     character(kind=c_char), dimension(*), intent(in) :: path_to_file
     integer :: i
     i = 1

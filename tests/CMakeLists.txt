@@ -32,6 +32,11 @@ macro(add_mopac_test _name _files)
 endmacro()
 
 #===============================================
+add_executable(mopac-api-test)
+target_link_libraries(mopac-api-test mopac-core)
+if (STATIC_BUILD)
+  target_link_options(mopac-api-test PUBLIC "-static")
+endif()
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list
     mopac_api_test
@@ -41,6 +46,8 @@ set(src_list
 foreach(idx IN LISTS src_list)
         target_sources(mopac-api-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
 endforeach()
+target_sources(mopac-api-test PRIVATE ${CMAKE_SOURCE_DIR}/include/mopac_api_internal.F90)
+target_sources(mopac-api-test PRIVATE ${CMAKE_SOURCE_DIR}/include/mopac_api_f.F90)
 #===============================================
 
 add_subdirectory(INDO-dev)

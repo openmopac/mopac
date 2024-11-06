@@ -20,175 +20,310 @@ submodule (mopac_api) mopac_api_createdestroy
 
 contains
 
-  ! allocate memory & initialize mopac_system
-  module subroutine create_mopac_system(natom, natom_move, charge, spin, model, & 
-                                        epsilon, atom, coord, nlattice, nlattice_move, &
-                                        pressure, lattice, tolerance, max_time, &
-                                        system) bind(c)
-    integer(c_int), intent(in) :: natom
-    integer(c_int), intent(in) :: natom_move
-    integer(c_int), intent(in) :: charge
-    integer(c_int), intent(in) :: spin
-    integer(c_int), intent(in) :: model
-    real(c_double), intent(in) :: epsilon
-    integer(c_int), dimension(natom), intent(in) :: atom
-    real(c_double), dimension(3*natom), intent(in) :: coord
-    integer(c_int), intent(in) :: nlattice
-    integer(c_int), intent(in) :: nlattice_move
-    real(c_double), intent(in) :: pressure
-    real(c_double), dimension(3*nlattice), intent(in) :: lattice
-    real(c_double), intent(in) :: tolerance
-    integer(c_int), intent(in) :: max_time
-    type(mopac_system), intent(out) :: system
-    integer :: status
-    integer(c_int), pointer :: iptr(:)
-    real(c_double), pointer :: rptr(:)
-    system%natom = natom
-    system%natom_move = natom_move
-    system%charge = charge
-    system%spin = spin
-    system%model = model
-    system%epsilon = epsilon
-    if (natom > 0) then
-      allocate(iptr(natom), stat=status)
-      if (status /= 0) then
-        write(*,*) "ERROR: Failed to allocate memory in CREATE_MOPAC_SYSTEM"
-        stop 1
-      end if  
-      iptr(1:natom) = atom(1:natom)
-      system%atom = c_loc(iptr)
-      allocate(rptr(3*natom), stat=status)
-      if (status /= 0) then
-        write(*,*) "ERROR: Failed to allocate memory in CREATE_MOPAC_SYSTEM"
-        stop 1
-      end if  
-      rptr(1:3*natom) = coord(1:3*natom)
-      system%coord = c_loc(rptr)
+  ! allocate memory for mopac_state
+  module subroutine create_mopac_state(state) bind(c)
+    type(mopac_state), intent(inout) :: state
+    if (state%mpack /= 0) then
+      state%pa = create_real(state%mpack)
+      if (state%uhf == 1) state%pb = create_real(state%mpack)
     end if
-    system%nlattice = nlattice
-    system%nlattice_move = nlattice_move
-    system%pressure = pressure
-    if (nlattice > 0) then
-      allocate(rptr(3*nlattice), stat=status)
-      if (status /= 0) then
-        write(*,*) "ERROR: Failed to allocate memory in CREATE_MOPAC_SYSTEM"
-        stop 1
-      end if  
-      rptr(1:3*nlattice) = lattice(1:3*nlattice)
-      system%lattice = c_loc(rptr)
-    end if
-    system%tolerance = tolerance
-    system%max_time = max_time
-  end subroutine create_mopac_system
+  end subroutine create_mopac_state
 
-  ! deallocate memory in mopac_system
-  module subroutine destroy_mopac_system(system) bind(c)
-    type(mopac_system), intent(in) :: system
-    integer(c_int), pointer :: iptr(:)
-    real(c_double), pointer :: rptr(:)
-    if (system%natom > 0) then
-      call c_f_pointer(system%atom, iptr, [system%natom])
-      deallocate(iptr)
-      call c_f_pointer(system%coord, rptr, [3*system%natom])
-      deallocate(rptr)
+  ! allocate memory for mozyme_state
+  module subroutine create_mozyme_state(state) bind(c)
+    type(mozyme_state), intent(inout) :: state
+    if (state%numat /= 0) then
+      state%nbonds = create_int(state%numat)
+      state%ibonds = create_int2(9,state%numat)
+      state%iorbs = create_int(state%numat)
+      state%ncf = create_int(state%noccupied)
+      state%nce = create_int(state%nvirtual)
+      state%icocc = create_int(state%icocc_dim)
+      state%icvir = create_int(state%icvir_dim)
+      state%cocc = create_real(state%cocc_dim)
+      state%cvir = create_real(state%cvir_dim)
     end if
-    if (system%nlattice > 0) then
-      call c_f_pointer(system%lattice, rptr, [3*system%nlattice])
-      deallocate(rptr)
-    end if
-  end subroutine destroy_mopac_system
+  end subroutine create_mozyme_state
 
   ! deallocate memory in mopac_properties
-  module subroutine destroy_mopac_properties(system, properties) bind(c)
-    type(mopac_system), intent(in) :: system
+  module subroutine destroy_mopac_properties(properties) bind(c)
     type(mopac_properties), intent(in) :: properties
-    integer :: i, j
-    integer(c_int), pointer :: iptr(:)
-    real(c_double), pointer :: rptr(:)
-    character(kind=c_char), pointer :: cptr(:)
+    integer :: i
     type(c_ptr), pointer :: pptr(:)
-    if (system%natom > 0) then
-      call c_f_pointer(properties%charge, rptr, [system%natom])
-      deallocate(rptr)
-      call c_f_pointer(properties%bond_index, iptr, [system%natom+1])
-      i = iptr(system%natom+1)
-      deallocate(iptr)
-      call c_f_pointer(properties%bond_atom, iptr, [i])
-      deallocate(iptr)
-      call c_f_pointer(properties%bond_order, rptr, [i])
-      deallocate(rptr)
-    end if
-    if (system%natom_move > 0) then
-      call c_f_pointer(properties%coord_update, rptr, [3*system%natom_move])
-      deallocate(rptr)
-      call c_f_pointer(properties%coord_deriv, rptr, [3*system%natom_move])
-      deallocate(rptr)
-    end if
-    if (c_associated(properties%freq)) then
-      call c_f_pointer(properties%freq, rptr, [3*system%natom_move])
-      deallocate(rptr)
-    end if
-    if (c_associated(properties%disp)) then
-      call c_f_pointer(properties%disp, rptr, [3*system%natom_move*3*system%natom_move])
-      deallocate(rptr)
-    end if
-    if (system%nlattice_move > 0) then
-      call c_f_pointer(properties%lattice_update, rptr, [3*system%nlattice_move])
-      deallocate(rptr)
-      call c_f_pointer(properties%lattice_deriv, rptr, [3*system%nlattice_move])
-      deallocate(rptr)
-    end if
+    call destroy_real(properties%charge)
+    call destroy_int(properties%bond_index)
+    call destroy_int(properties%bond_atom)
+    call destroy_real(properties%bond_order)
+    call destroy_real(properties%coord_update)
+    call destroy_real(properties%coord_deriv)
+    call destroy_real(properties%freq)
+    call destroy_real(properties%disp)
+    call destroy_real(properties%lattice_update)
+    call destroy_real(properties%lattice_deriv)
     if (properties%nerror > 0) then
       call c_f_pointer(properties%error_msg, pptr, [properties%nerror])
       do i=1, properties%nerror
-        call c_f_pointer(pptr(i), cptr, [120])
-        do j=1, 120 ! using the hard-coded max size of MOPAC's error messages
-          if (cptr(j) == c_null_char) exit
-        end do
-        call c_f_pointer(pptr(i), cptr, [j])
-        deallocate(cptr)
+        call destroy_char(pptr(i))
       end do
-      deallocate(pptr)
+      call destroy_ptr(properties%error_msg)
     end if
   end subroutine destroy_mopac_properties
 
   ! deallocate memory in mopac_state
   module subroutine destroy_mopac_state(state) bind(c)
     type(mopac_state), intent(in) :: state
-    real(c_double), pointer :: rptr(:)
     if (state%mpack /= 0) then
-      call c_f_pointer(state%pa, rptr, [state%mpack])
-      deallocate(rptr)
-      call c_f_pointer(state%pb, rptr, [state%mpack])
-      deallocate(rptr)
+      call destroy_real(state%pa)
+      if (state%uhf == 1) call destroy_real(state%pb)
     end if
   end subroutine destroy_mopac_state
 
   ! deallocate memory in mozyme_state
   module subroutine destroy_mozyme_state(state) bind(c)
     type(mozyme_state), intent(in) :: state
-    integer(c_int), pointer :: iptr(:)
-    real(c_double), pointer :: rptr(:)
     if (state%numat /= 0) then
-      call c_f_pointer(state%nbonds, iptr, [state%numat])
-      deallocate(iptr)
-      call c_f_pointer(state%ibonds, iptr, [9*state%numat])
-      deallocate(iptr)
-      call c_f_pointer(state%iorbs, iptr, [state%numat])
-      deallocate(iptr)
-      call c_f_pointer(state%ncf, iptr, [state%noccupied])
-      deallocate(iptr)
-      call c_f_pointer(state%nce, iptr, [state%nvirtual])
-      deallocate(iptr)
-      call c_f_pointer(state%icocc, iptr, [state%icocc_dim])
-      deallocate(iptr)
-      call c_f_pointer(state%icvir, iptr, [state%icvir_dim])
-      deallocate(iptr)
-      call c_f_pointer(state%cocc, rptr, [state%cocc_dim])
-      deallocate(rptr)
-      call c_f_pointer(state%cvir, rptr, [state%cvir_dim])
-      deallocate(rptr)
+      call destroy_int(state%nbonds)
+      call destroy_int(state%ibonds)
+      call destroy_int(state%iorbs)
+      call destroy_int(state%ncf)
+      call destroy_int(state%nce)
+      call destroy_int(state%icocc)
+      call destroy_int(state%icvir)
+      call destroy_real(state%cocc)
+      call destroy_real(state%cvir)
     end if
   end subroutine destroy_mozyme_state
+
+  ! Unfortunately, the Intel Fortran compiler does not adhere to the Fortran standard for pointers.
+  ! Memory allocated to a Fortran pointer erroneously cannot be deallocated if its memory is passed
+  ! through a C pointer in a C-bound interface and then reassigned to a Fortran pointer because hidden
+  ! information about memory allocation is contained within the original Fortran pointer and is not
+  ! retained by the C pointer. To get around this, MOPAC's API will support both C and Fortran memory
+  ! managers through the presence/absence of the MOPAC_API_MALLOC preprocessor variable.
+
+  ! allocate memory (C or Fortran memory manager, depending on compiler)
+  module function create_int(size)
+    integer, intent(in) :: size
+    type(c_ptr) :: create_int
+    integer(c_int), pointer :: ptr(:)
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_int = c_loc(ptr)
+#else
+    create_int = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_int, ptr, [size])
+#endif
+  end function create_int
+  module function create_int2(size, size2)
+    integer, intent(in) :: size
+    integer, intent(in) :: size2
+    type(c_ptr) :: create_int2
+    integer(c_int), pointer :: ptr(:,:)
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size,size2), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_int2 = c_loc(ptr)
+#else
+    create_int2 = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_int2, ptr, [size,size2])
+#endif
+  end function create_int2
+  module function create_real(size)
+    integer, intent(in) :: size
+    type(c_ptr) :: create_real
+    real(c_double), pointer :: ptr(:)
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_real = c_loc(ptr)
+#else
+    create_real = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_real, ptr, [size])
+#endif
+  end function create_real
+
+  ! allocate memory & copy data (C or Fortran memory manager, depending on compiler)
+  module function create_copy_int(array, size)
+    integer, intent(in) :: array(:)
+    integer, intent(in) :: size(1)
+    type(c_ptr) :: create_copy_int
+    integer(c_int), pointer :: ptr(:)
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size(1)), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_copy_int = c_loc(ptr)
+#else
+    create_copy_int = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_copy_int, ptr, size)
+#endif
+    ptr = array
+  end function create_copy_int
+  module function create_copy_int2(array, size)
+    integer, intent(in) :: array(:,:)
+    integer, intent(in) :: size(2)
+    type(c_ptr) :: create_copy_int2
+    integer(c_int), pointer :: ptr(:,:)
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size(1),size(2)), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_copy_int2 = c_loc(ptr)
+#else
+    create_copy_int2 = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_copy_int2, ptr, size)
+#endif
+    ptr = array
+  end function create_copy_int2
+  module function create_copy_real(array, size)
+    double precision, intent(in) :: array(:)
+    integer, intent(in) :: size(1)
+    type(c_ptr) :: create_copy_real
+    real(c_double), pointer :: ptr(:)
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size(1)), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_copy_real = c_loc(ptr)
+#else
+    create_copy_real = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_copy_real, ptr, size)
+#endif
+    ptr = array
+  end function create_copy_real
+  module function create_copy_char(array, size)
+    character(len=*), intent(in) :: array
+    integer, intent(in) :: size(1)
+    type(c_ptr) :: create_copy_char
+    character(kind=c_char), pointer :: ptr(:)
+    integer :: i
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size(1)), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_copy_char = c_loc(ptr)
+#else
+    create_copy_char = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_copy_char, ptr, size)
+#endif
+    do i=1, size(1)-1
+      ptr(i) = array(i:i)
+    end do
+    ptr(size(1)) = c_null_char
+  end function create_copy_char
+  module function create_copy_ptr(array, size)
+    type(c_ptr), intent(in) :: array(:)
+    integer, intent(in) :: size(1)
+    type(c_ptr) :: create_copy_ptr
+    type(c_ptr), pointer :: ptr(:)
+#ifndef MOPAC_API_MALLOC
+    integer :: status
+    allocate(ptr(size(1)), stat=status)
+    if (status /= 0) then
+      write(*,*) "ERROR: Failed to allocate memory in MOPAC API I/O"
+      stop 1
+    end if
+    create_copy_ptr = c_loc(ptr)
+#else
+    create_copy_ptr = malloc(c_sizeof(ptr))
+    call c_f_pointer(create_copy_ptr, ptr, size)
+#endif
+    ptr = array
+  end function create_copy_ptr
+
+  ! deallocate memory (C or Fortran memory manager, depending on compiler)
+  module subroutine destroy_int(copy)
+    type(c_ptr), intent(in) :: copy
+#ifndef MOPAC_API_MALLOC
+    integer(c_int), pointer :: ptr
+    integer :: status
+    if (c_associated(copy)) then
+      call c_f_pointer(copy, ptr)
+      deallocate(ptr, stat=status)
+      if (status /= 0) then
+        write(*,*) "ERROR: Failed to deallocate memory in MOPAC API I/O"
+        stop 1
+      end if
+    end if
+#else
+    call free(copy)
+#endif
+  end subroutine destroy_int
+  module subroutine destroy_real(copy)
+    type(c_ptr), intent(in) :: copy
+#ifndef MOPAC_API_MALLOC
+    real(c_double), pointer :: ptr
+    integer :: status
+    if (c_associated(copy)) then
+      call c_f_pointer(copy, ptr)
+      deallocate(ptr, stat=status)
+      if (status /= 0) then
+        write(*,*) "ERROR: Failed to deallocate memory in MOPAC API I/O"
+        stop 1
+      end if
+    end if
+#else
+    call free(copy)
+#endif
+  end subroutine destroy_real
+  module subroutine destroy_char(copy)
+    type(c_ptr), intent(in) :: copy
+#ifndef MOPAC_API_MALLOC
+    character(kind=c_char), pointer :: ptr
+    integer :: status
+    if (c_associated(copy)) then
+      call c_f_pointer(copy, ptr)
+      deallocate(ptr, stat=status)
+      if (status /= 0) then
+        write(*,*) "ERROR: Failed to deallocate memory in MOPAC API I/O"
+        stop 1
+      end if
+    end if
+#else
+    call free(copy)
+#endif
+  end subroutine destroy_char
+  module subroutine destroy_ptr(copy)
+    type(c_ptr), intent(in) :: copy
+#ifndef MOPAC_API_MALLOC
+    type(c_ptr), pointer :: ptr
+    integer :: status
+    if (c_associated(copy)) then
+      call c_f_pointer(copy, ptr)
+      deallocate(ptr, stat=status)
+      if (status /= 0) then
+        write(*,*) "ERROR: Failed to deallocate memory in MOPAC API I/O"
+        stop 1
+      end if
+    end if
+#else
+    call free(copy)
+#endif
+  end subroutine destroy_ptr
 
 end submodule mopac_api_createdestroy

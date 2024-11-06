@@ -134,6 +134,11 @@ if(BUILD_BZ)
   endif()
 endif()
 
+# Use malloc in API w/ Intel Fortran compiler because it can't deallocate Fortran-allocated memory passed through a C interface
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
+  target_compile_definitions(mopac-core PRIVATE MOPAC_API_MALLOC)
+endif()
+
 # MOPAC shared library ABI compatibility version
 set_target_properties(mopac-core PROPERTIES SOVERSION 2)
 
@@ -261,11 +266,6 @@ if(TESTS)
     endif()
     message(FATAL_ERROR "Python3 and Numpy are required for MOPAC testing (testing can be disabled with -DTESTS=OFF)")
   endif()
-  add_executable(mopac-api-test)
-  target_link_libraries(mopac-api-test mopac-core)
-  if (STATIC_BUILD)
-    target_link_options(mopac-api-test PUBLIC "-static")
-  endif()
   enable_testing()
   add_subdirectory(tests)
 endif()
@@ -320,6 +320,9 @@ install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff"
               "${CMAKE_SOURCE_DIR}/COPYING"
               "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION "." COMPONENT redist EXCLUDE_FROM_ALL)
 install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_api.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_api_internal.F90" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_api_f.F90" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/include/LICENSE" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
 
 # Install the executables and library
 install(TARGETS mopac RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT main)

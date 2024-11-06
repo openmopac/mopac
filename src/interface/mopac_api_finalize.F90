@@ -48,8 +48,7 @@ contains
   module subroutine mopac_finalize(properties)
     type(mopac_properties), intent(out) :: properties
     integer :: status, i, j, size
-    character(kind=c_int), pointer :: cptr(:)
-    type(c_ptr), pointer :: pptr(:)
+    type(c_ptr), allocatable :: pptr(:)
 
     ! close dummy output file to free up /dev/null
     close(iw)
@@ -57,31 +56,33 @@ contains
     ! record properties
     if (.not. moperr) call mopac_record(properties)
 
-    ! collect error messages
+    ! collect error messages & assign NULL pointers for memory safety
     if (moperr) then
+      properties%charge = c_null_ptr
+      properties%coord_update = c_null_ptr
+      properties%coord_deriv = c_null_ptr
+      properties%lattice_update = c_null_ptr
+      properties%lattice_deriv = c_null_ptr
+      properties%freq = c_null_ptr
+      properties%disp = c_null_ptr
+      properties%bond_index = c_null_ptr
+      properties%bond_atom = c_null_ptr
+      properties%bond_order = c_null_ptr
       call summary("",0)
       properties%nerror = dummy
       allocate(pptr(properties%nerror), stat=status)
-      properties%error_msg = c_loc(pptr)
       if (status /= 0) then
         properties%nerror = -properties%nerror
+        properties%error_msg = c_null_ptr
         return
       else
         do i=1, properties%nerror
           call summary("",-i)
-          size = len_trim(errtxt)
-          allocate(cptr(size+1), stat=status)
-          pptr(i) = c_loc(cptr)
-          if (status /= 0) then
-            properties%nerror = -properties%nerror
-            return    
-          end if
-          do j=1, size
-            cptr(j) = errtxt(j:j)
-          end do
-          cptr(size+1) = c_null_char
+          size = len_trim(errtxt) + 1
+          pptr(i) = create_copy(errtxt, [size])
         end do
       end if
+      properties%error_msg = create_copy(pptr, [properties%nerror])
       call summary("",-abs(properties%nerror)-1)
     else
       properties%nerror = 0
@@ -101,7 +102,7 @@ contains
     integer :: status, i, j, k, kk, kl, ku, io, jo, natom_move, nlattice_move
     double precision :: valenc, sum, dumy(3)
     integer(c_int), pointer :: bond_index(:), bond_atom(:)
-    real(c_double), pointer :: rptr(:), bond_order(:)
+    real(c_double), pointer :: bond_order(:)
 
     ! trigger charge & dipole calculation
     call chrge (p, q)
@@ -119,13 +120,7 @@ contains
     end if
     ! save basic properties
     properties%heat = escf
-    allocate(rptr(numat), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-      return
-    end if
-    rptr = q(:numat)
-    properties%charge = c_loc(rptr)
+    properties%charge = create_copy(q, [numat])
     properties%stress = voigt
     natom_move = nvar/3
     nlattice_move = 0
@@ -136,63 +131,26 @@ contains
       end if
     end do
     ! save properties of moveable coordinates
-    allocate(rptr(3*natom_move), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-      return
-    end if
-    rptr = xparam(:3*natom_move)
-    properties%coord_update = c_loc(rptr)
-    allocate(rptr(3*natom_move), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-      return
-    end if
-    rptr = grad(:3*natom_move)
-    properties%coord_deriv = c_loc(rptr)
+    properties%coord_update = create_copy(xparam, [3*natom_move])
+    properties%coord_deriv = create_copy(grad, [3*natom_move])
     if (nlattice_move > 0) then
-      allocate(rptr(3*nlattice_move), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      rptr = xparam(3*natom_move+1:)
-      properties%lattice_update = c_loc(rptr)
-      allocate(rptr(3*nlattice_move), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      rptr = grad(3*natom_move+1:)
-      properties%lattice_deriv = c_loc(rptr)
+      properties%lattice_update = create_copy(xparam(3*natom_move+1:), [3*nlattice_move])
+      properties%lattice_deriv = create_copy(grad(3*natom_move+1:), [3*nlattice_move])
+    else
+      properties%lattice_update = c_null_ptr
+      properties%lattice_deriv = c_null_ptr
     end if
     ! save vibrational properties if available
     if (index(keywrd, " FORCETS") /= 0) then
-      allocate(rptr(nvar), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      rptr = freq
-      properties%freq = c_loc(rptr)
-      allocate(rptr(nvar*nvar), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      rptr = cnorml
-      properties%disp = c_loc(rptr)
+      properties%freq = create_copy(freq, [nvar])
+      properties%disp = create_copy(cnorml, [nvar*nvar])
     else
       properties%freq = c_null_ptr
       properties%disp = c_null_ptr
     end if
     ! prune bond order matrix
-    allocate(bond_index(numat+1), stat=status)
-    properties%bond_index = c_loc(bond_index)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-      return
-    end if
+    properties%bond_index = create_int(numat+1)
+    call c_f_pointer(properties%bond_index, bond_index, [numat+1])
     if (mozyme) then
       ! 1st pass to populate bond_index
       bond_index(1) = 0
@@ -233,18 +191,10 @@ contains
         end do
       end do
       ! 2nd pass to populate bond_atom and bond_order
-      allocate(bond_atom(bond_index(numat+1)), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      properties%bond_atom = c_loc(bond_atom)
-      allocate(bond_order(bond_index(numat+1)), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      properties%bond_order = c_loc(bond_order)
+      properties%bond_atom = create_int(bond_index(numat+1))
+      call c_f_pointer(properties%bond_atom, bond_atom, [bond_index(numat+1)])
+      properties%bond_order = create_real(bond_index(numat+1))
+      call c_f_pointer(properties%bond_order, bond_order, [bond_index(numat+1)])
       do i = 1, numat
         io = iorbs(i)
         valenc = 0.d0
@@ -306,18 +256,10 @@ contains
         end do
       end do
       ! 2nd pass to populate bond_atom and bond_order
-      allocate(bond_atom(bond_index(numat+1)), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      properties%bond_atom = c_loc(bond_atom)
-      allocate(bond_order(bond_index(numat+1)), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_FINALIZE")
-        return
-      end if
-      properties%bond_order = c_loc(bond_order)
+      properties%bond_atom = create_int(bond_index(numat+1))
+      call c_f_pointer(properties%bond_atom, bond_atom, [bond_index(numat+1)])
+      properties%bond_order = create_real(bond_index(numat+1))
+      call c_f_pointer(properties%bond_order, bond_order, [bond_index(numat+1)])
       do i = 1, numat
         ku = i*(i-1)/2 + 1
         kl = (i+1)*(i+2)/2 - 1

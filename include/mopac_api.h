@@ -1,18 +1,5 @@
 /* Molecular Orbital PACkage (MOPAC)
  * Copyright (C) 2021, Virginia Polytechnic Institute and State University
- *
- * MOPAC is free software: you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * MOPAC is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 /* Diskless/stateless Application Programming Interface (API) to core MOPAC operations */
@@ -93,10 +80,12 @@ struct mopac_state {
   /* MOPAC data format is adapted from molkst_C and Common_arrays_C modules */
   /* > number of matrix elements in packed lower triangle matrix format */
   int mpack; /* 0 if state is unavailable */
+  /* > flag for unrestricted Hartree-Fock ground state (0 == restricted, 1 == unrestricted) */
+  int uhf;
   /* > alpha density matrix */
   double *pa; /* [mpack] */
   /* > beta density matrix */
-  double *pb; /* [mpack] */
+  double *pb; /* [mpack], NULL if uhf == 0 */
 };
 
 /* data that describes the electronic state using localized molecular orbitals */
@@ -136,25 +125,6 @@ struct mozyme_state {
   double *cvir; /* [cvir_dim] */
 };
 
-/* allocate memory & initialize mopac_system */
-void create_mopac_system(int *natom, int *natom_move, int *charge, int *spin, int *model,
-                         double *epsilon, int *atom, double *coord, int *nlattice, int *nlattice_move,
-                         double *pressure, double *lattice, double *tolerance, int *max_time,
-                         struct mopac_system *system);
-
-/* deallocate memory in mopac_system */
-void destroy_mopac_system(struct mopac_system *system);
-
-/* deallocate memory in mopac_properties (associated system is needed for size info) */
-void destroy_mopac_properties(struct mopac_system *system,
-                              struct mopac_properties *properties);
-
-/* deallocate memory in mopac_state */
-void destroy_mopac_state(struct mopac_state *state);
-
-/* deallocate memory in mozyme_state */
-void destroy_mozyme_state(struct mozyme_state *state);
-
 /* MOPAC electronic ground state calculation */
 void mopac_scf(struct mopac_system *system,
                struct mopac_state *state,
@@ -184,6 +154,21 @@ void mozyme_relax(struct mopac_system *system,
 void mozyme_vibe(struct mopac_system *system,
                  struct mozyme_state *state,
                  struct mopac_properties *properties);
+
+/* allocate memory for mopac_state */
+void create_mopac_state(struct mopac_state *state);
+
+/* allocate memory for mozyme_state */
+void create_mozyme_state(struct mozyme_state *state);
+
+/* deallocate memory in mopac_properties */
+void destroy_mopac_properties(struct mopac_properties *properties);
+
+/* deallocate memory in mopac_state */
+void destroy_mopac_state(struct mopac_state *state);
+
+/* deallocate memory in mozyme_state */
+void destroy_mozyme_state(struct mozyme_state *state);
 
 /* run MOPAC conventionally from an input file */
 void run_mopac_from_input(char *path_to_file);
