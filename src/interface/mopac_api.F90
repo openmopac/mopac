@@ -154,6 +154,9 @@ module mopac_api
 
     ! MOPAC electronic ground state calculation
     module subroutine mopac_scf(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_scf
+#endif
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -161,6 +164,9 @@ module mopac_api
 
     ! MOPAC geometry relaxation
     module subroutine mopac_relax(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_relax
+#endif
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -168,6 +174,9 @@ module mopac_api
 
     ! MOPAC vibrational calculation
     module subroutine mopac_vibe(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_vibe
+#endif
       type(mopac_system), intent(in) :: system
       type(mopac_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -175,6 +184,9 @@ module mopac_api
 
     ! MOZYME electronic ground state calculation
     module subroutine mozyme_scf(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_scf
+#endif
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -182,6 +194,9 @@ module mopac_api
 
     ! MOZYME geometry relaxation
     module subroutine mozyme_relax(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_relax
+#endif
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -189,6 +204,9 @@ module mopac_api
 
     ! MOZYME vibrational calculation
     module subroutine mozyme_vibe(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_vibe
+#endif
       type(mopac_system), intent(in) :: system
       type(mozyme_state), intent(inout) :: state
       type(mopac_properties), intent(out) :: properties
@@ -196,31 +214,49 @@ module mopac_api
 
     ! allocate memory for mopac_state
     module subroutine create_mopac_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: create_mopac_state
+#endif
       type(mopac_state), intent(inout) :: state
     end subroutine create_mopac_state
 
     ! allocate memory for mozyme_state
     module subroutine create_mozyme_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: create_mozyme_state
+#endif
       type(mozyme_state), intent(inout) :: state
     end subroutine create_mozyme_state
   
     ! deallocate memory in mopac_properties
     module subroutine destroy_mopac_properties(properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: destroy_mopac_properties
+#endif
       type(mopac_properties), intent(in) :: properties
     end subroutine destroy_mopac_properties
 
     ! deallocate memory in mopac_state
     module subroutine destroy_mopac_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: destroy_mopac_state
+#endif
       type(mopac_state), intent(in) :: state
     end subroutine destroy_mopac_state
 
     ! deallocate memory in mozyme_state
     module subroutine destroy_mozyme_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: destroy_mozyme_state
+#endif
       type(mozyme_state), intent(in) :: state
     end subroutine destroy_mozyme_state
 
     ! run MOPAC conventionally from an input file
     module subroutine run_mopac_from_input(path_to_file) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: run_mopac_from_input
+#endif
       character(kind=c_char), dimension(*), intent(in) :: path_to_file
     end subroutine run_mopac_from_input
 

@@ -15,9 +15,6 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 submodule (mopac_api) mopac_api_operations
-#ifdef WIN32
-!dec$ attributes dllexport :: mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax, mozyme_vibe
-#endif
   use Common_arrays_C, only: xparam, grad, lopt
   use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam, run
   implicit none
