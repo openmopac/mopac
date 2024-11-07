@@ -117,7 +117,7 @@ contains
 #else
     integer(c_intptr_t) :: dummy
     integer(c_int) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1))
+    dummy = malloc(c_sizeof(mold)*size)
     create_int = transfer(dummy, create_int)
 #endif
   end function create_int
@@ -137,7 +137,7 @@ contains
 #else
     integer(c_intptr_t) :: dummy
     integer(c_int) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1)*size(2))
+    dummy = malloc(c_sizeof(mold)*size*size2)
     create_int2 = transfer(dummy, create_int2)
 #endif
   end function create_int2
@@ -156,7 +156,7 @@ contains
 #else
     integer(c_intptr_t) :: dummy
     real(c_double) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1))
+    dummy = malloc(c_sizeof(mold)*size)
     create_real = transfer(dummy, create_real)
 #endif
   end function create_real
