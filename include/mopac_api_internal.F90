@@ -185,13 +185,13 @@ submodule (mopac_api_f) mopac_api_f_internal
     end subroutine mozyme_vibe
 
     ! allocate memory for mopac_state
-    module subroutine create_mopac_state(state) bind(c)
+    subroutine create_mopac_state(state) bind(c)
       use mopac_api_c
       type(mopac_state), intent(inout) :: state
     end subroutine create_mopac_state
 
     ! allocate memory for mozyme_state
-    module subroutine create_mozyme_state(state) bind(c)
+    subroutine create_mozyme_state(state) bind(c)
       use mopac_api_c
       type(mozyme_state), intent(inout) :: state
     end subroutine create_mozyme_state
@@ -224,7 +224,7 @@ submodule (mopac_api_f) mopac_api_f_internal
 
 contains
 
-  subroutine mopac_scf_f(system, state, properties)
+  module subroutine mopac_scf_f(system, state, properties)
     type(mopac_system_f), intent(in) :: system
     type(mopac_state_f), intent(inout) :: state
     type(mopac_properties_f), intent(out) :: properties
@@ -242,7 +242,7 @@ contains
     deallocate(rwork)
   end subroutine mopac_scf_f
 
-  subroutine mopac_relax_f(system, state, properties)
+  module subroutine mopac_relax_f(system, state, properties)
     type(mopac_system_f), intent(in) :: system
     type(mopac_state_f), intent(inout) :: state
     type(mopac_properties_f), intent(out) :: properties
@@ -260,7 +260,7 @@ contains
     deallocate(rwork)
   end subroutine mopac_relax_f
 
-  subroutine mopac_vibe_f(system, state, properties)
+  module subroutine mopac_vibe_f(system, state, properties)
     type(mopac_system_f), intent(in) :: system
     type(mopac_state_f), intent(inout) :: state
     type(mopac_properties_f), intent(out) :: properties
@@ -278,7 +278,7 @@ contains
     deallocate(rwork)
   end subroutine mopac_vibe_f
 
-  subroutine mozyme_scf_f(system, state, properties)
+  module subroutine mozyme_scf_f(system, state, properties)
     type(mopac_system_f), intent(in) :: system
     type(mozyme_state_f), intent(inout) :: state
     type(mopac_properties_f), intent(out) :: properties
@@ -296,7 +296,7 @@ contains
     deallocate(rwork)
   end subroutine mozyme_scf_f
 
-  subroutine mozyme_relax_f(system, state, properties)
+  module subroutine mozyme_relax_f(system, state, properties)
     type(mopac_system_f), intent(in) :: system
     type(mozyme_state_f), intent(inout) :: state
     type(mopac_properties_f), intent(out) :: properties
@@ -314,7 +314,7 @@ contains
     deallocate(rwork)
   end subroutine mozyme_relax_f
 
-  subroutine mozyme_vibe_f(system, state, properties)
+  module subroutine mozyme_vibe_f(system, state, properties)
     type(mopac_system_f), intent(in) :: system
     type(mozyme_state_f), intent(inout) :: state
     type(mopac_properties_f), intent(out) :: properties
@@ -332,7 +332,7 @@ contains
     deallocate(rwork)
   end subroutine mozyme_vibe_f
 
-  subroutine run_mopac_from_input_f(path_to_file)
+  module subroutine run_mopac_from_input_f(path_to_file)
     character(len=240), intent(in) :: path_to_file
     character(kind=c_char), allocatable :: path_to_file_c(:)
     integer :: i, size, status
@@ -387,7 +387,7 @@ contains
   end subroutine mopac_system_f2c
 
   subroutine mopac_properties_c2f(system_c, properties_c, properties_f)
-    type(mopac_system), intent(out) :: system_c
+    type(mopac_system), intent(in) :: system_c
     type(mopac_properties), intent(in) :: properties_c
     type(mopac_properties_f), intent(out) :: properties_f
     character(kind=c_char), pointer :: cptr(:)
