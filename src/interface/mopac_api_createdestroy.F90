@@ -22,6 +22,9 @@ contains
 
   ! allocate memory for mopac_state
   module subroutine create_mopac_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: create_mopac_state
+#endif
     type(mopac_state), intent(inout) :: state
     if (state%mpack /= 0) then
       state%pa = create_real(state%mpack)
@@ -31,6 +34,9 @@ contains
 
   ! allocate memory for mozyme_state
   module subroutine create_mozyme_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: create_mozyme_state
+#endif
     type(mozyme_state), intent(inout) :: state
     if (state%numat /= 0) then
       state%nbonds = create_int(state%numat)
@@ -47,6 +53,9 @@ contains
 
   ! deallocate memory in mopac_properties
   module subroutine destroy_mopac_properties(properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: destroy_mopac_properties
+#endif
     type(mopac_properties), intent(in) :: properties
     integer :: i
     type(c_ptr), pointer :: pptr(:)
@@ -71,6 +80,9 @@ contains
 
   ! deallocate memory in mopac_state
   module subroutine destroy_mopac_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: destroy_mopac_state
+#endif
     type(mopac_state), intent(in) :: state
     if (state%mpack /= 0) then
       call destroy_real(state%pa)
@@ -80,6 +92,9 @@ contains
 
   ! deallocate memory in mozyme_state
   module subroutine destroy_mozyme_state(state) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: destroy_mozyme_state
+#endif
     type(mozyme_state), intent(in) :: state
     if (state%numat /= 0) then
       call destroy_int(state%nbonds)

@@ -57,6 +57,9 @@ contains
 
   ! MOPAC electronic ground state calculation
   module subroutine mopac_scf(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_scf
+#endif
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -72,6 +75,9 @@ contains
 
   ! MOPAC geometry relaxation
   module subroutine mopac_relax(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_relax
+#endif
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -87,6 +93,9 @@ contains
 
   ! MOPAC vibrational calculation
   module subroutine mopac_vibe(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_vibe
+#endif
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -112,6 +121,9 @@ contains
 
   ! MOZYME electronic ground state calculation
   module subroutine mozyme_scf(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_scf
+#endif
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -127,6 +139,9 @@ contains
 
   ! MOZYME geometry relaxation
   module subroutine mozyme_relax(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_relax
+#endif
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -142,6 +157,9 @@ contains
 
   ! MOZYME vibrational calculation
   module subroutine mozyme_vibe(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_vibe
+#endif
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -167,6 +185,9 @@ contains
 
   ! Run MOPAC conventionally from an input file
   module subroutine run_mopac_from_input(path_to_file) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: run_mopac_from_input
+#endif
     character(kind=c_char), dimension(*), intent(in) :: path_to_file
     integer :: i
     i = 1
