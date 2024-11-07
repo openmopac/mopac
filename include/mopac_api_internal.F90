@@ -534,14 +534,23 @@ contains
     if (allocated(state_f%cocc)) deallocate(state_f%cocc)
     if (allocated(state_f%cvir)) deallocate(state_f%cvir)
     if (state_f%numat /= 0) then
+write(*,*) "nbonds", state_c%numat
       call copy_int(state_f%nbonds, state_c%nbonds, [state_c%numat])
+write(*,*) "ibonds"
       call copy_int2(state_f%ibonds, state_c%ibonds, [9,state_c%numat])
+write(*,*) "iorbs"
       call copy_int(state_f%iorbs, state_c%iorbs, [state_c%numat])
+write(*,*) "ncf", state_c%noccupied
       call copy_int(state_f%ncf, state_c%ncf, [state_c%noccupied])
+write(*,*) "nce", state_c%nvirtual
       call copy_int(state_f%nce, state_c%nce, [state_c%nvirtual])
+write(*,*) "icocc", state_c%icocc_dim
       call copy_int(state_f%icocc, state_c%icocc, [state_c%icocc_dim])
+write(*,*) "icvir", state_c%icvir_dim
       call copy_int(state_f%icvir, state_c%icvir, [state_c%icvir_dim])
+write(*,*) "cocc", state_c%cocc_dim
       call copy_real(state_f%cocc, state_c%cocc, [state_c%cocc_dim])
+write(*,*) "cvir", state_c%cvir_dim
       call copy_real(state_f%cvir, state_c%cvir, [state_c%cvir_dim])
     end if
     call destroy_mozyme_state(state_c)
