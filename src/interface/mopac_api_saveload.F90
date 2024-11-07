@@ -30,13 +30,15 @@ contains
     if (state%mpack > 0) call destroy_mopac_state(state)
 
     state%mpack = mpack
-    state%pa = create_copy(pa, [mpack])
-    if (uhf) then
-      state%uhf = 1
-      state%pb = create_copy(pb, [mpack])
-    else
-      state%uhf = 0
-      state%pb = c_null_ptr
+    if (mpack > 0) then
+      state%pa = create_copy(pa, [mpack])
+      if (uhf) then
+        state%uhf = 1
+        state%pb = create_copy(pb, [mpack])
+      else
+        state%uhf = 0
+        state%pb = c_null_ptr
+      end if
     end if
 
   end subroutine mopac_save
@@ -82,22 +84,24 @@ contains
     if (state%numat > 0) call destroy_mozyme_state(state)
 
     state%numat = numat
-    state%noccupied = noccupied
-    state%nvirtual = nvirtual
-    state%icocc_dim = icocc_dim
-    state%icvir_dim = icvir_dim
-    state%cocc_dim = cocc_dim
-    state%cvir_dim = cvir_dim
+    if (numat > 0) then
+      state%noccupied = noccupied
+      state%nvirtual = nvirtual
+      state%icocc_dim = icocc_dim
+      state%icvir_dim = icvir_dim
+      state%cocc_dim = cocc_dim
+      state%cvir_dim = cvir_dim
 
-    state%nbonds = create_copy(nbonds, [numat])
-    state%ibonds = create_copy(ibonds, [9,numat])
-    state%iorbs = create_copy(iorbs, [numat])
-    state%ncf = create_copy(ncf, [noccupied])
-    state%nce = create_copy(nce, [nvirtual])
-    state%icocc = create_copy(icocc, [icocc_dim])
-    state%icvir = create_copy(icvir, [icvir_dim])
-    state%cocc = create_copy(cocc, [cocc_dim])
-    state%cvir = create_copy(cvir, [cvir_dim])
+      state%nbonds = create_copy(nbonds, [numat])
+      state%ibonds = create_copy(ibonds, [9,numat])
+      state%iorbs = create_copy(iorbs, [numat])
+      state%ncf = create_copy(ncf, [noccupied])
+      state%nce = create_copy(nce, [nvirtual])
+      state%icocc = create_copy(icocc, [icocc_dim])
+      state%icvir = create_copy(icvir, [icvir_dim])
+      state%cocc = create_copy(cocc, [cocc_dim])
+      state%cvir = create_copy(cvir, [cvir_dim])
+    end if
   end subroutine mozyme_save
 
   ! load MOZYME density matrix, or construct initial guess
