@@ -171,6 +171,6 @@ void destroy_mopac_state(struct mopac_state *state);
 void destroy_mozyme_state(struct mozyme_state *state);
 
 /* run MOPAC conventionally from an input file */
-void run_mopac_from_input(char *path_to_file);
+int run_mopac_from_input(char *path_to_file);
 
 #endif

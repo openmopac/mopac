@@ -215,10 +215,11 @@ submodule (mopac_api_f) mopac_api_f_internal
     end subroutine destroy_mozyme_state
 
     ! run MOPAC conventionally from an input file
-    subroutine run_mopac_from_input(path_to_file) bind(c)
+    function run_mopac_from_input(path_to_file) bind(c)
       use iso_c_binding
+      integer(c_int) :: run_mopac_from_input
       character(kind=c_char), dimension(*), intent(in) :: path_to_file
-    end subroutine run_mopac_from_input
+    end function run_mopac_from_input
 
   end interface
 
@@ -332,7 +333,8 @@ contains
     deallocate(rwork)
   end subroutine mozyme_vibe_f
 
-  module subroutine run_mopac_from_input_f(path_to_file)
+  module function run_mopac_from_input_f(path_to_file)
+    logical :: run_mopac_from_input_f
     character(len=240), intent(in) :: path_to_file
     character(kind=c_char), allocatable :: path_to_file_c(:)
     integer :: i, size, status
@@ -346,8 +348,13 @@ contains
       path_to_file_c(i) = path_to_file(i:i)
     end do
     path_to_file_c(size+1) = c_null_char
-    call run_mopac_from_input(path_to_file_c)
-  end subroutine run_mopac_from_input_f
+    status = run_mopac_from_input(path_to_file_c)
+    if (status == 0) then
+      run_mopac_from_input_f = .true.
+    else
+      run_mopac_from_input_f = .false.
+    end if
+  end function run_mopac_from_input_f
 
   subroutine mopac_system_f2c(system_f, system_c, iwork, rwork)
     type(mopac_system_f), intent(in) :: system_f

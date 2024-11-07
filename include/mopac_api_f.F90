@@ -178,9 +178,10 @@ module mopac_api_f
     end subroutine mozyme_vibe_f
 
     ! run MOPAC conventionally from an input file
-    module subroutine run_mopac_from_input_f(path_to_file)
+    module function run_mopac_from_input_f(path_to_file)
+      logical :: run_mopac_from_input_f
       character(len=240), intent(in) :: path_to_file
-    end subroutine run_mopac_from_input_f
+    end function run_mopac_from_input_f
 
   end interface
 

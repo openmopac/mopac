@@ -184,10 +184,11 @@ contains
   end subroutine mozyme_vibe
 
   ! Run MOPAC conventionally from an input file
-  module subroutine run_mopac_from_input(path_to_file) bind(c)
+  module function run_mopac_from_input(path_to_file) bind(c)
 #ifdef WIN32
 !dec$ attributes dllexport :: run_mopac_from_input
 #endif
+    integer(c_int) :: run_mopac_from_input
     character(kind=c_char), dimension(*), intent(in) :: path_to_file
     integer :: i
     i = 1
@@ -199,9 +200,14 @@ contains
     gui = .false.
     run = 2
     call run_mopac
+    if (moperr) then
+      run_mopac_from_input = 1
+    else
+      run_mopac_from_input = 0
+    end if
     run = 1
     gui = .true.
     jobnam = ' '
-  end subroutine run_mopac_from_input
+  end function run_mopac_from_input
   
 end submodule mopac_api_operations

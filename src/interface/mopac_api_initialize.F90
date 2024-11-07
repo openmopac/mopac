@@ -135,9 +135,10 @@ contains
     write(num2str,'(i10)') system%max_time
     keywrd = trim(keywrd) // " T=" // adjustl(num2str)
     ! open dummy output file
-    output_fn = '/dev/null'
-#ifdef MOPAC_OS
-    if (MOPAC_OS == "Windows") output_fn = 'NUL'
+#ifdef WIN32
+    output_fn = 'NUL'
+#else
+  output_fn = '/dev/null'
 #endif
     close(iw)
     open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat=status)

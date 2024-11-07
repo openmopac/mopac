@@ -253,12 +253,13 @@ module mopac_api
     end subroutine destroy_mozyme_state
 
     ! run MOPAC conventionally from an input file
-    module subroutine run_mopac_from_input(path_to_file) bind(c)
+    module function run_mopac_from_input(path_to_file) bind(c)
 #ifdef WIN32
 !dec$ attributes dllexport :: run_mopac_from_input
 #endif
+      integer(c_int) :: run_mopac_from_input
       character(kind=c_char), dimension(*), intent(in) :: path_to_file
-    end subroutine run_mopac_from_input
+    end function run_mopac_from_input
 
   end interface
 
