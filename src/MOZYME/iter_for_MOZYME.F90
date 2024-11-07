@@ -263,6 +263,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             icocc(:icocc_dim) = iwork(:icocc_dim)
+            icocc(icocc_dim+1:) = 0
             icocc_dim = Nint(icocc_dim*1.6)
             deallocate (iwork)
 
@@ -279,6 +280,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             cocc(:cocc_dim) = rwork(:cocc_dim)
+            cocc(cocc_dim+1:) = 0.0d0
             cocc_dim = Nint(cocc_dim*1.6)
             deallocate (rwork)
 
@@ -295,6 +297,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             icvir(:icvir_dim) = iwork(:icvir_dim)
+            icvir(icvir_dim+1:) = 0
             icvir_dim = Nint(icvir_dim*1.6)
             deallocate (iwork)
 
@@ -311,6 +314,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             cvir(:cvir_dim) = rwork(:cvir_dim)
+            cvir(cvir_dim+1:) = 0.0d0
             cvir_dim = Nint(cvir_dim*1.6)
             deallocate (rwork)
           end if
@@ -361,6 +365,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             icocc(:icocc_dim) = iwork(:icocc_dim)
+            icocc(icocc_dim+1:) = 0
             icocc_dim = Nint(icocc_dim*1.6)
             deallocate (iwork)
 
@@ -377,6 +382,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             cocc(:cocc_dim) = rwork(:cocc_dim)
+            cocc(cocc_dim+1:) = 0.0d0
             cocc_dim = Nint(cocc_dim*1.6)
             deallocate (rwork)
 
@@ -393,6 +399,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             icvir(:icvir_dim) = iwork(:icvir_dim)
+            icvir(icvir_dim+1:) = 0
             icvir_dim = Nint(icvir_dim*1.6)
             deallocate (iwork)
 
@@ -409,6 +416,7 @@ subroutine iter_for_MOZYME (ee)
               return
             end if
             cvir(:cvir_dim) = rwork(:cvir_dim)
+            cvir(cvir_dim+1:) = 0.0d0
             cvir_dim = Nint(cvir_dim*1.6)
             deallocate (rwork)
           end if
