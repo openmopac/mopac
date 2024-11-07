@@ -34,7 +34,7 @@
         sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson, &
-        use_disk
+        use_disk, run
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
@@ -1013,8 +1013,11 @@
       write (iw, '(3/,'' TOTAL JOB TIME: '',F16.2,'' SECONDS'')') tim
       write (iw, '(/,'' == MOPAC DONE =='')')
       call fdate (line)
-      write(*,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
-      line(5:10)//", "//trim(line(21:))//", at"//line(11:16)//"."
+      ! suppress stdout when running as an API call
+      if (run /= 2) then
+        write(*,'(//10x,a,/)')"MOPAC Job: """//trim(job_fn)//""" ended normally on "// &
+        line(5:10)//", "//trim(line(21:))//", at"//line(11:16)//"."
+      end if
 !
 !  Delete files that are definitely not wanted
 !
