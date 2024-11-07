@@ -15,7 +15,9 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
   subroutine run_mopac
+#ifdef WIN32
   !dec$ attributes dllexport :: run_mopac
+#endif
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------

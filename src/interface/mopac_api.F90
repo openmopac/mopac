@@ -16,6 +16,9 @@
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
 module mopac_api
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax, mozyme_vibe
+#endif
   use, intrinsic :: iso_c_binding
   implicit none
 
