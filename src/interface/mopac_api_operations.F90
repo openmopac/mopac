@@ -33,7 +33,7 @@ submodule (mopac_api) mopac_api_operations
 
     ! save MOPAC density matrices
     module subroutine mopac_save(state)
-      type(mopac_state), intent(out) :: state
+      type(mopac_state), intent(inout) :: state
     end subroutine mopac_save
 
     ! load MOPAC density matrices, or construct initial guesses
@@ -43,7 +43,7 @@ submodule (mopac_api) mopac_api_operations
 
     ! save MOZYME density matrix
     module subroutine mozyme_save(state)
-      type(mozyme_state), intent(out) :: state
+      type(mozyme_state), intent(inout) :: state
     end subroutine mozyme_save
 
     ! load MOZYME density matrix, or construct initial guess

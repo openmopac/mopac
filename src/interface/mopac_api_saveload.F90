@@ -25,7 +25,7 @@ contains
 
   ! save MOPAC density matrices
   module subroutine mopac_save(state)
-    type(mopac_state), intent(out) :: state
+    type(mopac_state), intent(inout) :: state
 
     if (state%mpack > 0) call destroy_mopac_state(state)
 
@@ -79,7 +79,7 @@ contains
 
   ! save MOZYME density matrix
   module subroutine mozyme_save(state)
-    type(mozyme_state), intent(out) :: state
+    type(mozyme_state), intent(inout) :: state
 
     if (state%numat > 0) call destroy_mozyme_state(state)
 
