@@ -59,7 +59,7 @@ jobs:
         run: |
           sudo apt update && sudo apt install -y valgrind
           cd build/tests
-          valgrind --leak-check=yes ./mopac-api-test
+          valgrind -s --track-origins=yes --leak-check=yes ./mopac-api-test
 
       - name: Test MOPAC with CTest
         run: |
@@ -111,7 +111,7 @@ jobs:
         run: |
           sudo apt update && sudo apt install -y valgrind
           cd build/tests
-          valgrind --leak-check=yes ./mopac-api-test
+          valgrind -s --track-origins=yes --leak-check=yes ./mopac-api-test
 
       - name: Test MOPAC with CTest
         run: |
