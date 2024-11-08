@@ -197,7 +197,7 @@ contains
     create_copy_int = transfer(dummy, create_copy_int)
     call c_f_pointer(create_copy_int, ptr, size)
 #endif
-    ptr = array
+    ptr = array(:size(1))
   end function create_copy_int
   module function create_copy_int2(array, size)
     integer, intent(in) :: array(:,:)
@@ -219,7 +219,7 @@ contains
     create_copy_int2 = transfer(dummy, create_copy_int2)
     call c_f_pointer(create_copy_int2, ptr, size)
 #endif
-    ptr = array
+    ptr = array(:size(1),:size(2))
   end function create_copy_int2
   module function create_copy_real(array, size)
     double precision, intent(in) :: array(:)
@@ -241,7 +241,7 @@ contains
     create_copy_real = transfer(dummy, create_copy_real)
     call c_f_pointer(create_copy_real, ptr, size)
 #endif
-    ptr = array
+    ptr = array(:size(1))
   end function create_copy_real
   module function create_copy_char(array, size)
     character(len=*), intent(in) :: array
@@ -289,7 +289,7 @@ contains
     create_copy_ptr = transfer(dummy, create_copy_ptr)
     call c_f_pointer(create_copy_ptr, ptr, size)
 #endif
-    ptr = array
+    ptr = array(:size(1))
   end function create_copy_ptr
 
   ! deallocate memory (C or Fortran memory manager, depending on compiler)
