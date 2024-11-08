@@ -47,6 +47,7 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
             -DTHREADS_KEYWORD=OFF \
             -DSTATIC_BUILD=ON
 
@@ -98,6 +99,7 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
             -DTHREADS_KEYWORD=OFF \
             -DENABLE_COVERAGE=ON
 
