@@ -54,6 +54,12 @@ jobs:
         run: |
           cmake --build build -- -j$NUM_CORES
 
+      - name: Run Valgrind on MOPAC API tester
+        run: |
+          sudo apt update && sudo apt install -y valgrind
+          cd build/tests
+          valgrind --leak-check=yes ./mopac-api-test
+
       - name: Test MOPAC with CTest
         run: |
           cd build
@@ -98,6 +104,12 @@ jobs:
       - name: Build MOPAC with Make
         run: |
           cmake --build build -- -j$NUM_CORES
+
+      - name: Run Valgrind on MOPAC API tester
+        run: |
+          sudo apt update && sudo apt install -y valgrind
+          cd build/tests
+          valgrind --leak-check=yes ./mopac-api-test
 
       - name: Test MOPAC with CTest
         run: |
