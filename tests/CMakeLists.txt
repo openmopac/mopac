@@ -31,24 +31,7 @@ macro(add_mopac_test _name _files)
            ${CMAKE_BINARY_DIR}/mopac${CMAKE_EXECUTABLE_SUFFIX} ${HOF_ERROR} ${_files})
 endmacro()
 
-#===============================================
-add_executable(mopac-api-test)
-target_link_libraries(mopac-api-test mopac-core)
-if (STATIC_BUILD)
-  target_link_options(mopac-api-test PUBLIC "-static")
-endif()
-# Create a list of source files (src_list) with the .F90 extension
-set(src_list
-    mopac_api_test
-   )
-#-----------------------------------------------
-# Add a list of source files to the target
-foreach(idx IN LISTS src_list)
-        target_sources(mopac-api-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
-endforeach()
-target_sources(mopac-api-test PRIVATE ${CMAKE_SOURCE_DIR}/include/mopac_api_internal.F90)
-target_sources(mopac-api-test PRIVATE ${CMAKE_SOURCE_DIR}/include/mopac_api_f.F90)
-#===============================================
+target_sources(mopac-api-test PRIVATE mopac_api_test.F90)
 
 add_subdirectory(INDO-dev)
 add_subdirectory(keywords)
