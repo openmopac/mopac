@@ -15,7 +15,9 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
       module chanel_C
+#ifdef WIN32
 !dec$ attributes dllexport :: iend, end_fn
+#endif
       integer :: &
      & iw0       = -1, & !    Abbrev. output, for GUI (By default, not used)
      & ifiles_1  =  1, &

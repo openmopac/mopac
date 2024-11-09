@@ -15,32 +15,42 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 program mopac_api_test
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer :: nfail
     nfail = 0
 
     call test_mopac_scf1(nfail)
+    write(*,*) "Passed API test 1"
     call test_mopac_relax1(nfail)
+    write(*,*) "Passed API test 2"
     call test_mopac_vibe1(nfail)
+    write(*,*) "Passed API test 3"
     call test_mozyme_scf1(nfail)
+    write(*,*) "Passed API test 4"
     call test_mozyme_relax1(nfail)
+    write(*,*) "Passed API test 5"
     call test_mozyme_vibe1(nfail)
+    write(*,*) "Passed API test 6"
     call test_mopac_restart1(nfail)
+    write(*,*) "Passed API test 7"
     call test_mozyme_restart1(nfail)
+    write(*,*) "Passed API test 8"
     call test_cosmo1(nfail)
+    write(*,*) "Passed API test 9"
     call test_crystal1(nfail)
+    write(*,*) "Passed API test 10"
     call exit(nfail)
 end program mopac_api_test
 
 subroutine test_mopac_scf1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mopac_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'H2O SCF'
@@ -104,21 +114,20 @@ subroutine test_mopac_scf1(nfail)
     test_target%bond_order(5) = 0.895d0
     test_target%bond_order(6) = 0.895d0
     test_target%bond_order(7) = 1.791d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mopac_scf(test_in, test_restore, test_out)
+    call mopac_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mopac_scf1
 
 subroutine test_mopac_relax1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mopac_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'H2O relax'
@@ -190,21 +199,20 @@ subroutine test_mopac_relax1(nfail)
     test_target%bond_order(5) = 0.894d0
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mopac_relax(test_in, test_restore, test_out)
+    call mopac_relax_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mopac_relax1
 
 subroutine test_mopac_vibe1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mopac_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     test_name = 'H2O vibe'
 
@@ -267,7 +275,6 @@ subroutine test_mopac_vibe1(nfail)
     test_target%bond_order(5) = 0.894d0
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
-    test_target%calc_vibe = .true.
     test_target%nerror = 0
     allocate(test_target%freq(9))
     test_target%freq(1) = -18.0d0
@@ -362,18 +369,18 @@ subroutine test_mopac_vibe1(nfail)
     test_target%disp(8,9) = 0.1483d0
     test_target%disp(9,9) = 0.0000d0
 
-    call mopac_vibe(test_in, test_restore, test_out)
+    call mopac_vibe_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mopac_vibe1
 
 subroutine test_mozyme_scf1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mozyme_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mozyme_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'H2O SCF MOZYME'
@@ -437,21 +444,20 @@ subroutine test_mozyme_scf1(nfail)
     test_target%bond_order(5) = 0.896d0
     test_target%bond_order(6) = 0.896d0
     test_target%bond_order(7) = 1.793d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mozyme_scf(test_in, test_restore, test_out)
+    call mozyme_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mozyme_scf1
 
 subroutine test_mozyme_relax1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mozyme_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mozyme_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'H2O relax MOZYME'
@@ -523,22 +529,21 @@ subroutine test_mozyme_relax1(nfail)
     test_target%bond_order(5) = 0.894d0
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mozyme_relax(test_in, test_restore, test_out)
+    call mozyme_relax_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mozyme_relax1
 
 
 subroutine test_mozyme_vibe1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mozyme_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mozyme_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     test_name = 'H2O vibe MOZYME'
 
@@ -602,7 +607,6 @@ subroutine test_mozyme_vibe1(nfail)
     test_target%bond_order(5) = 0.894d0
     test_target%bond_order(6) = 0.894d0
     test_target%bond_order(7) = 1.788d0
-    test_target%calc_vibe = .true.
     test_target%nerror = 0
     allocate(test_target%freq(9))
     test_target%freq(1) = -18.0d0
@@ -697,18 +701,18 @@ subroutine test_mozyme_vibe1(nfail)
     test_target%disp(8,9) = 0.1483d0
     test_target%disp(9,9) = 0.0000d0
 
-    call mozyme_vibe(test_in, test_restore, test_out)
+    call mozyme_vibe_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mozyme_vibe1
 
 subroutine test_mopac_restart1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mopac_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'H2O SCF restart'
@@ -772,22 +776,21 @@ subroutine test_mopac_restart1(nfail)
     test_target%bond_order(5) = 0.895d0
     test_target%bond_order(6) = 0.895d0
     test_target%bond_order(7) = 1.791d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mopac_scf(test_in, test_restore, test_out)
-    call mopac_scf(test_in, test_restore, test_out)
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call mopac_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mopac_restart1
 
 subroutine test_mozyme_restart1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mozyme_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mozyme_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'H2O SCF MOZYME restart'
@@ -854,22 +857,21 @@ subroutine test_mozyme_restart1(nfail)
     test_target%bond_order(5) = 0.895d0
     test_target%bond_order(6) = 0.895d0
     test_target%bond_order(7) = 1.791d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mozyme_scf(test_in, test_restore, test_out)
-    call mozyme_scf(test_in, test_restore, test_out)
+    call mozyme_scf_f(test_in, test_restore, test_out)
+    call mozyme_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mozyme_restart1
 
 subroutine test_cosmo1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mopac_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'H2O SCF COSMO'
@@ -934,22 +936,20 @@ subroutine test_cosmo1(nfail)
     test_target%bond_order(5) = 0.859d0
     test_target%bond_order(6) = 0.859d0
     test_target%bond_order(7) = 1.718d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mopac_scf(test_in, test_restore, test_out)
+    call mopac_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_cosmo1
 
-
 subroutine test_crystal1(nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     integer, intent(inout) :: nfail
-    type(mopac_system) :: test_in
-    type(mopac_state) :: test_restore
-    type(mopac_properties) :: test_target
-    type(mopac_properties) :: test_out
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
     test_name = 'LiF SCF'
@@ -2189,19 +2189,18 @@ subroutine test_crystal1(nfail)
     test_target%bond_order(376) = 0.037d0
     test_target%bond_order(377) = 0.037d0
     test_target%bond_order(378) = 0.283d0
-    test_target%calc_vibe = .false.
     test_target%nerror = 0
 
-    call mopac_scf(test_in, test_restore, test_out)
+    call mopac_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_crystal1
 
 subroutine test_output(name, input, target, output, nfail)
-    use mopac_api
+    use mopac_api_f
     implicit none
     character(50), intent(in) :: name
-    type(mopac_system), intent(in) :: input
-    type(mopac_properties), intent(in) :: target, output
+    type(mopac_system_f), intent(in) :: input
+    type(mopac_properties_f), intent(in) :: target, output
     integer, intent(inout) :: nfail
     integer :: i, j
     double precision :: heat_tol, coord_tol, deriv_tol, freq_tol, charge_tol, stress_tol
@@ -2250,11 +2249,11 @@ subroutine test_output(name, input, target, output, nfail)
         end if
     end do
     ! compare vibrational properties
-    if(target%calc_vibe .neqv. output%calc_vibe) then
+    if(allocated(target%freq) .neqv. allocated(output%freq)) then
         nfail = nfail + 1
-        write(*,*) "calc_vibe mistmatch in test '", trim(name), "':", target%calc_vibe, &
-        "vs", output%calc_vibe
-    else if(target%calc_vibe .eqv. .true.) then
+        write(*,*) "freq allocation mistmatch in test '", trim(name), "':", allocated(target%freq), &
+        "vs", allocated(output%freq)
+    else if(allocated(target%freq) .eqv. .true.) then
         do i = 1, 3*input%natom_move
             if(abs(target%freq(i) - output%freq(i)) > freq_tol) then
                 nfail = nfail + 1

@@ -47,12 +47,19 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
             -DTHREADS_KEYWORD=OFF \
             -DSTATIC_BUILD=ON
 
       - name: Build MOPAC with Make
         run: |
           cmake --build build -- -j$NUM_CORES
+
+#      - name: Run Valgrind on MOPAC API tester
+#        run: |
+#          sudo apt update && sudo apt install -y valgrind
+#          cd build/tests
+#          valgrind -s --track-origins=yes --leak-check=yes ./mopac-api-test
 
       - name: Test MOPAC with CTest
         run: |
@@ -92,12 +99,19 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
             -DTHREADS_KEYWORD=OFF \
             -DENABLE_COVERAGE=ON
 
       - name: Build MOPAC with Make
         run: |
           cmake --build build -- -j$NUM_CORES
+
+#      - name: Run Valgrind on MOPAC API tester
+#        run: |
+#          sudo apt update && sudo apt install -y valgrind
+#          cd build/tests
+#          valgrind -s --track-origins=yes --leak-check=yes ./mopac-api-test
 
       - name: Test MOPAC with CTest
         run: |

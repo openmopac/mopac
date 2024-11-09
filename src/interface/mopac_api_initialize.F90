@@ -78,6 +78,9 @@ contains
     character(100) :: num2str
     integer :: i, j, nelectron, status
     double precision :: eat
+    integer(c_int), pointer :: atom(:)
+    real(c_double), pointer :: coord(:)
+    real(c_double), pointer :: lattice(:)
 
     ! validity checks of data in system
     if (system%natom <= 0) call mopend("Invalid number of atoms")
@@ -85,19 +88,25 @@ contains
       call mopend("Invalid number of moveable atoms")
     if (system%epsilon /= 1.d0 .and. system%nlattice > 0) &
       call mopend("COSMO solvent not available for periodic systems")
-    if (size(system%atom) < system%natom) call mopend("List of atomic numbers is too small")
-    if (size(system%coord) < 3*system%natom) call mopend("List of atomic coordinates is too small")
+    if (system%natom > 0 .and. .not. c_associated(system%atom)) &
+      call mopend("Array of atomic numbers not found")
+    if (system%natom > 0 .and. .not. c_associated(system%coord)) &
+      call mopend("Array of atomic coordinates is too small")
     if (system%nlattice < 0 .or. system%nlattice > 3) call mopend("Invalid number of lattice vectors")
     if (system%nlattice_move < 0 .or. system%nlattice_move > system%nlattice) &
       call mopend("Invalid number of moveable lattice vectors")
-    if (system%nlattice > 0) then
-      if(size(system%lattice) < 3*system%nlattice) call mopend("List of lattice vectors is too small")
-    end if
+    if (system%nlattice > 0 .and. .not. c_associated(system%lattice)) &
+      call mopend("List of lattice vectors is too small")
     if (system%tolerance <= 0.d0) call mopend("Relative numerical tolerance must be a positive number")
     if (system%max_time <= 0) call mopend("Time limit must be a positive number")
     if (system%nlattice_move > 0 .and. index(keywrd," FORCETS") /= 0) &
       call mopend("Lattice vectors cannot move during vibrational calculations")
     if (moperr) return
+
+    ! convert C pointers
+    call c_f_pointer(system%atom, atom, [system%natom])
+    call c_f_pointer(system%coord, coord, [3*system%natom])
+    if (system%nlattice > 0) call c_f_pointer(system%lattice, lattice, [3*system%nlattice])
 
     use_disk = .false.
     ! load ios, iop, and iod data into tore
@@ -126,9 +135,10 @@ contains
     write(num2str,'(i10)') system%max_time
     keywrd = trim(keywrd) // " T=" // adjustl(num2str)
     ! open dummy output file
-    output_fn = '/dev/null'
-#ifdef MOPAC_OS
-    if (MOPAC_OS == "Windows") output_fn = 'NUL'
+#ifdef WIN32
+    output_fn = 'NUL'
+#else
+  output_fn = '/dev/null'
 #endif
     close(iw)
     open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat=status)
@@ -193,20 +203,20 @@ contains
     end if
     ! insert geometry information into MOPAC data structures
     id = system%nlattice
-    nat(:system%natom) = system%atom(:)
-    labels(:system%natom) = system%atom(:)
-    geo(:,:system%natom) = reshape(system%coord,[3, system%natom])
+    nat(:system%natom) = atom(:system%natom)
+    labels(:system%natom) = atom(:system%natom)
+    geo(:,:system%natom) = reshape(coord,[3, system%natom])
     if (id > 0) then
       nat(system%natom+1:system%natom+id) = 107
       labels(system%natom+1:system%natom+id) = 107
-      geo(:,system%natom+1:system%natom+id) = reshape(system%lattice,[3, id])
+      geo(:,system%natom+1:system%natom+id) = reshape(lattice,[3, id])
     end if
     atmass(:natoms) = ams(labels(:))
     ! set optimization flags & xparam
     nvar = 3*system%natom_move + 3*system%nlattice_move
     lopt(:,:system%natom_move) = 1
     lopt(:,system%natom_move+1:) = 0
-    xparam(:3*system%natom_move) = system%coord(:3*system%natom_move)
+    xparam(:3*system%natom_move) = coord(:3*system%natom_move)
     do i=1, system%natom_move
       do j=1, 3
         loc(1,3*(i-1)+j) = i
@@ -215,7 +225,7 @@ contains
     end do
     if (system%nlattice_move > 0) then
       lopt(:,numat+1:numat+system%nlattice_move) = 1
-      xparam(3*system%natom_move+1:) = system%lattice(:3*system%nlattice_move)
+      xparam(3*system%natom_move+1:) = lattice(:3*system%nlattice_move)
       do i=1, system%nlattice_move
         do j=1, 3
           loc(1,3*system%natom_move+3*(i-1)+j) = numat+i

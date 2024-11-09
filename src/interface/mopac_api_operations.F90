@@ -16,7 +16,7 @@
 
 submodule (mopac_api) mopac_api_operations
   use Common_arrays_C, only: xparam, grad, lopt
-  use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam
+  use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam, run
   implicit none
 
   interface
@@ -33,7 +33,7 @@ submodule (mopac_api) mopac_api_operations
 
     ! save MOPAC density matrices
     module subroutine mopac_save(state)
-      type(mopac_state), intent(out) :: state
+      type(mopac_state), intent(inout) :: state
     end subroutine mopac_save
 
     ! load MOPAC density matrices, or construct initial guesses
@@ -43,7 +43,7 @@ submodule (mopac_api) mopac_api_operations
 
     ! save MOZYME density matrix
     module subroutine mozyme_save(state)
-      type(mozyme_state), intent(out) :: state
+      type(mozyme_state), intent(inout) :: state
     end subroutine mozyme_save
 
     ! load MOZYME density matrix, or construct initial guess
@@ -56,8 +56,10 @@ submodule (mopac_api) mopac_api_operations
 contains
 
   ! MOPAC electronic ground state calculation
-  module subroutine mopac_scf(system, state, properties)
-  !dec$ attributes dllexport :: mopac_scf
+  module subroutine mopac_scf(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_scf
+#endif
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -72,8 +74,10 @@ contains
   end subroutine mopac_scf
 
   ! MOPAC geometry relaxation
-  module subroutine mopac_relax(system, state, properties)
-  !dec$ attributes dllexport :: mopac_relax
+  module subroutine mopac_relax(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_relax
+#endif
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -88,8 +92,10 @@ contains
   end subroutine mopac_relax
 
   ! MOPAC vibrational calculation
-  module subroutine mopac_vibe(system, state, properties)
-  !dec$ attributes dllexport :: mopac_vibe
+  module subroutine mopac_vibe(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mopac_vibe
+#endif
     type(mopac_system), intent(in) :: system
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -114,8 +120,10 @@ contains
   end subroutine mopac_vibe
 
   ! MOZYME electronic ground state calculation
-  module subroutine mozyme_scf(system, state, properties)
-  !dec$ attributes dllexport :: mozyme_scf
+  module subroutine mozyme_scf(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_scf
+#endif
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -130,8 +138,10 @@ contains
   end subroutine mozyme_scf
 
   ! MOZYME geometry relaxation
-  module subroutine mozyme_relax(system, state, properties)
-  !dec$ attributes dllexport :: mozyme_relax
+  module subroutine mozyme_relax(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_relax
+#endif
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -146,8 +156,10 @@ contains
   end subroutine mozyme_relax
 
   ! MOZYME vibrational calculation
-  module subroutine mozyme_vibe(system, state, properties)
-  !dec$ attributes dllexport :: mozyme_vibe
+  module subroutine mozyme_vibe(system, state, properties) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: mozyme_vibe
+#endif
     type(mopac_system), intent(in) :: system
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
@@ -172,14 +184,30 @@ contains
   end subroutine mozyme_vibe
 
   ! Run MOPAC conventionally from an input file
-  module subroutine run_mopac_from_input(path_to_file)
-    !dec$ attributes dllexport :: run_mopac_from_input
-    character(len=240), intent(in) :: path_to_file
-    jobnam = trim(path_to_file)
+  module function run_mopac_from_input(path_to_file) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: run_mopac_from_input
+#endif
+    integer(c_int) :: run_mopac_from_input
+    character(kind=c_char), dimension(*), intent(in) :: path_to_file
+    integer :: i
+    i = 1
+    do
+      if(path_to_file(i) == ' ' .or. path_to_file(i) == c_null_char) exit
+      jobnam(i:i) = path_to_file(i)
+      i = i + 1
+    end do
     gui = .false.
+    run = 2
     call run_mopac
+    if (moperr) then
+      run_mopac_from_input = 1
+    else
+      run_mopac_from_input = 0
+    end if
+    run = 1
     gui = .true.
     jobnam = ' '
-  end subroutine run_mopac_from_input
+  end function run_mopac_from_input
   
 end submodule mopac_api_operations

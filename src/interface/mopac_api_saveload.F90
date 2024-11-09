@@ -25,37 +25,35 @@ contains
 
   ! save MOPAC density matrices
   module subroutine mopac_save(state)
-    type(mopac_state), intent(out) :: state
-    integer :: status
+    type(mopac_state), intent(inout) :: state
 
-    state%save_state = .true.
+    if (state%mpack > 0) call destroy_mopac_state(state)
+
     state%mpack = mpack
-
-    if (allocated(state%pa)) deallocate(state%pa)
-    allocate(state%pa(mpack), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOPAC_SAVE")
-      return
-    end if
-    state%pa = pa
-    if (uhf) then
-      if (allocated(state%pb)) deallocate(state%pb)
-      allocate(state%pb(mpack), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_SAVE")
-        return
+    if (mpack > 0) then
+      state%pa = create_copy(pa, [mpack])
+      if (uhf) then
+        state%uhf = 1
+        state%pb = create_copy(pb, [mpack])
+      else
+        state%uhf = 0
+        state%pb = c_null_ptr
       end if
-      state%pb = pb
     end if
+
   end subroutine mopac_save
 
   ! load MOPAC density matrices, or construct initial guesses
   module subroutine mopac_load(state)
     type(mopac_state), intent(in) :: state
     integer :: status
+    real(c_double), pointer :: rptr(:)
 
-    if(state%save_state) then
-      ! TO DO: compatibility tests
+    if(state%mpack > 0) then
+      if (state%mpack /= mpack .or. (state%uhf /= 0 .neqv. uhf)) then
+        call mopend("Attempting to load incompatible MOPAC state")
+        return
+      end if
       keywrd = trim(keywrd) // " OLDENS"
       mpack = state%mpack
       if (allocated(pa)) deallocate(pa)
@@ -63,8 +61,9 @@ contains
       if (status /= 0) then
         call mopend("Failed to allocate memory in MOPAC_LOAD")
         return
-      end if  
-      pa = state%pa
+      end if
+      call c_f_pointer(state%pa, rptr, [mpack])
+      pa = rptr
       if(uhf) then
         if (allocated(pb)) deallocate(pb)
         allocate(pb(mpack), stat=status)
@@ -72,96 +71,51 @@ contains
           call mopend("Failed to allocate memory in MOPAC_LOAD")
           return
         end if
-        pb = state%pb
-      end if
+        call c_f_pointer(state%pb, rptr, [mpack])
+        pb = rptr
+        end if
     end if
   end subroutine mopac_load
 
   ! save MOZYME density matrix
   module subroutine mozyme_save(state)
-    type(mozyme_state), intent(out) :: state
-    integer :: status
+    type(mozyme_state), intent(inout) :: state
 
-    state%save_state = .true.
+    if (state%numat > 0) call destroy_mozyme_state(state)
+
     state%numat = numat
-    state%noccupied = noccupied
-    state%nvirtual = nvirtual
-    state%icocc_dim = icocc_dim
-    state%icvir_dim = icvir_dim
-    state%cocc_dim = cocc_dim
-    state%cvir_dim = cvir_dim
-    if (allocated(state%nbonds)) deallocate(state%nbonds)
-    if (allocated(state%ibonds)) deallocate(state%ibonds)
-    if (allocated(state%iorbs)) deallocate(state%iorbs)
-    if (allocated(state%ncf)) deallocate(state%ncf)
-    if (allocated(state%nce)) deallocate(state%nce)
-    if (allocated(state%icocc)) deallocate(state%icocc)
-    if (allocated(state%icvir)) deallocate(state%icvir)
-    if (allocated(state%cocc)) deallocate(state%cocc)
-    if (allocated(state%cvir)) deallocate(state%cvir)
-    allocate(state%nbonds(numat), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
+    if (numat > 0) then
+      state%noccupied = noccupied
+      state%nvirtual = nvirtual
+      state%icocc_dim = icocc_dim
+      state%icvir_dim = icvir_dim
+      state%cocc_dim = cocc_dim
+      state%cvir_dim = cvir_dim
+
+      state%nbonds = create_copy(nbonds, [numat])
+      state%ibonds = create_copy(ibonds, [9,numat])
+      state%iorbs = create_copy(iorbs, [numat])
+      state%ncf = create_copy(ncf, [noccupied])
+      state%nce = create_copy(nce, [nvirtual])
+      state%icocc = create_copy(icocc, [icocc_dim])
+      state%icvir = create_copy(icvir, [icvir_dim])
+      state%cocc = create_copy(cocc, [cocc_dim])
+      state%cvir = create_copy(cvir, [cvir_dim])
     end if
-    allocate(state%ibonds(9,numat), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    allocate(state%iorbs(numat), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    allocate(state%ncf(noccupied), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    allocate(state%nce(nvirtual), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    allocate(state%icocc(icocc_dim), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    allocate(state%icvir(icvir_dim), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    allocate(state%cocc(cocc_dim), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    allocate(state%cvir(cvir_dim), stat=status)
-    if (status /= 0) then
-      call mopend("Failed to allocate memory in MOZYME_SAVE")
-      return
-    end if
-    state%nbonds = nbonds
-    state%ibonds = ibonds
-    state%iorbs = iorbs
-    state%ncf = ncf
-    state%nce = nce
-    state%icocc = icocc
-    state%icvir = icvir
-    state%cocc = cocc
-    state%cvir = cvir
   end subroutine mozyme_save
 
   ! load MOZYME density matrix, or construct initial guess
   module subroutine mozyme_load(state)
     type(mozyme_state), intent(in) :: state
     integer :: status, i, j, k, l
+    integer(c_int), pointer :: iptr(:), iptr2(:,:)
+    real(c_double), pointer :: rptr(:)
 
-    if(state%save_state) then
-      ! TO DO: compatibility tests
+    if(state%numat > 0) then
+      if (state%numat /= numat) then
+        call mopend("Attempting to load incompatible MOZYME state")
+        return
+      end if
       keywrd = trim(keywrd) // " OLDENS"
       numat = state%numat
       noccupied = state%noccupied
@@ -248,15 +202,24 @@ contains
         call mopend("Failed to allocate memory in MOZYME_LOAD")
         return
       end if
-      nbonds = state%nbonds
-      ibonds = state%ibonds
-      iorbs = state%iorbs
-      ncf = state%ncf
-      nce = state%nce
-      icocc = state%icocc
-      icvir = state%icvir
-      cocc = state%cocc
-      cvir = state%cvir
+      call c_f_pointer(state%nbonds, iptr, [numat])
+      nbonds = iptr
+      call c_f_pointer(state%ibonds, iptr2, [9,numat])
+      ibonds = iptr2
+      call c_f_pointer(state%iorbs, iptr, [numat])
+      iorbs = iptr
+      call c_f_pointer(state%ncf, iptr, [noccupied])
+      ncf = iptr
+      call c_f_pointer(state%nce, iptr, [nvirtual])
+      nce = iptr
+      call c_f_pointer(state%icocc, iptr, [icocc_dim])
+      icocc = iptr
+      call c_f_pointer(state%icvir, iptr, [icvir_dim])
+      icvir = iptr
+      call c_f_pointer(state%cocc, rptr, [cocc_dim])
+      cocc = rptr
+      call c_f_pointer(state%cvir, rptr, [cvir_dim])
+      cvir = rptr
       ! reconstruct nncf, nnce, ncocc, & ncvir
       j = 0
       do i = 1, noccupied

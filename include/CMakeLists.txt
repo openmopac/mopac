@@ -14,15 +14,5 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#===============================================
-# Create a list of source files (src_list) with the .F90 extension
-set(src_list 
-        mopac_api mopac_api_initialize mopac_api_finalize
-        mopac_api_saveload mopac_api_createdestroy mopac_api_operations
-   )
-#-----------------------------------------------
-# Add a list of source files to the target
-foreach(idx IN LISTS src_list)
-        target_sources(mopac-core PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/${idx}.F90)
-endforeach()
-#===============================================
+target_sources(mopac-api-test PRIVATE mopac_api_f.F90)
+target_sources(mopac-api-test PRIVATE mopac_api_internal.F90)
