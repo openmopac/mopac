@@ -110,10 +110,10 @@ the subroutine `run_mopac_from_input_f(path_to_file)` in the `mopac_api_f` modul
 
 ### Diskless/stateless API
 
-A subset of MOPAC calculations can be run through a C-like Application Programming Interface (API) defined by the `mopac_api.h` C header file
+A subset of MOPAC calculations can be run through a C-like Application Programming Interface (API) defined by the `mopac.h` C header file
 in the `include` directory, which also has a Fortran wrapper for convenience to Fortran software developers. Calculations run through this API
 do not use any input or output files or any other form of disk access, and the data structures of the API contain all relevant information
-regarding the input and output of the MOPAC calculation. The functionality and data exposed by this API is limited, and has been designed to
+regarding the input and output of the MOPAC calculation. The functionality and data exposed by this API is limited and has been designed to
 align with the most common observed uses of MOPAC. Future expansion of this functionality and data will be considered upon request.
 
 ## Citation
