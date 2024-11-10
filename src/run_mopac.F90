@@ -116,7 +116,11 @@
         call getarg (i, jobnam)
 #endif
         if (jobnam == '-V' .OR. jobnam == '--version') then
+#ifdef MOPAC_GIT_HASH
           write(*,"(a)") "MOPAC version "//trim(verson)//" commit "//trim(git_hash)
+#else
+          write(*,"(a)") "MOPAC version "//trim(verson)
+#endif
           stop
         endif
       end do
