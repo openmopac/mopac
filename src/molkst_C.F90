@@ -262,7 +262,7 @@ module molkst_C
                      !  Units         Text
   & git_hash*40 = 'unknown', & !  Git commit hash string
   & os*12 = 'unknown', &       !  Operating system name
-  & verson*20 = '22.*.*'       !  Version number for this copy of MOPAC
+  & verson*20 = '23.*.*'       !  Version number for this copy of MOPAC
                      !  Pattern      "xx.yy.zz(-pre)"
                      !  Description  major version, minor version, patch version, & pre-release tag
   character ::     &

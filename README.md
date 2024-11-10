@@ -92,6 +92,30 @@ The main source for MOPAC documentation is presently its old [online user manual
 
 There is a [new documentation website](https://openmopac.github.io) under development, but it is not yet ready for general use.
 
+## Interfaces
+
+While MOPAC is primarily a self-contained command-line program whose behavior is specified by an input file, it also has other modes of
+operation, some of which only require the MOPAC shared library and not the executable.
+
+### MDI Engine
+
+MOPAC can be compiled to run as an MDI Engine through the [MolSSI Driver Interface Library](https://github.com/MolSSI-MDI/MDI_Library)
+by setting `-DMDI=ON` when running CMake. See [MDI documentation](https://molssi-mdi.github.io/MDI_Library) for more information.
+
+### Run from library
+
+MOPAC calculations can be run as a C-like library call to `run_mopac_from_input(path_to_file)` where `path_to_file` is a C string
+containing the system path to a MOPAC input file. Alternatively, a Fortran wrapper in the `include` directory allows this to be run as
+the subroutine `run_mopac_from_input_f(path_to_file)` in the `mopac_api_f` module where `path_to_file` is a Fortran string.
+
+### Diskless/stateless API
+
+A subset of MOPAC calculations can be run through a C-like Application Programming Interface (API) defined by the `mopac_api.h` C header file
+in the `include` directory, which also has a Fortran wrapper for convenience to Fortran software developers. Calculations run through this API
+do not use any input or output files or any other form of disk access, and the data structures of the API contain all relevant information
+regarding the input and output of the MOPAC calculation. The functionality and data exposed by this API is limited, and has been designed to
+align with the most common observed uses of MOPAC. Future expansion of this functionality and data will be considered upon request.
+
 ## Citation
 
 To cite the use of open-source MOPAC in scientific publications, see the `CITATION.cff` file in this repository.

@@ -6,6 +6,38 @@
 #ifndef MOPAC_API_H
 #define MOPAC_API_H
 
+/*
+This C-like MOPAC API consists of 4 data structures - mopac_system, mopac_properties, mopac_state,
+and mozyme_state - and 6 main functions - mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax,
+and mozyme_vibe - that are organized by the solver they use - conventional MOPAC or reduced-scaling
+MOZYME - and the calculation they perform - a single self-consistent field (SCF) cycle, a geometric
+relaxation, or a vibrational calculation. For each function, mopac_system defines the atomistic
+system and various solver and model options and mopac_properties contains physical properties
+produced by the calculation. All data in mopac_system must be specified on input, while
+mopac_properties does not need to be initialized. Memory in mopac_properties is allocated by MOPAC,
+and it should be deallocated by using the destroy_mopac_properties function provided by the API.
+
+The mopac_state and mozyme_state structures contain information that specifies the electronic ground
+state. They must either be given a trivial initialization (mpack = 0 or numat = 0) to start a
+calculation from an atomic guess (MOPAC) or a Lewis-structure guess (MOZYME), or the output state of a
+previous calculation can be used to initialize the new calculation with the final state of the previous
+calculation, which is useful for running molecular dynamics simulations. The output states should be
+deallocated using functions provided by the API - destroy_mopac_state or destroy_mozyme_state. It is
+also possible to construct custom initial states, and the memory for these states must be allocated by
+using the create_mopac_state or create_mozyme_state API functions with the sizes of all arrays
+specified on input (mpack for MOPAC; numat, noccupied, nvirtual, icocc_dim, icvir_dim, cocc_dim, and
+cvir_dim for MOZYME).
+
+The API can also be used to run MOPAC calculations from an input file using the run_mopac_from_input
+function. This is equivalent to running MOPAC from the command line, except that MOPAC and all of its
+dependent math libraries can stay resident in memory between calculations when using API calls, which
+may improve performance in high-throughput settings for which disk access is not a bottleneck. In
+contrast, the other API functions run MOPAC without any disk access, which may be beneficial for
+high-throughput settings with file systems that perform poorly when large numbers of small files are
+being read and written simultaneously. If MOPAC encounters an error, then run_mopac_from_input returns
+1, otherwise it returns 0 for calculations that have completed successfully.
+*/
+
 /* data that defines the atomistic system and MOPAC job options */
 struct mopac_system {
   /* number of atoms */
