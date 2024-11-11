@@ -128,6 +128,12 @@
       numcal0 = numcal
       job_no0 = job_no
       step_num0 = step_num
+! other initialization to prevent hysteresis between API calls (add more as needed)
+      keywrd = ' '
+      keywrd_txt = ' '
+      keywrd_quoted = ' '
+      refkey = ' '
+      call summary("",-21) ! reset MOPAC's error handler
 !------------------------------------------------------------------------
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
