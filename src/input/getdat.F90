@@ -65,16 +65,6 @@
             call getarg (run, jobnam)
 #endif
             natoms = 1
-            do i = len_trim(jobnam), 1, -1   !  Remove any unprintable characters from the end of the file-name
-              if (ichar(jobnam(i:i)) > 39 .and. ichar(jobnam(i:i)) < 126 .or. jobnam(i:i) =="'") exit
-            end do
-            jobnam(i + 1:) = " "
-!
-!  Replace backslash with forward-slash
-!
-            do i = 1, len_trim(jobnam)
-              if (jobnam(i:i) == backslash) jobnam(i:i) = "/"
-            end do
           else if (i == 0) then
             if (is_PARAM) then
               write(line,'(2a)')" PARAM is the parameter optimization program for use with MOPAC"
@@ -99,6 +89,17 @@
           natoms = 1
         end if
       end if
+!  Remove any unprintable characters from the end of the file-name
+      do i = len_trim(jobnam), 1, -1
+        if (ichar(jobnam(i:i)) > 39 .and. ichar(jobnam(i:i)) < 126 .or. jobnam(i:i) =="'") exit
+      end do
+      jobnam(i + 1:) = " "
+!
+!  Replace backslash with forward-slash
+!
+      do i = 1, len_trim(jobnam)
+        if (jobnam(i:i) == backslash) jobnam(i:i) = "/"
+      end do
       if (natoms == 0) return
 !
 ! Check for the data set in the order: <file>.mop, <file>.dat, <file>
