@@ -15,7 +15,7 @@
 ! along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 subroutine iter_for_MOZYME (ee)
-    use molkst_C, only: norbs, step_num, numcal, nscf, escf, &
+    use molkst_C, only: norbs, step_num, numcal, numcal0, nscf, escf, &
        & numat,  enuclr, atheat, emin, keywrd, moperr, line, use_disk
 !
     use chanel_C, only: iw, iend, end_fn
@@ -519,7 +519,7 @@ subroutine iter_for_MOZYME (ee)
           goto 80
         end if
       end if
-      if (bigscf .or. numcal /= 1) then
+      if (bigscf .or. numcal /= 1+numcal0) then
           call diagg (f, nocc1, nvir1,  idiagg,  partp, indi)
         idiagg = idiagg + 1
       else
@@ -610,7 +610,7 @@ subroutine iter_for_MOZYME (ee)
         backspace (iw)
       end if
       call isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
-      if ( .not. bigscf .and. numcal == 1) then
+      if ( .not. bigscf .and. numcal == 1+numcal0) then
         exit
       else if (okscf .and. niter > 1 .and. (emin /= 0.d0 .or. niter > 3)) then
         exit

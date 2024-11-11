@@ -63,7 +63,7 @@
   method_am1, method_mndo, method_pm3, method_rm1, method_mndod, method_pm6, &
   method_pm7, nvar, koment, keywrd, zpe, id, density, natoms, formula, press, voigt, &
   uhf, nalpha, nbeta,  gnorm, mozyme, mol_weight, ilim, &
-  line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no, fract
+  line, nscf, time0, sz, ss2, no_pKa, title, jobnam, job_no, job_no0, fract
 !
   use MOZYME_C, only : ncf, ncocc, noccupied, icocc_dim, cocc_dim, nvirtual, icvir_dim, &
   nncf, iorbs, cocc, icocc, ncvir, nnce, nce, icvir, cvir, tyres, size_mres, &
@@ -1340,7 +1340,7 @@
 !
 !  Don't print processor-independent CPU times for quick jobs - that would waste too much time.
 !
-    if (time0 > 1.d0 .and. job_no < 4) then
+    if (time0 > 1.d0 .and. job_no < 4+job_no0) then
 !
 !  Deliberately run a time-consuming calculation to work out CPU speed
 !  The "j" index is set to use up 1.0 seconds on the development computer.

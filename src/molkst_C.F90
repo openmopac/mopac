@@ -110,6 +110,7 @@ module molkst_C
                  !  Each stage is limited to the same electronic structure.  Most calculations
                  !  will only have one stage, e.g. geometry optimization or force constants.
                  !
+  &  job_no0, numcal0, step_num0, & ! Needed for repeated API calls to run_mopac
   &  mpack,    & !  Number of elements in a lower-half-triangle = (norbs*(norbs+1))/2
   &  n2elec,   & !  Number of two-electron integrals
   &  nscf,     & !  Number of SCF calculations done

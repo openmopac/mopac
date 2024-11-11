@@ -42,7 +42,7 @@
 !
 !
         use chanel_C, only : iw, ir
-        use molkst_C, only : line, job_no, natoms, dummy, errtxt
+        use molkst_C, only : line, job_no, job_no0, natoms, dummy, errtxt
         implicit none
         integer, intent (in) :: ntxt
         character, intent (in) :: txt*(*)
@@ -83,7 +83,7 @@
            end if
         end if
         if (ntxt == 1) then
-          if (natoms == 0 .and. job_no == 1) then
+          if (natoms == 0 .and. job_no == job_no0) then
             write(iw,'(/10x, a)')"Job failed to run because no atoms were detected in the system"
             write(iw,'(10x, a, /)')"The start of the data-set is as follows:"
             rewind (ir)
