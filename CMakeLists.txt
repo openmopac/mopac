@@ -177,12 +177,13 @@ endif()
 
 # Pass version & commit information to MOPAC's Fortran source
 target_compile_definitions(mopac-core PRIVATE MOPAC_VERSION_FULL="${PROJECT_VERSION}")
-if(NOT GIT_HASH)
-  execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_HASH)
-endif()
+option(GIT_HASH "Enable THREADS keyword using OpenMP API" ON)
 if(GIT_HASH)
-  string(STRIP ${GIT_HASH} GIT_HASH)
-  target_compile_definitions(mopac-core PRIVATE MOPAC_GIT_HASH="${GIT_HASH}")
+  execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_HASH_VAL)
+  if(GIT_HASH_VAL)
+    string(STRIP ${GIT_HASH_VAL} GIT_HASH_VAL)
+    target_compile_definitions(mopac-core PRIVATE MOPAC_GIT_HASH="${GIT_HASH_VAL}")
+  endif()
 endif()
 
 # Try to use CMake's system of finding BLAS & LAPACK libraries
@@ -324,9 +325,9 @@ install(FILES "${CMAKE_SOURCE_DIR}/.github/mopac.ico" DESTINATION "." COMPONENT 
 install(FILES "${CMAKE_SOURCE_DIR}/CITATION.cff"
               "${CMAKE_SOURCE_DIR}/COPYING"
               "${CMAKE_SOURCE_DIR}/COPYING.lesser" DESTINATION "." COMPONENT redist EXCLUDE_FROM_ALL)
-install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_api.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
-install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_api_internal.F90" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
-install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_api_f.F90" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/include/mopac.h" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT main)
+install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_wrapper_internal.F90" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
+install(FILES "${CMAKE_SOURCE_DIR}/include/mopac_wrapper.F90" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
 install(FILES "${CMAKE_SOURCE_DIR}/include/LICENSE" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT redist EXCLUDE_FROM_ALL)
 
 # Install the executables and library
