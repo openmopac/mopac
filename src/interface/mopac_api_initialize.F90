@@ -53,7 +53,8 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     nscf, na1, norbs, no_pKa, id, iflepo, nelecs, ndep, &
     escf, gnorm, E_disp, E_hb, E_hh, sz, ss2, step, density, press, stress, voigt, &
     sparkle, &  ! logical flag for the presence of sparkles
-    atheat ! total atomic heat of formation
+    atheat, & ! total atomic heat of formation
+    keywrd_txt, keywrd_quoted, koment, title, refkey, allkey ! other text extracted from input files
   use MOZYME_C, only : nres, uni_res, refnuc
   use parameters_C, only : tore, & ! number of valence electrons per element
     ios, iop, iod, & ! number of s, p, and d valence electrons per element (data)
@@ -263,6 +264,12 @@ contains
     press = 0.d0
     stress = 0.d0
     voigt = 0.d0
+    keywrd_txt = ' '
+    keywrd_quoted = ' '
+    koment = ' '
+    title = ' '
+    refkey = ' '
+    allkey = ' '
     ! initialize variables that need default values (Common_arrays_C)
     na = 0
     nb = 0
