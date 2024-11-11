@@ -95,7 +95,8 @@ There is a [new documentation website](https://openmopac.github.io) under develo
 ## Interfaces
 
 While MOPAC is primarily a self-contained command-line program whose behavior is specified by an input file, it also has other modes of
-operation, some of which only require the MOPAC shared library and not the executable.
+operation, some of which only require the MOPAC shared library and not the executable. Note that API calls to the MOPAC library are not
+thread safe. Each thread must load its own instance of the MOPAC library, such as by running independent calling programs.
 
 ### MDI Engine
 
