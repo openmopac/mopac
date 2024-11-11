@@ -22,7 +22,7 @@
       use parameters_C, only : ams
 !
       use molkst_C, only : natoms, keywrd, numat, maxtxt, line, moperr, &
-        numcal, id, units, Angstroms, arc_hof_1, arc_hof_2, keywrd_txt, pdb_label
+        numcal, numcal0, id, units, Angstroms, arc_hof_1, arc_hof_2, keywrd_txt, pdb_label
 !
       use chanel_C, only : iw, ir, input_fn, end_fn, iend
 !
@@ -162,11 +162,11 @@
       if (line == '$end') go to 20
       if (line(1:1) == '*') go to 20
       if (line == ' ') then
-        if(natoms == 0 .and. numcal == 1) then
+        if(natoms == 0 .and. numcal == 1+numcal0) then
 !
 !  Check:  Is this an ARC file?
 !
-          numcal = 2
+          numcal = 2+numcal0
           rewind (iread)
           sum = 0.d0
           do i = 1, 10000
@@ -572,7 +572,7 @@
           write(iw,'(/10x,a,i5)')"Faulty atom:", natoms
           write(iw,'(/10x,a)')"Faulty line: """//trim(line)//""""
           call mopend("Unless MINI is used, optimization flags must be 1, 0, or -1")
-          numcal = 2
+          numcal = 2+numcal0
           if ((lopt(1,natoms) > 10 .or. lopt(2,natoms) > 10 .or. lopt(3,natoms) > 10) .and. natoms > 1) &
             write(iw,'(/10x,a)')" If the geometry is in Gaussian format, add keyword ""AIGIN"" and re-run"
           return
@@ -626,7 +626,7 @@
 !***********************************************************************
   120 continue
       if (natoms == 0) then
-        if (numcal == 1) call mopend (' Error detected while reading geometry')
+        if (numcal == 1+numcal0) call mopend (' Error detected while reading geometry')
         return
       end if
       if ( .not. Angstroms) then

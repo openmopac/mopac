@@ -18,7 +18,7 @@
       use cosmo_C, only : iseps, area, fepsi, cosvol, ediel, solv_energy
 !
       use molkst_C, only : numat, nclose, nopen, fract, nalpha, nelecs, nbeta, &
-      & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, escf, &
+      & norbs, nvar, gnorm, iflepo, enuclr,elect, ndep, nscf, numcal, numcal0, escf, &
       & keywrd, os, verson, time0, moperr, last, iscf, id, pressure, mol_weight, &
       jobnam, line, mers, uhf, method_indo, &
       density, formula, mozyme, mpack, stress, &
@@ -971,7 +971,7 @@
           call pdbout(31)
           close (31)
         end if
-        if (numcal == 2) then
+        if (numcal == 2+numcal0) then
           if (index(keywrd, "OLDGEO") /= 0) then
 !
 ! Write a warning that OLDGEO has been used, so user is aware that multiple ARC files are present

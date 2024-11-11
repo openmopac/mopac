@@ -27,7 +27,7 @@
 !
       USE symmetry_C, ONLY: idepfn, locdep, depmul, locpar
 !
-      use molkst_C, only : ndep, numat, numcal, natoms, nvar, keywrd, dh, &
+      use molkst_C, only : ndep, numat, numcal, numcal0, natoms, nvar, keywrd, dh, &
       & verson, is_PARAM, line, nl_atoms, l_feather, backslash, &
       & moperr, maxatoms, koment, title, method_pm6, refkey, l_feather_1, &
       isok, method_pm6_dh2, caltyp, keywrd_quoted, &
@@ -464,13 +464,13 @@
             intern = .false.
           else
             call getgeo (ir, labels, geo, coord, lopt, na, nb, nc, intern)
-            if (numcal == 1 .and. natoms == 0) then
+            if (numcal == 1+numcal0 .and. natoms == 0) then
               i = index(keywrd, "GEO_DAT")
               if (i /= 0) then
                 write(line,'(2a)')" GEO_DAT file """//trim(line_1)//""" exists, but does not contain any atoms."
                 write(0,'(//10x,a,//)')trim(line)
                 call mopend(trim(line))
-              else if (.not. gui .and. numcal < 2) then
+              else if (.not. gui .and. numcal < 2+numcal0) then
                 write(line,'(2a)')" Data set '"//trim(job_fn)//" exists, but does not contain any atoms."
                 write(0,'(//10x,a,//)')trim(line)
                 call mopend(trim(line))
@@ -498,7 +498,7 @@
               coorda(:,:numat) = geo(:,:numat)
               numat_old = numat
             else if (natoms /= -3) then
-              if (moperr .and. numcal == 1) return
+              if (moperr .and. numcal == 1+numcal0) return
               if (maxtxt > txtmax) txtmax = maxtxt
               txtatm1(:natoms) = txtatm(:natoms)
               if (index(keywrd, " RESID") /= 0) txtatm1(:numat)(22:22) = " "
@@ -623,7 +623,7 @@
             end do
           end if
           if (natoms < 0 ) then
-            if (numcal == 1) rewind ir
+            if (numcal == 1+numcal0) rewind ir
             if (.not.isok) then
               write (iw, '(A)') &
                 ' Use AIGIN to allow more geometries to be used'
@@ -634,7 +634,7 @@
               stop
             end if
             isok = .FALSE.
-            if (numcal > 2) then
+            if (numcal > 2+numcal0) then
               naigin = naigin + 1
               write (iw, '(2/,2A)') '   GAUSSIAN INPUT REQUIRES', &
                 ' STAND-ALONE JOB'
@@ -647,7 +647,7 @@
             go to 10
           end if
         end if
-        if (natoms == 0 .and. numcal == 1) then
+        if (natoms == 0 .and. numcal == 1+numcal0) then
           call mopend ('NO ATOMS IN SYSTEM')
           return
         end if
@@ -655,7 +655,7 @@
 !
 !   Use the old geometry, if one exists
 !
-        if (numcal == 1) then
+        if (numcal == 1+numcal0) then
           write(line,'(a)')" Keyword OLDGEO cannot be used in the first calculation - there is no old geometry"
           write(iw,'(//10x,a)')trim(line)
           call to_screen(trim(line))
@@ -689,7 +689,7 @@
           call mopend(trim(line))
           return
         else
-          if (numcal == 1 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
+          if (numcal == 1+numcal0 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
         end if
       end if
       maxci = 10000

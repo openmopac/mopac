@@ -34,7 +34,7 @@
         sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
         density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson, &
-        use_disk, run
+        use_disk, run, numcal0, job_no0, step_num0
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
 !
@@ -124,6 +124,10 @@
           stop
         endif
       end do
+! save state reference to use only relative state values in API calls
+      numcal0 = numcal
+      job_no0 = job_no
+      step_num0 = step_num
 !------------------------------------------------------------------------
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
@@ -179,7 +183,7 @@
    10 continue
       numcal = numcal + 1      ! A new calculation
       job_no = job_no + 1      ! A new job
-      if (job_no > 1) then
+      if (job_no > 1+job_no0) then
         backspace(ir)
         read(ir,'(a)', iostat = i) line
         if (i == 0) then
@@ -229,17 +233,17 @@
       l_normal_html = .true.
       use_disk = .true.
       state_Irred_Rep = " "
-      if (job_no > 1) then
+      if (job_no > 1+job_no0) then
         i = index(keywrd, " BIGCYCL")
         if (i /= 0 .and. index(keywrd,' DRC') == 0) then
           i = nint(reada(keywrd, i)) + 1
-          if (job_no < i) then
+          if (job_no < i+job_no0) then
             fepsi = store_fepsi
             goto 90
           end if
         end if
       end if
-      if (numcal > 1 .and. numcal < 4 .and. index(keywrd_txt," GEO_DAT") /= 0) then
+      if (numcal > 1+numcal0 .and. numcal < 4+numcal0 .and. index(keywrd_txt," GEO_DAT") /= 0) then
 !
 !  Quickly jump over first three lines
 !
@@ -249,7 +253,7 @@
         natoms = i
         call gettxt
       end if
-      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
+      if (numcal > 1+numcal0) call to_screen("To_file: Leaving MOPAC")
 !
 !    Read in all the data for the current job
 !
@@ -265,12 +269,12 @@
         if (j /= 0) i = i - 6 + j
       end if
       inquire(file=line(:i)//".den", exist=l_OLDDEN)
-90      if (moperr .and. numcal == 1 .and. natoms > 1) goto 101
-      if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
+90      if (moperr .and. numcal == 1+numcal0 .and. natoms > 1) goto 101
+      if (moperr .and. numcal == 1+numcal0 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
 ! Adjust maximum number of threads using the OpenMP API
 #ifdef _OPENMP
-      if (numcal == 1) default_num_threads = omp_get_max_threads()
+      if (numcal == 1+numcal0) default_num_threads = omp_get_max_threads()
       i = index(keywrd, " THREADS")
       if (i > 0) then
         num_threads = nint(reada(keywrd, i))
@@ -279,7 +283,7 @@
       end if
       call omp_set_num_threads(num_threads)
 #endif
-      if (numcal == 1) then
+      if (numcal == 1+numcal0) then
 #ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
         i = index(keywrd, " THREADS")
@@ -357,7 +361,7 @@
         lgpu = (lgpu_ref .and. natoms > 100) ! Warning - there are problems with UHF calculations on small systems
 #endif
       end if
-      if (.not. gui .and. numcal == 1 .and. natoms == 0) then
+      if (.not. gui .and. numcal == 1+numcal0 .and. natoms == 0) then
         write(line,'(2a)')" Data set exists, but does not contain any atoms."
         write(0,'(//10x,a,//)')trim(line)
         call mopend(trim(line))
@@ -376,7 +380,7 @@
         natoms = 0
         goto 100
       end if
-      if (numcal == 1 .and. moperr .or. natoms == 0) then
+      if (numcal == 1+numcal0 .and. moperr .or. natoms == 0) then
 !
 !   Check for spurious "extra" data
 !
