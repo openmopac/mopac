@@ -69,7 +69,7 @@
       Use settingGPUcard
 #endif
       implicit none
-      integer ::  i, j, k, l
+      integer ::  i, j, k, l, numcal0
       double precision :: eat,  tim, store_fepsi
       logical :: exists, opend, l_OLDDEN
       double precision, external :: C_triple_bond_C, reada, seconds
@@ -124,6 +124,8 @@
           stop
         endif
       end do
+! save numcal reference to use only relative numcal values in API calls
+      numcal0 = numcal
 !------------------------------------------------------------------------
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
@@ -239,7 +241,7 @@
           end if
         end if
       end if
-      if (numcal > 1 .and. numcal < 4 .and. index(keywrd_txt," GEO_DAT") /= 0) then
+      if (numcal > numcal0 .and. numcal < numcal0+3 .and. index(keywrd_txt," GEO_DAT") /= 0) then
 !
 !  Quickly jump over first three lines
 !
@@ -249,7 +251,7 @@
         natoms = i
         call gettxt
       end if
-      if (numcal > 1) call to_screen("To_file: Leaving MOPAC")
+      if (numcal > numcal0) call to_screen("To_file: Leaving MOPAC")
 !
 !    Read in all the data for the current job
 !
@@ -265,12 +267,12 @@
         if (j /= 0) i = i - 6 + j
       end if
       inquire(file=line(:i)//".den", exist=l_OLDDEN)
-90      if (moperr .and. numcal == 1 .and. natoms > 1) goto 101
-      if (moperr .and. numcal == 1 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
+90      if (moperr .and. numcal == numcal0 .and. natoms > 1) goto 101
+      if (moperr .and. numcal == numcal0 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
 ! Adjust maximum number of threads using the OpenMP API
 #ifdef _OPENMP
-      if (numcal == 1) default_num_threads = omp_get_max_threads()
+      if (numcal == numcal0) default_num_threads = omp_get_max_threads()
       i = index(keywrd, " THREADS")
       if (i > 0) then
         num_threads = nint(reada(keywrd, i))
@@ -279,7 +281,7 @@
       end if
       call omp_set_num_threads(num_threads)
 #endif
-      if (numcal == 1) then
+      if (numcal == numcal0) then
 #ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
         i = index(keywrd, " THREADS")
@@ -357,7 +359,7 @@
         lgpu = (lgpu_ref .and. natoms > 100) ! Warning - there are problems with UHF calculations on small systems
 #endif
       end if
-      if (.not. gui .and. numcal == 1 .and. natoms == 0) then
+      if (.not. gui .and. numcal == numcal0 .and. natoms == 0) then
         write(line,'(2a)')" Data set exists, but does not contain any atoms."
         write(0,'(//10x,a,//)')trim(line)
         call mopend(trim(line))
@@ -376,7 +378,7 @@
         natoms = 0
         goto 100
       end if
-      if (numcal == 1 .and. moperr .or. natoms == 0) then
+      if (numcal == numcal0 .and. moperr .or. natoms == 0) then
 !
 !   Check for spurious "extra" data
 !
