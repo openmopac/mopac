@@ -50,11 +50,11 @@ contains
     integer :: status, i, j, size
     type(c_ptr), allocatable :: pptr(:)
 
-    ! close dummy output file to free up /dev/null
-    close(iw)
-
     ! record properties
     if (.not. moperr) call mopac_record(properties)
+
+    ! close dummy output file to free up /dev/null
+    close(iw)
 
     ! collect error messages & assign NULL pointers for memory safety
     if (moperr) then
