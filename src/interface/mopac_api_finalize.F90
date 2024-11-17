@@ -53,9 +53,6 @@ contains
     ! record properties
     if (.not. moperr) call mopac_record(properties)
 
-    ! close dummy output file to free up /dev/null
-    close(iw)
-
     ! collect error messages & assign NULL pointers for memory safety
     if (moperr) then
       properties%charge = c_null_ptr
@@ -91,8 +88,12 @@ contains
     ! deallocate memory
     call setup_mopac_arrays(0,0)
     if (mozyme) call delete_MOZYME_arrays()
+
     ! turn use_disk back on
     use_disk = .true.
+
+    ! close dummy output file to free up /dev/null
+    close(iw)
   end subroutine mopac_finalize
 
   subroutine mopac_record(properties)
