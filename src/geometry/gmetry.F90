@@ -109,7 +109,6 @@
           coord(3,3) = coord(3,2)
         end if
 
-        if(size(na) == 4) call exit(1)
         do i = 4, natoms
           if (na(i) == 0) then
             coord(:,i) = geo(:,i)  ! Coordinate is already Cartesian
