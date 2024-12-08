@@ -726,6 +726,13 @@
           end if
           sum = dumy(1) ! Dummy operation - to use dumy
         end if
+      else ! make sure kchrge is defined, even with no valence electrons
+        sum = 0.D0
+        do i = 1, numat
+          l = nat(i)
+          sum = sum + tore(l)
+        end do
+        kchrge = nint(sum)
       end if
       if (norbs > 0) then
         if (index(keywrd,' FOCK') /= 0) then
@@ -1072,7 +1079,7 @@
         if (abs(solv_energy) > 1.d-1) &
           write (iwrite, '(    10X,''SOLVATION ENERGY        ='',F17.5,'' EV''   )') solv_energy
       end if
-      if (abs(ediel) > 1.d-5) then
+      if (iseps) then
         write (iwrite, '(    10X,''DIELECTRIC ENERGY       ='',F17.5,'' EV''   )') ediel
       end if
       if (Abs (pressure) > 1.d-4) then
