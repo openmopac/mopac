@@ -351,88 +351,87 @@
 !
 ! COMPUTE THE HEAT OF FORMATION.
 !
-      if (norbs > 0 .and. nelecs > 0) then
 !
 !  Put any ad-hoc corrections to the HoF here, so they will show up if PL
 !  is used
 !
-        hpress = 0.d0
-        if (Abs (pressure) > 1.d-4) then
-          if (id == 1) then
-            hpress = pressure * Sqrt (dot(tvec(1, 1), tvec(1, 1), 3))
-          else if (id == 3) then
-            hpress = pressure * volume (tvec, 3)
-          end if
-          atheat = atheat + hpress
+      hpress = 0.d0
+      if (Abs (pressure) > 1.d-4) then
+        if (id == 1) then
+          hpress = pressure * Sqrt (dot(tvec(1, 1), tvec(1, 1), 3))
+        else if (id == 3) then
+          hpress = pressure * volume (tvec, 3)
         end if
-        if (useps .and. .not. mozyme) atheat = atheat + solv_energy * fpc_9
+        atheat = atheat + hpress
+      end if
+      if (useps .and. .not. mozyme) atheat = atheat + solv_energy * fpc_9
 !
 !  Add in any molecular-mechanics type corrections here
 !
-        if (method_pm6 .and. N_3_present) then
-          nsp2_corr = nsp2_correction()
-          atheat = atheat + nsp2_corr
-        end if
-        if (method_pm7 .and. Si_O_H_present) then
-          Si_o_H_corr = Si_O_H_correction()
-          atheat = atheat + Si_O_H_corr
-        end if
-        call setup_nhco(i)
-        sum_dihed = 0.d0
-        do i = 1, nnhco
-          call dihed (coord, nhco(1,i), nhco(2,i), nhco(3,i), nhco(4,i), angle)
-          sum_dihed = sum_dihed + htype*sin(angle)**2
-        end do
-        atheat = atheat + sum_dihed
-        stress = 0.d0
-        if(use_ref_geo) then
-          do i = 1, numat
-            do j = 1,3
-              stress = stress + (geo(j,i) - geoa(j,i))**2
-            end do
+      if (method_pm6 .and. N_3_present) then
+        nsp2_corr = nsp2_correction()
+        atheat = atheat + nsp2_corr
+      end if
+      if (method_pm7 .and. Si_O_H_present) then
+        Si_o_H_corr = Si_O_H_correction()
+        atheat = atheat + Si_O_H_corr
+      end if
+      call setup_nhco(i)
+      sum_dihed = 0.d0
+      do i = 1, nnhco
+        call dihed (coord, nhco(1,i), nhco(2,i), nhco(3,i), nhco(4,i), angle)
+        sum_dihed = sum_dihed + htype*sin(angle)**2
+      end do
+      atheat = atheat + sum_dihed
+      stress = 0.d0
+      if(use_ref_geo) then
+        do i = 1, numat
+          do j = 1,3
+            stress = stress + (geo(j,i) - geoa(j,i))**2
           end do
-        end if
-        if (dh) then
-          call post_scf_corrections(sum, .false.)
-          if (moperr) return
-          atheat =  sum + atheat
-        end if
-        if (times) call timer ('BEFORE ITER')
-        if (int) then
+        end do
+      end if
+      if (dh) then
+        call post_scf_corrections(sum, .false.)
+        if (moperr) return
+        atheat =  sum + atheat
+      end if
+      if (times) call timer ('BEFORE ITER')
+      if (int) then
+        if (norbs > 0 .and. nelecs > 0) then
           if (mozyme) then
             call iter_for_MOZYME (elect)
           else
             call iter (elect, fulscf, .TRUE.)
           end if
-          if (moperr) return
-          if (noeps) then
-            noeps = .false.
-            useps = .true.
-            if ( .not. mozyme) then
-              if (.not. method_indo) call hcore ()
-              if (method_indo) then
-                call addnuc ()
-                call addhcr ()
-                do i= 1,mpack
-                  beta(i) = h(i)
-                end do
-              end if
-              call iter (elect, fulscf, .TRUE.)
-            end if
-          end if
-        else
-          if (mozyme) then
-             call buildf (f, partf, 0)
-             elect = helecz()
-           end if
         end if
-        stress = stress*density
-        atheat = atheat + stress
         if (moperr) return
-        if (times) call timer ('AFTER  ITER')
+        if (noeps) then
+          noeps = .false.
+          useps = .true.
+          if ( .not. mozyme) then
+            if (.not. method_indo) call hcore ()
+            if (method_indo) then
+              call addnuc ()
+              call addhcr ()
+              do i= 1,mpack
+                beta(i) = h(i)
+              end do
+            end if
+            if (norbs > 0 .and. nelecs > 0) call iter (elect, fulscf, .TRUE.)
+          end if
+        end if
       else
-        elect = 0.D0
+        if (mozyme .and. norbs > 0 .and. nelecs > 0) then
+          call buildf (f, partf, 0)
+          elect = helecz()
+        end if
       end if
+      stress = stress*density
+      atheat = atheat + stress
+      if (moperr) return
+      if (times) call timer ('AFTER  ITER')
+      if(nelecs == 0) elect = 0.D0
       escf = (elect + enuclr)*fpc_9 + atheat
       if (useps .and. mozyme) then
             escf = escf + solv_energy * fpc_9
