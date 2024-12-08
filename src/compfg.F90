@@ -431,7 +431,13 @@
       atheat = atheat + stress
       if (moperr) return
       if (times) call timer ('AFTER  ITER')
-      if(nelecs == 0) elect = 0.D0
+      if (nelecs == 0) then
+        elect = 0.D0
+        f = h
+        if (useps .and. .not. mozyme) then
+          call addfck (f, p)
+        end if
+      end if
       escf = (elect + enuclr)*fpc_9 + atheat
       if (useps .and. mozyme) then
             escf = escf + solv_energy * fpc_9
