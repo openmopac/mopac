@@ -347,8 +347,7 @@ endif()
 include(CPack)
 include(CPackIFW)
 cpack_ifw_configure_component(main DISPLAY_NAME "main program" SORTING_PRIORITY 2 FORCED_INSTALLATION
-  LICENSES "primary license (LGPL3)" "${CMAKE_SOURCE_DIR}/COPYING.lesser"
-  "secondary license terms (GPL3)" "${CMAKE_SOURCE_DIR}/COPYING"
+  LICENSES "license (Apache-2.0)" "${CMAKE_SOURCE_DIR}/LICENSE"
   SCRIPT "${CMAKE_SOURCE_DIR}/.github/qtifw_component.qs"
   USER_INTERFACES "${CMAKE_SOURCE_DIR}/.github/pathcheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/filecheckboxform.ui" "${CMAKE_SOURCE_DIR}/.github/iconcheckboxform.ui")
 cpack_ifw_configure_component(qtifw VIRTUAL FORCED_INSTALLATION)

@@ -1,12 +1,13 @@
 # Molecular Orbital PACkage (MOPAC)
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL_v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![DOI](https://zenodo.org/badge/177640376.svg)](https://zenodo.org/badge/latestdoi/177640376)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mopac/badges/version.svg)](https://anaconda.org/conda-forge/mopac)
 ![build](https://github.com/openmopac/mopac/actions/workflows/CI.yaml/badge.svg)
 [![codecov](https://codecov.io/gh/openmopac/mopac/branch/main/graph/badge.svg?token=qM2KeRvw06)](https://codecov.io/gh/openmopac/mopac)
 
-This is the official repository of the modern open-source version of MOPAC, which is now released under an LGPL license.
+This is the official repository of the modern open-source version of MOPAC, which is now released under an Apache license
+(versions 22.0.0 through 23.0.3 are available under an LGPL license).
 This is a direct continuation of the commercial development and distribution of MOPAC, which ended at MOPAC 2016.
 Commercial versions of MOPAC are no longer supported, and all MOPAC users are encouraged to switch to the most recent open-source version.
 
