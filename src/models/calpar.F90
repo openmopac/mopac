@@ -287,14 +287,14 @@
     write (param_out,"(a)") "! Molecular Orbital PACkage (MOPAC)"
     write (param_out,"(a)") "! Copyright 2021 Virginia Polytechnic Institute and State University"
     write (param_out,"(a)") "!"
-    write (param_out,"(a)") "! Licensed under the Apache License, Version 2.0 (the "License");"
+    write (param_out,"(a)") '! Licensed under the Apache License, Version 2.0 (the "License");'
     write (param_out,"(a)") "! you may not use this file except in compliance with the License."
     write (param_out,"(a)") "! You may obtain a copy of the License at"
     write (param_out,"(a)") "!"
     write (param_out,"(a)") "!    http://www.apache.org/licenses/LICENSE-2.0"
     write (param_out,"(a)") "!"
     write (param_out,"(a)") "! Unless required by applicable law or agreed to in writing, software"
-    write (param_out,"(a)") "! distributed under the License is distributed on an "AS IS" BASIS,"
+    write (param_out,"(a)") '! distributed under the License is distributed on an "AS IS" BASIS,'
     write (param_out,"(a)") "! WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied."
     write (param_out,"(a)") "! See the License for the specific language governing permissions and"
     write (param_out,"(a)") "! limitations under the License."
