@@ -4,7 +4,7 @@ Contributing to MOPAC
 
 MOPAC is an open source project and, as such, contributions are welcome and appreciated.
 The standard, minimal legal stipulations apply: all contributions must be provided under
-the LGPL 3.0 license and all contributors must agree to the DCO by using their real name
+the Apache 2.0 license and all contributors must agree to the DCO by using their real name
 and a valid email address in their git commit statements.
 
 How to contribute
