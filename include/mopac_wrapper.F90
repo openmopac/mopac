@@ -195,6 +195,11 @@ module mopac_api_f
       character(len=240), intent(in) :: path_to_file
     end function run_mopac_from_input_f
 
+    ! get MOPAC version string
+    module subroutine get_mopac_version_f(version)
+      character(len=21), intent(out) :: version
+    end subroutine get_mopac_version_f
+
   end interface
 
 end module mopac_api_f

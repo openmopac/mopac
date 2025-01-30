@@ -368,6 +368,21 @@ contains
     end if
   end function run_mopac_from_input_f
 
+  ! Get MOPAC version string
+  module subroutine get_mopac_version_f(version)
+    character(len=21), intent(out) :: version
+    character(kind=c_char) :: version_c(21)
+    integer :: i
+    i = 1
+    call get_mopac_version(version_c)
+    do
+      if(version_c(i) == c_null_char) exit
+      version(i:i) = version_c(i)
+      i = i + 1
+    end do
+    version(i:) = ' '
+  end subroutine get_mopac_version_f
+
   subroutine mopac_system_f2c(system_f, system_c, iwork, rwork)
     type(mopac_system_f), intent(in) :: system_f
     type(mopac_system), intent(out) :: system_c

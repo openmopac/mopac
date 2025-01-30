@@ -217,4 +217,7 @@ void destroy_mozyme_state(struct mozyme_state *state);
 /* run MOPAC conventionally from an input file */
 int run_mopac_from_input(char *path_to_file);
 
+/* get MOPAC version string */
+void get_mopac_version(char *version);
+
 #endif

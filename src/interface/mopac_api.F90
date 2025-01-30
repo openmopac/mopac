@@ -260,6 +260,14 @@ module mopac_api
       character(kind=c_char), dimension(*), intent(in) :: path_to_file
     end function run_mopac_from_input
 
+    ! get MOPAC version string
+    module subroutine get_mopac_version(version) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: get_mopac_version
+#endif
+      character(kind=c_char), dimension(*), intent(out) :: version
+    end subroutine get_mopac_version
+
   end interface
 
   ! allocate memory (C or Fortran memory manager, depending on compiler)
