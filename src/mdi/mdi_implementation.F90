@@ -35,8 +35,7 @@ MODULE MDI_IMPLEMENTATION
     nelecs, & ! number of electrons
     voigt, & ! Voigt stress tensor (xx, yy, zz, yz, xz, xy)
     jobnam, & ! path to input file
-    run, & ! run mode
-    gui ! output information for a Graphical User Interface
+    run ! run mode
 
   use Common_arrays_C, only : geo, & ! raw coordinates of atoms (highest priority for unrelaxed coordinates)
     xparam, & ! values of coordinates undergoing optimization (highest priority for relaxed coordinates)
@@ -83,7 +82,6 @@ CONTAINS
       WRITE(*,*) "MDI ERROR: No input file provided for MOPAC engine"
       RETURN
     END IF
-    gui = .false.
     run = 2
     jobnam = trim(input_file)
     use_mdi = .true.
@@ -101,7 +99,6 @@ CONTAINS
     use_mdi = .false.
     jobnam = ' '
     run = 1
-    gui = .true.
   END FUNCTION MDI_Plugin_close_mopac
 
   FUNCTION MDI_Plugin_launch_mopac(plugin_state) bind ( C, name="MDI_Plugin_launch_mopac" )
@@ -123,7 +120,6 @@ CONTAINS
       WRITE(*,*) "MDI ERROR: No input file provided for MOPAC engine"
       RETURN
     END IF
-    gui = .false.
     run = 2
     jobnam = trim(input_file)
     use_mdi = .true. 
@@ -131,7 +127,6 @@ CONTAINS
     use_mdi = .false.
     jobnam = ' '
     run = 1
-    gui = .true.
   END FUNCTION MDI_Plugin_launch_mopac
 
   SUBROUTINE initialize_mdi()

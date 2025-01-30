@@ -32,7 +32,7 @@
         MM_corrections, lxfac, trunc_1, trunc_2, l_normal_html, &
         sparkle, itemp_1, maxtxt, koment, sz, ss2, keywrd_quoted, &
         nl_atoms, use_ref_geo, prt_coords, pdb_label, step, &
-        density, norbs, method_indo, nclose, nopen, backslash, gui, os, git_hash, verson, &
+        density, norbs, method_indo, nclose, nopen, backslash, os, git_hash, verson, &
         use_disk, run, numcal0, job_no0, step_num0
 !
       USE parameters_C, only : tore, ios, iop, iod, eisol, eheat, zs, eheat_sparkles, gss
@@ -366,7 +366,7 @@
         lgpu = (lgpu_ref .and. natoms > 100) ! Warning - there are problems with UHF calculations on small systems
 #endif
       end if
-      if (.not. gui .and. numcal == 1+numcal0 .and. natoms == 0) then
+      if (numcal == 1+numcal0 .and. natoms == 0) then
         write(line,'(2a)')" Data set exists, but does not contain any atoms."
         write(0,'(//10x,a,//)')trim(line)
         call mopend(trim(line))
@@ -1002,44 +1002,40 @@
         end if
 98      continue
       end if
-      if ( .not. gui) then
-        if (allocated(p)) deallocate(p)
-        if (allocated(react)) deallocate(react)
-        inquire (file = end_fn, exist = exists)
-        if (exists) then
-          open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i)
-          close(iend, status = 'delete', iostat=i)
-        end if
-         itemp_1 = ncomments
-        if (index(keywrd, " ADD-H PDBOUT") == 0 .or. &
-           index(koment, " From PDB file") == 0) ncomments = 0
-        if (index(keywrd_txt," GEO_DAT") /= 0) then
-          i = index(keywrd_txt," GEO_DAT") + 9
-          j = index(keywrd_txt(i + 10:),'" ') + i + 9
-          write(line,'(a)')"GEO_DAT="//keywrd_txt(i:j)
-          call l_control(trim(line), len_trim(line), 1)
-        end if
-        call delete_MOZYME_arrays()
+      if (allocated(p)) deallocate(p)
+      if (allocated(react)) deallocate(react)
+      inquire (file = end_fn, exist = exists)
+      if (exists) then
+        open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i)
+        close(iend, status = 'delete', iostat=i)
+      end if
+        itemp_1 = ncomments
+      if (index(keywrd, " ADD-H PDBOUT") == 0 .or. &
+          index(koment, " From PDB file") == 0) ncomments = 0
+      if (index(keywrd_txt," GEO_DAT") /= 0) then
+        i = index(keywrd_txt," GEO_DAT") + 9
+        j = index(keywrd_txt(i + 10:),'" ') + i + 9
+        write(line,'(a)')"GEO_DAT="//keywrd_txt(i:j)
+        call l_control(trim(line), len_trim(line), 1)
+      end if
+      call delete_MOZYME_arrays()
 !
 ! Delete density matrix if it was made by MOZYME
 !
-        if (.not. l_OLDDEN .and. index(keywrd, " NEWDEN") == 0) then
-          j = len_trim(end_fn)
-          inquire (file = end_fn(:j - 3)//"den", exist = exists)
-          if (exists) then
-            open(unit = iend, file = end_fn(:j - 3)//"den", status='OLD', iostat=i)
-            if (i == 0) close(iend, status = 'delete', iostat=i)
-          end if
+      if (.not. l_OLDDEN .and. index(keywrd, " NEWDEN") == 0) then
+        j = len_trim(end_fn)
+        inquire (file = end_fn(:j - 3)//"den", exist = exists)
+        if (exists) then
+          open(unit = iend, file = end_fn(:j - 3)//"den", status='OLD', iostat=i)
+          if (i == 0) close(iend, status = 'delete', iostat=i)
         end if
-        go to 10
       end if
+      go to 10
 !
 ! Carefully delete all arrays created using "allocate"
 !
-  101 if ( .not. gui) then
-        call setup_mopac_arrays(0,0)
-        call delete_MOZYME_arrays()
-      end if
+  101 call setup_mopac_arrays(0,0)
+      call delete_MOZYME_arrays()
       call summary(" ",1)
       if (tim > 1.d7) tim = tim - 1.d7
       write (iw, '(3/,'' TOTAL JOB TIME: '',F16.2,'' SECONDS'')') tim

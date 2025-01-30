@@ -24,7 +24,7 @@
       sz, ss2, maxtxt, E_disp, E_hb, E_hh, l_normal_html, &
       no_pKa, nalpha_open, nbeta_open, use_ref_geo, N_Hbonds, caltyp, &
       hpress, nsp2_corr, Si_O_H_corr, sum_dihed, atheat, &
-      prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash, gui
+      prt_gradients, prt_coords, prt_cart, prt_pops, prt_charges, pdb_label, backslash
 !
       use MOZYME_C, only : icocc, icvir, ncocc, ncvir, nvirtual, noccupied, &
       & nnce, nncf, cocc, cvir, ncf, nce,  cocc_dim, &
@@ -876,7 +876,7 @@
           end if
           pa = p - pb
         end if
-        if (gui .or. index(keywrd,' BONDS') + index(keywrd,' ALLBO') /= 0) then
+        if (index(keywrd,' BONDS') + index(keywrd,' ALLBO') /= 0) then
           if ( .not. mozyme) then
             if (nbeta == 0) then
               write (iw, '(/10X,''BONDING CONTRIBUTION OF EACH M.O.'',/)')
@@ -914,7 +914,7 @@
         sum = meci()
         if (moperr) return
       end if
-      if (index(keywrd,' MULLIK') + index(keywrd,' GRAPH') /= 0 .and. .not. gui) then
+      if (index(keywrd,' MULLIK') + index(keywrd,' GRAPH') /= 0) then
         if (index(keywrd,' MULLIK') /= 0) write (iw, &
           '(/10X,'' MULLIKEN POPULATION ANALYSIS'')')
         if (mozyme) then

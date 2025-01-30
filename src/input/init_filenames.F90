@@ -14,7 +14,7 @@
 ! limitations under the License.
 
  subroutine init_filenames
-    use molkst_C, only: jobnam, line, gui
+    use molkst_C, only: jobnam, line
     use chanel_C, only : output_fn, restart_fn, brillouin_fn, &
      & density_fn, log_fn, end_fn, archive_fn, esp_fn, ump_fn, &
      mep_fn, pol_fn, gpt_fn, esr_fn, input_fn, xyz_fn, syb_fn, &
@@ -55,5 +55,4 @@
     xyz_fn        = jobnam(1:text_length) // ".xyz"
     syb_fn        = jobnam(1:text_length) // ".syb"
     cosmo_fn      = jobnam(1:text_length) // ".cos"
-    if (gui) output_fn     = "OUTPUT file"
   end subroutine init_filenames

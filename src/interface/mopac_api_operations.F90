@@ -15,7 +15,7 @@
 
 submodule (mopac_api) mopac_api_operations
   use Common_arrays_C, only: xparam, grad, lopt
-  use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam, run
+  use molkst_C, only: keywrd, escf, moperr, nvar, jobnam, run
   implicit none
 
   interface
@@ -196,7 +196,6 @@ contains
       jobnam(i:i) = path_to_file(i)
       i = i + 1
     end do
-    gui = .false.
     run = 2
     call run_mopac
     if (moperr) then
@@ -205,7 +204,6 @@ contains
       run_mopac_from_input = 0
     end if
     run = 1
-    gui = .true.
     jobnam = ' '
   end function run_mopac_from_input
   

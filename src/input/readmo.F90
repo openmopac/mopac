@@ -34,7 +34,7 @@
       ncomments, itemp_1, nbreaks, numat_old, maxtxt, use_ref_geo, &
       n_methods, methods, methods_keys,  method_pm6_d3h4, method_pm6_dh2x, id,  &
       method_pm6_d3h4x, method_pm6_d3, method_pm6_d3_not_h4, method_pm7_hh, method_pm6_org, &
-      method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label, gui
+      method_pm7_minus, method_pm6_dh_plus, prt_coords, prt_cart, mozyme, pdb_label
 !
       use meci_C, only : maxci
 !
@@ -469,7 +469,7 @@
                 write(line,'(2a)')" GEO_DAT file """//trim(line_1)//""" exists, but does not contain any atoms."
                 write(0,'(//10x,a,//)')trim(line)
                 call mopend(trim(line))
-              else if (.not. gui .and. numcal < 2+numcal0) then
+              else if (numcal < 2+numcal0) then
                 write(line,'(2a)')" Data set '"//trim(job_fn)//" exists, but does not contain any atoms."
                 write(0,'(//10x,a,//)')trim(line)
                 call mopend(trim(line))
@@ -681,15 +681,13 @@
       idate = ' '
       call fdate (idate)
       write (iw, '(1X,15(''*****''),''****'')',iostat=i)
-      if ( .not. gui) then
-        if (i /= 0) then
-          write(line,'(2a)')" Unable to write to file '", trim(output_fn)//"'"
-          write(0,'(//10x,a,//)')trim(line)
-          call mopend(trim(line))
-          return
-        else
-          if (numcal == 1+numcal0 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
-        end if
+      if (i /= 0) then
+        write(line,'(2a)')" Unable to write to file '", trim(output_fn)//"'"
+        write(0,'(//10x,a,//)')trim(line)
+        call mopend(trim(line))
+        return
+      else
+        if (numcal == 1+numcal0 .and. numat > 50) write(0,'(10x,a)')idate//"  Job: '"//trim(jobnam)//"' started successfully"
       end if
       maxci = 10000
       write (iw, '(1X,a)')"**                                                                           **"
@@ -1797,7 +1795,7 @@
         if (opend) close (iarc)
         if (index(keywrd, "PDBOUT") /= 0) archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
       end if
-      if (prt_cart .and. (maxtxt < 26 .and. (index(keywrd,' NOXYZ') == 0 .or. gui))) then
+      if (prt_cart .and. maxtxt < 26 .and. index(keywrd,' NOXYZ') == 0) then
          write (iw, '(2/10X,''CARTESIAN COORDINATES '',/)')
         write (iw, &
       '(4X,''NO.'',7X,''ATOM'',11X,''X'',11X,''Y'',11X,''Z'',/)')

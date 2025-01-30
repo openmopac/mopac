@@ -14,8 +14,6 @@
 ! limitations under the License.
 
 program param
-  use molkst_C, only : gui
   implicit none
-  gui = .false.
   call run_param
 end program param

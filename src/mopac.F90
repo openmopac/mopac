@@ -14,8 +14,6 @@
 ! limitations under the License.
 
 program mopac
-  use molkst_C, only : gui
   implicit none
-  gui = .false.
   call run_mopac
 end program mopac

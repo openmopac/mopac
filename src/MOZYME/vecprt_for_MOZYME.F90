@@ -14,7 +14,7 @@
 ! limitations under the License.
 
 subroutine vecprt_for_MOZYME(aa, numm)
-    use molkst_C, only: mpack, numat, gui
+    use molkst_C, only: mpack, numat
     use chanel_C, only: iw
     use elemts_C, only: elemnt
     use common_arrays_C, only : nat, nfirst, nlast, l_atom
@@ -61,11 +61,7 @@ subroutine vecprt_for_MOZYME(aa, numm)
           j = j + 1
           itext(j) = "  "
           jtext(j) = elemnt(nat(i))
-          if (gui) then
-            natom(j) = j
-          else
-            natom(j) = i
-          end if
+          natom(j) = i
           do k = 1, i
             if (l_atom(k)) then
               l = l + 1

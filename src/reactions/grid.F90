@@ -26,7 +26,7 @@
       use elemts_C, only : elemnt
 !
       use molkst_C, only : nvar, keywrd, tleft, line, norbs, &
-      natoms, moperr, uhf, numat, mpack, gui
+      natoms, moperr, uhf, numat, mpack
 !
       use maps_C, only : rxn_coord1, rxn_coord2, ione, ijlp, ilp, jlp, jlp1, surf, &
       lpara1, latom1, lpara2, latom2
@@ -46,7 +46,7 @@
       character :: formt*4, num*1
       logical :: restrt, useef, opend, minimize_energy_in_grid = .false., use_p
       double precision, dimension (:), allocatable :: all_points1, all_points2
-      double precision, dimension (:,:), allocatable ::  xy, surfac, all_pa, all_pb
+      double precision, dimension (:,:), allocatable ::  xy, surfac
       double precision, dimension (:,:,:), allocatable :: all_geo
       integer, dimension (:,:,:), allocatable :: all_nabc
       character :: txt*1
@@ -155,7 +155,6 @@
       end if
       allocate (all_nabc(i,3,natoms), all_points1(i), all_points2(i), &
               & all_geo(i,3,natoms))
-      allocate (all_pa(i,mpack), all_pb(i,j), stat = k)
       use_p = (i == 0)
       surf = 1.d9
       if (lpara1 /= 1 .and. na(latom1) > 0) then
@@ -273,14 +272,6 @@
             all_nabc(k,2,i) = nb(i)
             all_nabc(k,3,i) = nc(i)
           end do
-          if (gui) then
-            if (use_p) then
-              all_pa(k,:mpack) = pa(:mpack)
-              if (uhf) then
-                all_pb(k,:mpack) = pb(:mpack)
-              end if
-            end if
-          end if
           write (line, '('' :'',F16.5,F16.5,F21.6, i10,i5)') &
             geo(lpara1,latom1)*c1, geo(lpara2,latom2)*c2, escf, &
             loop , big_loop - loop
@@ -369,33 +360,6 @@
               l = l + 1
               write (iw, '(I4,3X,A2,3x, 3F16.9)') l, elemnt(labels(i)), (coord(k,l),k=1,3) 
             end do
-          end if
-          if (gui) then
-            if (use_p) then
-              ij = 0
-              do i = 1, norbs
-                do j = 1, i
-                ij = ij + 1
-                pa(ij) = all_pa(k,ij)
-                end do
-              end do
-              if (uhf) then
-                ij = 0
-                do i = 1, norbs
-                  do j = 1, i
-                  ij = ij + 1
-                  pb(ij) = all_pb(k,ij)
-                  end do
-                end do
-              else
-                pa = 0.d0
-                pb = 0.d0
-              end if
-              p = pa + pb
-            else
-              p = 2*pa
-            end if
-            call bonds()
           end if
         end do
       end do
