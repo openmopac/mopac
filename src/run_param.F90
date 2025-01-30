@@ -13,7 +13,7 @@
 ! See the License for the specific language governing permissions and
 ! limitations under the License.
 
- subroutine run_param
+ subroutine run_param() bind(c)
 #ifdef WIN32
  !dec$ attributes dllexport :: run_param
 #endif

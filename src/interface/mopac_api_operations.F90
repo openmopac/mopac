@@ -187,6 +187,10 @@ contains
 #ifdef WIN32
 !dec$ attributes dllexport :: run_mopac_from_input
 #endif
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     integer(c_int) :: run_mopac_from_input
     character(kind=c_char), dimension(*), intent(in) :: path_to_file
     integer :: i

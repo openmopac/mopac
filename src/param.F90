@@ -15,5 +15,9 @@
 
 program param
   implicit none
+  interface
+    subroutine run_param() bind(c)
+    end subroutine run_param
+  end interface
   call run_param
 end program param
