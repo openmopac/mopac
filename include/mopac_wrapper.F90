@@ -23,7 +23,7 @@ module mopac_api_f
   ! public subroutines of the MOPAC API
   public :: mopac_scf_f, mopac_relax_f, mopac_vibe_f, mozyme_scf_f, mozyme_relax_f, mozyme_vibe_f
   ! public subroutine of the simple, disk-based MOPAC API
-  public :: run_mopac_from_input_f
+  public :: run_mopac_from_input_f, get_mopac_version_f
 
   ! data that defines the atomistic system and MOPAC job options (Fortran wrapper)
   type :: mopac_system_f

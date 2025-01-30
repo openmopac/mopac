@@ -28,7 +28,7 @@ module mopac_api
   ! public subroutines to destroy derived types created by the API
   public :: destroy_mopac_properties, destroy_mopac_state, destroy_mozyme_state
   ! public subroutine of the simple, disk-based MOPAC API
-  public :: run_mopac_from_input
+  public :: run_mopac_from_input, get_mopac_version
 
   ! data that defines the atomistic system and MOPAC job options
   type, bind(c) :: mopac_system
