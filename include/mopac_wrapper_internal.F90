@@ -233,6 +233,11 @@ submodule (mopac_api_f) mopac_api_f_internal
       character(kind=c_char), dimension(*), intent(in) :: path_to_file
     end function run_mopac_from_input
 
+    ! get MOPAC version string
+    module subroutine get_mopac_version(version) bind(c)
+      use iso_c_binding
+      character(kind=c_char), dimension(*), intent(out) :: version
+    end subroutine get_mopac_version
   end interface
 
 contains
