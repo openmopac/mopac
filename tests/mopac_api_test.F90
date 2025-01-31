@@ -21,8 +21,9 @@ program mopac_api_test
     character(50) :: version
     nfail = 0
 
+    version = ' '
     call get_mopac_version_f(version)
-    if (trim(version) /= trim(verson)) then
+    if (version /= verson) then
         nfail = nfail + 1
         write(*,*) "Version mismatch: '", verson, "' vs. '", version, "'"
     end if
