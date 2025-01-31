@@ -1473,6 +1473,7 @@ subroutine Locate_TS
     double precision, external :: seconds
     logical :: opend
     character :: num*1
+    converged = .false.
     if (l_ts) then
       line = "TS"
     else if (l_nllsq) then
