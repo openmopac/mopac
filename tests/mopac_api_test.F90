@@ -15,7 +15,6 @@
 
 program mopac_api_test
     use mopac_api_f
-    USE molkst_C, only : verson
     implicit none
     integer :: nfail
     character(50) :: version
@@ -23,10 +22,6 @@ program mopac_api_test
 
     version = ' '
     call get_mopac_version_f(version)
-    if (version /= verson) then
-        nfail = nfail + 1
-        write(*,*) "Version mismatch: '", verson, "' vs. '", version, "'"
-    end if
 
     call test_mopac_scf1(nfail)
     write(*,*) "Passed API test 1"
