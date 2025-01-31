@@ -22,9 +22,9 @@ program mopac_api_test
     nfail = 0
 
     call get_mopac_version_f(version)
-    if (version /= verson) then
+    if (trim(version) /= trim(verson)) then
         nfail = nfail + 1
-        write(*,*) "Version mismatch:", verson, version
+        write(*,*) "Version mismatch: '", verson, "' vs. '", version, "'"
     end if
 
     call test_mopac_scf1(nfail)

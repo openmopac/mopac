@@ -197,7 +197,7 @@ module mopac_api_f
 
     ! get MOPAC version string
     module subroutine get_mopac_version_f(version)
-      character(len=21), intent(out) :: version
+      character(len=20), intent(out) :: version
     end subroutine get_mopac_version_f
 
   end interface
