@@ -238,6 +238,7 @@ submodule (mopac_api_f) mopac_api_f_internal
       use iso_c_binding
       character(kind=c_char), dimension(*), intent(out) :: version
     end subroutine get_mopac_version
+
   end interface
 
 contains
@@ -373,7 +374,6 @@ contains
     end if
   end function run_mopac_from_input_f
 
-  ! Get MOPAC version string
   module subroutine get_mopac_version_f(version)
     character(len=21), intent(out) :: version
     character(kind=c_char) :: version_c(21)
