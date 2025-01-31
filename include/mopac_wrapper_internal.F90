@@ -233,6 +233,12 @@ submodule (mopac_api_f) mopac_api_f_internal
       character(kind=c_char), dimension(*), intent(in) :: path_to_file
     end function run_mopac_from_input
 
+    ! get MOPAC version string
+    subroutine get_mopac_version(version) bind(c)
+      use iso_c_binding
+      character(kind=c_char), dimension(*), intent(out) :: version
+    end subroutine get_mopac_version
+
   end interface
 
 contains
@@ -367,6 +373,20 @@ contains
       run_mopac_from_input_f = .false.
     end if
   end function run_mopac_from_input_f
+
+  module subroutine get_mopac_version_f(version)
+    character(len=20), intent(out) :: version
+    character(kind=c_char) :: version_c(21)
+    integer :: i
+    i = 1
+    call get_mopac_version(version_c)
+    do
+      if(version_c(i) == c_null_char) exit
+      version(i:i) = version_c(i)
+      i = i + 1
+    end do
+    version(i:) = ' '
+  end subroutine get_mopac_version_f
 
   subroutine mopac_system_f2c(system_f, system_c, iwork, rwork)
     type(mopac_system_f), intent(in) :: system_f

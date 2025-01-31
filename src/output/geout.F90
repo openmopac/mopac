@@ -21,7 +21,7 @@
       & p, atmass, all_comments, pibonds_txt, l_atom
       USE parameters_C, only : tore, ams
       USE molkst_C, ONLY: numat, natoms, ndep, keywrd, maxtxt, line, &
-      & ncomments, moperr, nl_atoms, gui
+      & ncomments, moperr, nl_atoms
       USE symmetry_C, ONLY: depmul, locpar, idepfn, locdep
       USE elemts_C, only : elemnt
       USE chanel_C, only : iw
@@ -79,13 +79,8 @@
         flagn = ' +'
         iprt = iw
       else
-        if (gui) then
-          flag1 = ' 1'
-          flag0 = ' 0'
-        else
-          flag1 = '+1'
-          flag0 = '+0'
-        end if
+        flag1 = '+1'
+        flag0 = '+0'
         flagn = '-1'
         iprt = abs(mode)
       end if
@@ -201,7 +196,7 @@
           x = geo(3,i)
         end if
         if (latom == i) q(lparam) = flagn
-        if ( .not. gui .and. latom1 == i) q(lpara1) = flagn
+        if (latom1 == i) q(lpara1) = flagn
         if (latom2 == i) q(lpara2) = flagn
         blank = elemnt(labels(i))
         if (labels(i) /= 99 .and. labels(i) /= 107) ii = ii + 1
@@ -214,13 +209,8 @@
           if (txtatm(i)(15:16) == "**") txtatm(i)(15:16) = "99"
           if (txtatm(i)(23:26) == "****") txtatm(i)(23:26) = "9999"
           line = txtatm(i)
-          if (gui .and. txtatm(i)(3:) /= " ") then
-            blank = trim(blank)//"("//txtatm(i)(3:)//'  '
-            igui = -10
-          else
-            if (line /= " ") blank = trim(blank)//"("//line(:store_maxtxt)//')  '
-            igui = 0
-          end if
+          if (line /= " ") blank = trim(blank)//"("//line(:store_maxtxt)//')  '
+          igui = 0
         end if
         k = 0
         if (mode /= 1 .and. ii > 0 .and. nat(1) /= 0) then

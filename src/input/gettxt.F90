@@ -15,7 +15,7 @@
 
       subroutine gettxt
       use chanel_C, only: ir, iw, isetup, input_fn
-      use molkst_C, only: keywrd, keywrd_quoted, koment, title, refkey, gui, numcal, numcal0, line, &
+      use molkst_C, only: keywrd, keywrd_quoted, koment, title, refkey, numcal, numcal0, line, &
         moperr, allkey, backslash
       implicit none
 !-----------------------------------------------
@@ -107,7 +107,7 @@
           if (setup_present .and. .not. zero_scf) then
             write (line, '(A)') "SETUP FILE """//trim(filen)//""" MISSING."
             numcal = 2+numcal0
-            if (.not. gui )write(0,'(//30x,a)')' SETUP FILE "'//trim(filen)//'" MISSING'
+            write(0,'(//30x,a)')' SETUP FILE "'//trim(filen)//'" MISSING'
             call mopend (trim(line))
             return
           end if

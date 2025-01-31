@@ -18,7 +18,7 @@
 !   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : natoms, jobnam, run, backslash, &
-      line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2, gui
+      line, ncomments, is_PARAM, keywrd, arc_hof_1, arc_hof_2
       use chanel_C, only : job_fn, input_fn, iw0, iw
       use common_arrays_C, only : all_comments
 !-----------------------------------------------
@@ -47,46 +47,41 @@
 !********************************************************************
       natoms = 0
       call to_screen("To_file: getdat")
-      if (gui) then
-        jobnam = "MOPAC input"
-        natoms = 1
-      else
-        if (run /= 2 .or.jobnam ==" ") then
+      if (run /= 2 .or.jobnam ==" ") then
 #ifdef MOPAC_F2003
-          i = command_argument_count()
+        i = command_argument_count()
 #else
-          i = iargc()
+        i = iargc()
 #endif
-          if (i >= run) then
+        if (i >= run) then
 #ifdef MOPAC_F2003
-            call get_command_argument (run, jobnam)
+          call get_command_argument (run, jobnam)
 #else
-            call getarg (run, jobnam)
+          call getarg (run, jobnam)
 #endif
-            natoms = 1
-          else if (i == 0) then
-            if (is_PARAM) then
-              write(line,'(2a)')" PARAM is the parameter optimization program for use with MOPAC"
-              write(0,'(/10x,a,/)')trim(line)
-              write(0,'(10x,a)')" It uses a single argument, the PARAM data-set"
-              write(0,'(10x,a)')" The command to run PARAM is 'mopac-param <data-set>.dat'"
-             ! call web_message(0,"running_MOPAC.html")
-              write(0,'(10x,a)')" Press (return) to continue"
-              read(5,*, iostat=i)
-              return
-            else
-              write(0,'(/10x,a,/)')" MOPAC is a semiempirical quantum chemistry program"
-              write(0,'(10x,a)')" It uses a single argument, the MOPAC data-set"
-              write(0,'(10x,a)')" The command to run MOPAC is 'mopac <data-set>.mop'"
-              call web_message(0,"running_MOPAC.html")
-              write(0,'(10x,a)')" Press (return) to continue"
-              read(5,*, iostat=i)
-              return
-            end if
-          end if
-        else
           natoms = 1
+        else if (i == 0) then
+          if (is_PARAM) then
+            write(line,'(2a)')" PARAM is the parameter optimization program for use with MOPAC"
+            write(0,'(/10x,a,/)')trim(line)
+            write(0,'(10x,a)')" It uses a single argument, the PARAM data-set"
+            write(0,'(10x,a)')" The command to run PARAM is 'mopac-param <data-set>.dat'"
+            ! call web_message(0,"running_MOPAC.html")
+            write(0,'(10x,a)')" Press (return) to continue"
+            read(5,*, iostat=i)
+            return
+          else
+            write(0,'(/10x,a,/)')" MOPAC is a semiempirical quantum chemistry program"
+            write(0,'(10x,a)')" It uses a single argument, the MOPAC data-set"
+            write(0,'(10x,a)')" The command to run MOPAC is 'mopac <data-set>.mop'"
+            call web_message(0,"running_MOPAC.html")
+            write(0,'(10x,a)')" Press (return) to continue"
+            read(5,*, iostat=i)
+            return
+          end if
         end if
+      else
+        natoms = 1
       end if
 !  Remove any unprintable characters from the end of the file-name
       do i = len_trim(jobnam), 1, -1
@@ -255,7 +250,7 @@
           if (io_stat /= 0) then
             write (line, '(a)') ' The run-time temporary file "'//trim(jobnam)//'.temp" cannot be written to.'
             open(unit=iw, file=trim(jobnam)//'.out')
-            if( .not. gui) write(0,"(///10x,a)")line
+            write(0,"(///10x,a)")line
             call to_screen(line)
             call mopend (trim(line))
             return

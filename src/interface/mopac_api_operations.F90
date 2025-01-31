@@ -15,7 +15,7 @@
 
 submodule (mopac_api) mopac_api_operations
   use Common_arrays_C, only: xparam, grad, lopt
-  use molkst_C, only: keywrd, escf, moperr, nvar, gui, jobnam, run
+  use molkst_C, only: keywrd, escf, moperr, nvar, jobnam, run, verson
   implicit none
 
   interface
@@ -187,6 +187,10 @@ contains
 #ifdef WIN32
 !dec$ attributes dllexport :: run_mopac_from_input
 #endif
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     integer(c_int) :: run_mopac_from_input
     character(kind=c_char), dimension(*), intent(in) :: path_to_file
     integer :: i
@@ -196,7 +200,6 @@ contains
       jobnam(i:i) = path_to_file(i)
       i = i + 1
     end do
-    gui = .false.
     run = 2
     call run_mopac
     if (moperr) then
@@ -205,8 +208,23 @@ contains
       run_mopac_from_input = 0
     end if
     run = 1
-    gui = .true.
     jobnam = ' '
   end function run_mopac_from_input
-  
+
+  ! Get MOPAC version string
+  module subroutine get_mopac_version(version) bind(c)
+#ifdef WIN32
+!dec$ attributes dllexport :: get_mopac_version
+#endif
+    character(kind=c_char), dimension(*), intent(out) :: version
+    integer :: i
+    i = 1
+    do
+      if(verson(i:i) == ' ') exit
+      version(i) = verson(i:i)
+      i = i + 1
+    end do
+    version(i) = c_null_char
+  end subroutine get_mopac_version
+
 end submodule mopac_api_operations

@@ -14,9 +14,6 @@
 ! limitations under the License.
 
 module molkst_C
-#ifdef WIN32
-!dec$ attributes dllexport :: gui
-#endif
 !
 !  This module contains all the scalars relating to the system being calculated.
 !  Every entry is unique, and has the same meaning in every subroutine.
@@ -286,7 +283,6 @@ module molkst_C
      limscf,            & !  Convergence criterion for SCF: if TRUE, then exit the SCF
                           !  if the energy changes a lot (useful in geometry optimization)
                           !  if FALSE, then converge the SCF to the default criterion
-     gui = .true.,      & !  By default, output information for a Graphical User Interface
      lxfac,             & !  TRUE if a diatomic is being used to define the values of XFAC and ALPB
      units,             & !  TRUE if units for input geometry are defined (Angstroms or A0), FALSE otherwise
      Angstroms,         & !  TRUE if units for input geometry must be in Angstroms, if FALSE then A0, see also units

@@ -14,8 +14,10 @@
 ! limitations under the License.
 
 program mopac
-  use molkst_C, only : gui
   implicit none
-  gui = .false.
+  interface
+    subroutine run_mopac() bind(c)
+    end subroutine run_mopac
+  end interface
   call run_mopac
 end program mopac

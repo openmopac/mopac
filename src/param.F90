@@ -14,8 +14,10 @@
 ! limitations under the License.
 
 program param
-  use molkst_C, only : gui
   implicit none
-  gui = .false.
+  interface
+    subroutine run_param() bind(c)
+    end subroutine run_param
+  end interface
   call run_param
 end program param

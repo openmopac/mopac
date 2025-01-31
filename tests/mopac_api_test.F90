@@ -17,7 +17,11 @@ program mopac_api_test
     use mopac_api_f
     implicit none
     integer :: nfail
+    character(50) :: version
     nfail = 0
+
+    version = ' '
+    call get_mopac_version_f(version)
 
     call test_mopac_scf1(nfail)
     write(*,*) "Passed API test 1"
