@@ -38,7 +38,7 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: mode, iprt, i, j, n, ia, ii, k, store_maxtxt
+      integer :: mode, iprt, i, j, n, ia, ii, k, igui, store_maxtxt
       double precision, dimension(natoms) :: q2
       double precision :: degree, w, x, y, z
       logical :: cart, lxyz, isotopes, charge, store_moperr, nabc_pdb, sym_pdb
@@ -59,6 +59,7 @@
       nabc_pdb = (index(keywrd, "CONTROL_NABC_in_PDB") /= 0)
       sym_pdb = (index(keywrd, "CONTROL_SYM_in_PDB") /= 0)
       mode = mode1
+      igui = -10 ! Set to impossible value
       store_maxtxt = maxtxt
       if (index(keywrd, " NOTXT") /= 0) maxtxt = 0
       store_moperr = moperr
@@ -209,6 +210,7 @@
           if (txtatm(i)(23:26) == "****") txtatm(i)(23:26) = "9999"
           line = txtatm(i)
           if (line /= " ") blank = trim(blank)//"("//line(:store_maxtxt)//')  '
+          igui = 0
         end if
         k = 0
         if (mode /= 1 .and. ii > 0 .and. nat(1) /= 0) then
@@ -248,7 +250,7 @@
         end if
         if (labels(i) == 0) cycle
         if ( .not. l_atom(i)) cycle
-        if (na(i) == 0 .or. cart) then
+        if (na(i) == igui .or. cart) then
           if (mode /= 1) then !  Print suitable for reading as a data-set
             if (labels(i)/=99 .and. labels(i)/=107) then
 
