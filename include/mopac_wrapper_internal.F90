@@ -375,7 +375,7 @@ contains
   end function run_mopac_from_input_f
 
   module subroutine get_mopac_version_f(version)
-    character(len=21), intent(out) :: version
+    character(len=20), intent(out) :: version
     character(kind=c_char) :: version_c(21)
     integer :: i
     i = 1
