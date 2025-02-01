@@ -64,6 +64,10 @@
       integer :: naigin, i, j, k, iflag, nreact, ij, iend, l, ii, jj, &
         i4, j4, ir_temp, l_iw, from_data_set = 14, i_loop, setpi_limit = 50
       integer, external :: quoted
+#ifdef _OPENMP
+      integer :: num_threads, default_num_threads
+      integer, external :: omp_get_max_threads
+#endif
       double precision, dimension(40) :: value
       double precision, dimension(400) :: xyzt
       double precision :: degree, convrt, dum1, dum2, sum, Rab
@@ -780,7 +784,23 @@
       l_feather_1 = (index(keywrd, " MACRO") /= 0)
       write (iw, &
       '(/24X,A,'' CALCULATION RESULTS'',2/1X,15(''*****''),''****'' )') "     "//trim(caltyp)
+!
+! Set thread options for each job using OpenMP API
+!
+#ifdef _OPENMP
+      default_num_threads = omp_get_max_threads()
+      i = index(keywrd, " THREADS")
+      if (i > 0) then
+        num_threads = nint(reada(keywrd, i))
+        if (num_threads < 1) num_threads = 1
+      else
+        num_threads = default_num_threads
+      end if
+      call omp_set_num_threads(num_threads)
+      write (iw,'(" *  CALCULATION DONE: (MAX THREADS = ",I0, 1a, T54,2a)') num_threads, ")", idate,"  *"
+#else
       write (iw,'(" *  CALCULATION DONE: ",31x,2a)') idate,"  *"
+#endif
 !
 ! Copy all keywords to keywrd_txt
 !

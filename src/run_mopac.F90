@@ -73,10 +73,6 @@
       logical :: exists, opend, l_OLDDEN
       double precision, external :: C_triple_bond_C, reada, seconds
       character :: nokey(20)*10
-#ifdef _OPENMP
-      integer :: num_threads, default_num_threads
-      integer, external :: omp_get_max_threads
-#endif
 #ifdef MKL
       integer :: num_threads
       integer, external :: mkl_get_max_threads
@@ -277,17 +273,6 @@
 90      if (moperr .and. numcal == 1+numcal0 .and. natoms > 1) goto 101
       if (moperr .and. numcal == 1+numcal0 .and. index(keywrd_txt," GEO_DAT") == 0) goto 100
       if (moperr) goto 101
-! Adjust maximum number of threads using the OpenMP API
-#ifdef _OPENMP
-      if (numcal == 1+numcal0) default_num_threads = omp_get_max_threads()
-      i = index(keywrd, " THREADS")
-      if (i > 0) then
-        num_threads = nint(reada(keywrd, i))
-      else
-        num_threads = default_num_threads
-      end if
-      call omp_set_num_threads(num_threads)
-#endif
       if (numcal == 1+numcal0) then
 #ifdef MKL
         num_threads = min(mkl_get_max_threads(), 20)
