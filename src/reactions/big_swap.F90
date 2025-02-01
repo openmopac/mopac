@@ -1465,7 +1465,7 @@ subroutine Locate_TS
     implicit none
     integer, intent (in) :: loop
     logical, intent (in) :: extra_print, l_ts, l_nllsq, l_sigma
-    logical, intent (out) :: converged
+    logical, intent (inout) :: converged
 !
 !  Local
 !
@@ -1473,7 +1473,6 @@ subroutine Locate_TS
     double precision, external :: seconds
     logical :: opend
     character :: num*1
-    converged = .false.
     if (l_ts) then
       line = "TS"
     else if (l_nllsq) then
