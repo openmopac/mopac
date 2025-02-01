@@ -1904,11 +1904,10 @@ subroutine wrtwor (allkey)
     i = nint(reada(keywrd, i))
     i = max(i,1)
 #ifdef _OPENMP
-    max_threads = omp_get_num_procs()
     if (i == 1) then
       write (iw,'(" *  THREADS=1  - MULTI-THREADING NOT USED")')
     else
-      write (iw,'(" *  THREADS    - USE UP TO ", i0, " THREADS OUT OF ", i0)') i, max_threads
+      write (iw,'(" *  THREADS    - USE UP TO ", i0, " THREADS")') i
     end if
 #else
     write (iw,'(" *  THREADS    - INACTIVE (THREAD CONTROLS DISABLED)")')
