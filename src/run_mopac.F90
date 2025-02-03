@@ -117,7 +117,13 @@
           write(*,"(a)") "MOPAC version "//trim(verson)
 #endif
           stop
-        endif
+        end if
+#ifndef BUILD_MDI
+        if (jobnam == '-mdi' .OR. jobnam == '--mdi') then
+          write(*,*) "This MOPAC executable was not compiled with MDI support"
+          stop
+        end if
+#endif
       end do
 ! save state reference to use only relative state values in API calls
       numcal0 = numcal
