@@ -46,7 +46,7 @@ jobs:
         run: |
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_Fortran_COMPILER=flang
+            -DCMAKE_Fortran_COMPILER=flang-new
 
       - name: Build MOPAC with Make
         run: |
@@ -102,7 +102,7 @@ jobs:
           cmake -Bbuild ^
             -GNinja ^
             -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_Fortran_COMPILER=flang
+            -DCMAKE_Fortran_COMPILER=flang-new
   
       - name: Build MOPAC with Ninja
         shell: cmd
