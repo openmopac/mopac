@@ -120,7 +120,7 @@
         end if
 #ifndef BUILD_MDI
         if (jobnam == '-mdi' .OR. jobnam == '--mdi') then
-          wrrite(*,*) "This MOPAC executable was not compiled with MDI support"
+          write(*,*) "This MOPAC executable was not compiled with MDI support"
           stop
         end if
 #endif
