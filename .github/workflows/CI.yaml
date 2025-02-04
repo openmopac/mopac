@@ -93,13 +93,17 @@ jobs:
         shell: pwsh
         run: conda list
       
-      - name: Install dependencies with conda-forge
-        shell: cmd /C CALL {0}
-        run: |
-          conda install numpy
-          conda install flang
-          conda install ninja
-          conda install openblas
+      - name: Install numpy
+        run: conda install numpy
+
+      - name: Install flang
+        run: conda install flang
+
+      - name: Install ninja
+        run: conda install ninja
+
+      - name: Install openblas
+        run: conda install openblas
 
       - name: Configure MOPAC with CMake
         shell: cmd /C CALL {0}
