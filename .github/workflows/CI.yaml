@@ -101,9 +101,9 @@ jobs:
           conda install openblas
 
       - name: Configure MOPAC with CMake
-        shell: cmd
         run: |
           echo %PATH%
+          dir %CONDA%
           dir %CONDA%\bin
           dir %CONDA%\sbin
           cmake -Bbuild ^
@@ -115,12 +115,10 @@ jobs:
             -DCMAKE_Fortran_COMPILER=%CONDA%\bin\flang-new
 
       - name: Build MOPAC with Ninja
-        shell: cmd
         run: |
           cmake --build build -- -v
           
       - name: Test MOPAC with CTest
-        shell: cmd
         run: |
           cd build
           ctest -V -j %NUM_CORES%
