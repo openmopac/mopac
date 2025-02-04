@@ -157,7 +157,6 @@ call flush
       call getdat(ir,iw)
 write(*,*) "after getdat"
 call flush
-stop
       call to_screen("To_file: Start of reading in data")
       if (natoms == 0 .or. moperr) return
 !
@@ -285,6 +284,7 @@ call flush
       call readmo
 write(*,*) "after readmo"
 call flush
+stop
 !
 ! Check to see if an old density matrix exists
 !
