@@ -58,6 +58,7 @@ jobs:
       - name: Test MOPAC with CTest
         run: |
           cd build
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           ctest -V -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
@@ -106,6 +107,7 @@ jobs:
           echo %PATH% 
           cmake -Bbuild ^
             -GNinja ^
+            -DCMAKE_MAKE_PROGRAM=%CONDA%\bin\ninja ^
             -DCMAKE_BUILD_TYPE=Debug ^
             -DCMAKE_LIBRARY_PATH=%CONDA%\lib ^
             -DPython3_EXECUTABLE=%CONDA%\bin\python ^
