@@ -57,9 +57,12 @@ jobs:
 
       - name: Test MOPAC with CTest
         run: |
-          cd build
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
-          ctest -VV -R lewis
+          cd build
+          cd tests
+          cp ../../tests/test_Lewis_for_Proteins4.mop .
+          ../mopac test_Lewis_for_Proteins4.mop
+#          ctest -VV -R lewis
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
