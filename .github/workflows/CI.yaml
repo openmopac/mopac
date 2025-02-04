@@ -46,6 +46,7 @@ jobs:
         run: |
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_LIBRARY_PATH=$CONDA/lib \
             -DCMAKE_Fortran_COMPILER=$CONDA/bin/flang-new
 
       - name: Build MOPAC with Make
@@ -102,6 +103,7 @@ jobs:
           cmake -Bbuild ^
             -GNinja ^
             -DCMAKE_BUILD_TYPE=Debug ^
+            -DCMAKE_LIBRARY_PATH=%CONDA%\lib ^
             -DCMAKE_Fortran_COMPILER=%CONDA%\bin\flang-new
 
       - name: Build MOPAC with Ninja
