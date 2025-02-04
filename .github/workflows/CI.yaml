@@ -93,48 +93,40 @@ jobs:
         shell: pwsh
         run: conda list
       
-      - name: Install numpy
-        run: conda install numpy
-
-      - name: Install flang
-        run: conda install flang
-
-      - name: Install ninja
-        run: conda install ninja
-
-      - name: Install openblas
-        run: conda install openblas
+      - name: Install stuff
+        shell: bash -el {0}
+        run: |
+          conda install numpy
+          conda install flang
+          conda install ninja
+          conda install openblas
 
       - name: Configure MOPAC with CMake
-        shell: cmd /C CALL {0}
+        shell: bash -el {0}
         run: |
           conda activate test
-          echo %PATH%
-          dir %CONDA%
-          dir %CONDA%\condabin
-          dir %CONDA%\Tools
-          dir %CONDA%\bin
-          dir %CONDA%\sbin
-          dir "C:\Program Files"
-          cmake -Bbuild ^
-            -GNinja ^
-            -DCMAKE_MAKE_PROGRAM=%CONDA%\bin\ninja.exe ^
-            -DCMAKE_BUILD_TYPE=Debug ^
-            -DCMAKE_LIBRARY_PATH=%CONDA%\lib ^
-            -DPython3_EXECUTABLE=%CONDA%\bin\python ^
-            -DCMAKE_Fortran_COMPILER=%CONDA%\bin\flang-new
+          ls $CONDA
+          ls $CONDA/condabin
+          ls $CONDA/Tools
+          ls $CONDA/bin
+          ls $CONDA/sbin
+          cmake -Bbuild \
+            -GNinja \
+            -DCMAKE_LIBRARY_PATH=$CONDA/lib \
+            -DPython3_EXECUTABLE=$CONDA/python \
+            -DCMAKE_Fortran_COMPILER=flang-new
 
       - name: Build MOPAC with Ninja
-        shell: cmd /C CALL {0}
+        shell: bash -el {0}
         run: |
           cmake --build build -- -v
 
       - name: Test MOPAC with CTest
-        shell: cmd /C CALL {0}
+        shell: bash -el {0}
         run: |
           cd build
-          ctest -V -j %NUM_CORES%
-          
+          ctest -V -j $NUM_CORES
+ 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
