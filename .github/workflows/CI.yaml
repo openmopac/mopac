@@ -59,7 +59,7 @@ jobs:
         run: |
           cd build
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
-          ctest -VV -R lewis3
+          ctest -VV -R lewis
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
