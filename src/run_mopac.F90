@@ -146,7 +146,9 @@
 ! Read in all data; put it into a scratch file, "ir"
 !
       moperr = .false.
+write(*,*) "before getdat"
       call getdat(ir,iw)
+write(*,*) "after getdat"
       call to_screen("To_file: Start of reading in data")
       if (natoms == 0 .or. moperr) return
 !
@@ -185,7 +187,9 @@
 ! Set up essential arrays, these are the arrays that are needed for reading in the data
 !
       natoms = natoms + 200
+write(*,*) "before setup_mopac_arrays"
       call setup_mopac_arrays(natoms, 1)
+write(*,*) "after setup_mopac_arrays"
       maxatoms = natoms
    10 continue
       numcal = numcal + 1      ! A new calculation
@@ -265,7 +269,9 @@
 !    Read in all the data for the current job
 !
       i = numcal
+write(*,*) "before readmo"
       call readmo
+write(*,*) "after readmo"
 !
 ! Check to see if an old density matrix exists
 !
@@ -415,7 +421,9 @@
 !
 ! Set up all the data for the molecule
 !
+write(*,*) "before moldat"
       call moldat (0)  ! data dependent on the system
+write(*,*) "after moldat"
       if (index(keywrd, " 0SCF") /= 0) moperr = .FALSE.
       call calpar      ! Calculate derived parameters
       if (moperr) goto 100
@@ -483,8 +491,10 @@
       call delete_ref_key("RESIDUES", len_trim("RESIDUES"), ' ', 1)
       call delete_ref_key("XENO", len_trim("XENO"), ' ', 1)
       call output_rama()
+write(*,*) "before geochk", maxtxt
       if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) then
         call geochk()
+write(*,*) "after geochk", maxtxt
         if (moperr) goto 100
       end if
       if ( index(keywrd," PDBOUT") /= 0 .and. maxtxt < 26 .and. index(keywrd," RESID") == 0) then
