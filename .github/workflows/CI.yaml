@@ -49,7 +49,8 @@ jobs:
             -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_LIBRARY_PATH=$CONDA/lib \
             -DPython3_EXECUTABLE=$CONDA/bin/python \
-            -DCMAKE_Fortran_COMPILER=$CONDA/bin/flang-new
+            -DCMAKE_Fortran_COMPILER=$CONDA/bin/flang-new \
+            -DCMAKE_Fortran_FLAGS="-O0 -g"
 
       - name: Build MOPAC with Make
         run: |
