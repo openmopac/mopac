@@ -437,6 +437,8 @@
         break_coords(1,:400) = -123.d0
         if (aigeo .or. index(keywrd,' AIGIN') /= 0) then
           intern = .false.
+write(*,*) "before getgeg"
+stop
           call getgeg (ir, labels, geo, lopt, na, nb, nc)
           if (moperr) return
           if (xyz) then
