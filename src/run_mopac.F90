@@ -157,6 +157,7 @@ call flush
       call getdat(ir,iw)
 write(*,*) "after getdat"
 call flush
+stop
       call to_screen("To_file: Start of reading in data")
       if (natoms == 0 .or. moperr) return
 !
@@ -507,7 +508,6 @@ call flush
       call output_rama()
 write(*,*) "before geochk", maxtxt
 call flush
-stop
       if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) then
         call geochk()
 write(*,*) "after geochk", maxtxt
