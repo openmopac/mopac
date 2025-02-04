@@ -94,6 +94,7 @@ jobs:
         run: conda list
       
       - name: Install dependencies with conda-forge
+        shell: cmd /C CALL {0}
         run: |
           conda install numpy
           conda install flang
@@ -101,6 +102,7 @@ jobs:
           conda install openblas
 
       - name: Configure MOPAC with CMake
+        shell: cmd /C CALL {0}
         run: |
           echo %PATH%
           dir %CONDA%
@@ -115,10 +117,12 @@ jobs:
             -DCMAKE_Fortran_COMPILER=%CONDA%\bin\flang-new
 
       - name: Build MOPAC with Ninja
+        shell: cmd /C CALL {0}
         run: |
           cmake --build build -- -v
-          
+
       - name: Test MOPAC with CTest
+        shell: cmd /C CALL {0}
         run: |
           cd build
           ctest -V -j %NUM_CORES%
