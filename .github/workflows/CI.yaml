@@ -106,6 +106,8 @@ jobs:
         run: |
           echo %PATH%
           dir %CONDA%
+          dir %CONDA%\condabin
+          dir %CONDA%\Tools
           dir %CONDA%\bin
           dir %CONDA%\sbin
           cmake -Bbuild ^
