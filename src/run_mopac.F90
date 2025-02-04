@@ -125,6 +125,8 @@
         end if
 #endif
       end do
+write(*,*) "start mopac"
+call flush
 ! save state reference to use only relative state values in API calls
       numcal0 = numcal
       job_no0 = job_no
@@ -134,7 +136,11 @@
       keywrd_txt = ' '
       keywrd_quoted = ' '
       refkey = ' '
+write(*,*) "before summary"
+call flush
       call summary("",-21) ! reset MOPAC's error handler
+write(*,*) "after summary"
+call flush
 !------------------------------------------------------------------------
       tore = ios + iop + iod
       call fbx                            ! Factorials and Pascal's triangle (pure constants)
@@ -147,8 +153,10 @@
 !
       moperr = .false.
 write(*,*) "before getdat"
+call flush
       call getdat(ir,iw)
 write(*,*) "after getdat"
+call flush
       call to_screen("To_file: Start of reading in data")
       if (natoms == 0 .or. moperr) return
 !
@@ -188,8 +196,10 @@ write(*,*) "after getdat"
 !
       natoms = natoms + 200
 write(*,*) "before setup_mopac_arrays"
+call flush
       call setup_mopac_arrays(natoms, 1)
 write(*,*) "after setup_mopac_arrays"
+call flush
       maxatoms = natoms
    10 continue
       numcal = numcal + 1      ! A new calculation
@@ -270,8 +280,10 @@ write(*,*) "after setup_mopac_arrays"
 !
       i = numcal
 write(*,*) "before readmo"
+call flush
       call readmo
 write(*,*) "after readmo"
+call flush
 !
 ! Check to see if an old density matrix exists
 !
@@ -422,8 +434,10 @@ write(*,*) "after readmo"
 ! Set up all the data for the molecule
 !
 write(*,*) "before moldat"
+call flush
       call moldat (0)  ! data dependent on the system
 write(*,*) "after moldat"
+call flush
       if (index(keywrd, " 0SCF") /= 0) moperr = .FALSE.
       call calpar      ! Calculate derived parameters
       if (moperr) goto 100
@@ -492,9 +506,11 @@ write(*,*) "after moldat"
       call delete_ref_key("XENO", len_trim("XENO"), ' ', 1)
       call output_rama()
 write(*,*) "before geochk", maxtxt
+call flush
       if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) then
         call geochk()
 write(*,*) "after geochk", maxtxt
+call flush
         if (moperr) goto 100
       end if
       if ( index(keywrd," PDBOUT") /= 0 .and. maxtxt < 26 .and. index(keywrd," RESID") == 0) then
