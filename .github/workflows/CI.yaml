@@ -41,6 +41,7 @@ jobs:
         run: |
           conda install numpy
           conda install flang
+          conda install openblas
 
       - name: Configure MOPAC with CMake
         run: |
@@ -96,6 +97,8 @@ jobs:
         run: |
           conda install numpy
           conda install flang
+          conda install ninja
+          conda install openblas
 
       - name: Configure MOPAC with CMake
         shell: cmd
