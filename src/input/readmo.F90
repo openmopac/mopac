@@ -440,7 +440,6 @@
 write(*,*) "before getgeg"
           call getgeg (ir, labels, geo, lopt, na, nb, nc)
 write(*,*) "after getgeg"
-stop
           if (moperr) return
           if (xyz) then
             write (iw, '(A)') &
@@ -470,6 +469,7 @@ stop
             intern = .false.
           else
 write(*,*) "before getgeo"
+stop
             call getgeo (ir, labels, geo, coord, lopt, na, nb, nc, intern)
 write(*,*) "after getgeo"
 call flush
