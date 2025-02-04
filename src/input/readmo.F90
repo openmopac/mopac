@@ -469,10 +469,9 @@ write(*,*) "after getgeg"
             intern = .false.
           else
 write(*,*) "before getgeo"
-stop
             call getgeo (ir, labels, geo, coord, lopt, na, nb, nc, intern)
 write(*,*) "after getgeo"
-call flush
+stop
             if (numcal == 1+numcal0 .and. natoms == 0) then
               i = index(keywrd, "GEO_DAT")
               if (i /= 0) then
