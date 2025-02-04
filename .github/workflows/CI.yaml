@@ -105,11 +105,6 @@ jobs:
         shell: bash -el {0}
         run: |
           conda activate test
-          ls $CONDA
-          ls $CONDA/condabin
-          ls $CONDA/Tools
-          ls $CONDA/bin
-          ls $CONDA/sbin
           cmake -Bbuild \
             -GNinja \
             -DCMAKE_LIBRARY_PATH=$CONDA/lib \
