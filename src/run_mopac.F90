@@ -152,6 +152,7 @@ call flush
 ! Read in all data; put it into a scratch file, "ir"
 !
       moperr = .false.
+stop
 write(*,*) "before getdat"
 call flush
       call getdat(ir,iw)
