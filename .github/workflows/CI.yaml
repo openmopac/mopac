@@ -47,6 +47,7 @@ jobs:
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_LIBRARY_PATH=$CONDA/lib \
+            -DPYTHON_EXECUTABLE=$CONDA/bin/python \
             -DCMAKE_Fortran_COMPILER=$CONDA/bin/flang-new
 
       - name: Build MOPAC with Make
@@ -104,6 +105,7 @@ jobs:
             -GNinja ^
             -DCMAKE_BUILD_TYPE=Debug ^
             -DCMAKE_LIBRARY_PATH=%CONDA%\lib ^
+            -DPYTHON_EXECUTABLE=%CONDA%\bin\python ^
             -DCMAKE_Fortran_COMPILER=%CONDA%\bin\flang-new
 
       - name: Build MOPAC with Ninja
