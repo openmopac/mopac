@@ -440,7 +440,6 @@
 write(*,*) "before getgeg"
           call getgeg (ir, labels, geo, lopt, na, nb, nc)
 write(*,*) "after getgeg"
-stop
           if (moperr) return
           if (xyz) then
             write (iw, '(A)') &
