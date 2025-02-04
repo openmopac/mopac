@@ -62,7 +62,9 @@ jobs:
           cd build
           cd tests
           cp ../../tests/test_Lewis_for_Proteins4.mop .
+          cp ../../tests/test_Lewis_for_Proteins5.mop .
           ../mopac test_Lewis_for_Proteins4.mop
+          ../mopac test_Lewis_for_Proteins5.mop
 #          ctest -VV -R lewis
 
       - name: Save test results as an artifact (on failure)
