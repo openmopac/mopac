@@ -431,7 +431,7 @@ subroutine getdat
     rewind (5)
     line = trim(jobnam)
     call add_path(line)
-    open (unit=ir, file=trim(line)//".temp_makpol", status="UNKNOWN")
+    open (unit=ir, file=trim(line)//".temp_makpol")
     rewind (ir)
     i = 0
     do
@@ -453,7 +453,7 @@ subroutine getdat
       close (5)
       open (5, status="SCRATCH", form="UNFORMATTED")
     end if
-    open (unit=iw, file=trim(path)//trim(line)//".mop", status="UNKNOWN", iostat = i)
+    open (unit=iw, file=trim(path)//trim(line)//".mop", iostat = i)
     rewind (ir)
 end subroutine getdat
 subroutine getgeo (iread, labels, geo, xyz, lopt, na, nb, nc)

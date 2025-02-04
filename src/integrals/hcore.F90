@@ -86,7 +86,7 @@
              call mopend("A file named '"//trim(line)//"' was expected, but was not found.")
              return
           end if
-          open(85, file=line, status='unknown', form='formatted')
+          open(85, file=line, form='formatted')
           read(85, *, iostat = i)
           if (i /= 0) then
              call mopend("A file named '"//trim(line)//"' exists, but is empty.")

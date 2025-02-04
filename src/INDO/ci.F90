@@ -868,7 +868,7 @@
 ! RMG - add option to write transition dipoles between excited states
       if (index(keywrd, ' TDIP') /= 0) then
         filenm(lenf:lenf + 4) = '.tdip'
-        open (14, file = filenm, status = 'unknown')
+        open (14, file = filenm)
         write(14, *) nciout
       end if
 ! End RMG

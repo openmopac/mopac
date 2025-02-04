@@ -1289,7 +1289,7 @@
             inquire(unit=iarc, opened=opend)
             if (opend) close(iarc)
             archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
-            open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+            open(unit=iarc, file=archive_fn)
             rewind iarc
             call geout (iarc)
           end if

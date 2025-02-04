@@ -141,7 +141,7 @@
 !  vibrational frequencies and thermodynamics of the cluster.
 !
         bcc = (Index (keywrd, " BCC") /= 0)
-        open (unit=ibrz, file=brillouin_fn, status="UNKNOWN", form="FORMATTED")
+        open (unit=ibrz, file=brillouin_fn, form="FORMATTED")
         rewind(ibrz)
         write (ibrz,*) numat*3, mers, bcc
         write (ibrz,*) (fmatrx(i), i=1, linear)

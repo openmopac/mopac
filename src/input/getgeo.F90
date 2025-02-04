@@ -755,7 +755,7 @@
         if (exists) close(ir, status = 'delete', err = 99)
         inquire (file = end_fn, exist = exists)
         if (exists) then
-          open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=j)
+          open(unit=iend, file=end_fn, iostat=j)
           close(iend, status = 'delete', iostat=j)
         end if
 99      stop

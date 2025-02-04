@@ -124,8 +124,7 @@
         line = trim(jobnam)
         inquire(file=line, exist=exists)
         if (exists) then ! Check that it is not a folder
-          open(unit=from_data_set, file=line, status='OLD', position=&
-          'asis', iostat=io_stat)
+          open(unit=from_data_set, file=line, status='OLD', iostat=io_stat)
           if (io_stat == 9) then
             exists = .false.
           else
@@ -149,7 +148,7 @@
            if (i > 120)  call to_screen(line(121:min(i,240)))
          end if
          job_fn = line(:len(job_fn))
-        open(unit=from_data_set, file=job_fn, status='OLD', position='asis', iostat=io_stat)
+        open(unit=from_data_set, file=job_fn, status='OLD', iostat=io_stat)
         if (io_stat /= 0) then
           write(line,'(2a)')" Data file: '"//trim(job_fn)//"' exists, but it cannot be opened."
           write(0,'(//10x,a,//)')trim(line)

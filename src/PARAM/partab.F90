@@ -55,14 +55,10 @@ subroutine partab
    large = (Index (contrl, "LARGE") /= 0)
    cp = (Index (contrl, " CP ") /= 0)
    i = len_trim(jobnam)
-    open (unit=ipfile(1), form="FORMATTED", status="UNKNOWN", &
-   & file=jobnam(:i)//".heats")
-    open (unit=ipfile(2), form="FORMATTED", status="UNKNOWN", &
-   & file=jobnam(:i)//".ips")
-    open (unit=ipfile(3), form="FORMATTED", status="UNKNOWN", &
-   & file=jobnam(:i)//".dips")
-    open (unit=ipfile(4), form="FORMATTED", status="UNKNOWN", &
-   & file=jobnam(:i)//".geos")
+    open (unit=ipfile(1), form="FORMATTED", file=jobnam(:i)//".heats")
+    open (unit=ipfile(2), form="FORMATTED", file=jobnam(:i)//".ips")
+    open (unit=ipfile(3), form="FORMATTED", file=jobnam(:i)//".dips")
+    open (unit=ipfile(4), form="FORMATTED", file=jobnam(:i)//".geos")
    allref(1,1) = " "
    reftxt(1,1) = " "
     do i = 1, 4
@@ -87,7 +83,7 @@ subroutine partab
         inquire (unit=iw, opened=opend)
         if (.not. opend) then
           i = Index (jobnam, " ") - 1
-          open (unit=iw, file=jobnam(:i)//".arc", status="UNKNOWN")
+          open (unit=iw, file=jobnam(:i)//".arc")
           rewind (iw)
         end if
       else

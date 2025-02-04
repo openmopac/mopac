@@ -112,7 +112,7 @@
             return
           end if
         else
-          open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED',position='REWIND', iostat=i)
+          open(unit=isetup, file=filen, form='FORMATTED',position='REWIND', iostat=i)
           if (i /= 0) then
             if (.not. zero_scf) then
               call mopend ('COULD NOT OPEN SETUP FILE: '//trim(filen))
@@ -315,8 +315,7 @@
           end if
           keywrd(i:i+6) = " "
           call add_path(filen)
-          open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED', &
-            position='REWIND')
+          open(unit=isetup, file=filen, form='FORMATTED', position='REWIND')
           rewind isetup
           read (isetup, '(A)', end=30, err=30) refkey(2)
           close(isetup)
@@ -374,8 +373,7 @@
             keywrd(i:i + 6) = " "
           end if
           call add_path(filen)
-          open(unit=isetup, file=filen, status='UNKNOWN', form='FORMATTED', &
-            position='REWIND')
+          open(unit=isetup, file=filen, form='FORMATTED', position='REWIND')
           rewind isetup
           read (isetup, '(A)', end=39, err=40) keywrd(len_trim(keywrd) + 2:)
 39        close (isetup)

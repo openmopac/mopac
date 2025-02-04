@@ -103,7 +103,7 @@
         scf1 = index(keywrd,' 1SCF') /= 0
         aic = index(keywrd,'AIDER') /= 0
         if (aic .and. aifrst) then
-          open(unit=ir, file=job_fn, status='OLD', blank='ZERO',position='asis')
+          open(unit=ir, file=job_fn, status='OLD', blank='ZERO')
           rewind ir
 !
 !  ISOK IS SET FALSE: ONLY ONE SYSTEM ALLOWED

@@ -259,7 +259,7 @@ subroutine remove_bond(i)
     allocate (im(natoms))
     if (log) then
       inquire(unit=ilog, opened=opend)
-      if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis')
+      if (.not. opend) open(unit=ilog, form='FORMATTED', file=log_fn)
     end if
     j = 0
     k = 0

@@ -475,7 +475,7 @@
 !
 !  Write out ESP data in format for Jmol
 !
-      open (iesp, file=trim(jobnam)//".grd"  , status="UNKNOWN")
+      open (iesp, file=trim(jobnam)//".grd")
       write (iesp,"(a)") " 4 Density"
       write (iesp,"(a)") " Electron density from Total SCF Density"
       write (iesp, "(i5,3f12.6)")numat, xmin, ymin, zmin
@@ -507,7 +507,7 @@
       write(iesp, "(5e13.5)") esp_array(:pij)
     end do
     else if (espgrid) then
-      open (iesp, file=trim(jobnam)//'.grd', status="UNKNOWN")
+      open (iesp, file=trim(jobnam)//'.grd')
       write (iesp, "(3f12.6)") xmin*a0, ymin*a0, zmin*a0
       write (iesp, "(i5, 3f12.6)") nnx, delx*a0, delx*a0, delx*a0
       write (iesp, "(i5, 3f12.6)") nny, dely*a0, dely*a0, dely*a0

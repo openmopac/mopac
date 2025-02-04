@@ -43,7 +43,7 @@ subroutine solir (eigs, cr, nvecs, xyzk, itriv, xyzxyz)
     stop
   end if
   inquire(unit=iw_new, opened=opend) 
-  if (.not. opend) open (unit = iw_new, file = trim(data_set_name)//".txt", form = "FORMATTED", status = "UNKNOWN", iostat = i)
+  if (.not. opend) open (unit = iw_new, file = trim(data_set_name)//".txt", form = "FORMATTED", iostat = i)
   phaser = (0.0, 0.0)
   if (first) then
     first = .false.

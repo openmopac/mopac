@@ -141,7 +141,7 @@ program BZ
   end if  
   open (unit = 18, file = trim(jobnam)//".brz", status = "OLD", iostat = i99)
   if (i99 /= 0) then
-    open (unit = iw_new, file = trim(data_set_name)//".txt", form = "FORMATTED", status = "UNKNOWN", iostat = i99)
+    open (unit = iw_new, file = trim(data_set_name)//".txt", form = "FORMATTED", iostat = i99)
     write (iw, '(/10x,a,/)') " Failed to open '"//trim(jobnam)//".brz'"
     write (iw_new, '(/10x,a,/)') " Failed to open '"//trim(jobnam)//".brz'"
     stop
@@ -268,7 +268,7 @@ program BZ
   if (index(keywrd," OPS")   + index(keywrd," SEC")    + index(keywrd," FRACT")  + index(keywrd," ROTSEC") + &
       index(keywrd," TRANS") + index(keywrd," SYMSEC") + index(keywrd," PRTVEC") + index(keywrd," ROTFOK") + &
       index(keywrd," VECT") + index(keywrd," SYMTRZ") /= 0) &
-    open (unit = iw_new, file = trim(data_set_name)//".txt", form = "FORMATTED", status = "UNKNOWN", iostat = i99)
+    open (unit = iw_new, file = trim(data_set_name)//".txt", form = "FORMATTED", iostat = i99)
    call setup(MOPAC_sec_det, nvecs, sec_det)  
 !
 !  Rotate so that the first translation vector is along the "x" axis,

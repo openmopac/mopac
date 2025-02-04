@@ -73,7 +73,7 @@ subroutine pinout (mode, l_use_disk)
       end if
     end if
     if (l_use_disk) then
-      open (unit=iden, file=density_fn, status="UNKNOWN", form="UNFORMATTED")
+      open (unit=iden, file=density_fn, form="UNFORMATTED")
     else
       open (unit=iden, status="SCRATCH", form="UNFORMATTED")
     end if

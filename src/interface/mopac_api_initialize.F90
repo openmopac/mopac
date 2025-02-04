@@ -141,7 +141,7 @@ contains
   output_fn = '/dev/null'
 #endif
     close(iw)
-    open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat=status)
+    open(unit=iw, file=output_fn, iostat=status)
     if (status /= 0) then
       call mopend("Failed to open NULL file in MOPAC_INITIALIZE")
       return

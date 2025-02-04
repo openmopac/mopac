@@ -291,7 +291,7 @@ subroutine Locate_TS
       call add_path(line)
       inquire(unit=ipdb, opened=opend)
       if (opend) close(ipdb)
-      open(unit=ipdb, file=trim(line), status='UNKNOWN', position='asis')
+      open(unit=ipdb, file=trim(line))
       call pdbout(ipdb)
       close (ipdb)
     end if
@@ -636,7 +636,7 @@ subroutine Locate_TS
     call add_path(line)
     inquire(unit=iarc, opened=opend)
     if (opend) close(iarc)
-    open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+    open(unit=iarc, file=trim(line))
     write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"First geometry (derived from data-set) after optimization subject to ", &
     &"GEO_REF constraint of ", density, " Kcal/mol/Angstrom^2 towards the reference geometry written to file:", &
     &"'"//trim(line)//"'"
@@ -655,7 +655,7 @@ subroutine Locate_TS
     call add_path(line)
     inquire(unit=iarc, opened=opend)
     if (opend) close(iarc)
-    open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+    open(unit=iarc, file=trim(line))
     write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"Second geometry (derived from reference geometry)"// &
     & "after optimization subject to ", "GEO_REF constraint of ", density, &
     " Kcal/mol/Angstrom^2 towards the data-set geometry written to file:", "'"//trim(line)//"'"
@@ -703,7 +703,7 @@ subroutine Locate_TS
     call add_path(line)
     inquire(unit=iarc, opened=opend)
     if (opend) close(iarc)
-    open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+    open(unit=iarc, file=trim(line))
      write(iw,'(/10x,a,/10x,a,f'//fmt//',a,/10x,a,/)')"Average of first and second geometries after optimization subject to ", &
     &"GEO_REF constraint of ", density, " Kcal/mol/Angstrom^2 towards the data-set geometry written to file:", &
     &"'"//trim(line)//"'"
@@ -1497,7 +1497,7 @@ subroutine Locate_TS
       call add_path(line)
       inquire(unit=iarc, opened=opend)
       if (opend) close(iarc)
-      open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+      open(unit=iarc, file=trim(line))
       write(iw,'(/10x,a,i2,a,/10x,a,/)')"Transition state on cycle",loop, " written to file:", &
       &"'"//trim(line)//"'"
       call geout (iarc)
@@ -1528,7 +1528,7 @@ subroutine Locate_TS
       call add_path(line)
       inquire(unit=iarc, opened=opend)
       if (opend) close(iarc)
-      open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+      open(unit=iarc, file=trim(line))
       do i = 1, nvar
         geo(loc(2,i),loc(1,i)) = xparam(i)
       end do

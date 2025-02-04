@@ -831,7 +831,7 @@
 !
       potwrt = index(keywrd,'POTWRT') /= 0
       if (potwrt) then
-        open(iesp, file=esp_fn, status='UNKNOWN', position='asis')
+        open(iesp, file=esp_fn)
         write (iesp, '(I5)') nesp
         do i = 1, nesp
           write (iesp, 420) esp_array(i), potpt(1,i)/a0, potpt(2,i)/a0, potpt(3,i)/a0
@@ -973,8 +973,7 @@
       ipx2 = 2*ipx
 !     IF THIS IS A RESTART RUN, READ IN RESTART INFO
       if (index(keywrd,'ESPRST') /= 0) then
-        open(unit=iesr, file=restart_fn, status='OLD', form=&
-          'UNFORMATTED', position='asis')
+        open(unit=iesr, file=restart_fn, status='OLD', form='UNFORMATTED')
         read (iesr) jstart, iesps
         if (jstart == isc*2) then
           close(iesr)
@@ -1105,7 +1104,7 @@
           es(iesp) = es(iesp) - cespm(indc(ic),indc(ic))*espi(ic,ic)
         end do
 !     WRITE OUT RESTART INFORMATION
-        open(unit=iesr, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', position='asis')
+        open(unit=iesr, file=restart_fn, form='UNFORMATTED')
         iesps = 0
         write (iesr) ic, iesps
         do i = 1, nesp
@@ -1544,8 +1543,7 @@
 !     READ IN RESTART INFORMATION IF THIS IS A RESTART
 !
       if (index(keywrd,'ESPRST') /= 0) then
-        open(unit=iesr, file=esr_fn, status='UNKNOWN', form=&
-          'UNFORMATTED', position='asis')
+        open(unit=iesr, file=esr_fn, form='UNFORMATTED')
         read (iesr) jstart, iesps
         if (jstart /= isc*2) then
           iesps = 0
@@ -1702,8 +1700,7 @@
 !     WRITE OUT RESTART INFORMATION EVERY NESP/10 POINTS
 !
         if (mod(iesp,nesp/idn) /= 0) cycle
-        open(unit=iesr, file=esr_fn, status='UNKNOWN', form=&
-          'UNFORMATTED', position='asis')
+        open(unit=iesr, file=esr_fn, form='UNFORMATTED')
         jstart = isc*2
         write (iesr) jstart, iesp
         do i = 1, nesp

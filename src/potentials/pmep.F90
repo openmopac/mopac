@@ -59,8 +59,7 @@
         if (moperr) return
 !                                              ***** CALCULATE MEP ONLY
         if (index(keywrd,' PMEP') /= 0) then
-          open(unit=imep, file=mep_fn, status='UNKNOWN', position=&
-            'asis')
+          open(unit=imep, file=mep_fn)
           call mepmap (coord)
           if (moperr) return
           go to 20

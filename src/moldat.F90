@@ -249,7 +249,7 @@ subroutine moldat(mode)
                     if (line(i:i) == "/" .or. line(i:i) == backslash) exit
                   end do
                 end if
-              open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+              open(unit=iarc, file=trim(line))
               rewind iarc
               call pdbout(iarc)
             end if

@@ -255,7 +255,7 @@ subroutine make_line (nvecs, fcells)
 !
   inquire(unit=iw_new, opened=opend) 
   if (opend) close (iw_new)
-98 open (unit = iw_new, file = trim(jobnam)//".txt", form = "FORMATTED", status = "UNKNOWN", iostat = i)
+98 open (unit = iw_new, file = trim(jobnam)//".txt", form = "FORMATTED", iostat = i)
   if (i /= 0) then
     write(iw,*)" File: '"//trim(jobnam)//".txt' cannot be opened."
     call sleep(1)

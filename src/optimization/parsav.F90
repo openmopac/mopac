@@ -54,8 +54,7 @@
 !*********************************************************************
       inquire(unit=ires, opened=opend)
       if (opend) close(unit=ires, status='KEEP')
-      open(unit=ires, file=restart_fn, status='UNKNOWN', form=&
-        'UNFORMATTED', position='asis', iostat = io_stat)
+      open(unit=ires, file=restart_fn, form='UNFORMATTED', iostat = io_stat)
       if (io_stat /= 0) then
           write(iw,*)" Restart file either does not exist or is not available for reading"
           call mopend ("Restart file either does not exist or is not available for reading")

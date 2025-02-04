@@ -1158,8 +1158,7 @@
         if (formatted)then
           open(unit=iden, file=density_fn)
         else
-          open(unit=iden, file=density_fn, status='UNKNOWN', &
-          form='UNFORMATTED', position='asis')
+          open(unit=iden, file=density_fn, form='UNFORMATTED')
         end if
         rewind iden
         if (mode == 0) then

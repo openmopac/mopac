@@ -436,7 +436,7 @@
       if (opend) then
         close (unit=ires, status="KEEP")
       end if
-      open (unit=ires, file=restart_fn, status="UNKNOWN", form="UNFORMATTED")
+      open (unit=ires, file=restart_fn, form="UNFORMATTED")
       rewind (ires)
       if (mode == 1) then
         call den_in_out (1)
