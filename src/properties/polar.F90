@@ -4120,7 +4120,7 @@
 !
       idaf = 17
       irecln = 1023
-      open(unit=idaf, file=pol_fn, status='UNKNOWN', access=&
+      open(unit=idaf, file=pol_fn, access=&
         'DIRECT', form='UNFORMATTED', recl=8*irecln)
 !
 !     ----- IS THIS A NEW OR OLD DAF FILE -----
