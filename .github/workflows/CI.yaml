@@ -108,12 +108,14 @@ jobs:
       - name: Configure MOPAC with CMake
         shell: cmd /C CALL {0}
         run: |
+          conda activate test
           echo %PATH%
           dir %CONDA%
           dir %CONDA%\condabin
           dir %CONDA%\Tools
           dir %CONDA%\bin
           dir %CONDA%\sbin
+          dir "C:\Program Files"
           cmake -Bbuild ^
             -GNinja ^
             -DCMAKE_MAKE_PROGRAM=%CONDA%\bin\ninja.exe ^
