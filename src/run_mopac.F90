@@ -788,7 +788,9 @@
       call l_control("GEO_DAT", len_trim("GEO_DAT"), -1)
       call l_control("GEO_REF", len_trim("GEO_REF"), -1)
       if (mozyme) then
+write(*,*) "before geochk"
         call geochk()
+write(*,*) "after geochk"
         if (moperr) then
           if ( index(keywrd," PDBOUT") /= 0) then
             archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"pdb"

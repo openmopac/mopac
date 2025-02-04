@@ -46,6 +46,7 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_LIBRARY_PATH=$CONDA/lib \
             -DPython3_EXECUTABLE=$CONDA/bin/python \
             -DCMAKE_Fortran_COMPILER=$CONDA/bin/flang-new
@@ -58,7 +59,7 @@ jobs:
         run: |
           cd build
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
-          ctest -V -j $NUM_CORES
+          ctest -VV -R lewis3
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
