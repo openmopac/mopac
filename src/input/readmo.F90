@@ -440,6 +440,7 @@
 write(*,*) "before getgeg"
           call getgeg (ir, labels, geo, lopt, na, nb, nc)
 write(*,*) "after getgeg"
+stop
           if (moperr) return
           if (xyz) then
             write (iw, '(A)') &
@@ -472,7 +473,6 @@ write(*,*) "before getgeo"
             call getgeo (ir, labels, geo, coord, lopt, na, nb, nc, intern)
 write(*,*) "after getgeo"
 call flush
-stop
             if (numcal == 1+numcal0 .and. natoms == 0) then
               i = index(keywrd, "GEO_DAT")
               if (i /= 0) then

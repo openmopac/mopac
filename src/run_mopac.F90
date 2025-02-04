@@ -281,7 +281,6 @@ call flush
       i = numcal
 write(*,*) "before readmo"
 call flush
-stop
       call readmo
 write(*,*) "after readmo"
 call flush
