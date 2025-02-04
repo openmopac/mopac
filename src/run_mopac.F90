@@ -152,7 +152,6 @@ call flush
 ! Read in all data; put it into a scratch file, "ir"
 !
       moperr = .false.
-stop
 write(*,*) "before getdat"
 call flush
       call getdat(ir,iw)
@@ -508,6 +507,7 @@ call flush
       call output_rama()
 write(*,*) "before geochk", maxtxt
 call flush
+stop
       if (maxtxt == 0 .and. index(keywrd, " RESIDUES") /= 0) then
         call geochk()
 write(*,*) "after geochk", maxtxt
