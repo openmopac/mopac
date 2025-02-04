@@ -169,8 +169,7 @@
       end if
       cputot = 0.d0
       if (restrt) then
-          open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', &
-          position='asis', iostat = io_stat)
+          open(unit=ires, file=restart_fn, form='UNFORMATTED', iostat = io_stat)
           if (io_stat /= 0) then
             call mopend ("Restart file either does not exist or is not available for reading")
             return
@@ -298,8 +297,7 @@
           if (tleft < 0.d0) then
             inquire(unit=ires, opened=opend)
             if (.not. opend) &
-              open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', &
-              position='asis', iostat = io_stat)
+              open(unit=ires, file=restart_fn, form='UNFORMATTED', iostat = io_stat)
 !
 !  Save everything that would be needed by GRID when the job is restarted.
 !
@@ -372,7 +370,7 @@
       if (opend) then
         close (unit=iarc, status="KEEP")
       end if
-      open (unit=iarc, file=archive_fn, status="UNKNOWN")
+      open (unit=iarc, file=archive_fn)
 10000 format (" ARCHIVE FILE FOR GRID CALCULATION"/"GRID OF HEATS" /)
       write (iarc, 10000)
       call wrttxt (iarc)
@@ -395,7 +393,7 @@
       end if
       write(iw  ,'('//num//'x,1000f'//formt//')') ((geo22 + (j - 1)*step2)*c2,j=1,npts2)
       write(iarc,'('//num//'x,1000f'//formt//')') ((geo22 + (j - 1)*step2)*c2,j=1,npts2)
-      open(unit=iump, file=ump_fn, status='UNKNOWN', position='asis')
+      open(unit=iump, file=ump_fn)
       do i = 1, npts1
         write (iw,   '(1000f'//formt//')') (geo11 + (i - 1)*step1)*c1, (surfac(j,i),j=1,npts2)
         write (iarc, '(1000f'//formt//')') (geo11 + (i - 1)*step1)*c1, (surfac(j,i),j=1,npts2)

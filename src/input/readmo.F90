@@ -148,7 +148,7 @@
         allocate(txtatm1(numat))
         txtatm1(:numat) = txtatm(:numat)
         keywrd = "  LOG "//trim(keywrd)
-        open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis')
+        open(unit=ilog, form='FORMATTED', file=log_fn)
         return
       end if
       if (.not. allocated(lopt)) allocate(lopt(3,maxatoms))
@@ -1385,8 +1385,7 @@
       if (i /= 0 .and. index(keywrd,' IRC') + index(keywrd,'FORCE') + index(keywrd," THERMO") == 0) then
         inquire (file=restart_fn, exist = exists)
         if (.not. exists) goto 1900
-        open (unit=ires, file=restart_fn, status="UNKNOWN", &
-                   & form="UNFORMATTED")
+        open (unit=ires, file=restart_fn, form="UNFORMATTED")
         rewind (ires)
                !
                !  Read in the geometric variables
@@ -1514,7 +1513,7 @@
       (index(keywrd," 0SCF") /= 0 .and. index(keywrd," OLDGEO") /= 0 .and. &
        index(keywrd," PDBOUT") /= 0)) then
         inquire(unit=ilog, opened=opend)
-        if (.not. opend) open(unit=ilog, form='FORMATTED', status='UNKNOWN', file=log_fn, position='asis')
+        if (.not. opend) open(unit=ilog, form='FORMATTED', file=log_fn)
         call wrttxt (ilog)
        end if
       if (index(keywrd," OLDGEO") /= 0) call delete_ref_key("OLDGEO", len_trim("OLDGEO"), ' ', 1)

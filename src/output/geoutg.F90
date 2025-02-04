@@ -108,7 +108,7 @@
           igeo(idepfn(i),locdep(i)) = locpar(i)
         end if
       end do
-      open(unit=iscr, status='SCRATCH', position='asis')
+      open(unit=iscr, status='SCRATCH')
       nopt = 0
       do i = 1, natoms
         do j = 1, 3

@@ -73,8 +73,7 @@ subroutine paths()
     CheckRestart: if (lef) then
         write (iw, '(''  ABOUT TO ENTER EF FROM PATH'')')
         if (index(keywrd,'RESTAR') /= 0) then
-            open(unit=ires, file=restart_fn, status='UNKNOWN', &
-                  & form='UNFORMATTED', position='asis')
+            open(unit=ires, file=restart_fn, form='UNFORMATTED')
             rewind ires
             read (ires, end=120, err=120) i, j
             if (norbs /= j .or. numat /= i) then

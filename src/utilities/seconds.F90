@@ -49,7 +49,7 @@
 !
         if (use_disk) then
           rewind iend
-          open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat = i99)
+          open(unit=iend, file=end_fn, iostat = i99)
           if (i99 /= 0) then
             write(iw,"(a)")" File '"//trim(end_fn)//"' is unavailable for use"
             write(iw,"(a)")" Correct the error and re-submit"
@@ -86,7 +86,7 @@
         shut = 0.D0
         inquire (file=end_fn, exist = exists)
         if (exists) then
-          open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i99)
+          open(unit=iend, file=end_fn, iostat=i99)
           if (i99 /= 0) then
             close(iend, err=99)   ! Do not stop job if shutdown is faulty
     99      return
@@ -134,7 +134,7 @@
         call sleep(5)
         inquire(unit=iw, opened=opend)
         if (opend) close (iw)
-        open(unit=iw, file=output_fn, status='UNKNOWN', position='asis')
+        open(unit=iw, file=output_fn)
         if (l < 20) goto 11
         write(0,"(a)") "Job abandoned due to output file being unavailable"
         call mopend("Job abandoned due to output file being unavailable")

@@ -101,7 +101,7 @@ subroutine direct(cycle_no)
     write (ifiles_8, "(i4, 2A)") cycle_no, &
     &"   Molecule                                   Time  Heat     "&
     &, "Dipole     I.P.     Geometry     Total"
-    if(numvar == -10) open (unit=55, file="CALCD.TXT", status="UNKNOWN",iostat = loop)
+    if(numvar == -10) open (unit=55, file="CALCD.TXT", iostat = loop)
     do loop = 1, nmols
       molnum = molnum + 1
       tleft = 10000.d0

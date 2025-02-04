@@ -71,8 +71,7 @@
       if (first) icalcn = numcal
       inquire(unit=ires, opened=opend)
       if (opend) close(unit=ires, status='KEEP')
-      open(unit=ires, file=restart_fn, status='UNKNOWN', form=&
-        'UNFORMATTED', position='asis')
+      open(unit=ires, file=restart_fn, form='UNFORMATTED')
       rewind ires
       if (mdfp(9) /= 0) then
         if (mdfp(9) == 1) then

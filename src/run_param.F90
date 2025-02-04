@@ -167,7 +167,7 @@
     else
       text = jobnam (:i) // ".out"
     end if
-  97  open (unit=ifiles_8, file=text, status="UNKNOWN", iostat=i)
+  97  open (unit=ifiles_8, file=text, iostat=i)
     if (i /= 0) then
       write(0,*)" Output file '"//trim(text)//"' is busy.  Correct the fault or kill this job"
       call sleep (10)
@@ -460,7 +460,7 @@
       i = Index (jobnam, " ") - 1
       inquire (unit=iarc, opened=opend)
       if (opend) close(iarc)
-      open (unit=iw, file=jobnam(:len_trim(jobnam))//".arc", status="UNKNOWN")
+      open (unit=iw, file=jobnam(:len_trim(jobnam))//".arc")
       rewind (iw)
     else
       open (unit=iw, status="SCRATCH", form="FORMATTED")

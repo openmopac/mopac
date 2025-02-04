@@ -66,7 +66,7 @@ subroutine psort (refers, mode, nmols, reftxt, allref, ifile, l, lp)
       end do
     end if
     if (exists) then
-      open (14, status="UNKNOWN", file=trim(iw), blank="ZERO")
+      open (14, file=trim(iw), blank="ZERO")
       rewind (14)
     end if
     m = l

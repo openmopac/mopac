@@ -1041,7 +1041,7 @@ subroutine geochk ()
         i = iarc
         inquire(unit=i, opened=opend)
         if (opend) close(i, status = 'keep', iostat=j)
-        open(unit=i, file=line, status='UNKNOWN', position='asis')
+        open(unit=i, file=line)
         rewind i
         call pdbout(i)
         close (i)
@@ -1050,7 +1050,7 @@ subroutine geochk ()
         line = archive_fn(:len_trim(archive_fn) - 3)//"arc"
         inquire(unit=iarc, opened=opend)
         if (opend) close(iarc, status = 'keep', iostat=i)
-        open(unit=iarc, file=line, status='UNKNOWN', position='asis')
+        open(unit=iarc, file=line)
         rewind iarc
         call geout (iarc)
       end if
@@ -1584,7 +1584,7 @@ subroutine geochk ()
       archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
       inquire(unit=iarc, opened=opend)
       if (opend) close(iarc, status = 'keep', iostat=i)
-      open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+      open(unit=iarc, file=archive_fn)
       rewind iarc
       if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
       call geout (iarc)
@@ -1594,7 +1594,7 @@ subroutine geochk ()
         i = iarc
         inquire(unit=i, opened=opend)
         if (opend) close(i)
-        open(unit=i, file=line, status='UNKNOWN', position='asis')
+        open(unit=i, file=line)
         rewind i
         coord(:,:numat) = geo(:,:numat)
         call update_txtatm(.true., .true.)
@@ -1644,7 +1644,7 @@ subroutine geochk ()
           archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
           inquire(unit=iarc, opened=opend)
           if (opend) close(iarc, status = 'keep', iostat=i)
-          open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+          open(unit=iarc, file=archive_fn)
           rewind iarc
           if (index(keywrd, " PDBOUT") /= 0) call delete_ref_key("PDBOUT", len_trim("PDBOUT"), ' ', 1)
           call geout (iarc)
@@ -1744,7 +1744,7 @@ subroutine geochk ()
       if (index(keywrd, "0SCF") + index(keywrd, " RESEQ") == 0 .or. &
          index(keywrd, " PDBOUT") == 0) then
         inquire(unit=iarc, opened=opend)
-        if ( .not. opend) open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+        if ( .not. opend) open(unit=iarc, file=archive_fn)
         rewind(iarc)
         call geout (iarc)
       end if

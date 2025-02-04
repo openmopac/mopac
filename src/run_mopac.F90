@@ -160,7 +160,7 @@
       filenm = trim(jobnam)
       lenf = i+1
       l = 0
- 11   open(unit=iw, file=output_fn, status='UNKNOWN', position='asis', iostat = i)
+ 11   open(unit=iw, file=output_fn, iostat = i)
       if (i /= 0) then
         l = l + 1
         write(0,"(i3,3a)")21 - l," File """,output_fn(:len_trim(output_fn)),""" is unavailable for use"
@@ -426,7 +426,7 @@
       if (.false.) then
         inquire(unit=iarc, opened=opend)
         if (opend) close (iarc)
-        open(unit=iarc, file=archive_fn(:len_trim(archive_fn) - 3)//"mop", status='UNKNOWN', position='asis')
+        open(unit=iarc, file=archive_fn(:len_trim(archive_fn) - 3)//"mop")
         rewind iarc
 !
 !   Remove unwanted keywords
@@ -469,7 +469,7 @@
             if (line(i:i) == "/" .or. line(i:i) == backslash) exit
           end do
         end if
-        open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+        open(unit=iarc, file=trim(line))
         rewind iarc
         if (index(keywrd,' 0SCF') /= 0 .and. index(keywrd, " MINI") /= 0 .and. nl_atoms > 0) then
           open(unit=l, file=xyz_fn)
@@ -633,7 +633,7 @@
           inquire(unit=iarc, opened=opend)
           if (opend) close(iarc)
           archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"arc"
-          open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+          open(unit=iarc, file=archive_fn)
           rewind iarc
           if (index(keywrd, " NOOPT") + index(keywrd," OPT") == 0)   then
             if (index(keywrd, " RESEQ") + index(keywrd, " ADD-H") + index(keywrd, " SITE=") /= 0 ) then
@@ -660,7 +660,7 @@
                   if (line(i:i) == "/" .or. line(i:i) == backslash) exit
                 end do
               end if
-            open(unit=iarc, file=trim(line), status='UNKNOWN', position='asis')
+            open(unit=iarc, file=trim(line))
             rewind iarc
             call pdbout(iarc)
           end if
@@ -672,7 +672,7 @@
           end if
           inquire(unit=iarc, opened=opend)
           if (opend) close (iarc)
-          open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+          open(unit=iarc, file=archive_fn)
           rewind iarc
           if (pdb_label) then
 !
@@ -794,7 +794,7 @@
             archive_fn = archive_fn(:len_trim(archive_fn) - 3)//"pdb"
             inquire(unit=iarc, opened=opend)
             if (opend) close(iarc)
-            open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis')
+            open(unit=iarc, file=archive_fn)
             rewind iarc
             call pdbout(iarc)
           end if
@@ -997,7 +997,7 @@
       if (allocated(react)) deallocate(react)
       inquire (file = end_fn, exist = exists)
       if (exists) then
-        open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i)
+        open(unit=iend, file=end_fn, iostat=i)
         close(iend, status = 'delete', iostat=i)
       end if
         itemp_1 = ncomments
@@ -1042,7 +1042,7 @@
 !
       inquire (file = end_fn, exist = exists)
       if (exists) then
-        open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i)
+        open(unit=iend, file=end_fn, iostat=i)
         close(iend, status = 'delete', iostat=i)
       end if
       inquire(unit=ir, opened=opend)
@@ -1064,7 +1064,7 @@ subroutine special
   use molkst_C, only : jobnam, refkey, line
   implicit none
   integer :: iprt = 33, i, j, k, len_key
-  open(unit=iprt, file=jobnam(:len_trim(jobnam) - 0)//"_(PM6).arc", status='UNKNOWN', position='asis', iostat = i)
+  open(unit=iprt, file=jobnam(:len_trim(jobnam) - 0)//"_(PM6).arc", iostat = i)
   do i = 1, 6
     if (index(refkey(i), " NULL") /= 0) exit
     line = refkey(i)

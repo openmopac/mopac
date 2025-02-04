@@ -591,7 +591,7 @@
 !           IPOW(9)= 0 FOR RESTORE, 1 or 2 FOR DUMP (2: silent)
 !
 !*********************************************************************
-      open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', position='asis')
+      open(unit=ires, file=restart_fn, form='UNFORMATTED')
       rewind ires
       if (ipow(9) /= 0) then
         if (ipow(9) == 1) then

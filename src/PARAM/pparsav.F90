@@ -43,7 +43,7 @@
       else
       line = jobnam (:k) // "." // "rp"
       end if
-      open (unit=iext, form="FORMATTED", status="UNKNOWN", file=line)
+      open (unit=iext, form="FORMATTED", file=line)
       rewind (iext)
       write(iext,"('*',/,2a,/,'*')")'* Parameter    Element     New value   ',&
       & '    Change   '

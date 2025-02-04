@@ -65,8 +65,7 @@
           return
         end if
       end if
-      open(unit=ires, file=restart_fn, status='UNKNOWN', &
-      form='UNFORMATTED', iostat=i99, position='asis')
+      open(unit=ires, file=restart_fn, form='UNFORMATTED', iostat=i99)
       if (i99 /= 0) then
         if (j /= 0) then
           call mopend ('Fatal error in trying to open RESTART file')
@@ -76,8 +75,7 @@
 !   A restart file exists, but cannot be mounted.  Delete it.
 !   If it can't be deleted, carry on regardless.
 !
-        open(unit=ires, file=restart_fn, status='OLD', iostat=i99, &
-          position='asis')
+        open(unit=ires, file=restart_fn, status='OLD', iostat=i99)
         close(ires, status='DELETE', iostat=i99)
         go to 10
       end if

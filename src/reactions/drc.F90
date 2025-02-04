@@ -87,7 +87,7 @@
       errfn = 0.d0
       inquire(unit=iscr, opened=opend)
       if (opend) close(unit=iscr)
-      open(unit=iscr, status='SCRATCH', position='asis')
+      open(unit=iscr, status='SCRATCH')
       if (index(keywrd,' PREC') /= 0) then
         accu = 0.25d0
         cnvg = 0.000001d0
@@ -252,8 +252,7 @@
 !
         inquire(unit=ires, opened=opend)
         if (opend) close(unit=ires, status='KEEP')
-        open(unit=ires, file=restart_fn, status='UNKNOWN', &
-          form='UNFORMATTED', position='asis', iostat = io_stat)
+        open(unit=ires, file=restart_fn, form='UNFORMATTED', iostat = io_stat)
         if (io_stat /= 0) then
           write(iw,*)" Restart file either does not exist or is not available for reading"
           call mopend ("Restart file either does not exist or is not available for reading")
@@ -853,7 +852,7 @@
         if (tleft < 3*tcycle) then
           inquire(unit=ires, opened=opend)
           if (opend) close(unit=ires, status='DELETE')
-          open(unit=ires, file=restart_fn, status='UNKNOWN', form='UNFORMATTED', position='asis')
+          open(unit=ires, file=restart_fn, form='UNFORMATTED')
           rewind ires
           write (ires) 1,1, (xparam(i),i=1,nvar)
           write (ires) (velo0(i),i=1,nvar)

@@ -648,7 +648,7 @@ subroutine iter_for_MOZYME (ee)
       if (opend) then
         rewind (iend)
       else
-        open (unit=iend, file=end_fn, status="UNKNOWN")
+        open (unit=iend, file=end_fn)
       end if
       write (iend, "(A)", err=1000) xchar
       go to 1010

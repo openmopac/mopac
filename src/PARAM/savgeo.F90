@@ -73,7 +73,7 @@ subroutine savgeo (loop, geo, na, nb, nc, xparam, loc)
 !          stop
 !        end if
         call add_path(name)
-        open (iw, status="UNKNOWN", file=name, blank="ZERO", err=1000)
+        open (iw, file=name, blank="ZERO", err=1000)
         write (iw, "(A)", err=1000) " Test"
         rewind (iw)
         lsav = .true.

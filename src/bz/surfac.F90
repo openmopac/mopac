@@ -188,8 +188,7 @@ subroutine surfac (nvecs, fcells)
     top_l(1) = ca*cb*(-size) - sa*( size) + px
     top_l(2) = sa*cb*(-size) + ca*( size) + py
     top_l(3) =   -sb*(-size)              + pz
-    open (unit = 17, file = jobnam(:i)//".bnd", status = "UNKNOWN", &
-         & form = "FORMATTED", iostat = i99)
+    open (unit = 17, file = jobnam(:i)//".bnd", form = "FORMATTED", iostat = i99)
     write(17,"(2a)", iostat = i99)" Brillouin Zone Cross Sections for system: ",jobnam(1:i)
     if (i99 == 0) then
       if( phonon ) then

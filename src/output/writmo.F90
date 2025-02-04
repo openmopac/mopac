@@ -740,7 +740,7 @@
         end if
         if (mers(1) /= 0 .and. .not. mozyme .and. index(keywrd, " BZ") /= 0) then
           bcc = index(keywrd,' BCC') /= 0
-          open(unit=ibrz, file=brillouin_fn, status='UNKNOWN')
+          open(unit=ibrz, file=brillouin_fn)
           write (ibrz,*) norbs, (max(mers(i),1), i = 1,3), bcc
           write (ibrz,*) (f(i),i=1,(norbs*(norbs + 1))/2)
           write (ibrz,*) tvec, id, numat, ((coord(j,i),j=1,3),i=1,numat)
@@ -957,7 +957,7 @@
         inquire(unit=iarc, opened=opend)
         if ( .not. opend) then
           if (namfil == '**NULL**') namfil = archive_fn
-          open(unit=iarc, file=archive_fn, status='UNKNOWN', position='asis', iostat = i)
+          open(unit=iarc, file=archive_fn, iostat = i)
           if (i /= 0) then
             write(iw,*) "Could not open archive file, run continuing."
             return
@@ -971,7 +971,7 @@
             if (line(i:i) == "/" .or. line(i:i) == backslash) exit
           end do
           line = trim(line)//"pdb"
-          open(unit=31, file=trim(line), status='UNKNOWN', position='asis')
+          open(unit=31, file=trim(line))
           l_normal_html = .true.
           call l_control("Write_Escf", len("Write_Escf"), 1)
           call pdbout(31)
@@ -1355,7 +1355,7 @@
   double precision :: sum
   integer :: i, j, k, i1, i2, ips, ix
   double precision :: fcon, dqam1dft, dd, enew
-    open (unit=iwc, file=cosmo_fn, status='unknown')
+    open (unit=iwc, file=cosmo_fn)
     if (index(keywrd,'COSCCH') > 0) then
       fcon=a0*ev
 10    read(ir,'(a)',err=30,end=30) line

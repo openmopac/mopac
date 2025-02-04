@@ -115,8 +115,7 @@
       else
         write (iw, '(''  ABOUT TO ENTER EF FROM PATHK'')')
         if (index(keywrd,'RESTAR') /= 0) then
-          open(unit=ires, file=restart_fn, status='UNKNOWN', form=&
-            'UNFORMATTED', position='asis')
+          open(unit=ires, file=restart_fn, form='UNFORMATTED')
           rewind ires
           read (ires, end=60, err=60) i, l
           if (norbs /= l .or. numat /= i) then
@@ -258,8 +257,7 @@
       '(/16X,''POINTS ON REACTION PATH '',/16X,''AND CORRESPONDING HEATS'',2/)')
       inquire(unit=iarc, opened=opend)
       if (opend) close(unit=iarc, status='KEEP')
-      open(unit=iarc, file=archive_fn, status='UNKNOWN', position=&
-        'asis')
+      open(unit=iarc, file=archive_fn)
       write (iarc, 30)
       call wrttxt (iarc)
    30 format(' ARCHIVE FILE FOR PATH CALCULATION'/,&

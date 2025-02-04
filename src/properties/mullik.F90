@@ -89,9 +89,9 @@
           close (unit=igpt, iostat=i)
           if (graph_formatted) then
             open(unit=igpt, file=gpt_fn(:len_trim(gpt_fn) - 3)//"mgf", form='FORMATTED', &
-              status="UNKNOWN", iostat = i)
+              iostat = i)
           else
-            open(unit=igpt, file=gpt_fn, form='UNFORMATTED', status="UNKNOWN", iostat = i)
+            open(unit=igpt, file=gpt_fn, form='UNFORMATTED', iostat = i)
           end if
           if (i /= 0) then
             write(iw,*)" File '"//gpt_fn(:len_trim(gpt_fn))//"' is unavailable for use"

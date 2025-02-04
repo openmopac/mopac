@@ -272,7 +272,7 @@
     write (i, '(//10x, a, /)')" A new file called '"//trim(file_name)//"' will be written"
     call add_path(file_name)
     j = 0
-97  open (unit=param_out, file=trim(file_name), status="UNKNOWN", iostat=i)
+97  open (unit=param_out, file=trim(file_name), iostat=i)
     if ( i /= 0 .and. j < 10)then
 !
 !  The file can exist, but is not currently accessible

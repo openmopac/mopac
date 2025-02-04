@@ -25,7 +25,7 @@
       integer :: i
       inquire (file = end_fn, exist = exists)
       if (exists) then
-        open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i)
+        open(unit=iend, file=end_fn, iostat=i)
         if (i == -100) return
         close(iend, status = 'delete', iostat=i)
         if (i == -100) return
@@ -33,7 +33,7 @@
       end_fn = end_fn(:len_trim(end_fn) - 3)//"res"
       inquire (file = end_fn, exist = exists)
       if (exists) then
-        open(unit=iend, file=end_fn, status='UNKNOWN', position='asis', iostat=i)
+        open(unit=iend, file=end_fn, iostat=i)
         if (i == -100) return
         close(iend, status = 'delete', iostat=i)
         if (i == -100) return
