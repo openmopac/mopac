@@ -318,6 +318,7 @@ if(natoms > 5578) stop
 if(natoms > 5578) write(*,*) "label:", txtatm(natoms + 1)
 if(natoms > 5578) stop
 !   CLEAN THE INPUT DATA
+write(*,*) "line length", ltl
       call upcase (line, ltl)
       if (index(line, " NEXT") /= 0) goto 120
 !
@@ -631,7 +632,8 @@ if(natoms > 5578) stop
         natoms = -1
         return
       end if
-!write(*,*) "loop iter", natoms
+write(*,*) "loop iter", natoms
+if(natoms > 5000) stop
 !if(natoms > 5578) stop
       go to 20
 !***********************************************************************
