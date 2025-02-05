@@ -465,8 +465,8 @@ write(*,*) "before main loop of getgeo"
 ! ALL O.K.
 !
  70   continue
-if(natoms > 5578) write(*,*) "preprocessing done for", natoms
-if(natoms > 5578) stop
+!if(natoms > 5578) write(*,*) "preprocessing done for", natoms
+!if(natoms > 5578) stop
       natoms = natoms + 1
       nb(natoms) = 0
       nc(natoms) = 0
