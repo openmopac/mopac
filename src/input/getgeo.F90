@@ -308,6 +308,8 @@ write(*,*) "before main loop of getgeo"
       else
         txtatm(natoms + 1) = ' '
       end if
+if(natoms > 5578) write(*,*) "label:", txtatm(natoms + 1)
+if(natoms > 5578) stop
 !   CLEAN THE INPUT DATA
       call upcase (line, ltl)
       if (index(line, " NEXT") /= 0) goto 120
