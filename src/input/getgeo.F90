@@ -156,7 +156,6 @@
       end if
       ii = 0
 write(*,*) "before main loop of getgeo"
-stop
    20 continue
       read (iread, '(A241)', iostat=ios, end=120, err=210) line
       if (line == '$coord') go to 20
@@ -622,6 +621,8 @@ stop
         return
       end if
       go to 20
+write(*,*) "end of loop"
+stop
 !***********************************************************************
 ! ALL DATA READ IN, CLEAN UP AND RETURN
 !***********************************************************************
