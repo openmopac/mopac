@@ -66,13 +66,11 @@ jobs:
           ../mopac test_Lewis_for_Proteins4.mop
 #          ctest -VV -R lewis
 
-      - name: Test MOPAC with CTest
+      - name: Run Valgrind on MOPAC API tester
         run: |
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
-          cd build
-          cd tests
-          cp ../../tests/test_Lewis_for_Proteins5.mop .
-          ../mopac test_Lewis_for_Proteins5.mop
+          sudo apt update && sudo apt install -y valgrind
+          cd build/tests
+          valgrind -s --track-origins=yes --leak-check=yes ../mopac test_Lewis_for_Proteins4.mop
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
