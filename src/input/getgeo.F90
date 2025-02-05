@@ -157,11 +157,11 @@
       ii = 0
 write(*,*) "before main loop of getgeo"
    20 continue
-if(natoms > 5578) write(*,*) "before line read:", ios, line
-if(natoms > 5578) stop
+!if(natoms > 5578) write(*,*) "before line read:", ios, line
+!if(natoms > 5578) stop
       read (iread, '(A241)', iostat=ios, end=120, err=210) line
-if(natoms > 5578) write(*,*) "after line read:", ios, line
-if(natoms > 5578) stop
+!if(natoms > 5578) write(*,*) "after line read:", ios, line
+!if(natoms > 5578) stop
       if (line == '$coord') go to 20
       if (line == '$end') go to 20
       if (line(1:1) == '*') go to 20
@@ -254,8 +254,8 @@ if(natoms > 5578) stop
 !
 !   SEE IF TEXT IS ASSOCIATED WITH THIS ELEMENT
 !
-if(natoms > 5578) write(*,*) "before label:", line
-if(natoms > 5578) stop
+!if(natoms > 5578) write(*,*) "before label:", line
+!if(natoms > 5578) stop
       i = index(line,'(')
       if (i /= 0) then
 !
@@ -314,10 +314,9 @@ if(natoms > 5578) stop
       else
         txtatm(natoms + 1) = ' '
       end if
-if(natoms > 5578) write(*,*) "label:", txtatm(natoms + 1)
-if(natoms > 5578) stop
+!if(natoms > 5578) write(*,*) "label:", txtatm(natoms + 1)
+!if(natoms > 5578) stop
 !   CLEAN THE INPUT DATA
-write(*,*) "line length", ltl
       call upcase (line, ltl)
       if (index(line, " NEXT") /= 0) goto 120
 !
@@ -632,7 +631,6 @@ if(natoms > 5578) stop
         return
       end if
 write(*,*) "loop iter", natoms
-if(natoms > 5000) stop
 !if(natoms > 5578) stop
       go to 20
 !***********************************************************************

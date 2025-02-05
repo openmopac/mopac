@@ -71,7 +71,7 @@ jobs:
           sudo apt update && sudo apt install -y valgrind
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           cd build/tests
-          valgrind -s --track-origins=yes --leak-check=yes ../mopac test_Lewis_for_Proteins4.mop
+          valgrind -s --main-stacksize=167772160 --track-origins=yes --leak-check=yes ../mopac test_Lewis_for_Proteins4.mop
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
