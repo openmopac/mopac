@@ -63,8 +63,15 @@ jobs:
           cd build
           cd tests
           cp ../../tests/test_Lewis_for_Proteins4.mop .
-          cp ../../tests/test_Lewis_for_Proteins5.mop .
           ../mopac test_Lewis_for_Proteins4.mop
+#          ctest -VV -R lewis
+
+      - name: working?
+        run: |
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
+          cd build
+          cd tests
+          cp ../../tests/test_Lewis_for_Proteins5.mop .
           ../mopac test_Lewis_for_Proteins5.mop
 #          ctest -VV -R lewis
 
