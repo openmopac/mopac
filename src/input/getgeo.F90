@@ -250,6 +250,8 @@ write(*,*) "before main loop of getgeo"
 !
 !   SEE IF TEXT IS ASSOCIATED WITH THIS ELEMENT
 !
+if(natoms > 5578) write(*,*) "before label:", line
+if(natoms > 5578) stop
       i = index(line,'(')
       if (i /= 0) then
 !
