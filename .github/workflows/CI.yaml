@@ -65,8 +65,9 @@ jobs:
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           cd build
           cd tests
-          cp ../../tests/test_Lewis_for_Proteins4.mop .
-          ../mopac test_Lewis_for_Proteins4.mop
+          cp ../../tests/test_Lewis_for_Proteins.mop .
+          ../mopac test_Lewis_for_Proteins.mop
+          tail -1000 test_Lewis_for_Proteins.out
 #          ctest -VV -R lewis
 
       - name: Run Valgrind on MOPAC API tester
