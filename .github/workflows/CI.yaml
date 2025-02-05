@@ -59,6 +59,7 @@ jobs:
       - name: Test MOPAC with CTest
         continue-on-error: true
         run: |
+          ulimit -s 167772160
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           cd build
           cd tests
