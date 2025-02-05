@@ -158,6 +158,8 @@
 write(*,*) "before main loop of getgeo"
    20 continue
       read (iread, '(A241)', iostat=ios, end=120, err=210) line
+if(natoms > 5578) write(*,*) "after line read:", ios, line
+if(natoms > 5578) stop
       if (line == '$coord') go to 20
       if (line == '$end') go to 20
       if (line(1:1) == '*') go to 20
