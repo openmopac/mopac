@@ -620,6 +620,8 @@ write(*,*) "before main loop of getgeo"
         natoms = -1
         return
       end if
+write(*,*) "loop iter", natoms
+if(natoms > 4500) stop
       go to 20
 !***********************************************************************
 ! ALL DATA READ IN, CLEAN UP AND RETURN
