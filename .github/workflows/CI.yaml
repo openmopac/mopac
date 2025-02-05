@@ -57,7 +57,6 @@ jobs:
           cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
-        continue-on-error: true
         run: |
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           cd build
