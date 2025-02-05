@@ -18,7 +18,7 @@ MODULE MDI_IMPLEMENTATION
   USE, INTRINSIC :: ISO_C_binding
 
   ! MDI library dependencies
-  use MDI, only : MDI_Init, MDI_Accept_communicator, MDI_Send, &
+  use MDI_wrapper, only : MDI_Init, MDI_Accept_communicator, MDI_Send, &
     MDI_Recv_command, MDI_Recv, MDI_COMMAND_LENGTH, MDI_LABEL_LENGTH, &
     MDI_DOUBLE, MDI_CHAR, MDI_INT, MDI_Register_command, MDI_Register_node, &
     MDI_Conversion_factor, MDI_Get_role, MDI_ENGINE, MDI_Plugin_get_argc, &
