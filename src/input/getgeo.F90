@@ -620,14 +620,13 @@ write(*,*) "before main loop of getgeo"
         natoms = -1
         return
       end if
-write(*,*) "loop iter", natoms
-if(natoms > 6000) stop
       go to 20
-write(*,*) "end of loop"
 !***********************************************************************
 ! ALL DATA READ IN, CLEAN UP AND RETURN
 !***********************************************************************
   120 continue
+write(*,*) "end of loop"
+stop
       if (natoms == 0) then
         if (numcal == 1+numcal0) call mopend (' Error detected while reading geometry')
         return
