@@ -620,9 +620,10 @@ write(*,*) "before main loop of getgeo"
         natoms = -1
         return
       end if
+write(*,*) "loop iter", natoms
+stop
       go to 20
 write(*,*) "end of loop"
-stop
 !***********************************************************************
 ! ALL DATA READ IN, CLEAN UP AND RETURN
 !***********************************************************************
