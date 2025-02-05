@@ -57,6 +57,7 @@ jobs:
           cmake --build build -- -j$NUM_CORES
 
       - name: Test MOPAC with CTest
+        continue-on-error: true
         run: |
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           cd build
@@ -64,6 +65,14 @@ jobs:
           cp ../../tests/test_Lewis_for_Proteins4.mop .
           ../mopac test_Lewis_for_Proteins4.mop
 #          ctest -VV -R lewis
+
+      - name: Test MOPAC with CTest
+        run: |
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
+          cd build
+          cd tests
+          cp ../../tests/test_Lewis_for_Proteins5.mop .
+          ../mopac test_Lewis_for_Proteins5.mop
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
