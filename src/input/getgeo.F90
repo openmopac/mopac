@@ -621,7 +621,7 @@ write(*,*) "before main loop of getgeo"
         return
       end if
 write(*,*) "loop iter", natoms
-if(natoms > 5500) stop
+if(natoms > 5750) stop
       go to 20
 !***********************************************************************
 ! ALL DATA READ IN, CLEAN UP AND RETURN
