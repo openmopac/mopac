@@ -26,7 +26,7 @@ submodule (mopac_api) mopac_api_createdestroy
     end function malloc
     subroutine free(ptr) bind(c)
       use iso_c_binding
-      type(c_ptr) :: ptr
+      type(c_ptr), value :: ptr
     end subroutine free
   end interface
 #endif
@@ -127,7 +127,9 @@ contains
   ! through a C pointer in a C-bound interface and then reassigned to a Fortran pointer because hidden
   ! information about memory allocation is contained within the original Fortran pointer and is not
   ! retained by the C pointer. To get around this, MOPAC's API will support both C and Fortran memory
-  ! managers through the presence/absence of the MOPAC_API_MALLOC preprocessor variable.
+  ! managers through the presence/absence of the MOPAC_API_CC and MOPAC_API_IFORT preprocessor variables.
+  ! The MOPAC_API_IFORT variable uses ifort's custom malloc/free intrinsics, whereas MOPAC_API_CC uses
+  ! malloc/free from the C standard library.
 
   ! allocate memory (C or Fortran memory manager, depending on compiler)
   module function create_int(size)
