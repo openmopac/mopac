@@ -17,6 +17,17 @@
 submodule (mopac_api) mopac_api_createdestroy
   implicit none
 
+#ifdef MOPAC_API_MALLOC_C
+  interface
+    type(C_PTR) function malloc(num) BIND(C)
+      type(C_SIZE_T), VALUE :: num
+    end function malloc
+    subroutine free(ptr) BIND(C)
+      type(C_PTR), VALUE :: ptr
+    end subroutine free
+  end interface
+#endif
+
 contains
 
   ! allocate memory for mopac_state
@@ -119,14 +130,6 @@ contains
   module function create_int(size)
     integer, intent(in) :: size
     type(c_ptr) :: create_int
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer(c_int), pointer :: ptr(:)
     integer :: status
@@ -147,14 +150,6 @@ contains
     integer, intent(in) :: size
     integer, intent(in) :: size2
     type(c_ptr) :: create_int2
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer(c_int), pointer :: ptr(:,:)
     integer :: status
@@ -174,14 +169,6 @@ contains
   module function create_real(size)
     integer, intent(in) :: size
     type(c_ptr) :: create_real
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     real(c_double), pointer :: ptr(:)
     integer :: status
@@ -205,14 +192,6 @@ contains
     integer, intent(in) :: size(1)
     type(c_ptr) :: create_copy_int
     integer(c_int), pointer :: ptr(:)
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer :: status
     allocate(ptr(size(1)), stat=status)
@@ -235,14 +214,6 @@ contains
     integer, intent(in) :: size(2)
     type(c_ptr) :: create_copy_int2
     integer(c_int), pointer :: ptr(:,:)
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer :: status
     allocate(ptr(size(1),size(2)), stat=status)
@@ -265,14 +236,6 @@ contains
     integer, intent(in) :: size(1)
     type(c_ptr) :: create_copy_real
     real(c_double), pointer :: ptr(:)
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer :: status
     allocate(ptr(size(1)), stat=status)
@@ -296,14 +259,6 @@ contains
     type(c_ptr) :: create_copy_char
     character(kind=c_char), pointer :: ptr(:)
     integer :: i
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer :: status
     allocate(ptr(size(1)), stat=status)
@@ -329,14 +284,6 @@ contains
     integer, intent(in) :: size(1)
     type(c_ptr) :: create_copy_ptr
     type(c_ptr), pointer :: ptr(:)
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      type(C_PTR) function malloc(num) BIND(C)
-        use iso_c_binding
-        type(C_SIZE_T), VALUE :: num
-      end function malloc
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer :: status
     allocate(ptr(size(1)), stat=status)
@@ -358,14 +305,6 @@ contains
   ! deallocate memory (C or Fortran memory manager, depending on compiler)
   module subroutine destroy_int(copy)
     type(c_ptr), intent(in) :: copy
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      subroutine free(ptr) BIND(C)
-        use iso_c_binding
-        type(C_PTR), VALUE :: ptr
-      end subroutine free
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     integer(c_int), pointer :: ptr
     integer :: status
@@ -385,14 +324,6 @@ contains
   end subroutine destroy_int
   module subroutine destroy_real(copy)
     type(c_ptr), intent(in) :: copy
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      subroutine free(ptr) BIND(C)
-        use iso_c_binding
-        type(C_PTR), VALUE :: ptr
-      end subroutine free
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     real(c_double), pointer :: ptr
     integer :: status
@@ -412,14 +343,6 @@ contains
   end subroutine destroy_real
   module subroutine destroy_char(copy)
     type(c_ptr), intent(in) :: copy
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      subroutine free(ptr) BIND(C)
-        use iso_c_binding
-        type(C_PTR), VALUE :: ptr
-      end subroutine free
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     character(kind=c_char), pointer :: ptr
     integer :: status
@@ -439,14 +362,6 @@ contains
   end subroutine destroy_char
   module subroutine destroy_ptr(copy)
     type(c_ptr), intent(in) :: copy
-#ifdef MOPAC_API_MALLOC_C
-    interface
-      subroutine free(ptr) BIND(C)
-        use iso_c_binding
-        type(C_PTR), VALUE :: ptr
-      end subroutine free
-    end interface
-#endif
 #ifndef MOPAC_API_MALLOC
     type(c_ptr), pointer :: ptr
     integer :: status
