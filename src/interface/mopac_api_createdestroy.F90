@@ -122,6 +122,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -149,6 +150,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -175,6 +177,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -205,6 +208,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -234,6 +238,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -263,6 +268,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -293,6 +299,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -325,6 +332,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       type(C_PTR) function malloc(num) BIND(C)
+        use iso_c_binding
         type(C_SIZE_T), VALUE :: num
       end function malloc
     end interface
@@ -353,6 +361,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       subroutine free(ptr) BIND(C)
+        use iso_c_binding
         type(C_PTR), VALUE :: ptr
       end subroutine free
     end interface
@@ -379,6 +388,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       subroutine free(ptr) BIND(C)
+        use iso_c_binding
         type(C_PTR), VALUE :: ptr
       end subroutine free
     end interface
@@ -405,6 +415,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       subroutine free(ptr) BIND(C)
+        use iso_c_binding
         type(C_PTR), VALUE :: ptr
       end subroutine free
     end interface
@@ -431,6 +442,7 @@ contains
 #ifdef MOPAC_API_MALLOC_C
     interface
       subroutine free(ptr) BIND(C)
+        use iso_c_binding
         type(C_PTR), VALUE :: ptr
       end subroutine free
     end interface
