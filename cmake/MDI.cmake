@@ -3,8 +3,8 @@
 # support cross-compilation and ninja-build
 include(ExternalProject)
 ExternalProject_Add(mdi_build
-  URL     "https://github.com/MolSSI-MDI/MDI_Library/archive/v1.4.26.tar.gz"
-  URL_MD5 "3124bb85259471e2a53a891f04bf697a"
+  URL     "https://github.com/MolSSI-MDI/MDI_Library/archive/v1.4.35.tar.gz"
+  URL_MD5 "a053911e29c71dd66dc7be9418c3d409"
   CMAKE_ARGS
   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
@@ -13,8 +13,8 @@ ExternalProject_Add(mdi_build
   -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
   -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
   -Dlanguage=Fortran
-  -Dlibtype=SHARED
-  -Dmpi=OFF
+  -DBUILD_SHARED_LIBS=ON
+  -DMDI_USE_MPI=OFF
   UPDATE_COMMAND ""
   INSTALL_COMMAND ""
   BUILD_BYPRODUCTS "<BINARY_DIR>/MDI_Library/libmdi${CMAKE_SHARED_LIBRARY_SUFFIX}"

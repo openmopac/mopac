@@ -70,6 +70,10 @@ CONTAINS
     CHARACTER(len=240) :: input_file
     PROCEDURE(execute_command), POINTER :: generic_command => null()
     TYPE(C_PTR)                         :: class_obj
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     MDI_Plugin_open_mopac = 0
     CALL MDI_Set_plugin_state(plugin_state, ierr)
     generic_command => execute_command
@@ -92,6 +96,10 @@ CONTAINS
 
   FUNCTION MDI_Plugin_close_mopac() bind ( C, name="MDI_Plugin_close_mopac" )
     INTEGER :: MDI_Plugin_close_mopac
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     MDI_Plugin_close_mopac = 0
     close_mdi = .true.
     CALL run_mopac
@@ -108,6 +116,10 @@ CONTAINS
     CHARACTER(len=240) :: input_file
     PROCEDURE(execute_command), POINTER :: generic_command => null()
     TYPE(C_PTR)                         :: class_obj
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     MDI_Plugin_launch_mopac = 0
     CALL MDI_Set_plugin_state(plugin_state, ierr)
     generic_command => execute_command
