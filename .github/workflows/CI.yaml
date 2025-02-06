@@ -4,28 +4,16 @@ on:
   push:
     branches:    
       - main
+      - api-c-malloc-test
   pull_request:
     branches:
       - main
   schedule:
     - cron: "0 0 * * 0"
 
-# Download links for the Intel MKL library & Fortran compiler from:
-# https://www.intel.com/content/www/us/en/developer/articles/tool/oneapi-standalone-components.html
-# (while MKL is available through several package managers, the compiler is not and we are grouping these dependencies for simplicity)
-env:
-  IFORT_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/0d65c8d4-f245-4756-80c4-6712b43cf835/l_fortran-compiler_p_2023.2.1.8_offline.sh
-  MKL_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/adb8a02c-4ee7-4882-97d6-a524150da358/l_onemkl_p_2023.2.0.49497_offline.sh
-  IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/2fbce033-15f4-4e13-8d14-f5a2016541ce/m_fortran-compiler-classic_p_2023.2.0.49001_offline.dmg
-  MKL_MAC_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/9399bece-76fb-4b1c-b15c-8ac295448513/m_onemkl_p_2023.2.0.49501_offline.dmg
-  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/1720594b-b12c-4aca-b7fb-a7d317bac5cb/w_fortran-compiler_p_2023.2.1.7_offline.exe
-  MKL_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/2b9cdf66-5291-418e-a7e8-f90515cc9098/w_onemkl_p_2023.2.0.49500_offline.exe
-  IFORT_WINDOWS_VERSION: 2023.2.1
-  MKL_WINDOWS_VERSION: 2023.2.0
-
 jobs:
-  linux-static:
-    runs-on: ubuntu-22.04
+  linux-flang:
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
@@ -37,32 +25,43 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: '3.x'
+          auto-update-conda: true
+          python-version: '3.11'
+          channels: conda-forge
+      - name: Conda info
+        shell: bash -el {0}
+        run: conda info
+      - name: Conda list
+        shell: pwsh
+        run: conda list
 
-      - name: Install dependencies with PyPI
-        run: pip install numpy
+      - name: Install dependencies with conda-forge
+        run: |
+          conda install numpy
+          conda install flang
+          conda install openblas
 
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DTHREADS_KEYWORD=OFF \
-            -DSTATIC_BUILD=ON
+            -DCMAKE_LIBRARY_PATH=$CONDA/lib \
+            -DPython3_EXECUTABLE=$CONDA/bin/python \
+            -DCMAKE_Fortran_COMPILER=$CONDA/bin/flang-new \
+            -DCMAKE_Fortran_FLAGS="-O0 -g" \
+            -DENABLE_API_MALLOC=ON
 
       - name: Build MOPAC with Make
         run: |
           cmake --build build -- -j$NUM_CORES
 
-#      - name: Run Valgrind on MOPAC API tester
-#        run: |
-#          sudo apt update && sudo apt install -y valgrind
-#          cd build/tests
-#          valgrind -s --track-origins=yes --leak-check=yes ./mopac-api-test
-
       - name: Test MOPAC with CTest
         run: |
+          ulimit -s 33554432
+          ulimit -all
+          export OPENBLAS_NUM_THREADS=1
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           cd build
           ctest -V -j $NUM_CORES
 
@@ -70,384 +69,5 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4
         with:
-          name: static-test-output
+          name: linux-flang-test-output
           path: build/tests
-
-  code-coverage:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 30
-
-    steps:
-      - name: Check number of cores
-        run: |
-          lscpu
-          lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
-          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install lcov with Ubuntu package manager
-        run: sudo apt-get install lcov
-
-      - name: Install dependencies with PyPI
-        run: pip install numpy
-
-      - name: Configure MOPAC with CMake
-        run: |
-          cmake -B build \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DTHREADS_KEYWORD=OFF \
-            -DENABLE_COVERAGE=ON
-
-      - name: Build MOPAC with Make
-        run: |
-          cmake --build build -- -j$NUM_CORES
-
-#      - name: Run Valgrind on MOPAC API tester
-#        run: |
-#          sudo apt update && sudo apt install -y valgrind
-#          cd build/tests
-#          valgrind -s --track-origins=yes --leak-check=yes ./mopac-api-test
-
-      - name: Test MOPAC with CTest
-        run: |
-          cd build
-          ctest -V -j $NUM_CORES
-
-      - name: Save test results as an artifact (on failure)
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-test-output
-          path: build/tests
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          directory: build
-          files: coverage.info
-          token: ${{ secrets.CODECOV_TOKEN }}
-
-  linux-build:
-    # Ubuntu 22+ switched to newer glibc (2.34) that breaks the compatibility library right now
-    runs-on: ubuntu-20.04
-    timeout-minutes: 30
-
-    steps:
-      - name: Check number of cores
-        run: |
-          lscpu
-          lscpu | grep "CPU(s):                       " | awk '{print $2}' > num_cores
-          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      # Set up the QT installer framework
-      - uses: jmarrec/setup-qtifw@v1
-        with:
-          qtifw-version: '4.6.x'
-
-      - name: Cache Intel dependencies
-        id: cache-intel
-        uses: actions/cache@v4
-        with:
-          path: /opt/intel
-          key: cache-${{ env.IFORT_LINUX_URL }}-${{ env.MKL_LINUX_URL }}
-
-      - name: Download & install Intel dependencies
-        if: steps.cache-intel.outputs.cache-hit != 'true'
-        run: |
-          curl $IFORT_LINUX_URL --output ifort_download.sh
-          sudo sh ifort_download.sh -a --silent --eula accept
-          curl $MKL_LINUX_URL --output mkl_download.sh
-          sudo sh mkl_download.sh -a --silent --eula accept
-
-      - name: Clone glibc compatibility library
-        uses: actions/checkout@v4
-        with:
-          repository: wheybags/glibc_version_header
-          path: glibc
-
-      - name: Install dependencies with PyPI
-        run: pip install numpy
-
-      - name: Configure MOPAC with CMake
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cmake -B build \
-            -DCMAKE_Fortran_COMPILER=ifort \
-            -DCMAKE_Fortran_FLAGS="-static-intel" \
-            -DCMAKE_C_COMPILER=gcc \
-            -DCMAKE_C_FLAGS="-include $GITHUB_WORKSPACE/glibc/version_headers/x64/force_link_glibc_2.17.h" \
-            -DAUTO_BLAS=OFF \
-            -DMOPAC_LINK="-Wl,--start-group ${MKLROOT}/lib/intel64/libmkl_intel_lp64.a ${MKLROOT}/lib/intel64/libmkl_intel_thread.a ${MKLROOT}/lib/intel64/libmkl_core.a -Wl,--end-group -liomp5 -lpthread -lm -ldl"
-
-      - name: Build MOPAC with Make
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cmake --build build -- -j$NUM_CORES
-          ldd -v build/mopac
-
-      - name: Test MOPAC with CTest
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cd build
-          ctest -V -j $NUM_CORES
-
-      - name: Save test results as an artifact (on failure)
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-test-output
-          path: build/tests
-
-      - name: Package MOPAC with CPack
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cd build
-          cpack -G IFW
-          ls -l
-
-      - name: Local installation test & minimal packaging
-        run: |
-          cd build
-          sudo make install
-          sudo cpack -G TGZ
-
-      - name: Save executable as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-dist
-          path: build/mopac-*-linux.*
-
-  mac-build:
-    # macos-latest is now ARM-based, MOPAC is being distributed for Intel-based Macs right now, so using latest free Intel-based standard runner
-    runs-on: macos-13
-    timeout-minutes: 30
-
-    steps:
-      - name: Check number of cores
-        run: |
-          system_profiler SPHardwareDataType
-          system_profiler SPHardwareDataType | grep "Total Number of Cores" | awk '{print $5}' > num_cores
-          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      # Set up the QT installer framework
-      - uses: jmarrec/setup-qtifw@v1
-        with:
-          qtifw-version: '4.6.x'
-
-      - name: Fix permissions for cache restore
-        run: |
-          sudo mkdir -p /opt/intel
-          sudo chown $USER /opt/intel
-
-      - name: Cache Intel Fortran compiler
-        id: cache-intel
-        uses: actions/cache@v4
-        with:
-          path: /opt/intel
-          key: cache-${{ env.IFORT_MAC_URL }}-${{ env.MKL_MAC_URL }}-macos-13
-
-      - name: Download & install Intel Fortran compiler
-        if: steps.cache-intel.outputs.cache-hit != 'true'
-        run: |
-          curl $MKL_MAC_URL --output mkl_download.dmg
-          hdiutil attach mkl_download.dmg
-          sudo /Volumes/m_onemkl*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
-          curl $IFORT_MAC_URL --output ifort_download.dmg
-          hdiutil attach ifort_download.dmg
-          sudo /Volumes/m_fortran-compiler*/bootstrapper.app/Contents/MacOS/install.sh --silent --eula accept
-
-      - name: Install dependencies with PyPI
-        run: pip3 install numpy
-
-      # AUTO_BLAS=OFF because find_package(BLAS) has a bug with static BLAS libraries on Mac
-      - name: Configure MOPAC with CMake
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cmake -B build \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=10.8 \
-            -DCMAKE_Fortran_COMPILER=ifort \
-            -DCMAKE_Fortran_FLAGS="-static-intel" \
-            -DCMAKE_C_COMPILER=gcc \
-            -DAUTO_BLAS=OFF \
-            -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-ld_classic" \
-            -DCMAKE_EXE_LINKER_FLAGS="-Wl,-ld_classic" \
-            -DMOPAC_LINK="${MKLROOT}/lib/libmkl_intel_lp64.a ${MKLROOT}/lib/libmkl_intel_thread.a ${MKLROOT}/lib/libmkl_core.a -liomp5 -lpthread -lm -ldl"
-
-      # an Intel-suggested hack is temporarily circumventing excessively slow calls to xcodebuild hidden in ifort, taken from:
-      # https://community.intel.com/t5/Intel-oneAPI-HPC-Toolkit/slow-execution-of-ifort-icpc-on-MacOSX-catalina/m-p/1203190
-      - name: Build MOPAC with Make
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          mkdir xcode_hack
-          echo -ne '#!/bin/bash\ncase "$4" in\n    "")\n      echo $INTEL_OSXSDK_VER;;\n     *)\n      echo $INTEL_OSXSDK_PATH;;\nesac\n' > xcode_hack/xcodebuild
-          chmod 755 xcode_hack/xcodebuild
-          export INTEL_OSXSDK_VER=`xcodebuild -sdk macosx -version | grep SDKVersion`
-          export INTEL_OSXSDK_PATH=`xcodebuild -sdk macosx -version Path`
-          export PATH=$GITHUB_WORKSPACE/xcode_hack:${PATH}
-          cmake --build build -- -j$NUM_CORES
-
-      - name: Test MOPAC with CTest
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cd build
-          ctest -V -j $NUM_CORES
-
-      - name: Save test results as an artifact (on failure)
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: mac-test-output
-          path: build/tests
-
-      - name: Local installation test
-        run: |
-          cd build
-          make install
-
-      - name: Package MOPAC with CPack
-        run: |
-          source /opt/intel/oneapi/setvars.sh
-          cd build
-          cpack -G IFW
-          ls -l
-
-      - name: Local installation test & minimal packaging
-        run: |
-          cd build
-          sudo make install
-          sudo cpack -G ZIP
-
-      - name: Save executable as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: mac-dist
-          path: build/mopac-*-mac.*
-
-  windows-build:
-    # NOTE: windows-latest has been switched to Visual Studio 2022, which is not yet supported by Intel development tools
-    runs-on: windows-2019
-    timeout-minutes: 30
-
-    steps:
-      - name: Check number of cores
-        shell: bash
-        run: |
-          WMIC CPU Get -Format:List
-          WMIC CPU Get NumberOfLogicalProcessors | head -2 | tail -1 > num_cores
-          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
-
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      # Set up the QT installer framework
-      - uses: jmarrec/setup-qtifw@v1
-        with:
-          qtifw-version: '4.6.x'
-
-      - name: Cache Intel Fortran compiler
-        id: cache-intel
-        uses: actions/cache@v4
-        with:
-          path: C:\Program Files (x86)\Intel
-          key: cache-${{ env.IFORT_WINDOWS_URL }}-${{ env.MKL_WINDOWS_URL }}
-
-      - name: Download & install Intel Fortran compiler
-        if: steps.cache-intel.outputs.cache-hit != 'true'
-        shell: cmd
-        run: |
-          curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
-          ifort_download -s -x -f ifort_unpack
-          ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2019_INTEGRATION=0
-          curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
-          mkl_download -s -x -f mkl_unpack
-          mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2019_INTEGRATION=0
-
-      - name: Install dependencies with PyPI
-        run: pip3 install numpy
-
-      # The main Intel\oneAPI\setvars.bat script is not setting up the correct version of ifort, so using component-level scripts
-      - name: Configure MOPAC with CMake
-        shell: cmd
-        run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
-          echo %PATH%
-          cmake -Bbuild ^
-            -GNinja ^
-            -DBUILD_BZ=ON ^
-            -DCMAKE_Fortran_COMPILER=ifort ^
-            -DCMAKE_Fortran_FLAGS="/libs:static" ^
-            -DBLA_STATIC=ON ^
-            -DBLA_VENDOR=Intel10_64lp
-
-      - name: Build MOPAC with Ninja
-        shell: cmd
-        run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
-          cmake --build build -- -v
-
-      - name: Test MOPAC with CTest
-        shell: cmd
-        run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
-          cd build
-          ctest -V -j %NUM_CORES%
-
-      - name: Save test results as an artifact (on failure)
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-test-output
-          path: build/tests
-
-      - name: Local installation test
-        shell: cmd
-        run: |
-          cd build
-          cmake --install .
-
-      - name: Package MOPAC with CPack (in development)
-        shell: cmd
-        run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
-          cd build
-          cpack -G IFW
-          dir
-
-      - name: Local installation test & minimal packaging
-        shell: cmd
-        run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
-          cd build
-          make install
-          cpack -G ZIP
-
-      - name: Save executable as an artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-dist
-          path: build/mopac-*-win.*
