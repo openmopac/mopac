@@ -15,15 +15,16 @@
 
 ! Diskless/stateless Application Programming Interface (API) to core MOPAC operations
 submodule (mopac_api) mopac_api_createdestroy
+  use, intrinsic :: iso_c_binding
   implicit none
 
 #ifdef MOPAC_API_MALLOC_C
   interface
-    type(C_PTR) function malloc(num) BIND(C)
-      type(C_SIZE_T), VALUE :: num
+    type(c_ptr) function malloc(num) bind(c)
+      type(c_size_t), value :: num
     end function malloc
-    subroutine free(ptr) BIND(C)
-      type(C_PTR), VALUE :: ptr
+    subroutine free(ptr) bind(c)
+      type(c_ptr), value :: ptr
     end subroutine free
   end interface
 #endif
