@@ -88,6 +88,7 @@ jobs:
         run: |
           cmake -B build \
             -DMDI=ON \
+            -DCMAKE_MODULE_PATH=$CONDA/share/cmake/mdi \
             -DCMAKE_LIBRARY_PATH=$CONDA/lib \
             -DPython3_EXECUTABLE=$CONDA/bin/python
 
