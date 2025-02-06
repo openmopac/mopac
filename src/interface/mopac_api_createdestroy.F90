@@ -17,6 +17,20 @@
 submodule (mopac_api) mopac_api_createdestroy
   implicit none
 
+#ifdef MOPAC_API_CC
+  interface
+    function malloc(num) bind(c)
+      use iso_c_binding
+      integer(c_size_t), value :: num
+      type(c_ptr) :: malloc
+    end function malloc
+    subroutine free(ptr) bind(c)
+      use iso_c_binding
+      type(c_ptr), value :: ptr
+    end subroutine free
+  end interface
+#endif
+
 contains
 
   ! allocate memory for mopac_state
@@ -113,13 +127,23 @@ contains
   ! through a C pointer in a C-bound interface and then reassigned to a Fortran pointer because hidden
   ! information about memory allocation is contained within the original Fortran pointer and is not
   ! retained by the C pointer. To get around this, MOPAC's API will support both C and Fortran memory
-  ! managers through the presence/absence of the MOPAC_API_MALLOC preprocessor variable.
+  ! managers through the presence/absence of the MOPAC_API_CC and MOPAC_API_IFORT preprocessor variables.
+  ! The MOPAC_API_IFORT variable uses ifort's custom malloc/free intrinsics, whereas MOPAC_API_CC uses
+  ! malloc/free from the C standard library.
 
   ! allocate memory (C or Fortran memory manager, depending on compiler)
   module function create_int(size)
     integer, intent(in) :: size
     type(c_ptr) :: create_int
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    integer(c_int) :: mold
+    create_int = malloc(c_sizeof(mold)*size)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size)
+    create_int = transfer(dummy, create_int)
+#else
     integer(c_int), pointer :: ptr(:)
     integer :: status
     allocate(ptr(size), stat=status)
@@ -128,18 +152,21 @@ contains
       stop 1
     end if
     create_int = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    integer(c_int) :: mold
-    dummy = malloc(c_sizeof(mold)*size)
-    create_int = transfer(dummy, create_int)
 #endif
   end function create_int
   module function create_int2(size, size2)
     integer, intent(in) :: size
     integer, intent(in) :: size2
     type(c_ptr) :: create_int2
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    integer(c_int) :: mold
+    create_int2 = malloc(c_sizeof(mold)*size*size2)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size*size2)
+    create_int2 = transfer(dummy, create_int2)
+#else
     integer(c_int), pointer :: ptr(:,:)
     integer :: status
     allocate(ptr(size,size2), stat=status)
@@ -148,17 +175,20 @@ contains
       stop 1
     end if
     create_int2 = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    integer(c_int) :: mold
-    dummy = malloc(c_sizeof(mold)*size*size2)
-    create_int2 = transfer(dummy, create_int2)
 #endif
   end function create_int2
   module function create_real(size)
     integer, intent(in) :: size
     type(c_ptr) :: create_real
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    real(c_double) :: mold
+    create_real = malloc(c_sizeof(mold)*size)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    real(c_double) :: mold
+    dummy = malloc(c_sizeof(mold)*size)
+    create_real = transfer(dummy, create_real)
+#else
     real(c_double), pointer :: ptr(:)
     integer :: status
     allocate(ptr(size), stat=status)
@@ -167,11 +197,6 @@ contains
       stop 1
     end if
     create_real = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    real(c_double) :: mold
-    dummy = malloc(c_sizeof(mold)*size)
-    create_real = transfer(dummy, create_real)
 #endif
   end function create_real
 
@@ -181,7 +206,17 @@ contains
     integer, intent(in) :: size(1)
     type(c_ptr) :: create_copy_int
     integer(c_int), pointer :: ptr(:)
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    integer(c_int) :: mold
+    create_copy_int = malloc(c_sizeof(mold)*size(1))
+    call c_f_pointer(create_copy_int, ptr, size)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_int = transfer(dummy, create_copy_int)
+    call c_f_pointer(create_copy_int, ptr, size)
+#else
     integer :: status
     allocate(ptr(size(1)), stat=status)
     if (status /= 0) then
@@ -189,12 +224,6 @@ contains
       stop 1
     end if
     create_copy_int = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    integer(c_int) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1))
-    create_copy_int = transfer(dummy, create_copy_int)
-    call c_f_pointer(create_copy_int, ptr, size)
 #endif
     ptr = array(:size(1))
   end function create_copy_int
@@ -203,7 +232,17 @@ contains
     integer, intent(in) :: size(2)
     type(c_ptr) :: create_copy_int2
     integer(c_int), pointer :: ptr(:,:)
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    integer(c_int) :: mold
+    create_copy_int2 = malloc(c_sizeof(mold)*size(1)*size(2))
+    call c_f_pointer(create_copy_int2, ptr, size)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    integer(c_int) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1)*size(2))
+    create_copy_int2 = transfer(dummy, create_copy_int2)
+    call c_f_pointer(create_copy_int2, ptr, size)
+#else
     integer :: status
     allocate(ptr(size(1),size(2)), stat=status)
     if (status /= 0) then
@@ -211,12 +250,6 @@ contains
       stop 1
     end if
     create_copy_int2 = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    integer(c_int) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1)*size(2))
-    create_copy_int2 = transfer(dummy, create_copy_int2)
-    call c_f_pointer(create_copy_int2, ptr, size)
 #endif
     ptr = array(:size(1),:size(2))
   end function create_copy_int2
@@ -225,7 +258,17 @@ contains
     integer, intent(in) :: size(1)
     type(c_ptr) :: create_copy_real
     real(c_double), pointer :: ptr(:)
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    real(c_double) :: mold
+    create_copy_real = malloc(c_sizeof(mold)*size(1))
+    call c_f_pointer(create_copy_real, ptr, size)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    real(c_double) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_real = transfer(dummy, create_copy_real)
+    call c_f_pointer(create_copy_real, ptr, size)
+#else
     integer :: status
     allocate(ptr(size(1)), stat=status)
     if (status /= 0) then
@@ -233,12 +276,6 @@ contains
       stop 1
     end if
     create_copy_real = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    real(c_double) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1))
-    create_copy_real = transfer(dummy, create_copy_real)
-    call c_f_pointer(create_copy_real, ptr, size)
 #endif
     ptr = array(:size(1))
   end function create_copy_real
@@ -248,7 +285,17 @@ contains
     type(c_ptr) :: create_copy_char
     character(kind=c_char), pointer :: ptr(:)
     integer :: i
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    character(kind=c_char) :: mold
+    create_copy_char = malloc(c_sizeof(mold)*size(1))
+    call c_f_pointer(create_copy_char, ptr, size)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    character(kind=c_char) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_char = transfer(dummy, create_copy_char)
+    call c_f_pointer(create_copy_char, ptr, size)
+#else
     integer :: status
     allocate(ptr(size(1)), stat=status)
     if (status /= 0) then
@@ -256,12 +303,6 @@ contains
       stop 1
     end if
     create_copy_char = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    character(kind=c_char) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1))
-    create_copy_char = transfer(dummy, create_copy_char)
-    call c_f_pointer(create_copy_char, ptr, size)
 #endif
     do i=1, size(1)-1
       ptr(i) = array(i:i)
@@ -273,7 +314,17 @@ contains
     integer, intent(in) :: size(1)
     type(c_ptr) :: create_copy_ptr
     type(c_ptr), pointer :: ptr(:)
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    type(c_ptr) :: mold
+    create_copy_ptr = malloc(c_sizeof(mold)*size(1))
+    call c_f_pointer(create_copy_ptr, ptr, size)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: dummy
+    type(c_ptr) :: mold
+    dummy = malloc(c_sizeof(mold)*size(1))
+    create_copy_ptr = transfer(dummy, create_copy_ptr)
+    call c_f_pointer(create_copy_ptr, ptr, size)
+#else
     integer :: status
     allocate(ptr(size(1)), stat=status)
     if (status /= 0) then
@@ -281,12 +332,6 @@ contains
       stop 1
     end if
     create_copy_ptr = c_loc(ptr)
-#else
-    integer(c_intptr_t) :: dummy
-    type(c_ptr) :: mold
-    dummy = malloc(c_sizeof(mold)*size(1))
-    create_copy_ptr = transfer(dummy, create_copy_ptr)
-    call c_f_pointer(create_copy_ptr, ptr, size)
 #endif
     ptr = array(:size(1))
   end function create_copy_ptr
@@ -294,7 +339,13 @@ contains
   ! deallocate memory (C or Fortran memory manager, depending on compiler)
   module subroutine destroy_int(copy)
     type(c_ptr), intent(in) :: copy
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    call free(copy)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
+#else
     integer(c_int), pointer :: ptr
     integer :: status
     if (c_associated(copy)) then
@@ -305,15 +356,17 @@ contains
         stop 1
       end if
     end if
-#else
-    integer(c_intptr_t) :: copy2
-    copy2 = transfer(copy, copy2)
-    call free(copy2)
 #endif
   end subroutine destroy_int
   module subroutine destroy_real(copy)
     type(c_ptr), intent(in) :: copy
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    call free(copy)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
+#else
     real(c_double), pointer :: ptr
     integer :: status
     if (c_associated(copy)) then
@@ -324,15 +377,17 @@ contains
         stop 1
       end if
     end if
-#else
-    integer(c_intptr_t) :: copy2
-    copy2 = transfer(copy, copy2)
-    call free(copy2)
 #endif
   end subroutine destroy_real
   module subroutine destroy_char(copy)
     type(c_ptr), intent(in) :: copy
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    call free(copy)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
+#else
     character(kind=c_char), pointer :: ptr
     integer :: status
     if (c_associated(copy)) then
@@ -343,15 +398,17 @@ contains
         stop 1
       end if
     end if
-#else
-    integer(c_intptr_t) :: copy2
-    copy2 = transfer(copy, copy2)
-    call free(copy2)
 #endif
   end subroutine destroy_char
   module subroutine destroy_ptr(copy)
     type(c_ptr), intent(in) :: copy
-#ifndef MOPAC_API_MALLOC
+#ifdef MOPAC_API_CC
+    call free(copy)
+#elif defined(MOPAC_API_IFORT)
+    integer(c_intptr_t) :: copy2
+    copy2 = transfer(copy, copy2)
+    call free(copy2)
+#else
     type(c_ptr), pointer :: ptr
     integer :: status
     if (c_associated(copy)) then
@@ -362,10 +419,6 @@ contains
         stop 1
       end if
     end if
-#else
-    integer(c_intptr_t) :: copy2
-    copy2 = transfer(copy, copy2)
-    call free(copy2)
 #endif
   end subroutine destroy_ptr
 

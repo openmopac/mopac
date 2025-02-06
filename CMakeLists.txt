@@ -53,7 +53,9 @@ project(openmopac VERSION ${CMAKE_MATCH_1} LANGUAGES Fortran)
 
 # Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
 option(ENABLE_MKL "Turn on C language support for MKL" ON)
-if(ENABLE_MKL)
+option(USE_C_MALLOC "Turn on C malloc/free for API memory management" OFF)
+option(FORCE_EXPORT_SYMBOLS "Turn on CMake system to export all symbols in MOPAC shared library" OFF)
+if(ENABLE_MKL OR USE_C_MALLOC OR FORCE_EXPORT_SYMBOLS)
   enable_language(C)
 endif()
 
@@ -100,6 +102,9 @@ if (STATIC_BUILD)
   set(BLA_STATIC ON)
 else()
   add_library(mopac-core SHARED)
+  if(FORCE_EXPORT_SYMBOLS)
+    set_target_properties(mopac-core PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+  endif()
 endif()
 set_target_properties(mopac-core PROPERTIES OUTPUT_NAME "mopac")
 add_executable(mopac)
@@ -134,8 +139,11 @@ if(BUILD_BZ)
 endif()
 
 # Use malloc in API w/ Intel Fortran compiler because it can't deallocate Fortran-allocated memory passed through a C interface
-if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
-  target_compile_definitions(mopac-core PRIVATE MOPAC_API_MALLOC)
+if(USE_C_MALLOC)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_API_CC)
+  target_link_libraries(mopac-core PUBLIC ${CMAKE_C_STANDARD_LIBRARIES})
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
+  target_compile_definitions(mopac-core PRIVATE MOPAC_API_IFORT)
 endif()
 
 # MOPAC shared library ABI compatibility version
@@ -176,7 +184,7 @@ endif()
 
 # Pass version & commit information to MOPAC's Fortran source
 target_compile_definitions(mopac-core PRIVATE MOPAC_VERSION_FULL="${PROJECT_VERSION}")
-option(GIT_HASH "Enable THREADS keyword using OpenMP API" ON)
+option(GIT_HASH "Show git hash in --version info (git repo only)" ON)
 if(GIT_HASH)
   execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_HASH_VAL)
   if(GIT_HASH_VAL)
