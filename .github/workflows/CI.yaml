@@ -86,6 +86,10 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
+          ls $CONDA
+          ls $CONDA/share
+          ls $CONDA/share/cmake
+          ls $CONDA/share/cmake/mdi
           cmake -B build \
             -DMDI=ON \
             -DCMAKE_MODULE_PATH=$CONDA/share/cmake/mdi \
