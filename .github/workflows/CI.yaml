@@ -86,13 +86,17 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
+          echo "conda:"
           ls $CONDA
+          echo "conda/share:"
           ls $CONDA/share
+          echo "conda/share/cmake:"
           ls $CONDA/share/cmake
+          echo "conda/share/cmake/mdi:"
           ls $CONDA/share/cmake/mdi
           cmake -B build \
             -DMDI=ON \
-            -DCMAKE_MODULE_PATH=$CONDA/share/cmake/mdi \
+            -Dmdi_DIR=$CONDA/share/cmake/mdi \
             -DCMAKE_LIBRARY_PATH=$CONDA/lib \
             -DPython3_EXECUTABLE=$CONDA/bin/python
 
