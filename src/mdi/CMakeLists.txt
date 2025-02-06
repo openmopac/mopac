@@ -16,7 +16,7 @@
 #===============================================
 # Create a list of source files (src_list) with the .F90 extension
 set(src_list 
-    mdi_implementation
+    mdi_wrapper mdi_implementation
    )
 #-----------------------------------------------
 # Add a list of source files to the target

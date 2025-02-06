@@ -18,7 +18,7 @@ MODULE MDI_IMPLEMENTATION
   USE, INTRINSIC :: ISO_C_binding
 
   ! MDI library dependencies
-  use MDI, only : MDI_Init, MDI_Accept_communicator, MDI_Send, &
+  use MDI_wrapper, only : MDI_Init, MDI_Accept_communicator, MDI_Send, &
     MDI_Recv_command, MDI_Recv, MDI_COMMAND_LENGTH, MDI_LABEL_LENGTH, &
     MDI_DOUBLE, MDI_CHAR, MDI_INT, MDI_Register_command, MDI_Register_node, &
     MDI_Conversion_factor, MDI_Get_role, MDI_ENGINE, MDI_Plugin_get_argc, &
@@ -70,6 +70,10 @@ CONTAINS
     CHARACTER(len=240) :: input_file
     PROCEDURE(execute_command), POINTER :: generic_command => null()
     TYPE(C_PTR)                         :: class_obj
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     MDI_Plugin_open_mopac = 0
     CALL MDI_Set_plugin_state(plugin_state, ierr)
     generic_command => execute_command
@@ -92,6 +96,10 @@ CONTAINS
 
   FUNCTION MDI_Plugin_close_mopac() bind ( C, name="MDI_Plugin_close_mopac" )
     INTEGER :: MDI_Plugin_close_mopac
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     MDI_Plugin_close_mopac = 0
     close_mdi = .true.
     CALL run_mopac
@@ -108,6 +116,10 @@ CONTAINS
     CHARACTER(len=240) :: input_file
     PROCEDURE(execute_command), POINTER :: generic_command => null()
     TYPE(C_PTR)                         :: class_obj
+    interface
+      subroutine run_mopac() bind(c)
+      end subroutine run_mopac
+    end interface
     MDI_Plugin_launch_mopac = 0
     CALL MDI_Set_plugin_state(plugin_state, ierr)
     generic_command => execute_command
