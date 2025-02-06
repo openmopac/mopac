@@ -53,7 +53,8 @@ project(openmopac VERSION ${CMAKE_MATCH_1} LANGUAGES Fortran)
 
 # Enable C language support for MKL?  (C is only needed for auto-detection of MKL by find_package)
 option(ENABLE_MKL "Turn on C language support for MKL" ON)
-if(ENABLE_MKL)
+option(ENABLE_API_MALLOC "Turn on C malloc/free for API memory management" OFF)
+if(ENABLE_MKL OR ENABLE_API_MALLOC)
   enable_language(C)
 endif()
 
@@ -134,8 +135,11 @@ if(BUILD_BZ)
 endif()
 
 # Use malloc in API w/ Intel Fortran compiler because it can't deallocate Fortran-allocated memory passed through a C interface
-if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel" OR ENABLE_API_MALLOC)
   target_compile_definitions(mopac-core PRIVATE MOPAC_API_MALLOC)
+endif()
+if(ENABLE_API_MALLOC)
+  target_compile_definitions(mopac-core PRIVATE MOPAC_API_MALLOC_C)
 endif()
 
 # MOPAC shared library ABI compatibility version
