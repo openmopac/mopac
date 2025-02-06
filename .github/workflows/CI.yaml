@@ -39,20 +39,17 @@ jobs:
 
       - name: Install dependencies with conda-forge
         run: |
-          conda activate test
           conda install numpy
           conda install openblas
 
       - name: Configure MOPAC with CMake
         run: |
-          conda activate test
           cmake -B build \
             -DMDI=ON
-#            -DPython3_EXECUTABLE=$CONDA/bin/python
+            -DPython3_EXECUTABLE=$CONDA/bin/python
 
       - name: Build MOPAC with Make
         run: |
-          conda activate test
           cmake --build build -- -j$NUM_CORES
 
   linux-remote:
@@ -82,19 +79,16 @@ jobs:
 
       - name: Install dependencies with conda-forge
         run: |
-          conda activate test
           conda install numpy
           conda install openblas
           conda install mdi
 
       - name: Configure MOPAC with CMake
         run: |
-          conda activate test
           cmake -B build \
             -DMDI=ON
-#            -DPython3_EXECUTABLE=$CONDA/bin/python
+            -DPython3_EXECUTABLE=$CONDA/bin/python
 
       - name: Build MOPAC with Make
         run: |
-          conda activate test
           cmake --build build -- -j$NUM_CORES
