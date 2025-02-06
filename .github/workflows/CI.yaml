@@ -45,7 +45,8 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
-            -DMDI=ON
+            -DMDI=ON \
+            -DCMAKE_LIBRARY_PATH=$CONDA/lib \
             -DPython3_EXECUTABLE=$CONDA/bin/python
 
       - name: Build MOPAC with Make
@@ -86,7 +87,8 @@ jobs:
       - name: Configure MOPAC with CMake
         run: |
           cmake -B build \
-            -DMDI=ON
+            -DMDI=ON \
+            -DCMAKE_LIBRARY_PATH=$CONDA/lib \
             -DPython3_EXECUTABLE=$CONDA/bin/python
 
       - name: Build MOPAC with Make
