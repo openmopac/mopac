@@ -50,7 +50,7 @@ jobs:
             -DPython3_EXECUTABLE=$CONDA/bin/python \
             -DCMAKE_Fortran_COMPILER=$CONDA/bin/flang-new \
             -DCMAKE_Fortran_FLAGS="-O0 -g" \
-            -DENABLE_API_MALLOC=ON
+            -DUSE_C_MALLOC=ON
 
       - name: Build MOPAC with Make
         run: |
