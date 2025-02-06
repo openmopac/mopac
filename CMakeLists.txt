@@ -140,6 +140,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "Intel" OR ENABLE_API_MALLOC)
 endif()
 if(ENABLE_API_MALLOC)
   target_compile_definitions(mopac-core PRIVATE MOPAC_API_MALLOC_C)
+  target_link_libraries(mopac-core PUBLIC ${CMAKE_C_STANDARD_LIBRARIES})
 endif()
 
 # MOPAC shared library ABI compatibility version
