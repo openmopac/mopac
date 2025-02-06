@@ -20,10 +20,12 @@ submodule (mopac_api) mopac_api_createdestroy
 #ifdef MOPAC_API_MALLOC_C
   interface
     function malloc(num) bind(c)
+      use iso_c_binding
       integer(c_size_t), value :: num
       integer(c_ptr) :: malloc
     end function malloc
     subroutine free(ptr) bind(c)
+      use iso_c_binding
       integer(c_ptr), value :: ptr
     end subroutine free
   end interface
