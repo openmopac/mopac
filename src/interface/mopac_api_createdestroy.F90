@@ -22,11 +22,11 @@ submodule (mopac_api) mopac_api_createdestroy
     function malloc(num) bind(c)
       use iso_c_binding
       integer(c_size_t), value :: num
-      integer(c_ptr) :: malloc
+      integer(c_intptr_t) :: malloc
     end function malloc
     subroutine free(ptr) bind(c)
       use iso_c_binding
-      integer(c_ptr), value :: ptr
+      integer(c_intptr_t), value :: ptr
     end subroutine free
   end interface
 #endif
