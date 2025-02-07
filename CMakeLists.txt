@@ -279,7 +279,7 @@ if(TESTS)
   if(NOT Python3_FOUND)
     if(Python3_Interpreter_FOUND AND (NOT Python3_NumPy_FOUND))
       message(NOTICE "Python3 found without NumPy at path: ${Python3_EXECUTABLE}\n"
-              "(HINT: install NumPy for this Python3 instance with pip or give higher priority to an instance with NumPy installed)")
+              "(HINT: install NumPy for this Python3 instance with pip or conda, or give higher priority to an instance with NumPy installed by setting Python3_EXECUTABLE)")
     endif()
     message(FATAL_ERROR "Python3 and Numpy are required for MOPAC testing (testing can be disabled with -DTESTS=OFF)")
   endif()
