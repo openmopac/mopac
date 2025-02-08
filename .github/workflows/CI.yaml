@@ -55,6 +55,7 @@ jobs:
       - name: Build MOPAC with Make
         run: |
           cmake --build build -- -j$NUM_CORES
+          mopac --version
 
       - name: Test MOPAC with CTest
         run: |
