@@ -451,7 +451,7 @@ contains
       call copy_int(properties_f%bond_atom, properties_c%bond_atom, &
                     [properties_f%bond_index(system_c%natom+1)-1])
       do i=1, properties_f%bond_index(system_c%natom+1)-1
-        properties_f%bond_index(i) = properties_f%bond_index(i) + 1
+        properties_f%bond_atom(i) = properties_f%bond_atom(i) + 1
       end do
       call copy_real(properties_f%bond_order, properties_c%bond_order, &
                     [properties_f%bond_index(system_c%natom+1)-1])
