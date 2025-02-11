@@ -223,12 +223,12 @@ contains
               sum = sum + p(k) ** 2
             end do
             if (sum > 0.01d0) then
-              bond_atom(kk) = j
+              bond_atom(kk) = j - 1
               bond_order(kk) = sum
               kk = kk + 1
             end if
           else if (valenc > 0.01d0) then
-            bond_atom(kk) = j
+            bond_atom(kk) = j - 1
             bond_order(kk) = valenc
             kk = kk + 1
           end if
@@ -266,7 +266,7 @@ contains
         kk = bond_index(i) + 1
         do j = 1, i
           if (bondab(ku) > 0.01d0) then
-            bond_atom(kk) = j
+            bond_atom(kk) = j - 1
             bond_order(kk) = bondab(ku)
             kk = kk + 1
           end if
@@ -274,7 +274,7 @@ contains
         end do
         do j = i+1, numat
           if (bondab(kl) > 0.01d0) then
-            bond_atom(kk) = j
+            bond_atom(kk) = j - 1
             bond_order(kk) = bondab(kl)
             kk = kk + 1
           end if

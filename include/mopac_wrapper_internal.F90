@@ -450,6 +450,9 @@ contains
       end do
       call copy_int(properties_f%bond_atom, properties_c%bond_atom, &
                     [properties_f%bond_index(system_c%natom+1)-1])
+      do i=1, properties_f%bond_index(system_c%natom+1)-1
+        properties_f%bond_atom(i) = properties_f%bond_atom(i) + 1
+      end do
       call copy_real(properties_f%bond_order, properties_c%bond_order, &
                     [properties_f%bond_index(system_c%natom+1)-1])
       call copy_real(properties_f%lattice_update, properties_c%lattice_update, [3*system_c%nlattice_move])

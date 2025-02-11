@@ -92,16 +92,6 @@
 #ifdef BUILD_MDI
       if (close_mdi) goto 100
 #endif
-! set versioning information
-#ifdef MOPAC_VERSION_FULL
-      verson = MOPAC_VERSION_FULL
-#endif
-#ifdef MOPAC_OS
-      os = MOPAC_OS
-#endif
-#ifdef MOPAC_GIT_HASH
-      git_hash = MOPAC_GIT_HASH
-#endif
 ! parse command-line flags
 #ifdef MOPAC_F2003
       do i = 1, command_argument_count()
