@@ -257,9 +257,21 @@ module molkst_C
   & formula*100,   & !  Type          Empirical formula
                      !  Definition    Type and number count of each element in the system
                      !  Units         Text
-  & git_hash*40 = 'unknown', & !  Git commit hash string
-  & os*12 = 'unknown', &       !  Operating system name
-  & verson*20 = '23.*.*'       !  Version number for this copy of MOPAC
+#ifdef MOPAC_GIT_HASH
+  & git_hash*40 = MOPAC_GIT_HASH, & !  Git commit hash string
+#else
+  & git_hash*40 = 'unknown', & !  Generic git commit hash string when hash is unavailable
+#endif
+#ifdef MOPAC_OS
+  & os*12 = MOPAC_OS, &       !  Operating system name
+#else
+  & os*12 = 'unknown', &       !  Generic operating system name when OS is unknown
+#endif
+#ifdef MOPAC_VERSION_FULL
+  & verson*20 = MOPAC_VERSION_FULL !  Version number for this copy of MOPAC
+#else
+  & verson*20 = '23.*.*'       !  Generic version number when version is unknown
+#endif
                      !  Pattern      "xx.yy.zz(-pre)"
                      !  Description  major version, minor version, patch version, & pre-release tag
   character ::     &

@@ -92,24 +92,17 @@
 #ifdef BUILD_MDI
       if (close_mdi) goto 100
 #endif
-! set versioning information
-#ifdef MOPAC_VERSION_FULL
-      verson = MOPAC_VERSION_FULL
-#endif
-#ifdef MOPAC_OS
-      os = MOPAC_OS
-#endif
-#ifdef MOPAC_GIT_HASH
-      git_hash = MOPAC_GIT_HASH
-#endif
 ! parse command-line flags
 #ifdef MOPAC_F2003
+write(*,*) "COMMAND LINE ARGUMENT NUMBER:", command_argument_count()
       do i = 1, command_argument_count()
         call get_command_argument (i, jobnam)
 #else
+  write(*,*) "COMMAND LINE ARGUMENT NUMBER (old):", iargc()
       do i = 1, iargc()
         call getarg (i, jobnam)
 #endif
+write(*,*) "COMMAND LINE ARGUMENTS:", i, jobnam
         if (jobnam == '-V' .OR. jobnam == '--version') then
 #ifdef MOPAC_GIT_HASH
           write(*,"(a)") "MOPAC version "//trim(verson)//" commit "//trim(git_hash)
