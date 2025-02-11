@@ -55,7 +55,6 @@ jobs:
       - name: Build MOPAC with Make
         run: |
           cmake --build build -- -j$NUM_CORES
-          build/mopac --version
 
       - name: Test MOPAC with CTest
         run: |
@@ -64,6 +63,7 @@ jobs:
           export OPENBLAS_NUM_THREADS=1
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA/lib
           cd build
+          ./mopac --version
           ctest -V -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
