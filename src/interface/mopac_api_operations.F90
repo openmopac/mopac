@@ -63,7 +63,8 @@ contains
     type(mopac_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
 
-    keywrd = " 1SCF PULAY GRADIENTS BONDS"
+    keywrd = " 1SCF PULAY BONDS"
+    if (system%natom_move + syste%nlattice_move >= 0) trim(keywrd) // " GRADIENTS"
     call mopac_initialize(system)
     if (.not. moperr) call mopac_load(state)
     ! call computational routine for SCF calculations
@@ -127,7 +128,8 @@ contains
     type(mozyme_state), intent(inout) :: state
     type(mopac_properties), intent(out) :: properties
 
-    keywrd = " MOZYME 1SCF GRADIENTS ALLBONDS"
+    keywrd = " MOZYME 1SCF ALLBONDS"
+    if (system%natom_move + syste%nlattice_move >= 0) trim(keywrd) // " GRADIENTS"
     call mopac_initialize(system)
     if (.not. moperr) call mozyme_load(state)
     ! call computational routine for SCF calculations
