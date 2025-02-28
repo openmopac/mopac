@@ -352,9 +352,9 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
     if (energy > -0.5d0) return
     sum1 = distance(D,H)
     P_Hbonds = min(numat, P_Hbonds + 1)
-    if (txtatm(D) == " ") write(txtatm(D),'(a,i5,3x,a)')"Atom No.:", D, elemnt(nat(D))
-    if (txtatm(H) == " ") write(txtatm(H),'(a,i5,3x,a)')"Atom No.:", H, elemnt(nat(H))
-    if (txtatm(A) == " ") write(txtatm(A),'(a,i5,3x,a)')"Atom No.:", A, elemnt(nat(A))
+    if (txtatm(D)(2:) == " ") write(txtatm(D),'(a,i5,3x,a)')"Atom No.:", D, elemnt(nat(D))
+    if (txtatm(H)(2:) == " ") write(txtatm(H),'(a,i5,3x,a)')"Atom No.:", H, elemnt(nat(H))
+    if (txtatm(A)(2:) == " ") write(txtatm(A),'(a,i5,3x,a)')"Atom No.:", A, elemnt(nat(A))
     if (maxtxt < 2) then
       write(H_txt(P_Hbonds),'(2x,a,f15.3,6x,a,12x,a,10x, f7.2,a)')trim(txtatm(D)), sum1,  &
       trim(txtatm(H)), trim(txtatm(A)), energy, " Kcal/mol"
