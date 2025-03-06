@@ -352,12 +352,10 @@ subroutine find_H__Y_bonds(acc_a, nacc_a, acc_b, nacc_b, bonding_a_h, nb_a_h, hb
     if (energy > -0.5d0) return
     sum1 = distance(D,H)
     P_Hbonds = min(numat, P_Hbonds + 1)
-    if (txtatm(D)(2:) == " ") write(txtatm(D),'(a,i5,3x,a)')"Atom No.:", D, elemnt(nat(D))
-    if (txtatm(H)(2:) == " ") write(txtatm(H),'(a,i5,3x,a)')"Atom No.:", H, elemnt(nat(H))
-    if (txtatm(A)(2:) == " ") write(txtatm(A),'(a,i5,3x,a)')"Atom No.:", A, elemnt(nat(A))
-    if (maxtxt < 2) then
-      write(H_txt(P_Hbonds),'(2x,a,f15.3,6x,a,12x,a,10x, f7.2,a)')trim(txtatm(D)), sum1,  &
-      trim(txtatm(H)), trim(txtatm(A)), energy, " Kcal/mol"
+    if (maxtxt < 2) then    
+      write(H_txt(P_Hbonds),'(2x,a,i5,3x,a,f15.3,6x,a,i5,3x,a,12x,a,i5,3x,a,10x, f7.2,a)') &
+        "Atom No.:", D, elemnt(nat(D)), sum1, "Atom No.:", H, elemnt(nat(H)),   &
+        "Atom No.:", A, elemnt(nat(A)), energy, " Kcal/mol"
     else
       write(H_txt(P_Hbonds),'(a,2x,f6.3,3x,a,3x,a,3x, f7.2,a)')""""//txtatm(D)(:maxtxt)//"""", sum1,  &
       """"//txtatm(H)(:maxtxt)//"""", """"//txtatm(A)(:maxtxt)//"""", energy, " Kcal/mol"
