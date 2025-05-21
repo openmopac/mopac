@@ -51,7 +51,6 @@ module cosmo_C
   double precision, dimension(4,1082) :: dirsm, dirvec
   double precision, dimension(:), allocatable :: &
   & amat,    & !
-  & cmat,    & !
   & gden,    & !
   & qscat,   & !
   & arat,    & !
