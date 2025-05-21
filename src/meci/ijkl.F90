@@ -163,7 +163,7 @@
             end if
           end do
         end do
-        call ciint (cij, wcij)
+        wcij = 0.0d0 ! stub for removed ciint subroutine, this is the only thing it actually did
         do l = 1, i
           ipq = 0
           do ii = 1, numat

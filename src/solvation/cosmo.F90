@@ -187,28 +187,6 @@ subroutine ansude (ra, rb, d, rs, ara, arb, aar, abr, arad, arbd, rinc)
     arad = pi * ra * (sad*za + sa*zad + 2.d0*ra*cad)
     arbd = pi * rb * (sbd*zb + sb*zbd + 2.d0*rb*cbd)
 end subroutine ansude
-subroutine ciint (c34, pq34)
-    use molkst_C, only : lm61
-    use cosmo_C, only : nps, cmat
-    implicit none
-    double precision, dimension (lm61), intent (in) :: c34
-    double precision, dimension (lm61), intent (inout) :: pq34
-    integer :: i, i0, j
-    i0 = 0
-    do i = 1, lm61
-      pq34(i) = 0.d0
-    end do
-    if (nps < 0) return
-    do i = 1, lm61
-      do j = 1, i - 1
-        i0 = i0 + 1
-        pq34(j) = pq34(j) + cmat(i0) * c34(i)
-        pq34(i) = pq34(i) + cmat(i0) * c34(j)
-      end do
-      i0 = i0 + 1
-      pq34(i) = pq34(i) + cmat(i0) * c34(i)
-    end do
-end subroutine ciint
 subroutine coscav
    !***********************************************************************
    !
@@ -1749,8 +1727,8 @@ end subroutine surclo
 subroutine cosini(l_print)
     use cosmo_C, only : n0, ioldcv, fnsq, nps, rsolv, nspa, disex2, &
     dirsm, dirvec, srad, ipiden, gden, idenat, qdenet, amat, &
-    cmat, lenabc, arat, sude, isude, bh, qden, nar_csm, nsetf, phinet, &
-    qscnet, bmat, nset, xsp, abcmat, iatsp, nn, qscat, cosurf, nppa, &
+    lenabc, arat, sude, isude, qden, nar_csm, nsetf, phinet, &
+    qscnet, bmat, nset, iatsp, nn, qscat, cosurf, nppa, &
     ffact, fepsi, nden
     use common_arrays_C, only : nat, nfirst, nlast
     use molkst_C, only : numat, keywrd, moperr, lm61, mozyme, line, jobnam
@@ -1797,18 +1775,14 @@ subroutine cosini(l_print)
     if (allocated(qdenet)) deallocate (qdenet)
     if (allocated(phinet)) deallocate (phinet)
     if (allocated(qscnet)) deallocate (qscnet)
-    if (allocated(abcmat)) deallocate (abcmat)
     if (allocated(bmat))   deallocate (bmat)
-    if (allocated(cmat))   deallocate (cmat)
     if (allocated(qscat))  deallocate (qscat)
     if (allocated(srad))   deallocate (srad)
     if (allocated(iatsp))  deallocate (iatsp)
     if (allocated(nar_csm))deallocate (nar_csm)
     if (allocated(nn))     deallocate (nn)
     if (allocated(cosurf)) deallocate (cosurf)
-    if (allocated(xsp))    deallocate (xsp)
     if (allocated(nset))   deallocate (nset)
-    if (allocated(bh))     deallocate (bh)
     if (allocated(qden))   deallocate (qden)
     if (allocated(nar_csm))    deallocate (nar_csm)
     if (allocated(nsetf))  deallocate (nsetf)
@@ -1833,12 +1807,10 @@ subroutine cosini(l_print)
       return
     end if
     if (.not. mozyme) then
-      allocate(abcmat(lenabc), xsp(3, lenabc), nset(nppa*numat), bh(lenabc), stat = j)
+      allocate(nset(nppa*numat), stat = j)
       allocate(bmat(lm61, lenabc), stat = i)
       j = j + i
       allocate(amat((lenabc*(lenabc + 1))/2), stat = i)
-      j = j + i
-      allocate(cmat((lm61*(lm61 + 1))/2), stat = i)
       j = j + i
       if (j /= 0) then
         if (l_print) then
@@ -1855,7 +1827,6 @@ subroutine cosini(l_print)
         call memory_error("COSINI (2) in Cosmo")
         return
       end if
-      cmat = 0.d0
     end if
     call extvdw (usevdw, rvdw)
     if (moperr) return

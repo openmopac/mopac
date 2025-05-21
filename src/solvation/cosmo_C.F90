@@ -43,7 +43,6 @@ module cosmo_C
     cosvol,      & ! Molecular volume, in cubic Angstroms
                    !
     cif1, cif2,  & !
-    cdiagi,      &
    fnsq, rsolv
   double precision :: ffact = 0.d0
   double precision, dimension(:), allocatable :: diagsl
@@ -51,22 +50,16 @@ module cosmo_C
   double precision, dimension(4,1082) :: dirsm, dirvec
   double precision, dimension(:), allocatable :: &
   & amat,    & !
-  & cmat,    & !
   & gden,    & !
   & qscat,   & !
   & arat,    & !
   & srad,    & !
-  & abcmat,  & !
-  & qden,    & !
-  & bh,      & !
-  & cdiag
+  & qden
   double precision, dimension(:,:), allocatable :: &
   & bmat,    & !
   & phinet,  & !
   & qscnet,  & !
   & qdenet,  & !
   & cosurf,  & !
-  & sude,    & !
-  & xsp,     & !
-  & cxy
+  & sude
 end module cosmo_C
