@@ -1727,8 +1727,8 @@ end subroutine surclo
 subroutine cosini(l_print)
     use cosmo_C, only : n0, ioldcv, fnsq, nps, rsolv, nspa, disex2, &
     dirsm, dirvec, srad, ipiden, gden, idenat, qdenet, amat, &
-    lenabc, arat, sude, isude, bh, qden, nar_csm, nsetf, phinet, &
-    qscnet, bmat, nset, xsp, abcmat, iatsp, nn, qscat, cosurf, nppa, &
+    lenabc, arat, sude, isude, qden, nar_csm, nsetf, phinet, &
+    qscnet, bmat, nset, iatsp, nn, qscat, cosurf, nppa, &
     ffact, fepsi, nden
     use common_arrays_C, only : nat, nfirst, nlast
     use molkst_C, only : numat, keywrd, moperr, lm61, mozyme, line, jobnam
@@ -1775,7 +1775,6 @@ subroutine cosini(l_print)
     if (allocated(qdenet)) deallocate (qdenet)
     if (allocated(phinet)) deallocate (phinet)
     if (allocated(qscnet)) deallocate (qscnet)
-    if (allocated(abcmat)) deallocate (abcmat)
     if (allocated(bmat))   deallocate (bmat)
     if (allocated(qscat))  deallocate (qscat)
     if (allocated(srad))   deallocate (srad)
@@ -1783,9 +1782,7 @@ subroutine cosini(l_print)
     if (allocated(nar_csm))deallocate (nar_csm)
     if (allocated(nn))     deallocate (nn)
     if (allocated(cosurf)) deallocate (cosurf)
-    if (allocated(xsp))    deallocate (xsp)
     if (allocated(nset))   deallocate (nset)
-    if (allocated(bh))     deallocate (bh)
     if (allocated(qden))   deallocate (qden)
     if (allocated(nar_csm))    deallocate (nar_csm)
     if (allocated(nsetf))  deallocate (nsetf)
@@ -1810,7 +1807,7 @@ subroutine cosini(l_print)
       return
     end if
     if (.not. mozyme) then
-      allocate(abcmat(lenabc), xsp(3, lenabc), nset(nppa*numat), bh(lenabc), stat = j)
+      allocate(nset(nppa*numat), stat = j)
       allocate(bmat(lm61, lenabc), stat = i)
       j = j + i
       allocate(amat((lenabc*(lenabc + 1))/2), stat = i)
