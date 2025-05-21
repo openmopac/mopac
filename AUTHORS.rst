@@ -149,8 +149,12 @@ Michael Coolidge
    [`DOI:10.1002/jcc.540120807 <https://doi.org/10.1002/jcc.540120807>`_]
 
 Andreas Klamt
-   implementation of the COSMO solvation model
+   reference implementation of the COSMO solvation model
    [`DOI:10.1039/P29930000799 <https://doi.org/10.1039/P29930000799>`_]
+
+Andrey Bliznyuk
+   fast implementation of the COSMO solvation model
+   [`DOI:10.1021/j100039a044 <https://doi.org/10.1021/j100039a044>`_]
 
 Anna Stewart
    copyediting of MOPAC documentation
