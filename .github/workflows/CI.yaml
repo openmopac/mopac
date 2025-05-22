@@ -41,6 +41,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install OpenBLAS with Ubuntu package manager
+        run: sudo apt-get install libopenblas-dev
+
       - name: Install dependencies with PyPI
         run: pip install numpy
 
@@ -92,6 +95,9 @@ jobs:
 
       - name: Install lcov with Ubuntu package manager
         run: sudo apt-get install lcov
+
+      - name: Install OpenBLAS with Ubuntu package manager
+        run: sudo apt-get install libopenblas-dev
 
       - name: Install dependencies with PyPI
         run: pip install numpy
