@@ -25,7 +25,7 @@ env:
 
 jobs:
   linux-static:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
@@ -74,7 +74,7 @@ jobs:
           path: build/tests
 
   code-coverage:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
@@ -134,7 +134,7 @@ jobs:
 
   linux-build:
     # Ubuntu 22+ switched to newer glibc (2.34) that breaks the compatibility library right now
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
