@@ -50,7 +50,9 @@ enough quantum mechanical structure to retain a high degree of model transferabi
 Semiempirical models of thermochemistry were pioneered by Pople [@Pople1; @Pople2] and later
 championed by Dewar [@Dewar], culminating in the development of the Modified Neglect of Diatomic
 Overlap (MNDO) model form [@MNDO], the Austin Model 1 (AM1) parameterization [@AM1], and the
-MOPAC program [@MOPAC1].
+MOPAC program [@MOPAC1]. Historically, MOPAC has been the development platform for the MNDO-family
+semiempirical models, but these models are also implemented in other software such as
+Gaussian [@Gaussian], CP2K [@CP2K], Sparrow [@Sparrow], and ULYSSES [@ULYSSES].
 
 In the four decades since MOPAC was first released, the computing power of personal computers
 has increased a million fold. As a result, the practical cost considerations of quantum chemistry
@@ -66,7 +68,9 @@ are highly sensitive to cost such as interactive simulations for chemical explor
 it is useful to perform calculations at a semiempirical level to estimate results and check for
 problems before committing to a much more expensive calculation at an *ab initio* level. For some
 expensive applications such as protein modeling, only the semiempirical level may be affordable to
-quantum chemistry users who do not have access to supercomputers.
+quantum chemistry users who do not have access to supercomputers. Semiempirical quantum mechanical
+models continue to be a middle ground in atomistic simulation between *ab initio* quantum mechanics
+and molecular mechanics based on classical force fields [@SQM_perspective].
 
 # Features
 
