@@ -457,7 +457,7 @@
       if (lgrad) then
         store_e_disp = e_disp
         if (times) call timer ('Before DERIV')
-        if (nelecs > 0) call deriv (geo, grad)
+        call deriv (geo, grad)
         if (moperr) return
         if (times) call timer ('AFTER  DERIV')
         e_disp = store_e_disp
