@@ -15,11 +15,11 @@
 
 subroutine hcore_for_MOZYME ()
   use molkst_C, only: numat, norbs, id, numcal, n2elec, moperr, &
-     & enuclr, l1u, l2u, l3u, keywrd, efield, mpack, cutofp
+     & enuclr, l1u, l2u, l3u, keywrd, efield, mpack, cutofp, line
   use cosmo_C, only : useps,  phinet, qscnet, qdenet
   use linear_cosmo, only : addnucz
   use chanel_C, only: iw
-  use funcon_C, only: a0, ev
+  use funcon_C, only: a0, ev, fpc_9
   use overlaps_C, only : cutof1, cutof2
   use parameters_C, only: tore, dd, natorb
   use common_arrays_C, only: h, coord, nat, w, wj => w, wk, uspd, tvec
@@ -28,20 +28,61 @@ subroutine hcore_for_MOZYME ()
   implicit none
 !
   character (len=248) :: tmpkey
-  logical :: calci, calcij, calcj, fldon
+  logical :: calci, calcij, calcj, fldon, lmolaris_qmmm, exists
   logical, save :: debug
   integer :: i1, i2, ii, im1, io1, ione, ired, j, j1, jj, jo1, jred, k, &
- & krmax, kro, ks, mm, nj, kr, i, ni, itemp, imol=0
+ & krmax, kro, ks, mm, nj, kr, i, ni, itemp, imol=0, q_at, link_at, mol_at
   double precision :: const, enuc, fldcon, fnuc, half, hterme, xf, yf, zf, xj(3)
   double precision, parameter :: eps = 1.d-10
   double precision, dimension (45) :: e1b, e2a
   double precision, dimension (2025) :: wjd, wkd
   double precision, dimension (9, 9) :: di, dibits
+  double precision, allocatable :: vqc(:)
   double precision, external :: reada
   integer, external :: ijbo
   fldcon = 0.d0
   fnuc = 0.d0
   debug = (Index (keywrd, " HCORE") /= 0)
+  lmolaris_qmmm = (index(keywrd,'QMMM') /= 0)
+  if (lmolaris_qmmm) then
+  !
+  !  Read in the energy in kcal/mol that an electron on each atom would have, arising from
+  !  the partial charges on all atoms.
+  !
+    line="mol.in"
+    call add_path(line)
+    inquire (file=trim(line), exist = exists)
+    if (.not. exists) then
+        call mopend("A file named '"//trim(line)//"' was expected, but was not found.")
+        return
+    end if
+    open(85, file=line, form='formatted')
+    read(85, *, iostat = i)
+    if (i /= 0) then
+        call mopend("A file named '"//trim(line)//"' exists, but is empty.")
+        return
+    end if
+    read(85, *, iostat = i)q_at, link_at
+    if (i /= 0) then
+        call mopend("A file named '"//trim(line)//"' exists, but is corrupt.")
+        return
+    end if
+    mol_at = q_at + link_at
+    if(mol_at /= numat) then
+      write(line,'(a,i5,a,i5,a)') &
+        " The number of atoms in 'mol.in':",mol_at," and in the MOPAC data set:",numat," are different."
+      call mopend(trim(line))
+      write(iw,'(10x,a)')" Correct fault and resubmit."
+      return
+    end if
+    if (allocated(vqc)) deallocate(vqc)
+    allocate(vqc(numat))
+    do i = 1, numat
+      read(85,*)line,line,line,line,vqc(i)
+      if (debug) write(iw,'(a, i4, a, f9.3)')"ATOM No.",i," VQC(I)",vqc(i)
+    end do
+    close(85)
+  end if
   call add_more_interactions()
   if (moperr) return
   if (imol /= numcal) then
@@ -159,12 +200,15 @@ subroutine hcore_for_MOZYME ()
           fnuc = -(efield(1)*coord(1, i) + efield(2)*coord(2, i) + &
                & efield(3)*coord(3, i)) * fldcon
           h(i2) = h(i2) + fnuc
+        else
+          if(lmolaris_qmmm) h(i2) = h(i2) - vqc(i)/fpc_9
         end if
       end do
     end if
     if (fldon) then
       enuclr = enuclr - fnuc * tore(nat(i))
     end if
+    if (lmolaris_qmmm) enuclr = enuclr + vqc(i)/fpc_9*tore(nat(i))
     !
     !   FILL THE ATOM-OTHER ATOM ONE-ELECTRON MATRIX<PSI(LAMBDA)|PSI(SIGMA)>
     !
