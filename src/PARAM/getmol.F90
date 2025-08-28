@@ -202,7 +202,6 @@ subroutine getusp (nat, nfirst, nlast, uspd, atheat)
     double precision, intent (out) :: atheat
     integer :: ia, ib, ii, j, k, k1, ni, i
     double precision :: eat
-    double precision, external :: C_triple_bond_C
     save :: eat
 !----------------------------------------------------------------
     atheat = 0.d0
@@ -248,6 +247,5 @@ subroutine getusp (nat, nfirst, nlast, uspd, atheat)
       cutofp = 30.d0
     end if
     call set_up_dentate
-    atheat = atheat + C_triple_bond_C()
 !
 end subroutine getusp

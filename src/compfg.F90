@@ -65,7 +65,7 @@
       integer :: icalcn, i, j, k, l
       double precision, dimension(3) :: degree
       double precision :: angle, atheat_store, sum, store_e_disp
-      double precision, external ::  nsp2_correction, Si_O_H_correction
+      double precision, external ::  nsp2_correction, Si_O_H_correction, C_triple_bond_C
       double precision, external :: helecz
       logical :: debug, print, large, usedci, force, times, aider, &
         dh, l_locate_ts
@@ -367,6 +367,7 @@
 !
 !  Add in any molecular-mechanics type corrections here
 !
+      atheat = atheat + C_triple_bond_C()
       if (method_pm6 .and. N_3_present) then
         nsp2_corr = nsp2_correction()
         atheat = atheat + nsp2_corr
