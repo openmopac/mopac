@@ -71,7 +71,7 @@
       integer ::  i, j, k, l
       double precision :: eat,  tim, store_fepsi
       logical :: exists, opend, l_OLDDEN
-      double precision, external :: C_triple_bond_C, reada, seconds
+      double precision, external :: reada, seconds
       character :: nokey(20)*10
 #ifdef MKL
       integer :: num_threads
@@ -768,7 +768,6 @@
       end if
       eat = sum(eisol(nat(:numat)))
       atheat = atheat - eat*fpc_9
-      atheat = atheat + C_triple_bond_C()
       rxn_coord = 1.d9
 !
 !  All data for the current job are now read in, and all parameters are

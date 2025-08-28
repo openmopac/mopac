@@ -237,6 +237,7 @@
           call geout(iw)
         end if
       end if
+      call C_triple_bond_C_deriv(dxyz)
       if (DH_correction) call post_scf_corrections(sum, .true.)
 !
 !   THE CARTESIAN DERIVATIVES ARE IN DXYZ

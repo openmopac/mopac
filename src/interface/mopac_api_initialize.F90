@@ -74,7 +74,7 @@ contains
   ! logic has been stripped out of this restricted initialization.
   module subroutine mopac_initialize(system)
     type(mopac_system), intent(in) :: system
-    double precision, external :: seconds, C_triple_bond_C
+    double precision, external :: seconds
     character(100) :: num2str
     integer :: i, j, nelectron, status
     double precision :: eat
@@ -342,7 +342,6 @@ contains
     end do
     eat = sum(eisol(nat(:numat)))
     atheat = atheat - eat*fpc_9
-    atheat = atheat + C_triple_bond_C()
     ! setup MOZYME calculations
     if (mozyme) call set_up_MOZYME_arrays()
   end subroutine mopac_initialize

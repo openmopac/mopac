@@ -219,42 +219,89 @@
   use common_arrays_C, only : nat, coord, nbonds, ibonds
   use molkst_C, only : numat, method_pm6, method_pm7, method_pm6_org, method_pm8
   implicit none
-  integer :: i, j, k, isum
-  double precision :: rab
+  integer :: i, j, k
+  double precision :: rab, rmin, rmax, param1, param2, sum
+!
+! C-C double bond length = 1.34 Angstroms
+! C-C triple bond length = 1.20 Angstroms
+!
+    rmin = 1.21d0
+    rmax = 1.33d0
+    param1 = -5.d0
+    param2 = 25.d0
     if ( .not. (method_pm6 .or. method_pm7 .or. method_pm6_org .or. method_pm8)) then
       C_triple_bond_C = 0.d0
       return
     end if
-    isum = 0
+    sum = 0.d0
     do i = 1, numat
-      rab = 10.d0
-      if (nat(i) == 6 .and. nbonds(i) == 2) then
+      if (nat(i) == 6) then
 !
 !  Possible triple bond
 !
         do k = 1, nbonds(i)
           j = ibonds(k,i)
           if (j > i) cycle
-          if(nat(j) == 6 .and. nbonds(j) == 2) then
+          if(nat(j) == 6) then
             rab = (coord(1,i) - coord(1,j))**2 + (coord(2,i) - coord(2,j))**2 + (coord(3,i) - coord(3,j))**2
-!
-! C-C double bond length = 1.34 Angstroms
-! C-C triple bond length = 1.20 Angstroms
-!
-            if (rab < 1.27d0**2) goto 99
+            if (rab < rmin**2) sum = sum + 1.d0
+            if (rab >= rmin**2 .and. rab < rmax**2) then
+              rab = (dsqrt(rab) - rmin) / (rmax - rmin)
+              sum = sum + 1.d0 - 10.d0*rab**3 + 15.d0*rab**4 - 6.d0*rab**5 + &
+              (param1+rab*param2)*(rab**3 - 3.d0*rab**4 + 3.d0*rab**5 - rab**6)
+            end if
           end if
         end do
-        if (i < j) cycle
 !
 !   Carbon atom "i" is attached to two other atoms, and is attached to carbon atom "j"
 !   and the i-j distance indicates that the bond is acetylenic.
 !
       end if
-      cycle
-99    isum = isum + 1
     end do
-    C_triple_bond_C = isum*12.d0  !  (The value "12" was determined empirically
+    C_triple_bond_C = sum*12.d0  !  (The value "12" was determined empirically
   end function C_triple_bond_C
+  subroutine C_triple_bond_C_deriv(dxyz)
+    use common_arrays_C, only : nat, coord, nbonds, ibonds
+    use molkst_C, only : numat, method_pm6, method_pm7, method_pm6_org, method_pm8
+    implicit none
+    integer :: i, j, k
+    double precision :: rab, rmin, rmax, param1, param2, drab, dsum, dx, dy, dz
+    double precision, intent (inout) ::  dxyz(3, numat)
+      rmin = 1.21d0
+      rmax = 1.33d0
+      param1 = -5.d0
+      param2 = 25.d0
+      if ( .not. (method_pm6 .or. method_pm7 .or. method_pm6_org .or. method_pm8)) then
+        return
+      end if
+      do i = 1, numat
+        if (nat(i) == 6) then
+          do k = 1, nbonds(i)
+            j = ibonds(k,i)
+            if (j > i) cycle
+            if(nat(j) == 6) then
+              rab = (coord(1,i) - coord(1,j))**2 + (coord(2,i) - coord(2,j))**2 + (coord(3,i) - coord(3,j))**2
+              if (rab >= rmin**2 .and. rab < rmax**2) then
+                drab = 0.5d0/(dsqrt(rab) * (rmax - rmin))
+                rab = (dsqrt(rab) - rmin) / (rmax - rmin)
+                dx = 2.d0*(coord(1,i) - coord(1,j))*drab
+                dy = 2.d0*(coord(2,i) - coord(2,j))*drab
+                dz = 2.d0*(coord(3,i) - coord(3,j))*drab
+                dsum = - 10.d0*3.d0*rab**2 + 15.d0*4.d0*rab**3 - 6.d0*5.d0*rab**4 + &
+                (param1+rab*param2)*(3.d0*rab**2 - 3.d0*4.d0*rab**3 + 3.d0*5.d0*rab**4 - 6.d0*rab**5) + &
+                param2*(rab**3 - 3.d0*rab**4 + 3.d0*rab**5 - rab**6)
+                dxyz(1, i) = dxyz(1, i) + 12.d0*dsum*dx
+                dxyz(2, i) = dxyz(2, i) + 12.d0*dsum*dy
+                dxyz(3, i) = dxyz(3, i) + 12.d0*dsum*dz
+                dxyz(1, j) = dxyz(1, j) - 12.d0*dsum*dx
+                dxyz(2, j) = dxyz(2, j) - 12.d0*dsum*dy
+                dxyz(3, j) = dxyz(3, j) - 12.d0*dsum*dz
+              end if
+            end if
+          end do
+        end if
+      end do
+  end subroutine C_triple_bond_C_deriv
 !
 !
 !
