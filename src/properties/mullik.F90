@@ -13,14 +13,14 @@
 ! See the License for the specific language governing permissions and
 ! limitations under the License.
 
-      subroutine mullik()
+      subroutine mullik(popmat)
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
 !
       use molkst_C, only : numat, nelecs, nclose, nopen, fract,  &
         keywrd, norbs, id, verson, method_pm6, uhf, nalpha, nbeta, &
-        numcal, escf, line
+        numcal, escf, line, mpack
 !
       use symmetry_C, only : jndex, namo
 !
@@ -34,6 +34,7 @@
       use chanel_C, only : igpt, gpt_fn, iw
 !
       implicit none
+      double precision, intent(out) :: popmat(mpack)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -59,6 +60,8 @@
 !              H      =  PACKED ARRAY OF ONE-ELECTRON MATRIX
 !              VECS   =  WORKSTORE OF SIZE AT LEAST NORBS*NORBS
 !              STORE  =  WORKSTORE OF SIZE AT LEAST (NORBS*(NORBS+1))/2
+!
+! ON OUTPUT    POPMAT =  PACKED ARRAY OF MULLIKEN POPULATION MATRIX
 !
 !*********************************************************************
 
@@ -250,18 +253,18 @@
       nlower = (norbs*(norbs + 1))/2
       call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 3)
 !
-      pb(:ifact(norbs+1)) = pb(:ifact(norbs+1))*store(:ifact(norbs+1))
+      popmat(:ifact(norbs+1)) = pb(:ifact(norbs+1))*store(:ifact(norbs+1))
       summ = 0.D0
       do i = 1, norbs
         sum = 0
         do j = 1, i
-          sum = sum + pb(ifact(i)+j)
+          sum = sum + popmat(ifact(i)+j)
         end do
         do j = i + 1, norbs
-          sum = sum + pb(ifact(j)+i)
+          sum = sum + popmat(ifact(j)+i)
         end do
         summ = summ + sum
-        pb(ifact(i+1)) = sum
+        popmat(ifact(i+1)) = sum
       end do
       h = store_h
       return

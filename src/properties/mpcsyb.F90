@@ -13,12 +13,12 @@
 ! See the License for the specific language governing permissions and
 ! limitations under the License.
 
-      subroutine mpcsyb(chr, kchrge, eionis, dip)
+      subroutine mpcsyb(chr, kchrge, eionis, di, popmat)
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : numat, norbs, nclose, nalpha, nbeta, escf, &
-      keywrd
+      keywrd, mpack
       use common_arrays_C, only : coord, eigs
       use chanel_C, only : isyb, syb_fn
       implicit none
@@ -26,7 +26,7 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: kchrge
-      double precision , intent(in) :: eionis, chr(numat)
+      double precision , intent(in) :: eionis, chr(numat), popmat(mpack)
       double precision , intent(inout) :: dip
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -58,9 +58,9 @@
       if (kchrge /= 0) dip = 0.0
       write (16, '(I4,F10.3,''  Charge,Dipole Moment'')', err=30) kchrge, dip
       if (index(keywrd," MULL") /= 0) then
-        call mpcpop(1)
+        call mpcpop(1, popmat)
       else
-        call mpcpop(0)
+        call mpcpop(0, popmat)
       end if
       close(unit = isyb, status = "keep")
       return
@@ -71,12 +71,12 @@
 !
 ! ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 !
-      subroutine mpcpop(icok)
+      subroutine mpcpop(icok, popmat)
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-      USE molkst_C, only : numat, keywrd
-      use common_arrays_C, only : nfirst, nlast, nat, pb, chrg
+      USE molkst_C, only : numat, keywrd, mpack
+      use common_arrays_C, only : nfirst, nlast, nat, chrg
       use parameters_C, only : tore
       use chanel_C, only : iw, isyb
       use elemts_C, only : elemnt
@@ -85,6 +85,7 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: icok
+      double precision, intent(in) :: popmat(mpack)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
@@ -118,7 +119,7 @@
 !
 !    Diagonal element of mulliken matrix
 !
-            sum = sum + pb((j*(j+1))/2)
+            sum = sum + popmat((j*(j+1))/2)
           end do
           k = nat(i)
 !
