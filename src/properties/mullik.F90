@@ -20,7 +20,7 @@
 !
       use molkst_C, only : numat, nelecs, nclose, nopen, fract,  &
         keywrd, norbs, id, verson, method_pm6, uhf, nalpha, nbeta, &
-        numcal, escf, line, mpack
+        numcal, escf, line, mpack, nalpha_open, nbeta_open
 !
       use symmetry_C, only : jndex, namo
 !
@@ -29,7 +29,7 @@
       use common_arrays_C, only : nfirst, nlast, nat, coord, &
       & c, h, pb, tvec, eigs, q, eigb, p, ifact, cb
 !
-      use parameters_C, only : zs, zp, zd, betas, betap, tore
+      use parameters_C, only : zs, zp, zd, betas, betap, betad, tore, natorb
 !
       use chanel_C, only : igpt, gpt_fn, iw
 !
@@ -38,16 +38,14 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, if, il, im1, k, ii, j, jf, jl, ij, icalcn=0, mo_l, mo_u
+      integer :: i, if, il, im1, k, ii, j, jf, jl, ij, icalcn=0, mo_l, mo_u, norbi, norbj
       character, dimension(:), allocatable :: namo_tmp*4
       character :: paras*1
       double precision, dimension(norbs) :: eig
-      double precision, dimension(:), allocatable :: store, vecs, store_h
+      double precision, dimension(:), allocatable :: store, vecs, overlap
       double precision, dimension(:, :), allocatable :: work
-      double precision :: bi, bj, sum, summ, q2(numat)
+      double precision :: bi(9), bj(9), sum, summ, q2(numat)
       logical :: graph, graph_formatted, namo_ok
-! GBR_new_addition
-      integer :: nlower
 !
       save :: graph, graph_formatted, icalcn, mo_l, mo_u
 !
@@ -66,8 +64,7 @@
 !*********************************************************************
 
 
-     allocate(store((norbs*(norbs + 1))/2), store_h((norbs*(norbs + 1))/2), &
-       vecs(norbs**2), stat = i)
+     allocate(p_mullik(mpack), overlap(mpack), vecs(norbs**2), stat = i)
      if (i /= 0) then
         write(iw,*)" Unable to allocate memory for eigenvector matrices in MULLIK"
         call mopend("Unable to allocate memory for eigenvector matrices in MULLIK")
@@ -110,36 +107,46 @@
       do i = 1, numat
         q(i) = tore(nat(i) ) - q2(i)
       end do
-      store_h = h
+      ! overlap matrix construction from to_screen, including d orbitals
+      overlap = 0.d0
       do i = 1, numat
         if = nfirst(i)
-        il = nlast(i)
         im1 = i - 1
-        bi = betas(nat(i))
-        do k = if, il
-          ii = (k*(k - 1))/2
-          do j = 1, im1
-            jf = nfirst(j)
-            jl = nlast(j)
-            bj = betas(nat(j))
-!  THE  +1.D-14 IS TO PREVENT POSSIBLE ERRORS IN THE DIAGONALIZATION.
-            ij = ii + jf
-            h(ij) = 2.D0*h(ij)/(bi + bj) + 1.D-14
-            store(ij) = h(ij)
-            bj = betap(nat(j))
-            bj = betap(nat(j))
-            h(ii+jf+1:jl+ii) = 2.D0*h(ii+jf+1:jl+ii)/(bi + bj) + 1.D-14
-!  THE  +1.D-14 IS TO PREVENT POSSIBLE ERRORS IN THE DIAGONALIZATION.
-            store(ii+jf+1:jl+ii) = h(ii+jf+1:jl+ii)
+        ni = nat(i)
+        bi = betas(ni)
+        bi(1) = betas(ni)*0.5D0
+        bi(2) = betap(ni)*0.5D0
+        bi(3) = bi(2)
+        bi(4) = bi(2)
+        bi(5) = betad(ni)*0.5D0
+        bi(6) = bi(5)
+        bi(7) = bi(5)
+        bi(8) = bi(5)
+        bi(9) = bi(5)
+        norbi = natorb(ni)
+        do j = 1, im1
+          nj = nat(j)
+          bj(1) = betas(nj)*0.5D0
+          bj(2) = betap(nj)*0.5D0
+          bj(3) = bj(2)
+          bj(4) = bj(2)
+          bj(5) = betad(nj)*0.5D0
+          bj(6) = bj(5)
+          bj(7) = bj(5)
+          bj(8) = bj(5)
+          bj(9) = bj(5)
+          norbj = natorb(nj)
+          jf = nfirst(j)
+          do ii = 1, norbi
+            do jj = 1, norbj
+              ij = ((if + ii - 1)*(if + ii - 2))/2 + jf + jj - 1
+              overlap(ij) = h(ij)/(bi(ii) + bj(jj))
+            end do
           end do
-          store(ii+if:k+ii) = 0.D0
-          h(ii+if:k+ii) = 0.D0
-          bi = betap(nat(i))
         end do
       end do
-      store(ifact(2:norbs+1)) = 1.D0
-      h(ifact(2:norbs+1)) = 1.D0
-      call rsp (h, norbs, eig, vecs)
+      overlap(ifact(2:norbs+1)) = 1.D0
+      call rsp (overlap, norbs, eig, vecs)
       do i = 1, norbs
         eig(i) = 1.D0/sqrt(abs(eig(i)))
       end do
@@ -245,15 +252,20 @@
           write (igpt) work
           write (igpt) id, tvec
         end if
-        h = store_h
         if (index(keywrd,'MULLIK') == 0) return
       end if
-      call mult (c, work, vecs, norbs)
-      i = -1
-      nlower = (norbs*(norbs + 1))/2
-      call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, nlower, norbs, 2, pb, 3)
-!
-      popmat(:ifact(norbs+1)) = pb(:ifact(norbs+1))*store(:ifact(norbs+1))
+      if (uhf) then
+        call mult (c, work, vecs, norbs)
+        call density_for_GPU (vecs, fract, nalpha, nalpha_open, 1.d0, mpack, norbs, 2, p_mullik, 3)
+        popmat(:mpack) = p_mullik(:mpack)*overlap(:mpack)
+        call mult (cb, work, vecs, norbs)
+        call density_for_GPU (vecs, fract, nbeta, nbeta_open, 1.d0, mpack, norbs, 2, p_mullik, 3)
+        popmat(:mpack) = popmat(:mpack) + p_mullik(:mpack)*overlap(:mpack)
+      else
+        call mult (c, work, vecs, norbs)
+        call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, mpack, norbs, 2, p_mullik, 3)
+        popmat(:mpack) = p_mullik(:mpack)*overlap(:mpack)
+      end if
       summ = 0.D0
       do i = 1, norbs
         sum = 0
@@ -266,6 +278,5 @@
         summ = summ + sum
         popmat(ifact(i+1)) = sum
       end do
-      h = store_h
       return
       end subroutine mullik
