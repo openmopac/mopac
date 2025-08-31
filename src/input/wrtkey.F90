@@ -214,15 +214,6 @@ subroutine wrtchk (allkey)
     end if
   end if
 !
-!   MULLIK does not work with UHF
-!
-  if (Index (keywrd, " MULLIK") /= 0 ) then
-    if (uhf) then
-      call mopend ("MULLIKEN POPULATION NOT AVAILABLE WITH UHF")
-      return
-    end if
-  end if
-!
 !   Check UHF with nonallowed keywords
 !
   if (uhf) then

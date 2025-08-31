@@ -19,7 +19,7 @@
 !   M o d u l e s
 !-----------------------------------------------
       use common_arrays_C, only : na, nb, nc, labels, loc, nat, c, eigs
-      use molkst_C, only : natoms, numcal, keywrd, numat, title, koment, line
+      use molkst_C, only : natoms, numcal, keywrd, numat, title, koment, line, norbs
       use maps_C, only : rxn_coord, rc_escf, ekin, rc_dipo
       use elemts_C, only : elemnt
       use chanel_C, only : iw
@@ -37,6 +37,7 @@
       double precision, dimension(3,numat) :: xyz, vel
       double precision, dimension(3) :: gg
       double precision :: etot, errr, last_point, last_rxn_coord = 10.d0
+      double precision, dimension (:), allocatable :: popmat
       logical :: drc, large, graph, run_local
       character :: alpha*2, frmat*1
       double precision, external :: reada
@@ -167,7 +168,9 @@
       end do
       if (graph) then
         if (run_local)  call local (c, i, eigs, 0, "c ")
-        call mullik ()
+        allocate(popmat((norbs*(norbs+1))/2))
+        call mullik (popmat)
+        deallocate(popmat)
       end if
       call to_screen("To_file: IRC-DRC")
       if (index(keywrd," LDRC_FIRST") /= 0) then

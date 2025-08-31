@@ -18,7 +18,7 @@
       use molkst_C, only : natoms, ndep,  nvar, gnorm, iflepo, keywrd, &
       & last, numat, escf, id, jloop => itemp_1, numcal, n_trivial => itemp_2, &
       moperr, this_point => itemp_2, zpe, mozyme, uhf, prt_force, prt_normal_coords, &
-      prt_orientation, maxtxt, l_normal_html
+      prt_orientation, maxtxt, l_normal_html, norbs
 !
       use common_arrays_C, only : xparam, na, nb, nc, geo, geoa, ca => c, cb, eigs, eigb, &
       & labels, coord, loc, grad, errfn, na_store, nat, lopt, fmatrx, p, q, txtatm
@@ -42,7 +42,7 @@
       double precision :: time2, tscf, tder, time1, time3, a, b, c, &
         sum, const, summ, sum1, sym
       double precision, dimension(:), allocatable :: store, ff, oldf, &
-        velocity
+        velocity, popmat
       double precision, dimension (:,:), allocatable :: store_coord
       logical :: restrt, linear, debug, prnt, large, ts
       double precision, external :: ddot, dipole, reada, seconds
@@ -247,7 +247,11 @@
       '(10X," GRADIENT NORM SHOULD BE LESS THAN ABOUT",f4.1," FOR THERMO",&
       &/10X,'' TO GIVE ACCURATE RESULTS'')') sum
       end if
-      if ( .not. mozyme .and. .not. restrt) call mullik()
+      if ( .not. mozyme .and. .not. restrt) then
+        allocate(popmat((norbs*(norbs+1))/2))
+        call mullik(popmat)
+        deallocate(popmat)
+      end if
       if (tscf > 0.01D0) then
         write (iw, '(2/10X,''TIME FOR SCF CALCULATION ='',F8.2)') tscf
         write (iw, '( /10X,''TIME FOR DERIVATIVES     ='',F8.2)') tder

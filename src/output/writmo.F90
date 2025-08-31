@@ -59,7 +59,7 @@
 !-----------------------------------------------
 
       double precision ::  gcoord(3,numat)
-      double precision, dimension (:), allocatable :: rxyz
+      double precision, dimension (:), allocatable :: rxyz, popmat
       integer :: icalcn, i, loc11, loc21, nopn, j, k, l, m, kchrge, iwrite, mvar
       double precision :: q2(numat), degree, xreact, eionis, vol, tim, xi, sum, &
       dip, dumy(3), pKa_unsorted(numat), distortion, rms, gnorm_norm, escf_min
@@ -917,6 +917,8 @@
       if (index(keywrd,' MULLIK') + index(keywrd,' GRAPH') /= 0) then
         if (index(keywrd,' MULLIK') /= 0) write (iw, &
           '(/10X,'' MULLIKEN POPULATION ANALYSIS'')')
+        mpack = (norbs*(norbs + 1))/2
+        allocate(popmat(mpack))
         if (mozyme) then
           if (allocated(c)) deallocate(c)
           allocate (c(norbs, norbs), stat=i)
@@ -934,25 +936,21 @@
 !
 !              Convert "h" from MOZYME form to lower-half-triangle
 !
-          mpack = (norbs*(norbs + 1))/2
-          allocate(pb(mpack))
-          call convert_mat_packed_to_triangle(h, pb)
+          call convert_mat_packed_to_triangle(h, popmat)
           deallocate(h)        !   "h" must be deallocated because it might be smaller than mpack
           allocate(h(mpack))   !   Re-allocate "h"
-          h(:mpack) = pb(:mpack)
+          h(:mpack) = popmat(:mpack)
         end if
-        call mullik ()
+        call mullik (popmat)
         if (index(keywrd,' GRAPH') /= 0) &
           write (iw,'(/10X,'' DATA FOR GRAPH WRITTEN TO DISK'')')
       end if
-!
-!  NOTE: ON EXIT FROM MULLIK, PB HOLDS THE MULLIKEN ANALYSIS.
-!
       if (index(keywrd," SYB") /= 0) then
-        call mpcsyb(q, kchrge, eionis, dip)
+        call mpcsyb(q, kchrge, eionis, dip, popmat)
       else
-        if (index(keywrd,' MULLIK') /= 0)  call mpcpop(-1)
+        if (index(keywrd,' MULLIK') /= 0)  call mpcpop(-1, popmat)
       end if
+      if (allocated(popmat)) deallocate(popmat)
       if (icalcn /= numcal) then
         inquire(unit=iarc, opened=opend)
         if ( .not. opend) then
