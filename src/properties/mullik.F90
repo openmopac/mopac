@@ -38,11 +38,11 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, if, il, im1, k, ii, j, jf, jl, ij, icalcn=0, mo_l, mo_u, norbi, norbj, mpack0
+      integer :: i, if, il, im1, k, ii, j, jj, jf, jl, ij, icalcn=0, mo_l, mo_u, norbi, norbj, mpack0, ni, nj
       character, dimension(:), allocatable :: namo_tmp*4
       character :: paras*1
       double precision, dimension(norbs) :: eig
-      double precision, dimension(:), allocatable :: store, vecs, overlap
+      double precision, dimension(:), allocatable :: vecs, overlap, p_mullik
       double precision, dimension(:, :), allocatable :: work
       double precision :: bi(9), bj(9), sum, summ, q2(numat)
       logical :: graph, graph_formatted, namo_ok
