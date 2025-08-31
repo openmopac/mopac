@@ -18,7 +18,7 @@
 !   M o d u l e s
 !-----------------------------------------------
       use molkst_C, only : numat, norbs, nclose, nalpha, nbeta, escf, &
-      keywrd, mpack
+      keywrd
       use common_arrays_C, only : coord, eigs
       use chanel_C, only : isyb, syb_fn
       implicit none
@@ -26,7 +26,7 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: kchrge
-      double precision , intent(in) :: eionis, chr(numat), popmat(mpack)
+      double precision , intent(in) :: eionis, chr(numat), popmat((norbs*(norbs+1))/2)
       double precision , intent(inout) :: dip
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
@@ -75,7 +75,7 @@
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-      USE molkst_C, only : numat, keywrd, mpack
+      USE molkst_C, only : numat, keywrd, norbs
       use common_arrays_C, only : nfirst, nlast, nat, chrg
       use parameters_C, only : tore
       use chanel_C, only : iw, isyb
@@ -85,7 +85,7 @@
 !   D u m m y   A r g u m e n t s
 !-----------------------------------------------
       integer , intent(in) :: icok
-      double precision, intent(in) :: popmat(mpack)
+      double precision, intent(in) :: popmat((norbs*(norbs+1))/2)
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------

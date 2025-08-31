@@ -19,7 +19,7 @@
 !   M o d u l e s
 !-----------------------------------------------
       use common_arrays_C, only : na, nb, nc, labels, loc, nat, c, eigs
-      use molkst_C, only : natoms, numcal, keywrd, numat, title, koment, line, mpack
+      use molkst_C, only : natoms, numcal, keywrd, numat, title, koment, line, norbs
       use maps_C, only : rxn_coord, rc_escf, ekin, rc_dipo
       use elemts_C, only : elemnt
       use chanel_C, only : iw
@@ -168,7 +168,7 @@
       end do
       if (graph) then
         if (run_local)  call local (c, i, eigs, 0, "c ")
-        allocate(popmat(mpack))
+        allocate(popmat((norbs*(norbs+1))/2))
         call mullik (popmat)
         deallocate(popmat)
       end if
