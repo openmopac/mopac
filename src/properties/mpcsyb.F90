@@ -13,7 +13,7 @@
 ! See the License for the specific language governing permissions and
 ! limitations under the License.
 
-      subroutine mpcsyb(chr, kchrge, eionis, di, popmat)
+      subroutine mpcsyb(chr, kchrge, eionis, dip, popmat)
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
