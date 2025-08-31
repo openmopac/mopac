@@ -38,14 +38,15 @@
 !-----------------------------------------------
 !   L o c a l   V a r i a b l e s
 !-----------------------------------------------
-      integer :: i, if, il, im1, k, ii, j, jj, jf, jl, ij, icalcn=0, mo_l, mo_u, norbi, norbj, mpack0, ni, nj
+      integer :: i, if, il, im1, k, ii, j, jj, jf, jl, ij, icalcn=0, mo_l, mo_u, &
+        norbi, norbj, mpack0, ni, nj, iopc_calcp, na1el, na2el
       character, dimension(:), allocatable :: namo_tmp*4
       character :: paras*1
       double precision, dimension(norbs) :: eig
       double precision, dimension(:), allocatable :: vecs, overlap, p_mullik
       double precision, dimension(:, :), allocatable :: work
       double precision :: bi(9), bj(9), sum, summ, q2(numat)
-      logical :: graph, graph_formatted, namo_ok
+      logical :: graph, graph_formatted, namo_ok, halfe
 !
       save :: graph, graph_formatted, icalcn, mo_l, mo_u
 !
@@ -69,6 +70,21 @@
         write(iw,*)" Unable to allocate memory for eigenvector matrices in MULLIK"
         call mopend("Unable to allocate memory for eigenvector matrices in MULLIK")
         return
+      end if
+! synchronize w/ iter
+      na2el = nclose
+      na1el = nalpha + nopen
+      halfe = (nopen /= nclose .and. Abs(fract - 2.D0) > 1.d-20 .and. Abs(fract) > 1.d-20)
+      if (halfe) then
+        iopc_calcp = 3            ! DGEMM on CPU
+#ifdef GPU
+        if (lgpu) iopc_calcp = 2  ! DGEMM on GPU
+#endif
+      else
+        iopc_calcp = 5            ! DSYRK on CPU
+#ifdef GPU
+        if (lgpu) iopc_calcp = 4  ! DSYRK on GPU
+#endif
       end if
 !*********************************************************************
 !
@@ -256,14 +272,18 @@
       end if
       if (uhf) then
         call mult (c, work, vecs, norbs)
-        call density_for_GPU (vecs, fract, nalpha, nalpha_open, 1.d0, mpack0, norbs, 2, p_mullik, 3)
+        call density_for_GPU (vecs, fract, nalpha, nalpha_open, 1.d0, mpack0, norbs, 1, p_mullik, iopc_calcp)
         popmat(:mpack0) = p_mullik(:mpack0)*overlap(:mpack0)
         call mult (cb, work, vecs, norbs)
-        call density_for_GPU (vecs, fract, nbeta, nbeta_open, 1.d0, mpack0, norbs, 2, p_mullik, 3)
+        call density_for_GPU (vecs, fract, nbeta, nbeta_open, 1.d0, mpack0, norbs, 1, p_mullik, iopc_calcp)
         popmat(:mpack0) = popmat(:mpack0) + p_mullik(:mpack0)*overlap(:mpack0)
       else
         call mult (c, work, vecs, norbs)
-        call density_for_GPU (vecs, fract, nclose, nopen, 2.d0, mpack0, norbs, 2, p_mullik, 3)
+        if (halfe) then
+          call densit (vecs, norbs, norbs, na2el, 2.d0, na1el, fract, p_mullik, 1)
+        else
+          call density_for_GPU (vecs, fract, na2el, na1el, 2.d0, mpack0, norbs, 1, p_mullik, iopc_calcp)
+        end if
         popmat(:mpack0) = p_mullik(:mpack0)*overlap(:mpack0)
       end if
       summ = 0.D0
