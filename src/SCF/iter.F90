@@ -52,7 +52,7 @@
       logical :: debug, prtfok, prteig, prtden, prt1el, minprt, newdg, prtpl, &
         prtvec, camkin, ci, okpuly, oknewd, times, force, allcon, &
         halfe, gs, capps, incitr, timitr, frst, bfrst, ready, glow,  &
-        makea, makeb, getout, l_param, opendd
+        makea, makeb, getout, l_param, opendd, tlimit
       integer :: iopc_calcp
       character, dimension(3) :: abprt*5
       double precision, external :: capcor, helect, meci, reada, seconds
@@ -90,6 +90,7 @@
       opendd = .false.
       glow = .FALSE.
       tstart = seconds(1)
+      tlimit = index(keywrd,' CYCLES') + index(keywrd,' BIGCYCLES') == 0
       if (icalcn /= numcal) then
         call delete_iter_arrays
         l_param = .true.
@@ -642,7 +643,7 @@
       end if
       ! enforce time limit
       tnow = seconds(2)
-      if (tnow - tstart >= tleft) then
+      if (tlimit .and. tnow - tstart >= tleft) then
         call writmo
         call mopend ('UNABLE TO ACHIEVE SELF-CONSISTENCE WITHIN TIME LIMIT')
         return
