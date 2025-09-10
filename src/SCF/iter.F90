@@ -27,7 +27,7 @@
     &    nclose, nopen, fract, numcal, mpack, iflepo, iscf, &
     &    enuclr, keywrd, gnorm, moperr, last, nscf, emin, &
          limscf, atheat, is_PARAM, id, line, lxfac, nalpha_open, &
-         nbeta_open, npulay, method_indo, use_disk
+         nbeta_open, npulay, method_indo, use_disk, tleft
       USE reimers_C, only: dd, ff, tot, cc0, aa, dtmp, nb2
       use cosmo_C, only : useps
 #ifdef GPU
@@ -47,7 +47,8 @@
       double precision :: plb, scfcrt, pl, bshift, pltest, trans, w1, w2, random, &
         shift, shiftb = 0.d0, shfmax, ten, tenold, plchek, scorr, shfto, &
         shftbo, titer0, eold, diff, enrgy, titer, escf, &
-        sellim, sum, summ, eold_alpha, eold_beta, theta(norbs), ofract, sum1, sum2
+        sellim, sum, summ, eold_alpha, eold_beta, theta(norbs), ofract, sum1, sum2, &
+        tstart, tnow
       logical :: debug, prtfok, prteig, prtden, prt1el, minprt, newdg, prtpl, &
         prtvec, camkin, ci, okpuly, oknewd, times, force, allcon, &
         halfe, gs, capps, incitr, timitr, frst, bfrst, ready, glow,  &
@@ -88,6 +89,7 @@
       sellim = 0.d0
       opendd = .false.
       glow = .FALSE.
+      tstart = seconds(1)
       if (icalcn /= numcal) then
         call delete_iter_arrays
         l_param = .true.
@@ -636,6 +638,13 @@
         iscf = 2
         call writmo
         call mopend ('UNABLE TO ACHIEVE SELF-CONSISTENCE')
+        return
+      end if
+      ! enforce time limit
+      tnow = seconds(2)
+      if (tnow - tstart >= tleft) then
+        call writmo
+        call mopend ('UNABLE TO ACHIEVE SELF-CONSISTENCE WITHIN TIME LIMIT')
         return
       end if
       ee = helect(norbs,pa,h,f)
