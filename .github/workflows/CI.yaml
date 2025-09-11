@@ -353,7 +353,9 @@ jobs:
     steps:
       - name: Check number of cores
         shell: pwsh
-        run: (Get-CimInstance -ClassName Win32_Processor | Measure-Object -Property NumberOfLogicalProcessors -Sum).Sum >> $GITHUB_ENV
+        run: |
+          $ncores = (Get-CimInstance -ClassName Win32_Processor | Measure-Object -Property NumberOfLogicalProcessors -Sum).Sum
+          echo "num_cores=$ncores" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
       - uses: actions/checkout@v4
 
