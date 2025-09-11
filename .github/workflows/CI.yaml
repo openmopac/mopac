@@ -352,11 +352,10 @@ jobs:
 
     steps:
       - name: Check number of cores
-        shell: bash
+        shell: pwsh
         run: |
-          WMIC CPU Get -Format:List
-          WMIC CPU Get NumberOfLogicalProcessors | head -2 | tail -1 > num_cores
-          echo "NUM_CORES=$(cat num_cores)" >> $GITHUB_ENV
+          $ncores = (Get-CimInstance -ClassName Win32_Processor | Measure-Object -Property NumberOfLogicalProcessors -Sum).Sum
+          echo "num_cores=$ncores" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
       - uses: actions/checkout@v4
 
