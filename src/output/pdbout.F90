@@ -313,7 +313,7 @@ subroutine pdbout (mode1)
     write(iprt,"(/a)") "$(document).ready(function() {Info = {"
     write(iprt,"(10x,a)") "width: 1500,", "height: 1000,", "color: ""0xB0B0B0"",", &
     "disableInitialConsole: true, ", "addSelectionOptions: false,", "j2sPath: ""../jsmol/j2s"",", &
-    "jarPath: ""../jsmol/java"",", "use: ""HTML5"", script: ", " "
+    "use: ""HTML5"", script: ", " "
     write(iprt,"(a)")"// Data set to be loaded", " "
     if (index(keywrd, " GRAPHF") /= 0) then
       line = input_fn(:len_trim(input_fn) - 4)//"mgf"

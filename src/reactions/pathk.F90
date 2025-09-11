@@ -548,7 +548,6 @@
     write(iprt,"(a)")""
     write(iprt,"(a)")"  Jmol.Info.j2sPath = ""../jsmol/j2s"""
     write(iprt,"(a)")"  "
-    write(iprt,"(a)")" jmolInitialize(""java"",""JmolAppletSigned0.jar"")"
     write(iprt,"(a)")" jmolSetAppletColor(""lightblue"");"
     write(iprt,"(a)")" jmolApplet(600, ""set antialiasDisplay;set loadStructCallback 'plotEnergies';"// &
       "set animFrameCallback 'doHighlight'; load "" + modelFile);"
