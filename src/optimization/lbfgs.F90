@@ -87,7 +87,7 @@
       if (Index (keywrd, " CYCLES") /= 0) then
         maxcyc = Nint (reada (keywrd, Index (keywrd, " CYCLES")))
       end if
-      if (index(keywrd, " LET") + index(keywrd, " PREC") /= 0) then
+      if (index(keywrd, " LET") + index(keywrd, " PRECISE") /= 0) then
         if (index(keywrd, " LET(") /= 0) then
           max_bad = Nint (reada (keywrd, Index (keywrd, " LET(")))
           write(iw,'(/10x,a,i4)') &
@@ -107,7 +107,7 @@
       else
         tolerg = 1.d0
         if (id /= 0) tolerg = id*2.d0 - 1.d0
-        if (Index (keywrd, " PREC") /= 0) then
+        if (Index (keywrd, " PRECISE") /= 0) then
           tolerg = tolerg*0.2d0
         end if
       end if

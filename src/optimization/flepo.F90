@@ -183,7 +183,7 @@
 !  ORDER OF PRECISION:   'GNORM' TAKES PRECEDENCE OVER 'FORCE', WHICH
 !                        TAKES PRECEDENCE OVER 'PRECISE'.
         tolerg = 1.0D0
-        if (index(keywrd,'PREC') /= 0) tolerg = 0.2D0
+        if (index(keywrd,'PRECISE') /= 0) tolerg = 0.2D0
         if (index(keywrd,'FORCE') /= 0) tolerg = 0.1D0
 !
 !      READ IN THE GRADIENT-NORM LIMIT, IF SPECIFIED
@@ -203,7 +203,7 @@
         delhof = 0.0010D0*const
         tolerf = 0.002D0*const
         tolrg = tolerg
-        if (index(keywrd,'PREC') /= 0) then
+        if (index(keywrd,'PRECISE') /= 0) then
           tolerx = tolerx*0.01D0
           delhof = delhof*0.01D0
           tolerf = tolerf*0.01D0
@@ -741,7 +741,7 @@
             ' DURING THESE ATTEMPTS THE ENERGY DROPPED',' BY LESS THAN',f4.1,&
             ' KCAL/MOLE',/,10x,&
             ' FURTHER CALCULATION IS NOT JUSTIFIED AT THIS TIME.')
-          if (index(keywrd,'PREC') == 0) write (iw, 390)
+          if (index(keywrd,'PRECISE') == 0) write (iw, 390)
   390     format(10x,' TO CONTINUE, START AGAIN WITH THE WORD "PRECISE"')
           last = 1
           call compfg (xparam, .TRUE., funct1, .TRUE., grad, .FALSE.)

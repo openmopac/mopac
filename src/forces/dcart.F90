@@ -97,7 +97,7 @@
         end if
         large = index(keywrd,'LARGE') /= 0
         debug = index(keywrd,'DERIV') + index(keywrd,'DCART') /= 0
-        force = index(keywrd,'PREC') + index(keywrd,'FORCE') /= 0
+        force = index(keywrd,'PRECISE') + index(keywrd,'FORCE') /= 0
       end if
       icuc = (l123 + 1)/2
       numtot = numat*l123

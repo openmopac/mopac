@@ -127,7 +127,7 @@
         icalcn = numcal
         debug = index(keywrd,'DERNVO') /= 0
         large = index(keywrd,'LARGE') /= 0
-        dcar = index(keywrd,'FORC') + index(keywrd,'PREC') /= 0
+        dcar = index(keywrd,'FORC') + index(keywrd,'PRECISE') /= 0
         nvax = 3*numat
       end if
       dxyzr(:nvax) = 0.D0
