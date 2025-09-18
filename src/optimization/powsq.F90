@@ -82,7 +82,7 @@
         xinc = a0*0.01D0
         rho2 = 1.D-4
         tol2 = 4.D-1
-        if (index(keywrd,' PREC') /= 0) tol2 = 1.D-2
+        if (index(keywrd,' PRECISE') /= 0) tol2 = 1.D-2
         if (index(keywrd,' GNORM') /= 0) then
           tol2 = reada(keywrd,index(keywrd,' GNORM'))
           if (tol2<0.01D0 .and. index(keywrd,' LET')==0) then

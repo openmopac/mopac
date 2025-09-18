@@ -1019,7 +1019,7 @@ subroutine efstr (xparam, funct, ihess, ntime, iloop, igthes, mxstep, ireclc, &
     end if
     tol2 = 1.d+0
     if (id /= 0) tol2 = id*2.d0 - 1.d0
-    if (Index (keywrd, " PREC") /= 0) tol2 = tol2*5.d-2
+    if (Index (keywrd, " PRECISE") /= 0) tol2 = tol2*5.d-2
     i = Index (keywrd, " GNORM=")
     if (i /= 0) then
       tol2 = reada (keywrd, i)

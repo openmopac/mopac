@@ -370,7 +370,7 @@ subroutine Locate_TS
   else
     tolerg = 1.d0
     if (id /= 0) tolerg = id*2.d0 - 1.d0
-    if (Index (keywrd, " PREC") /= 0) then
+    if (Index (keywrd, " PRECISE") /= 0) then
       tolerg = tolerg*0.2d0
     end if
   end if

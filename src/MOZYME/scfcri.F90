@@ -45,7 +45,7 @@ subroutine scfcri (selcon)
       !
       i = Index (keywrd, " TS") + Index (keywrd, " FORCETS") + Index (keywrd, " IRC=")
       if (i /= 0) scfcrt = 2.0d-3
-      precis = (Index (keywrd, " PRECIS") /= 0)
+      precis = (Index (keywrd, " PRECISE") /= 0)
       i = Index (keywrd, " RELSCF")
       if (i /= 0) then
         scfcrt = reada (keywrd, i) * scfcrt

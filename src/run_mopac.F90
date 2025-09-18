@@ -495,8 +495,8 @@
         end if
       end if
       if (mozyme) then
-        if (index(keywrd, " PREC") /= 0) then
-          call l_control("PREC", len_trim("PREC"), -1)
+        if (index(keywrd, " PRECISE") /= 0) then
+          call l_control("PRECISE", len_trim("PRECISE"), -1)
           if (index(keywrd, " LET") == 0) call l_control("LET", len_trim("LET"), 1)
         end if
       end if

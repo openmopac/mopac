@@ -75,7 +75,7 @@
         saddle = index(keywrd, " SADDLE") /= 0
         debug = index(keywrd,' DERIV') /= 0
         field = index(keywrd,' FIELD') /= 0
-        precis = index(keywrd,' PREC') /= 0
+        precis = index(keywrd,' PRECISE') /= 0
         DH_correction = (index(keywrd,' PM6-D') + index(keywrd,' PM6-H') /= 0 .or. &
           method_PM7 .or. method_pm6_org .or. method_pm8 )
         intn = index(keywrd,'  XYZ') == 0

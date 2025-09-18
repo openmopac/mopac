@@ -89,7 +89,7 @@
       if (index(keywrd,' CYCLES') /= 0 .and. index(keywrd, " IRC") == 0) &
         maxcyc = nint(reada(keywrd,index(keywrd,' CYCLES')))
       prnt = index(keywrd,'IRC=') == 0
-      precis = index(keywrd,' PREC') /= 0
+      precis = index(keywrd,' PRECISE') /= 0
       restrt = index(keywrd,'RESTART') /= 0
       if (index(keywrd,'NLLSQ') /= 0) restrt = .FALSE.
       debug = index(keywrd,'FMAT') /= 0

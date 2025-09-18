@@ -1912,7 +1912,7 @@
 !
 !  Calculate the average and RMS differences of two geometries
 !
-    precise = (index(keywrd, " PREC") /= 0)
+    precise = (index(keywrd, " PRECISE") /= 0)
     residue_motion = 0.d0
     No_atoms_in_residue = 0
     ires_l = 10000

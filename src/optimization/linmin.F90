@@ -92,7 +92,7 @@
           xnear = 1.D-5
           delta1 = 0.0005D0
           delta2 = 0.0001D0
-          if (index(keywrd,'PREC') /= 0) then
+          if (index(keywrd,'PRECISE') /= 0) then
             delta1 = 0.D0
             delta2 = delta2*0.01D0
           end if

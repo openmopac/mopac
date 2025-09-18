@@ -88,7 +88,7 @@
       inquire(unit=iscr, opened=opend)
       if (opend) close(unit=iscr)
       open(unit=iscr, status='SCRATCH')
-      if (index(keywrd,' PREC') /= 0) then
+      if (index(keywrd,' PRECISE') /= 0) then
         accu = 0.25d0
         cnvg = 0.000001d0
       else
