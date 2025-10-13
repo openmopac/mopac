@@ -55,6 +55,7 @@ subroutine iter_for_MOZYME (ee)
    !
    !***********************************************************************
     character :: xchar = " "
+    double precision :: tstart
     logical, save :: prtpls, orthog, times, scf1, bigscf, debug, prtden, &
          & prtfok, okscf, opend, panic = .true., store_useps
     integer, save :: i, idnout, nocc1, nvir1, istabl, idiagg, nhb, itrmax, &
@@ -63,10 +64,11 @@ subroutine iter_for_MOZYME (ee)
     double precision, save :: selcon, eold,  sum
     integer, external :: ijbo
     logical, external :: PLS_faulty
-    double precision, external :: helecz, reada
+    double precision, external :: helecz, reada, seconds
     integer, dimension (:), allocatable :: iwork
     double precision, dimension (:), allocatable :: rwork
     add_niter = 0
+    tstart = seconds(1)
 !
         80  continue
     if (nmol /= numcal) then
@@ -608,7 +610,7 @@ subroutine iter_for_MOZYME (ee)
         endfile (iw)
         backspace (iw)
       end if
-      call isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
+      call isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax, tstart)
       if ( .not. bigscf .and. numcal == 1+numcal0) then
         exit
       else if (okscf .and. niter > 1 .and. (emin /= 0.d0 .or. niter > 3)) then

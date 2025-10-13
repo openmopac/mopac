@@ -152,6 +152,14 @@
         write (iw, '(A)') ' '
         write (iw, '(A)') &
           ' CHECK YOUR GEOMETRY AND ALSO TRY USING SHIFT OR PULAY. '
+        write (iw, '(A)') ' '
+        write (iw, '(A)') &
+          ' CLOSED-SHELL ORGANIC MOLECULES SHOULD HAVE GOOD SCF CONVERGENCE, '
+        write (iw, '(A)') &
+          ' CHECK THEIR TOTAL CHARGE WITH THE ''LEWIS'' KEYWORD, '
+        write (iw, '(A)') &
+          ' AND CHECK THEIR PROTONATION WITH THE ''ADD-H'' KEYWORD. '
+        write (iw, '(A)') ' '
         call geout (1)
         call mopend ('THE SCF CALCULATION FAILED.')
         return
