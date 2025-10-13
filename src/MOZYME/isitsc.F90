@@ -13,17 +13,18 @@
 ! See the License for the specific language governing permissions and
 ! limitations under the License.
 
-subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
-    use molkst_C, only: iscf
+subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax, tstart)
+    use molkst_C, only: iscf, iflepo, tleft, keywrd
     use MOZYME_C, only : ovmax, energy_diff
     implicit none
     logical, intent (out) :: okscf
     integer, intent (in) :: itrmax, niter
     integer, intent (inout) :: iemax, iemin
-    double precision, intent (in) :: emin, escf, selcon
-    logical :: scf1 = .false.
+    double precision, intent (in) :: emin, escf, selcon, tstart
+    double precision, external :: seconds
+    logical :: scf1 = .false., tlimit
     integer :: i, iemax1, iemin1
-    double precision :: energy_test, fmo_test
+    double precision :: energy_test, fmo_test, tnow
     double precision, dimension (10) :: escf0
     data escf0 / 10 * 0.d0 /
     save
@@ -34,11 +35,18 @@ subroutine isitsc (escf, selcon, emin, iemin, iemax, okscf, niter, itrmax)
     energy_test = selcon
     fmo_test = selcon * 5.0d0
 
+    tlimit = index(keywrd,' CYCLES') + index(keywrd,' BIGCYCLES') == 0
+    tnow = seconds(2)
     if (ovmax < fmo_test .and. Abs (energy_diff) < energy_test &
-         & .and. scf1 .or. niter > itrmax) then
+         & .and. scf1 .or. niter > itrmax &
+         & .or. (tlimit .and. tnow - tstart >= tleft)) then
       okscf = .true.
-      iscf = 2
-      if (scf1) iscf = 1
+      if (scf1) then
+        iscf = 1
+      else
+        iscf = 2
+        iflepo = 9
+      end if
     else
       scf1 = (ovmax < fmo_test .and. Abs (energy_diff) < energy_test)
       if (emin /= 0.d0) then
