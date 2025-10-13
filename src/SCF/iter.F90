@@ -644,6 +644,8 @@
       ! enforce time limit
       tnow = seconds(2)
       if (tlimit .and. tnow - tstart >= tleft) then
+        iflepo = 9
+        iscf = 2
         call writmo
         call mopend ('UNABLE TO ACHIEVE SELF-CONSISTENCE WITHIN TIME LIMIT')
         return
