@@ -311,7 +311,7 @@ contains
       if (zs(i) < 0.1d0) tore(i) = 3.d0
     end do
     ! set the spin multiplicity
-    nelectron = sum(tore(nat(:numat)))
+    nelectron = sum(tore(nat(:numat))) - system%charge
     write(num2str,'(f6.1)') system%spin + mod(nelectron,2)*0.5d0
     keywrd = trim(keywrd) // " MS=" // adjustl(num2str)
     ! initialization steps performed by moldat
