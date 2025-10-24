@@ -135,9 +135,9 @@ subroutine test_mopac_scf2(nfail)
     type(mopac_properties_f) :: test_out
     character(50) :: test_name
     integer :: i
-    test_name = 'H2O SCF'
+    test_name = 'OH- SCF'
 
-    ! SCF calculation of H2O
+    ! SCF calculation of OH-
     test_in%natom = 2
     test_in%natom_move = 0
     test_in%charge = -1
@@ -159,7 +159,7 @@ subroutine test_mopac_scf2(nfail)
     allocate(test_target%charge(2))
     test_target%charge(1) = 0.246921d0
     test_target%charge(2) = -1.246921d0
-    test_target%dipole(1) = 1.382d0
+    test_target%dipole(1) = 1.723d0
     test_target%dipole(2) = 0.0d0
     test_target%dipole(3) = 0.0d0
     test_target%stress(:) = 0.0d0
