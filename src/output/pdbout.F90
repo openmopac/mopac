@@ -308,11 +308,11 @@ subroutine pdbout (mode1)
     write(iprt,"(a)")"}"
     write(iprt,"(a)")"</style>"
     write(iprt,"(a)") "<!--"," ","   Start of JSmol script"," ", "-->"
-    write(iprt,"(a)") "<meta charset=""utf-8""> <script type=""text/javascript"" src=""../jsmol/JSmol.min.js""></script>  "
+    write(iprt,"(a)") "<meta charset=""utf-8""> <script type=""text/javascript"" src=""/jsmol/JSmol.min.js""></script>  "
     write(iprt,"(a)") "<script type=""text/javascript"">"
     write(iprt,"(/a)") "$(document).ready(function() {Info = {"
     write(iprt,"(10x,a)") "width: 1500,", "height: 1000,", "color: ""0xB0B0B0"",", &
-    "disableInitialConsole: true, ", "addSelectionOptions: false,", "j2sPath: ""../jsmol/j2s"",", &
+    "disableInitialConsole: true, ", "addSelectionOptions: false,", "j2sPath: ""/jsmol/j2s"",", &
     "use: ""HTML5"", script: ", " "
     write(iprt,"(a)")"// Data set to be loaded", " "
     if (index(keywrd, " GRAPHF") /= 0) then
