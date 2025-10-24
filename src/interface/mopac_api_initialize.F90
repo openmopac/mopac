@@ -172,6 +172,8 @@ contains
         i = 14
       case (1) ! PM6-D3H4
         i = 9
+        ! PM6-D3H4 also needs the PM6 flag for PM6-x model family checks
+        methods(6) = .true.
       case (2) ! PM6-ORG
         i = 18
       case (3) ! PM6
