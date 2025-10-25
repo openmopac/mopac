@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: "If you use this software for a scientific publication, please cite it as below."
 title: MOPAC
 type: software
-version: 23.2
+version: 23.2.1
 doi: 10.5281/zenodo.6511958
-date-released: 2025-09-13
+date-released: 2025-10-25
 authors:
   - family-names: Moussa
     given-names: "Jonathan E."
