@@ -17,6 +17,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_finalize
   use chanel_C, only : iw ! file handle for main output file
   use Common_arrays_C, only : xparam, & ! values of coordinates undergoing optimization
     geo, & ! raw coordinates of atoms
+    coord, & ! Cartesian coordinates of atoms
     grad, & ! gradients of heat
     p, & ! total density matrix
     q, & ! partial charges
@@ -107,12 +108,13 @@ contains
     ! trigger charge & dipole calculation
     call chrge (p, q)
     q(:numat) = tore(nat(:numat)) - q(:numat)
+    call gmetry (geo, coord)
     if (id == 0) then
       if (mozyme) then
         sum = dipole_for_MOZYME(dumy, 2)
         properties%dipole = dumy
       else
-        sum = dipole(p, xparam, dumy, 1)
+        sum = dipole(p, coord, dumy, 1)
         properties%dipole = dip(:3,3)
       end if
     else
