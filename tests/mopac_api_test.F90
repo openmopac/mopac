@@ -24,27 +24,17 @@ program mopac_api_test
     call get_mopac_version_f(version)
 
     call test_mopac_scf1(nfail)
-    write(*,*) "Passed API test 1"
     call test_mopac_scf2(nfail)
-    write(*,*) "Passed API test 2"
     call test_mopac_relax1(nfail)
-    write(*,*) "Passed API test 3"
     call test_mopac_vibe1(nfail)
-    write(*,*) "Passed API test 4"
     call test_mozyme_scf1(nfail)
-    write(*,*) "Passed API test 5"
     call test_mozyme_relax1(nfail)
-    write(*,*) "Passed API test 6"
     call test_mozyme_vibe1(nfail)
-    write(*,*) "Passed API test 7"
     call test_mopac_restart1(nfail)
-    write(*,*) "Passed API test 8"
+    call test_mopac_restart2(nfail)
     call test_mozyme_restart1(nfail)
-    write(*,*) "Passed API test 9"
     call test_cosmo1(nfail)
-    write(*,*) "Passed API test 10"
     call test_crystal1(nfail)
-    write(*,*) "Passed API test 11"
     call exit(nfail)
 end program mopac_api_test
 
@@ -845,6 +835,143 @@ subroutine test_mopac_restart1(nfail)
     call mopac_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_mopac_restart1
+
+
+subroutine test_mopac_restart2(nfail)
+    use mopac_api_f
+    implicit none
+    integer, intent(inout) :: nfail
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target_minus, test_target_zero, test_target_plus
+    type(mopac_properties_f) :: test_out
+    character(50) :: test_name
+    integer :: i
+
+    ! SCF calculations of OH
+    test_in%natom = 2
+    test_in%natom_move = 0
+    allocate(test_in%atom(2))
+    test_in%atom(1) = 1
+    test_in%atom(2) = 8
+    allocate(test_in%coord(2*3))
+    test_in%coord(1) = 0.94d0
+    test_in%coord(2) = 0.0d0
+    test_in%coord(3) = 0.0d0
+    test_in%coord(4) = 0.0d0
+    test_in%coord(5) = 0.0d0
+    test_in%coord(6) = 0.0d0
+    test_target_minus%heat = -32.84804d0
+    allocate(test_target_minus%coord_update(2*3))
+    test_target_minus%coord_update = test_in%coord
+    allocate(test_target_minus%coord_deriv(0))
+    allocate(test_target_minus%charge(2))
+    test_target_minus%charge(1) = 0.258863d0
+    test_target_minus%charge(2) = -1.258863d0
+    test_target_minus%dipole(1) = 1.704d0
+    test_target_minus%dipole(2) = 0.0d0
+    test_target_minus%dipole(3) = 0.0d0
+    test_target_minus%stress(:) = 0.0d0
+    allocate(test_target_minus%bond_index(3))
+    test_target_minus%bond_index(1) = 1
+    test_target_minus%bond_index(2) = 3
+    test_target_minus%bond_index(3) = 5
+    allocate(test_target_minus%bond_atom(4))
+    test_target_minus%bond_atom(1) = 1
+    test_target_minus%bond_atom(2) = 2
+    test_target_minus%bond_atom(3) = 1
+    test_target_minus%bond_atom(4) = 2
+    allocate(test_target_minus%bond_order(4))
+    test_target_minus%bond_order(1) = 0.933d0
+    test_target_minus%bond_order(2) = 0.933d0
+    test_target_minus%bond_order(3) = 0.933d0
+    test_target_minus%bond_order(4) = 0.933d0
+    test_target_minus%nerror = 0
+
+    test_target_zero%heat = 7.49350d0
+    allocate(test_target_zero%coord_update(2*3))
+    test_target_zero%coord_update = test_in%coord
+    allocate(test_target_zero%coord_deriv(0))
+    allocate(test_target_zero%charge(2))
+    test_target_zero%charge(1) = 0.249457d0
+    test_target_zero%charge(2) = -0.249457d0
+    test_target_zero%dipole(1) = 1.361d0
+    test_target_zero%dipole(2) = 0.0d0
+    test_target_zero%dipole(3) = 0.0d0
+    test_target_zero%stress(:) = 0.0d0
+    allocate(test_target_zero%bond_index(3))
+    test_target_zero%bond_index(1) = 1
+    test_target_zero%bond_index(2) = 3
+    test_target_zero%bond_index(3) = 5
+    allocate(test_target_zero%bond_atom(4))
+    test_target_zero%bond_atom(1) = 1
+    test_target_zero%bond_atom(2) = 2
+    test_target_zero%bond_atom(3) = 1
+    test_target_zero%bond_atom(4) = 2
+    allocate(test_target_zero%bond_order(4))
+    test_target_zero%bond_order(1) = 0.935d0
+    test_target_zero%bond_order(2) = 0.935d0
+    test_target_zero%bond_order(3) = 0.935d0
+    test_target_zero%bond_order(4) = 0.935d0
+    test_target_zero%nerror = 0
+
+    test_target_plus%heat = 333.19415d0
+    allocate(test_target_plus%coord_update(2*3))
+    test_target_plus%coord_update = test_in%coord
+    allocate(test_target_plus%coord_deriv(0))
+    allocate(test_target_plus%charge(2))
+    test_target_plus%charge(1) = 0.241496d0
+    test_target_plus%charge(2) = 0.758504d0
+    test_target_plus%dipole(1) = 1.028d0
+    test_target_plus%dipole(2) = 0.0d0
+    test_target_plus%dipole(3) = 0.0d0
+    test_target_plus%stress(:) = 0.0d0
+    allocate(test_target_plus%bond_index(3))
+    test_target_plus%bond_index(1) = 1
+    test_target_plus%bond_index(2) = 3
+    test_target_plus%bond_index(3) = 5
+    allocate(test_target_plus%bond_atom(4))
+    test_target_plus%bond_atom(1) = 1
+    test_target_plus%bond_atom(2) = 2
+    test_target_plus%bond_atom(3) = 1
+    test_target_plus%bond_atom(4) = 2
+    allocate(test_target_plus%bond_order(4))
+    test_target_plus%bond_order(1) = 0.942d0
+    test_target_plus%bond_order(2) = 0.942d0
+    test_target_plus%bond_order(3) = 0.942d0
+    test_target_plus%bond_order(4) = 0.942d0
+    test_target_plus%nerror = 0
+
+    test_in%charge = -1
+    test_name = 'OH SCF restart (-1)'
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target_minus, test_out, nfail)
+    test_in%charge = 0
+    test_name = 'OH SCF restart (-1 -> 0)'
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target_zero, test_out, nfail)
+    test_in%charge = 1
+    test_name = 'OH SCF restart (-1 -> 0 -> 1)'
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target_plus, test_out, nfail)
+
+    test_restore%mpack = 0
+
+    test_in%charge = 0
+    test_name = 'OH SCF restart (0)'
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target_zero, test_out, nfail)
+    test_in%charge = -1
+    test_name = 'OH SCF restart (0 -> -1)'
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target_minus, test_out, nfail)
+    test_in%charge = 1
+    test_name = 'OH SCF restart (0 -> -1 -> 1)'
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target_plus, test_out, nfail)
+
+    call mopac_scf_f(test_in, test_restore, test_out)
+end subroutine test_mopac_restart2
 
 subroutine test_mozyme_restart1(nfail)
     use mopac_api_f
