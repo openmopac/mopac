@@ -65,6 +65,7 @@ contains
 
     keywrd = " 1SCF PULAY BONDS"
     if (system%natom_move + system%nlattice_move > 0) keywrd = trim(keywrd) // " GRADIENTS"
+    if (state%mpack > 0 .and. state%uhf == 1) keywrd = trim(keywrd) // " UHF"
     call mopac_initialize(system)
     if (.not. moperr) call mopac_load(state)
     ! call computational routine for SCF calculations
@@ -83,6 +84,7 @@ contains
     type(mopac_properties), intent(out) :: properties
 
     keywrd = " LBFGS PULAY BONDS"
+    if (state%mpack > 0 .and. state%uhf == 1) keywrd = trim(keywrd) // " UHF"
     call mopac_initialize(system)
     if (.not. moperr) call mopac_load(state)
     ! call computational routine for LBFGS geometry optimization
@@ -102,6 +104,7 @@ contains
     integer :: i
 
     keywrd = " FORCETS PULAY BONDS"
+    if (state%mpack > 0 .and. state%uhf == 1) keywrd = trim(keywrd) // " UHF"
     call mopac_initialize(system)
     if (.not. moperr) call mopac_load(state)
     ! call computational routine to evaluate vibrational matrix
