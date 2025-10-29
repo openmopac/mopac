@@ -14,7 +14,7 @@
 ! limitations under the License.
 
 submodule (mopac_api:mopac_api_operations) mopac_api_saveload
-  use Common_arrays_C, only: pa, pb, nbonds, ibonds
+  use Common_arrays_C, only: p, pa, pb, nbonds, ibonds
   use molkst_C, only: keywrd, uhf, mpack, numat
   use MOZYME_C, only: iorbs, noccupied, ncf, nvirtual, nce, icocc_dim, &
     icocc, icvir_dim, icvir, cocc_dim, cocc, cvir_dim, cvir, nnce, nncf, ncocc, ncvir
@@ -49,30 +49,24 @@ contains
     real(c_double), pointer :: rptr(:)
 
     if(state%mpack > 0) then
-      if (state%mpack /= mpack .or. (state%uhf /= 0 .neqv. uhf)) then
+      if (state%mpack /= mpack) then
         call mopend("Attempting to load incompatible MOPAC state")
         return
       end if
       keywrd = trim(keywrd) // " OLDENS"
-      mpack = state%mpack
-      if (allocated(pa)) deallocate(pa)
-      allocate(pa(mpack), stat=status)
-      if (status /= 0) then
-        call mopend("Failed to allocate memory in MOPAC_LOAD")
-        return
-      end if
       call c_f_pointer(state%pa, rptr, [mpack])
       pa = rptr
-      if(uhf) then
-        if (allocated(pb)) deallocate(pb)
-        allocate(pb(mpack), stat=status)
-        if (status /= 0) then
-          call mopend("Failed to allocate memory in MOPAC_LOAD")
-          return
+      if (uhf) then
+        if (state%uhf == 1) then
+          call c_f_pointer(state%pb, rptr, [mpack])
+          pb = rptr
+        else
+          pb = pa
         end if
-        call c_f_pointer(state%pb, rptr, [mpack])
-        pb = rptr
-        end if
+        p = pa + pb
+      else
+        p = pa*2.d0
+      end if
     end if
   end subroutine mopac_load
 

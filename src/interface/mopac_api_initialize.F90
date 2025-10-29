@@ -52,6 +52,7 @@ submodule (mopac_api:mopac_api_operations) mopac_api_initialize
     nscf, na1, norbs, no_pKa, id, iflepo, nelecs, ndep, &
     escf, gnorm, E_disp, E_hb, E_hh, sz, ss2, step, density, press, stress, voigt, &
     sparkle, &  ! logical flag for the presence of sparkles
+    rhf, uhf, & ! logical flags for spin restrictions
     atheat, & ! total atomic heat of formation
     keywrd_txt, keywrd_quoted, koment, title, refkey, allkey ! other text extracted from input files
   use MOZYME_C, only : nres, uni_res, refnuc
@@ -316,6 +317,14 @@ contains
     nelectron = sum(tore(nat(:numat))) - system%charge
     write(num2str,'(f6.1)') system%spin + mod(nelectron,2)*0.5d0
     keywrd = trim(keywrd) // " MS=" // adjustl(num2str)
+    ! set the spin restriction flags (moldat sets defaults if rhf & uhf are both .false.)
+    if(mod(nelectron,2) == 0 .and. system%spin == 0 .and. index(keywrd," UHF") == 0) then
+      rhf = .true.
+      uhf = .false.
+    else
+      uhf = .true.
+      rhf = .false.
+    end if
     ! initialization steps performed by moldat
     call moldat (0)
     ! evaluate derived parameters of the model
