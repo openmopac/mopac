@@ -1,0 +1,6 @@
+FORCE
+3
+Vibrational calculation (FORCE keyword) of a relaxed water molecule with PM7 (the default semiempirical model)
+H -0.01662  0.00960388  0.00000000
+O  0.83340  0.44586408  0.00000000
+H  1.47682 -0.26055545  0.00000000

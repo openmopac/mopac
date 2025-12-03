@@ -1,0 +1,164 @@
+ *******************************************************************************
+ **                                                                           **
+ **                              MOPAC v23.2                                  **
+ **                                                                           **
+ *******************************************************************************
+ **          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **
+ **    Visit the DOI location for information on how to cite this program.    **
+ *******************************************************************************
+
+                              PM7 CALCULATION RESULTS
+
+ *******************************************************************************
+ *  CALCULATION DONE: (MAX THREADS = 8)              Tue Dec  2 16:23:23 2025  *
+ *  T=         - A TIME OF 172800.0 SECONDS REQUESTED
+ *  DUMP=N     - RESTART FILE WRITTEN EVERY 7200.0 SECONDS REQUESTED
+ *******************************************************************************
+
+ 3
+ Geometry relaxation (the default calculation) of a water molecule with PM7 (the default semiempirical model)
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+
+     1       H         -0.02110000  *  -0.00200000  *   0.00000000  *
+     2       O          0.83450000  *   0.45190000  *   0.00000000  *
+     3       H          1.47690000  *  -0.27300000  *   0.00000000  *
+
+
+
+          CARTESIAN COORDINATES 
+
+    NO.       ATOM           X           Y           Z
+
+     1         H         -0.0211     -0.0020      0.0000
+     2         O          0.8345      0.4519      0.0000
+     3         H          1.4769     -0.2730      0.0000
+
+ General Reference for PM7:
+ "Optimization of Parameters for Semiempirical Methods VI: More Modifications to the 
+ NDDO Approximations and Re-optimization of Parameters", J. J. P. Stewart, J. Mol. Mod., 1:32, 19 (2013)
+ https://link.springer.com/article/10.1007/s00894-012-1667-x
+
+           Empirical Formula: H2 O  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2v 
+
+
+      RHF CALCULATION, NO. OF DOUBLY OCCUPIED LEVELS = 4
+
+
+          Geometry optimization using EF
+
+          DIAGONAL MATRIX USED AS START HESSIAN
+
+ CYCLE:     1 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:    14.470 HEAT: -57.69030
+ CYCLE:     2 TIME:   0.004 TIME LEFT:  2.00D  GRAD.:     4.712 HEAT: -57.78854
+ CYCLE:     3 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     1.049 HEAT: -57.79841
+ CYCLE:     4 TIME:   0.000 TIME LEFT:  2.00D  GRAD.:     0.561 HEAT: -57.79930
+
+     GRADIENT =  0.56142 IS LESS THAN CUTOFF =  1.00000
+
+
+
+ -------------------------------------------------------------------------------
+
+ 3
+ Geometry relaxation (the default calculation) of a water molecule with PM7 (the default semiempirical model)
+
+
+     GEOMETRY OPTIMISED USING EIGENVECTOR FOLLOWING (EF).     
+     SCF FIELD WAS ACHIEVED                                   
+
+
+                              PM7 CALCULATION
+                                                       MOPAC v23.2 MacOS
+                                                       Tue Dec  2 16:23:23 2025
+
+
+
+
+          FINAL HEAT OF FORMATION =        -57.79930 KCAL/MOL =    -241.83228 KJ/MOL
+
+
+          COSMO AREA              =         42.43 SQUARE ANGSTROMS
+          COSMO VOLUME            =         25.17 CUBIC ANGSTROMS
+
+          GRADIENT NORM           =          0.56142          =       0.32414 PER ATOM
+          IONIZATION POTENTIAL    =         12.112848 EV
+          HOMO LUMO ENERGIES (EV) =        -12.113  4.051
+          NO. OF FILLED LEVELS    =          4
+          MOLECULAR WEIGHT        =         18.0152         POINT GROUP:  C2v 
+
+          MOLECULAR DIMENSIONS (Angstroms)
+
+            Atom       Atom       Distance
+            H     3    H     1     1.51767
+            O     2    H     1     0.58060
+            H     1    O     2     0.00000
+
+
+          SCF CALCULATIONS        =          5
+
+          WALL-CLOCK TIME         =      0.020 SECONDS
+          COMPUTATION TIME        =      0.016 SECONDS
+
+
+
+
+   ATOM   CHEMICAL          X               Y               Z
+  NUMBER   SYMBOL      (ANGSTROMS)     (ANGSTROMS)     (ANGSTROMS)
+
+     1       H         -0.01661902  *   0.00960388  *   0.00000000  *
+     2       O          0.83339654  *   0.44586408  *   0.00000000  *
+     3       H          1.47681546  *  -0.26055545  *   0.00000000  *
+
+                             CARTESIAN COORDINATES
+
+   1    H       -0.016619016     0.009603881     0.000000000
+   2    O        0.833396536     0.445864077     0.000000000
+   3    H        1.476815457    -0.260555447     0.000000000
+
+
+           Empirical Formula: H2 O  =     3 atoms
+
+
+
+      MOLECULAR POINT GROUP   :   C2v 
+
+
+                  EIGENVALUES  
+ -29.61938 -17.82504 -14.22530 -12.11285   4.05079   6.34308
+
+
+              NET ATOMIC CHARGES AND DIPOLE CONTRIBUTIONS
+
+  ATOM NO.   TYPE          CHARGE      No. of ELECS.   s-Pop       p-Pop       
+    1          H           0.324197        0.6758     0.67580
+    2          O          -0.648409        6.6484     1.81391     4.83450
+    3          H           0.324212        0.6758     0.67579
+ DIPOLE           X         Y         Z       TOTAL
+ POINT-CHG.    -0.322    -1.779    -0.000     1.808
+ HYBRID        -0.058    -0.318    -0.000     0.323
+ SUM           -0.379    -2.097    -0.000     2.131
+
+
+          ATOMIC ORBITAL ELECTRON POPULATIONS
+
+     Atom    s        px        py        pz   
+    1  H   0.67580
+    2  O   1.81391   1.35515   1.47935   2.00000
+    3  H   0.67579
+
+ **********************
+ *                    *
+ * JOB ENDED NORMALLY *
+ *                    *
+ **********************
+
+
+
+ TOTAL JOB TIME:             0.02 SECONDS
+
+ == MOPAC DONE ==
