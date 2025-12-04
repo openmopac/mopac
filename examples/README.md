@@ -36,7 +36,7 @@ Additional linking options such as `-Wl,-rpath=../lib` may be necessary if the M
 The Fortran API to MOPAC requires an extra wrapper that must be compiled alongside the calling program.
 The Fortran program `example.F90` is the Fortran equivalent to `example.c`, which must be compiled and linked with
 `mopac_wrapper.F90` and `mopac_wrapper_internal.F90` located in `/include` along with the MOPAC shared library.
-An example build statement with the `gfortrtan` compiler and the MOPAC shared library located at `../lib` is:
+An example build statement with the `gfortran` compiler and the MOPAC shared library located at `../lib` is:
 ```
 gfortran example.F90 ../include/mopac_wrapper.F90 ../include/mopac_wrapper_internal.F90 -I../include -L../lib -lmopac -o fortran_executable
 ```
