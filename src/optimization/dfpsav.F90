@@ -98,7 +98,7 @@
           if (index(keywrd,'STEP1') == 0) then
             write (iw, &
               '(2/10X,''CURRENT VALUE OF HEAT OF FORMATION ='',F12.6)') funct1
-            if (prt_gradients .and. index(keywrd," GRADI") /= 0 .and. mozyme) then
+            if (prt_gradients .and. index(keywrd," GRAD") /= 0 .and. mozyme) then
               write (iw, '(3/7X,''CURRENT  POINT  AND  DERIVATIVES'',/)')
               call prtgra ()
             end if

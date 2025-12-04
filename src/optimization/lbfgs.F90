@@ -404,7 +404,7 @@
         else
           write (iw, "(//10X,'CURRENT VALUE OF HEAT OF FORMATION ='   ,F14.6)") escf - stress
         end if
-        if (prt_gradients .and. index(keywrd," GRADI") /= 0 .and. mozyme) then
+        if (prt_gradients .and. index(keywrd," GRAD") /= 0 .and. mozyme) then
           write (iw, '(3/7X,''CURRENT  POINT  AND  DERIVATIVES'',/)')
           call prtgra ()
         end if
