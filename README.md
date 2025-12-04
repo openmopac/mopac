@@ -6,10 +6,8 @@
 ![build](https://github.com/openmopac/mopac/actions/workflows/CI.yaml/badge.svg)
 [![codecov](https://codecov.io/gh/openmopac/mopac/branch/main/graph/badge.svg?token=qM2KeRvw06)](https://codecov.io/gh/openmopac/mopac)
 
-This is the official repository of the modern open-source version of MOPAC, which is now released under an Apache license
-(versions 22.0.0 through 23.0.3 are available under an LGPL license).
-This is a direct continuation of the commercial development and distribution of MOPAC, which ended at MOPAC 2016.
-Commercial versions of MOPAC are no longer supported, and all MOPAC users are encouraged to switch to the most recent open-source version.
+This is the official repository of the modern open-source version of MOPAC, 
+which is a direct continuation of the commercial development and distribution of MOPAC that ended at MOPAC 2016.
 
 [![mopac_at_molssi](.github/mopac_at_molssi.png)](https://molssi.org)
 
@@ -21,10 +19,10 @@ For detailed information about MOPAC, see its [website](https://openmopac.github
 
 MOPAC is a popular semiempirical quantum chemistry package that was first released in 1983.
 MOPAC can perform quantum mechanical calculations of molecules and materials, much like *ab initio* quantum chemistry packages such as [Gaussian](https://www.gaussian.com).
-Semiempirical calculations are around 1000x faster than *ab initio* calculations, but they are usually less accurate because they rely on
-simplified, minimal-basis model Hamiltonians that are fit to experimental data rather than more predictive theories.
-The speed and ease-of-use of MOPAC makes it a good teaching tool, either to teach physical chemistry concepts to students or to prepare yourself
-to use more expensive quantum chemistry software. It can also be useful for high-throughput calculations in screening and informatics applications.
+Semiempirical calculations are around 1000x faster than *ab initio* calculations, but they are usually less accurate and less predictive because they rely on
+simplified models fit to experimental data rather than more complicated and comprehensive theories.
+The speed and ease-of-use of MOPAC make it a good teaching tool, either to teach physical chemistry concepts to students or to prepare for the use
+of more expensive quantum chemistry software. It can also be useful for high-throughput calculations in screening and informatics applications.
 
 ## Building
 
@@ -43,7 +41,7 @@ cmake ..
 make
 ```
 MOPAC will build without any other CMake options if a Fortran compiler, BLAS/LAPACK, Python 3, and NumPy are found in the software environment.
-To build with optional [MolSSI Driver Interface)(MDI)](https://molssi-mdi.github.io/MDI_Library/) engine support, use the CMake command-line option `-DMDI=ON`.
+To build with optional [MolSSI Driver Interface(MDI)](https://molssi-mdi.github.io/MDI_Library/) engine support, use the CMake command-line option `-DMDI=ON`.
 
 ## Usage
 
