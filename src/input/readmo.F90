@@ -698,8 +698,12 @@
       write (iw,"(1x,a)") "**                              MOPAC v"//verson//"                  **"
       write (iw, '(1X,a)')"**                                                                           **"
       write (iw, '(1X,a)')"*******************************************************************************"
-      write (iw, '(1X,a)')"**          Digital Object Identifier (DOI): 10.5281/zenodo.6511958          **"
-      write (iw, '(1X,a)')"**    Visit the DOI location for information on how to cite this program.    **"
+      write (iw, '(1X,a)')"** MOPAC's Digital Object Identifier: https://doi.org/10.5281/zenodo.6511958 **"
+      write (iw, '(1X,a)')"**                                                                           **"
+      write (iw, '(1X,a)')"** Please cite the open-source release paper for use of this MOPAC version:  **"
+      write (iw, '(1X,a)')"** J. E. Moussa and J. J. P. Stewart (2026)                                  **"
+      write (iw, '(1X,a)')"** MOPAC: An open-source semiempirical molecular orbital program             **"
+      write (iw, '(1X,a)')"** J. Open Source Softw., 11(119), 8025, https://doi.org/10.21105/joss.08025 **"
       write (iw, '(1X,a)')"*******************************************************************************"
       j = len_trim(keywrd)
       do i = j, 1, -1
