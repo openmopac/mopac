@@ -1,10 +1,10 @@
 cff-version: 1.2.0
-message: "If you use this software for a scientific publication, please cite it as below."
+message: "If you use this software, then please cite it. The preferred citation is its JOSS release paper, https://doi.org/10.21105/joss.08025. Alternatively, use the software citation defined by this file."
 title: MOPAC
 type: software
-version: 23.2.3
+version: 23.2.4
 doi: 10.5281/zenodo.6511958
-date-released: 2026-02-16
+date-released: 2026-04-04
 authors:
   - family-names: Moussa
     given-names: "Jonathan E."
