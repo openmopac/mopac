@@ -35,6 +35,7 @@ program mopac_api_test
     call test_mozyme_restart1(nfail)
     call test_cosmo1(nfail)
     call test_crystal1(nfail)
+    call test_moperr(nfail)
     call exit(nfail)
 end program mopac_api_test
 
@@ -2348,6 +2349,88 @@ subroutine test_crystal1(nfail)
     call mopac_scf_f(test_in, test_restore, test_out)
     call test_output(test_name, test_in, test_target, test_out, nfail)
 end subroutine test_crystal1
+
+subroutine test_moperr(nfail)
+    use mopac_api_f
+    implicit none
+    integer, intent(inout) :: nfail
+    type(mopac_system_f) :: test_in
+    type(mopac_state_f) :: test_restore
+    type(mopac_properties_f) :: test_target
+    type(mopac_properties_f) :: test_out
+    character(50) :: test_name
+    integer :: i
+    test_name = 'error handler recovery'
+
+    ! SCF calculation of H2O
+    test_in%natom = 3
+    test_in%natom_move = 3
+    allocate(test_in%atom(3))
+    test_in%atom(1) = 1
+    test_in%atom(2) = 1
+    test_in%atom(3) = 8
+    allocate(test_in%coord(3*3))
+    test_in%coord(1) = 0.76d0
+    test_in%coord(2) = 0.59d0
+    test_in%coord(3) = 0.0d0
+    test_in%coord(4) = -0.76d0
+    test_in%coord(5) = 0.59d0
+    test_in%coord(6) = 0.0d0
+    test_in%coord(7) = 0.0d0
+    test_in%coord(8) = 0.0d0
+    test_in%coord(9) = 0.0d0
+    test_target%heat = -57.76975d0
+    allocate(test_target%coord_update(3*3))
+    test_target%coord_update = test_in%coord
+    allocate(test_target%coord_deriv(3*3))
+    test_target%coord_deriv(1) = 2.307865d0
+    test_target%coord_deriv(2) = 2.742432d0
+    test_target%coord_deriv(3) = 0.0d0
+    test_target%coord_deriv(4) = -2.307865d0
+    test_target%coord_deriv(5) = 2.711610d0
+    test_target%coord_deriv(6) = 0.0d0
+    test_target%coord_deriv(7) = 0.0d0
+    test_target%coord_deriv(8) = -5.454042d0
+    test_target%coord_deriv(9) = 0.0d0
+    allocate(test_target%charge(3))
+    test_target%charge(1) = 0.322260d0
+    test_target%charge(2) = 0.322260d0
+    test_target%charge(3) = -0.644520d0
+    test_target%dipole(1) = 0.0d0
+    test_target%dipole(2) = 2.147d0
+    test_target%dipole(3) = 0.0d0
+    test_target%stress(:) = 0.0d0
+    allocate(test_target%bond_index(4))
+    test_target%bond_index(1) = 1
+    test_target%bond_index(2) = 3
+    test_target%bond_index(3) = 5
+    test_target%bond_index(4) = 8
+    allocate(test_target%bond_atom(7))
+    test_target%bond_atom(1) = 1
+    test_target%bond_atom(2) = 3
+    test_target%bond_atom(3) = 2
+    test_target%bond_atom(4) = 3
+    test_target%bond_atom(5) = 1
+    test_target%bond_atom(6) = 2
+    test_target%bond_atom(7) = 3
+    allocate(test_target%bond_order(7))
+    test_target%bond_order(1) = 0.896d0
+    test_target%bond_order(2) = 0.895d0
+    test_target%bond_order(3) = 0.896d0
+    test_target%bond_order(4) = 0.895d0
+    test_target%bond_order(5) = 0.895d0
+    test_target%bond_order(6) = 0.895d0
+    test_target%bond_order(7) = 1.791d0
+    test_target%nerror = 0
+
+    ! trigger an API error
+    test_in%natom = -1
+    call mopac_scf_f(test_in, test_restore, test_out)
+    test_in%natom = 3
+
+    call mopac_scf_f(test_in, test_restore, test_out)
+    call test_output(test_name, test_in, test_target, test_out, nfail)
+end subroutine test_moperr
 
 subroutine test_output(name, input, target, output, nfail)
     use mopac_api_f
