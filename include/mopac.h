@@ -18,6 +18,11 @@
 #ifndef MOPAC_H
 #define MOPAC_H
 
+/* C++ compatibility wrapper */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
 This C-like MOPAC API consists of 4 data structures - mopac_system, mopac_properties, mopac_state,
 and mozyme_state - and 6 main functions - mopac_scf, mopac_relax, mopac_vibe, mozyme_scf, mozyme_relax,
@@ -220,4 +225,10 @@ int run_mopac_from_input(char *path_to_file);
 /* get MOPAC version string */
 void get_mopac_version(char *version);
 
+/* close C++ compatibility wrapper block */
+#ifdef __cplusplus
+}
+#endif
+
+/* close header barrier */
 #endif

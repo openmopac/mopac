@@ -83,6 +83,10 @@ contains
     real(c_double), pointer :: coord(:)
     real(c_double), pointer :: lattice(:)
 
+    ! reset the error handler before using it
+    call summary("",-21)
+    moperr = .false.
+
     ! validity checks of data in system
     if (system%natom <= 0) call mopend("Invalid number of atoms")
     if (system%natom_move < 0 .or. system%natom_move > system%natom) &
@@ -241,7 +245,6 @@ contains
     job_no = job_no + 1
     step_num = step_num + 1
     ! initialize variables that need default values (molkst_C)
-    moperr = .false.
     isok = .true.
     MM_corrections = .false.
     pdb_label = .false.
