@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.08025/status.svg)](https://doi.org/10.21105/joss.08025)
-[![DOI](https://zenodo.org/badge/177640376.svg)](https://zenodo.org/badge/latestdoi/177640376)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6511958.svg)](https://doi.org/10.5281/zenodo.6511958)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/mopac/badges/version.svg)](https://anaconda.org/conda-forge/mopac)
 ![build](https://github.com/openmopac/mopac/actions/workflows/CI.yaml/badge.svg)
 [![codecov](https://codecov.io/gh/openmopac/mopac/branch/main/graph/badge.svg?token=qM2KeRvw06)](https://codecov.io/gh/openmopac/mopac)
