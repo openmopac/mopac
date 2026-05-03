@@ -405,6 +405,8 @@ contains
     system_c%pressure = system_f%pressure
     system_c%tolerance = system_f%tolerance
     system_c%max_time = system_f%max_time
+    system_c%coord = c_null_ptr
+    system_c%lattice = c_null_ptr
     allocate(iwork(system_f%natom), stat=status)
     if (status /= 0) then
       write(*,*) "ERROR: Failed to allocate memory in MOPAC API wrapper"
@@ -417,11 +419,13 @@ contains
       write(*,*) "ERROR: Failed to allocate memory in MOPAC API wrapper"
       stop 1
     end if
-    rwork(:3*system_f%natom) = system_f%coord
-    system_c%coord = c_loc(rwork)
-    if (system_f%nlattice > 0) then
-      rwork(3*system_f%natom+1:) = system_f%lattice
-      system_c%lattice = c_loc(rwork(3*system_f%natom+1))
+    if (system_f%natom > 0) then
+      rwork(:3*system_f%natom) = system_f%coord
+      system_c%coord = c_loc(rwork)
+      if (system_f%nlattice > 0) then
+        rwork(3*system_f%natom+1:) = system_f%lattice
+        system_c%lattice = c_loc(rwork(3*system_f%natom+1))
+      end if
     end if
   end subroutine mopac_system_f2c
 
