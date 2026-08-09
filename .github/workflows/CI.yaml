@@ -18,10 +18,6 @@ env:
   MKL_LINUX_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/adb8a02c-4ee7-4882-97d6-a524150da358/l_onemkl_p_2023.2.0.49497_offline.sh
   IFORT_MAC_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/2fbce033-15f4-4e13-8d14-f5a2016541ce/m_fortran-compiler-classic_p_2023.2.0.49001_offline.dmg
   MKL_MAC_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/9399bece-76fb-4b1c-b15c-8ac295448513/m_onemkl_p_2023.2.0.49501_offline.dmg
-  IFORT_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/1720594b-b12c-4aca-b7fb-a7d317bac5cb/w_fortran-compiler_p_2023.2.1.7_offline.exe
-  MKL_WINDOWS_URL: https://registrationcenter-download.intel.com/akdlm/IRC_NAS/2b9cdf66-5291-418e-a7e8-f90515cc9098/w_onemkl_p_2023.2.0.49500_offline.exe
-  IFORT_WINDOWS_VERSION: 2023.2.1
-  MKL_WINDOWS_VERSION: 2023.2.0
 
 jobs:
   linux-static:
@@ -359,47 +355,29 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: conda-incubator/setup-miniconda@v4
         with:
-          python-version: '3.x'
+          activate-environment: mopac
+
+      - name: Install compilers & dependencies with conda
+        run: |
+          conda install numpy
+          conda install -c https://software.repos.intel.com/python/conda/ -c conda-forge ifx_win-64
+          conda install -c https://software.repos.intel.com/python/conda/ -c conda-forge mkl-static
 
       # Set up the QT installer framework
       - uses: jmarrec/setup-qtifw@v1
         with:
           qtifw-version: '4.6.x'
 
-      - name: Cache Intel Fortran compiler
-        id: cache-intel
-        uses: actions/cache@v4
-        with:
-          path: C:\Program Files (x86)\Intel
-          key: cache-${{ env.IFORT_WINDOWS_URL }}-${{ env.MKL_WINDOWS_URL }}
-
-      - name: Download & install Intel Fortran compiler
-        if: steps.cache-intel.outputs.cache-hit != 'true'
-        shell: cmd
-        run: |
-          curl ${{ env.IFORT_WINDOWS_URL }} --output ifort_download.exe
-          ifort_download -s -x -f ifort_unpack
-          ifort_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0 -p=NEED_VS2022_INTEGRATION=0
-          curl ${{ env.MKL_WINDOWS_URL }} --output mkl_download.exe
-          mkl_download -s -x -f mkl_unpack
-          mkl_unpack\bootstrapper --silent --eula accept -p=NEED_VS2017_INTEGRATION=0 -p=NEED_VS2019_INTEGRATION=0 -p=NEED_VS2022_INTEGRATION=0
-
-      - name: Install dependencies with PyPI
-        run: pip3 install numpy
-
-      # The main Intel\oneAPI\setvars.bat script is not setting up the correct version of ifort, so using component-level scripts
       - name: Configure MOPAC with CMake
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           echo %PATH%
           cmake -Bbuild ^
             -GNinja ^
             -DBUILD_BZ=ON ^
-            -DCMAKE_Fortran_COMPILER=ifort ^
+            -DCMAKE_Fortran_COMPILER=ifx ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
             -DBLA_STATIC=ON ^
             -DBLA_VENDOR=Intel10_64lp
@@ -407,15 +385,11 @@ jobs:
       - name: Build MOPAC with Ninja
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           cmake --build build -- -v
 
       - name: Test MOPAC with CTest
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           cd build
           ctest -V -j %NUM_CORES%
 
@@ -435,8 +409,6 @@ jobs:
       - name: Package MOPAC with CPack (in development)
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           cd build
           cpack -G IFW
           dir
@@ -444,8 +416,6 @@ jobs:
       - name: Local installation test & minimal packaging
         shell: cmd
         run: |
-          call "C:\Program Files (x86)\Intel\oneAPI\compiler\${{ env.IFORT_WINDOWS_VERSION }}\env\vars.bat"
-          call "C:\Program Files (x86)\Intel\oneAPI\mkl\${{ env.MKL_WINDOWS_VERSION }}\env\vars.bat"
           cd build
           make install
           cpack -G ZIP
