@@ -359,7 +359,7 @@ jobs:
       - name: Setup Fortran
         uses: gha3mi/setup-fortran-conda@latest
         with:
-          compiler: ifx
+          compiler: gfortran
           extra-packages: "numpy mkl-static"
 
       # Set up the QT installer framework
