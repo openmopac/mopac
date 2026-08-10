@@ -344,6 +344,9 @@ jobs:
 
   windows-build:
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash -el {0}
     timeout-minutes: 30
 
     steps:
@@ -353,11 +356,24 @@ jobs:
           $ncores = (Get-CimInstance -ClassName Win32_Processor | Measure-Object -Property NumberOfLogicalProcessors -Sum).Sum
           echo "num_cores=$ncores" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
+      - name: Cache conda
+        uses: actions/cache@v5
+        env:
+          # Increase this value to reset cache if etc/example-environment.yml has not changed
+          CACHE_NUMBER: 0
+        with:
+          # Use faster GNU tar
+          enableCrossOsArchive: true
+          path: D:\conda_pkgs_dir
+          key:
+            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}
       - uses: conda-incubator/setup-miniconda@v4
         with:
           activate-environment: mopac
+          channel-priority: strict
+          pkgs-dirs: D:\conda_pkgs_dir
 
       - name: Install compilers & dependencies with conda
         run: |
@@ -371,27 +387,22 @@ jobs:
           qtifw-version: '4.6.x'
 
       - name: Configure MOPAC with CMake
-        shell: cmd
         run: |
-          echo %PATH%
-          cmake -Bbuild ^
-            -GNinja ^
-            -DBUILD_BZ=ON ^
-            -DCMAKE_Fortran_COMPILER=ifx ^
-            -DCMAKE_Fortran_FLAGS="/libs:static" ^
-            -DBLA_STATIC=ON ^
+          cmake -Bbuild \
+            -GNinja \
+            -DBUILD_BZ=ON \
+            -DCMAKE_Fortran_COMPILER=ifx \
+            -DCMAKE_Fortran_FLAGS="/libs:static" \
+            -DBLA_STATIC=ON \
             -DBLA_VENDOR=Intel10_64lp
 
       - name: Build MOPAC with Ninja
-        shell: cmd
-        run: |
-          cmake --build build -- -v
+        run: cmake --build build -- -v
 
       - name: Test MOPAC with CTest
-        shell: cmd
         run: |
           cd build
-          ctest -V -j %NUM_CORES%
+          ctest -V -j $NUM_CORES
 
       - name: Save test results as an artifact (on failure)
         if: ${{ failure() }}
@@ -401,20 +412,17 @@ jobs:
           path: build/tests
 
       - name: Local installation test
-        shell: cmd
         run: |
           cd build
           cmake --install .
 
       - name: Package MOPAC with CPack (in development)
-        shell: cmd
         run: |
           cd build
           cpack -G IFW
-          dir
+          ls
 
       - name: Local installation test & minimal packaging
-        shell: cmd
         run: |
           cd build
           make install
