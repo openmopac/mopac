@@ -368,12 +368,12 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
-          cmake -B build \
-            -G Ninja \
-            -DBUILD_BZ=ON \
-            -DCMAKE_Fortran_COMPILER=ifx \
-            -DCMAKE_Fortran_FLAGS="/libs:static" \
-            -DBLA_STATIC=ON \
+          cmake -B build `
+            -G Ninja `
+            -DBUILD_BZ=ON `
+            -DCMAKE_Fortran_COMPILER=ifx `
+            -DCMAKE_Fortran_FLAGS="/libs:static" `
+            -DBLA_STATIC=ON `
             -DBLA_VENDOR=Intel10_64lp
 
       - name: Build MOPAC with Ninja
