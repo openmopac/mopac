@@ -368,8 +368,8 @@ jobs:
 
       - name: Configure MOPAC with CMake
         run: |
-          cmake -Bbuild \
-            -GNinja \
+          cmake -B build \
+            -G Ninja \
             -DBUILD_BZ=ON \
             -DCMAKE_Fortran_COMPILER=ifx \
             -DCMAKE_Fortran_FLAGS="/libs:static" \
