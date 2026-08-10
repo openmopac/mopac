@@ -358,15 +358,11 @@ jobs:
 
       - uses: actions/checkout@v6
 
-      - uses: gha3mi/setup-fortran-conda@v0.18.1
+      - name: Setup Fortran
+        uses: gha3mi/setup-fortran-conda@latest
         with:
           compiler: ifx
-
-      - name: Install compilers & dependencies with conda
-        run: |
-          conda install numpy
-#          conda install -c https://software.repos.intel.com/python/conda/ -c conda-forge ifx_win-64
-          conda install -c https://software.repos.intel.com/python/conda/ -c conda-forge mkl-static
+          extra-packages: "numpy mkl-static"
 
       # Set up the QT installer framework
       - uses: jmarrec/setup-qtifw@v1
