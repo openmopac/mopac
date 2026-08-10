@@ -358,27 +358,31 @@ jobs:
 
       - uses: actions/checkout@v6
 
-      - name: Cache conda
-        uses: actions/cache@v5
-        env:
-          # Increase this value to reset cache if etc/example-environment.yml has not changed
-          CACHE_NUMBER: 0
+      - uses: gha3mi/setup-fortran-conda@latest
         with:
-          # Use faster GNU tar
-          enableCrossOsArchive: true
-          path: D:\conda_pkgs_dir
-          key:
-            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}
-      - uses: conda-incubator/setup-miniconda@v4
-        with:
-          activate-environment: mopac
-          channel-priority: strict
-          pkgs-dirs: D:\conda_pkgs_dir
+          compiler: ifx
+
+#      - name: Cache conda
+#        uses: actions/cache@v5
+#        env:
+#          # Increase this value to reset cache if etc/example-environment.yml has not changed
+#          CACHE_NUMBER: 0
+#        with:
+#          # Use faster GNU tar
+#          enableCrossOsArchive: true
+#          path: D:\conda_pkgs_dir
+#          key:
+#            ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}
+#      - uses: conda-incubator/setup-miniconda@v4
+#        with:
+#          activate-environment: mopac
+#          channel-priority: strict
+#          pkgs-dirs: D:\conda_pkgs_dir
 
       - name: Install compilers & dependencies with conda
         run: |
           conda install numpy
-          conda install -c https://software.repos.intel.com/python/conda/ -c conda-forge ifx_win-64
+#          conda install -c https://software.repos.intel.com/python/conda/ -c conda-forge ifx_win-64
           conda install -c https://software.repos.intel.com/python/conda/ -c conda-forge mkl-static
 
       # Set up the QT installer framework
