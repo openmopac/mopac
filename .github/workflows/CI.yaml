@@ -353,7 +353,8 @@ jobs:
           $ncores = (Get-CimInstance -ClassName Win32_Processor | Measure-Object -Property NumberOfLogicalProcessors -Sum).Sum
           echo "num_cores=$ncores" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 
-      - uses: actions/checkout@v6
+# Setup Fortran performs the checkout...
+#      - uses: actions/checkout@v6
 
       - name: Setup Fortran
         uses: gha3mi/setup-fortran-conda@latest
