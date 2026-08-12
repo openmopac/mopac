@@ -214,7 +214,12 @@ contains
             valenc = valenc + 2.d0 * p(kk)
           end do
         end if
-        kk = bond_index(i) + 1
+        if (valenc > 0.01d0) then
+            kk = bond_index(i) + 1
+            bond_atom(kk) = j - 1
+            bond_order(kk) = valenc
+            kk = kk + 1
+        end if
         do j = 1, numat
           jo = iorbs(j)
           if (i /= j .and. ijbo (i, j) >= 0) then
@@ -229,10 +234,6 @@ contains
               bond_order(kk) = sum
               kk = kk + 1
             end if
-          else if (valenc > 0.01d0) then
-            bond_atom(kk) = j - 1
-            bond_order(kk) = valenc
-            kk = kk + 1
           end if
         end do
       end do
