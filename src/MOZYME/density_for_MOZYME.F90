@@ -79,8 +79,8 @@ subroutine density_for_MOZYME (p, mode, nclose_loc, partp)
                   p(l) = p(l) + cocc(k2) * sum
                 end do
               end do
-            else if (j > k .and. nijbo (j, k) >= 0) then
-              l = nijbo (j, k)
+            else if (j > k .and. nijbo (k, j) >= 0) then
+              l = nijbo (k, j)
               do j1 = 1, nj
                 sum = cocc(ja+j1+loop)
                 do k1 = 1, iorbs(k)
