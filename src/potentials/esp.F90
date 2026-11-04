@@ -1355,7 +1355,6 @@
 !-----------------------------------------------
 !   M o d u l e s
 !-----------------------------------------------
-      use, intrinsic :: ieee_arithmetic, only: ieee_is_finite
       implicit none
 !-----------------------------------------------
 !   D u m m y   A r g u m e n t s
@@ -1386,10 +1385,6 @@
       data a0, a1s2, pie4, a1/ 0.0D0, 0.5D0, 0.7853981633974483096156608D0, &
         1.0D0/
       data xsw/ 24.0D0/
-      if (.not. ieee_is_finite(x)) then
-        write (*, *) 'MOPAC-301 diagnostic: non-finite x in fsub', n, x
-        stop 'Non-finite x in fsub'
-      end if
       e = a1s2*exp((-x))
       fac0 = n
       fac0 = fac0 + a1s2
@@ -1430,7 +1425,7 @@
         suma = suma + term(i)
       end do
       if (i == size(term) .and. Abs(suma - sum1) > epsilon(suma) * Abs(suma)) then
-        write (*, *) 'MOPAC-301 warning: ESP series reached term limit; using partial sum', n, x
+        write (*, *) 'Warning: ESP series reached term limit; using partial sum', n, x
       end if
       go to 90
 !
