@@ -1417,13 +1417,16 @@
       term(i) = term(i-1)*x/fact
       sum1 = suma
       suma = suma + term(i)
-      do while(sum1 - suma /= 0.D0)
+      do while(Abs(suma - sum1) > epsilon(suma) * Abs(suma) .and. i < size(term))
         i = i + 1
         fact = fact + a1
         term(i) = term(i-1)*x/fact
         sum1 = suma
         suma = suma + term(i)
       end do
+      if (i == size(term) .and. Abs(suma - sum1) > epsilon(suma) * Abs(suma)) then
+        write (*, *) 'Warning: ESP series reached term limit; using partial sum', n, x
+      end if
       go to 90
 !
 !     USE ASYMPTOTIC SERIES
