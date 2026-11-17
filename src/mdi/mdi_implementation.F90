@@ -235,7 +235,7 @@ CONTAINS
 
     INTEGER                       :: i, j, ierr
     INTEGER                       :: natoms
-    DOUBLE PRECISION              :: conv
+    DOUBLE PRECISION              :: conv, conv_e, conv_l
     DOUBLE PRECISION              :: charge
     CHARACTER(len=:), ALLOCATABLE :: char_array
     INTEGER, ALLOCATABLE          :: int_array(:)
@@ -379,7 +379,7 @@ CONTAINS
       real_array = 0.0d0
       do i=1, nvar
         if (loc(1,i) <= numat) then
-          real_array(3*(loc(1,i)-1)+loc(2,i)) = grad(i)
+          real_array(3*(loc(1,i)-1)+loc(2,i)) = -grad(i)    ! force = -dE/dx
         end if
       end do
       CALL MDI_Conversion_factor("kilocalorie_per_mol", "atomic_unit_of_energy", conv, ierr)
@@ -427,12 +427,17 @@ CONTAINS
       real_array(7) = voigt(5)
       real_array(8) = voigt(4)
       real_array(9) = voigt(3)
-      CALL MDI_Conversion_factor("newton", "atomic_unit_of_force", conv, ierr)
+
+      real_array = -real_array          ! negate: MOPAC tensile+ -> MDI/LAMMPS compressive+
+      real_array = real_array * 1e9     ! GPa -> Pa
+
+      CALL MDI_Conversion_factor("joule", "atomic_unit_of_energy", conv_e, ierr)
       if (ierr /= 0) execute_command = 1
-      real_array = real_array * conv * 1e-9
-      CALL MDI_Conversion_factor("meter", "atomic_unit_of_length", conv, ierr)
+      CALL MDI_Conversion_factor("meter", "atomic_unit_of_length", conv_l, ierr)
       if (ierr /= 0) execute_command = 1
-      real_array = real_array / (conv*conv)
+
+      real_array = real_array * conv_e / (conv_l**3)
+
       CALL MDI_Send(real_array, 9, MDI_DOUBLE, comm, ierr)
       if (ierr /= 0) execute_command = 1
       DEALLOCATE( real_array )

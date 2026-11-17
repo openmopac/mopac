@@ -309,6 +309,18 @@ subroutine pdbout (mode1)
     write(iprt,"(a)")"</style>"
     write(iprt,"(a)") "<!--"," ","   Start of JSmol script"," ", "-->"
     write(iprt,"(a)") "<meta charset=""utf-8""> <script type=""text/javascript"" src=""/jsmol/JSmol.min.js""></script>  "
+    ! Show a visible message if JSmol did not load (wrong path or no local web server)
+    write(iprt,"(a)") "<script type=""text/javascript"">"
+    write(iprt,"(a)") "if (typeof Jmol === ""undefined"") { document.write("
+    write(iprt,"(a)") "  ""<div style='border:2px solid #c00; background:#fee; padding:1em; margin:1em;"" +"
+    write(iprt,"(a)") "  "" font-family:sans-serif'>"" +"
+    write(iprt,"(a)") "  ""<b>JSmol could not be loaded from /jsmol/JSmol.min.js, so the molecule cannot be displayed.</b><br>"" +"
+    write(iprt,"(a)") "  ""This page must be viewed through a local web server whose root folder contains "" +"
+    write(iprt,"(a)") "  ""a copy of JSmol in a folder named <code>jsmol</code>. "" +"
+    write(iprt,"(a)") "  ""The MOPAC <code>jsmol-launcher</code> scripts do this for you. "" +"
+    write(iprt,"(a)") "  ""See <a href='https://openmopac.net/guides/jsmol/'>openmopac.net/guides/jsmol/</a>"" +"
+    write(iprt,"(a)") "  "" for instructions.</div>""); }"
+    write(iprt,"(a)") "</script>"
     write(iprt,"(a)") "<script type=""text/javascript"">"
     write(iprt,"(/a)") "$(document).ready(function() {Info = {"
     write(iprt,"(10x,a)") "width: 1500,", "height: 1000,", "color: ""0xB0B0B0"",", &
