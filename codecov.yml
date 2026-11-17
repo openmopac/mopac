@@ -1,0 +1,8 @@
+# Codecov settings (https://docs.codecov.com/docs/codecovyml-reference)
+coverage:
+  status:
+    project:
+      default:
+        # Total coverage varies by a few hundredths of a percent between
+        # otherwise identical runs, so only fail when it drops by more than this.
+        threshold: 0.1%

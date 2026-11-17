@@ -347,7 +347,7 @@ jobs:
           path: build/mopac-*-mac.*
 
   windows-build:
-    runs-on: windows-latest
+    runs-on: windows-2022
     timeout-minutes: 30
 
     steps:
@@ -398,6 +398,7 @@ jobs:
           echo %PATH%
           cmake -Bbuild ^
             -GNinja ^
+            -DPython3_EXECUTABLE="%pythonLocation%\python.exe" ^
             -DBUILD_BZ=ON ^
             -DCMAKE_Fortran_COMPILER=ifort ^
             -DCMAKE_Fortran_FLAGS="/libs:static" ^
